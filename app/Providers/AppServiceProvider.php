@@ -52,7 +52,7 @@ use App\Models\Product;
 use App\Observers\ProductObserver;
 
 use App\Models\Productservice_price;
-use App\Observers\ProductServicepriceObserver;
+use App\Observers\ProductServicePriceObserver;
 
 use App\Models\Routeto_branch;
 use App\Observers\RoutetoBranchObserver;
