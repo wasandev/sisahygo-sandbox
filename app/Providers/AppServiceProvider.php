@@ -130,7 +130,7 @@ class AppServiceProvider extends ServiceProvider
         Product_image::observe(Product_imageObserver::class);
         Product_style::observe(Product_styleObserver::class);
         Product::observe(ProductObserver::class);
-        Productservice_price::observe(ProductServicepriceObserver::class);
+        Productservice_price::observe(ProductServicePriceObserver::class);
         Tiretype::observe(TiretypeObserver::class);
         Unit::observe(UnitObserver::class);
         Vendor::observe(VendorObserver::class);
