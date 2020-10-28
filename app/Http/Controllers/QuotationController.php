@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
@@ -34,10 +34,10 @@ class QuotationController extends Controller
         $quotation = Quotation::find($quotation);
 
 
-        $pdf = PDF::loadView('tenants.printquotation', compact('quotation', 'company'));
+        //$pdf = PDF::loadView('tenants.printquotation', compact('quotation', 'company'));
 
         $path =  Storage::disk('tenant')->getAdapter()->getPathPrefix() . 'media/' . $quotation->quotation_no . '.pdf';
-        $pdf->save($path);
+        //$pdf->save($path);
         // //$pdf->stream($path);
 
         return $path;

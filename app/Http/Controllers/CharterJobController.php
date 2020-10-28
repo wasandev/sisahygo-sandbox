@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Charter_job;
 use App\Models\CompanyProfile;
-use PDF;
+//use PDF;
 use Illuminate\Support\Facades\Storage;
 
 class CharterJobController extends Controller
@@ -40,10 +40,10 @@ class CharterJobController extends Controller
 
 
 
-        $pdf = PDF::loadView('pdfdoc.printcharterjob', compact('charterjob', 'company'));
+        // $pdf = PDF::loadView('pdfdoc.printcharterjob', compact('charterjob', 'company'));
 
         $path =  Storage::disk('tenant')->getAdapter()->getPathPrefix() . 'media/' . $charterjob->job_no . '.pdf';
-        $pdf->save($path);
+        //$pdf->save($path);
 
         return $path;
     }
