@@ -3,6 +3,7 @@
 namespace Laravel\Nova;
 
 use Illuminate\Support\Facades\Validator;
+use Laravel\Nova\Contracts\PivotableField;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 trait PerformsValidation
@@ -252,6 +253,27 @@ trait PerformsValidation
     {
         return self::newResource()
                     ->availableFields($request)
+                    ->filter(function ($field) {
+                        return ! $field instanceof PivotableField;
+                    })
+                    ->firstWhere('resourceName', $field)
+                    ->getValidationAttribute($request);
+    }
+
+    /**
+     * Get the validation attachable attribute for a specific field.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  string  $field
+     * @return string
+     */
+    public static function validationAttachableAttributeFor(NovaRequest $request, $field)
+    {
+        return self::newResource()
+                    ->availableFields($request)
+                    ->filter(function ($field) {
+                        return $field instanceof PivotableField;
+                    })
                     ->firstWhere('resourceName', $field)
                     ->getValidationAttribute($request);
     }

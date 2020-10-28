@@ -26,6 +26,7 @@
       class="btn btn-xs mr-1"
       :class="action.class"
       dusk="run-inline-action-button"
+      :data-testid="action.uriKey"
     >
       {{ action.name }}
     </button>

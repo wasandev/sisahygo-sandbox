@@ -175,6 +175,25 @@ class IndexComponent extends BaseComponent
     }
 
     /**
+     * Run the action with the given URI key.
+     */
+    public function runInlineAction(Browser $browser, $id, $uriKey, $fieldCallback = null)
+    {
+        $browser->within('[dusk="'.$id.'-row"]', function ($browser) use ($uriKey) {
+            $browser->click('[dusk="run-inline-action-button"][data-testid="'.$uriKey.'"]')
+                    ->pause(600);
+        });
+
+        $browser->elsewhere('.modal', function ($browser) use ($fieldCallback) {
+            if ($fieldCallback) {
+                $fieldCallback($browser);
+            }
+
+            $browser->click('[dusk="confirm-action-button"]')->pause(250);
+        });
+    }
+
+    /**
      * Check the user at the given resource table row index.
      */
     public function clickCheckboxForId(Browser $browser, $id)

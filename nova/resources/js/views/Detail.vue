@@ -44,9 +44,11 @@
         :panel="panel"
       >
         <div v-if="panel.showToolbar" class="flex items-center mb-3">
-          <heading :level="1" class="truncate">{{ panel.name }}</heading>
+          <heading :level="1" class="flex-auto truncate">{{
+            panel.name
+          }}</heading>
 
-          <div class="ml-3 w-full flex items-center">
+          <div class="ml-3 flex items-center">
             <custom-detail-toolbar
               :resource="resource"
               :resource-name="resourceName"
@@ -353,12 +355,17 @@ export default {
      * Show the confirmation modal for deleting or detaching a resource
      */
     async confirmDelete() {
-      this.deleteResources([this.resource], () => {
+      this.deleteResources([this.resource], response => {
         Nova.success(
           this.__('The :resource was deleted!', {
             resource: this.resourceInformation.singularLabel.toLowerCase(),
           })
         )
+
+        if (response && response.data && response.data.redirect) {
+          this.$router.push({ path: response.data.redirect })
+          return
+        }
 
         if (!this.resource.softDeletes) {
           this.$router.push({
@@ -421,12 +428,17 @@ export default {
      * Show the confirmation modal for force deleting
      */
     async confirmForceDelete() {
-      this.forceDeleteResources([this.resource], () => {
+      this.forceDeleteResources([this.resource], response => {
         Nova.success(
           this.__('The :resource was deleted!', {
             resource: this.resourceInformation.singularLabel.toLowerCase(),
           })
         )
+
+        if (response && response.data && response.data.redirect) {
+          this.$router.push({ path: response.data.redirect })
+          return
+        }
 
         this.$router.push({
           name: 'index',

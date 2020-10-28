@@ -61,15 +61,15 @@ trait PerformsQueries
         return $query->where(function ($query) use ($search) {
             $model = $query->getModel();
 
-            $connectionType = $query->getModel()->getConnection()->getDriverName();
+            $connectionType = $model->getConnection()->getDriverName();
 
-            $canSearchPrimaryKey = is_numeric($search) &&
-                                   in_array($query->getModel()->getKeyType(), ['int', 'integer']) &&
+            $canSearchPrimaryKey = ctype_digit($search) &&
+                                   in_array($model->getKeyType(), ['int', 'integer']) &&
                                    ($connectionType != 'pgsql' || $search <= static::maxPrimaryKeySize()) &&
-                                   in_array($query->getModel()->getKeyName(), static::$search);
+                                   in_array($model->getKeyName(), static::$search);
 
             if ($canSearchPrimaryKey) {
-                $query->orWhere($query->getModel()->getQualifiedKeyName(), $search);
+                $query->orWhere($model->getQualifiedKeyName(), $search);
             }
 
             $likeOperator = $connectionType == 'pgsql' ? 'ilike' : 'like';

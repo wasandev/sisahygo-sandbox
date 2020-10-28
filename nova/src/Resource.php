@@ -182,6 +182,13 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     public static $pollingInterval = 15;
 
     /**
+     * Indicates whether to show the polling toggle button inside Nova.
+     *
+     * @var int
+     */
+    public static $showPollingToggle = false;
+
+    /**
      * The debounce amount to use when searching this resource.
      *
      * @var float
@@ -566,11 +573,11 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      * Return the location to redirect the user after deletion.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return string
+     * @return string|null
      */
     public static function redirectAfterDelete(NovaRequest $request)
     {
-        return '/resources/'.static::uriKey();
+        return null;
     }
 
     /**

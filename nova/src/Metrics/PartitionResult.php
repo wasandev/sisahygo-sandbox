@@ -15,11 +15,11 @@ class PartitionResult implements JsonSerializable
     public $value;
 
     /**
-     * The label resolver.
+     * The custom label name.
      *
-     * @var \Closure|null
+     * @var array
      */
-    public $labelResolver;
+    public $labels = [];
 
     /**
      * The custom label colors.
@@ -48,7 +48,9 @@ class PartitionResult implements JsonSerializable
      */
     public function label(Closure $callback)
     {
-        $this->labelResolver = $callback;
+        $this->labels = collect($this->value)->mapWithKeys(function ($value, $label) use ($callback) {
+            return [$label => $callback($label)];
+        })->all();
 
         return $this;
     }
@@ -75,7 +77,7 @@ class PartitionResult implements JsonSerializable
     {
         return [
             'value' => collect($this->value ?? [])->map(function ($value, $label) {
-                $resolvedLabel = with($label, $this->labelResolver);
+                $resolvedLabel = $this->labels[$label] ?? $label;
 
                 return array_filter([
                     'color' => data_get($this->colors->colors, $label, $this->colors->get($resolvedLabel)),

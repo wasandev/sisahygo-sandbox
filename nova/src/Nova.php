@@ -160,7 +160,7 @@ class Nova
      */
     public static function version()
     {
-        return '3.13.0';
+        return '3.14.0';
     }
 
     /**
@@ -229,6 +229,7 @@ class Nova
                 'showColumnBorders' => $resource::showColumnBorders(),
                 'polling' => $resource::$polling,
                 'pollingInterval' => $resource::$pollingInterval * 1000,
+                'showPollingToggle' => $resource::$showPollingToggle,
                 'debounce' => $resource::$debounce * 1000,
             ], $resource::additionalInformation($request));
         })->values()->all();

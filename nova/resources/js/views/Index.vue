@@ -132,6 +132,14 @@
         </div>
 
         <div class="flex items-center ml-auto px-3">
+          <resource-polling-button
+            v-if="shouldShowPollingToggle"
+            :currently-polling="currentlyPolling"
+            @start-polling="startPolling"
+            @stop-polling="stopPolling"
+            class="mr-1"
+          />
+
           <!-- Action Selector -->
           <action-selector
             v-if="selectedResources.length > 0 || haveStandaloneActions"
@@ -240,7 +248,10 @@
               />
             </svg>
 
-            <h3 class="text-base text-80 font-normal mb-6">
+            <h3
+              class="text-base text-80 font-normal"
+              :class="{ 'mb-6': authorizedToCreate && !resourceIsFull }"
+            >
               {{
                 __('No :resource matched the given criteria.', {
                   resource: singularName.toLowerCase(),
@@ -411,6 +422,8 @@ export default {
 
     // Load More Pagination
     currentPageLoadMore: null,
+
+    currentlyPolling: false,
   }),
 
   /**
@@ -437,6 +450,9 @@ export default {
     this.initializeOrderingFromQueryString()
 
     this.perPage = this.resourceInformation.perPageOptions[0]
+
+    console.log(this.resourceInformation.polling)
+    this.currentlyPolling = this.resourceInformation.polling
 
     await this.initializeFilters()
     await this.getResources()
@@ -470,11 +486,7 @@ export default {
     })
 
     if (this.resourceInformation.polling) {
-      this.pollingListener = setInterval(() => {
-        if (document.hasFocus()) {
-          this.getResources()
-        }
-      }, this.resourceInformation.pollingInterval)
+      this.startPolling()
     }
   },
 
@@ -804,6 +816,28 @@ export default {
       this.perPage =
         this.$route.query[this.perPageParameter] || _.first(this.perPageOptions)
     },
+
+    /**
+     * Pause polling for new resources.
+     */
+    stopPolling() {
+      clearInterval(this.pollingListener)
+
+      this.$nextTick(() => (this.currentlyPolling = false))
+    },
+
+    /**
+     * Start polling for new resources.
+     */
+    startPolling() {
+      this.pollingListener = setInterval(() => {
+        if (document.hasFocus()) {
+          this.getResources()
+        }
+      }, this.resourceInformation.pollingInterval)
+
+      this.$nextTick(() => (this.currentlyPolling = true))
+    },
   },
 
   computed: {
@@ -972,7 +1006,10 @@ export default {
      * Determine if the resource / relationship is "full".
      */
     resourceIsFull() {
-      return this.viaHasOne && this.resources.length > 0
+      return (
+        (Boolean(this.viaHasOne) && this.resources.length > 0) ||
+        Boolean(this.viaHasOneThrough && this.resources.length > 0)
+      )
     },
 
     /**
@@ -982,6 +1019,10 @@ export default {
       return (
         this.relationshipType == 'hasOne' || this.relationshipType == 'morphOne'
       )
+    },
+
+    viaHasOneThrough() {
+      return this.relationshipType == 'hasOneThrough'
     },
 
     /**
@@ -1206,6 +1247,13 @@ export default {
         this.resourceResponse &&
         this.resources.length > 0
       )
+    },
+
+    /**
+     * Determine if the polling toggle button should be shown.
+     */
+    shouldShowPollingToggle() {
+      return this.resourceInformation.showPollingToggle
     },
   },
 }

@@ -32,6 +32,20 @@ class Create extends Page
     }
 
     /**
+     * Run the inline create relation.
+     */
+    public function runInlineCreate(Browser $browser, $uriKey, callable $fieldCallback)
+    {
+        $browser->click("@{$uriKey}-inline-create")->pause(500);
+
+        $browser->elsewhere('.modal', function ($browser) use ($fieldCallback) {
+            $fieldCallback($browser);
+
+            $browser->create()->pause(250);
+        });
+    }
+
+    /**
      * Click the create button.
      */
     public function create(Browser $browser)

@@ -39,9 +39,9 @@ class ResourceDestroyController extends Controller
             });
         });
 
-        if ($request->isForSingleResource()) {
+        if ($request->isForSingleResource() && ! is_null($redirect = $request->resource()::redirectAfterDelete($request))) {
             return response()->json([
-                'redirect' => $request->resource()::redirectAfterDelete($request),
+                'redirect' => $redirect,
             ]);
         }
     }

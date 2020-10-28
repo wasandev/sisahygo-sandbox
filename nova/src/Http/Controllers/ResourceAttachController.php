@@ -51,7 +51,7 @@ class ResourceAttachController extends Controller
      */
     protected function validate(NovaRequest $request, $model, $resource)
     {
-        $attribute = $resource::validationAttributeFor($request, $request->relatedResource);
+        $attribute = $resource::validationAttachableAttributeFor($request, $request->relatedResource);
 
         tap($this->creationRules($request, $resource), function ($rules) use ($resource, $request, $attribute) {
             Validator::make($request->all(), $rules, [], $this->customRulesKeys($request, $attribute))->validate();

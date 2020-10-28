@@ -129,7 +129,21 @@ export default {
       this.relationResponse = data
 
       if (this.isHasOneRelationship && this.alreadyFilled) {
-        Nova.error(this.__('The HasOne relationship has already filled.'))
+        Nova.error(this.__('The HasOne relationship has already been filled.'))
+
+        this.$router.push({
+          name: 'detail',
+          params: {
+            resourceId: this.viaResourceId,
+            resourceName: this.viaResource,
+          },
+        })
+      }
+
+      if (this.isHasOneThroughRelationship && this.alreadyFilled) {
+        Nova.error(
+          this.__('The HasOneThrough relationship has already been filled.')
+        )
 
         this.$router.push({
           name: 'detail',
@@ -342,9 +356,16 @@ export default {
       return this.relationResponse && this.relationResponse.hasOneRelationship
     },
 
+    isHasOneThroughRelationship() {
+      return (
+        this.relationResponse && this.relationResponse.hasOneThroughRelationship
+      )
+    },
+
     shouldShowAddAnotherButton() {
       return (
-        this.inFormMode && !this.alreadyFilled && !this.isHasOneRelationship
+        Boolean(this.inFormMode && !this.alreadyFilled) &&
+        Boolean(!this.isHasOneRelationship || !this.isHasOneThroughRelationship)
       )
     },
   },

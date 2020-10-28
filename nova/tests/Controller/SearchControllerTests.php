@@ -34,6 +34,22 @@ trait SearchControllerTests
         $this->assertNull($original[2]['avatar']);
     }
 
+    /**
+     * @dataProvider invalidNumericDataProvider
+     */
+    public function test_cant_retrieve_search_results_by_ids_given_invalid_numeric($given)
+    {
+        $user = factory(User::class)->create();
+        $post = factory(Post::class)->create(['user_id' => $user->id]);
+
+        $response = $this->withExceptionHandling()
+                        ->getJson('/nova-api/search?search='.$given);
+
+        $response->assertStatus(200);
+
+        $this->assertSame([], $response->original);
+    }
+
     public function test_can_retrieve_search_results_with_custom_cover()
     {
         $user = factory(User::class)->create();
@@ -50,5 +66,13 @@ trait SearchControllerTests
         $original = $response->original;
 
         $this->assertEquals('https://github.com/taylorotwell.png?size=40', $original[1]['avatar']);
+    }
+
+    public function invalidNumericDataProvider()
+    {
+        yield ['1.'];
+        yield ['1.0'];
+        yield ['1,201'];
+        yield ['2147483647']; // Max ID supported by Postgres
     }
 }

@@ -70,4 +70,23 @@ class PartitionTest extends IntegrationTest
             ],
         ], $result->jsonSerialize());
     }
+
+    public function test_colors_are_present_in_results_when_set_with_string_labels_with_custom_label_after_serialization()
+    {
+        $result = new PartitionResult(['weekly' => 10, 'monthly' => 60, 'yearly' => 90]);
+        $result->label(function ($label) {
+            return Str::title($label);
+        })->colors([
+            'weekly' => '#fff',
+            'monthly' => '#000',
+        ]);
+
+        $this->assertEquals([
+            'value' => [
+                ['label' => 'Weekly', 'value' => 10, 'color' => '#fff'],
+                ['label' => 'Monthly', 'value' => 60, 'color' => '#000'],
+                ['label' => 'Yearly', 'value' => 90],
+            ],
+        ], unserialize(serialize($result))->jsonSerialize());
+    }
 }

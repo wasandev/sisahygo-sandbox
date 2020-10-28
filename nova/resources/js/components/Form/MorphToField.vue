@@ -126,6 +126,7 @@
             v-if="canShowNewRelationModal"
             @click="openRelationModal"
             class="ml-1"
+            :dusk="`${field.attribute}-inline-create`"
           />
         </div>
 

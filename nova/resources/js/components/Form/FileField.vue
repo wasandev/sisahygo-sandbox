@@ -273,7 +273,13 @@ export default {
      * The label attribute to use for the file field.
      */
     labelFor() {
-      return `file-${this.field.attribute}`
+      let name = this.resourceName
+
+      if (this.relatedResourceName) {
+        name += '-' + this.relatedResourceName
+      }
+
+      return `file-${name}-${this.field.attribute}`
     },
 
     /**
