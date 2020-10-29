@@ -10,8 +10,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasOne;
-use Laravel\Nova\Fields\MorphOne;
+use Laravel\Nova\Fields\DateTime;
 
 class User extends Resource
 {
@@ -100,18 +99,27 @@ class User extends Resource
                 'driver' => 'พนักงานขับรถ'
             ])->displayUsingLabels()
                 ->rules('required'),
-            Text::make(__('User Code'), 'usercode'),
+            Text::make(__('User Code'), 'usercode')
+                ->hideFromIndex(),
             BelongsTo::make(__('Employee'), 'assign_user', 'App\Nova\Employee')
                 ->nullable()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->hideFromIndex(),
             BelongsTo::make(__('Customer'), 'assign_customer', 'App\Nova\Customer')
                 ->nullable()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->hideFromIndex(),
             BelongsToMany::make(__('Roles'), 'roles', \Pktharindu\NovaPermissions\Nova\Role::class),
             BelongsTo::make(__('Created by'), 'user_create', 'App\Nova\User')
                 ->OnlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
         ];
     }
 

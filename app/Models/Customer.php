@@ -14,6 +14,7 @@ class Customer extends Model
         'type',
         'user_id',
         'taxid',
+        'email',
         'paymenttype',
         'creditterm',
         'name',
@@ -41,6 +42,11 @@ class Customer extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
     }
     public function assign_customer()
     {

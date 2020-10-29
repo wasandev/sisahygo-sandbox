@@ -33,6 +33,14 @@ class Address extends Resource
      */
     public static $title = 'name';
 
+    public static function label()
+    {
+        return __('Customer addresses');
+    }
+    public static function singulatLabel()
+    {
+        return __('Addresses');
+    }
     /**
      * The columns that should be searched.
      *
@@ -59,7 +67,7 @@ class Address extends Resource
             Text::make(__('Phone'), 'phoneno')
                 ->rules('required', 'numeric'),
 
-            new Panel('ที่อยู่', $this->addressFields()),
+            new Panel(__('Address'), $this->addressFields()),
             BelongsTo::make(__('User'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
         ];

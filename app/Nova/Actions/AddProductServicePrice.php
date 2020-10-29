@@ -16,6 +16,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Number;
 
 class AddProductServicePrice extends Action
 {
@@ -77,18 +78,18 @@ class AddProductServicePrice extends Action
 
         return [
 
-
-            Select::make('เลือกสาขาต้นทาง', 'from_branch_id')
+            Select::make(__('From branch'), 'from_branch_id')
                 ->options($branches)
                 ->displayUsingLabels(),
-            Select::make('เลือกสาขาปลายทาง', 'to_branch_id')
+            Select::make(__('To branch'), 'to_branch_id')
                 ->options($branches)
                 ->displayUsingLabels(),
-            Boolean::make('ใช้หน่วยนับของสินค้า', 'product_unit'),
-            Select::make('เลือกหน่วยนับสินค้า', 'unit')
+            Boolean::make(__('Used product unit'), 'product_unit'),
+            Select::make(__('Unit'), 'unit')
                 ->options($units)
                 ->displayUsingLabels(),
-            Currency::make('ค่าขนส่ง/หน่วย(บาท)', 'item_price'),
+            Number::make(__('Shipping cost'), 'item_price')
+                ->step('0.01'),
 
 
 

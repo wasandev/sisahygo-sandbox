@@ -28,4 +28,14 @@ class Productservice_price extends Model
     {
         return $this->belongsTo('App\Models\Branch', 'from_branch_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
 }

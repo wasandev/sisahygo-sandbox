@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 
 class Unit extends Resource
 {
@@ -39,7 +40,11 @@ class Unit extends Resource
 
     public static function label()
     {
-        return 'หน่วยนับ';
+        return __('Units');
+    }
+    public static function singularLabel()
+    {
+        return __('Unit');
     }
     /**
      * Get the fields displayed by the resource.
@@ -51,8 +56,16 @@ class Unit extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('ชื่อหน่วยนับ', 'name')->sortable(),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
+            Text::make(__('Name'), 'name')->sortable(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
         ];
     }

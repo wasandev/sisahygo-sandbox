@@ -2,13 +2,18 @@
 
 namespace App\Observers;
 
+use \Illuminate\Support\Facades\Auth;
 use App\Models\Carstyle;
 
 class CarstyleObserver
 {
     public function creating(Carstyle $carstyle)
     {
-        $carstyle->user_id = auth()->user()->id;
+        if (Auth::check()) {
+            $carstyle->user_id = auth()->user()->id;
+        } else {
+            $carstyle->user_id = 1;
+        }
     }
 
     public function updating(Carstyle $carstyle)

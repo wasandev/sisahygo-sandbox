@@ -11,8 +11,8 @@ class CharterRouteObserver
         $charter_route->user_id = auth()->user()->id;
     }
 
-    public function saving(Charter_route $charter_route)
+    public function updating(Charter_route $charter_route)
     {
-        $charter_route->user_id = auth()->user()->id;
+        $charter_route->updated_by = auth()->user()->id;
     }
 }

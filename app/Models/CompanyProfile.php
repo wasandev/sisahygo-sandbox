@@ -18,6 +18,7 @@ class CompanyProfile extends Model
         'country',
         'description',
         'imagefile',
+        'email',
         'logofile',
         'phoneno',
         'weburl',

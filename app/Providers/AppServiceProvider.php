@@ -84,7 +84,8 @@ use App\Observers\QuotationObserver;
 use App\Models\Charter_job;
 use App\Observers\CharterJobObserver;
 
-
+use App\Models\Customer_product_price;
+use App\Observers\CustomerShippingCostObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -139,5 +140,6 @@ class AppServiceProvider extends ServiceProvider
         Charter_price::observe(CharterPriceObserver::class);
         Quotation::observe(QuotationObserver::class);
         Charter_job::observe(CharterJobObserver::class);
+        Customer_product_price::observe(CustomerShippingCostObserver::class);
     }
 }

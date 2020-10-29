@@ -16,6 +16,7 @@ class QuotationObserver
 
     public function updating(Quotation $quotation)
     {
+        $quotation->updated_by = auth()->user()->id;
         $quotation->status = 'edit';
     }
 }

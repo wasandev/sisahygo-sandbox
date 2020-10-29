@@ -17,8 +17,8 @@ class ParcelObserver
     {
         $parcel->user_id = auth()->user()->id;
     }
-    public function saving(Parcel $parcel)
+    public function updating(Parcel $parcel)
     {
-        $parcel->user_id = auth()->user()->id;
+        $parcel->updated_by = auth()->user()->id;
     }
 }

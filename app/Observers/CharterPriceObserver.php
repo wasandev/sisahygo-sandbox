@@ -11,8 +11,8 @@ class CharterPriceObserver
         $charter_price->user_id = auth()->user()->id;
     }
 
-    public function saving(Charter_price $charter_price)
+    public function updating(Charter_price $charter_price)
     {
-        $charter_price->user_id = auth()->user()->id;
+        $charter_price->updated_by = auth()->user()->id;
     }
 }

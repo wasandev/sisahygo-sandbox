@@ -6,13 +6,11 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\MorphTo;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 
@@ -49,7 +47,11 @@ class Product extends Resource
     ];
     public static function label()
     {
-        return 'ข้อมูลสินค้า';
+        return __('Products');
+    }
+    public static function singularLabel()
+    {
+        return __('Product');
     }
     /**
      * Get the fields displayed by the resource.
@@ -63,29 +65,42 @@ class Product extends Resource
 
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status')
-                ->hideWhenCreating(),
-
-            BelongsTo::make('ประเภทสินค้า', 'category', 'App\Nova\Category')
+            Boolean::make(__('Status'), 'status')
                 ->sortable(),
-            BelongsTo::make('ลักษณะสินค้า', 'product_style', 'App\Nova\Product_style')
-                ->sortable(),
-            Text::make('ชื่อสินค้า', 'name')
+            BelongsTo::make(__('Category'), 'category', 'App\Nova\Category')
+                ->sortable()
+                ->showCreateRelationButton(),
+            BelongsTo::make(__('Product style'), 'product_style', 'App\Nova\Product_style')
+                ->sortable()
+                ->showCreateRelationButton(),
+            Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('กว้าง(ซม.)', 'width')
+            Number::make(__('Width'), 'width')
+                ->step('0.01')
                 ->hideFromIndex(),
-            Currency::make('ยาว(ซม.)', 'length')
+            Number::make(__('Length'), 'length')
+                ->step('0.01')
                 ->hideFromIndex(),
-            Currency::make('สูง(ซม.)', 'height')
-
+            Number::make(__('Height'), 'height')
+                ->step('0.01')
                 ->hideFromIndex(),
-            Currency::make('น้ำหนัก(กก.)', 'weight')
+            Number::make(__('Weight'), 'weight')
+                ->step('0.01')
                 ->hideFromIndex(),
-            BelongsTo::make('หน่วยนับ', 'unit', 'App\Nova\Unit'),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
+            BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
+                ->showCreateRelationButton(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
-            HasMany::make('ค่าขนส่งตามสินค้า', 'productservice_price', 'App\Nova\Productservice_price'),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            HasMany::make(__('Product service price'), 'productservice_price', 'App\Nova\Productservice_price'),
             // BelongsToMany::make('ลูกค้าที่ใช้สินค้านี้', 'customer', 'App\Nova\Customer'),
             // HasMany::make('ค่าขนส่งสินค้าตามลูกค้า', 'customer_product_prices', 'App\Nova\Customer_product_price')
 

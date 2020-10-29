@@ -16,7 +16,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Customer_product_price extends Resource
 {
-    //public static $displayInNavigation = false;
+    public static $displayInNavigation = false;
     public static $group = "4.งานด้านการขาย";
     public static $priority = 8;
     /**
@@ -44,7 +44,11 @@ class Customer_product_price extends Resource
 
     public static function label()
     {
-        return 'ค่าขนส่งสินค้าตามลูกค้า';
+        return __('Customer shipping cost');
+    }
+    public static function singularLabel()
+    {
+        return __('Shipping cost');
     }
     /**
      * Get the fields displayed by the resource.
@@ -56,33 +60,33 @@ class Customer_product_price extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'active')
+            Boolean::make(__('Status'), 'active')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
+            BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('สินค้า', 'product', 'App\Nova\Product')
+            BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->sortable()
                 ->rules('required'),
 
-            BelongsTo::make('จากสาขา', 'from_branch', 'App\Nova\Branch')
+            BelongsTo::make(__('From branch'), 'from_branch', 'App\Nova\Branch')
                 ->sortable()
                 ->rules('required'),
-            InputDistrict::make('ไปอำเภอ/เขต', 'district')
+            InputDistrict::make(__('To district'), 'district')
                 ->withValues(['amphoe', 'province'])
                 ->fromValue('amphoe')
                 ->sortable()
                 ->rules('required'),
-            InputProvince::make('ไปจังหวัด', 'province')
+            InputProvince::make(__('To province'), 'province')
                 ->withValues(['amphoe', 'province'])
                 ->fromValue('province')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('หน่วยนับ', 'unit', 'App\Nova\Unit')
+            BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('ค่าขนส่ง', 'price')
+            Currency::make(__('Shipping cost'), 'price')
                 ->sortable()
                 ->rules('required'),
         ];

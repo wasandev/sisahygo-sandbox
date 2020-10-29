@@ -21,9 +21,9 @@ class CustomerObserver
         $customer->status = '1';
     }
 
-    public function saving(Customer $customer)
+    public function updating(Customer $customer)
     {
-        $customer->user_id = auth()->user()->id;
+        $customer->updated_by = auth()->user()->id;
         $customer->country = 'thailand';
         $customer->status = '1';
     }

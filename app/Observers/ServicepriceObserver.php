@@ -12,9 +12,9 @@ class ServicepriceObserver
         $serviceprice->status = '0';
     }
 
-    public function saving(Serviceprice $serviceprice)
+    public function updating(Serviceprice $serviceprice)
     {
-        $serviceprice->user_id = auth()->user()->id;
+        $serviceprice->updated_by = auth()->user()->id;
         $serviceprice->status = '0';
     }
 }

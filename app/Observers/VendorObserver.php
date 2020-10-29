@@ -11,8 +11,8 @@ class VendorObserver
         $vendor->user_id = auth()->user()->id;
     }
 
-    public function saving(Vendor $vendor)
+    public function updating(Vendor $vendor)
     {
-        $vendor->user_id = auth()->user()->id;
+        $vendor->updated_by = auth()->user()->id;
     }
 }

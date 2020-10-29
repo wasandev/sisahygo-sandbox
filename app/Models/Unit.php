@@ -22,4 +22,8 @@ class Unit extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
 }

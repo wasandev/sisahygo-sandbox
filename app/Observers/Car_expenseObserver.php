@@ -11,8 +11,8 @@ class Car_expenseObserver
         $car_expense->user_id = auth()->user()->id;
     }
 
-    public function saving(Car_expense $car_expense)
+    public function updating(Car_expense $car_expense)
     {
-        $car_expense->user_id = auth()->user()->id;
+        $car_expense->updated_by = auth()->user()->id;
     }
 }

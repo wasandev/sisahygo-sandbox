@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use \Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class UserObserver
@@ -14,7 +15,11 @@ class UserObserver
      */
     public function creating(User $user)
     {
-        $user->created_by = auth()->user()->id;
+        if (Auth::check()) {
+            $user->created_by = auth()->user()->id;
+        } else {
+            $user->created_by = 1;
+        }
     }
 
     /**

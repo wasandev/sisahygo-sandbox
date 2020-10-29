@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\DateTime;
 
 class Category extends Resource
 {
@@ -44,7 +45,11 @@ class Category extends Resource
      */
     public static function label()
     {
-        return 'ประเภทสินค้า';
+        return __('Categories');
+    }
+    public static function singularLabel()
+    {
+        return __('Category');
     }
     /**
      * Get the fields displayed by the resource.
@@ -59,10 +64,19 @@ class Category extends Resource
 
         return [
             ID::make()->sortable(),
-            Text::make('ประเภทสินค้า', 'name')->sortable(),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
+            Text::make(__('Name'), 'name')->sortable(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
-            HasMany::make('สินค้า', 'products', 'App\Nova\Product'),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+
+            HasMany::make(__('Products'), 'products', 'App\Nova\Product'),
         ];
     }
 

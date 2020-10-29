@@ -506,7 +506,36 @@
     "Cars": "ข้อมูลรถ",
     "Car": "รถ",
     "Business types": "ข้อมูลประเภทธุรกิจ",
-    "Business type": "ประเภทธุรกิจ"
+    "Business type": "ประเภทธุรกิจ",
+    "Status": "สถานะ",
+    "Payment type": "ประเภทการชำระเงิน",
+    "Credit term": "ระยะเวลาเครดิต",
+    "Contact name": "ชื่อผู้ติดต่อ",
+    "Units": "ข้อมูลหน่วยนับ",
+    "Unit": "หน่วยนับ",
+    "Product styles": "ข้อมูลลักษณะสินค้า",
+    "Product style": "ลักษณะสินค้า",
+    "Categories": "ข้อมูลประเภทสินค้า",
+    "Category": "ประเภทสินค้า",
+    "Products": "ข้อมูลสินค้า",
+    "Product": "สินค้า",
+    "Width": "กว้าง(ซม.)",
+    "Length": "ยาว(ซม.)",
+    "Height": "สูง(ซม.)",
+    "Weight": "น้ำหนัก(กก.)",
+    "Shipping costs": "ข้อมูลค่าขนส่งสินค้า",
+    "Shipping cost": "ค่าขนส่งสินค้า",
+    "From branch": "จากสาขา",
+    "To branch": "ไปสาขา",
+    "To district": "ไปอำเภอ",
+    "To province": "ไปจังหวัด",
+    "Used product unit": "ใช้หน่วยนับของสินค้า",
+    "Customer shipping cost": "ค่าขนส่งสินค้าตามลูกค้า",
+    "Customer addresses": "จุดรับ-ส่งสินค้า",
+    "Customer products": "ข้อมูลสินค้าของลูกค้า"
+
+
+
 
 
 

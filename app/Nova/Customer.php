@@ -18,8 +18,8 @@ use Wasandev\InputThaiAddress\InputSubDistrict;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Wasandev\InputThaiAddress\InputPostalCode;
-use Wasandev\InputThaiAddress\MapAddress;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Datetime;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 
 class Customer extends Resource
@@ -54,7 +54,11 @@ class Customer extends Resource
 
     public static function label()
     {
-        return 'ข้อมูลลูกค้า';
+        return __('Customers');
+    }
+    public static function singularLabel()
+    {
+        return __('Customer');
     }
     /**
      * Get the fields displayed by the resource.
@@ -66,46 +70,52 @@ class Customer extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status')->size('w-full')
+            Boolean::make(__('Status'), 'status')
                 ->hideWhenCreating(),
-            Text::make('ชื่อลูกค้า', 'name')
+            Text::make(__('Name'), 'name')
                 ->sortable()
-
                 ->rules('required', 'max:250'),
-            Text::make('เลขประจำตัวผู้เสียภาษี', 'taxid')
+            Text::make(__('Tax ID'), 'taxid')
                 ->hideFromIndex()
-
                 ->rules('required', 'digits:13', 'numeric'),
-            Select::make('ประเภท', 'type')->options([
+            Select::make(__('Type'), 'type')->options([
                 'company' => 'นิติบุคคล',
                 'person' => 'บุคคลธรรมดา'
             ])
                 ->displayUsingLabels()
                 ->hideFromIndex(),
 
-            Select::make('การชำระเงิน', 'paymenttype')->options([
+            Select::make(__('Payment type'), 'paymenttype')->options([
                 'เงินสด' => 'เงินสด',
                 'วางบิล' => 'วางบิล'
             ])
                 ->hideFromIndex()
-
                 ->withMeta(['value' => 'เงินสด']),
-            Number::make('ระยะเวลาเครดิต', 'creditterm')
+            Number::make(__('Credit term'), 'creditterm')
                 ->withMeta(['value' => 0])
                 ->hideFromIndex(),
-            BelongsTo::make('ประเภทธุรกิจ', 'businesstype', 'App\Nova\Businesstype')
-                ->hideFromIndex(),
-
-
+            BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
+                ->hideFromIndex()
+                ->showCreateRelationButton(),
+            HasOne::make(__('Assign user'), 'assign_customer', 'App\Nova\User'),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
 
             new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
             new Panel('ที่อยู่ในการออกเอกสาร', $this->addressFields()),
             new Panel('อื่นๆ', $this->otherFields()),
-
-            HasMany::make('จุดรับ-ส่งสินค้า', 'addresses', 'App\Nova\Address'),
-            BelongsToMany::make('สินค้าของลูกค้า', 'product', 'App\Nova\Product'),
-            HasMany::make('ค่าขนส่งสินค้าตามลูกค้า', 'customer_product_prices', 'App\Nova\Customer_product_price'),
-            HasOne::make(__('Assign user'), 'assign_customer', 'App\Nova\User')
+            HasMany::make(__('Customer addresses'), 'addresses', 'App\Nova\Address'),
+            BelongsToMany::make(__('Customer products'), 'product', 'App\Nova\Product'),
+            HasMany::make(__('Customer shipping cost'), 'customer_product_prices', 'App\Nova\Customer_product_price'),
+            HasOne::make(__('Assign user'), 'assign_customer', 'App\Nova\User'),
 
 
 
@@ -120,15 +130,17 @@ class Customer extends Resource
     protected function contactFields()
     {
         return [
-            Text::make('ชื่อผู้ติดต่อ', 'contactname')
+            Text::make(__('Contact name'), 'contactname')
                 ->hideFromIndex(),
-            Text::make('โทรศัพท์', 'phoneno')
+            Text::make(__('Email'), 'email')
+                ->hideFromIndex(),
+            Text::make(__('Phone'), 'phoneno')
                 ->rules('required', 'numeric'),
-            Text::make('เว็บไซต์', 'weburl')
+            Text::make(__('Website Url'), 'weburl')
                 ->hideFromIndex(),
-            Text::make('Facebook', 'facebook')
+            Text::make(__('Facebook'), 'facebook')
                 ->hideFromIndex(),
-            Text::make('Line', 'line')
+            Text::make(__('Line'), 'line')
                 ->hideFromIndex(),
 
         ];
@@ -142,27 +154,32 @@ class Customer extends Resource
     {
         return [
 
-            Text::make('ที่อยู่', 'address')->hideFromIndex()
+            Text::make(__('Address'), 'address')->hideFromIndex()
                 ->rules('required'),
-            InputSubDistrict::make('ตำบล/แขวง', 'sub_district')
+            InputSubDistrict::make(__('Sub District'), 'sub_district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('district')
+                ->rules('required')
                 ->hideFromIndex(),
-            InputDistrict::make('อำเภอ/เขต', 'district')
+            InputDistrict::make(__('District'), 'district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('amphoe')
                 ->sortable()
-                ->rules('required'),
-            InputProvince::make('จังหวัด', 'province')
+                ->rules('required')
+                ->hideFromIndex(),
+            InputProvince::make(__('Province'), 'province')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('province')
                 ->sortable()
-                ->rules('required'),
-            InputPostalCode::make('รหัสไปรษณีย์', 'postal_code')
+                ->rules('required')
+                ->hideFromIndex(),
+            InputPostalCode::make(__('Postal Code'), 'postal_code')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('zipcode')
+                ->rules('required')
                 ->hideFromIndex(),
-            NovaGoogleMaps::make('ตำแหน่งที่ตั้งบน Google Map', 'location')->setValue($this->location_lat, $this->location_lng)
+
+            NovaGoogleMaps::make(__('Google Map Address'), 'location')->setValue($this->location_lat, $this->location_lng)
                 ->hideFromIndex(),
 
         ];
@@ -175,14 +192,13 @@ class Customer extends Resource
     protected function otherFields()
     {
         return [
-            Image::make('โลโก้', 'logofile')
+            Image::make(__('Logo'), 'logofile')
                 ->hideFromIndex(),
-            Image::make('ภาพหน้าร้าน', 'imagefile')
+            Image::make(__('Image'), 'imagefile')
                 ->hideFromIndex(),
-            Textarea::make('รายละเอียดอื่นๆ', 'description')
+            Textarea::make(__('Other'), 'description')
                 ->hideFromIndex(),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
-                ->onlyOnDetail(),
+
         ];
     }
 

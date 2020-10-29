@@ -143,7 +143,12 @@ class Employee extends Resource
     protected function contactFields()
     {
         return [
-            Text::make(__('Phone'), 'phoneno'),
+            Text::make(__('Email'), 'email')
+                ->hideFromIndex(),
+            Text::make(__('Phone'), 'phoneno')
+                ->rules('required'),
+            Text::make(__('Email'), 'email')
+                ->hideFromIndex(),
             Text::make(__('Line'), 'line')->hideFromIndex(),
             Text::make(__('Facebook'), 'facebook')->hideFromIndex(),
 
