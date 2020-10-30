@@ -5,9 +5,11 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 
 class Parcel extends Resource
 {
@@ -41,6 +43,10 @@ class Parcel extends Resource
     {
         return 'ข้อมูลพัสดุ';
     }
+    public static function singularLabel()
+    {
+        return 'พัสดุ';
+    }
     /**
      * Get the fields displayed by the resource.
      *
@@ -51,25 +57,41 @@ class Parcel extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('ชื่อพัสดุ', 'name')
+            Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('กว้าง(ซม.)', 'width')
+
+            Number::make(__('Width'), 'width')
+                ->step('0.01')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('ยาว(ซม.)', 'length')
+            Number::make(__('Length'), 'length')
+                ->step('0.01')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('สูง(ซม.)', 'height')
+            Number::make(__('Height'), 'height')
+                ->step('0.01')
                 ->sortable()
                 ->rules('required'),
-            Text::make('ขนาด(กว้าง+ยาว+สูง)', function () {
+            Text::make(__('Size'), function () {
                 return $this->width + $this->length + $this->height;
             }),
-            Currency::make('น้ำหนัก(กก.)', 'weight')
-                ->sortable()
-                ->rules('required'),
-            HasMany::make('ราคาจัดส่งพัสดุ', 'serviceprice_items', 'App\Nova\Serviceprice_item'),
+            Number::make(__('Weight'), 'weight')
+                ->step('0.01')
+                ->sortable(),
+
+            HasMany::make(__('Shipping cost'), 'serviceprice_items', 'App\Nova\Serviceprice_item'),
+
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
         ];
     }
 

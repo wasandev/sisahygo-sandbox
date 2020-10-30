@@ -100,7 +100,7 @@ class Product extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make(__('Product service price'), 'productservice_price', 'App\Nova\Productservice_price'),
+            HasMany::make(__('Shipping costs'), 'productservice_price', 'App\Nova\Productservice_price'),
             // BelongsToMany::make('ลูกค้าที่ใช้สินค้านี้', 'customer', 'App\Nova\Customer'),
             // HasMany::make('ค่าขนส่งสินค้าตามลูกค้า', 'customer_product_prices', 'App\Nova\Customer_product_price')
 
@@ -149,7 +149,7 @@ class Product extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\AddProductServicePrice)->showOnTableRow(),
+            (new Actions\AddProductServicePrice),
             //new Actions\AddProductCustomerPrice,
             new DownloadExcel,
 

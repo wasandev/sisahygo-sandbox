@@ -8,6 +8,8 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\DateTime;
 
 class Routeto_branch extends Resource
 {
@@ -39,7 +41,7 @@ class Routeto_branch extends Resource
 
     public static function label()
     {
-        return 'เส้นทางขนส่งระหว่างสาขา';
+        return __('Route to branch');
     }
     /**
      * Get the fields displayed by the resource.
@@ -51,11 +53,22 @@ class Routeto_branch extends Resource
     {
         return [
             ID::make()->sortable(),
-            BelongsTo::make('ต้นทาง', 'branch', 'App\Nova\Branch'),
-            BelongsTo::make('ปลายทาง', 'dest_branch', 'App\Nova\Branch'),
-            Text::make('ชื่อเส้นทาง', 'name'),
-            Currency::make('ระยะทาง(กม.)', 'distance'),
-            HasMany::make('ต้นทุนขนส่งตามเส้นทางระหว่างสาขา', 'routeto_branch_costs', 'App\Nova\Routeto_branch_cost')
+            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch'),
+            BelongsTo::make(__('To branch'), 'dest_branch', 'App\Nova\Branch'),
+            Text::make(__('Name'), 'name'),
+            Number::make(__('Distance'), 'distance')
+                ->step('0.01'),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            HasMany::make(__('Shipping cost data'), 'routeto_branch_costs', 'App\Nova\Routeto_branch_cost')
 
         ];
     }

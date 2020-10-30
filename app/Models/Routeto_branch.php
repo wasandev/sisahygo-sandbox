@@ -24,7 +24,14 @@ class Routeto_branch extends Pivot
     {
         return $this->belongsTo('App\Models\Branch', 'branch_id');
     }
-
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function dest_branch()
     {
         return $this->belongsTo('App\Models\Branch', 'dest_branch_id');

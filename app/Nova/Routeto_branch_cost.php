@@ -8,11 +8,12 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Routeto_branch_cost extends Resource
 {
-    //public static $displayInNavigation = false;
+    public static $displayInNavigation = false;
     public static $group = "5.งานจัดการการขนส่ง";
     public static $priority = 2;
     /**
@@ -40,7 +41,7 @@ class Routeto_branch_cost extends Resource
 
     public static function label()
     {
-        return 'ต้นทุนตามเส้นทางระหว่างสาขา';
+        return __('Shipping cost data');
     }
 
     /**
@@ -53,40 +54,45 @@ class Routeto_branch_cost extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status')
+            Boolean::make(__('Status'), 'status')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('เส้นทางขนส่งระหว่างสาขา', 'routeto_branch', 'App\Nova\Routeto_branch')
+            BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype')
+            BelongsTo::make(__('Car type'), 'cartype', 'App\Nova\Cartype')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
+            BelongsTo::make(__('Car style'), 'carstyle', 'App\Nova\Carstyle')
                 ->sortable()
                 ->rules('required'),
-
-
             Currency::make('ค่าจ้างรถ(กรณีรถร่วม)', 'car_charge')
-
                 ->sortable()
                 ->rules('required'),
             Currency::make('ค่าเที่ยวคนขับ(กรณีรถบริษัท)', 'driver_charge')
-
                 ->sortable()
                 ->rules('required'),
-            Currency::make('ค่าเชื้อเพลิงที่ใช้(บาท)', 'fuel_cost')->format('%.2n')
+            Currency::make('ค่าเชื้อเพลิงที่ใช้(บาท)', 'fuel_cost')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('จำนวนเชื้อเพลิงที่ใช้(ลิตร)', 'fuel_amount')
-
+            Number::make('จำนวนเชื้อเพลิงที่ใช้(ลิตร)', 'fuel_amount')
+                ->step('0.01')
                 ->sortable()
                 ->rules('required')
                 ->hideFromIndex(),
             Number::make('ระยะเวลาขนส่ง(ชม.)', 'timespent')
+                ->step('0.01')
                 ->hideFromIndex(),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
-                ->onlyOndetail(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
         ];
     }
 

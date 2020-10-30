@@ -97,7 +97,7 @@ class Customer extends Resource
             BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
                 ->hideFromIndex()
                 ->showCreateRelationButton(),
-            HasOne::make(__('Assign user'), 'assign_customer', 'App\Nova\User'),
+
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')

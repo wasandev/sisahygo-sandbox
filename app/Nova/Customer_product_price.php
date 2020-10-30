@@ -16,7 +16,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Customer_product_price extends Resource
 {
-    public static $displayInNavigation = false;
+    //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการขาย";
     public static $priority = 8;
     /**
@@ -112,6 +112,7 @@ class Customer_product_price extends Resource
     public function filters(Request $request)
     {
         return [
+            new Filters\Customer,
             new Filters\FromBranch,
             new Filters\Province,
             new Filters\Product,

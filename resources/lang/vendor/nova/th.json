@@ -42,13 +42,13 @@
     "Another user has updated this resource since this page was loaded. Please refresh the page and try again.": "Another user has updated this resource since this page was loaded. Please refresh the page and try again.",
     "Are you sure you want to delete this file?": "ยืนยันการลบไฟล์นี้หรือไม่",
     "Are you sure you want to run this action?": "ต้องการทำรายการ?",
-    "Attach": "เพิ่มเข้า",
-    "Attach & Attach Another": "Attach & Attach Another",
+    "Attach": "กำหนด",
+    "Attach & Attach Another": "กำหนด & กำหนดเพิ่ม",
     "Cancel": "ยกเลิก",
     "Choose": "เลือก",
     "Choose File": "เลือกไฟล์",
     "Choose Type": "เลือกประเภท",
-    "Choose an option": "เลือกตัวเลือก",
+    "Choose an option": "เลือกรายการ",
     "Click to choose": "คลิกเลือก",
     "Reset Filters": "รีเซ็ทการกรอง",
     "Create": "เพิ่ม",
@@ -523,6 +523,7 @@
     "Length": "ยาว(ซม.)",
     "Height": "สูง(ซม.)",
     "Weight": "น้ำหนัก(กก.)",
+    "Size": "ขนาด(ซม.)",
     "Shipping costs": "ข้อมูลค่าขนส่งสินค้า",
     "Shipping cost": "ค่าขนส่งสินค้า",
     "From branch": "จากสาขา",
@@ -532,13 +533,15 @@
     "Used product unit": "ใช้หน่วยนับของสินค้า",
     "Customer shipping cost": "ค่าขนส่งสินค้าตามลูกค้า",
     "Customer addresses": "จุดรับ-ส่งสินค้า",
-    "Customer products": "ข้อมูลสินค้าของลูกค้า"
-
-
-
-
-
-
-
-
+    "Customer products": "ข้อมูลสินค้าของลูกค้า",
+    "Add Customer product shipping cost": "สร้างตารางราคาค่าขนส่งของลูกค้า",
+    "Parcels": "ข้อมูลพัสดุ",
+    "Parcel": "พัสดุ",
+    "Parcels shipping costs": "ข้อมูลค่าขนส่งพัสดุ",
+    "Parcels shipping cost": "ค่าขนส่งพัสดุ",
+    "Service charges": "ข้อมูลค่าบริการอื่นๆ",
+    "Service charge": "ค่าบริการอื่นๆ",
+    "Amount": "จำนวนเงิน",
+    "Distance": "ระยะทาง",
+    "Shipping cost data": "ต้นทุนการขนส่งระหว่างสาขา"
 }

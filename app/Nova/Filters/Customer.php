@@ -5,7 +5,7 @@ namespace App\Nova\Filters;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class Branch extends Filter
+class Customer extends Filter
 {
     /**
      * The filter's component.
@@ -13,7 +13,7 @@ class Branch extends Filter
      * @var string
      */
     public $component = 'select-filter';
-    public $name = 'เลือกสาขา';
+    public $name = 'เลือกลูกค้า';
     /**
      * Apply the filter to the given query.
      *
@@ -24,7 +24,7 @@ class Branch extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('branch_id', $value);
+        return $query->where('customer_id', $value);
     }
 
     /**
@@ -35,7 +35,7 @@ class Branch extends Filter
      */
     public function options(Request $request)
     {
-        $branches = \App\Models\Branch::all();
-        return $branches->pluck('id', 'name')->all();
+        $customers = \App\Models\Customer::all();
+        return $customers->pluck('id', 'name')->all();
     }
 }

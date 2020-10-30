@@ -15,7 +15,14 @@ class Branch_route extends Model
     {
         return $this->belongsTo('App\Models\Branch');
     }
-
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function branch_route_districts()
     {
         return $this->hasMany('App\Models\Branch_route_district');

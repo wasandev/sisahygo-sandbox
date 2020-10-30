@@ -11,6 +11,8 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Serviceprice extends Resource
@@ -44,7 +46,11 @@ class Serviceprice extends Resource
     ];
     public static function label()
     {
-        return 'ค่าขนส่งพัสดุ';
+        return __('Parcels shipping costs');
+    }
+    public static function singularLabel()
+    {
+        return __('Parcels shipping cost');
     }
 
     /**
@@ -60,9 +66,9 @@ class Serviceprice extends Resource
 
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status'),
+            Boolean::make(__('Status'), 'status'),
 
-            Text::make('ชื่อราคา', 'name'),
+            Text::make(__('Name'), 'name'),
             Select::make('เงื่อนไขการคิดราคา', 'pricetypes')
                 ->options([
                     'size' => 'ขนาด(กว้าง+ยาว+สูง)-ซม.',
@@ -76,6 +82,16 @@ class Serviceprice extends Resource
                 ->hideFromIndex(),
             Date::make('วันที่สิ้นสุดการใช้งาน', 'end_date')
                 ->hideFromIndex(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
             HasMany::make('รายการราคา', 'serviceprice_items', 'App\Nova\Serviceprice_item'),
 
         ];

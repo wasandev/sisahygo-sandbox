@@ -5,10 +5,12 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use App\Models\Branch_area;
 use App\Models\Branch_route;
+use Laravel\Nova\Fields\DateTime;
+
 
 
 class Branch_route_district extends Resource
@@ -55,7 +57,7 @@ class Branch_route_district extends Resource
     public function fields(Request $request)
     {
 
-        if ($request->editMode == "create" && !empty($request->viaResource) && !empty($request->viaResourceId) && !empty($request->viaRelationship)) {
+        if ($request->editMode == "create"  && !empty($request->viaResource) && !empty($request->viaResourceId) && !empty($request->viaRelationship)) {
             //$branch_route = Branch_route::where('branch_id', $request->viaResourceId)->pluck('name', 'id');
             $branch_route = Branch_route::find($request->viaResourceId);
             $branch_area = Branch_area::where('branch_id', $branch_route->branch_id)->pluck('district', 'id');
@@ -70,14 +72,15 @@ class Branch_route_district extends Resource
                     ->withMeta(['value' => $branch_route->id])
                     ->hideWhenUpdating()
                     ->readonly(true),
-                Select::make('พื้นที่บริการ', 'branch_area_id')
+                Select::make('อำเภอ', 'branch_area_id')
                     ->options($branch_area)
                     ->onlyOnForms(),
 
-
-                Currency::make('ระยะทาง(กม.)', 'distance'),
+                Number::make('ระยะทาง(กม.)', 'distance')
+                    ->step('0.01'),
             ];
         }
+
         return [
             ID::make()->sortable(),
             BelongsTo::make('เส้นทางขนส่งของสาขา', 'branch_route', 'App\Nova\Branch_route')
@@ -86,7 +89,18 @@ class Branch_route_district extends Resource
             BelongsTo::make('อำเภอ', 'branch_area', 'App\Nova\Branch_area')
                 ->sortable(),
 
-            Currency::make('ระยะทางจากสาขา(กม.)', 'distance'),
+            Number::make('ระยะทางจากสาขา(กม.)', 'distance')
+                ->step('0.01'),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
         ];
     }
 

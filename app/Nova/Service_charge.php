@@ -9,17 +9,19 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\DateTime;
 
 class Service_charge extends Resource
 {
     public static $group = "4.งานด้านการขาย";
+    public static $priority = 11;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
     public static $model = 'App\Models\Service_charge';
-    public static $priority = 11;
+
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -39,7 +41,11 @@ class Service_charge extends Resource
 
     public static function label()
     {
-        return 'ค่าบริการอื่นๆ';
+        return __('Service charges');
+    }
+    public static function singularLabel()
+    {
+        return __('Service charge');
     }
 
     /**
@@ -52,16 +58,24 @@ class Service_charge extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status')
+            Boolean::make(__('Status'), 'status')
                 ->sortable()
                 ->rules('required'),
-            Text::make('ชื่อบริการ', 'name')
+            Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('ค่าบริการ/ครั้ง', 'amount')
+            Currency::make(__('Amount'), 'amount')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
         ];
     }

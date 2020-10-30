@@ -11,8 +11,8 @@ class RoutetoBranchObserver
         $routeto_branch->user_id = auth()->user()->id;
     }
 
-    public function saving(Routeto_branch $routeto_branch)
+    public function updating(Routeto_branch $routeto_branch)
     {
-        $routeto_branch->user_id = auth()->user()->id;
+        $routeto_branch->updated_by = auth()->user()->id;
     }
 }

@@ -13,7 +13,7 @@ class FromBranch extends Filter
      * @var string
      */
     public $component = 'select-filter';
-    public $name = 'ตามสาขาต้นทาง';
+    public $name = 'จากสาขา';
 
     /**
      * Apply the filter to the given query.

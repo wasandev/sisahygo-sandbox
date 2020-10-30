@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Select;
 use App\Models\Tenant\Serviceprice;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
+use Laravel\Nova\Fields\DateTime;
 
 class Serviceprice_item extends Resource
 {
@@ -41,7 +42,11 @@ class Serviceprice_item extends Resource
 
     public static function label()
     {
-        return 'ตารางราคา';
+        return 'ข้อมูลตารางราคาขนส่งพัสดุ';
+    }
+    public static function singularLabel()
+    {
+        return 'ตารางราคาขนส่งพัสดุ';
     }
     /**
      * Get the fields displayed by the resource.
@@ -61,22 +66,32 @@ class Serviceprice_item extends Resource
             BelongsTo::make('ชื่อพัสดุ', 'parcel', 'App\Nova\Parcel')
                 ->rules('required')
                 ->sortable(),
-            BelongsTo::make('สาขาต้นทาง', 'from_branch', 'App\Nova\Branch')
+            BelongsTo::make(__('From branch'), 'from_branch', 'App\Nova\Branch')
                 ->rules('required')
                 ->sortable(),
-            InputDistrict::make('ไปอำเภอ/เขต', 'district')
+            InputDistrict::make(__('To district'), 'district')
                 ->withValues(['amphoe', 'province'])
                 ->fromValue('amphoe')
                 ->sortable()
                 ->rules('required'),
-            InputProvince::make('ไปจังหวัด', 'province')
+            InputProvince::make(__('To province'), 'province')
                 ->withValues(['amphoe', 'province'])
                 ->fromValue('province')
                 ->sortable()
                 ->rules('required'),
-            Currency::make('ค่าขนส่ง', 'price')
+            Currency::make(__('Shipping cost'), 'price')
                 ->rules('required')
                 ->sortable(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
         ];
     }
 

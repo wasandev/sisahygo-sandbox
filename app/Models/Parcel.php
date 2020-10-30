@@ -15,7 +15,10 @@ class Parcel extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function serviceprice_items()
     {
         return $this->hasMany('App\Models\Serviceprice_item');

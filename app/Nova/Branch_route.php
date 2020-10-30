@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\DateTime;
 
 class Branch_route extends Resource
 {
@@ -61,8 +62,18 @@ class Branch_route extends Resource
                 ->sortable(),
             Text::make('ชื่อเส้นทาง', 'name')
                 ->sortable(),
-
-            Currency::make('ระยะทางจากสาขา(กม.)', 'distance'),
+            Number::make('ระยะทางจากสาขา(กม.)', 'distance')
+                ->step('0.01'),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
             HasMany::make('อำเภอในเส้นทาง', 'branch_route_districts', 'App\Nova\Branch_route_district'),
             HasMany::make('ต้นทุนตามเส้นทางของสาขา', 'branch_route_costs', 'App\Nova\Branch_route_cost')
 

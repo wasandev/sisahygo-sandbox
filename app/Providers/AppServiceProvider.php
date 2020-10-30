@@ -12,42 +12,61 @@ use App\Observers\UserObserver;
 // use App\Observers\CommentObserver;
 use App\Models\Customer;
 use App\Observers\CustomerObserver;
+
 use App\Models\Tranjob;
 use App\Observers\TranjobObserver;
+
 use App\Models\CompanyProfile;
 use App\Observers\CompanyProfileObserver;
+
 use App\Models\Address;
 use App\Observers\AddressObserver;
+
 use App\Models\Branch;
 use App\Observers\BranchObserver;
+
 use App\Models\Branch_area;
 use App\Observers\BranchAreaObserver;
+
 use App\Models\Businesstype;
 use App\Observers\BusinesstypeObserver;
+
 use App\Models\Car_expense;
 use App\Observers\Car_expenseObserver;
+
 use App\Models\Car;
 use App\Observers\CarObserver;
+
 use App\Models\Carstyle;
 use App\Observers\CarstyleObserver;
+
 use App\Models\Cartype;
 use App\Observers\CartypeObserver;
+
 use App\Models\Category;
 use App\Observers\CategoryObserver;
+
 use App\Models\Company_expense;
 use App\Observers\Company_expenseObserver;
+
 use App\Models\Department;
 use App\Observers\DepartmentObserver;
+
 use App\Models\Driving_license_type;
 use App\Observers\Driving_license_typeObserver;
+
 use App\Models\Employee;
 use App\Observers\EmployeeObserver;
+
 use App\Models\Position;
 use App\Observers\PositionObserver;
+
 use App\Models\Product_image;
 use App\Observers\Product_imageObserver;
+
 use App\Models\Product_style;
 use App\Observers\Product_styleObserver;
+
 use App\Models\Product;
 use App\Observers\ProductObserver;
 
@@ -56,6 +75,9 @@ use App\Observers\ProductServicePriceObserver;
 
 use App\Models\Routeto_branch;
 use App\Observers\RoutetoBranchObserver;
+
+use App\Models\Routeto_branch_cost;
+use App\Observers\RoutetoBranchCostObserver;
 
 use App\Models\Tiretype;
 use App\Observers\TiretypeObserver;
@@ -69,8 +91,20 @@ use App\Observers\VendorObserver;
 use App\Models\Branch_route;
 use App\Observers\BranchRouteObserver;
 
+use App\Models\Branch_route_district;
+use App\Observers\BranchRouteDistrictObserver;
+
+use App\Models\Branch_route_cost;
+use App\Observers\BranchRouteCostObserver;
+
 use App\Models\Parcel;
 use App\Observers\ParcelObserver;
+
+use App\Models\Serviceprice;
+use App\Observers\ServicepriceObserver;
+
+use App\Models\Serviceprice_item;
+use App\Observers\Serviceprice_itemObserver;
 
 use App\Models\Charter_route;
 use App\Observers\CharterRouteObserver;
@@ -86,6 +120,9 @@ use App\Observers\CharterJobObserver;
 
 use App\Models\Customer_product_price;
 use App\Observers\CustomerShippingCostObserver;
+
+use App\Models\Service_charge;
+use App\Observers\ServiceChargeObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -116,7 +153,10 @@ class AppServiceProvider extends ServiceProvider
         Branch::observe(BranchObserver::class);
         Branch_area::observe(BranchAreaObserver::class);
         Branch_route::observe(BranchRouteObserver::class);
+        Branch_route_district::observe(BranchRouteDistrictObserver::class);
+        Branch_route_cost::observe(BranchRouteCostObserver::class);
         Routeto_branch::observe(RoutetoBranchObserver::class);
+        Routeto_branch_cost::observe(RoutetoBranchCostObserver::class);
         Businesstype::observe(BusinesstypeObserver::class);
         Car_expense::observe(Car_expenseObserver::class);
         Car::observe(CarObserver::class);
@@ -136,6 +176,9 @@ class AppServiceProvider extends ServiceProvider
         Unit::observe(UnitObserver::class);
         Vendor::observe(VendorObserver::class);
         Parcel::observe(ParcelObserver::class);
+        Serviceprice::observe(ServicepriceObserver::class);
+        Serviceprice_item::observe(Serviceprice_itemObserver::class);
+        Service_charge::observe(ServiceChargeObserver::class);
         Charter_route::observe(CharterRouteObserver::class);
         Charter_price::observe(CharterPriceObserver::class);
         Quotation::observe(QuotationObserver::class);
