@@ -17,6 +17,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Number;
 
 class Branch extends Resource
 {
@@ -96,15 +97,16 @@ class Branch extends Resource
 
             new Panel(__('Address'), $this->addressFields()),
             HasMany::make(__('Branch Areas'), 'branch_areas', 'App\Nova\Branch_area'),
-            HasMany::make(__('Branch Routes'), 'branch_routes', 'App\Nova\Branch_route'),
             BelongsToMany::make(__('Route to branch'), 'routeto', 'App\Nova\Branch')
                 ->fields(function () {
                     return [
                         Text::make('ชื่อเส้นทาง', 'name'),
-                        Currency::make('ระยะทาง(กม.)', 'distance'),
+                        Number::make('ระยะทาง(กม.)', 'distance')->step('0.01'),
                     ];
                 }),
-            BelongsTo::make(__('User'), 'user', 'App\Nova\User')
+            HasMany::make(__('Branch Routes'), 'branch_routes', 'App\Nova\Branch_route'),
+
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
                 ->format('DD/MM/YYYY hh:mm')
