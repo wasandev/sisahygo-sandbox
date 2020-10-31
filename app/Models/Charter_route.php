@@ -15,6 +15,10 @@ class Charter_route extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function charter_prices()
     {
         return $this->hasMany('App\Models\Charter_price');

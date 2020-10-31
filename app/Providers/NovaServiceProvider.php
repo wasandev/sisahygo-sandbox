@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Gate;
 use App\Nova\Dashboards\Sisahygo;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
-
+use App\Nova\Metrics\CustomersPerDay;
+use App\Nova\Metrics\NewCustomers;
+use App\Nova\Metrics\CharterJobsPerDay;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -58,7 +60,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Sisahygo,
+            (new CustomersPerDay)->width('1/3'),
+            (new CharterJobsPerDay)->width('1/3'),
+            (new NewCustomers)->width('1/3'),
         ];
     }
 
@@ -69,7 +73,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        return [];
+        return [
+            //new Sisahygo,
+        ];
     }
 
     /**

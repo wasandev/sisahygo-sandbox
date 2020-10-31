@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\DateTime;
 use Wasandev\InputThaiAddress\InputProvince;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -59,31 +60,39 @@ class Charter_route extends Resource
 
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status')
+            Boolean::make(__('Status'), 'status')
                 ->sortable(),
-            Text::make('ชื่อเส้นทาง', 'name')
+            Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
             //Belongsto::make('สาขาต้นทาง', 'branch', 'App\Nova\Branch'),
-            Belongsto::make('อำเภอต้นทาง', 'branch_area', 'App\Nova\Branch_area')
+            Belongsto::make(__('From district'), 'branch_area', 'App\Nova\Branch_area')
                 ->searchable(),
 
-            InputDistrict::make('อำเภอ/เขต ปลายทาง', 'to_district')
+            InputDistrict::make(__('To district'), 'to_district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('amphoe')
                 ->sortable()
                 ->rules('required'),
-            InputProvince::make('จังหวัดปลายทาง', 'to_province')
+            InputProvince::make(__('To province'), 'to_province')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('province')
                 ->sortable()
                 ->rules('required'),
 
 
-            Currency::make('ระยะทาง(กม.)', 'distance')
+            Currency::make(__('Distance'), 'distance')
                 ->sortable()
                 ->rules('required'),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             HasMany::make('ต้นทุนขนส่งแบบเหมาคัน', 'charter_route_costs', 'App\Nova\Charter_route_cost'),
             HasMany::make('ราคาค่าขนส่งแบบเหมาคัน', 'charter_prices', 'App\Nova\Charter_price'),
