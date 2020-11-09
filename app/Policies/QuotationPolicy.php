@@ -10,7 +10,10 @@ class QuotationPolicy
 {
     use HandlesAuthorization;
 
-
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view quotations');
+    }
     public function view(User $user, Quotation $quotation)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('view quotations');

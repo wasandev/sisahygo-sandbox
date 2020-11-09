@@ -13,24 +13,19 @@ use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Wasandev\InputThaiAddress\InputPostalCode;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Branch extends Resource
 {
-
-
 
     //public static $displayInNavigation = false;
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
     public static $priority = 2;
     //public static $showColumnBorders = true;
-
-
-
 
     //public static $subGroup = "ข้อมูลบริษัท";
     /**
@@ -78,16 +73,15 @@ class Branch extends Resource
 
         return [
 
-
             ID::make()->sortable(),
+            Text::make(__('Branch Code'), 'code')
+                ->rules('required')
+                ->sortable(),
             Text::make(__('Name'), 'name')->sortable()
                 ->rules('required'),
-            Text::make(__('Branch Code'), 'code')
-                ->hideFromIndex()
-                ->rules('required'),
+
             Text::make(__('Phone'), 'phoneno')
-                ->rules('required')
-                ->hideFromIndex(),
+                ->rules('required'),
             Select::make(__('Branch Type'), 'type')->options([
                 'owner' => 'บริษัทเป็นเจ้าของ',
                 'pathner' => 'ร่วมบริการ'
@@ -109,12 +103,12 @@ class Branch extends Resource
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Updated At'), 'updated_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
 
         ];
@@ -199,6 +193,10 @@ class Branch extends Resource
     {
         return [
             new Actions\AddBranchArea,
+            (new Actions\ImportBranches)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
+            (new DownloadExcel)->allFields()->withHeadings(),
         ];
     }
 }

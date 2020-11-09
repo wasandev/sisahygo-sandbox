@@ -8,11 +8,12 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Unit extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 3;
 
     /**
@@ -111,6 +112,11 @@ class Unit extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\ImportUnits)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
+        ];
     }
 }

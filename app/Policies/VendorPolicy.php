@@ -10,7 +10,10 @@ class VendorPolicy
 {
     use HandlesAuthorization;
 
-
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view vendors');
+    }
     public function view(User $user, Vendor $vendor)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('view vendors');

@@ -59,12 +59,12 @@ class Position extends Resource
             BelongsTo::make(__('User'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Updated At'), 'updated_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
         ];
     }

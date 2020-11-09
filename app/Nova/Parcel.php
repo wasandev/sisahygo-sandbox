@@ -10,11 +10,14 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+
+
 
 class Parcel extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 9;
     /**
      * The model the resource corresponds to.
@@ -136,6 +139,8 @@ class Parcel extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->allFields()->withHeadings(),
+        ];
     }
 }

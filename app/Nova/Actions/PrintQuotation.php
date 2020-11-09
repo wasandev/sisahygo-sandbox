@@ -35,10 +35,10 @@ class PrintQuotation extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $quotationController =  new \App\Http\Controllers\Tenant\QuotationController();
+            $quotationController =  new \App\Http\Controllers\QuotationController();
             $path = $quotationController->makePDF($model->id);
 
-            return Action::openInNewTab(Storage::url('media/' . $model->quotation_no . '.pdf'));
+            return Action::openInNewTab(Storage::url('documents/' . $model->quotation_no . '.pdf'));
         }
     }
 

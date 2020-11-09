@@ -30,6 +30,10 @@ class Charter_job extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function employee()
     {
         return $this->belongsTo('App\Models\Employee');

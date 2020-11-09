@@ -10,6 +10,10 @@ class EmployeePolicy
 {
     use HandlesAuthorization;
 
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view employees');
+    }
     public function view(User $user, Employee $employee)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('view employees');

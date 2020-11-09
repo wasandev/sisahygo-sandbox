@@ -14,7 +14,7 @@ class AddPaymenttypeAndCredittermToCustomersTable extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->enum('paymenttype', ['เงินสด', 'วางบิล'])->default('เงินสด');
+            $table->enum('paymenttype', ['H', 'E', 'Y'])->default('H');
             $table->integer('creditterm')->nullable()->default(0);
         });
     }

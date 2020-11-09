@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-use App\Models\Tenant\Serviceprice as AppServiceprice;
+
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
@@ -17,7 +17,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Serviceprice extends Resource
 {
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 10;
 
 

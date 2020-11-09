@@ -10,7 +10,10 @@ class UnitPolicy
 {
     use HandlesAuthorization;
 
-
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view units');
+    }
     public function view(User $user, Unit $unit)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('view units');

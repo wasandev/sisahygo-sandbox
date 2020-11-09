@@ -10,6 +10,10 @@ class PositionPolicy
 {
     use HandlesAuthorization;
 
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view positions');
+    }
 
     public function view(User $user, Position $position)
     {

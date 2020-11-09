@@ -6,14 +6,15 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
-use SebastianBergmann\CodeCoverage\Filter;
+//use Wasandev\InputThaiAddress\InputSubDistrict;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Productservice_price extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 7;
     /**
      * The model the resource corresponds to.
@@ -37,7 +38,12 @@ class Productservice_price extends Resource
     public static $search = [
         'id', 'district', 'province'
     ];
-
+    public static $searchRelations = [
+        'product' => ['name'],
+    ];
+    public static $globalSearchRelations = [
+        'product' => ['name'],
+    ];
     public static function label()
     {
         return __('Shipping costs');
@@ -62,6 +68,10 @@ class Productservice_price extends Resource
                 ->searchable(),
             BelongsTo::make(__('From branch'), 'from_branch', 'App\Nova\Branch')
                 ->sortable(),
+            // InputSubDistrict::make(__('Sub District'), 'sub_district')
+            //     ->withValues(['district', 'amphoe', 'province', 'zipcode'])
+            //     ->fromValue('district')
+            //     ->rules('required'),
             InputDistrict::make(__('To district'), 'district')
                 ->withValues(['amphoe', 'province'])
                 ->fromValue('amphoe')
@@ -132,6 +142,8 @@ class Productservice_price extends Resource
         return [
             new Actions\UpdateProductServicePrice,
             new Actions\UpdateProductServiceUnit,
+            (new DownloadExcel)->allFields()->withHeadings(),
+
         ];
     }
 }

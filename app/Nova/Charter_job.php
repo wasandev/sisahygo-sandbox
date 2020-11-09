@@ -78,6 +78,7 @@ class Charter_job extends Resource
                 ->searchable(),
             Select::make('เงื่อนไขการชำระเงิน', 'paymenttype')->options([
                 'เงินสด' => 'เงินสด',
+                'เงินโอน' => 'เงินโอน',
                 'วางบิล' => 'วางบิล',
             ])->displayUsingLabels()
 
@@ -107,8 +108,15 @@ class Charter_job extends Resource
             DateTime::make('วันที่แก้ไขล่าสุด', 'updated_at')
 
                 ->onlyOnDetail(),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
-
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             BelongsTo::make('เลือกราคาค่าขนส่งเหมาคัน', 'charter_price', 'App\Nova\Charter_price')
                 ->hideFromIndex()

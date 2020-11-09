@@ -9,12 +9,13 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Product_style extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
-    public static $priority = 4;
+    public static $group = "4.งานด้านการตลาด";
+    public static $priority = 5;
 
 
     /**
@@ -120,6 +121,11 @@ class Product_style extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\ImportProduct_styles)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
+        ];
     }
 }

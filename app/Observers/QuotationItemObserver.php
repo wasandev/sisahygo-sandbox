@@ -27,7 +27,10 @@ class QuotationItemObserver
             ]);
     }
 
-
+    public function updating(Quotation_item $quotation_item)
+    {
+        $quotation_item->updated_by = auth()->user()->id;
+    }
 
     public function updated(Quotation_item $quotation_item)
     {

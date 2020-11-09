@@ -21,11 +21,12 @@ use Wasandev\InputThaiAddress\InputPostalCode;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Datetime;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Customer extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 2;
 
 
@@ -70,14 +71,16 @@ class Customer extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make(__('Status'), 'status')
-                ->hideWhenCreating(),
+            Boolean::make(__('Status'), 'status'),
+            Text::make(__('Customer code'), 'customer_code')
+                ->readonly(),
+
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required', 'max:250'),
             Text::make(__('Tax ID'), 'taxid')
-                ->hideFromIndex()
-                ->rules('required', 'digits:13', 'numeric'),
+                ->hideFromIndex(),
+            //->rules('digits:13', 'numeric'),
             Select::make(__('Type'), 'type')->options([
                 'company' => 'นิติบุคคล',
                 'person' => 'บุคคลธรรมดา'
@@ -86,11 +89,12 @@ class Customer extends Resource
                 ->hideFromIndex(),
 
             Select::make(__('Payment type'), 'paymenttype')->options([
-                'เงินสด' => 'เงินสด',
-                'วางบิล' => 'วางบิล'
+                'H' => 'เงินสดต้นทาง',
+                'E' => 'เงินสดปลายทาง',
+                'Y' => 'วางบิล'
             ])
                 ->hideFromIndex()
-                ->withMeta(['value' => 'เงินสด']),
+                ->withMeta(['value' => 'H']),
             Number::make(__('Credit term'), 'creditterm')
                 ->withMeta(['value' => 0])
                 ->hideFromIndex(),
@@ -247,7 +251,16 @@ class Customer extends Resource
     {
 
         return [
-            new Actions\AddCustomerProductPrice,
+            (new Actions\AddCustomerProductPrice)
+                ->canSee(function ($request) {
+                    return ($request->user()->hasPermissionTo('create productservice_prices'));
+                }),
+            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\ImportCustomers)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
+
+
         ];
     }
 }

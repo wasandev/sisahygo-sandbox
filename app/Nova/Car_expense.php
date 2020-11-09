@@ -5,6 +5,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -38,7 +39,11 @@ class Car_expense extends Resource
     ];
     public static function label()
     {
-        return 'หมวดค่าใช้จ่ายรถ';
+        return __('Car Expenses');
+    }
+    public static function singularLabel()
+    {
+        return __('Car Expense');
     }
     /**
      * Get the fields displayed by the resource.
@@ -51,7 +56,15 @@ class Car_expense extends Resource
         return [
             ID::make()->sortable(),
             Text::make('หมวดค่าใช้จ่ายรถ', 'name'),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
         ];
     }

@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Charter_price extends Resource
@@ -43,7 +44,7 @@ class Charter_price extends Resource
     ];
     public static function label()
     {
-        return 'ค่าขนส่งแบบเหมาคัน';
+        return 'ราคาขนส่งแบบเหมาคัน';
     }
     /**
      * Get the fields displayed by the resource.
@@ -55,35 +56,66 @@ class Charter_price extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status')
+            Boolean::make(__('Status'), 'status')
                 ->sortable()
                 ->rules('required'),
             BelongsTo::make('เส้นทางขนส่ง', 'charter_route', 'App\Nova\Charter_route')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->showCreateRelationButton(),
             BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->showCreateRelationButton(),
             BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->showCreateRelationButton(),
 
             Currency::make('ค่าขนส่ง/เที่ยว', 'price')
                 ->sortable()
-                ->format('%.2n')
                 ->rules('required'),
 
             Number::make('จำนวนจุดรับส่งไม่เกิน', 'pickuppoint')
+                ->step('0.01')
                 ->withMeta(['value' => 2]),
 
             Currency::make('จุดรับส่งเกินที่กำหนดคิดค่าบริการจุดละ', 'overpointcharge')
-                ->format('%.2n')
                 ->sortable()
                 ->rules('required')
                 ->hideFromIndex()
                 ->withMeta(['value' => 500]),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
-                ->onlyOndetail(),
+            Currency::make('ค่าจ้างรถ(กรณีรถร่วม)', 'car_charge')
+                ->sortable()
+                ->rules('required')
+                ->hideFromIndex(),
+            Currency::make('ค่าเที่ยวคนขับ(กรณีรถบริษัท)', 'driver_charge')
+                ->sortable()
+                ->rules('required')
+                ->hideFromIndex(),
+            Currency::make('ค่าเชื้อเพลิงที่ใช้', 'fuel_cost')
+                ->sortable()
+                ->rules('required')
+                ->hideFromIndex(),
+            Number::make('จำนวนเชื้อเพลิงที่ใช้(ลิตร)', 'fuel_amount')
+                ->step('0.01')
+                ->sortable()
+                ->rules('required')
+                ->hideFromIndex(),
+            Number::make('ระยะเวลาขนส่ง(ชม.)', 'timespent')
+                ->hideFromIndex()
+                ->step('0.01'),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+
         ];
     }
 

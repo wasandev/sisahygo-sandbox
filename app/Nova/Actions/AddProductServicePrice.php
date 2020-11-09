@@ -2,6 +2,8 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\SubDistrict;
+use App\Models\District;
 use App\Models\Branch_area;
 use App\Models\Branch;
 use App\Models\Unit;
@@ -17,6 +19,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Number;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 
 class AddProductServicePrice extends Action
 {
@@ -74,6 +77,7 @@ class AddProductServicePrice extends Action
 
 
         $branches  = Branch::all()->pluck('name', 'id');
+
         $units = Unit::all()->pluck('name', 'id');
 
         return [
@@ -84,10 +88,15 @@ class AddProductServicePrice extends Action
             Select::make(__('To branch'), 'to_branch_id')
                 ->options($branches)
                 ->displayUsingLabels(),
-            Boolean::make(__('Used product unit'), 'product_unit'),
-            Select::make(__('Unit'), 'unit')
-                ->options($units)
-                ->displayUsingLabels(),
+
+            Boolean::make(__('Used product unit'), 'product_unit')
+                ->default(true),
+            NovaDependencyContainer::make([
+                Select::make(__('Unit'), 'unit')
+                    ->options($units)
+                    ->displayUsingLabels()
+                    ->searchable(),
+            ])->dependsOn('product_unit', false),
             Number::make(__('Shipping cost'), 'item_price')
                 ->step('0.01'),
 

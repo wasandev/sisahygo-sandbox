@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Number;
 use Wasandev\InputThaiAddress\InputProvince;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -66,8 +67,8 @@ class Charter_route extends Resource
                 ->sortable()
                 ->rules('required'),
             //Belongsto::make('สาขาต้นทาง', 'branch', 'App\Nova\Branch'),
-            Belongsto::make(__('From district'), 'branch_area', 'App\Nova\Branch_area')
-                ->searchable(),
+            Belongsto::make(__('From branch area'), 'branch_area', 'App\Nova\Branch_area')
+                ->showCreateRelationButton(),
 
             InputDistrict::make(__('To district'), 'to_district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
@@ -80,8 +81,8 @@ class Charter_route extends Resource
                 ->sortable()
                 ->rules('required'),
 
-
-            Currency::make(__('Distance'), 'distance')
+            Number::make(__('Distance'), 'distance')
+                ->step('0.01')
                 ->sortable()
                 ->rules('required'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
@@ -94,7 +95,7 @@ class Charter_route extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make('ต้นทุนขนส่งแบบเหมาคัน', 'charter_route_costs', 'App\Nova\Charter_route_cost'),
+            //HasMany::make('ต้นทุนขนส่งแบบเหมาคัน', 'charter_route_costs', 'App\Nova\Charter_route_cost'),
             HasMany::make('ราคาค่าขนส่งแบบเหมาคัน', 'charter_prices', 'App\Nova\Charter_price'),
         ];
     }

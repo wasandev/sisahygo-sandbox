@@ -13,13 +13,10 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-
-
-
 class Product extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 6;
 
     //public static $displayInNavigation = false;
@@ -69,9 +66,11 @@ class Product extends Resource
                 ->sortable(),
             BelongsTo::make(__('Category'), 'category', 'App\Nova\Category')
                 ->sortable()
+                ->nullable()
                 ->showCreateRelationButton(),
             BelongsTo::make(__('Product style'), 'product_style', 'App\Nova\Product_style')
                 ->sortable()
+                ->nullable()
                 ->showCreateRelationButton(),
             Text::make(__('Name'), 'name')
                 ->sortable()
@@ -89,6 +88,7 @@ class Product extends Resource
                 ->step('0.01')
                 ->hideFromIndex(),
             BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
+                ->nullable()
                 ->showCreateRelationButton(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -151,7 +151,10 @@ class Product extends Resource
         return [
             (new Actions\AddProductServicePrice),
             //new Actions\AddProductCustomerPrice,
-            new DownloadExcel,
+            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\ImportProducts)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
 
 
         ];

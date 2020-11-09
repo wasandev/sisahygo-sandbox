@@ -37,7 +37,10 @@ class Quotation_item extends Model
     {
         return $this->belongsTo('App\Models\Unit');
     }
-
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function cartype()
     {
         return $this->belongsTo('App\Models\Cartype');

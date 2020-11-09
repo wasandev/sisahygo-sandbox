@@ -47,6 +47,6 @@ class CreateRoutetoBranchTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('routeto_branch_routes');
+        Schema::dropIfExists('routeto_branch');
     }
 }

@@ -10,7 +10,10 @@ class CategoryPolicy
 {
     use HandlesAuthorization;
 
-
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view categories');
+    }
     public function view(User $user, Category $category)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('view categories');

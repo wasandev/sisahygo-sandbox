@@ -39,6 +39,7 @@ class CharterJobObserver
 
         $charter_job->sub_total = $charter_price->price;
         $charter_job->total = $charter_price->price - $charter_job->discount;
+        $charter_job->updated_by = auth()->user()->id;
     }
     public function updated(Charter_job $charter_job)
     {

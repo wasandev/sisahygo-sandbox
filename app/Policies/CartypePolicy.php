@@ -9,6 +9,10 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class CartypePolicy
 {
     use HandlesAuthorization;
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view cartypes');
+    }
 
 
     public function view(User $user, Cartype $cartype)

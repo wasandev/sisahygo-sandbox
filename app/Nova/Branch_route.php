@@ -42,7 +42,7 @@ class Branch_route extends Resource
 
     public static function label()
     {
-        return 'เส้นทางขนส่งภายในสาขา';
+        return 'เส้นทางขนส่งภายในสาขา(โซน)';
     }
 
 
@@ -60,9 +60,9 @@ class Branch_route extends Resource
             ID::make()->sortable(),
             BelongsTo::make('สาขา', 'branch', 'App\Nova\Branch')
                 ->sortable(),
-            Text::make('ชื่อเส้นทาง', 'name')
+            Text::make('ชื่อเส้นทาง(โซน)', 'name')
                 ->sortable(),
-            Number::make('ระยะทางจากสาขา(กม.)', 'distance')
+            Number::make('ระยะทางรวมจากสาขา(กม.)', 'distance')
                 ->step('0.01'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),

@@ -38,7 +38,7 @@ class PrintCharterJob extends Action
             $charterjobController =  new \App\Http\Controllers\CharterJobController();
             $path = $charterjobController->makePDF($model->id);
 
-            return Action::openInNewTab(Storage::url('media/' . $model->job_no . '.pdf'));
+            return Action::openInNewTab(Storage::url('documents/' . $model->job_no . '.pdf'));
         }
     }
 

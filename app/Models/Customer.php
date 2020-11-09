@@ -13,6 +13,7 @@ class Customer extends Model
         'status',
         'type',
         'user_id',
+        'customer_code',
         'taxid',
         'email',
         'paymenttype',

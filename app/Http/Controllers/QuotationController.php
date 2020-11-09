@@ -15,7 +15,7 @@ class QuotationController extends Controller
     public function __construct()
     {
 
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth']);
     }
 
     public function preview($quotation)
@@ -23,7 +23,7 @@ class QuotationController extends Controller
 
         $company = CompanyProfile::find(1);
         $quotation = Quotation::find($quotation);
-        return view('tenants.printquotation', compact('quotation', 'company'));
+        return view('documents.printquotation', compact('quotation', 'company'));
     }
 
 
@@ -34,12 +34,12 @@ class QuotationController extends Controller
         $quotation = Quotation::find($quotation);
 
 
-        //$pdf = PDF::loadView('tenants.printquotation', compact('quotation', 'company'));
+        $pdf = PDF::loadView('documents.printquotation', compact('quotation', 'company'));
 
-        $path =  Storage::disk('tenant')->getAdapter()->getPathPrefix() . 'media/' . $quotation->quotation_no . '.pdf';
-        //$pdf->save($path);
-        // //$pdf->stream($path);
-
-        return $path;
+        $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $quotation->quotation_no . '.pdf';
+        $pdf->save($path);
+        $pdf->stream($path);
+        return $pdf->download($path);
+        //return $path;
     }
 }

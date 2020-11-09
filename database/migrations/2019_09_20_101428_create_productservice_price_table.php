@@ -17,8 +17,8 @@ class CreateProductservicePriceTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned();
             $table->integer('from_branch_id')->unsigned();
-            $table->string('district')->nullable();
-            $table->string('province')->nullable();
+            $table->string('district', 150);
+            $table->string('province', 150);
             $table->decimal('price', 10, 4)->default(0);
             $table->integer('unit_id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();

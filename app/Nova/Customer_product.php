@@ -9,7 +9,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Customer_product extends Resource
 {
     public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     /**
      * The model the resource corresponds to.
      *

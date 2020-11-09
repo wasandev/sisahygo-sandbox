@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware('web', 'auth')
+    ->namespace('\\App\\Http\\Controllers\\')
+    ->group(function () {
+
+
+
+        Route::get('/quotation/preview/{id}', 'QuotationController@preview')->name('preview'); //For test
+        Route::get('/quotation/makepdf/{id}', 'QuotationController@makePDF')->name('makepdf');
+        Route::get('/charterjob/preview/{id}', 'CharterJobController@preview')->name('preview'); //for test
+        Route::get('/charterjob/makepdf/{id}', 'CharterJobController@makePDF')->name('makepdf');
+    });

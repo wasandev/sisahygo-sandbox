@@ -8,15 +8,16 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
-use App\Models\Tenant\Serviceprice;
+use App\Models\Serviceprice;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Laravel\Nova\Fields\DateTime;
 
 class Serviceprice_item extends Resource
 {
-    public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    //public static $displayInNavigation = false;
+    public static $group = "4.งานด้านการตลาด";
+    public static $priority = 11;
     /**
      * The model the resource corresponds to.
      *
@@ -42,11 +43,11 @@ class Serviceprice_item extends Resource
 
     public static function label()
     {
-        return 'ข้อมูลตารางราคาขนส่งพัสดุ';
+        return __('Parcels shipping prices');
     }
     public static function singularLabel()
     {
-        return 'ตารางราคาขนส่งพัสดุ';
+        return __('Parcels shipping price');
     }
     /**
      * Get the fields displayed by the resource.

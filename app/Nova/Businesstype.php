@@ -8,12 +8,14 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Businesstype extends Resource
 {
 
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 1;
 
 
@@ -68,13 +70,14 @@ class Businesstype extends Resource
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Updated At'), 'updated_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            HasMany::make(__('Customer'), 'customers', 'App\Nova\Customer'),
         ];
     }
 
@@ -119,6 +122,11 @@ class Businesstype extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
+        ];
     }
 }

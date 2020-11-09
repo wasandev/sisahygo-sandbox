@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Charter_job;
 use App\Models\CompanyProfile;
-//use PDF;
+use PDF;
 use Illuminate\Support\Facades\Storage;
 
 class CharterJobController extends Controller
@@ -15,7 +15,7 @@ class CharterJobController extends Controller
     public function __construct()
     {
 
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth']);
     }
 
     public function preview($charterjob)
@@ -28,7 +28,7 @@ class CharterJobController extends Controller
 
 
 
-        return view('tenants.printcharterjob', compact('charterjob', 'company'));
+        return view('documents.printcharterjob', compact('charterjob', 'company'));
     }
 
 
@@ -38,12 +38,10 @@ class CharterJobController extends Controller
         $company = CompanyProfile::find(1);
         $charterjob = Charter_job::find($charterjob);
 
+        $pdf = PDF::loadView('documents.printcharterjob', compact('charterjob', 'company'));
 
-
-        // $pdf = PDF::loadView('pdfdoc.printcharterjob', compact('charterjob', 'company'));
-
-        $path =  Storage::disk('tenant')->getAdapter()->getPathPrefix() . 'media/' . $charterjob->job_no . '.pdf';
-        //$pdf->save($path);
+        $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $charterjob->job_no . '.pdf';
+        $pdf->save($path);
 
         return $path;
     }

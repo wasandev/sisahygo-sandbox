@@ -9,6 +9,7 @@ use Laravel\Nova\NovaApplicationServiceProvider;
 use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterJobsPerDay;
+use Anaseqal\NovaImport\NovaImport;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -88,6 +89,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             \Pktharindu\NovaPermissions\NovaPermissions::make()
                 ->roleResource(Role::class),
+            new NovaImport,
 
         ];
     }

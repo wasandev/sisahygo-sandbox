@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
@@ -90,7 +91,10 @@ class User extends Resource
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->sortable()
                 ->nullable()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
 
             Select::make(__('Role'), 'role')->options([
                 'employee' => 'พนักงาน',
@@ -98,17 +102,30 @@ class User extends Resource
                 'customer' => 'ลูกค้า',
                 'driver' => 'พนักงานขับรถ'
             ])->displayUsingLabels()
-                ->rules('required'),
+                ->rules('required')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
             Text::make(__('User Code'), 'usercode')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
+
             BelongsTo::make(__('Employee'), 'assign_user', 'App\Nova\Employee')
                 ->nullable()
                 ->showCreateRelationButton()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
             BelongsTo::make(__('Customer'), 'assign_customer', 'App\Nova\Customer')
                 ->nullable()
                 ->showCreateRelationButton()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
             BelongsToMany::make(__('Roles'), 'roles', \Pktharindu\NovaPermissions\Nova\Role::class),
             BelongsTo::make(__('Created by'), 'user_create', 'App\Nova\User')
                 ->OnlyOnDetail(),
@@ -165,5 +182,12 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->role != 'admin') {
+            return $query->where('id', $request->user()->id);
+        }
+        return $query;
     }
 }

@@ -9,7 +9,7 @@ class Productservice_price extends Model
 {
 
     protected $fillable = [
-        'product_id', 'from_branch_id', 'unit_id', 'price', 'district', 'province', 'user_id', 'updated_by'
+        'product_id', 'from_branch_id', 'unit_id', 'price',  'district', 'province', 'user_id', 'updated_by'
     ];
 
     protected $table = 'productservice_price';

@@ -60,10 +60,10 @@ class Address extends Resource
     {
         return [
             ID::make()->sortable(),
-            BelongsTo::make(__('Customer Name'), 'customer', 'App\Nova\Customer')
+            BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
                 ->hideFromIndex(),
-            Text::make(__('Address Name'), 'name')->sortable(),
-            Text::make(__('Contact Name'), 'contactname')->sortable(),
+            Text::make(__('Address name'), 'name')->sortable(),
+            Text::make(__('Contact name'), 'contactname')->sortable(),
             Text::make(__('Phone'), 'phoneno')
                 ->rules('required', 'numeric'),
 

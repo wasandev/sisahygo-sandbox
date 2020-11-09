@@ -10,6 +10,11 @@ class BusinesstypePolicy
 {
     use HandlesAuthorization;
 
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view businesstypes');
+    }
+
     public function view(User $user, Businesstype $businesstype)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('view businesstypes');

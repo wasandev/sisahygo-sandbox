@@ -138,25 +138,25 @@ return [
             'group'        => 'ข้อมูลสาขา',
         ],
         //พื้นที่บริการของสาขา
-        'view branch_areas' => [
+        'view branchareas' => [
             'display_name' => 'ดู',
             'description'  => 'ดู',
             'group'        => 'พื้นที่บริการของสาขา',
         ],
 
-        'create branch_areas' => [
+        'create branchareas' => [
             'display_name' => 'สร้าง',
             'description'  => 'สร้าง',
             'group'        => 'พื้นที่บริการของสาขา',
         ],
 
-        'edit branch_areas' => [
+        'edit branchareas' => [
             'display_name' => 'แก้ไข',
             'description'  => 'แก้ไข',
             'group'        => 'พื้นที่บริการของสาขา',
         ],
 
-        'delete branch_areas' => [
+        'delete branchareas' => [
             'display_name' => 'ลบ',
             'description'  => 'ลบ',
             'group'        => 'พื้นที่บริการของสาขา',
@@ -574,28 +574,52 @@ return [
             'group'        => 'ค่าขนส่งตามสินค้าตามลูกค้า',
         ],
         //ค่าขนส่งพัสดุ
-        'view service_prices' => [
+        'view serviceprices' => [
             'display_name' => 'ดู',
             'description'  => 'ดู',
-            'group'        => 'ค่าขนส่งพัสดุ',
+            'group'        => 'รูปแบบราคาขนส่งพัสดุ',
         ],
 
-        'create service_prices' => [
+        'create serviceprices' => [
             'display_name' => 'สร้าง',
             'description'  => 'สร้าง',
-            'group'        => 'ค่าขนส่งพัสดุ',
+            'group'        => 'รูปแบบราคาขนส่งพัสดุ',
         ],
 
-        'edit service_prices' => [
+        'edit serviceprices' => [
             'display_name' => 'แก้ไข',
             'description'  => 'แก้ไข',
-            'group'        => 'ค่าขนส่งพัสดุ',
+            'group'        => 'รูปแบบราคาขนส่งพัสดุ',
         ],
 
-        'delete service_prices' => [
+        'delete serviceprices' => [
             'display_name' => 'ลบ',
             'description'  => 'ลบ',
-            'group'        => 'ค่าขนส่งพัสดุ',
+            'group'        => 'รูปแบบราคาขนส่งพัสดุ',
+        ],
+        //ตารางราคาค่าขนส่งพัสดุ
+        'view serviceprice_items' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ตารางราคาขนส่งพัสดุ',
+        ],
+
+        'create serviceprice_items' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ตารางราคาขนส่งพัสดุ',
+        ],
+
+        'edit serviceprice_items' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ตารางราคาขนส่งพัสดุ',
+        ],
+
+        'delete serviceprice_items' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ตารางราคาขนส่งพัสดุ',
         ],
         //ค่าบริการอื่นๆ
         'view service_charges' => [

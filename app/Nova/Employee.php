@@ -19,6 +19,7 @@ use Wasandev\InputThaiAddress\InputPostalCode;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\DateTime;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Employee extends Resource
 {
@@ -66,7 +67,9 @@ class Employee extends Resource
     {
         return [
             ID::make()->sortable(),
-            Image::make(__('Image'), 'imagefile'),
+            Image::make(__('Image'), 'imagefile')
+                ->hideFromIndex(),
+            Boolean::make(__('Status'), 'active'),
             new Panel('ข้อมูลพนักงาน', $this->empdetailFields()),
             new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
             new Panel('ที่อยู่', $this->addressFields()),
@@ -75,12 +78,12 @@ class Employee extends Resource
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Updated At'), 'updated_at')
-                ->format('DD/MM/YYYY hh:mm')
+                ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             HasOne::make(__('Assign user'), 'assign_user', 'App\Nova\User'),
 
@@ -90,7 +93,8 @@ class Employee extends Resource
     protected function empdetailFields()
     {
         return [
-
+            Text::make(__('Employee code'), 'employee_code')
+                ->rules('required', 'numeric'),
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
@@ -107,7 +111,7 @@ class Employee extends Resource
                 ->showCreateRelationButton(),
 
             BelongsTo::make(__('Department'), 'department', 'App\Nova\Department')
-                ->hideFromIndex()
+
                 ->rules('required')
                 ->showCreateRelationButton(),
             BelongsTo::make(__('Position'), 'position', 'App\Nova\Position')
@@ -253,6 +257,8 @@ class Employee extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->allFields()->withHeadings(),
+        ];
     }
 }

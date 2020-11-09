@@ -11,6 +11,7 @@ class Vendor extends Model
         'status',
         'type',
         'user_id',
+        'owner_code',
         'taxid',
         'paymenttype',
         'creditterm',
@@ -39,7 +40,10 @@ class Vendor extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function businesstype()
     {
         return $this->belongsTo('App\Models\Businesstype');

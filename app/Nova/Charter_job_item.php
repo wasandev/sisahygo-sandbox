@@ -15,6 +15,7 @@ use App\Models\Charter_route;
 use App\Models\Charter_price;
 use App\Models\Branch_area;
 use App\Rules\Truckweight;
+use Laravel\Nova\Fields\Number;
 
 class Charter_job_item extends Resource
 {
@@ -88,16 +89,19 @@ class Charter_job_item extends Resource
                 ->rules('required')
                 ->onlyOnForms(),
             BelongsTo::make('จุดรับสินค้าของลูกค้า', 'from_address', 'App\Nova\Address')
-                ->ExceptOnForms(),
+                ->exceptOnForms(),
             BelongsTo::make('จุดส่งสินค้าของลูกค้า', 'to_address', 'App\Nova\Address')
-                ->ExceptOnForms(),
+                ->exceptOnForms(),
 
             BelongsTo::make('สินค้า', 'product', 'App\Nova\Product')
-                ->rules('required'),
-            Currency::make('จำนวน', 'amount')
+                ->rules('required')
+                ->showCreateRelationButton(),
+            Number::make('จำนวนสินค้า', 'amount')
+                ->step('0.01')
                 ->rules('required'),
             BelongsTo::make('หน่วยนับ', 'unit', 'App\Nova\Unit')
-                ->rules('required'),
+                ->rules('required')
+                ->showCreateRelationButton(),
             Currency::make('น้ำหนักสินค้ารวม(กก.)', 'total_weight')
                 ->rules('required', new Truckweight($charter_price->cartype_id))
                 //->creationRules(new Truckweight($charter_price->cartype_id))

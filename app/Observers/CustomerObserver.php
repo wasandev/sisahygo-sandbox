@@ -3,9 +3,12 @@
 namespace App\Observers;
 
 use App\Models\Customer;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 
 class CustomerObserver
 {
+
 
 
     /**
@@ -16,16 +19,16 @@ class CustomerObserver
      */
     public function creating(Customer $customer)
     {
+        //$customer_code = IdGenerator::generate(['table' => 'customers', 'field' => 'customer_code', 'length' => 10, 'prefix' => 'S']);
         $customer->user_id = auth()->user()->id;
+        // $customer->customer_code = $customer_code;
         $customer->country = 'thailand';
-        $customer->status = '1';
     }
 
     public function updating(Customer $customer)
     {
         $customer->updated_by = auth()->user()->id;
         $customer->country = 'thailand';
-        $customer->status = '1';
     }
 
     /**

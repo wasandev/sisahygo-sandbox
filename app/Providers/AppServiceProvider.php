@@ -109,16 +109,23 @@ use App\Observers\Serviceprice_itemObserver;
 use App\Models\Charter_route;
 use App\Observers\CharterRouteObserver;
 
+use App\Models\Charter_route_cost;
+use App\Observers\CharterRouteCostObserver;
+
 use App\Models\Charter_price;
 use App\Observers\CharterPriceObserver;
 
 use App\Models\Quotation;
 use App\Observers\QuotationObserver;
 
+use App\Models\Quotation_item;
+use App\Observers\QuotationItemObserver;
+
 use App\Models\Charter_job;
 use App\Observers\CharterJobObserver;
 
 use App\Models\Customer_product_price;
+
 use App\Observers\CustomerShippingCostObserver;
 
 use App\Models\Service_charge;
@@ -177,12 +184,14 @@ class AppServiceProvider extends ServiceProvider
         Vendor::observe(VendorObserver::class);
         Parcel::observe(ParcelObserver::class);
         Serviceprice::observe(ServicepriceObserver::class);
+        Customer_product_price::observe(CustomerShippingCostObserver::class);
         Serviceprice_item::observe(Serviceprice_itemObserver::class);
         Service_charge::observe(ServiceChargeObserver::class);
         Charter_route::observe(CharterRouteObserver::class);
+        Charter_route_cost::observe(CharterRouteCostObserver::class);
         Charter_price::observe(CharterPriceObserver::class);
         Quotation::observe(QuotationObserver::class);
+        Quotation_item::observe(QuotationItemObserver::class);
         Charter_job::observe(CharterJobObserver::class);
-        Customer_product_price::observe(CustomerShippingCostObserver::class);
     }
 }

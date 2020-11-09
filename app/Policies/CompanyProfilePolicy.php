@@ -10,7 +10,10 @@ class CompanyProfilePolicy
 {
     use HandlesAuthorization;
 
-
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view companyprofile');
+    }
 
     /**
      * Determine whether the user can view the company profile.

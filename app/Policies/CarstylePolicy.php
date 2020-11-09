@@ -10,7 +10,10 @@ class CarstylePolicy
 {
     use HandlesAuthorization;
 
-
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view carstyles');
+    }
     public function view(User $user, Carstyle $carstyle)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('view carstyles');

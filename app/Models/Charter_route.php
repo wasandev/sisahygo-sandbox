@@ -24,10 +24,10 @@ class Charter_route extends Model
         return $this->hasMany('App\Models\Charter_price');
     }
 
-    public function charter_route_costs()
-    {
-        return $this->hasMany('App\Models\Charter_route_cost');
-    }
+    // public function charter_route_costs()
+    // {
+    //     return $this->hasMany('App\Models\Charter_route_cost');
+    // }
     public function branch()
     {
         return $this->belongsTo('App\Models\Branch');

@@ -35,7 +35,10 @@ class Quotation extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
     public function charter_prices()
     {
         return $this->belongsToMany('App\Models\Charter_price', 'charter_price_quotation', 'quotation_id', 'charter_price_id');

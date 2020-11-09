@@ -17,7 +17,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 class Customer_product_price extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
+    public static $group = "4.งานด้านการตลาด";
     public static $priority = 8;
     /**
      * The model the resource corresponds to.

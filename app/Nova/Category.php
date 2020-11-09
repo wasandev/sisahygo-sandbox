@@ -9,12 +9,13 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\DateTime;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Category extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "4.งานด้านการขาย";
-    public static $priority = 5;
+    public static $group = "4.งานด้านการตลาด";
+    public static $priority = 4;
 
     /**
      * The model the resource corresponds to.
@@ -121,6 +122,11 @@ class Category extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\ImportCategories)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
+        ];
     }
 }

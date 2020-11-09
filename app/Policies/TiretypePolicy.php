@@ -10,6 +10,10 @@ class TiretypePolicy
 {
     use HandlesAuthorization;
 
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view tiretypes');
+    }
 
     public function view(User $user, Tiretype $tiretype)
     {

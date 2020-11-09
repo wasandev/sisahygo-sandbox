@@ -1,0 +1,54 @@
+@tailwind base
+
+ol,
+ul
+  list-style: outside
+  margin: 0
+  padding-left: 1rem
+
+
+.transition
+  transition: all .15s ease-in-out
+
+.aspect-16x9
+  padding-bottom:56.25%
+
+.circ
+  width: 32px
+  vertical-align: middle
+  border-radius: 50%
+  box-shadow: 0 0 0 2px #fff
+  margin-top: 0px
+
+.circ:hover
+  box-shadow: 0 0 0 3px #fff
+
+.btn
+  @apply py-2 px-4 rounded shadow
+
+.btn-blue
+  @apply bg-blue-500 text-white
+
+.btn-blue:hover
+  @apply bg-blue-700
+
+.btn-mstore
+  @apply bg-yellow-500 text-black
+
+.btn-mstore:hover
+  @apply bg-yellow-700 text-white
+
+.search-icon-center
+  top: 8px
+.text-success
+    @apply text-green-500
+.text-danger
+    @apply text-red-500
+
+@tailwind components
+@tailwind utilities
+@tailwind screens
+
+
+
+

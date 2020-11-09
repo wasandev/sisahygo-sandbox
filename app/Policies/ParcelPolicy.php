@@ -10,6 +10,10 @@ class ParcelPolicy
 {
     use HandlesAuthorization;
 
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view parcels');
+    }
 
     public function view(User $user, Parcel $parcel)
     {

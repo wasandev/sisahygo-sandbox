@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "anaseqal/nova-import": "^0.0.6",
         "barryvdh/laravel-dompdf": "^0.8.7",
         "cloudcake/nova-fixed-bars": "^1.1",
         "doctrine/dbal": "^2.12",
@@ -17,12 +18,14 @@
         "fruitcake/laravel-cors": "^2.0",
         "gregoriohc/laravel-nova-theme-responsive": "^0.8.1",
         "guzzlehttp/guzzle": "^7.0.1",
+        "haruncpi/laravel-id-generator": "^1.0",
         "jfeid/nova-google-maps": "^1.1",
         "laravel/framework": "^8.0",
         "laravel/nova": "~3.0 ",
         "laravel/tinker": "^2.0",
         "maatwebsite/laravel-nova-excel": "^1.2",
         "pktharindu/nova-permissions": "^2.1",
+        "titasgailius/search-relations": "^1.0",
         "wasandev/input-thai-address": "*"
     },
     "require-dev": {

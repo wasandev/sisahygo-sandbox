@@ -44,6 +44,6 @@ class CreateBranchAreasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tenancy_branch_areas');
+        Schema::dropIfExists('branch_areas');
     }
 }

@@ -10,6 +10,10 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
+    public function viewAny(User $user)
+    {
+        return $user->role == 'admin' || $user->hasPermissionTo('view products');
+    }
 
     public function view(User $user, Product $product)
     {

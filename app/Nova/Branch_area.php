@@ -11,12 +11,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\HasMany;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Laravel\Nova\Fields\DateTime;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 
 
 class Branch_area extends Resource
 {
-    //public static $displayInNavigation = false;
+    public static $displayInNavigation = false;
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
     public static $priority = 5;
     /**
@@ -135,7 +136,11 @@ class Branch_area extends Resource
     public function actions(Request $request)
     {
         return [
-            //new Actions\AddBranchAreaByBranch,
+
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
         ];
     }
 }

@@ -57,6 +57,7 @@ class AddBranchArea extends Action
         return [
             Select::make('เลือกจังหวัด', 'province')->options($provinces)
                 ->displayUsingLabels()
+                ->searchable()
         ];
     }
 

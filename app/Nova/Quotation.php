@@ -81,17 +81,26 @@ class Quotation extends Resource
                 ->searchable(),
             Select::make('เงื่อนไขการชำระเงิน', 'paymenttype')->options([
                 'เงินสด' => 'เงินสด',
+                'เงินโอน' => 'เงินโอน',
                 'วางบิล' => 'วางบิล',
+
             ])->displayUsingLabels(),
             Text::make('หมายเหตุ/เงื่อนไข', 'terms')
                 ->hideFromIndex(),
             DateTime::make('ใช้ได้ถึงวันที่', 'expiration_date')
 
                 ->hideFromIndex(),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
-
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
-            BelongsToMany::make('ราคาขนส่งเหมาคัน', 'charter_prices', 'App\Nova\Charter_price')
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->OnlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsToMany::make('รายการ', 'charter_prices', 'App\Nova\Charter_price')
 
 
 

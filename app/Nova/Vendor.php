@@ -19,6 +19,7 @@ use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\DateTime;
 
 class Vendor extends Resource
 {
@@ -49,7 +50,11 @@ class Vendor extends Resource
     ];
     public static function label()
     {
-        return 'ผู้จำหน่าย/ผู้ร่วมบริการ';
+        return __('Vendors');
+    }
+    public static function singularLabel()
+    {
+        return __('Vendor');
     }
     /**
      * Get the fields displayed by the resource.
@@ -61,33 +66,44 @@ class Vendor extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status')->size('w-full'),
-            Text::make('ชื่อผู้จำหน่าย/ผู้ร่วมบริการ/เจ้าของรถ', 'name')
+            Boolean::make(__('Status'), 'status'),
+            Text::make(__('Owner code'), 'owner_code')
+                ->sortable(),
+            Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required')
-                ->size('w-1/2'),
-            Text::make('เลขประจำตัวผู้เสียภาษี', 'taxid')
+                ->rules('required'),
+            Text::make(__('Tax ID'), 'taxid')
+                ->hideFromIndex(),
+            Select::make(__('Type'), 'type')
+                ->options([
+                    'company' => 'นิติบุคคล',
+                    'person' => 'บุคคลธรรมดา'
+                ])
+                ->displayUsingLabels()
+                ->hideFromIndex(),
+            Select::make(__('Payment type'), 'paymenttype')
+                ->options([
+                    'เงินสด' => 'เงินสด',
+                    'วางบิล' => 'วางบิล'
+                ])
                 ->hideFromIndex()
-                ->size('w-1/2'),
-            Select::make('ประเภท', 'type')->options([
-                'company' => 'นิติบุคคล',
-                'person' => 'บุคคลธรรมดา'
-            ])->displayUsingLabels()
-                ->hideFromIndex()->size('w-1/2'),
-            Select::make('การชำระเงิน', 'paymenttype')->options([
-                'เงินสด' => 'เงินสด',
-                'วางบิล' => 'วางบิล'
-            ])
-                ->hideFromIndex()
-                ->size('w-1/2')
                 ->withMeta(['value' => 'เงินสด']),
             Number::make('ระยะเวลาเครดิต', 'creditterm')
                 ->withMeta(['value' => 0])
-                ->size('w-1/2')
                 ->hideFromIndex(),
             BelongsTo::make('ประเภทธุรกิจ', 'businesstype', 'App\Nova\Businesstype')
-                ->hideFromIndex()->size('w-1/2'),
-
+                ->hideFromIndex()
+                ->showCreateRelationButton(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
             new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
             new Panel('ที่อยู่', $this->addressFields()),
             new Panel('อื่นๆ', $this->otherFields()),
@@ -103,15 +119,14 @@ class Vendor extends Resource
     protected function contactFields()
     {
         return [
-            Text::make('ชื่อผู้ติดต่อ', 'contractname')
-                ->hideFromIndex()
-                ->size('w-1/2'),
-            Text::make('โทรศัพท์', 'phoneno')->size('w-1/2'),
-            Text::make('เว็บไซต์', 'weburl')->size('w-1/2')
+            Text::make(__('Contact name'), 'contractname')
                 ->hideFromIndex(),
-            Text::make('Facebook', 'facebook')->size('w-1/2')
+            Text::make(__('Phone'), 'phoneno'),
+            Text::make(__('Web url'), 'weburl')
                 ->hideFromIndex(),
-            Text::make('Line', 'line')->size('w-1/2')
+            Text::make(__('Facebook'), 'facebook')
+                ->hideFromIndex(),
+            Text::make(__('Line'), 'line')
                 ->hideFromIndex(),
 
         ];
@@ -125,21 +140,32 @@ class Vendor extends Resource
     {
         return [
 
-            Text::make('ที่อยู่', 'address')->hideFromIndex(),
-            InputSubDistrict::make('ตำบล/แขวง', 'sub_district')
+            Text::make(__('Address'), 'address')->hideFromIndex()
+                ->rules('required'),
+            InputSubDistrict::make(__('Sub District'), 'sub_district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
-                ->fromValue('district'),
-            InputDistrict::make('อำเภอ/เขต', 'district')
+                ->fromValue('district')
+                ->rules('required')
+                ->hideFromIndex(),
+            InputDistrict::make(__('District'), 'district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
-                ->fromValue('amphoe'),
-            InputProvince::make('จังหวัด', 'province')
+                ->fromValue('amphoe')
+                ->sortable()
+                ->rules('required')
+                ->hideFromIndex(),
+            InputProvince::make(__('Province'), 'province')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
-                ->fromValue('province'),
-            InputPostalCode::make('รหัสไปรษณีย์', 'postal_code')
+                ->fromValue('province')
+                ->sortable()
+                ->rules('required')
+                ->hideFromIndex(),
+            InputPostalCode::make(__('Postal Code'), 'postal_code')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
-                ->fromValue('zipcode'),
+                ->fromValue('zipcode')
+                ->rules('required')
+                ->hideFromIndex(),
 
-            NovaGoogleMaps::make('ตำแหน่งที่ตั้งบน Google Map', 'location')->setValue($this->location_lat, $this->location_lng)
+            NovaGoogleMaps::make(__('Google Map Address'), 'location')->setValue($this->location_lat, $this->location_lng)
                 ->hideFromIndex(),
 
         ];
@@ -153,12 +179,12 @@ class Vendor extends Resource
     protected function otherFields()
     {
         return [
-            Image::make('โลโก้', 'logofile'),
-            Image::make('ภาพหน้าร้าน', 'imagefile')
+            Image::make(__('Logo'), 'logofile')
                 ->hideFromIndex(),
-            Textarea::make('รายละเอียดอื่นๆ', 'description')->hideFromIndex(),
-            BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
-                ->onlyOnDetail(),
+            Image::make(__('Image'), 'imagefile')
+                ->hideFromIndex(),
+            Textarea::make(__('Other'), 'description')
+                ->hideFromIndex(),
         ];
     }
     /**
