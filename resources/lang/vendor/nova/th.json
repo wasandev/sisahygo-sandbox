@@ -423,6 +423,7 @@
     "Add Service Price Item": "เพิ่มรายการราคาจัดส่งพัสดุ",
     "Update Service Price": "แก้ไขราคาค่าจัดส่งพัสดุ",
     "Add Product Service Price": "สร้างตารางค่าขนส่งตามสินค้า",
+    "Add Product Service Price Style": "สร้างตารางค่าขนส่งตามประเภทสินค้า",
     "Update Product Service Price": "แก้ไขราคาค่าขนส่งตามสินค้า",
     "Add Product Customer Price": "สร้างตารางราคาค่าขนส่งสินค้าตามลูกค้า",
     "Add Customer Product Price": "สร้างตารางราคาค่าขนส่งสินค้าตามลูกค้า",
@@ -560,6 +561,11 @@
     "Import Productstyles": "นำเข้าข้อมูล ประเภทสินค้า",
     "Import Products": "นำเข้าข้อมูล สินค้า",
     "Import Units": "นำเข้าข้อมูล หน่วยนับ",
-    "Import Customer": "นำเข้าข้อมูล ลูกค้า"
+    "Import Customer": "นำเข้าข้อมูล ลูกค้า",
+    "Set product category": "กำหนดกลุ่มสินค้า",
+    "Set product style": "กำหนดประเภทสินค้า",
+    "Set product unit": "กำหนดหน่วยนับสินค้า"
+
+
 
 }

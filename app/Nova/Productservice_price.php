@@ -28,7 +28,7 @@ class Productservice_price extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'district';
 
     /**
      * The columns that should be searched.
@@ -114,7 +114,7 @@ class Productservice_price extends Resource
         return [
             new Filters\FromBranch,
             new Filters\Province,
-            new Filters\Product,
+            new Filters\ToDistrict,
             new Filters\Unit,
 
         ];

@@ -526,29 +526,30 @@ return [
             'group'        => 'พัสดุ',
         ],
         //ค่าขนส่งตามสินค้า
+        'view own productservice_prices' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'ค่าขนส่งตามสินค้า',
+        ],
         'view productservice_prices' => [
             'display_name' => 'ดู',
             'description'  => 'ดู',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
-        'create productservice_prices' => [
-            'display_name' => 'สร้าง',
-            'description'  => 'สร้าง',
+        'manage own productservice_prices' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
-        'edit productservice_prices' => [
-            'display_name' => 'แก้ไข',
-            'description'  => 'แก้ไข',
+        'manage productservice_prices' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
-        'delete productservice_prices' => [
-            'display_name' => 'ลบ',
-            'description'  => 'ลบ',
-            'group'        => 'ค่าขนส่งตามสินค้า',
-        ],
+
         //ค่าขนส่งตามสินค้าตามลูกค้า
         'view customerproduct_prices' => [
             'display_name' => 'ดู',

@@ -13,7 +13,7 @@ class Unit extends Filter
      * @var string
      */
     public $component = 'select-filter';
-    public $name = 'ตามหน่วยสินค้า';
+    public $name = 'ตามหน่วยนับสินค้า';
     /**
      * Apply the filter to the given query.
      *

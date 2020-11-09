@@ -13,9 +13,9 @@ class Product_style extends Model
     ];
 
 
-    public function product()
+    public function products()
     {
-        return $this->belongsTo('App\Models\Product');
+        return $this->hasMany('App\Models\Product');
     }
     public function user()
     {

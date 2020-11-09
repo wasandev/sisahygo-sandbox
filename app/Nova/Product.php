@@ -126,7 +126,10 @@ class Product extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\Category,
+            new Filters\ProductStyle,
+        ];
     }
 
     /**
@@ -155,6 +158,9 @@ class Product extends Resource
             (new Actions\ImportProducts)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),
+            (new Actions\SetProductCategory),
+            (new Actions\SetProductStyle),
+            (new Actions\SetProductUnit)
 
 
         ];

@@ -5,7 +5,7 @@ namespace App\Nova\Filters;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class Province extends Filter
+class ToDistrict extends Filter
 {
     /**
      * The filter's component.
@@ -13,8 +13,7 @@ class Province extends Filter
      * @var string
      */
     public $component = 'select-filter';
-    public $name = 'ไปจังหวัด';
-
+    public $name = 'ไปอำเภอ';
 
     /**
      * Apply the filter to the given query.
@@ -26,7 +25,7 @@ class Province extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('province', $value);
+        return $query->where('district', $value);
     }
 
     /**
@@ -37,7 +36,7 @@ class Province extends Filter
      */
     public function options(Request $request)
     {
-        $provinces = \App\Models\Province::has('branch_area');
-        return $provinces->pluck('name', 'name')->all();
+        $districts = \App\Models\District::has('branch_area');
+        return $districts->pluck('name', 'name')->all();
     }
 }

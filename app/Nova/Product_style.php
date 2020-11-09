@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddProductServicePriceStyle;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -76,7 +77,7 @@ class Product_style extends Resource
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
 
-            HasMany::make('สินค้า', 'product', 'App\Nova\Product'),
+            HasMany::make('สินค้า', 'products', 'App\Nova\Product'),
         ];
     }
 
@@ -125,6 +126,9 @@ class Product_style extends Resource
             (new DownloadExcel)->allFields()->withHeadings(),
             (new Actions\ImportProduct_styles)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
+            }),
+            (new AddProductServicePriceStyle)->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('manage productservice_prices');
             }),
         ];
     }
