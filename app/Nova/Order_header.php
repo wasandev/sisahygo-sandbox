@@ -67,7 +67,7 @@ class Order_header extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Status::make(__('Status'),'order_status')
+            Status::make(__('Status'), 'order_status')
                 ->loadingWhen(['New'])
                 ->failedWhen(['Cancel'])
                 ->exceptOnForms(),
@@ -76,9 +76,9 @@ class Order_header extends Resource
                 ->readonly(),
             Text::make(__('Order date'), 'order_date')
                 ->readonly(),
-            BelongsTo::make(__('From branch','branch','App\Nova\Branch'),
-            BelongsTo::make(__('To branch', 'to_branch', 'App\Nova\Branch'),
-            BelongsTo::make('ผู้ส่งสินค้า','customer','App\Nova\Customer'),
+            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch'),
+            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch'),
+            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer'),
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer'),
 
 
