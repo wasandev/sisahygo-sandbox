@@ -198,6 +198,7 @@ class NovaServiceProvider extends ServiceProvider
             Console\ResourceCommand::class,
             Console\ResourceToolCommand::class,
             Console\StubPublishCommand::class,
+            Console\TranslateCommand::class,
             Console\ThemeCommand::class,
             Console\ToolCommand::class,
             Console\TrendCommand::class,

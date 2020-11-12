@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Testing\Browser\Pages;
 
 use Laravel\Dusk\Browser;
+use Laravel\Nova\Nova;
 
 class Update extends Page
 {
@@ -31,7 +32,7 @@ class Update extends Page
      */
     public function url()
     {
-        return '/nova/resources/'.$this->resourceName.'/'.$this->resourceId.'/edit';
+        return Nova::path().'/resources/'.$this->resourceName.'/'.$this->resourceId.'/edit';
     }
 
     /**

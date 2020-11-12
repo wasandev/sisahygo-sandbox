@@ -2,58 +2,85 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <title>SISAHYGO</title>
+    <meta name='description' content='Transportation management'>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#F7D90B" />
-    <title>SISAHYGO : เว็บแอปพลิเคชั่นสำหรับจัดการการขนส่ง</title>
+    <meta name="theme-color" content="#4299E1" />
+
+    <link rel="canonical" href="https://app.sisahygo.online/" />
+    @yield('ogmeta')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i"
+    <link href="https://fonts.googleapis.com/css?family=Bai Jamjuree:400,500,600,700"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
+        <script src="{{ mix('/js/app.js') }}" defer></script>
+        @if (App::environment('production', 'staging'))
+            <script>
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                        }, function(err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                        });
+                    });
+                    }
+            </script>
+        @endif
+
+
+        <link rel ="manifest" href ="/manifest.json">
+
+
     <!-- Scripts -->
-    <script src="{{ mix('/js/app.js') }}" defer></script>
-
-
-    <!-- // ... // -->
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-            ]); ?>
+            'csrfToken' => csrf_token(),
+        ]); ?>
     </script>
 
-    <!-- This makes the current user's id available in javascript -->
+
     @if(!auth()->guest())
-    <script>
-        window.Laravel.userId = <?php echo auth()->user()->id; ?>
-    </script>
+        <script>
+            window.Laravel.userId = <?php echo auth()->user()->id; ?>
+        </script>
     @endif
-
-
-
-
-
+    <link rel="shortcut icon" href="<?php echo asset('images/icons/favicon.png'); ?>">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     @stack('scripts')
+
+
+
 </head>
 
-<body class=" h-full bg-grey-light font-sans leading-normal tracking-normal">
-    <div id="app">
+<body class="font-sans  bg-white  leading-normal tracking-normal antialiased">
+
+    <div>
+
         @yield('nav')
-
-
-
+        @yield('search')
+        @yield('mstorehome')
         @yield('content')
-
         @yield('footer')
     </div>
-</body>
+
+
+
+ </body>
 
 </html>

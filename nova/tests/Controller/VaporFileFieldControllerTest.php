@@ -6,6 +6,7 @@ use Faker\Provider\Uuid;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\VaporFile;
 use Laravel\Nova\Tests\IntegrationTest;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -258,6 +259,8 @@ class VaporFileFieldControllerTest extends IntegrationTest
             ]);
 
         $this->assertNotNull(VaporFile::first());
+
+        unset($this->app[NovaRequest::class]);
 
         return $response;
     }

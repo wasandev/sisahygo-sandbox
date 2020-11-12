@@ -10,7 +10,7 @@
       {{
         __('Update attached :resource: :title', {
           resource: relatedResourceLabel,
-          title: this.title,
+          title: title,
         })
       }}
     </heading>

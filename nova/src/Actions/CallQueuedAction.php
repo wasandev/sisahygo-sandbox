@@ -67,7 +67,7 @@ class CallQueuedAction
     /**
      * Get the name of the "failed" method that should be called for the action.
      *
-     * @return string
+     * @return string|null
      */
     protected function failedMethodName()
     {
@@ -76,7 +76,7 @@ class CallQueuedAction
             return $method;
         }
 
-        return method_exists($this, 'failed')
+        return method_exists($this->action, 'failed')
                     ? 'failed' : null;
     }
 

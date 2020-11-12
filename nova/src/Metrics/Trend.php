@@ -5,6 +5,7 @@ namespace Laravel\Nova\Metrics;
 use Cake\Chronos\Chronos;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Laravel\Nova\Nova;
@@ -123,7 +124,7 @@ abstract class Trend extends RangedMetric
     {
         $resource = $model instanceof Builder ? $model->getModel() : new $model;
 
-        $column = $column ?? $resource->getCreatedAtColumn();
+        $column = $column ?? $resource->getQualifiedCreatedAtColumn();
 
         return $this->aggregate($request, $model, $unit, 'count', $resource->getQualifiedKeyName(), $column);
     }
@@ -133,7 +134,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -147,7 +148,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -161,7 +162,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -175,7 +176,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -189,7 +190,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -204,7 +205,7 @@ abstract class Trend extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $unit
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -218,7 +219,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -232,7 +233,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -246,7 +247,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -260,7 +261,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -274,7 +275,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -289,7 +290,7 @@ abstract class Trend extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $unit
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -303,7 +304,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Illuminate\Database\Eloquent\Builder|string $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return TrendResult
      */
@@ -317,7 +318,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -331,7 +332,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -345,7 +346,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -359,7 +360,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -374,7 +375,7 @@ abstract class Trend extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $unit
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -388,7 +389,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -402,7 +403,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -416,7 +417,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -430,7 +431,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -444,7 +445,7 @@ abstract class Trend extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -459,7 +460,7 @@ abstract class Trend extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $unit
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -488,7 +489,7 @@ abstract class Trend extends RangedMetric
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $unit
      * @param  string  $function
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string  $dateColumn
      * @return \Laravel\Nova\Metrics\TrendResult
      */
@@ -499,7 +500,7 @@ abstract class Trend extends RangedMetric
         $timezone = Nova::resolveUserTimezone($request) ?? $request->timezone;
 
         $expression = (string) TrendDateExpressionFactory::make(
-            $query, $dateColumn = $dateColumn ?? $query->getModel()->getCreatedAtColumn(),
+            $query, $dateColumn = $dateColumn ?? $query->getModel()->getQualifiedCreatedAtColumn(),
             $unit, $timezone
         );
 
@@ -511,7 +512,9 @@ abstract class Trend extends RangedMetric
             $request->twelveHourTime === 'true'
         );
 
-        $wrappedColumn = $query->getQuery()->getGrammar()->wrap($column);
+        $wrappedColumn = $column instanceof Expression
+                ? (string) $column
+                : $query->getQuery()->getGrammar()->wrap($column);
 
         $results = $query
                 ->select(DB::raw("{$expression} as date_result, {$function}({$wrappedColumn}) as aggregate"))

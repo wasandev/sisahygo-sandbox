@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\File;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\SoftDeletingFile;
@@ -148,6 +149,8 @@ class FileFieldControllerTest extends IntegrationTest
                             'avatar' => UploadedFile::fake()->image('avatar.png'),
                         ]);
 
+        unset($this->app[NovaRequest::class]);
+
         $response = $this->withExceptionHandling()
                         ->get('/nova-api/files/'.File::first()->id.'/download/avatar');
 
@@ -161,6 +164,8 @@ class FileFieldControllerTest extends IntegrationTest
                         ->postJson('/nova-api/files', [
                             'avatar' => UploadedFile::fake()->image('avatar.png'),
                         ]);
+
+        unset($this->app[NovaRequest::class]);
 
         $response = $this->withExceptionHandling()
                         ->deleteJson('/nova-api/files/'.File::first()->id.'/field/avatar');
@@ -250,6 +255,8 @@ class FileFieldControllerTest extends IntegrationTest
                             'avatar' => UploadedFile::fake()->image('avatar.png'),
                         ]);
 
+        unset($this->app[NovaRequest::class]);
+
         $response = $this->withExceptionHandling()
                         ->deleteJson('/nova-api/files/'.File::first()->id.'/field/avatar');
 
@@ -265,6 +272,8 @@ class FileFieldControllerTest extends IntegrationTest
                         ->postJson('/nova-api/files', [
                             'avatar' => UploadedFile::fake()->image('avatar.png'),
                         ]);
+
+        unset($this->app[NovaRequest::class]);
 
         $response = $this->withExceptionHandling()
                         ->deleteJson('/nova-api/files/'.File::first()->id.'/field/avatar');
@@ -314,6 +323,8 @@ class FileFieldControllerTest extends IntegrationTest
                         ->postJson('/nova-api/files', [
                             'avatar' => UploadedFile::fake()->image('avatar.png'),
                         ]);
+
+        unset($this->app[NovaRequest::class]);
 
         $response = $this->withExceptionHandling()
                         ->deleteJson('/nova-api/files', [

@@ -53,6 +53,7 @@ class ActionControllerTest extends IntegrationTest
         unset($_SERVER['queuedResourceAction.appliedFields']);
 
         DB::disableQueryLog();
+        DB::flushQueryLog();
 
         parent::tearDown();
     }
@@ -718,6 +719,7 @@ class ActionControllerTest extends IntegrationTest
         $user2 = factory(User::class)->create();
 
         DB::enableQueryLog();
+        DB::flushQueryLog();
 
         $response = $this->withExceptionHandling()
                         ->post('/nova-api/users/action?action='.(new NoopAction)->uriKey(), [

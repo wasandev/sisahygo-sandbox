@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Testing\Browser\Pages;
 
 use Laravel\Dusk\Browser;
+use Laravel\Nova\Nova;
 
 class Attach extends Page
 {
@@ -34,7 +35,7 @@ class Attach extends Page
      */
     public function url()
     {
-        return '/nova/resources/'.$this->resourceName.'/'.$this->resourceId.'/attach/'.$this->relation.'?viaRelationship='.$this->relation.'&polymorphic=0';
+        return Nova::path().'/resources/'.$this->resourceName.'/'.$this->resourceId.'/attach/'.$this->relation.'?viaRelationship='.$this->relation.'&polymorphic=0';
     }
 
     /**

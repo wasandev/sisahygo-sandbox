@@ -1,27 +1,23 @@
-<footer class='w-full  text-center border-t border-grey bg-black p-2 align-bottom '>
-	<ul class="list-reset flex justify-center flex-1 md:flex-none items-center">
-		<li>
-			<a class="inline-block py-2 px-3 text-white no-underline hover:text-mstore hover:text-underline"
-				href="/blog">Blog
+<footer class='w-full  text-center border-t border-grey bg-gray-100 p-2 align-bottom '>
+	<div class="list-reset flex justify-center flex-1 md:flex-none items-center">
+
+			<a class="inline-block py-2 px-3 text-black no-underline hover:text-mstore hover:text-underline"
+				href="/blog">News
 			</a>
-		</li>
-		<li>
-			<a class="inline-block text-grey-dark no-underline hover:text-mstore hover:text-underline py-2 px-3"
+
+
+			<a class="inline-block text-black no-underline hover:text-mstore hover:text-underline py-2 px-3"
 				href="/terms">Terms
 			</a>
-		</li>
-		<li>
-			<a class="inline-block text-grey-dark no-underline hover:text-mstore hover:text-underline py-2 px-3"
+
+			<a class="inline-block text-black no-underline hover:text-mstore hover:text-underline py-2 px-3"
 				href="/privacy">Privacy
 			</a>
-		</li>
 
-		<li>
-			<a class="inline-block text-grey-dark no-underline hover:text-mstore hover:text-underline py-2 px-3"
+			<a class="inline-block text-black no-underline hover:text-mstore hover:text-underline py-2 px-3"
 				href="/contact">Contact Us
 			</a>
-		</li>
-	</ul>
+	</div>
 
 
 </footer>

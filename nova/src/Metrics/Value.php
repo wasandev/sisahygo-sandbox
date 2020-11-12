@@ -27,7 +27,7 @@ abstract class Value extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string|null  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
@@ -41,7 +41,7 @@ abstract class Value extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
@@ -55,7 +55,7 @@ abstract class Value extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
@@ -69,7 +69,7 @@ abstract class Value extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
@@ -83,7 +83,7 @@ abstract class Value extends RangedMetric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string  $column
      * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
@@ -98,7 +98,7 @@ abstract class Value extends RangedMetric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $function
-     * @param  string|null  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @param  string|null  $dateColumn
      * @return \Laravel\Nova\Metrics\ValueResult
      */
@@ -111,13 +111,13 @@ abstract class Value extends RangedMetric
         $timezone = Nova::resolveUserTimezone($request) ?? $request->timezone;
 
         $previousValue = round(with(clone $query)->whereBetween(
-            $dateColumn ?? $query->getModel()->getCreatedAtColumn(),
+            $dateColumn ?? $query->getModel()->getQualifiedCreatedAtColumn(),
             $this->previousRange($request->range, $timezone)
         )->{$function}($column), $this->precision);
 
         return $this->result(
             round(with(clone $query)->whereBetween(
-                $dateColumn ?? $query->getModel()->getCreatedAtColumn(),
+                $dateColumn ?? $query->getModel()->getQualifiedCreatedAtColumn(),
                 $this->currentRange($request->range, $timezone)
             )->{$function}($column), $this->precision)
         )->previous($previousValue);

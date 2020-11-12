@@ -449,9 +449,6 @@ export default {
     this.initializeTrashedFromQueryString()
     this.initializeOrderingFromQueryString()
 
-    this.perPage = this.resourceInformation.perPageOptions[0]
-
-    console.log(this.resourceInformation.polling)
     this.currentlyPolling = this.resourceInformation.polling
 
     await this.initializeFilters()
@@ -814,7 +811,8 @@ export default {
      */
     initializePerPageFromQueryString() {
       this.perPage =
-        this.$route.query[this.perPageParameter] || _.first(this.perPageOptions)
+        this.$route.query[this.perPageParameter] ||
+        this.resourceInformation.perPageOptions[0]
     },
 
     /**
@@ -831,7 +829,10 @@ export default {
      */
     startPolling() {
       this.pollingListener = setInterval(() => {
-        if (document.hasFocus()) {
+        if (
+          document.hasFocus() &&
+          document.querySelectorAll('div.modal').length < 1
+        ) {
           this.getResources()
         }
       }, this.resourceInformation.pollingInterval)

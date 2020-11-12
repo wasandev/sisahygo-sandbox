@@ -526,24 +526,24 @@ return [
             'group'        => 'พัสดุ',
         ],
         //ค่าขนส่งตามสินค้า
-        'view own productservice_prices' => [
+        'view own order_header' => [
             'display_name' => 'ดูข้อมูลของตัวเอง',
             'description'  => 'ดูข้อมูลของตัวเอง',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
-        'view productservice_prices' => [
+        'view order_header' => [
             'display_name' => 'ดู',
             'description'  => 'ดู',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
-        'manage own productservice_prices' => [
+        'manage own order_header' => [
             'display_name' => 'จัดการข้อมูลของตัวเอง',
             'description'  => 'จัดการข้อมูลของตัวเอง',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
-        'manage productservice_prices' => [
+        'manage order_header' => [
             'display_name' => 'จัดการข้อมูล',
             'description'  => 'จัดการข้อมูล',
             'group'        => 'ค่าขนส่งตามสินค้า',
@@ -933,6 +933,52 @@ return [
             'display_name' => 'ลบ',
             'description'  => 'ลบ',
             'group'        => 'ค่าใช้จ่ายส่วนกลาง',
+        ],
+        //ใบรับส่งสินค้า
+        'view own order_headers' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'ใบรับส่งสินค้า',
+        ],
+        'view order_headers' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบรับส่งสินค้า',
+        ],
+
+        'manage own order_headers' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'ใบรับส่งสินค้า',
+        ],
+
+        'manage order_headers' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'ใบรับส่งสินค้า',
+        ],
+        //ใบรับส่งสินค้า
+        'view own order_details' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'รายการสินค้าในใบรับส่ง',
+        ],
+        'view order_details' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการสินค้าในใบรับส่ง',
+        ],
+
+        'manage own order_details' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'รายการสินค้าในใบรับส่ง',
+        ],
+
+        'manage order_headers' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'รายการสินค้าในใบรับส่ง',
         ],
     ],
 ];

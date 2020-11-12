@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Testing\Browser\Pages;
 
 use Laravel\Dusk\Browser;
+use Laravel\Nova\Nova;
 
 class Lens extends Index
 {
@@ -28,7 +29,7 @@ class Lens extends Index
      */
     public function url()
     {
-        return '/nova/resources/'.$this->resourceName.'/lens/'.$this->lens;
+        return Nova::path().'/resources/'.$this->resourceName.'/lens/'.$this->lens;
     }
 
     /**

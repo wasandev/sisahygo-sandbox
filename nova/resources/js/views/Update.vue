@@ -16,6 +16,7 @@
       <form-panel
         v-for="panel in panelsWithFields"
         @update-last-retrieved-at-timestamp="updateLastRetrievedAtTimestamp"
+        @field-changed="onUpdateFormStatus"
         @file-upload-started="handleFileUploadStarted"
         @file-upload-finished="handleFileUploadFinished"
         :panel="panel"

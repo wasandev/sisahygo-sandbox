@@ -13,6 +13,13 @@ use Laravel\Nova\Panel;
 class UserWithCustomFields extends UserResource
 {
     /**
+     * Indicates if the resource should be globally searchable.
+     *
+     * @var bool
+     */
+    public static $globallySearchable = false;
+
+    /**
      * Get the URI key for the resource.
      *
      * @return string

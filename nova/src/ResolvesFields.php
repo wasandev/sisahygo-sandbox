@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Contracts\Cover;
+use Laravel\Nova\Contracts\Deletable;
 use Laravel\Nova\Contracts\ListableField;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -98,6 +99,52 @@ trait ResolvesFields
     }
 
     /**
+     * Resolve the deletable fields.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return \Laravel\Nova\Fields\FieldCollection
+     */
+    public function deletableFields(NovaRequest $request)
+    {
+        $methods = collect(['fieldsForIndex', 'fieldsForDetail'])
+            ->filter(function ($method) {
+                return method_exists($this, $method);
+            })->all();
+
+        return $this->buildAvailableFields($request, $methods)
+            ->when($request->viaRelationship(), function ($fields) use ($request) {
+                $fields = $fields->values()->all();
+                $pivotFields = $this->pivotFieldsFor($request, $request->viaResource)->all();
+
+                if ($index = $this->indexToInsertPivotFields($request, $fields)) {
+                    array_splice($fields, $index + 1, 0, $pivotFields);
+                } else {
+                    $fields = array_merge($fields, $pivotFields);
+                }
+
+                return FieldCollection::make($fields);
+            })
+            ->whereInstanceOf(Deletable::class)
+            ->unique(function ($field) {
+                return $field->attribute;
+            })
+            ->authorized($request)
+            ->each(function ($field) use ($request) {
+                if (! $field instanceof Resolvable) {
+                    return;
+                }
+
+                if ($field->pivot) {
+                    $accessor = $this->pivotAccessorFor($request, $request->viaResource);
+
+                    $field->resolveForDisplay($this->{$accessor} ?? new Pivot);
+                } else {
+                    $field->resolveForDisplay($this->resource);
+                }
+            });
+    }
+
+    /**
      * Resolve the downloadable fields.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -124,17 +171,21 @@ trait ResolvesFields
                 return FieldCollection::make($fields);
             })
             ->whereInstanceOf(Downloadable::class)
-            ->withoutListableFields()
+            ->unique(function ($field) {
+                return $field->attribute;
+            })
             ->authorized($request)
             ->each(function ($field) use ($request) {
-                if ($field instanceof Resolvable && ! $field->pivot) {
-                    $field->resolveForDisplay($this->resource);
+                if (! $field instanceof Resolvable) {
+                    return;
                 }
 
-                if ($field instanceof Resolvable && $field->pivot) {
+                if ($field->pivot) {
                     $accessor = $this->pivotAccessorFor($request, $request->viaResource);
 
                     $field->resolveForDisplay($this->{$accessor} ?? new Pivot);
+                } else {
+                    $field->resolveForDisplay($this->resource);
                 }
             });
     }

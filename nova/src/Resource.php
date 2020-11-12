@@ -326,6 +326,18 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
+     * Prepare search column value.
+     *
+     * @param  string  $column
+     * @param  string  $search
+     * @return string
+     */
+    protected static function searchableKeyword($column, $search)
+    {
+        return '%'.$search.'%';
+    }
+
+    /**
      * Get the value that should be displayed to represent the resource.
      *
      * @return string

@@ -5,6 +5,7 @@ namespace Laravel\Nova\Tests\Controller;
 use Faker\Provider\Uuid;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\Discussion;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\IntegrationTest;
@@ -72,6 +73,8 @@ class TrixAttachmentControllerTest extends IntegrationTest
 
         $this->assertCount(1, PendingAttachment::all());
 
+        unset($this->app[NovaRequest::class]);
+
         $this->withoutExceptionHandling()
             ->postJson('/nova-api/discussions', [
                 'user' => $user->id,
@@ -79,6 +82,8 @@ class TrixAttachmentControllerTest extends IntegrationTest
                 'body' => 'This is the content of the discussion',
                 'bodyDraftId' => $draftId,
             ])->assertStatus(201);
+
+        unset($this->app[NovaRequest::class]);
 
         tap(Attachment::first(), function ($attachment) {
             $this->withoutExceptionHandling()

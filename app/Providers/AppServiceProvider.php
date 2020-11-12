@@ -131,6 +131,12 @@ use App\Observers\CustomerShippingCostObserver;
 use App\Models\Service_charge;
 use App\Observers\ServiceChargeObserver;
 
+use App\Models\Order_header;
+use App\Observers\OrderHeaderObserver;
+
+use App\Models\Order_detail;
+use App\Observers\OrderDetailObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -193,5 +199,7 @@ class AppServiceProvider extends ServiceProvider
         Quotation::observe(QuotationObserver::class);
         Quotation_item::observe(QuotationItemObserver::class);
         Charter_job::observe(CharterJobObserver::class);
+        Order_header::observe(OrderHeaderObserver::class);
+        Order_detail::observe(OrderDetailObserver::class);
     }
 }

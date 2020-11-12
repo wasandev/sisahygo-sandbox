@@ -350,8 +350,6 @@ export default {
     this.initializeTrashedFromQueryString()
     this.initializeOrderingFromQueryString()
 
-    this.perPage = this.resourceInformation.perPageOptions[0]
-
     await this.initializeFilters(this.lens)
     this.getResources()
     // this.getAuthorizationToRelate()
@@ -602,7 +600,8 @@ export default {
      */
     initializePerPageFromQueryString() {
       this.perPage =
-        this.$route.query[this.perPageParameter] || _.first(this.perPageOptions)
+        this.$route.query[this.perPageParameter] ||
+        this.resourceInformation.perPageOptions[0]
     },
   },
 

@@ -12,6 +12,7 @@
       <form-panel
         class="mb-8"
         v-for="panel in panelsWithFields"
+        @field-changed="onUpdateFormStatus"
         @file-upload-started="handleFileUploadStarted"
         @file-upload-finished="handleFileUploadFinished"
         :shown-via-new-relation-modal="shownViaNewRelationModal"

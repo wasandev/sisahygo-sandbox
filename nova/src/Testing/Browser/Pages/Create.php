@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Testing\Browser\Pages;
 
 use Laravel\Dusk\Browser;
+use Laravel\Nova\Nova;
 
 class Create extends Page
 {
@@ -28,7 +29,7 @@ class Create extends Page
      */
     public function url()
     {
-        return '/nova/resources/'.$this->resourceName.'/new';
+        return Nova::path().'/resources/'.$this->resourceName.'/new';
     }
 
     /**

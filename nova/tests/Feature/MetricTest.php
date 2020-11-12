@@ -3,9 +3,12 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Cake\Chronos\Chronos;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\Trend;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Nova;
@@ -23,6 +26,14 @@ class MetricTest extends IntegrationTest
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        DB::disableQueryLog();
+        DB::flushQueryLog();
+
+        parent::tearDown();
     }
 
     public function test_metric_can_be_calculated()
@@ -213,5 +224,71 @@ class MetricTest extends IntegrationTest
         $metric = new TotalUsers;
 
         $this->assertNull($metric->jsonSerialize()['selectedRangeKey']);
+    }
+
+    public function test_partition_metrics_can_provide_data_with_raw_column_expression()
+    {
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Partition {
+            public function calculate(Request $request)
+            {
+                return $this->max($request, User::class, DB::raw('json_extract(meta, "$.value")'), 'id');
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', []);
+
+        $metric->calculate($request);
+
+        $this->assertSame(
+            'select "id", max(json_extract(meta, "$.value")) as aggregate from "users" where "users"."deleted_at" is null group by "id"',
+            DB::getQueryLog()[0]['query']
+        );
+    }
+
+    public function test_trend_metrics_can_provide_data_with_raw_column_expression()
+    {
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Trend {
+            public function calculate(Request $request)
+            {
+                return $this->max($request, User::class, 'day', DB::raw('json_extract(meta, "$.value")'));
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', []);
+
+        $metric->calculate($request);
+
+        $this->assertSame(
+            'select strftime(\'%Y-%m-%d\', datetime("users"."created_at", \'+0 hour\')) as date_result, max(json_extract(meta, "$.value")) as aggregate from "users" where "users"."created_at" between ? and ? and "users"."deleted_at" is null group by strftime(\'%Y-%m-%d\', datetime("users"."created_at", \'+0 hour\')) order by "date_result" asc',
+            DB::getQueryLog()[0]['query']
+        );
+    }
+
+    public function test_value_metrics_can_provide_data_with_raw_column_expression()
+    {
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Value {
+            public function calculate(Request $request)
+            {
+                return $this->max($request, User::class, DB::raw('json_extract(meta, "$.value")'));
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', []);
+
+        $metric->calculate($request);
+
+        $this->assertSame(
+            'select max(json_extract(meta, "$.value")) as aggregate from "users" where "users"."created_at" between ? and ? and "users"."deleted_at" is null',
+            DB::getQueryLog()[0]['query']
+        );
     }
 }

@@ -173,6 +173,21 @@ class ResourceFieldTest extends IntegrationTest
         $this->assertCount(3, $resource->detailFields($request));
     }
 
+    public function test_uses_deletable_fields()
+    {
+        $user = factory(User::class)->create();
+        $resource = new UserWithCustomFields($user);
+
+        $request = NovaRequest::create('/');
+
+        $this->assertSame(
+            ['Avatar'],
+            $resource->deletableFields($request)->pluck('name')->all()
+        );
+
+        $this->assertCount(1, $resource->deletableFields($request));
+    }
+
     public function test_uses_downloadable_fields()
     {
         $user = factory(User::class)->create();

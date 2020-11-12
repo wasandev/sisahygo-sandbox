@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -160,7 +161,11 @@ class Nova
      */
     public static function version()
     {
-        return '3.14.0';
+        return once(function () {
+            $manifest = json_decode(File::get(__DIR__.'/../composer.json'), true);
+
+            return $manifest['version'] ?? '3.x';
+        });
     }
 
     /**

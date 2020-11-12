@@ -12,7 +12,7 @@ trait PerformsQueries
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $search
+     * @param  string|null  $search
      * @param  array  $filters
      * @param  array  $orderings
      * @param  string  $withTrashed
@@ -23,7 +23,7 @@ trait PerformsQueries
                                       $withTrashed = TrashedStatus::DEFAULT)
     {
         return static::applyOrderings(static::applyFilters(
-            $request, static::initializeQuery($request, $query, $search, $withTrashed), $filters
+            $request, static::initializeQuery($request, $query, (string) $search, $withTrashed), $filters
         ), $orderings)->tap(function ($query) use ($request) {
             static::indexQuery($request, $query->with(static::$with));
         });
@@ -75,7 +75,11 @@ trait PerformsQueries
             $likeOperator = $connectionType == 'pgsql' ? 'ilike' : 'like';
 
             foreach (static::searchableColumns() as $column) {
-                $query->orWhere($model->qualifyColumn($column), $likeOperator, '%'.$search.'%');
+                $query->orWhere(
+                    $model->qualifyColumn($column),
+                    $likeOperator,
+                    static::searchableKeyword($column, $search)
+                );
             }
         });
     }

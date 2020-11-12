@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Testing\Browser\Pages;
 
 use Laravel\Dusk\Browser;
+use Laravel\Nova\Nova;
 
 class Index extends Page
 {
@@ -26,7 +27,7 @@ class Index extends Page
      */
     public function url()
     {
-        return '/nova/resources/'.$this->resourceName;
+        return Nova::path().'/resources/'.$this->resourceName;
     }
 
     /**

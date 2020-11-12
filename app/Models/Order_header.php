@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Order_header extends Model
+{
+    protected $fillable = [
+        'order_header_no', 'order_header_date', 'order_status', 'branch_id', 'branch_rec_id',
+        'customer_id', 'customer_rec_id', 'paymenttype', 'remark', 'waybill_id', 'trantype',
+        'checker_id', 'loader_id', 'shipper_id', 'paystatus', 'order_amount', 'user_id', 'updated_by'
+    ];
+    protected $casts = [
+        'order_header_date' => 'date'
+    ];
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer');
+    }
+    public function to_customer()
+    {
+        return $this->belongsTo('App\Models\Customer', 'customer_rec_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
+    public function checker()
+    {
+        return $this->belongsTo('App\Models\Employee', 'checker_id');
+    }
+    public function loader()
+    {
+        return $this->belongsTo('App\Models\Employee', 'loader_id');
+    }
+
+    public function shipper()
+    {
+        return $this->belongsTo('App\Models\Employee', 'shipper_id');
+    }
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch');
+    }
+    public function to_branch()
+    {
+        return $this->belongsTo('App\Models\Branch', 'branch_rec_id');
+    }
+
+    public function order_details()
+    {
+        return $this->hasMany('App\Models\Order_detail');
+    }
+}

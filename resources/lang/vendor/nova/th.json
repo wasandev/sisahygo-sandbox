@@ -564,7 +564,9 @@
     "Import Customer": "นำเข้าข้อมูล ลูกค้า",
     "Set product category": "กำหนดกลุ่มสินค้า",
     "Set product style": "กำหนดประเภทสินค้า",
-    "Set product unit": "กำหนดหน่วยนับสินค้า"
+    "Set product unit": "กำหนดหน่วยนับสินค้า",
+    "Order header no": "เลขที่ใบรับส่ง",
+    "Order Date": "วันที่ใบรับส่ง"
 
 
 

@@ -103,8 +103,14 @@ class ActionRequest extends NovaRequest
         }
 
         return $this->viaRelationship()
-                        ? $this->modelsViaRelationship()
-                        : $this->newQueryWithoutScopes();
+                    ? $this->modelsViaRelationship()
+                    : tap($this->newQueryWithoutScopes(), function ($query) {
+                        $resource = $this->resource();
+
+                        $resource::indexQuery(
+                            $this, $query
+                        );
+                    });
     }
 
     /**

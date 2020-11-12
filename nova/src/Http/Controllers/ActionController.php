@@ -17,7 +17,9 @@ class ActionController extends Controller
     public function index(NovaRequest $request)
     {
         $resource = $request->newResourceWith(
-            $request->findModelQuery()->first() ?? $request->model()
+            ($request->resourceId
+                ? $request->findModelQuery()->first()
+                : null) ?? $request->model()
         );
 
         return response()->json([

@@ -6,11 +6,11 @@
           :label-for="field.attribute"
           :class="{ 'mb-2': showHelpText && field.helpText }"
         >
-          {{ fieldLabel }}
-
-          <span v-if="field.required" class="text-danger text-sm">{{
-            __('*')
-          }}</span>
+          {{ fieldLabel }}&nbsp;<span
+            v-if="field.required"
+            class="text-danger text-sm"
+            >{{ __('*') }}</span
+          >
         </form-label>
       </slot>
     </div>
