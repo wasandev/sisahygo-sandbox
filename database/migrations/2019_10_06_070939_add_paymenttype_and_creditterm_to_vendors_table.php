@@ -14,7 +14,7 @@ class AddPaymenttypeAndCredittermToVendorsTable extends Migration
     public function up()
     {
         Schema::table('vendors', function (Blueprint $table) {
-            $table->enum('paymenttype', ['เงินสด', 'วางบิล'])->default('เงินสด');
+            $table->enum('paymenttype', ['เงินสด', 'เงินโอน', 'วางบิล'])->default('เงินสด');
             $table->integer('creditterm')->nullable()->default(0);
         });
     }

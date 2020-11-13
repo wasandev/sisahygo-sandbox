@@ -70,7 +70,7 @@ class Customer extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            //ID::make()->sortable(),
             Boolean::make(__('Status'), 'status'),
             Text::make(__('Customer code'), 'customer_code')
                 ->readonly(),
@@ -94,7 +94,8 @@ class Customer extends Resource
                 'Y' => 'วางบิล'
             ])
                 ->hideFromIndex()
-                ->withMeta(['value' => 'H']),
+                ->withMeta(['value' => 'H'])
+                ->displayUsingLabels(),
             Number::make(__('Credit term'), 'creditterm')
                 ->withMeta(['value' => 0])
                 ->hideFromIndex(),
@@ -139,7 +140,8 @@ class Customer extends Resource
             Text::make(__('Email'), 'email')
                 ->hideFromIndex(),
             Text::make(__('Phone'), 'phoneno')
-                ->rules('required', 'numeric'),
+                ->rules('required', 'numeric')
+                ->hideFromIndex(),
             Text::make(__('Website Url'), 'weburl')
                 ->hideFromIndex(),
             Text::make(__('Facebook'), 'facebook')
@@ -169,14 +171,12 @@ class Customer extends Resource
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('amphoe')
                 ->sortable()
-                ->rules('required')
-                ->hideFromIndex(),
+                ->rules('required'),
             InputProvince::make(__('Province'), 'province')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('province')
                 ->sortable()
-                ->rules('required')
-                ->hideFromIndex(),
+                ->rules('required'),
             InputPostalCode::make(__('Postal Code'), 'postal_code')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('zipcode')
