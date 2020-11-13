@@ -489,7 +489,7 @@
     "Employee status": "สถานะพนักงาน",
     "Charter routes": "เส้นทางขนส่งเหมาคัน",
     "Customer name": "ชื่อลูกค้า",
-    "Address name": "ชื่อจุดรับ-ส่ง",
+    "Address name": "ที่อยู่รับ-ส่งสินค้า",
     "Assign user": "กำหนดผู้ใช้",
     "Created by": "สร้างโดย",
     "Created At": "สร้างเมื่อ",
@@ -534,7 +534,7 @@
     "To province": "ไปจังหวัด",
     "Used product unit": "ใช้หน่วยนับของสินค้า",
     "Customer shipping cost": "ราคาค่าขนส่งสินค้าตามลูกค้า",
-    "Customer addresses": "จุดรับ-ส่งสินค้า",
+    "Customer addresses": "ที่อยู่รับ-ส่งสินค้า",
     "Customer products": "ข้อมูลสินค้าของลูกค้า",
     "Add Customer product shipping cost": "สร้างตารางราคาค่าขนส่งของลูกค้า",
     "Parcels": "ข้อมูลพัสดุ",
@@ -566,7 +566,10 @@
     "Set product style": "กำหนดประเภทสินค้า",
     "Set product unit": "กำหนดหน่วยนับสินค้า",
     "Order header no": "เลขที่ใบรับส่ง",
-    "Order Date": "วันที่ใบรับส่ง"
+    "Order Date": "วันที่ใบรับส่ง",
+    "Order details": "ข้อมูลรายการสินค้า",
+    "Order detail": "รายการสินค้า",
+    "Order Confirmed": "ยืนยันใบรับส่งสินค้า"
 
 
 

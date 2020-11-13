@@ -18,7 +18,7 @@ class Order_detail extends Model
     }
     public function product()
     {
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Product');
     }
     public function unit()
     {

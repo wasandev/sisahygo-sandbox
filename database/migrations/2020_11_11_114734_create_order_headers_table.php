@@ -24,7 +24,7 @@ class CreateOrderHeadersTable extends Migration
             $table->bigInteger('customer_rec_id')->unsigned();
             $table->enum('paymenttype', ['H', 'T', 'E', 'F', 'L'])->default('H');
             $table->string('remark', 150)->nullable();
-            $table->bigInteger('waybill_id')->unsigned();
+            $table->bigInteger('waybill_id')->nullable();
             $table->boolean('trantype')->default(true);
             $table->integer('checker_id')->nullable();
             $table->integer('loader_id')->nullable();

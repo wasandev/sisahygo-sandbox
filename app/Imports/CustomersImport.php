@@ -17,12 +17,14 @@ class CustomersImport implements ToModel
         return new Customer([
             'customer_code' => $row[0],
             'name'     => $row[1],
-            'address' => $row[2],
-            'sub_district' => $row[3],
-            'district' => $row[4],
-            'province' => $row[5],
-            'postal_code' => $row[6],
-            'phoneno' => $row[7],
+            'taxid' => $row[2],
+            'address' => $row[3],
+            'sub_district' => $row[4],
+            'district' => $row[5],
+            'province' => $row[6],
+            'postal_code' => $row[7],
+            'phoneno' => $row[8],
+            'paymenttype' => $row[9]
         ]);
     }
 }

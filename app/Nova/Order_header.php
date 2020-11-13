@@ -5,10 +5,12 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Order_header extends Resource
@@ -74,12 +76,29 @@ class Order_header extends Resource
             //BelongsTo::make('ใบกำกับสินค้า','waybill_id','App\Nova\Waybill'),
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly(),
-            Text::make(__('Order date'), 'order_date')
-                ->readonly(),
-            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch'),
-            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch'),
-            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer'),
-            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer'),
+            Date::make(__('Order date'), 'order_header_date')
+                ->readonly()
+                ->default(today())
+                ->format('DD/MM/YYYY'),
+            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
+                ->hideWhenCreating(),
+            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
+                ->hideWhenCreating(),
+            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
+                ->searchable()
+                ->showCreateRelationButton(),
+            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
+                ->searchable()
+                ->showCreateRelationButton(),
+            Select::make(__('Payment type'), 'paymenttype')->options([
+                'H' => 'เงินสดต้นทาง',
+                'E' => 'เงินสดปลายทาง',
+                'T' => 'เงินโอน',
+                'F' => 'วางบิลต้นทาง',
+                'L' => 'วางบิลปลายทาง'
+            ])->displayUsingLabels()
+                ->hideFromIndex()
+                ->default('H'),
 
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
@@ -92,7 +111,7 @@ class Order_header extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make('รายการสินค้า', 'order_detail', 'App\Nova\Order_detail'),
+            HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
         ];
     }
 
@@ -137,6 +156,15 @@ class Order_header extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Actions\OrderConfirmed)
+                ->onlyOnDetail()
+                ->confirmText('ต้องการยืนยันใบรับส่งรายการนี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
+        ];
     }
 }

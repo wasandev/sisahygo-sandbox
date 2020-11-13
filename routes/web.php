@@ -1,16 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
 
 Route::auth();
 Route::get('/', function () {
     return view('welcome');
 });
 
-//Memeber page : /
-Route::get('/member', 'HomeController@index');
 
+Route::middleware('web', 'auth')
+    ->namespace('\\App\\Http\\Controllers\\')
+    ->group(function () {
 
+        Route::get('/test', 'TestController@test');
+    });
 
 //Pages
 Route::get('pages/{slug}', array('as' => 'page.show', 'uses' => 'PagesController@show'));
@@ -20,10 +24,9 @@ Route::middleware('web', 'auth')
     ->namespace('\\App\\Http\\Controllers\\')
     ->group(function () {
 
-
-
         Route::get('/quotation/preview/{id}', 'QuotationController@preview')->name('preview'); //For test
         Route::get('/quotation/makepdf/{id}', 'QuotationController@makePDF')->name('makepdf');
         Route::get('/charterjob/preview/{id}', 'CharterJobController@preview')->name('preview'); //for test
         Route::get('/charterjob/makepdf/{id}', 'CharterJobController@makePDF')->name('makepdf');
+        Route::get('/orderheader/makepdf/{id}', 'OrderHeaderController@makePDF')->name('makepdf');
     });
