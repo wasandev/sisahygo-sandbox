@@ -73,7 +73,8 @@ class Customer extends Resource
             //ID::make()->sortable(),
             Boolean::make(__('Status'), 'status'),
             Text::make(__('Customer code'), 'customer_code')
-                ->readonly(),
+                ->readonly()
+                ->hideFromIndex(),
 
             Text::make(__('Name'), 'name')
                 ->sortable()
