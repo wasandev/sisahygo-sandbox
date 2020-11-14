@@ -13,7 +13,7 @@ class Province extends Filter
      * @var string
      */
     public $component = 'select-filter';
-    public $name = 'ไปจังหวัด';
+    public $name = 'จังหวัด';
 
 
     /**
@@ -37,7 +37,7 @@ class Province extends Filter
      */
     public function options(Request $request)
     {
-        $provinces = \App\Models\Province::has('branch_area');
+        $provinces = \App\Models\Province::all();
         return $provinces->pluck('name', 'name')->all();
     }
 }

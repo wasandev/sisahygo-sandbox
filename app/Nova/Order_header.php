@@ -68,7 +68,7 @@ class Order_header extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            //ID::make(__('ID'), 'id')->sortable(),
             Status::make(__('Status'), 'order_status')
                 ->loadingWhen(['New'])
                 ->failedWhen(['Cancel'])

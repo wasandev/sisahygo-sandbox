@@ -10,6 +10,9 @@ use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterJobsPerDay;
 use Anaseqal\NovaImport\NovaImport;
+use App\Nova\Metrics\CustomersByDistrict;
+use App\Nova\Metrics\CustomersByProvince;
+use App\Nova\Metrics\OrdersPerDay;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -61,9 +64,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new CustomersPerDay)->width('1/3'),
-            (new CharterJobsPerDay)->width('1/3'),
-            (new NewCustomers)->width('1/3'),
+            (new OrdersPerDay)->width('1/2'),
+            (new CharterJobsPerDay)->width('1/2'),
+            (new CustomersPerDay)->width('1/2'),
+            (new NewCustomers)->width('1/2'),
+            (new CustomersByProvince())->width('1/2'),
+            (new CustomersByDistrict())->width('1/2'),
+
         ];
     }
 

@@ -58,7 +58,7 @@
     "Edit Attached": "Edit Attached",
     "Go Home": "ไปหน้าหลัก",
     "Hold Up!": "Hold Up!",
-    "Lens": "Lens",
+    "Lens": "สถิติที่น่าสนใจ",
     "New": "ใหม่",
     "Next": "ถัดไป",
     "Only Trashed": "Only Trashed",
@@ -430,9 +430,9 @@
     "Update Product Service Unit": "แก้ไขหน่วยนับสินค้าที่เลือก",
     "Set Customer Product Price Active": "กำหนดใช้งาน/ไม่ใช้งาน",
     "Print Quotation": "พิมพ์ใบเสนอราคา(PDF)",
-    "Print Charter Job": "พิมพ์ใบงานขนส่งเหมาคัน(PDF)",
+    "Print Charter Job": "พิมพ์ใบรับส่งขนส่งเหมาคัน(PDF)",
     "Customers Per Day": "จำนวนลูกค้า/วัน",
-    "Charter Jobs Per Day": "ใบงานค่าขนส่งเหมาคัน/วัน",
+    "Charter Jobs Per Day": "ใบรับส่งเหมาคันตามวัน",
     "Charter Jobs Active": "ยืนยันใบรับงาน",
     "Charter Job Cancel": "ยกเลิกใบรับงาน",
     "Name": "ชื่อ",
@@ -569,7 +569,11 @@
     "Order Date": "วันที่ใบรับส่ง",
     "Order details": "ข้อมูลรายการสินค้า",
     "Order detail": "รายการสินค้า",
-    "Order Confirmed": "ยืนยันใบรับส่งสินค้า"
+    "Order Confirmed": "ยืนยันใบรับส่งสินค้า",
+    "Orders Per Day": "จำนวนใบรับส่งตามวัน",
+    "Revenue": "รายได้ค่าขนส่ง",
+    "Most valueable receivers": "ยอดค่าขนส่งตามผู้รับ",
+    "Most valueable senders": "ยอดค่าขนส่งตามผู้ส่ง"
 
 
 

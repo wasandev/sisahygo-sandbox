@@ -22,6 +22,9 @@ use Wasandev\InputThaiAddress\InputProvince;
 use Wasandev\InputThaiAddress\InputPostalCode;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use App\Nova\Metrics\CustomersByProvince;
+use App\Nova\Metrics\CustomersByDistrict;
+use Laravel\Nova\Testing\Browser\Pages\Lens;
 
 class Customer extends Resource
 {
@@ -215,7 +218,10 @@ class Customer extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new CustomersByProvince())->width('1/2'),
+            (new CustomersByDistrict())->width('1/2'),
+        ];
     }
 
     /**
@@ -228,6 +234,7 @@ class Customer extends Resource
     {
         return [
             new Filters\BusinessType,
+            new Filters\Province,
         ];
     }
 
@@ -239,7 +246,10 @@ class Customer extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new Lenses\MostValueableSenders(),
+            new Lenses\MostValueableReceivers()
+        ];
     }
 
     /**
