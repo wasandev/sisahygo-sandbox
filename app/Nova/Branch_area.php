@@ -10,16 +10,18 @@ use Wasandev\InputThaiAddress\InputProvince;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\HasMany;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 
 
 class Branch_area extends Resource
 {
-    public static $displayInNavigation = false;
-    public static $group = '1.งานสำหรับผู้ดูแลระบบ';
-    public static $priority = 5;
+    //public static $displayInNavigation = false;
+    public static $group = '5.งานจัดการการขนส่ง';
+    public static $priority = 1;
     /**
      * The model the resource corresponds to.
      *
@@ -50,6 +52,13 @@ class Branch_area extends Resource
     {
         return 'พื้นที่บริการสาขา';
     }
+
+    public static $searchRelations = [
+        'branch' => ['name'],
+    ];
+    public static $globalSearchRelations = [
+        'branch' => ['name'],
+    ];
     /**
      * Get the fields displayed by the resource.
      *
@@ -59,7 +68,7 @@ class Branch_area extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            //ID::make()->sortable(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')->sortable(),
 
             InputDistrict::make(__('District'), 'district')
@@ -72,8 +81,9 @@ class Branch_area extends Resource
                 ->fromValue('province')
                 ->sortable()
                 ->rules('required'),
-
-            HasMany::make(__('Charter routes'), 'charter_routes', 'App\Nova\Charter_route'),
+            Number::make(__('Delivery days'), 'deliverydays')
+                ->step('0.01'),
+            //HasMany::make(__('Charter routes'), 'charter_routes', 'App\Nova\Charter_route'),
             NovaGoogleMaps::make(__('Google Map Address'), 'location')->setValue($this->location_lat, $this->location_lng)
                 ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
@@ -136,7 +146,7 @@ class Branch_area extends Resource
     public function actions(Request $request)
     {
         return [
-
+            new Actions\SetDeliverydays,
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';

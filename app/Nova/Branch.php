@@ -91,13 +91,13 @@ class Branch extends Resource
 
             new Panel(__('Address'), $this->addressFields()),
             HasMany::make(__('Branch Areas'), 'branch_areas', 'App\Nova\Branch_area'),
-            BelongsToMany::make(__('Route to branch'), 'routeto', 'App\Nova\Branch')
-                ->fields(function () {
-                    return [
-                        Text::make('ชื่อเส้นทาง', 'name'),
-                        Number::make('ระยะทาง(กม.)', 'distance')->step('0.01'),
-                    ];
-                }),
+            // BelongsToMany::make(__('Route to branch'), 'routeto', 'App\Nova\Branch')
+            //     ->fields(function () {
+            //         return [
+            //             Text::make('ชื่อเส้นทาง', 'name'),
+            //             Number::make('ระยะทาง(กม.)', 'distance')->step('0.01'),
+            //         ];
+            //     }),
             HasMany::make(__('Branch Routes'), 'branch_routes', 'App\Nova\Branch_route'),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')

@@ -66,6 +66,10 @@ class Routeto_branch_cost extends Resource
             BelongsTo::make(__('Car style'), 'carstyle', 'App\Nova\Carstyle')
                 ->sortable()
                 ->rules('required'),
+
+            Currency::make(__('Full truck rate'), 'fulltruckrate')
+                ->sortable()
+                ->rules('required'),
             Currency::make('ค่าจ้างรถ(กรณีรถร่วม)', 'car_charge')
                 ->sortable()
                 ->rules('required'),

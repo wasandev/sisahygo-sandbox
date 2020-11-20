@@ -24,7 +24,7 @@ use Laravel\Nova\Fields\DateTime;
 class Vendor extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "7.งานด้านค่าใช้จ่าย";
+    public static $group = "8.งานการเงิน/บัญชี";
     public static $priority = 3;
     /**
      * The model the resource corresponds to.
@@ -65,10 +65,11 @@ class Vendor extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            //ID::make()->sortable(),
             Boolean::make(__('Status'), 'status'),
             Text::make(__('Owner code'), 'owner_code')
-                ->sortable(),
+                ->sortable()
+                ->onlyOnDetail(),
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
@@ -228,6 +229,10 @@ class Vendor extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Actions\ImportVendors)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
+        ];
     }
 }

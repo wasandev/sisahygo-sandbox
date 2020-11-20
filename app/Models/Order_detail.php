@@ -10,11 +10,16 @@ class Order_detail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_header_id', 'product_id', 'unit_id', 'price', 'amount', 'remark', 'user_id', 'updated_by'
+        'order_header_id', 'usepricetable', 'productservice_price_id', 'product_id', 'unit_id', 'price', 'amount',
+        'remark', 'user_id', 'updated_by'
     ];
     public function order_header()
     {
         return $this->belongsTo('App\Models\Order_header');
+    }
+    public function productservice_price()
+    {
+        return $this->belongsTo('App\Models\Productservice_price');
     }
     public function product()
     {

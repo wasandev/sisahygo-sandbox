@@ -23,7 +23,6 @@ class Order_headerPolicy
         return $user->role == 'admin' || $user->hasPermissionTo('view Order_headers');
     }
 
-
     public function create(User $user)
     {
         return $user->role == 'admin' || $user->hasAnyPermission(['manage Order_headers', 'manage own Order_headers']);
@@ -33,17 +32,24 @@ class Order_headerPolicy
     public function update(User $user, Order_header $Order_header)
     {
         if ($user->hasPermissionTo('manage own Order_headers')) {
-            return $user->id === $Order_header->user_id;
+            return ($user->id === $Order_header->user_id) && ($Order_header->order_status == "new");
         }
-        return $user->role == 'admin' || $user->hasPermissionTo('manage Order_headers');
+        return ($user->role == 'admin' || $user->hasPermissionTo('manage Order_headers')) && ($Order_header->order_status == "new");
     }
-
 
     public function delete(User $user, Order_header $Order_header)
     {
         if ($user->hasPermissionTo('manage own Order_headers')) {
-            return $user->id === $Order_header->user_id;
+            return ($user->id === $Order_header->user_id) && ($Order_header->order_status == "new");
         }
-        return $user->role == 'admin' || $user->hasPermissionTo('manage Order_headers');
+        return ($user->role == 'admin' || $user->hasPermissionTo('manage Order_headers')) && ($Order_header->order_status == "new");
+    }
+
+    public function addOrder_detail(User $user, ORder_header $Order_header)
+    {
+        if ($Order_header->order_status == "new") {
+            return true;
+        }
+        return false;
     }
 }

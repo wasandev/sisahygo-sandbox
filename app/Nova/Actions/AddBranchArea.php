@@ -41,6 +41,7 @@ class AddBranchArea extends Action
                     'branch_id' => $model->id,
                     'district' => $district->name,
                     'province' => $district->province->name,
+                    'deliverydays' => '3'
                 ]);
             }
         }

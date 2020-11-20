@@ -35,8 +35,6 @@ class Product extends Model
         return $this->hasMany('App\Models\Product_image');
     }
 
-
-
     public function product_style()
     {
         return $this->belongsTo('App\Models\Product_style');

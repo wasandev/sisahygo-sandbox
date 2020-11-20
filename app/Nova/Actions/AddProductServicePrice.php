@@ -88,7 +88,6 @@ class AddProductServicePrice extends Action
             Select::make(__('To branch'), 'to_branch_id')
                 ->options($branches)
                 ->displayUsingLabels(),
-
             Boolean::make(__('Used product unit'), 'product_unit')
                 ->default(true),
             NovaDependencyContainer::make([

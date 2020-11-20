@@ -14,7 +14,7 @@ use Laravel\Nova\Fields\DateTime;
 class Routeto_branch extends Resource
 {
     public static $group = "5.งานจัดการการขนส่ง";
-    public static $priority = 1;
+    public static $priority = 2;
     //public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
@@ -56,6 +56,8 @@ class Routeto_branch extends Resource
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch'),
             BelongsTo::make(__('To branch'), 'dest_branch', 'App\Nova\Branch'),
             Text::make(__('Name'), 'name'),
+            Number::make(__('Collect days'), 'collectdays')
+                ->step('0.01'),
             Number::make(__('Distance'), 'distance')
                 ->step('0.01'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')

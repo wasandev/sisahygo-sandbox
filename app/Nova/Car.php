@@ -79,7 +79,7 @@ class Car extends Resource
 
 
         return [
-            ID::make()->sortable(),
+            //ID::make()->sortable(),
             Boolean::make('ใช้งาน', 'status'),
             //->hideWhenCreating(),
             Image::make('รูปรถ', 'carimage')->hideFromIndex(),
@@ -109,24 +109,36 @@ class Car extends Resource
             Text::make('ทะเบียนรถ', 'car_regist')
                 ->rules('required')
                 ->sortable(),
+            BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype')
+                ->showCreateRelationButton()
+                ->sortable()
+                ->nullable(),
+            BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
+                ->showCreateRelationButton()
+                ->sortable()
+                ->nullable(),
             BelongsTo::make('จังหวัด', 'province', Province::class)
+                ->hideFromIndex()
                 ->searchable()
-                ->rules('required'),
+                ->nullable(),
             Text::make('หมายเลขรถของบริษัท', 'carno')
-                ->sortable(),
+                ->hideFromIndex(),
             Select::make('ตำแหน่งรถ', 'carposition')->options([
                 'tractor' => 'หัว',
                 'trailer' => 'หาง'
             ])->displayUsingLabels()
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex(),
             Select::make('การเป็นเจ้าของ', 'ownertype')->options([
                 'owner' => 'รถบริษัท',
                 'partner' => 'รถร่วมบริการ'
             ])->displayUsingLabels()
                 ->sortable(),
             NovaDependencyContainer::make([
-                BelongsTo::make('เจ้าของรถ', 'owner', 'App\Nova\Vendor')
+                BelongsTo::make('เจ้าของรถ/ผู้รับรายได้', 'owner', 'App\Nova\Vendor')
                     ->showCreateRelationButton()
+                    ->sortable()
+                    ->searchable(),
             ])->dependsOn('ownertype', 'partner'),
 
             Date::make('วันที่ได้มา/วันที่เข้าร่วม', 'purchase_date')
@@ -134,12 +146,7 @@ class Car extends Resource
                 ->format('DD/MM/YYYY'),
             Currency::make('ราคาที่ซื้อมา', 'purchase_price')
                 ->hideFromIndex(),
-            BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype')
-                ->hideFromIndex()
-                ->showCreateRelationButton(),
-            BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
-                ->hideFromIndex()
-                ->showCreateRelationButton(),
+
             BelongsTo::make('ตำแหน่งยาง', 'tiretype', 'App\Nova\Tiretype')
                 ->hideFromIndex()
                 ->showCreateRelationButton(),
@@ -225,10 +232,17 @@ class Car extends Resource
     public function actions(Request $request)
     {
         return [
+            (new Actions\ImportCars)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
+            (new Actions\SetCarType),
+            (new Actions\SetCarStyle),
+            (new Actions\SetCarOwnerType)
+
         ];
     }
 }

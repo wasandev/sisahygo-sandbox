@@ -45,7 +45,13 @@ class Customer extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    //public static $title = 'name' . ' ' . ' address';
+
+    public function title()
+    {
+        return $this->name  . ' ' . $this->district . ' ' . $this->province
+            . ' T.' . $this->phoneno;
+    }
 
     /**
      * The columns that should be searched.
@@ -53,7 +59,7 @@ class Customer extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'district', 'province'
+        'name', 'sub_district', 'district', 'province'
     ];
 
     public static function label()

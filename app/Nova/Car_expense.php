@@ -12,9 +12,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Car_expense extends Resource
 {
-    //public static $displayInNavigation = false;
-    public static $group = "7.งานด้านค่าใช้จ่าย";
-    public static $priority = 1;
+    public static $displayInNavigation = false;
+    public static $group = "8.งานการเงิน/บัญชี";
+    public static $priority = 5;
     /**
      * The model the resource corresponds to.
      *

@@ -14,6 +14,7 @@ class Branch_area extends Model
         'province',
         'location_lat',
         'location_lng',
+        'deliverydays',
         'user_id',
         'updated_by'
     ];

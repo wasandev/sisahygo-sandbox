@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Order_detail;
+//use App\Models\Order_header;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class Order_detailPolicy
@@ -26,24 +27,27 @@ class Order_detailPolicy
 
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasAnyPermission(['manage Order_details', 'manage own Order_details']);
+
+        return ($user->role == 'admin' || $user->hasAnyPermission(['manage Order_details', 'manage own Order_details']));
     }
 
 
     public function update(User $user, Order_detail $Order_detail)
     {
         if ($user->hasPermissionTo('manage own Order_details')) {
-            return $user->id === $Order_detail->user_id;
+            return ($user->id === $Order_detail->user_id) &&  ($Order_detail->order_header->order_status == "new");
         }
-        return $user->role == 'admin' || $user->hasPermissionTo('manage Order_details');
+        return ($user->role == 'admin' || $user->hasPermissionTo('manage Order_details'))
+            && ($Order_detail->order_header->order_status == "new");
     }
 
 
     public function delete(User $user, Order_detail $Order_detail)
     {
         if ($user->hasPermissionTo('manage own Order_details')) {
-            return $user->id === $Order_detail->user_id;
+            return ($user->id === $Order_detail->user_id) &&  ($Order_detail->order_header->order_status == "new");
         }
-        return $user->role == 'admin' || $user->hasPermissionTo('manage Order_details');
+        return ($user->role == 'admin' || $user->hasPermissionTo('manage Order_details'))
+            && ($Order_detail->order_header->order_status == "new");
     }
 }

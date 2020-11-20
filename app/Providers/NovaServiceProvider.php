@@ -10,8 +10,10 @@ use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterJobsPerDay;
 use Anaseqal\NovaImport\NovaImport;
+use App\Nova\Metrics\CharterIncomes;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersByProvince;
+use App\Nova\Metrics\OrderIncomes;
 use App\Nova\Metrics\OrdersPerDay;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -64,6 +66,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+            (new OrderIncomes())->width('1/2'),
+            (new CharterIncomes())->width('1/2'),
             (new OrdersPerDay)->width('1/2'),
             (new CharterJobsPerDay)->width('1/2'),
             (new CustomersPerDay)->width('1/2'),
@@ -94,9 +98,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+
             \Pktharindu\NovaPermissions\NovaPermissions::make()
                 ->roleResource(Role::class),
             new NovaImport,
+
 
         ];
     }

@@ -6,10 +6,13 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Http\Requests\NovaRequest;
 //use Wasandev\InputThaiAddress\InputSubDistrict;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+
+
 
 class Productservice_price extends Resource
 {
@@ -28,8 +31,12 @@ class Productservice_price extends Resource
      *
      * @var string
      */
-    public static $title = 'district';
+    // public static $title = 'district';
 
+    public function title()
+    {
+        return $this->product->name . '->' . $this->district . ' ' . $this->province . '=' . number_format($this->price, 2, '.', ',') . '/' . $this->unit->name;
+    }
     /**
      * The columns that should be searched.
      *

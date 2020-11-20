@@ -61,7 +61,7 @@ class Product extends Resource
 
 
         return [
-            ID::make()->sortable(),
+            //ID::make()->sortable(),
             Boolean::make(__('Status'), 'status')
                 ->sortable(),
             BelongsTo::make(__('Category'), 'category', 'App\Nova\Category')

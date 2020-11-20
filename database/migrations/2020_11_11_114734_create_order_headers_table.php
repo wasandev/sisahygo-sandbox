@@ -17,7 +17,8 @@ class CreateOrderHeadersTable extends Migration
             $table->id();
             $table->char('order_header_no', 15)->nullable();
             $table->date('order_header_date');
-            $table->enum('order_status', ['New', 'Confirmed', 'Cancel'])->default('New');
+            $table->enum('order_status', ['new', 'confirmed', 'loaded', 'transporting', 'completed', 'cancel'])->default('New');
+            $table->boolean('payment_status')->default(false);
             $table->integer('branch_id')->unsigned();
             $table->integer('branch_rec_id')->unsigned();
             $table->bigInteger('customer_id')->unsigned();
@@ -29,7 +30,6 @@ class CreateOrderHeadersTable extends Migration
             $table->integer('checker_id')->nullable();
             $table->integer('loader_id')->nullable();
             $table->integer('shipper_id')->nullable();
-            $table->boolean('paystatus')->default(false);
             $table->decimal('order_amount', 10, 2)->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

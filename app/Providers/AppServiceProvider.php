@@ -137,6 +137,19 @@ use App\Observers\OrderHeaderObserver;
 use App\Models\Order_detail;
 use App\Observers\OrderDetailObserver;
 
+use App\Models\Order_status;
+use App\Observers\Order_statusObserver;
+
+use App\Models\Bank;
+use App\Observers\BankObserver;
+
+use App\Models\Bankaccount;
+use App\Observers\BankaccountObserver;
+
+use App\Models\Order_banktransfer;
+use App\Observers\Order_banktransferObserver;
+
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -201,5 +214,9 @@ class AppServiceProvider extends ServiceProvider
         Charter_job::observe(CharterJobObserver::class);
         Order_header::observe(OrderHeaderObserver::class);
         Order_detail::observe(OrderDetailObserver::class);
+        Order_status::observe((Order_statusObserver::class));
+        Bank::observe(BankObserver::class);
+        Bankaccount::observe(BankaccountObserver::class);
+        Order_banktransfer::observe(Order_banktransferObserver::class);
     }
 }

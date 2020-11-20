@@ -9,7 +9,8 @@ class Order_header extends Model
     protected $fillable = [
         'order_header_no', 'order_header_date', 'order_status', 'branch_id', 'branch_rec_id',
         'customer_id', 'customer_rec_id', 'paymenttype', 'remark', 'waybill_id', 'trantype',
-        'checker_id', 'loader_id', 'shipper_id', 'paystatus', 'order_amount', 'user_id', 'updated_by'
+        'checker_id', 'loader_id', 'shipper_id', 'payment_status', 'order_amount', 'user_id', 'updated_by',
+        'bankaccount_id', 'bankreference'
     ];
     protected $casts = [
         'order_header_date' => 'date'
@@ -56,5 +57,10 @@ class Order_header extends Model
     public function order_details()
     {
         return $this->hasMany('App\Models\Order_detail');
+    }
+
+    public function order_statuses()
+    {
+        return $this->hasMany('App\Models\Order_status');
     }
 }
