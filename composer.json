@@ -26,7 +26,8 @@
         "maatwebsite/laravel-nova-excel": "^1.2",
         "pktharindu/nova-permissions": "^2.1",
         "titasgailius/search-relations": "^1.0",
-        "wasandev/input-thai-address": "*"
+        "wasandev/input-thai-address": "*",
+        "wasandev/sisahy-go": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -82,6 +83,10 @@
         {
             "type": "path",
             "url": "./nova-components/InputThaiAddress"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/SisahyGo"
         }
     ]
 }

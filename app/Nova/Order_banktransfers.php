@@ -40,7 +40,7 @@ class Order_banktransfers extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'account_no'
     ];
     public static function label()
     {

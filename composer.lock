@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40787d5c87eda258c5d5aa652214d6c2",
+    "content-hash": "b58d28960488ce3f8773529eaa662d70",
     "packages": [
         {
             "name": "anaseqal/nova-import",
@@ -6888,6 +6888,42 @@
                 "MIT"
             ],
             "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/sisahy-go",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/SisahyGo",
+                "reference": "0d32d97314b062a7173dfcfdbb448cf0c4ff8eee"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\SisahyGo\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\SisahyGo\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova theme.",
             "keywords": [
                 "laravel",
                 "nova"
