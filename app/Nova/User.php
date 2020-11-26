@@ -124,6 +124,7 @@ class User extends Resource
                 }),
             BelongsTo::make(__('Customer'), 'assign_customer', 'App\Nova\Customer')
                 ->nullable()
+                ->searchable()
                 ->showCreateRelationButton()
                 ->hideFromIndex()
                 ->canSee(function ($request) {
