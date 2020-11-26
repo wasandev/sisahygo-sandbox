@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
+
+    public function checker()
+    {
+        return $this->belongsTo('App\Models\User', 'checker_id');
+    }
 }

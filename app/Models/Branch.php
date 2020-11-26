@@ -18,6 +18,7 @@ class Branch extends Model
         'country',
         'phoneno',
         'type',
+        'vendor_id',
         'location_lat',
         'location_lng',
         'user_id',
@@ -42,7 +43,10 @@ class Branch extends Model
             'longitude' => $this->location_lng,
         ];
     }
-
+    public function vendor()
+    {
+        return $this->belongsTo('App\Models\Vendor');
+    }
     public function user()
     {
         return $this->belongsTo('App\Models\User');

@@ -2,6 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\BillingUser;
+use App\Nova\Filters\CheckerUser;
+use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\ShowOwnOrder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -14,11 +18,19 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Metrics\OrderIncomes;
+use App\Nova\Metrics\OrdersByPaymentType;
+use App\Nova\Metrics\OrdersPerDay;
+use App\Nova\Metrics\OrdersByBranchRec;
+use App\Nova\Metrics\OrdersPerMonth;
 
 class Order_header extends Resource
 {
+    public static $polling = true;
+    public static $pollingInterval = 90;
+    public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
-    public static $priority = 1;
+    public static $priority = 2;
 
     /**
      * The model the resource corresponds to.
@@ -55,7 +67,8 @@ class Order_header extends Resource
 
     public static function label()
     {
-        return 'ข้อมูลใบรับส่งสินค้า';
+
+        return "รายการใบรับส่งสินค้า";
     }
     public static function singularLabel()
     {
@@ -70,18 +83,27 @@ class Order_header extends Resource
     public function fields(Request $request)
     {
         return [
-            //ID::make(__('ID'), 'id')->sortable(),
+            //ID::make('ลำดับ', 'id')->sortable(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel'])
                 ->exceptOnForms(),
-            //BelongsTo::make('ใบกำกับสินค้า','waybill_id','App\Nova\Waybill'),
+            BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
+                ->nullable(),
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly(),
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
                 ->default(today())
-                ->format('DD/MM/YYYY'),
+                ->format('DD/MM/YYYY')
+                ->hideFromIndex(),
+            Select::make(__('Payment type'), 'paymenttype')->options([
+                'H' => 'เงินสดต้นทาง',
+                'T' => 'เงินโอนต้นทาง',
+                'E' => 'เงินสดปลายทาง',
+                'F' => 'วางบิลต้นทาง',
+                'L' => 'วางบิลปลายทาง'
+            ])->onlyOnIndex(),
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'T' => 'เงินโอนต้นทาง',
@@ -89,8 +111,7 @@ class Order_header extends Resource
                 'F' => 'วางบิลต้นทาง',
                 'L' => 'วางบิลปลายทาง'
             ])->displayUsingLabels()
-                ->hideWhenCreating()
-                ->default('H'),
+                ->onlyOnDetail(),
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
@@ -99,15 +120,7 @@ class Order_header extends Resource
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->hideFromIndex(),
-            // Text::make('ชื่อผู้ส่ง', function () {
-            //     return $this->customer->name;
-            // })
-            //     ->onlyOnIndex(),
 
-            // Text::make('ชื่อผู้รับ', function () {
-            //     return $this->to_customer->name;
-            // })
-            //     ->onlyOnIndex(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->showCreateRelationButton(),
@@ -128,7 +141,7 @@ class Order_header extends Resource
                 ->onlyOnDetail(),
             BelongsTo::make(__('Shipper'), 'shipper', 'App\Nova\User')
                 ->onlyOnDetail(),
-            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+            BelongsTo::make('พนักงานออกใบรับส่ง', 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm')
@@ -151,7 +164,24 @@ class Order_header extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new OrderIncomes())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view order-incomes');
+                }),
+            (new OrdersPerMonth())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-per-day');
+                }),
+            (new OrdersByPaymentType())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
+                }),
+            (new OrdersByBranchRec())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
+                }),
+        ];
     }
 
     /**
@@ -162,7 +192,13 @@ class Order_header extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new ShowOwnOrder(),
+            new OrderdateFilter(),
+            new BillingUser(),
+            new CheckerUser(),
+
+        ];
     }
 
     /**
@@ -173,7 +209,9 @@ class Order_header extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new Lenses\OrderBillingCash(),
+        ];
     }
 
     /**
@@ -195,18 +233,24 @@ class Order_header extends Resource
                 }),
         ];
     }
-
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->role != 'admin') {
+            return $query->where('order_status', '<>', 'checking');
+        }
+        return $query;
+    }
     public static function relatableCustomers(NovaRequest $request, $query)
     {
         $from_branch = $request->user()->branch_id;
-        $to_branch =  2;
+        // $to_branch =  6;
         if ($request->route()->parameter('field') == "customer") {
             $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
             return $query->whereIn('district', $branch_area);
         }
         if ($request->route()->parameter('field') == "to_customer") {
-            $branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get();
-            return $query->whereIn('province', $branch_area);
+            // $branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get();
+            return $query; //->whereIn('district', $branch_area);
         }
         //return $query;
     }

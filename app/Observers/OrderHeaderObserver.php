@@ -11,9 +11,10 @@ class OrderHeaderObserver
 {
     public function creating(Order_header $order_header)
     {
+        $order_amount = 0;
         $order_header->order_status = 'new';
         $order_header->order_header_date = today();
-        $order_header->checker_id = auth()->user()->id;
+        $order_header->user_id = auth()->user()->id;
         $order_header->branch_id =  auth()->user()->branch_id;
         $customer_paymenttype = $order_header->customer->paymenttype;
         $to_customer_paymenttype = $order_header->to_customer->paymenttype;
@@ -28,10 +29,18 @@ class OrderHeaderObserver
         } else {
             $order_header->paymenttype = 'H';
         }
+        $order_items = $order_header->order_details;
+        foreach ($order_items as $order_item) {
+            $sub_total = $order_item->price * $order_item->amount;
+            $order_amount = $order_amount + $sub_total;
+        }
+        $order_header->order_amount = $order_amount;
     }
 
     public function updating(Order_header $order_header)
     {
+
+
         if ($order_header->order_status == 'confirmed' && is_null($order_header->order_header_no)) {
             $order_amount = 0;
             $order_header_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'order_header_no', 'length' => 15, 'prefix' => date('Ymd')]);

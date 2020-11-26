@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Illuminate\Support\Facades\DB;
+use App\Nova\Filters\OrderdateFilter;
 
 class MostValueableReceivers extends Lens
 {
@@ -79,7 +80,9 @@ class MostValueableReceivers extends Lens
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new OrderdateFilter(),
+        ];
     }
 
     /**

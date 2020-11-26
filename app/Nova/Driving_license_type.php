@@ -13,7 +13,7 @@ class Driving_license_type extends Resource
 {
     //public static $displayInNavigation = false;
     public static $group = "2.งานด้านบุคคล";
-    public static $priority = 2;
+    public static $priority = 3;
 
     /**
      * The model the resource corresponds to.

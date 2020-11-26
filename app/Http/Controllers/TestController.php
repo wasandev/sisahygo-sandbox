@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Customer;
-use App\Models\Branch_area;
+
+use App\Models\Branch;
+use App\Models\Routeto_branch;
+
 use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
     public function test()
     {
-        $customer_rec = Customer::find(2);
-        echo $customer_rec->district;
-        //$brancharea = DB::table('branch_areas')->where('district', $customer_rec->district)->first();
-        $brancharea = Branch_area::firstWhere('district', $customer_rec->district);
+        $routeto_branch = Routeto_branch::find(7);
+        $from_branch = Branch::find($routeto_branch->branch_id);
+        $to_branch = Branch::find($routeto_branch->dest_branch_id);
+        $routeto_branchname = $from_branch->name . '-' . $to_branch->name;
+        $from_latlng = $from_branch->location_lat . ',' . $from_branch->location_lng;
+        $to_latlng = $to_branch->location_lat . ',' . $to_branch->location_lng;
 
-        dd($brancharea->branch_id);
+        $distdata  = get_distance($from_latlng, $to_latlng);
+        // dd($distdata);
+        echo $routeto_branchname . ' = ' . $distdata['distance'] . 'กม. เวลาเดินทาง' . $distdata['duration'];
     }
 }

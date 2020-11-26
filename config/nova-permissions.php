@@ -526,26 +526,27 @@ return [
             'group'        => 'พัสดุ',
         ],
         //ค่าขนส่งตามสินค้า
-        'view own order_header' => [
-            'display_name' => 'ดูข้อมูลของตัวเอง',
-            'description'  => 'ดูข้อมูลของตัวเอง',
-            'group'        => 'ค่าขนส่งตามสินค้า',
-        ],
-        'view order_header' => [
+        'view productservice_prices' => [
             'display_name' => 'ดู',
             'description'  => 'ดู',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
-        'manage own order_header' => [
-            'display_name' => 'จัดการข้อมูลของตัวเอง',
-            'description'  => 'จัดการข้อมูลของตัวเอง',
+        'create productservice_prices' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
-        'manage order_header' => [
-            'display_name' => 'จัดการข้อมูล',
-            'description'  => 'จัดการข้อมูล',
+        'edit productservice_prices' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ค่าขนส่งตามสินค้า',
+        ],
+
+        'delete productservice_prices' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
             'group'        => 'ค่าขนส่งตามสินค้า',
         ],
 
@@ -934,6 +935,29 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ค่าใช้จ่ายส่วนกลาง',
         ],
+        //ตรวจนับสินค้า
+        'view own order_checkers' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'ตรวจนับสินค้า',
+        ],
+        'view order_checkers' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ตรวจนับสินค้า',
+        ],
+
+        'manage own order_checkers' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'ตรวจนับสินค้า',
+        ],
+
+        'manage order_checkers' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'ตรวจนับสินค้า',
+        ],
         //ใบรับส่งสินค้า
         'view own order_headers' => [
             'display_name' => 'ดูข้อมูลของตัวเอง',
@@ -957,7 +981,7 @@ return [
             'description'  => 'จัดการข้อมูล',
             'group'        => 'ใบรับส่งสินค้า',
         ],
-        //ใบรับส่งสินค้า
+        //รายการสินค้าในใบรับส่งสินค้า
         'view own order_details' => [
             'display_name' => 'ดูข้อมูลของตัวเอง',
             'description'  => 'ดูข้อมูลของตัวเอง',
@@ -975,10 +999,75 @@ return [
             'group'        => 'รายการสินค้าในใบรับส่ง',
         ],
 
-        'manage order_headers' => [
+        'manage order_details' => [
             'display_name' => 'จัดการข้อมูล',
             'description'  => 'จัดการข้อมูล',
             'group'        => 'รายการสินค้าในใบรับส่ง',
         ],
+        //ใบกำกับสินค้า
+        'view own waybills' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'ใบกำกับสินค้า',
+        ],
+        'view waybills' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบกำกับสินค้า',
+        ],
+
+        'manage own waybills' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'ใบกำกับสินค้า',
+        ],
+
+        'manage waybills' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'ใบกำกับสินค้า',
+        ],
+        //Metrics
+        'view order-incomes' => [
+            'display_name' => 'รายได้ค่าขนส่ง',
+            'description'  => 'ดูรายได้ค่าขนส่ง',
+            'group'        => 'กราฟสรุป',
+        ],
+        'view orders-per-day' => [
+            'display_name' => 'จำนวนใบรับส่งต่อวัน',
+            'description'  => 'จำนวนใบรับส่งต่อวัน',
+            'group'        => 'กราฟสรุป',
+        ],
+        'view charter-incomes' => [
+            'display_name' => 'รายได้ค่าขนส่งเหมาคัน',
+            'description'  => 'ดูรายได้ค่าขนส่งเหมาคัน',
+            'group'        => 'กราฟสรุป',
+        ],
+        'view charter-jobs-per-day' => [
+            'display_name' => 'จำนวนงานเหมาคันต่อวัน',
+            'description'  => 'ดูจำนวนงานเหมาคันต่อวัน',
+            'group'        => 'กราฟสรุป',
+        ],
+        'view customers-by-province' => [
+            'display_name' => 'จำนวนลูกค้าตามจังหวัด',
+            'description'  => 'จำนวนลูกค้าตามจังหวัด',
+            'group'        => 'กราฟสรุป',
+        ],
+        'view customers-by-district' => [
+            'display_name' => 'จำนวนลูกค้าตามอำเภอ',
+            'description'  => 'จำนวนลูกค้าตามอำเภอ',
+            'group'        => 'กราฟสรุป',
+        ],
+        'view new-customers' => [
+            'display_name' => 'จำนวนลูกค้าใหม่',
+            'description'  => 'จำนวนลูกค้าใหม่',
+            'group'        => 'กราฟสรุป',
+        ],
+        'view customers-per-day' => [
+            'display_name' => 'ลูกค้าใหม่/วัน',
+            'description'  => 'ลูกค้าใหม่/วัน',
+            'group'        => 'กราฟสรุป',
+        ],
+        //Actions
     ],
 ];

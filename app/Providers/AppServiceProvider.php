@@ -134,6 +134,12 @@ use App\Observers\ServiceChargeObserver;
 use App\Models\Order_header;
 use App\Observers\OrderHeaderObserver;
 
+use App\Models\Order_checker;
+use App\Observers\OrderCheckerObserver;
+
+use App\Models\Order_loader;
+use App\Observers\OrderLoaderObserver;
+
 use App\Models\Order_detail;
 use App\Observers\OrderDetailObserver;
 
@@ -149,6 +155,17 @@ use App\Observers\BankaccountObserver;
 use App\Models\Order_banktransfer;
 use App\Observers\Order_banktransferObserver;
 
+use App\Models\Blog;
+use App\Observers\BlogsObserver;
+
+use App\Models\Page;
+use App\Observers\PagesObserver;
+
+use App\Models\Partner_option;
+use App\Observers\Partner_optionObserver;
+
+use App\Models\Waybill;
+use App\Observers\WaybillObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -213,10 +230,16 @@ class AppServiceProvider extends ServiceProvider
         Quotation_item::observe(QuotationItemObserver::class);
         Charter_job::observe(CharterJobObserver::class);
         Order_header::observe(OrderHeaderObserver::class);
+        Order_checker::observe(OrderCheckerObserver::class);
+        Order_loader::observe(OrderLoaderObserver::class);
         Order_detail::observe(OrderDetailObserver::class);
         Order_status::observe((Order_statusObserver::class));
         Bank::observe(BankObserver::class);
         Bankaccount::observe(BankaccountObserver::class);
         Order_banktransfer::observe(Order_banktransferObserver::class);
+        Blog::observe(BlogsObserver::class);
+        Page::observe(PagesObserver::class);
+        Partner_option::observe(Partner_optionObserver::class);
+        Waybill::observe(WaybillObserver::class);
     }
 }

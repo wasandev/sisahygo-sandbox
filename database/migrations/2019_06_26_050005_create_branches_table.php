@@ -26,7 +26,8 @@ class CreateBranchesTable extends Migration
             $table->string('location_lat')->nullable();
             $table->string('location_lng')->nullable();
             $table->string('phoneno', 30)->nullable();
-            $table->enum('type', ['owner', 'pathner'])->default('owner');
+            $table->enum('type', ['owner', 'partner'])->default('owner');
+            $table->integer('vendor_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->timestamps();

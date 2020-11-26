@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Routeto_branch extends Resource
 {
@@ -55,11 +56,16 @@ class Routeto_branch extends Resource
             ID::make()->sortable(),
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch'),
             BelongsTo::make(__('To branch'), 'dest_branch', 'App\Nova\Branch'),
-            Text::make(__('Name'), 'name'),
+            Text::make(__('Name'), 'name')
+                ->exceptOnForms(),
             Number::make(__('Collect days'), 'collectdays')
                 ->step('0.01'),
             Number::make(__('Distance'), 'distance')
-                ->step('0.01'),
+                ->step('0.01')
+                ->exceptOnForms(),
+            Number::make(__('Duration'), 'duration')
+                ->step('0.01')
+                ->exceptOnForms(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -119,5 +125,14 @@ class Routeto_branch extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

@@ -57,7 +57,8 @@ class OrderConfirmed extends Action
                 $model->order_status = 'confirmed';
 
                 $model->save();
-                return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+                //return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+                return Action::push('/resources/order_headers/');
             }
 
             return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');

@@ -20,6 +20,7 @@ class Order_detail extends Resource
     public static $displayInNavigation = false;
     public static $group = '8.งานบริการขนส่ง';
     public static $priority = 2;
+
     /**
      * The model the resource corresponds to.
      *

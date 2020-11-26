@@ -14,7 +14,7 @@ class Department extends Resource
 {
     //public static $displayInNavigation = false;
     public static $group = "2.งานด้านบุคคล";
-    public static $priority = 3;
+    public static $priority = 1;
 
     /**
      * The model the resource corresponds to.

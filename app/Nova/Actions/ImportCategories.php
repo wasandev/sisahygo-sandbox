@@ -42,7 +42,7 @@ class ImportCategories extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         Excel::import(new CategoriesImport, $fields->file);
-        return Action::message('It worked!');
+        return Action::message('นำเข้าข้อมูลแล้ว');
     }
 
     /**

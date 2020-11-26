@@ -16,7 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class User extends Resource
 {
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
-    public static $priority = 3;
+    public static $priority = 4;
     //public static $showColumnBorders = true;
 
     /**
@@ -82,7 +82,10 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->updateRules('unique:users,email,{{resourceId}}')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
 
             Password::make(__('password'), 'password')
                 ->onlyOnForms()
@@ -126,7 +129,10 @@ class User extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
-            BelongsToMany::make(__('Roles'), 'roles', \Pktharindu\NovaPermissions\Nova\Role::class),
+            BelongsToMany::make(__('Roles'), 'roles', \Pktharindu\NovaPermissions\Nova\Role::class)
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
             BelongsTo::make(__('Created by'), 'user_create', 'App\Nova\User')
                 ->OnlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -186,7 +192,7 @@ class User extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->role != 'admin') {
-            return $query->where('id', $request->user()->id);
+            return $query->where('role', '<>', 'admin');
         }
         return $query;
     }

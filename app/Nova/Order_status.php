@@ -62,7 +62,7 @@ class Order_status extends Resource
                 if ($this->status == 'confirmed') {
                     $status = $this->order_header->branch->name . '-' . 'รับสินค้าไว้แล้ว';
                 } elseif ($this->status == 'loaded') {
-                    $status = 'จัดสินค้าขึ้นรถแล้ว' . '- ทะเบียน' . '---';
+                    $status = 'จัดสินค้าขึ้นรถแล้ว' . '- ทะเบียน' . ' ' . $this->order_header->waybill->car->car_regist;
                 } elseif ($this->status == 'transporting') {
                     $status = 'สินค้าอยู่ระหว่างขนส่งไปสาขา' . '-' . $this->order_header->to_branch->name;
                 } elseif ($this->status == 'completed') {

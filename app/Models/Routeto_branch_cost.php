@@ -10,7 +10,7 @@ class Routeto_branch_cost extends Model
 
 
     protected $fillable = [
-        'routeto_branch_id', 'cartype_id', 'carstyle_id', 'status', 'fulltruckrate',  'fuel_cost', 'fuel_amount', 'timespent',  'car_charge', 'driver_charge', 'user_id', 'updated_by'
+        'routeto_branch_id', 'cartype_id', 'carstyle_id', 'status', 'fulltruckrate',  'fuel_cost', 'fuel_amount',  'car_charge', 'driver_charge', 'user_id', 'updated_by'
     ];
 
     public function routeto_branch()

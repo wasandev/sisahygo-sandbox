@@ -2,6 +2,7 @@
 
 namespace App\Nova\Lenses;
 
+use App\Nova\Filters\OrderdateFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -79,7 +80,9 @@ class MostValueableSenders extends Lens
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new OrderdateFilter()
+        ];
     }
 
     /**

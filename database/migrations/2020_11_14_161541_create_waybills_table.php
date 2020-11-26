@@ -17,13 +17,15 @@ class CreateWaybillsTable extends Migration
             $table->id();
             $table->char('waybill_no', 15)->unique();
             $table->date('waybill_date');
-            $table->enum('waybill_status', ['loading', 'comfirmed', 'transporting', 'destinated', 'completed', 'cancel'])->default('loading');
+            $table->enum('waybill_status', ['loading', 'comfirmed', 'transporting', 'destinated', 'completed', 'cancel', 'problem'])->default('loading');
             $table->enum('waybill_type', ['general', 'charter', 'express'])->default('General');
-            $table->integer('routeto_branch_id')->unsigned();
+            $table->integer('routeto_branch_id')->nullable();
+            $table->integer('charter_route_id')->nullable();
             $table->integer('car_id')->unsigned();
+            $table->integer('driver_id')->unsigned();
             $table->integer('branchcar_id')->nullable();
             $table->decimal('waybill_amount', 10, 2)->default(0.00);
-            $table->decimal('waybill_rate', 10, 2)->default(0.00);
+            $table->decimal('waybill_payable', 10, 2)->default(0.00);
             $table->decimal('waybill_income', 10, 2)->default(0.00);
             $table->decimal('branch_car_rate', 10, 2)->default(0.00);
             $table->decimal('branch_car_income', 10, 2)->default(0.00);

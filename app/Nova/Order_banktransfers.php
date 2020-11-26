@@ -16,6 +16,10 @@ class Order_banktransfers extends Resource
 {
     public static $group = '8.งานการเงิน/บัญชี';
     public static $priority = 4;
+    public static $polling = true;
+    public static $pollingInterval = 90;
+    public static $showPollingToggle = true;
+    public static $globallySearchable = false;
     /**
      * The model the resource corresponds to.
      *

@@ -38,8 +38,13 @@ class Car extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'car_regist';
 
+    public function title()
+    {
+
+        return $this->car_regist . ' ' . $this->cartype->name;
+    }
     /**
      * The columns that should be searched.
      *
@@ -149,8 +154,10 @@ class Car extends Resource
 
             BelongsTo::make('ตำแหน่งยาง', 'tiretype', 'App\Nova\Tiretype')
                 ->hideFromIndex()
+                ->nullable()
                 ->showCreateRelationButton(),
             Number::make('จำนวนยาง', 'tires')
+                ->nullable()
                 ->hideFromIndex(),
         ];
     }
@@ -244,5 +251,15 @@ class Car extends Resource
             (new Actions\SetCarOwnerType)
 
         ];
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

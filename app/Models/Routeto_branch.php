@@ -15,6 +15,7 @@ class Routeto_branch extends Pivot
         'dest_branch_id',
         'name',
         'distance',
+        'duration',
         'collectdays',
         'user_id', 'updated_by'
     ];

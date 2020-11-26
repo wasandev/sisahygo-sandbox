@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -18,10 +19,12 @@ use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 
 class Branch extends Resource
 {
-
+    use HasDependencies;
     //public static $displayInNavigation = false;
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
     public static $priority = 2;
@@ -73,7 +76,7 @@ class Branch extends Resource
 
         return [
 
-            ID::make()->sortable(),
+            //ID::make()->sortable(),
             Text::make(__('Branch Code'), 'code')
                 ->rules('required')
                 ->sortable(),
@@ -82,23 +85,31 @@ class Branch extends Resource
 
             Text::make(__('Phone'), 'phoneno')
                 ->rules('required'),
-            Select::make(__('Branch Type'), 'type')->options([
-                'owner' => 'บริษัทเป็นเจ้าของ',
-                'pathner' => 'ร่วมบริการ'
-            ])->displayUsingLabels()
-                ->hideFromIndex()
-                ->rules('required'),
 
             new Panel(__('Address'), $this->addressFields()),
+            Select::make(__('Branch Type'), 'type')->options([
+                'owner' => 'บริษัทเป็นเจ้าของ',
+                'partner' => 'ร่วมบริการ'
+            ])->displayUsingLabels()
+                ->rules('required'),
+            NovaDependencyContainer::make([
+                BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
+                    ->searchable()
+                    ->showCreateRelationButton()
+                    ->nullable(),
+
+            ])->dependsOn('type', 'partner'),
             HasMany::make(__('Branch Areas'), 'branch_areas', 'App\Nova\Branch_area'),
             // BelongsToMany::make(__('Route to branch'), 'routeto', 'App\Nova\Branch')
             //     ->fields(function () {
             //         return [
-            //             Text::make('ชื่อเส้นทาง', 'name'),
+            //             Text::make('ชื่อเส้นทาง', 'name')->exceptOnForms(),
             //             Number::make('ระยะทาง(กม.)', 'distance')->step('0.01'),
+            //             Number::make('เวลาเก็บสินค้าที่สาขาต้นทาง(วัน)', 'collectdays')->step('0.01'),
+
             //         ];
             //     }),
-            HasMany::make(__('Branch Routes'), 'branch_routes', 'App\Nova\Branch_route'),
+            //HasMany::make(__('Branch Routes'), 'branch_routes', 'App\Nova\Branch_route'),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -198,5 +209,15 @@ class Branch extends Resource
             }),
             (new DownloadExcel)->allFields()->withHeadings(),
         ];
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

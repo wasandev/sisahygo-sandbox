@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
 use App\Models\Order_header;
 
-class OrdersPerDay extends Trend
+class OrdersPerMonth extends Trend
 {
     /**
      * Calculate the value of the metric.
@@ -16,7 +16,10 @@ class OrdersPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->countByDays($request, Order_header::class);
+
+        return $this->sumByMonths($request, Order_header::class, 'order_amount')
+            ->showSumValue()
+            ->format('0,0.00');
     }
 
     /**
@@ -27,9 +30,10 @@ class OrdersPerDay extends Trend
     public function ranges()
     {
         return [
-            30 => '30 วัน',
-            60 => '60 วัน',
-            365 => '365 วัน',
+            3 => '3 เดือน',
+            6 => '6 เดือน',
+            9 => '9 เดือน',
+            12 => '12 เดือน',
         ];
     }
 
@@ -50,10 +54,10 @@ class OrdersPerDay extends Trend
      */
     public function uriKey()
     {
-        return 'orders-per-day';
+        return 'orders-per-month';
     }
     public function name()
     {
-        return __('Orders Per Day');
+        return __('Orders Per Month');
     }
 }

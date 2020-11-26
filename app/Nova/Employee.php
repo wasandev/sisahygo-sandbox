@@ -66,7 +66,7 @@ class Employee extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            //ID::make()->sortable(),
             Image::make(__('Image'), 'imagefile')
                 ->hideFromIndex(),
             Boolean::make(__('Status'), 'active'),
@@ -94,7 +94,26 @@ class Employee extends Resource
     {
         return [
             Text::make(__('Employee code'), 'employee_code')
-                ->rules('required', 'numeric'),
+                ->hideFromIndex()
+                ->nullable(),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
+                ->rules('required')
+                ->sortable()
+                ->showCreateRelationButton(),
+
+            BelongsTo::make(__('Department'), 'department', 'App\Nova\Department')
+                ->sortable()
+                ->rules('required')
+                ->showCreateRelationButton(),
+            Select::make(__('Employee type'), 'type')->options([
+                'ผู้บริหาร' => 'ผู้บริหาร',
+                'พนักงานบริษัท' => 'พนักงานบริษัท',
+                'พนักงานบริษัทร่วม' => 'พนักงานบริษัทร่วม',
+                'แรงงาน' => 'แรงงาน',
+                'พนักงานขับรถบริษัท' => 'พนักงานขับรถบริษัท',
+                'พนักงานขับรถร่วม' => 'พนักงานขับรถร่วม',
+            ])->displayUsingLabels()
+                ->sortable(),
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
@@ -106,26 +125,12 @@ class Employee extends Resource
             Text::make(__('Nickname'), 'nickname')
                 ->nullable()
                 ->hideFromIndex(),
-            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->rules('required')
-                ->showCreateRelationButton(),
 
-            BelongsTo::make(__('Department'), 'department', 'App\Nova\Department')
-
-                ->rules('required')
-                ->showCreateRelationButton(),
             BelongsTo::make(__('Position'), 'position', 'App\Nova\Position')
                 ->hideFromIndex()
                 ->showCreateRelationButton(),
 
-            Select::make(__('Employee type'), 'type')->options([
-                'ผู้บริหาร' => 'ผู้บริหาร',
-                'พนักงานบริษัท' => 'พนักงานบริษัท',
-                'พนักงานบริษัทร่วม' => 'พนักงานบริษัทร่วม',
-                'แรงงาน' => 'แรงงาน',
-                'พนักงานขับรถบริษัท' => 'พนักงานขับรถบริษัท',
-                'พนักงานขับรถร่วม' => 'พนักงานขับรถร่วม',
-            ])->displayUsingLabels(),
+
 
             Select::make(__('Employee status'), 'status')->options([
                 'ประจำ' => 'ประจำ',
@@ -258,7 +263,19 @@ class Employee extends Resource
     public function actions(Request $request)
     {
         return [
+            (new Actions\ImportEmployees)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
             (new DownloadExcel)->allFields()->withHeadings(),
         ];
+    }
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

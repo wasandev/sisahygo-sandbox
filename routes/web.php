@@ -14,6 +14,10 @@ Route::middleware('web', 'auth')
     ->group(function () {
 
         Route::get('/test', 'TestController@test');
+        Route::get('pages/{slug}', array('as' => 'page.show', 'uses' => 'PagesController@show'));
+        Route::get('pages', array('as' => 'page.about', 'uses' => 'PagesController@about'));
+        Route::any('/blogs', 'BlogController@index');
+        Route::get('/blogs/{slug}', 'BlogController@show');
     });
 
 //Pages

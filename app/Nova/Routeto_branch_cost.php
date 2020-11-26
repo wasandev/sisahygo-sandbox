@@ -84,9 +84,7 @@ class Routeto_branch_cost extends Resource
                 ->sortable()
                 ->rules('required')
                 ->hideFromIndex(),
-            Number::make('ระยะเวลาขนส่ง(ชม.)', 'timespent')
-                ->step('0.01')
-                ->hideFromIndex(),
+
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')

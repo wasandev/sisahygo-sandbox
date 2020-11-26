@@ -34,7 +34,7 @@ class Order_header extends Model
     }
     public function checker()
     {
-        return $this->belongsTo('App\Models\Employee', 'checker_id');
+        return $this->belongsTo('App\Models\User', 'checker_id');
     }
     public function loader()
     {
@@ -62,5 +62,10 @@ class Order_header extends Model
     public function order_statuses()
     {
         return $this->hasMany('App\Models\Order_status');
+    }
+
+    public function waybill()
+    {
+        return $this->belongsTo('App\Models\Waybill');
     }
 }
