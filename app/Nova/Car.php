@@ -42,7 +42,7 @@ class Car extends Resource
 
     public function title()
     {
-        if (is_null($this->cartype->name)) {
+        if ($this->cartype) {
             return $this->car_regist;
         }
         return $this->car_regist . ' ' . $this->cartype->name;
