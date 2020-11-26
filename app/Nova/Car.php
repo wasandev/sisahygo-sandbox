@@ -43,9 +43,10 @@ class Car extends Resource
     public function title()
     {
         if ($this->cartype) {
-            return $this->car_regist;
+            $this->car_regist . ' ' . $this->cartype->name;
         }
-        return $this->car_regist . ' ' . $this->cartype->name;
+        return
+            $this->car_regist;
     }
     /**
      * The columns that should be searched.
