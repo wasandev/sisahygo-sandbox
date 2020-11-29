@@ -89,4 +89,9 @@ class Car extends Model
     {
         return $this->belongsTo('App\Models\Province',  'car_province', 'name');
     }
+
+    public function waybills()
+    {
+        return $this->hasMany('App\Models\Waybill');
+    }
 }

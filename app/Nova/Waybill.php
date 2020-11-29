@@ -21,7 +21,7 @@ class Waybill extends Resource
 {
     use HasDependencies;
     public static $group = '7.งานบริการขนส่ง';
-    public static $priority = 3;
+    public static $priority = 4;
     public static $polling = true;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
@@ -95,12 +95,7 @@ class Waybill extends Resource
                 'express' => 'Express',
             ])->displayUsingLabels()
                 ->default('general'),
-            Text::make('สาขาปลายทาง', 'branch_rec', function () {
-                if ($this->waybill_type <> 'charter') {
-                    return $this->routeto_branch->name;
-                }
-                return $this->charter_route->name;
-            })->onlyOnIndex(),
+
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                     ->nullable()
@@ -115,7 +110,7 @@ class Waybill extends Resource
                 ->searchable()
                 ->sortable(),
             Text::make('ยอดค่าขนส่งที่กำหนด', 'fulltruckrate', function () {
-                if ($this->waybill_type == 'general') {
+                if ($this->waybill_type == 'general' || $this->waybill_type == 'express') {
                     $hasitem = count($this->routeto_branch->routeto_branch_costs);
                     if ($hasitem) {
                         $routeto_branch_cost = \App\Models\Routeto_branch_cost::where('routeto_branch_id', '=', $this->routeto_branch_id)
@@ -136,14 +131,17 @@ class Waybill extends Resource
             Number::make('ค่าขนส่ง', 'total_amount', function () {
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),
-
+            Currency::make('ค่าบรรทุก', 'waybill_payable')
+                ->onlyOnDetail(),
+            Currency::make('รายได้บริษัท', 'waybill_income')
+                ->onlyOnDetail(),
 
 
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
                 ->searchable()
                 ->sortable()
                 ->hideFromIndex(),
-            BelongsTo::make(__('Loader'), 'loader', 'App\Nova\Employee')
+            BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->searchable()
                 ->sortable()
                 ->hideFromIndex(),
@@ -158,6 +156,7 @@ class Waybill extends Resource
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             HasMany::make(__('Order header'), 'order_loaders', 'App\Nova\Order_loader'),
+            HasMany::make(__('Waybill status'), 'waybill_statuses', 'App\Nova\Waybill_status'),
         ];
     }
 
@@ -202,7 +201,24 @@ class Waybill extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Actions\WaybillConfirmed($request->resourceId))
+                ->onlyOnDetail()
+                ->confirmText('ต้องการยืนยันใบกำกับสินค้ารายการนี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
+            (new Actions\WaybillTransporting())
+                ->onlyOnIndex()
+                ->confirmText('ต้องการกำหนดให้รถออกจากสาขา')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
+        ];
     }
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {

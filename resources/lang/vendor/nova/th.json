@@ -474,6 +474,7 @@
     "Driving license type":"ประเภทใบขับขี่",
     "Employees": "ข้อมูลพนักงาน",
     "Employee": "พนักงาน",
+    "Driver": "พนักงานขับรถ",
     "Image File": "รูป",
     "ID card number": "เลขที่บัตรประชาชน",
     "Nickname": "ชื่อเล่น",
@@ -617,7 +618,13 @@
     "Title": "ชื่อเรื่อง",
     "Blog_content": "เนื้อหาบทความ",
     "Blog_image": "รูปภาพ",
-    "Order loaded": "จัดขึ้นสินค้า"
+    "Order loaded": "จัดขึ้นสินค้า",
+    "Waybill transporting": "กำหนดรถออก",
+    "Waybill confirmed":"ยืนยันใบกำกับสินค้า",
+    "Waybill status":"สถานะใบกำกับ",
+    "loading": "กำลังจัดสินค้าขึ้นรถบรรทุก"
+
+
 
 
 

@@ -10,8 +10,8 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
 use App\Models\Waybill;
-use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Fields\Text;
+use App\Models\Order_loader;
+use App\Models\Routeto_branch;
 
 class OrderLoaded extends Action
 {
@@ -24,7 +24,7 @@ class OrderLoaded extends Action
     }
     public function uriKey()
     {
-        return 'order_checked';
+        return 'order_loaded';
     }
     public function name()
     {
@@ -41,19 +41,20 @@ class OrderLoaded extends Action
     {
         foreach ($models as $model) {
             $hasitem = count($model->order_details);
-            //$order_amount = $model->order_details->price->sum();
+
 
             if ($model->order_status == 'loaded') {
                 return Action::danger('รายการนี้จัดขึ้นแล้ว');
             } elseif ($hasitem) {
 
                 $model->order_status = 'loaded';
-                $model->waybill_id = $fields->waybill;
+                $model->waybill_id = $fields->waybill_branch;
                 $model->save();
-                return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+                //return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
+                return Action::push('/resources/order_loaders/');
             }
 
-            return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');
+            return Action::danger('ไม่สามารถทำรายการจัดสินค้าขึ้นรถได้ ->ไม่มีรายการสินค้า!');
         }
     }
 
@@ -64,17 +65,32 @@ class OrderLoaded extends Action
      */
     public function fields()
     {
-        $waybills = Waybill::all()->pluck('waybill_no', 'id');
+        if (isset(request()->resourceId)) {
+            $waybillOptions = array();
+            $order_loader =    Order_loader::find(request()->resourceId);
+            $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
+            // $waybills = Waybill::where('routeto_branch_id', '=', $routeto_branch->id)->get()
+            //     ->pluck('waybill_no', 'id');
+            $waybills = Waybill::all()->pluck('waybill_no', 'id');
+            // $waybills = Waybill::with('car')
+            //     ->where('routeto_branch_id', '=', $routeto_branch->id)
+            //     ->where('waybill_status', '=', 'loading')
+            //     ->get();
+            // foreach ($waybills as $waybill) {
+            //     $waybillOptions = [
+            //         ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+            //     ];
+            //     $selectOptions = collect($waybillOptions);
+            //     $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
+            // }
 
-        return [
-            Text::make('Test')->default(function ($request) {
-                //$resourceId = $request->route('resourceId');
-                return $request->resourceId;
-            }),
+            return [
 
-            Select::make(__('Waybill'), 'waybill')
-                ->options($waybills)
-                ->displayUsingLabels(),
-        ];
+                Select::make(__('Waybill'), 'waybill_branch')
+                    ->options($waybills)
+                    ->displayUsingLabels()
+                    ->rules('required'),
+            ];
+        }
     }
 }

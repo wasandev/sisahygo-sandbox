@@ -6,6 +6,10 @@ use App\Models\Order_header;
 use App\Models\Order_status;
 use App\Models\Order_banktransfer;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Carbon;
+use App\Models\Customer;
+use App\Models\Branch_area;
+use App\Exceptions\MyCustomException;
 
 class OrderHeaderObserver
 {
@@ -16,6 +20,12 @@ class OrderHeaderObserver
         $order_header->order_header_date = today();
         $order_header->user_id = auth()->user()->id;
         $order_header->branch_id =  auth()->user()->branch_id;
+        $to_customer = Customer::find($order_header->customer_rec_id);
+        $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+        if (is_null($to_branch)) {
+            throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+        }
+        $order_header->branch_rec_id = $to_branch->branch_id;
         $customer_paymenttype = $order_header->customer->paymenttype;
         $to_customer_paymenttype = $order_header->to_customer->paymenttype;
         if ($customer_paymenttype == 'H' || $to_customer_paymenttype == 'H') {
@@ -45,6 +55,14 @@ class OrderHeaderObserver
             $order_amount = 0;
             $order_header_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'order_header_no', 'length' => 15, 'prefix' => date('Ymd')]);
             $order_header->order_header_no = $order_header_no;
+            $to_customer = Customer::find($order_header->customer_rec_id);
+            $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+            if (is_null($to_branch)) {
+                throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+            }
+            $order_header->branch_rec_id = $to_branch->branch_id;
+            $order_header->order_header_date = today();
+            $order_header->created_at = Carbon::now()->toDateTimeString();
             $order_header->user_id = auth()->user()->id;
             $order_header->updated_by = auth()->user()->id;
             $order_items = $order_header->order_details;

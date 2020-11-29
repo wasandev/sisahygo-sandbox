@@ -16,13 +16,16 @@ class Order_checker extends Model
     protected $casts = [
         'order_header_date' => 'date'
     ];
+
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer');
     }
     public function to_customer()
     {
+        //$branch_area = \App\Models\Branch_area::where('branch_id', $this->branch_rec_id);
         return $this->belongsTo('App\Models\Customer', 'customer_rec_id');
+        //->whereIn('district', $branch_area);
     }
     public function user()
     {
@@ -54,6 +57,6 @@ class Order_checker extends Model
 
     public function order_statuses()
     {
-        return $this->hasMany('App\Models\Order_status');
+        return $this->hasMany('App\Models\Order_status', 'order_header_id');
     }
 }

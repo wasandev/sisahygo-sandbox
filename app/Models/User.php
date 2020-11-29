@@ -85,4 +85,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\User', 'checker_id');
     }
+    public function loader()
+    {
+        return $this->belongsTo('App\Models\User', 'loader_id');
+    }
 }

@@ -2,10 +2,14 @@
 
 namespace App\Observers;
 
+use App\Models\Branch;
+use App\Models\Branch_area;
 use App\Models\Order_checker;
+use App\Models\Customer;
 use App\Models\Order_status;
 use App\Models\Order_banktransfer;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use App\Exceptions\MyCustomException;
 
 class OrderCheckerObserver
 {
@@ -13,6 +17,12 @@ class OrderCheckerObserver
     {
         $order_checker->order_status = 'checking';
         $order_checker->order_header_date = today();
+        $to_customer = Customer::find($order_checker->customer_rec_id);
+        $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+        if (is_null($to_branch)) {
+            throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+        }
+        $order_checker->branch_rec_id = $to_branch->branch_id;
         $order_checker->checker_id = auth()->user()->id;
         $order_checker->user_id = auth()->user()->id;
         $order_checker->branch_id =  auth()->user()->branch_id;
@@ -37,6 +47,15 @@ class OrderCheckerObserver
 
         if ($order_checker->order_status == 'new') {
             $order_amount = 0;
+            $to_customer = $order_checker->customer_rec_id;
+            $to_customer = Customer::find($order_checker->customer_rec_id);
+            $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+            if (is_null($to_branch)) {
+                if (is_null($to_branch)) {
+                    throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+                }
+            }
+            $order_checker->branch_rec_id = $to_branch->branch_id;
             $order_checker->user_id = auth()->user()->id;
             $order_checker->updated_by = auth()->user()->id;
             $order_items = $order_checker->order_details;

@@ -17,6 +17,14 @@ class Order_detail extends Model
     {
         return $this->belongsTo('App\Models\Order_header');
     }
+    public function order_checker()
+    {
+        return $this->belongsTo('App\Models\Order_checker');
+    }
+    public function order_loader()
+    {
+        return $this->belongsTo('App\Models\Order_loader');
+    }
     public function productservice_price()
     {
         return $this->belongsTo('App\Models\Productservice_price');

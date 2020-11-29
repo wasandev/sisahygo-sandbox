@@ -53,6 +53,7 @@ class SetProductUnit extends Action
 
             Select::make(__('Unit'), 'product_unit')
                 ->options($units)
+                ->searchable()
                 ->displayUsingLabels()
 
         ];

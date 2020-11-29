@@ -55,7 +55,7 @@ class Order_loader extends Model
 
     public function order_statuses()
     {
-        return $this->hasMany('App\Models\Order_status');
+        return $this->hasMany('App\Models\Order_status', 'order_header_id');
     }
     public function waybill()
     {

@@ -47,7 +47,8 @@ class OrderChecked extends Action
                 $model->order_status = 'new';
 
                 $model->save();
-                return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+                //return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+                return Action::push('/resources/order_checkers');
             }
 
             return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');

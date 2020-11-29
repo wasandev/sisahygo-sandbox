@@ -63,7 +63,7 @@ class Businesstype extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->sortable()->hideFromIndex(),
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),

@@ -83,21 +83,23 @@ class Order_header extends Resource
     public function fields(Request $request)
     {
         return [
-            //ID::make('ลำดับ', 'id')->sortable(),
+            ID::make('ลำดับ', 'id')->sortable(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel'])
                 ->exceptOnForms(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
-                ->nullable(),
+                ->nullable()
+                ->onlyOnDetail(),
             Text::make(__('Order header no'), 'order_header_no')
-                ->readonly(),
+                ->readonly()
+                ->exceptOnForms(),
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
                 ->default(today())
                 ->format('DD/MM/YYYY')
-                ->hideFromIndex(),
-            Select::make(__('Payment type'), 'paymenttype')->options([
+                ->exceptOnForms(),
+            Select::make(__('Payment'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'T' => 'เงินโอนต้นทาง',
                 'E' => 'เงินสดปลายทาง',
@@ -119,24 +121,33 @@ class Order_header extends Resource
                 ->hideFromIndex(),
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->hideFromIndex(),
-
+                ->hideFromIndex()
+                ->showOnUpdating(),
+            Currency::make('จำนวนเงิน', 'order_amount')
+                ->exceptOnForms(),
+            Text::make('ผู้ส่ง', 'from_customer', function () {
+                return $this->customer->name;
+            })->onlyOnIndex(),
+            Text::make('ผู้ส่ง', 'from_customer', function () {
+                return $this->to_customer->name;
+            })->onlyOnIndex(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->hideFromIndex(),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->hideFromIndex(),
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
 
 
-            Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
+
 
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
-                ->onlyOnDetail(),
+                ->hideFromIndex(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->onlyOnDetail(),
             BelongsTo::make(__('Shipper'), 'shipper', 'App\Nova\User')
@@ -249,8 +260,8 @@ class Order_header extends Resource
             return $query->whereIn('district', $branch_area);
         }
         if ($request->route()->parameter('field') == "to_customer") {
-            // $branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get();
-            return $query; //->whereIn('district', $branch_area);
+            $branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get();
+            return $query->whereIn('district', $branch_area);
         }
         //return $query;
     }

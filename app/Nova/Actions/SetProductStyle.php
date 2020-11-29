@@ -53,6 +53,7 @@ class SetProductStyle extends Action
 
 
             Select::make(__('Product style'), 'product_style')
+                ->searchable()
                 ->options($product_styles)
                 ->displayUsingLabels()
 

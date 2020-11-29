@@ -59,4 +59,8 @@ class Waybill extends Model
     {
         return $this->hasMany('App\Models\Order_loader');
     }
+    public function waybill_statuses()
+    {
+        return $this->hasMany('App\Models\Waybill_status');
+    }
 }

@@ -52,7 +52,7 @@ class Branch_route_cost extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->hideFromIndex(),
             Boolean::make('ใช้งาน', 'status')
                 ->sortable()
                 ->rules('required'),

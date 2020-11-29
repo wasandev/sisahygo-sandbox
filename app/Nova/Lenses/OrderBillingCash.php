@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Fields\Date;
 
 class OrderBillingCash extends Lens
 {
@@ -29,7 +30,7 @@ class OrderBillingCash extends Lens
                 ->where('order_headers.order_status', '=', 'confirmed')
                 ->where('order_headers.paymenttype', '=', 'H')
                 ->orderBy('cash', 'desc')
-                ->groupBy('users.id', 'users.name')
+                ->groupBy('users.id', 'users.name', 'order_headers.order_header_date')
         ));
     }
     /**
@@ -41,6 +42,7 @@ class OrderBillingCash extends Lens
     {
         return [
             'users.name',
+            'order_headers.order_header_date',
             DB::raw('sum(order_headers.order_amount) as cash'),
         ];
     }
@@ -55,6 +57,8 @@ class OrderBillingCash extends Lens
         return [
             // ID::make(__('ID'), 'id')->sortable(),
             Text::make(__('Name'), 'name'),
+            Date::make(__('Order date'), 'order_header_date')
+                ->format('DD/MM/YYYY'),
             Currency::make(__('จำนวนเงิน'), 'cash', function ($value) {
                 return $value;
             }),

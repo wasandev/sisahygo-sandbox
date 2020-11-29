@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Waybill_status extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'waybill_id', 'status', 'user_id', 'updated_by'
+    ];
+
+    public function waybill()
+    {
+        return $this->belongsTo('App\Models\Waybill');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function user_update()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
 }

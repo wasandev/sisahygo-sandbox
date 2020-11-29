@@ -20,6 +20,7 @@ class Order_checker extends Resource
 
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 1;
+    public static $globallySearchable = false;
 
     /**
      * The model the resource corresponds to.
@@ -81,9 +82,10 @@ class Order_checker extends Resource
                 ->format('DD/MM/YYYY')
                 ->exceptOnForms(),
 
-
+            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
+                ->exceptOnForms(),
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->hideFromIndex(),
+                ->exceptOnForms(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->showCreateRelationButton(),
@@ -165,23 +167,23 @@ class Order_checker extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->role != 'admin') {
-            return $query->where('order_status', 'checking')
-                ->orWhere('order_status', 'new');
+            return $query->where('checker_id', $request->user()->id);
+            // ->orWhere('order_status', 'checking')
+            // ->orWhere('order_status', 'new');
         }
         return $query;
     }
     public static function relatableCustomers(NovaRequest $request, $query)
     {
         $from_branch = $request->user()->branch_id;
-        $to_branch =  6;
+        // $to_branch =  6;
         if ($request->route()->parameter('field') == "customer") {
             $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
             return $query->whereIn('district', $branch_area);
         }
-        if ($request->route()->parameter('field') == "to_customer") {
-            $branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get();
-            return $query->whereIn('district', $branch_area);
-        }
-        //return $query;
+        // if ($request->route()->parameter('field') == "to_customer") {
+        //     $branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get();
+        //     return $query->whereIn('district', $branch_area);
+        // }
     }
 }

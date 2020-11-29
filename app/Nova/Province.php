@@ -13,6 +13,7 @@ class Province extends Resource
     public static $displayInNavigation = false;
     //public static $displayInNavigation = false;
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
+    public static $globallySearchable = false;
     //public static $subGroup = "ข้อมูลเบื้องต้น";
     /**
      * The model the resource corresponds to.

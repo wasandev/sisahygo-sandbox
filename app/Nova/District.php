@@ -12,6 +12,7 @@ class District extends Resource
 {
     public static $displayInNavigation = false;
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
+    public static $globallySearchable = false;
     /**
      * The model the resource corresponds to.
      *

@@ -981,6 +981,29 @@ return [
             'description'  => 'จัดการข้อมูล',
             'group'        => 'ใบรับส่งสินค้า',
         ],
+        //รายการจัดขึ้น
+        'view own order_loaders' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'รายการจัดขึ้นสินค้า',
+        ],
+        'view order_loaders' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการจัดขึ้นสินค้า',
+        ],
+
+        'manage own order_loaders' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'รายการจัดขึ้นสินค้า',
+        ],
+
+        'manage order_loaders' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'รายการจัดขึ้นสินค้า',
+        ],
         //รายการสินค้าในใบรับส่งสินค้า
         'view own order_details' => [
             'display_name' => 'ดูข้อมูลของตัวเอง',

@@ -59,7 +59,7 @@ class Address extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->sortable()->hideFromIndex(),
             BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
                 ->hideFromIndex(),
             Text::make(__('Address name'), 'name')->sortable(),

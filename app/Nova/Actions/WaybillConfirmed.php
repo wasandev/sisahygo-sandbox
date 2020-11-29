@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Nova\Actions;
+
+use App\Models\Routeto_branch;
+use App\Models\Routeto_branch_cost;
+use App\Models\Waybill;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
+
+class WaybillConfirmed extends Action
+{
+    use InteractsWithQueue, Queueable;
+    public function __construct($model = null)
+    {
+        $this->model = $model;
+    }
+    public function uriKey()
+    {
+        return 'waybill_confirmed';
+    }
+    public function name()
+    {
+        return __('Waybill confirmed');
+    }
+    /**
+     * Perform the action on the given models.
+     *
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
+     * @param  \Illuminate\Support\Collection  $models
+     * @return mixed
+     */
+    public function handle(ActionFields $fields, Collection $models)
+    {
+        foreach ($models as $model) {
+            $hasitem = count($model->order_loaders);
+            //$order_amount = $model->order_details->price->sum();
+
+            if ($model->waybill_status <> 'loading') {
+                return Action::danger('ไม่สามารถยืนยันรายการที่ ยืนยัน/ยกเลิก ไปแล้วได้');
+            } elseif ($hasitem) {
+
+                $model->waybill_amount = $fields->waybill_amount;
+                $model->waybill_payable =  $fields->waybill_payable;
+                $model->waybill_income = $fields->waybill_income;
+                $model->departure_at = $fields->departure_at;
+                $model->arrival_at = $fields->arrival_at;
+                $model->waybill_status = 'confirmed';
+                $model->save();
+                //return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+                return Action::push('/resources/waybills/');
+            }
+
+            return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการใบรับส่ง!');
+        }
+    }
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        if ($this->model) {
+            $waybill = Waybill::find($this->model);
+            $waybill_amount = $waybill->order_loaders->sum('order_amount');
+            $routeto_branch = Routeto_branch::find($waybill->routeto_branch_id);
+            $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $waybill->routeto_branch_id)
+                ->where('cartype_id', '=', $waybill->car->cartype_id)
+                ->first();
+
+
+            return [
+                Currency::make('ยอดค่าขนส่งรวม', 'waybill_amount')->default($waybill_amount)
+                    ->readonly(),
+                Currency::make('หักค่าบรรทุก', 'waybill_payable')->default($routeto_branch_cost->car_charge),
+                Currency::make('รายได้บริษัท', 'waybill_income')->default($waybill_amount - $routeto_branch_cost->car_charge),
+                DateTime::make('กำหนดรถออกจากสาขาต้นทาง', 'departure_at')
+                    ->format('DD/MM/YYYY HH:mm'),
+                DateTime::make('กำหนดรถถึงสาขาปลายทาง', 'arrival_at')
+                    ->format('DD/MM/YYYY HH:mm'),
+            ];
+        }
+        return [
+            Currency::make('ยอดค่าขนส่งรวม', 'waybill_amount')
+                ->readonly(),
+            Currency::make('หักค่าบรรทุก', 'waybill_payable'),
+            Currency::make('รายได้บริษัท', 'waybill_income'),
+            DateTime::make('กำหนดรถออกจากสาขาต้นทาง', 'departure_at'),
+            DateTime::make('กำหนดรถถึงสาขาปลายทาง', 'arrival_at'),
+        ];
+    }
+}

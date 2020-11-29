@@ -38,15 +38,14 @@ class Car extends Resource
      *
      * @var string
      */
-    public static $title = 'car_regist';
+    //public static $title = 'car_regist';
 
     public function title()
     {
-        if ($this->cartype) {
-            $this->car_regist . ' ' . $this->cartype->name;
-        }
-        return
-            $this->car_regist;
+        //if ($this->cartype) {
+        return $this->car_regist . ' ' . $this->cartype->name;
+        // }
+        //return $this->car_regist;
     }
     /**
      * The columns that should be searched.

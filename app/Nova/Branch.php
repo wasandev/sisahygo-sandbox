@@ -76,7 +76,7 @@ class Branch extends Resource
 
         return [
 
-            //ID::make()->sortable(),
+            ID::make()->hideFromIndex(),
             Text::make(__('Branch Code'), 'code')
                 ->rules('required')
                 ->sortable(),

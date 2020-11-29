@@ -15,7 +15,7 @@ use Laravel\Nova\Fields\DateTime;
 
 class Serviceprice_item extends Resource
 {
-    //public static $displayInNavigation = false;
+    public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 11;
     /**

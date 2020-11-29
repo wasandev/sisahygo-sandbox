@@ -56,7 +56,7 @@ class Bank extends Resource
     public function fields(Request $request)
     {
         return [
-            // ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->hideFromIndex(),
             Text::make(__('Name'), 'name')
                 ->rules('required'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')

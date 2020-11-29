@@ -21,7 +21,8 @@ class Order_loader extends Resource
 {
 
     public static $group = '7.งานบริการขนส่ง';
-    public static $priority = 4;
+    public static $priority = 3;
+    public static $globallySearchable = false;
 
     /**
      * The model the resource corresponds to.
@@ -93,6 +94,8 @@ class Order_loader extends Resource
                 ->sortable()
                 ->exceptOnForms()
                 ->hideFromIndex(),
+            Currency::make('จำนวนเงิน', 'order_amount')
+                ->exceptOnForms(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->searchable()
@@ -103,6 +106,7 @@ class Order_loader extends Resource
 
 
             HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
+            HasMany::make(__('Order status'), 'order_statuses', 'App\Nova\Order_status'),
         ];
     }
 
@@ -150,33 +154,41 @@ class Order_loader extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\OrderLoaded($request->resourceId))
-                ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
-                ->confirmButtonText('ยืนยัน')
-                ->cancelButtonText("ไม่ยืนยัน")
-                ->canRun(function ($request, $model) {
-                    return true;
-                }),
+            // (new Actions\OrderLoaded($request->resourceId))
+            //     ->onlyOnDetail()
+            //     ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
+            //     ->confirmButtonText('ยืนยัน')
+            //     ->cancelButtonText("ไม่ยืนยัน")
+            //     ->canRun(function ($request, $model) {
+            //         return true;
+            //     }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->role != 'admin') {
-            return $query->where('order_status', 'confirmed')
-                ->orWhere('order_status', 'loaded');
-        }
+        // if ($request->user()->role != 'admin') {
+        //     return $query->whereIn('order_status', ['confirmed', 'loaded']);
+        // }
         return $query;
     }
-    // public static function relatableWaybills(NovaRequest $request, $query)
-    // {
-    //     $to_branch =  $request;
+    public static function relatableWaybills(NovaRequest $request, $query)
+    {
+        if (isset($request->resourceId)) {
+            $resourceId = $request->resourceId;
+            $order_loader = \App\Models\Order_loader::find($resourceId);
+            $routeto_branch = \App\Models\Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
+            return $query->where('routeto_branch_id', '=', $routeto_branch->id)
+                ->where('waybill_status', '=', 'loading');
+        }
+    }
 
-    //     if ($request->route()->parameter('field') == "to_customer") {
-    //         $branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get();
-    //         return $query->whereIn('district', $branch_area);
-    //     }
-    //     //return $query;
-    // }
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
 
-
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
 }

@@ -13,6 +13,9 @@ class OrderLoaderObserver
     public function updating(Order_loader $order_loader)
     {
         $order_loader->order_status = 'loaded';
+        if (is_null($order_loader->waybill_id)) {
+            $order_loader->order_status = 'confirmed';
+        }
         if (is_null($order_loader->loader_id)) {
             $order_loader->loader_id =  auth()->user()->id;
         }

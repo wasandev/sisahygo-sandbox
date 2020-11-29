@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\DateTime;
 class Tiretype extends Resource
 {
 
-    //public static $displayInNavigation = false;
+    public static $displayInNavigation = false;
     public static $group = "3.งานด้านรถบรรทุก";
     public static $priority = 3;
 

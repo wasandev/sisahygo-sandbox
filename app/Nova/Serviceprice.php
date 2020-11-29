@@ -17,6 +17,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Serviceprice extends Resource
 {
+    public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 10;
 

@@ -54,6 +54,7 @@ class SetProductCategory extends Action
 
             Select::make(__('Category'), 'category')
                 ->options($categories)
+                ->searchable()
                 ->displayUsingLabels()
 
 

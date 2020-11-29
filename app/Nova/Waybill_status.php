@@ -2,14 +2,15 @@
 
 namespace App\Nova;
 
-
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Text;
+
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Order_status extends Resource
+class Waybill_status extends Resource
 {
     public static $displayInNavigation = false;
     public static $group = '8.งานบริการขนส่ง';
@@ -19,14 +20,14 @@ class Order_status extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Order_status::class;
+    public static $model = \App\Models\Waybill_status::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'order_header_id';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,17 +35,15 @@ class Order_status extends Resource
      * @var array
      */
     public static $search = [
-        'id'
+        'id',
     ];
-
-
     public static function label()
     {
-        return 'ข้อมูลสถานะใบรับส่งสินค้า';
+        return 'ข้อมูลสถานะใบกำกับสินค้า';
     }
     public static function singularLabel()
     {
-        return 'สถานะใบรับส่งสินค้า';
+        return 'สถานะใบกำกับสินค้า';
     }
     /**
      * Get the fields displayed by the resource.
@@ -55,20 +54,25 @@ class Order_status extends Resource
     public function fields(Request $request)
     {
         return [
-            // ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header')
-                ->hideFromIndex(),
+            ID::make(__('ID'), 'id')->sortable(),
+            BelongsTo::make(__('Waybill'), 'waybill', 'App\Nova\Waybill'),
             DateTime::make(__('Status time'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm'),
-            Text::make(__('Order status'), function ($status) {
-                if ($this->status == 'confirmed') {
-                    $status = $this->order_header->branch->name . '-' . 'รับสินค้าไว้แล้ว';
-                } elseif ($this->status == 'loaded') {
-                    $status = 'จัดสินค้าขึ้นรถแล้ว' . '- ทะเบียน' . ' ' . $this->order_header->waybill->car->car_regist;
+            Text::make(__('Status'), function ($status) {
+                if ($this->status == 'loading') {
+                    $status = 'กำลังจัดสินค้าขึ้นรถบรรทุก';
+                } elseif ($this->status == 'confirmed') {
+                    $status = 'สินค้าเต็มคัน ออกใบกำกับแล้ว';
                 } elseif ($this->status == 'transporting') {
-                    $status = 'สินค้าอยู่ระหว่างขนส่งไปสาขา' . '-' . $this->order_header->to_branch->name;
+                    $status = 'รถบรรทุกออกจากสาขาต้นทางแล้ว';
+                } elseif ($this->status == 'destinated') {
+                    $status = 'รถบรรทุกถึงสาขาปลายทางแล้ว';
                 } elseif ($this->status == 'completed') {
-                    $status = 'สินค้าถึงผู้รับปลายทางแล้ว';
+                    $status = 'กระจายสินค้าหมดแล้ว';
+                } elseif ($this->status == 'cancel') {
+                    $status = 'ยกเลิกรายการ';
+                } elseif ($this->status == 'ploblem') {
+                    $status = 'มีปัญหาการขนส่ง';
                 }
 
                 return $status;
@@ -79,7 +83,6 @@ class Order_status extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail()
-
         ];
     }
 
