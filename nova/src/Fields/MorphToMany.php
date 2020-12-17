@@ -184,7 +184,7 @@ class MorphToMany extends Field implements DeletableContract, ListableField, Piv
                               );
 
         return $query->tap(function ($query) use ($request, $model) {
-            forward_static_call($this->attachableQueryCallable($request, $model), $request, $query);
+            forward_static_call($this->attachableQueryCallable($request, $model), $request, $query, $this);
         });
     }
 

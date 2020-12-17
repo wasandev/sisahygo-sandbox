@@ -1,0 +1,228 @@
+<?php
+
+namespace App\Nova;
+
+use App\Nova\Filters\RouteToBranch;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Http\Requests\NovaRequest;
+
+class Branchrec_waybill extends Resource
+{
+    use HasDependencies;
+    public static $group = '8.สำหรับสาขา';
+    public static $priority = 1;
+    // public static $polling = true;
+    // public static $pollingInterval = 90;
+    // public static $showPollingToggle = true;
+    public static $globallySearchable = false;
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = \App\Models\Branchrec_waybill::class;
+
+    /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public function title()
+    {
+        return $this->waybill_no . '-' . $this->car->car_regist;
+    }
+    public function subtitle()
+    {
+        return $this->car->car_regist;
+    }
+
+    /**
+     * The columns that should be searched.
+     *
+     * @var array
+     */
+    public static $search = [
+        'id', 'waybill_no'
+    ];
+    public static function label()
+    {
+        return 'รายการรถเข้าสาขา';
+    }
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function fields(Request $request)
+    {
+        return [
+            ID::make()->hideFromIndex(),
+            Status::make(__('Status'), 'waybill_status')
+                ->loadingWhen(['in transit'])
+                ->failedWhen(['cancel'])
+                ->exceptOnForms(),
+            Text::make(__('Waybill no'), 'waybill_no')->readonly(),
+            Date::make(__('Waybill date'), 'waybill_date')
+                ->readonly()
+                ->default(today())
+                ->format('DD/MM/YYYY')
+                ->exceptOnForms(),
+            Select::make(__('Waybill type'), 'waybill_type')->options([
+                'general' => 'ทั่วไป',
+                'charter' => 'เหมาคัน',
+                'express' => 'Express',
+            ])->displayUsingLabels()
+                ->default('general')
+                ->exceptOnForms(),
+
+            // NovaDependencyContainer::make([
+            BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
+                ->nullable()
+                //->showCreateRelationButton()
+                ->onlyOnDetail(),
+            // ])->dependsOnNot('waybill_type', 'charter'),
+            //NovaDependencyContainer::make([
+            // BelongsTo::make(__('Charter route'), 'charter_route', 'App\Nova\Charter_route')
+            //     ->nullable()
+            //     ->showCreateRelationButton()
+            //     ->onlyOnDetail(),
+            // ])->dependsOn('waybill_type', 'charter'),
+            BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
+                ->searchable()
+                ->sortable()
+                ->exceptOnForms(),
+            Text::make('ยอดค่าขนส่งที่กำหนด', 'fulltruckrate', function () {
+                if ($this->waybill_type == 'general' || $this->waybill_type == 'express') {
+                    $hasitem = count($this->routeto_branch->routeto_branch_costs);
+                    if ($hasitem) {
+                        $routeto_branch_cost = \App\Models\Routeto_branch_cost::where('routeto_branch_id', '=', $this->routeto_branch_id)
+                            ->where('cartype_id', '=', $this->car->cartype_id)
+                            ->first();
+                        if (isset($routeto_branch_cost)) {
+                            $fulltruckrate = $routeto_branch_cost->fulltruckrate;
+                            return  number_format($fulltruckrate, 2, '.', ',');
+                        }
+                    }
+                    return 0;
+                }
+                return 0;
+            })->onlyOnDetail(),
+            Number::make('ค่าขนส่ง', 'total_amount', function () {
+                return number_format($this->branchrec_orders->sum('order_amount'), 2, '.', ',');
+            })->exceptOnForms(),
+            Currency::make('ค่าบรรทุก', 'waybill_payable')
+                ->onlyOnDetail(),
+            Currency::make('รายได้บริษัท', 'waybill_income')
+                ->onlyOnDetail(),
+
+            BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
+                ->searchable()
+                ->sortable()
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
+                ->searchable()
+                ->sortable()
+                ->onlyOnDetail(),
+            DateTime::make(__('วันเวลาออกจากสาขาต้นทาง'), 'departure_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->exceptOnForms()
+                ->readonly(),
+            DateTime::make(__('กำหนดถึงสาขาปลายทาง'), 'arrival_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->hideFromIndex()
+                ->readonly(),
+            DateTime::make(__('วันเวลาถึงสาขาปลายทางจริง'), 'arrivaled_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->hideFromIndex(),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            HasMany::make(__('Order header'), 'branchrec_orders', 'App\Nova\Branchrec_order'),
+            HasMany::make(__('Waybill status'), 'waybill_statuses', 'App\Nova\Waybill_status'),
+        ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function cards(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function filters(Request $request)
+    {
+        return [
+            (new RouteToBranch()),
+        ];
+    }
+
+    /**
+     * Get the lenses available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function lenses(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return [
+
+            (new Actions\WaybillArrival($request->resourceId))
+                ->onlyOnDetail()
+                ->confirmText('ต้องการกำหนดให้รถถึงสาขาปลายทาง')
+                ->confirmButtonText('ใช่')
+                ->cancelButtonText("ไม่ใช่")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_waybills');
+                }),
+
+        ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $routeto_branch = \App\Models\Routeto_branch::where('dest_branch_id', $request->user()->branch_id)->get('id');
+        return $query->whereIn('routeto_branch_id', $routeto_branch);
+    }
+}

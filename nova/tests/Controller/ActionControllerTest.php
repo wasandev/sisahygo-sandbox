@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\ActionEvent;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\Comment;
 use Laravel\Nova\Tests\Fixtures\DestructiveAction;
@@ -65,6 +66,23 @@ class ActionControllerTest extends IntegrationTest
 
         $response->assertStatus(200);
         $this->assertInstanceOf(Action::class, $response->original['actions'][0]);
+    }
+
+    public function test_can_retrieve_actions_for_a_resource_with_field()
+    {
+        $response = $this->withExceptionHandling()
+                        ->get('/nova-api/comments/actions');
+
+        $response->assertStatus(200);
+        $this->assertInstanceOf(Action::class, $response->original['actions'][0]);
+
+        $noopAction = $response->original['actions'][0]->jsonSerialize();
+
+        $this->assertInstanceOf(Text::class, $noopAction['fields'][0]);
+
+        $textField = $noopAction['fields'][0]->jsonSerialize();
+
+        $this->assertSame(['Hello', 'World'], $textField['suggestions']);
     }
 
     public function test_actions_can_be_applied()
@@ -341,8 +359,7 @@ class ActionControllerTest extends IntegrationTest
 
         $filters = base64_encode(json_encode([
             [
-                'class' => IdFilter::class,
-                'value' => 1,
+                IdFilter::class => 1,
             ],
         ]));
 
@@ -365,8 +382,7 @@ class ActionControllerTest extends IntegrationTest
 
         $filters = base64_encode(json_encode([
             [
-                'class' => IdFilter::class,
-                'value' => 1,
+                IdFilter::class => 1,
             ],
         ]));
 

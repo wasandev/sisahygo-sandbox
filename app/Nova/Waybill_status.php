@@ -54,8 +54,9 @@ class Waybill_status extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make(__('Waybill'), 'waybill', 'App\Nova\Waybill'),
+            ID::make(__('ID'), 'id')->hideFromIndex(),
+            BelongsTo::make(__('Waybill'), 'waybill', 'App\Nova\Waybill')
+                ->hideFromIndex(),
             DateTime::make(__('Status time'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm'),
             Text::make(__('Status'), function ($status) {
@@ -63,10 +64,12 @@ class Waybill_status extends Resource
                     $status = 'กำลังจัดสินค้าขึ้นรถบรรทุก';
                 } elseif ($this->status == 'confirmed') {
                     $status = 'สินค้าเต็มคัน ออกใบกำกับแล้ว';
-                } elseif ($this->status == 'transporting') {
+                } elseif ($this->status == 'in transit') {
                     $status = 'รถบรรทุกออกจากสาขาต้นทางแล้ว';
-                } elseif ($this->status == 'destinated') {
+                } elseif ($this->status == 'arrival') {
                     $status = 'รถบรรทุกถึงสาขาปลายทางแล้ว';
+                } elseif ($this->status == 'delivery') {
+                    $status = 'อยู่ระหว่างการกระจายสินค้า';
                 } elseif ($this->status == 'completed') {
                     $status = 'กระจายสินค้าหมดแล้ว';
                 } elseif ($this->status == 'cancel') {

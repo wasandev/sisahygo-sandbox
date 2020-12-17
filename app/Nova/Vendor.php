@@ -24,7 +24,7 @@ use Laravel\Nova\Fields\DateTime;
 class Vendor extends Resource
 {
     //public static $displayInNavigation = false;
-    public static $group = "8.งานการเงิน/บัญชี";
+    public static $group = "9.งานการเงิน/บัญชี";
     public static $priority = 3;
     /**
      * The model the resource corresponds to.

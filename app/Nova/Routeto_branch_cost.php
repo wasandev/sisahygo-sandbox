@@ -65,24 +65,24 @@ class Routeto_branch_cost extends Resource
                 ->rules('required'),
             BelongsTo::make(__('Car style'), 'carstyle', 'App\Nova\Carstyle')
                 ->sortable()
-                ->rules('required'),
+                ->nullable(),
 
             Currency::make(__('Full truck rate'), 'fulltruckrate')
                 ->sortable()
-                ->rules('required'),
+                ->nullable(),
             Currency::make('ค่าจ้างรถ(กรณีรถร่วม)', 'car_charge')
                 ->sortable()
-                ->rules('required'),
+                ->nullable(),
             Currency::make('ค่าเที่ยวคนขับ(กรณีรถบริษัท)', 'driver_charge')
                 ->sortable()
-                ->rules('required'),
+                ->nullable(),
             Currency::make('ค่าเชื้อเพลิงที่ใช้(บาท)', 'fuel_cost')
                 ->sortable()
-                ->rules('required'),
+                ->nullable(),
             Number::make('จำนวนเชื้อเพลิงที่ใช้(ลิตร)', 'fuel_amount')
                 ->step('0.01')
                 ->sortable()
-                ->rules('required')
+                ->nullable()
                 ->hideFromIndex(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')

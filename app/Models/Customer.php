@@ -73,6 +73,14 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\Customer_product_price');
     }
+    public function order_sends()
+    {
+        return $this->hasMany('App\Models\Order_header', 'customer_id', 'id');
+    }
+    public function order_recs()
+    {
+        return $this->hasMany('App\Models\Order_header', 'customer_rec_id', 'id');
+    }
 
     /*
 	Provide the Location value to the Nova field

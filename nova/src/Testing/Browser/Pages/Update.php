@@ -11,18 +11,21 @@ class Update extends Page
 
     public $resourceName;
     public $resourceId;
+    public $queryParams;
 
     /**
      * Create a new page instance.
      *
      * @param  string  $resourceName
      * @param  int  $resourceId
+     * @param  array  $queryParams
      * @return void
      */
-    public function __construct($resourceName, $resourceId)
+    public function __construct($resourceName, $resourceId, $queryParams = [])
     {
-        $this->resourceId = $resourceId;
         $this->resourceName = $resourceName;
+        $this->resourceId = $resourceId;
+        $this->queryParams = $queryParams;
     }
 
     /**
@@ -32,7 +35,13 @@ class Update extends Page
      */
     public function url()
     {
-        return Nova::path().'/resources/'.$this->resourceName.'/'.$this->resourceId.'/edit';
+        $url = Nova::path().'/resources/'.$this->resourceName.'/'.$this->resourceId.'/edit';
+
+        if ($this->queryParams) {
+            $url .= '?'.http_build_query($this->queryParams);
+        }
+
+        return $url;
     }
 
     /**

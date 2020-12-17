@@ -167,6 +167,18 @@ use App\Observers\Partner_optionObserver;
 use App\Models\Waybill;
 use App\Observers\WaybillObserver;
 
+use App\Models\Branchrec_waybill;
+use App\Observers\Branchrec_waybillObserver;
+
+use App\Models\Branchrec_order;
+use App\Observers\Branchrec_orderObserver;
+
+use App\Models\Delivery;
+use App\Observers\DeliveryObserver;
+
+use App\Models\Delivery_item;
+use App\Observers\DeliveryItemObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -241,5 +253,9 @@ class AppServiceProvider extends ServiceProvider
         Page::observe(PagesObserver::class);
         Partner_option::observe(Partner_optionObserver::class);
         Waybill::observe(WaybillObserver::class);
+        Branchrec_waybill::observe(Branchrec_waybillObserver::class);
+        Branchrec_order::observe(Branchrec_orderObserver::class);
+        Delivery::observe(DeliveryObserver::class);
+        Delivery_item::observe(DeliveryItemObserver::class);
     }
 }

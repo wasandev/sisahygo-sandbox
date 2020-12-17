@@ -1,24 +1,26 @@
 <template>
   <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
     <template slot="field">
-      <input
-        ref="theInput"
-        class="w-full form-control form-input form-input-bordered"
-        :id="field.attribute"
-        :dusk="field.attribute"
-        v-model="value"
-        :disabled="isReadonly"
-        v-bind="extraAttributes"
-      />
+      <div class="flex items-center">
+        <input
+          ref="theInput"
+          class="w-full form-control form-input form-input-bordered"
+          :id="field.attribute"
+          :dusk="field.attribute"
+          v-model="value"
+          :disabled="isReadonly"
+          v-bind="extraAttributes"
+        />
 
-      <button
-        class="btn btn-link rounded px-1 py-1 text-sm text-primary mt-2"
-        v-if="field.showCustomizeButton"
-        type="button"
-        @click="toggleCustomizeClick"
-      >
-        {{ __('Customize') }}
-      </button>
+        <button
+          class="btn btn-link rounded px-1 py-1 inline-flex text-sm text-primary ml-1 mt-2"
+          v-if="field.showCustomizeButton"
+          type="button"
+          @click="toggleCustomizeClick"
+        >
+          {{ __('Customize') }}
+        </button>
+      </div>
     </template>
   </default-field>
 </template>

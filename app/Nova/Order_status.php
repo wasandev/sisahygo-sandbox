@@ -65,10 +65,20 @@ class Order_status extends Resource
                     $status = $this->order_header->branch->name . '-' . 'รับสินค้าไว้แล้ว';
                 } elseif ($this->status == 'loaded') {
                     $status = 'จัดสินค้าขึ้นรถแล้ว' . '- ทะเบียน' . ' ' . $this->order_header->waybill->car->car_regist;
-                } elseif ($this->status == 'transporting') {
+                } elseif ($this->status == 'in transit') {
                     $status = 'สินค้าอยู่ระหว่างขนส่งไปสาขา' . '-' . $this->order_header->to_branch->name;
+                } elseif ($this->status == 'arrival') {
+                    $status = 'สินค้าถึงสาขาปลายทาง';
+                } elseif ($this->status == 'branch warehouse') {
+                    $status = 'สินค้าอยู่คลังสาขา รอการจัดส่ง';
+                } elseif ($this->status == 'delivery') {
+                    $status = 'สินค้าอยู่ระหว่างการจัดส่ง';
                 } elseif ($this->status == 'completed') {
-                    $status = 'สินค้าถึงผู้รับปลายทางแล้ว';
+                    $status = 'สินค้าจัดส่งถึงผู้รับปลายทางแล้ว';
+                } elseif ($this->status == 'problem') {
+                    $status = 'มีปัญหาการขนส่ง';
+                } elseif ($this->status == 'cancel') {
+                    $status = 'ยกเลิกรายการแล้ว';
                 }
 
                 return $status;

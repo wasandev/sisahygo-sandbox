@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\RouteToBranch;
+use App\Nova\Filters\ToBranch;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -16,6 +18,8 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ActionRequest;
+
 
 class Waybill extends Resource
 {
@@ -25,6 +29,7 @@ class Waybill extends Resource
     public static $polling = true;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
+    public static $trafficCop = false;
     /**
      * The model the resource corresponds to.
      *
@@ -41,9 +46,12 @@ class Waybill extends Resource
 
     public function title()
     {
-        return $this->waybill_no . ' ' . $this->car->car_regist;
+        return $this->waybill_no . ' - ' . $this->car->car_regist;
     }
-    public static $sub_title = 'car_regist';
+    public function subtitle()
+    {
+        return $this->car->car_regist;
+    }
 
 
     /**
@@ -108,6 +116,7 @@ class Waybill extends Resource
             ])->dependsOn('waybill_type', 'charter'),
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
                 ->searchable()
+                ->withSubtitles()
                 ->sortable(),
             Text::make('ยอดค่าขนส่งที่กำหนด', 'fulltruckrate', function () {
                 if ($this->waybill_type == 'general' || $this->waybill_type == 'express') {
@@ -116,15 +125,12 @@ class Waybill extends Resource
                         $routeto_branch_cost = \App\Models\Routeto_branch_cost::where('routeto_branch_id', '=', $this->routeto_branch_id)
                             ->where('cartype_id', '=', $this->car->cartype_id)
                             ->first();
-
-                        $fulltruckrate = $routeto_branch_cost->fulltruckrate;
-                        return  number_format(
-                            $fulltruckrate,
-                            2,
-                            '.',
-                            ','
-                        );
+                        if (isset($routeto_branch_cost)) {
+                            $fulltruckrate = $routeto_branch_cost->fulltruckrate;
+                            return  number_format($fulltruckrate, 2, '.', ',');
+                        }
                     }
+                    return 0;
                 }
                 return 0;
             })->exceptOnForms(),
@@ -138,13 +144,20 @@ class Waybill extends Resource
 
 
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
-                ->searchable()
                 ->sortable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
-                ->searchable()
                 ->sortable()
                 ->hideFromIndex(),
+            DateTime::make(__('วันเวลาออกจากสาขาต้นทาง'), 'departure_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            DateTime::make(__('กำหนดถึงสาขาปลายทาง'), 'arrival_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            DateTime::make(__('วันเวลากำหนดถึงสาขาปลายทางจริง'), 'arrivaled_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -179,7 +192,9 @@ class Waybill extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            (new RouteToBranch()),
+        ];
     }
 
     /**
@@ -201,25 +216,47 @@ class Waybill extends Resource
      */
     public function actions(Request $request)
     {
+
         return [
             (new Actions\WaybillConfirmed($request->resourceId))
+
                 ->onlyOnDetail()
                 ->confirmText('ต้องการยืนยันใบกำกับสินค้ารายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
-                ->canRun(function ($request, $model) {
-                    return true;
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage waybills');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && $this->resource->waybill_status == 'loading');
                 }),
             (new Actions\WaybillTransporting())
-                ->onlyOnIndex()
-                ->confirmText('ต้องการกำหนดให้รถออกจากสาขา')
+                ->confirmText('ต้องการกำหนดให้รถออกจากสาขาต้นทาง')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
-                ->canRun(function ($request, $model) {
-                    return true;
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage waybills');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && $this->resource->waybill_status == 'confirmed');
                 }),
         ];
     }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $routeto_branch = \App\Models\Routeto_branch::where('branch_id', $request->user()->branch_id)->get('id');
+
+        return $query->whereIn('routeto_branch_id', $routeto_branch);
+    }
+
+    public static function relatableEmployees(NovaRequest $request, $query)
+    {
+        return $query->whereIn('type', ['พนักงานขับรถบริษัท', 'พนักงานขับรถร่วม']);
+    }
+
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {
         return '/resources/' . static::uriKey();

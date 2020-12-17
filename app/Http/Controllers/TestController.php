@@ -36,25 +36,31 @@ class TestController extends Controller
         // $names = Arr::pluck($array, 'developer.id', 'developer.name');
         // dd($names);
 
-        $waybillOptions = array();
-        $order_loader =    Order_loader::find(16);
-        $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
-        // $waybills = Waybill::where('routeto_branch_id', '=', $routeto_branch->id)
-        //     ->pluck('waybill_no', 'id');
-        $waybills = Waybill::with('car')
-            ->where('routeto_branch_id', '=', $routeto_branch->id)
-            ->where('waybill_status', '=', 'loading')
-            ->get();
-        //$waybills = Waybill::with('car')->where('routeto_branch_id', '=', 7)->get();
+        // $waybillOptions = array();
+        // $order_loader =    Order_loader::find(16);
+        // $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
+        // // $waybills = Waybill::where('routeto_branch_id', '=', $routeto_branch->id)
+        // //     ->pluck('waybill_no', 'id');
+        // $waybills = Waybill::with('car')
+        //     ->where('routeto_branch_id', '=', $routeto_branch->id)
+        //     ->where('waybill_status', '=', 'loading')
+        //     ->get();
+        // //$waybills = Waybill::with('car')->where('routeto_branch_id', '=', 7)->get();
+        // foreach ($waybills as $waybill) {
+        //     $waybillOptions = [
+        //         ['waybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+        //     ];
+        // }
+
+        // $waybillOptions = collect($waybillOptions);
+        // $waybillOptions = $waybillOptions->pluck('waybill.name', 'waybill.id');
+        $routeto_branch = \App\Models\Routeto_branch::where('branch_id', 5)->get('id');
+        //dd($routeto_branch);
+        $waybills = \App\Models\Waybill::whereIn('routeto_branch_id', $routeto_branch)->get();
+
         foreach ($waybills as $waybill) {
-            $waybillOptions = [
-                ['waybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
-            ];
+            echo $waybill->waybill_no;
         }
-
-        $waybillOptions = collect($waybillOptions);
-        $waybillOptions = $waybillOptions->pluck('waybill.name', 'waybill.id');
-
-        // return view('test.test', compact('waybillOptions'));
+        //return view('test.test');
     }
 }

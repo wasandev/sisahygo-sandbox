@@ -17,6 +17,7 @@ use Laravel\Nova\Fields\DateTime;
 class WaybillConfirmed extends Action
 {
     use InteractsWithQueue, Queueable;
+
     public function __construct($model = null)
     {
         $this->model = $model;
@@ -83,9 +84,11 @@ class WaybillConfirmed extends Action
                 Currency::make('หักค่าบรรทุก', 'waybill_payable')->default($routeto_branch_cost->car_charge),
                 Currency::make('รายได้บริษัท', 'waybill_income')->default($waybill_amount - $routeto_branch_cost->car_charge),
                 DateTime::make('กำหนดรถออกจากสาขาต้นทาง', 'departure_at')
-                    ->format('DD/MM/YYYY HH:mm'),
+                    ->format('DD/MM/YYYY HH:mm')
+                    ->rules('required'),
                 DateTime::make('กำหนดรถถึงสาขาปลายทาง', 'arrival_at')
-                    ->format('DD/MM/YYYY HH:mm'),
+                    ->format('DD/MM/YYYY HH:mm')
+                    ->rules('required'),
             ];
         }
         return [
@@ -93,8 +96,10 @@ class WaybillConfirmed extends Action
                 ->readonly(),
             Currency::make('หักค่าบรรทุก', 'waybill_payable'),
             Currency::make('รายได้บริษัท', 'waybill_income'),
-            DateTime::make('กำหนดรถออกจากสาขาต้นทาง', 'departure_at'),
-            DateTime::make('กำหนดรถถึงสาขาปลายทาง', 'arrival_at'),
+            DateTime::make('กำหนดรถออกจากสาขาต้นทาง', 'departure_at')
+                ->rules('required'),
+            DateTime::make('กำหนดรถถึงสาขาปลายทาง', 'arrival_at')
+                ->rules('required'),
         ];
     }
 }

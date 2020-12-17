@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order_checker;
 
 class Order_detail extends Model
 {
@@ -19,14 +20,15 @@ class Order_detail extends Model
     }
     public function order_checker()
     {
-        return $this->belongsTo('App\Models\Order_checker');
+        return $this->belongsTo('App\Models\Order_checker', 'order_header_id');
     }
     public function order_loader()
     {
-        return $this->belongsTo('App\Models\Order_loader');
+        return $this->belongsTo('App\Models\Order_loader', 'order_header_id');
     }
     public function productservice_price()
     {
+
         return $this->belongsTo('App\Models\Productservice_price');
     }
     public function product()

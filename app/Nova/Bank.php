@@ -13,7 +13,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Bank extends Resource
 {
-    public static $group = '8.งานการเงิน/บัญชี';
+    public static $group = '9.งานการเงิน/บัญชี';
     public static $priority = 1;
     /**
      * The model the resource corresponds to.

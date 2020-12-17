@@ -255,7 +255,12 @@ export default {
 
       Nova.request()
         .get(
-          '/nova-api/' + this.resourceName + '/field/' + this.viaRelationship
+          '/nova-api/' + this.resourceName + '/field/' + this.viaRelationship,
+          {
+            params: {
+              relatable: true,
+            },
+          }
         )
         .then(({ data }) => {
           this.field = data
@@ -276,6 +281,8 @@ export default {
         .get(
           '/nova-api/' +
             this.resourceName +
+            '/' +
+            this.resourceId +
             '/creation-pivot-fields/' +
             this.relatedResourceName,
           {

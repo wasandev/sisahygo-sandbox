@@ -24,7 +24,8 @@ use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\CustomersByDistrict;
-use Laravel\Nova\Testing\Browser\Pages\Lens;
+use Illuminate\Support\Str;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Customer extends Resource
 {
@@ -45,11 +46,15 @@ class Customer extends Resource
      *
      * @var string
      */
-    //public static $title = 'name' . ' ' . ' address';
-
+    //public static $title = 'name';
     public function title()
     {
-        return $this->name  . ' ' . $this->district . ' ' . $this->province
+        return $this->name . ' -' . $this->district;
+    }
+
+    public function subtitle()
+    {
+        return $this->sub_district . ' ' . $this->district . ' ' . $this->province
             . ' T.' . $this->phoneno;
     }
 
@@ -59,7 +64,7 @@ class Customer extends Resource
      * @var array
      */
     public static $search = [
-        'name',  'district', 'province'
+        'name', 'sub_district',  'district', 'province'
     ];
 
     public static function label()
@@ -88,6 +93,7 @@ class Customer extends Resource
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required', 'max:250'),
+
             Text::make(__('Tax ID'), 'taxid')
                 ->hideFromIndex(),
             //->rules('digits:13', 'numeric'),
@@ -134,6 +140,8 @@ class Customer extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
+            HasMany::make('รายการส่งสินค้า', 'order_sends', 'App\Nova\Order_header'),
+            HasMany::make('รายการรับสินค้า', 'order_recs', 'App\Nova\Order_header'),
 
 
 
@@ -153,7 +161,7 @@ class Customer extends Resource
             Text::make(__('Email'), 'email')
                 ->hideFromIndex(),
             Text::make(__('Phone'), 'phoneno')
-                ->rules('required', 'numeric')
+                ->rules('required')
                 ->hideFromIndex(),
             Text::make(__('Website Url'), 'weburl')
                 ->hideFromIndex(),
@@ -219,6 +227,45 @@ class Customer extends Resource
         ];
     }
 
+    public static function relatableQuery(NovaRequest $request, $query)
+    {
+
+        // if ($request->resourceId && $request->resource == 'order_headers' && $request->editMode === 'update') {
+
+        //     $order = \App\Models\Order_header::find($request->resourceId);
+        //     $from_branch = $order->branch_id;
+        //     $to_branch =  $order->branch_rec_id;
+
+        //     if ($request->route()->parameter('field') === "customer") {
+        //         $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
+        //         return $query->whereIn('district', $branch_area);
+        //     }
+        //     if ($request->route()->parameter('field') === "to_customer") {
+        //         $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+        //         return $query->whereIn('district', $to_branch_area);
+        //     }
+        // }
+        $from_branch = $request->user()->branch_id;
+        $to_branch =  $request->user()->branch_rec_id;
+
+        if (!is_null($from_branch)) {
+            if ($request->route()->parameter('field') === "customer") {
+                $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
+                return $query->whereIn('district', $branch_area);
+            }
+        }
+        if (!is_null($to_branch)) {
+            if ($request->route()->parameter('field') === "to_customer") {
+                $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+                return $query->whereIn('district', $to_branch_area);
+            }
+        } else {
+            if ($request->route()->parameter('field') === "to_customer") {
+                $to_branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get('district');
+                return $query->whereIn('district', $to_branch_area);
+            }
+        }
+    }
     /**
      * Get the cards available for the request.
      *

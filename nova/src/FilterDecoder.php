@@ -44,12 +44,15 @@ class FilterDecoder
         }
 
         return collect($filters)->map(function ($filter) {
-            $matchingFilter = $this->availableFilters->first(function ($availableFilter) use ($filter) {
-                return $filter['class'] === $availableFilter->key();
+            $class = key($filter);
+            $value = $filter[$class];
+
+            $matchingFilter = $this->availableFilters->first(function ($availableFilter) use ($class) {
+                return $class === $availableFilter->key();
             });
 
             if ($matchingFilter) {
-                return ['filter' => $matchingFilter, 'value' => $filter['value']];
+                return ['filter' => $matchingFilter, 'value' => $value];
             }
         })
             ->filter()

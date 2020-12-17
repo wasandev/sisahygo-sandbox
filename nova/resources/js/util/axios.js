@@ -20,7 +20,7 @@ instance.interceptors.response.use(
 
     // Handle Session Timeouts
     if (status === 401) {
-      window.location.href = Nova.config.base
+      window.location.reload()
     }
 
     // Handle Forbidden

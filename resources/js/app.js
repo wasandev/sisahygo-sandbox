@@ -13,6 +13,16 @@ window.$ = window.jQuery = require('jquery');
 
 window.Vue = require('vue');
 
+
+import VueThailandAddress from 'vue-thailand-address';
+
+
+// เพิ่ม stylesheet ของ Vue Thailand Address เข้าไป
+import 'vue-thailand-address/dist/vue-thailand-address.css'; // ใช้ Plugin
+Vue.use(VueThailandAddress);
+
+
+
 var deferredPrompt;
 window.addEventListener('beforeinstallprompt', function(event) {
   event.preventDefault();
@@ -48,6 +58,10 @@ var app = new Vue({
     //router: new VueRouter(routes),
     data: {
         termModalShowing: false,
+        subdistrict: "",
+      district: "",
+      province: "",
+      zipcode: ""
 
     },
 

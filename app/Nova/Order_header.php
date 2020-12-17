@@ -6,6 +6,7 @@ use App\Nova\Filters\BillingUser;
 use App\Nova\Filters\CheckerUser;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\ShowOwnOrder;
+use App\Nova\Filters\ShowByOrderStatus;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -23,6 +24,7 @@ use App\Nova\Metrics\OrdersByPaymentType;
 use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerMonth;
+use Wasandev\Orderstatus\Orderstatus;
 
 class Order_header extends Resource
 {
@@ -31,6 +33,7 @@ class Order_header extends Resource
     public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 2;
+    public static $trafficCop = false;
 
     /**
      * The model the resource corresponds to.
@@ -83,17 +86,18 @@ class Order_header extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make('ลำดับ', 'id')->sortable(),
+            ID::make('ลำดับ', 'id')
+                ->sortable()
+                ->hideFromIndex(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
-                ->failedWhen(['cancel'])
+                ->failedWhen(['cancel', 'problem'])
                 ->exceptOnForms(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->onlyOnDetail(),
             Text::make(__('Order header no'), 'order_header_no')
-                ->readonly()
-                ->exceptOnForms(),
+                ->readonly(),
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
                 ->default(today())
@@ -121,31 +125,30 @@ class Order_header extends Resource
                 ->hideFromIndex(),
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
+                ->hideWhenCreating()
                 ->hideFromIndex()
                 ->showOnUpdating(),
-            Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
-            Text::make('ผู้ส่ง', 'from_customer', function () {
-                return $this->customer->name;
-            })->onlyOnIndex(),
-            Text::make('ผู้ส่ง', 'from_customer', function () {
-                return $this->to_customer->name;
-            })->onlyOnIndex(),
+
+
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
-                ->showCreateRelationButton()
-                ->hideFromIndex(),
+                ->withSubtitles()
+                ->showCreateRelationButton(),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
-                ->showCreateRelationButton()
+                ->withSubtitles()
+                ->showCreateRelationButton(),
+            Currency::make('จำนวนเงิน', 'order_amount')
+                ->onlyOnDetail(),
+            Select::make(__('Tran type'), 'trantype')->options([
+                '0' => 'รับเอง',
+                '1' => 'จัดส่ง',
+            ])->displayUsingLabels()
+                ->sortable()
                 ->hideFromIndex(),
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
-
-
-
-
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
                 ->hideFromIndex(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
@@ -176,6 +179,7 @@ class Order_header extends Resource
     public function cards(Request $request)
     {
         return [
+            (new Orderstatus()),
             (new OrderIncomes())->width('1/2')
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view order-incomes');
@@ -204,6 +208,7 @@ class Order_header extends Resource
     public function filters(Request $request)
     {
         return [
+            new ShowByOrderStatus(),
             new ShowOwnOrder(),
             new OrderdateFilter(),
             new BillingUser(),
@@ -247,22 +252,28 @@ class Order_header extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->role != 'admin') {
-            return $query->where('order_status', '<>', 'checking');
+            return $query->where('order_status', '<>', 'checking')
+                ->where('branch_id', '=', $request->user()->branch_id);
         }
         return $query;
     }
-    public static function relatableCustomers(NovaRequest $request, $query)
-    {
-        $from_branch = $request->user()->branch_id;
-        // $to_branch =  6;
-        if ($request->route()->parameter('field') == "customer") {
-            $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
-            return $query->whereIn('district', $branch_area);
-        }
-        if ($request->route()->parameter('field') == "to_customer") {
-            $branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get();
-            return $query->whereIn('district', $branch_area);
-        }
-        //return $query;
-    }
+    // public static function relatableCustomers(NovaRequest $request, $query)
+    // {
+    //     $from_branch = $request->user()->branch_id;
+    //     $to_branch =  $request->user()->branch_rec_id;
+
+    //     if (!is_null($from_branch)) {
+    //         if ($request->route()->parameter('field') === "customer") {
+    //             $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
+    //             return $query->whereIn('district', $branch_area);
+    //         }
+    //     }
+    //     if (!is_null($to_branch)) {
+    //         if ($request->route()->parameter('field') === "to_customer") {
+    //             $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+    //             //dd($to_branch_area);
+    //             return $query->whereIn('district', $to_branch_area);
+    //         }
+    //     }
+    // }
 }

@@ -15,11 +15,16 @@ class WaybillObserver
         $waybill_no = IdGenerator::generate(['table' => 'waybills', 'field' => 'waybill_no', 'length' => 15, 'prefix' => 'W' . date('Ymd')]);
         $waybill->waybill_no = $waybill_no;
         $waybill->user_id = auth()->user()->id;
-        Waybill_status::create([
-            'waybill_id' => $waybill->id,
-            'status' => 'loading',
-            'user_id' => auth()->user()->id,
-        ]);
+    }
+    public function created(Waybill $waybill)
+    {
+        if ($waybill->waybill_status == 'loading') {
+            Waybill_status::create([
+                'waybill_id' => $waybill->id,
+                'status' => 'loading',
+                'user_id' => auth()->user()->id,
+            ]);
+        }
     }
     public function updating(Waybill $waybill)
     {
@@ -30,10 +35,10 @@ class WaybillObserver
                 'user_id' => auth()->user()->id,
             ]);
         }
-        if ($waybill->waybill_status == 'transporting') {
+        if ($waybill->waybill_status == 'in transit') {
             Waybill_status::create([
                 'waybill_id' => $waybill->id,
-                'status' => 'transporting',
+                'status' => 'in transit',
                 'user_id' => auth()->user()->id,
             ]);
         }

@@ -1,5 +1,5 @@
 <template>
-  <div name="thai-address-input">
+  <div id="app">
     <default-field :field="field" :errors="errors">
       <template slot="field">
         <ThailandAutoComplete
@@ -22,7 +22,8 @@ import ThailandAutoComplete from "vue-thailand-address-autocomplete";
 export default {
   name: "district",
   components: {
-    ThailandAutoComplete
+    ThailandAutoComplete,
+
   },
 
   mixins: [FormField, HandlesValidationErrors],

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\OrderdateFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -14,6 +15,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Wasandev\Orderstatus\Orderstatus;
 
 class Order_checker extends Resource
 {
@@ -35,7 +37,7 @@ class Order_checker extends Resource
      *
      * @var string
      */
-    public static $title = 'order_header_no';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -43,7 +45,7 @@ class Order_checker extends Resource
      * @var array
      */
     public static $search = [
-        'order_header_no'
+        'id'
     ];
 
     public static $searchRelations = [
@@ -88,12 +90,18 @@ class Order_checker extends Resource
                 ->exceptOnForms(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
+                ->withSubtitles()
                 ->showCreateRelationButton(),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
+                ->withSubtitles()
                 ->showCreateRelationButton(),
-
+            Select::make(__('Tran type'), 'trantype')->options([
+                '0' => 'รับเอง',
+                '1' => 'จัดส่ง',
+            ])->displayUsingLabels()
+                ->sortable(),
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
@@ -131,7 +139,9 @@ class Order_checker extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new OrderdateFilter(),
+        ];
     }
 
     /**
@@ -154,6 +164,7 @@ class Order_checker extends Resource
     public function actions(Request $request)
     {
         return [
+            // (new Orderstatus()),
             (new Actions\OrderChecked($request->resourceId))
                 ->onlyOnDetail()
                 ->confirmText('ต้องการยืนยันใบรับส่งรายการนี้?')
@@ -176,14 +187,20 @@ class Order_checker extends Resource
     public static function relatableCustomers(NovaRequest $request, $query)
     {
         $from_branch = $request->user()->branch_id;
-        // $to_branch =  6;
-        if ($request->route()->parameter('field') == "customer") {
-            $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
-            return $query->whereIn('district', $branch_area);
+        $to_branch =  $request->user()->branch_rec_id;
+
+        if (!is_null($from_branch)) {
+            if ($request->route()->parameter('field') === "customer") {
+                $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
+                return $query->whereIn('district', $branch_area);
+            }
         }
-        // if ($request->route()->parameter('field') == "to_customer") {
-        //     $branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get();
-        //     return $query->whereIn('district', $branch_area);
-        // }
+        if (!is_null($to_branch)) {
+            if ($request->route()->parameter('field') === "to_customer") {
+                $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+                //dd($to_branch_area);
+                return $query->whereIn('district', $to_branch_area);
+            }
+        }
     }
 }

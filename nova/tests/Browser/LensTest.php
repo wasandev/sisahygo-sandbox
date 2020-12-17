@@ -23,12 +23,13 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->assertSeeResource(1)
                                 ->assertSeeResource(2)
                                 ->assertSeeResource(3);
-                    });
+                    })
+                    ->assertTitle('Passthrough Lens | Nova Dusk Suite');
 
             $browser->blank();
         });
@@ -44,7 +45,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->click('@1-view-button');
                     })
@@ -66,7 +67,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->click('@1-edit-button');
                     })
@@ -109,7 +110,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->assertSeeResource(1)
                                 ->assertSeeResource(25)
@@ -139,7 +140,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->assertSeeResource(1)
                                 ->assertSeeResource(25)
@@ -174,7 +175,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->setPerPage('50')
                                 ->pause(1500)
@@ -199,7 +200,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->setPerPage('50')
                                 ->pause(1500)
@@ -208,7 +209,7 @@ class LensTest extends DuskTestCase
                                 ->assertSeeResource(1);
                     })
                     ->refresh()
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->assertSeeResource(50)
                                 ->assertSeeResource(25)
@@ -229,7 +230,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->applyFilter('Select First', '1')
                             ->pause(1500)
@@ -257,7 +258,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->applyFilter('Select First', '1')
                             ->pause(1500)
@@ -277,6 +278,52 @@ class LensTest extends DuskTestCase
 
     /**
      * @test
+     * @dataProvider userResourceLenUrlWithFilterApplied
+     */
+    public function test_filters_can_be_applied_to_lenses_received_from_url($url)
+    {
+        $this->setupLaravel();
+
+        $this->browse(function (Browser $browser) use ($url) {
+            $browser->loginAs(User::find(1))
+                    ->visit($url)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
+                    ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
+                        $browser->assertDontSeeResource(1)
+                            ->assertDontSeeResource(2)
+                            ->assertSeeResource(3)
+                            ->assertDontSeeResource(4);
+                    });
+
+            $browser->blank();
+        });
+    }
+
+    /**
+     * @test
+     * @dataProvider userResourceLenUrlWithFilterIgnored
+     */
+    public function test_filters_ignored_for_lenses_received_from_url($url)
+    {
+        $this->setupLaravel();
+
+        $this->browse(function (Browser $browser) use ($url) {
+            $browser->loginAs(User::find(1))
+                    ->visit($url)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
+                    ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
+                        $browser->assertSeeResource(1)
+                            ->assertSeeResource(2)
+                            ->assertSeeResource(3)
+                            ->assertSeeResource(4);
+                    });
+
+            $browser->blank();
+        });
+    }
+
+    /**
+     * @test
      */
     public function can_delete_a_resource_via_resource_table_row_delete_icon()
     {
@@ -285,7 +332,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->deleteResourceById(3)
                                 ->assertSeeResource(1)
@@ -307,7 +354,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->clickCheckboxForId(3)
                             ->clickCheckboxForId(2)
@@ -354,7 +401,7 @@ class LensTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('users', 'passthrough-lens'))
-                    ->waitFor('@passthrough-lens-lens-component', 10)
+                    ->waitFor('@passthrough-lens-lens-component', 25)
                     ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
                         $browser->clickCheckboxForId(3)
                             ->clickCheckboxForId(2)
@@ -367,6 +414,44 @@ class LensTest extends DuskTestCase
 
             $browser->blank();
         });
+    }
+
+    /**
+     * @test
+     */
+    public function can_run_table_row_actions_on_selected_resources()
+    {
+        $this->setupLaravel();
+
+        User::whereIn('id', [2, 3, 4])->update(['active' => true]);
+
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::find(1))
+                    ->visit(new Lens('users', 'passthrough-lens'))
+                    ->waitFor('@passthrough-lens-lens-component', 25)
+                    ->within(new LensComponent('users', 'passthrough-lens'), function ($browser) {
+                        $browser->assertDontSeeIn('@1-row', 'Mark As Inactive')
+                            ->assertSeeIn('@2-row', 'Mark As Inactive')
+                            ->runInlineAction(2, 'mark-as-inactive');
+                    });
+
+            $this->assertEquals(0, User::find(1)->active);
+            $this->assertEquals(0, User::find(2)->active);
+            $this->assertEquals(1, User::find(3)->active);
+
+            $browser->blank();
+        });
+    }
+
+    public function userResourceLenUrlWithFilterApplied()
+    {
+        yield ['nova/resources/users/lens/passthrough-lens?users_page=1&users_filter=W3siU2VsZWN0Rmlyc3QiOiIzIn1d'];
+        yield ['nova/resources/users/lens/passthrough-lens?users_page=1&users_filter=W3siY2xhc3MiOiJTZWxlY3RGaXJzdCIsInZhbHVlIjoiMyJ9XQ'];
+    }
+
+    public function userResourceLenUrlWithFilterIgnored()
+    {
+        yield ['nova/resources/users/lens/passthrough-lens?users_page=1&users_filter=W3siY2xhc3MiOiJBcHBcXE5vdmFcXEZpbHRlcnNcXFNlbGVjdEZpcnN0IiwidmFsdWUiOiIzIn1d'];
     }
 
     /*

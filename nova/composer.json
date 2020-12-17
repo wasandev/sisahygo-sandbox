@@ -1,10 +1,7 @@
 {
   "name": "laravel/nova",
   "description": "A wonderful administration interface for Laravel.",
-  "keywords": [
-    "laravel",
-    "admin"
-  ],
+  "keywords": ["laravel", "admin"],
   "license": "MIT",
   "authors": [
     {
@@ -30,7 +27,7 @@
     "laravel/nova-dusk-suite": "dev-master",
     "laravel/legacy-factories": "^1.0",
     "mockery/mockery": "^1.0",
-    "orchestra/testbench-dusk": "^6.3",
+    "orchestra/testbench-dusk": "^6.5",
     "phpunit/phpunit": "^8.4",
     "predis/predis": "^1.1"
   },
@@ -49,9 +46,7 @@
       "dev-master": "3.x-dev"
     },
     "laravel": {
-      "providers": [
-        "Laravel\\Nova\\NovaCoreServiceProvider"
-      ],
+      "providers": ["Laravel\\Nova\\NovaCoreServiceProvider"],
       "aliases": {
         "Nova": "Laravel\\Nova\\Nova"
       }
@@ -67,12 +62,11 @@
       "@php -r \"if (file_exists('.env.dusk')) { copy('.env.dusk', 'vendor/laravel/nova-dusk-suite/.env'); } else { copy('.env.dusk.example', 'vendor/laravel/nova-dusk-suite/.env'); }\""
     ],
     "dusk:assets": [
+      "yarn install",
       "yarn run prod",
       "./vendor/bin/testbench-dusk nova:publish"
     ],
-    "dusk:test": [
-      "./vendor/bin/phpunit -c phpunit.dusk.xml"
-    ]
+    "dusk:test": ["./vendor/bin/phpunit -c phpunit.dusk.xml"]
   },
   "repositories": [
     {
@@ -82,5 +76,5 @@
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "version": "3.15.0"
+  "version": "3.17.0"
 }

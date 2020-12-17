@@ -1050,6 +1050,145 @@ return [
             'description'  => 'จัดการข้อมูล',
             'group'        => 'ใบกำกับสินค้า',
         ],
+        //รายการรถเข้าสาขา
+        'view own branchrec_waybills' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'รายการรถเข้าสาขา',
+        ],
+        'view branchrec_waybills' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการรถเข้าสาขา',
+        ],
+
+        'manage own branchrec_waybills' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'รายการรถเข้าสาขา',
+        ],
+
+        'manage branchrec_waybills' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'รายการรถเข้าสาขา',
+        ],
+
+        //รายการใบรับส่งเข้าสาขา
+        'view own branchrec_orders' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'ใบรับส่งเข้าสาขา',
+        ],
+        'view branchrec_orders' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบรับส่งเข้าสาขา',
+        ],
+
+        'manage own branchrec_orders' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'ใบรับส่งเข้าสาขา',
+        ],
+
+        'manage branchrec_orders' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'ใบรับส่งเข้าสาขา',
+        ],
+        //รายการรับเงินค่าขนส่งของสาขา
+        'view branchorder_payments' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการรับเงินปลายทาง',
+        ],
+        'create branchorder_payments' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการรับเงินปลายทาง',
+        ],
+
+        'edit branchorder_payments' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการรับเงินปลายทาง',
+        ],
+
+        'delete branchorder_payments' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการรับเงินปลายทาง',
+        ],
+        //รายการใบรับส่งมีปัญหา
+        'view orders_problems' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการใบรับส่งมีปัญหา',
+        ],
+        'create orders_problems' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการใบรับส่งมีปัญหา',
+        ],
+
+        'edit orders_problems' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการใบรับส่งมีปัญหา',
+        ],
+
+        'delete orders_problems' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการใบรับส่งมีปัญหา',
+        ],
+        //รายการจัดส่งสินค้า
+        'view deliveries' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการจัดส่งสินค้า',
+        ],
+        'create deliveries' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการจัดส่งสินค้า',
+        ],
+
+        'edit deliveries' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการจัดส่งสินค้า',
+        ],
+
+        'delete deliveries' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการจัดส่งสินค้า',
+        ],
+        //ใบรับส่งในรายการจัดส่งสินค้า
+        'view delivery_items' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบรับส่งในรายการจัดส่งสินค้า',
+        ],
+        'create delivery_items' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบรับส่งในรายการจัดส่งสินค้า',
+        ],
+
+        'edit delivery_items' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบรับส่งในรายการจัดส่งสินค้า',
+        ],
+
+        'delete delivery_items' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบรับส่งในรายการจัดส่งสินค้า',
+        ],
         //Metrics
         'view order-incomes' => [
             'display_name' => 'รายได้ค่าขนส่ง',

@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'role',
         'branch_id',
+        'branch_rec_id',
         'avatar',
         'mobile',
         'usercode',
@@ -54,6 +55,10 @@ class User extends Authenticatable
     public function branch()
     {
         return $this->belongsTo('App\Models\Branch');
+    }
+    public function branch_rec()
+    {
+        return $this->belongsTo('App\Models\Branch', 'branch_rec_id');
     }
 
     public function roles()

@@ -3,7 +3,9 @@
 namespace App\Nova;
 
 use App\Nova\Filters\OrderToBranch;
+use App\Nova\Filters\ShowByOrderStatus;
 use App\Nova\Filters\ToDistrict;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -16,6 +18,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Wasandev\Orderstatus\Orderstatus;
 
 class Order_loader extends Resource
 {
@@ -80,6 +83,7 @@ class Order_loader extends Resource
 
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable(),
+
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly(),
 
@@ -95,10 +99,14 @@ class Order_loader extends Resource
                 ->exceptOnForms()
                 ->hideFromIndex(),
             Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
+            Select::make(__('Tran type'), 'trantype')->options([
+                '0' => 'รับเอง',
+                '1' => 'จัดส่ง',
+            ])->displayUsingLabels()
+                ->sortable(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
-                ->searchable()
                 ->hideFromIndex(),
 
             Text::make(__('Remark'), 'remark')->nullable()
@@ -118,7 +126,9 @@ class Order_loader extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Orderstatus()),
+        ];
     }
 
     /**
@@ -131,6 +141,7 @@ class Order_loader extends Resource
     {
         return [
             new OrderToBranch(),
+            new ShowByOrderStatus(),
         ];
     }
 
@@ -164,11 +175,34 @@ class Order_loader extends Resource
             //     }),
         ];
     }
+    // public static function indexQuery(NovaRequest $request, $query)
+    // {
+    //     return $query->whereNotIn('order_status', ['checking', 'new'])
+    //         ->where('branch_id', '=', $request->user()->branch_id);
+    // }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        // if ($request->user()->role != 'admin') {
-        //     return $query->whereIn('order_status', ['confirmed', 'loaded']);
-        // }
+        if ($request->user()->role != 'admin' && !($request->user()->hasPermissionTo('manage branchrec_orders'))) {
+
+            $resourceTable = 'order_headers';
+
+            $query->select("{$resourceTable}.*");
+            $query->addSelect('c.district as customerDistrict');
+            $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
+            $query->whereNotIn("{$resourceTable}.order_status", ['checking', 'new']);
+            $query->where("{$resourceTable}.branch_id", '=', $request->user()->branch_id);
+            $orderBy = $request->get('orderBy');
+
+            if ($orderBy == 'customer_rec_id') {
+                $query->getQuery()->orders = null;
+                $query->orderBy('customerDistrict', $request->get('orderByDirection'));
+            } else {
+                $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+                    $q->getQuery()->orders = null;
+                    return $q->orderBy('customerDistrict', 'asc');
+                });
+            }
+        }
         return $query;
     }
     public static function relatableWaybills(NovaRequest $request, $query)
@@ -176,6 +210,7 @@ class Order_loader extends Resource
         if (isset($request->resourceId)) {
             $resourceId = $request->resourceId;
             $order_loader = \App\Models\Order_loader::find($resourceId);
+
             $routeto_branch = \App\Models\Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
             return $query->where('routeto_branch_id', '=', $routeto_branch->id)
                 ->where('waybill_status', '=', 'loading');

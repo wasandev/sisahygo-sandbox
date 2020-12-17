@@ -19,6 +19,8 @@ class Productservice_price extends Resource
     //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 7;
+
+    public static $with = ['product'];
     /**
      * The model the resource corresponds to.
      *
@@ -35,7 +37,12 @@ class Productservice_price extends Resource
 
     public function title()
     {
-        return $this->product->name . '->' . $this->district . ' ' . $this->province . '=' . number_format($this->price, 2, '.', ',') . '/' . $this->unit->name;
+        return $this->product->name . '=>' . number_format($this->price, 2, '.', ',') . '/' . $this->unit->name;
+    }
+
+    public function subtitle()
+    {
+        return  $this->district . ' ' . $this->province;
     }
     /**
      * The columns that should be searched.
@@ -48,9 +55,9 @@ class Productservice_price extends Resource
     public static $searchRelations = [
         'product' => ['name'],
     ];
-    public static $globalSearchRelations = [
-        'product' => ['name'],
-    ];
+    // public static $globalSearchRelations = [
+    //     'product' => ['name'],
+    // ];
     public static function label()
     {
         return __('Shipping costs');
@@ -152,5 +159,18 @@ class Productservice_price extends Resource
             (new DownloadExcel)->allFields()->withHeadings(),
 
         ];
+    }
+    public static function relatableQuery(NovaRequest $request, $query)
+    {
+        if ($request->viaResourceId && $request->viaRelationship == 'order_details') {
+
+            $resourceId = $request->viaResourceId;
+
+            $order = \App\Models\Order_checker::find($resourceId);
+            $district = $order->to_customer->district;
+            //dd($district);
+            return $query->orWhere('district', $district);
+        }
+        // return $query->limit(100);
     }
 }

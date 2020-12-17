@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Number;
 
 class UpdateProductServicePrice extends Action
 {
@@ -51,7 +52,7 @@ class UpdateProductServicePrice extends Action
 
         return [
 
-            Currency::make('ปรับค่าขนส่งสินค้าที่เลือกเป็น(บาท)', 'item_price'),
+            Number::make('ปรับค่าขนส่งสินค้าที่เลือกเป็น(บาท)', 'item_price')->step('0.01'),
 
 
 

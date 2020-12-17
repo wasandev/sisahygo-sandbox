@@ -2,23 +2,29 @@
 
 
 @section('content')
-<div id="app" class="max-w-full " >
+<div id="app" class="max-w-md mx-auto " >
 
-    <div class="flex mx-4">
-        <div class="col-sm-4">
-            <form method="get" action="/">
-                <label>waybill</label>
-                <select name="event_edit" class="form-control form-control-lg">
-                    @foreach($waybillOptions as $waybill)
-                        {{$waybill->name}}
-                        {{-- <option value="{{$waybill->id}}">{{$waybill->waybill_no }}- {{$waybill->car->car_regist}}</option> --}}
-                    @endforeach
-                </select>
-            </form>
-        </div>
+    <div>
+       <template>
 
-
+        <!-- ตำบล/แขวง -->
+         <addressinput-subdistrict v-model="subdistrict" />
+       </template>
+       <template>
+         <!-- อำเภอ/เขต -->
+         <addressinput-district v-model="district" />
+         </template>
+         <template>
+        <!-- จังหวัด -->
+        <addressinput-province v-model="province" />
+        </template>
+         <!-- รหัสไปรษณีย์ -->
+         <template>
+         <addressinput-zipcode v-model="zipcode" />
+        </template>
     </div>
+
+
 
 
 </div>

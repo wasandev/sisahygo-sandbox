@@ -10,16 +10,19 @@ class Create extends Page
     use HasSearchableRelations;
 
     public $resourceName;
+    public $queryParams;
 
     /**
      * Create a new page instance.
      *
      * @param  string  $resourceName
+     * @param  array  $queryParams
      * @return void
      */
-    public function __construct($resourceName)
+    public function __construct($resourceName, $queryParams = [])
     {
         $this->resourceName = $resourceName;
+        $this->queryParams = $queryParams;
     }
 
     /**
@@ -29,7 +32,13 @@ class Create extends Page
      */
     public function url()
     {
-        return Nova::path().'/resources/'.$this->resourceName.'/new';
+        $url = Nova::path().'/resources/'.$this->resourceName.'/new';
+
+        if ($this->queryParams) {
+            $url .= '?'.http_build_query($this->queryParams);
+        }
+
+        return $url;
     }
 
     /**

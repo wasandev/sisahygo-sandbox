@@ -622,7 +622,8 @@
     "Waybill transporting": "กำหนดรถออก",
     "Waybill confirmed":"ยืนยันใบกำกับสินค้า",
     "Waybill status":"สถานะใบกำกับ",
-    "loading": "กำลังจัดสินค้าขึ้นรถบรรทุก"
+    "loading": "กำลังจัดสินค้าขึ้นรถบรรทุก",
+    "Waybill arrival": "กำหนดรถถึงสาขาปลายทางแล้ว"
 
 
 

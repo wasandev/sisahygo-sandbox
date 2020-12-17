@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\OwnerType;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -42,10 +43,13 @@ class Car extends Resource
 
     public function title()
     {
-        //if ($this->cartype) {
-        return $this->car_regist . ' ' . $this->cartype->name;
-        // }
-        //return $this->car_regist;
+
+        return $this->car_regist;
+    }
+
+    public function subtitle()
+    {
+        return  $this->cartype->name;
     }
     /**
      * The columns that should be searched.
@@ -218,7 +222,9 @@ class Car extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new OwnerType
+        ];
     }
 
     /**

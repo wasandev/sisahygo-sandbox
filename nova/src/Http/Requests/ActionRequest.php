@@ -108,7 +108,7 @@ class ActionRequest extends NovaRequest
                         $resource = $this->resource();
 
                         $resource::indexQuery(
-                            $this, $query
+                            $this, $query->with($resource::$with)
                         );
                     });
     }

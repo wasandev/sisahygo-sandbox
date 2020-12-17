@@ -32,12 +32,8 @@ class HasManyThrough extends HasMany implements ListableField, RelatableField
      */
     public function __construct($name, $attribute = null, $resource = null)
     {
-        parent::__construct($name, $attribute);
+        parent::__construct($name, $attribute, $resource);
 
-        $resource = $resource ?? ResourceRelationshipGuesser::guessResource($name);
-
-        $this->resourceClass = $resource;
-        $this->resourceName = $resource::uriKey();
         $this->hasManyThroughRelationship = $this->attribute;
     }
 

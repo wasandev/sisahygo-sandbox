@@ -179,14 +179,20 @@ class MorphTo extends Field implements RelatableField
         }
 
         if ($value) {
-            $resource = new $this->resourceClass($value);
+            if (! is_string($this->resourceClass)) {
+                $this->morphToType = $value->getMorphClass();
+                $this->value = $value->getKey();
+                $this->viewable = false;
+            } else {
+                $resource = new $this->resourceClass($value);
 
-            $this->value = $this->formatDisplayValue(
-                $value, Nova::resourceForModel($value)
-            );
+                $this->value = $this->formatDisplayValue(
+                    $value, Nova::resourceForModel($value)
+                );
 
-            $this->viewable = $this->viewable
-                && $resource->authorizedToView(request());
+                $this->viewable = $this->viewable
+                    && $resource->authorizedToView(request());
+            }
         }
     }
 
@@ -329,7 +335,7 @@ class MorphTo extends Field implements RelatableField
         return $query->tap(function ($query) use ($request, $relatedResource, $model) {
             forward_static_call(
                 $this->morphableQueryCallable($request, $relatedResource, $model),
-                $request, $query
+                $request, $query, $this
             );
         });
     }

@@ -42,8 +42,10 @@ class ActionEvent extends Model
      */
     public function user()
     {
+        $provider = config('auth.guards.'.(config('nova.guard') ?? 'web').'.provider');
+
         return $this->belongsTo(
-            config('auth.providers.'.(config('nova.guard') ?? 'users').'.model'), 'user_id'
+            config('auth.providers.'.$provider.'.model'), 'user_id'
         );
     }
 

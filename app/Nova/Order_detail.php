@@ -8,17 +8,19 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 //use Laravel\Nova\Fields\BelongsToMany;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 
 class Order_detail extends Resource
 {
     use HasDependencies;
     public static $displayInNavigation = false;
-    public static $group = '8.งานบริการขนส่ง';
+    public static $group = '7.งานบริการขนส่ง';
     public static $priority = 2;
     public static $globallySearchable = false;
     /**
@@ -34,8 +36,10 @@ class Order_detail extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
-
+    public function title()
+    {
+        return  $this->order_header->order_header_no;
+    }
     /**
      * The columns that should be searched.
      *
@@ -61,8 +65,9 @@ class Order_detail extends Resource
     public function fields(Request $request)
     {
 
+
         return [
-            //ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header'),
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->onlyOnIndex(),
@@ -71,26 +76,32 @@ class Order_detail extends Resource
             Currency::make('ค่าขนส่ง/หน่วย', 'price')
                 ->onlyOnIndex(),
             Boolean::make('ใช้ราคาจากตาราง', 'usepricetable')
-                ->withMeta(["value" => 1])
+                //->withMeta(["value" => 1])
                 ->hideFromIndex(),
 
             NovaDependencyContainer::make([
                 BelongsTo::make(__('เลือกตารางราคา'), 'productservice_price', 'App\Nova\Productservice_price')
                     ->searchable()
+                    ->withSubtitles()
                     ->nullable()
-                    ->showOnIndex(),
+                    ->showOnIndex()
+                    ->withoutTrashed(),
             ])->dependsOn('usepricetable', true),
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                     ->searchable()
-                    ->nullable(),
+                    ->rules('required')
+
+                    ->withoutTrashed(),
                 BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
                     ->searchable()
-                    ->nullable(),
+                    ->rules('required'),
                 Currency::make('ค่าขนส่ง', 'price')
+                    ->rules('required')
             ])->dependsOn('usepricetable', false),
             Number::make('จำนวน', 'amount')
-                ->step('0.01'),
+                ->step('0.01')
+                ->rules('required'),
 
             Currency::make('จำนวนเงิน', function () {
                 if ($this->usepricetable) {
@@ -147,18 +158,18 @@ class Order_detail extends Resource
         return [];
     }
 
-    public static function relatableProductservice_prices(NovaRequest $request, $query)
-    {
 
-        $resourceId = $request->query('viaResourceId');
-        if ($resourceId !== null) {
+    // public static function relatableProductservice_prices(NovaRequest $request, $query)
+    // {
+    //     $viaResourceId = $request->viaResourceId;
 
-            $order = \App\Models\Order_header::find($resourceId);
-            $customer_rec = \App\Models\Customer::find($order->customer_rec_id);
+    //     if (isset($viaResourceId)) {
+    //         $order = \App\Models\Order_checker::find($viaResourceId);
+    //         $district = $order->to_customer->district;
 
-            return $query->where('district', $customer_rec->district);
-        }
-    }
+    //         return $query->where('district', $district);
+    //     }
+    // }
 
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {

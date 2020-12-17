@@ -26,9 +26,12 @@
         "maatwebsite/laravel-nova-excel": "^1.2",
         "orlyapps/nova-belongsto-depend": "^2.0",
         "pktharindu/nova-permissions": "^2.1",
+        "rawilk/laravel-printing": "^1.3",
         "titasgailius/search-relations": "^1.0",
         "wasandev/input-thai-address": "*",
-        "wasandev/sisahy-go": "*"
+        "wasandev/sisahy-go": "*",
+        "wasandev/thai-address": "*",
+        "wasandev/orderstatus": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -91,6 +94,14 @@
         {
             "type": "path",
             "url": "./nova-components/SisahyGo"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/ThaiAddress"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Orderstatus"
         }
     ]
 }

@@ -16,6 +16,10 @@ class Waybill_status extends Model
     {
         return $this->belongsTo('App\Models\Waybill');
     }
+    public function  branchrec_waybill()
+    {
+        return $this->belongsTo('App\Models\Branchrec_waybill', 'waybill_id');
+    }
     public function user()
     {
         return $this->belongsTo('App\Models\User');

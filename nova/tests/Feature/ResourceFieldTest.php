@@ -165,12 +165,12 @@ class ResourceFieldTest extends IntegrationTest
         $request = ResourceDetailRequest::create('/');
 
         $this->assertSame(
-            ['Detail Name', 'Restricted', 'Avatar'],
+            ['Detail Name', 'Restricted', 'Avatar', 'Actions'],
             $resource->detailFields($request)->pluck('name')->all()
         );
 
         $this->assertCount(3, $resource->availableFields($request));
-        $this->assertCount(3, $resource->detailFields($request));
+        $this->assertCount(4, $resource->detailFields($request));
     }
 
     public function test_uses_deletable_fields()

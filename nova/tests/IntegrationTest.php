@@ -58,8 +58,6 @@ abstract class IntegrationTest extends TestCase
 
         Hash::driver('bcrypt')->setRounds(4);
 
-        $this->loadMigrations();
-
         $this->withFactories(__DIR__.'/Factories');
 
         Nova::$tools = [];
@@ -104,7 +102,7 @@ abstract class IntegrationTest extends TestCase
      *
      * @return void
      */
-    protected function loadMigrations()
+    protected function defineDatabaseMigrations()
     {
         $this->loadMigrationsFrom([
             '--database' => 'sqlite',
@@ -191,7 +189,7 @@ abstract class IntegrationTest extends TestCase
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
         $app['config']->set('database.default', 'sqlite');
 

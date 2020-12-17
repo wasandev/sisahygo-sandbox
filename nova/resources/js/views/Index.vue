@@ -82,7 +82,8 @@
             shouldShowDeleteMenu ||
             softDeletes ||
             !viaResource ||
-            hasFilters,
+            hasFilters ||
+            haveStandaloneActions,
         }"
       >
         <div class="flex items-center">
@@ -186,7 +187,9 @@
             :via-has-one="viaHasOne"
             :trashed="trashed"
             :per-page="perPage"
-            :per-page-options="perPageOptions"
+            :per-page-options="
+              perPageOptions || resourceInformation.perPageOptions
+            "
             @clear-selected-filters="clearSelectedFilters"
             @filter-changed="filterChanged"
             @trashed-changed="trashedChanged"
@@ -430,13 +433,13 @@ export default {
    * Mount the component and retrieve its initial data.
    */
   async created() {
+    if (Nova.missingResource(this.resourceName))
+      return this.$router.push({ name: '404' })
+
     this.debouncer = _.debounce(
       callback => callback(),
       this.resourceInformation.debounce
     )
-
-    if (Nova.missingResource(this.resourceName))
-      return this.$router.push({ name: '404' })
 
     // Bind the keydown even listener when the router is visited if this
     // component is not a relation on a Detail page
@@ -489,6 +492,7 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     next()
+    this.initializeSearchFromQueryString()
     this.initializeState(false)
   },
 

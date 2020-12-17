@@ -3,6 +3,7 @@
 namespace Laravel\Nova;
 
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
+use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Http\Middleware\ServeNova;
@@ -39,6 +40,10 @@ class NovaCoreServiceProvider extends ServiceProvider
             if (! $app->bound(NovaRequest::class)) {
                 $app->instance(NovaRequest::class, $request);
             }
+        });
+
+        $this->app['events']->listen(RequestHandled::class, function ($event) {
+            $this->app->forgetInstance(NovaRequest::class);
         });
     }
 

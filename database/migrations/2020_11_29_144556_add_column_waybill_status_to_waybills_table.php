@@ -14,7 +14,7 @@ class AddColumnWaybillStatusToWaybillsTable extends Migration
     public function up()
     {
         Schema::table('waybills', function (Blueprint $table) {
-            $table->enum('waybill_status', ['loading', 'confirmed', 'transporting', 'destinated', 'completed', 'cancel', 'problem'])->default('loading');
+            $table->enum('waybill_status', ['loading', 'confirmed', 'in transit', 'arrival', 'delivery', 'completed', 'cancel', 'problem'])->default('loading');
         });
     }
 

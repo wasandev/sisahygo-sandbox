@@ -50,11 +50,11 @@ class OrderCheckerObserver
             $to_customer = $order_checker->customer_rec_id;
             $to_customer = Customer::find($order_checker->customer_rec_id);
             $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+
             if (is_null($to_branch)) {
-                if (is_null($to_branch)) {
-                    throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
-                }
+                throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
             }
+
             $order_checker->branch_rec_id = $to_branch->branch_id;
             $order_checker->user_id = auth()->user()->id;
             $order_checker->updated_by = auth()->user()->id;

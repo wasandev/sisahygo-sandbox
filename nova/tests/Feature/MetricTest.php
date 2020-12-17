@@ -133,6 +133,16 @@ class MetricTest extends IntegrationTest
         $request = NovaRequest::create('/?range=2', 'GET', ['timezone' => 'America/Los_Angeles']);
         $this->assertEquals([2, 7], array_values($metric->countByMonths($request, User::class)->trend));
 
+        Chronos::setTestNow(Chronos::parse('Nov 2 2019 8 AM', 'Japan'));
+
+        $request = NovaRequest::create('/?range=2', 'GET', ['timezone' => 'Japan']);
+        $this->assertEquals([0, 2], array_values($metric->countByDays($request, User::class)->trend));
+
+        Chronos::setTestNow(Chronos::parse('Nov 2 2019 9 AM', 'Japan'));
+
+        $request = NovaRequest::create('/?range=2', 'GET', ['timezone' => 'Japan']);
+        $this->assertEquals([2, 7], array_values($metric->countByDays($request, User::class)->trend));
+
         Chronos::setTestNow(null);
     }
 
@@ -195,14 +205,56 @@ class MetricTest extends IntegrationTest
 
     public function test_trend_metrics_default_precision()
     {
-        factory(Post::class, 2)->create(['word_count' => 5.37894, 'published_at' => now()])->average('word_count');
+        Carbon::setTestNow($now = now());
+
+        factory(Post::class, 2)->create(['word_count' => 5.37894, 'published_at' => $now])->average('word_count');
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
         $this->assertEquals(5, Arr::first((new PostAverageTrend)->calculate(NovaRequest::create('/', 'GET', ['range'=>1]))->trend));
+
+        $this->assertSame([
+            Carbon::today()->startOfMonth()->toDatetimeString(), $now->toDatetimeString(),
+        ], array_map(function ($date) {
+            return $date->toDatetimeString();
+        }, DB::getQueryLog()[0]['bindings']));
     }
 
     public function test_trend_metrics_custom_precision()
     {
-        factory(Post::class, 2)->create(['word_count' => 5.37894, 'published_at' => now()])->average('word_count');
+        Carbon::setTestNow($now = now());
+
+        factory(Post::class, 2)->create(['word_count' => 5.37894, 'published_at' => $now])->average('word_count');
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
         $this->assertEquals(5.38, Arr::first((new PostAverageTrend)->precision(2)->calculate(NovaRequest::create('/', 'GET', ['range'=>1]))->trend));
+
+        $this->assertSame([
+            Carbon::today()->startOfMonth()->toDatetimeString(), $now->toDatetimeString(),
+        ], array_map(function ($date) {
+            return $date->toDatetimeString();
+        }, DB::getQueryLog()[0]['bindings']));
+    }
+
+    public function test_trend_metrics_exceeds_range()
+    {
+        Carbon::setTestNow($now = now());
+
+        factory(Post::class, 2)->create(['word_count' => 5.37894, 'published_at' => $now])->average('word_count');
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $this->assertEquals(5, Arr::last((new PostAverageTrend)->calculate(NovaRequest::create('/', 'GET', ['range'=>24]))->trend));
+
+        $this->assertSame([
+            Carbon::today()->startOfMonth()->subMonths(11)->toDatetimeString(), $now->toDatetimeString(),
+        ], array_map(function ($date) {
+            return $date->toDatetimeString();
+        }, DB::getQueryLog()[0]['bindings']));
     }
 
     public function test_value_metrics_can_provide_a_default_range()

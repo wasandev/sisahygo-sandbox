@@ -14,7 +14,7 @@ class AddOrderStatusColumnToOrderHeadersTable extends Migration
     public function up()
     {
         Schema::table('order_headers', function (Blueprint $table) {
-            $table->enum('order_status', ['checking', 'new', 'confirmed', 'loaded', 'transporting', 'completed', 'cancel', 'problem'])->default('new');
+            $table->enum('order_status', ['checking', 'new', 'confirmed', 'loaded', 'in transit', 'arrival', 'delivery', 'completed', 'cancel', 'problem'])->default('new');
         });
     }
 

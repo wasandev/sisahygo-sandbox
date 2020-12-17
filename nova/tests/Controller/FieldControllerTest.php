@@ -123,7 +123,7 @@ class FieldControllerTest extends IntegrationTest
     public function test_can_return_creation_pivot_fields()
     {
         $response = $this->withExceptionHandling()
-                        ->get('/nova-api/users/creation-pivot-fields/roles');
+                        ->get('/nova-api/users/6/creation-pivot-fields/roles');
 
         $fields = collect($response->original);
 
@@ -135,7 +135,7 @@ class FieldControllerTest extends IntegrationTest
     public function test_can_return_creation_pivot_fields_with_parent_belongs_to()
     {
         $response = $this->withoutExceptionHandling()
-            ->get('/nova-api/roles/creation-pivot-fields/users?editing=true&editMode=attach');
+            ->get('/nova-api/roles/5/creation-pivot-fields/users?editing=true&editMode=attach');
 
         $fields = collect($response->original);
 

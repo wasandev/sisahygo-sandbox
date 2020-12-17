@@ -98,7 +98,10 @@ class User extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
-
+            BelongsTo::make('รายการสาขาปลายทาง(ที่ทำงานประจำ)', 'branch_rec', 'App\Nova\Branch')
+                ->sortable()
+                ->nullable()
+                ->showCreateRelationButton(),
             Select::make(__('Role'), 'role')->options([
                 'employee' => 'พนักงาน',
                 'admin' => 'Admin',

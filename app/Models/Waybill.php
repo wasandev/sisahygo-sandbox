@@ -12,10 +12,13 @@ class Waybill extends Model
         'waybill_no', 'waybill_date', 'waybill_status', 'waybill_type',
         'routeto_branch_id', 'charter_route_id', 'car_id', 'driver_id', 'branchcar_id',
         'waybill_amount', 'waybill_date', 'waybill_income', 'branch_car_rate', 'branch_car_income',
-        'loader_id', 'departure_at', 'arrival_at', 'user_id', 'updated_by'
+        'loader_id', 'departure_at', 'arrival_at', 'arrivaled_at', 'user_id', 'updated_by'
     ];
     protected $casts = [
-        'waybill_date' => 'date'
+        'waybill_date' => 'date',
+        'departure_at' => 'datetime',
+        'arrival_at' => 'datetime',
+        'arrivaled_at' => 'datetime'
     ];
     public function routeto_branch()
     {
@@ -43,7 +46,7 @@ class Waybill extends Model
 
     public function loader()
     {
-        return $this->belongsTo('App\Models\Employee', 'loader_id',);
+        return $this->belongsTo('App\Models\User', 'loader_id',);
     }
     public function user()
     {
@@ -59,6 +62,7 @@ class Waybill extends Model
     {
         return $this->hasMany('App\Models\Order_loader');
     }
+
     public function waybill_statuses()
     {
         return $this->hasMany('App\Models\Waybill_status');

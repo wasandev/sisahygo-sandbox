@@ -42,15 +42,15 @@ class WaybillTransporting extends Action
 
                 foreach ($model->order_loaders as $orders) {
                     Order_loader::where('id', $orders->id)
-                        ->update(['order_status' => 'transporting']);
+                        ->update(['order_status' => 'in transit']);
                     Order_status::create([
                         'order_header_id' => $orders->id,
-                        'status' => 'transporting',
+                        'status' => 'in transit',
                         'user_id' => auth()->user()->id,
                     ]);
                 }
                 $model->departure_at = Carbon::now()->toDateTimeString();
-                $model->waybill_status = 'transporting';
+                $model->waybill_status = 'in transit';
                 $model->save();
                 return Action::message('กำหนดรถออกเดินทางแล้ว');
             }

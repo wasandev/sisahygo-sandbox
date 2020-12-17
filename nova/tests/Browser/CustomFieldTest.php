@@ -47,6 +47,7 @@ class CustomFieldTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit(new Create('flights'))
                     ->create()
+                    ->waitForText('There was a problem submitting the form.', 15)
                     ->assertSee('The Name field is required.');
 
             $browser->blank();
@@ -65,7 +66,7 @@ class CustomFieldTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($flight) {
             $browser->loginAs(User::find(1))
                     ->visit(new Index('flights'))
-                    ->waitFor('@flights-index-component', 10)
+                    ->waitFor('@flights-index-component', 25)
                     ->within(new IndexComponent('flights'), function ($browser) use ($flight) {
                         $browser->assertSee($flight->name);
                     });

@@ -5,6 +5,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Wasandev\InputThaiAddress\InputSubDistrict;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -72,12 +73,12 @@ class Branch_area extends Resource
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')->sortable(),
 
             InputDistrict::make(__('District'), 'district')
-                ->withValues(['amphoe', 'province'])
+                ->withValues(['subdistrict', 'district', 'province', 'zipcode'])
                 ->fromValue('amphoe')
                 ->sortable()
                 ->rules('required'),
             InputProvince::make(__('Province'), 'province')
-                ->withValues(['amphoe', 'province'])
+                ->withValues(['subdistrict', 'district', 'province', 'zipcode'])
                 ->fromValue('province')
                 ->sortable()
                 ->rules('required'),

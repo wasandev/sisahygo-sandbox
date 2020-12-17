@@ -124,6 +124,21 @@ export default {
     this.updateLastRetrievedAtTimestamp()
   },
 
+  beforeRouteUpdate(to, from, next) {
+    next()
+
+    if (
+      this.resourceName === to.params.resourceName &&
+      this.resourceId !== to.params.resourceId
+    ) {
+      this.resourceId = to.params.resourceId
+      this.viaResource = to.query.viaResource || null
+      this.viaResourceId = to.query.viaResourceId || null
+      this.viaRelationship = to.query.viaRelationship || null
+      this.getFields()
+    }
+  },
+
   methods: {
     /**
      * Get the available fields for the resource.

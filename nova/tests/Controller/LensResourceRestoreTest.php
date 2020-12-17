@@ -79,8 +79,7 @@ class LensResourceRestoreTest extends IntegrationTest
 
         $filters = base64_encode(json_encode([
             [
-                'class' => IdFilter::class,
-                'value' => 1,
+                IdFilter::class => 1,
             ],
         ]));
 

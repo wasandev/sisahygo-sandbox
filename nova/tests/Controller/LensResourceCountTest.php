@@ -38,8 +38,7 @@ class LensResourceCountTest extends IntegrationTest
 
         $filters = base64_encode(json_encode([
             [
-                'class' => IdFilter::class,
-                'value' => 2,
+                IdFilter::class => 2,
             ],
         ]));
 

@@ -186,6 +186,7 @@ export default {
       await this.getField()
       await this.getPivotFields()
       await this.getAvailableResources()
+      this.resetErrors()
 
       this.selectedResourceId = this.relatedResourceId
 
@@ -201,7 +202,12 @@ export default {
       this.field = null
 
       const { data: field } = await Nova.request().get(
-        '/nova-api/' + this.resourceName + '/field/' + this.viaRelationship
+        '/nova-api/' + this.resourceName + '/field/' + this.viaRelationship,
+        {
+          params: {
+            relatable: true,
+          },
+        }
       )
 
       this.field = field
@@ -247,6 +253,10 @@ export default {
           field.fill = () => ''
         }
       })
+    },
+
+    resetErrors() {
+      this.validationErrors = new Errors()
     },
 
     /**
