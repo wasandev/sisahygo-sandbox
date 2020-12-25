@@ -26,7 +26,6 @@
         "maatwebsite/laravel-nova-excel": "^1.2",
         "orlyapps/nova-belongsto-depend": "^2.0",
         "pktharindu/nova-permissions": "^2.1",
-        "rawilk/laravel-printing": "^1.3",
         "titasgailius/search-relations": "^1.0",
         "wasandev/input-thai-address": "*",
         "wasandev/sisahy-go": "*",
