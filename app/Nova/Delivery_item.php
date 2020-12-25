@@ -2,13 +2,16 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DeliveryConfirmed;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Delivery_item extends Resource
@@ -32,7 +35,11 @@ class Delivery_item extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title()
+    {
+        return $this->customer->name;
+    }
+
 
     /**
      * The columns that should be searched.
@@ -45,7 +52,7 @@ class Delivery_item extends Resource
 
     public static function label()
     {
-        return 'รายการใบรับส่ง';
+        return 'รายการจัดส่งตามผู้รับ';
     }
 
     /**
@@ -57,42 +64,45 @@ class Delivery_item extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
             BelongsTo::make('เลขที่รายการจัดส่ง', 'delivery', 'App\Nova\Delivery'),
-            BelongsTo::make(__('Order header no'), 'branchrec_order', 'App\Nova\Branchrec_order'),
-            Text::make('ประเภทการชำระเงิน', 'paymenttype', function ($request) {
-                $order = \App\Models\Branchrec_order::find($this->order_header_id);
-                return $order->paymenttype;
-            })->onlyOnIndex(),
 
-            Text::make('จำนวนเงินจัดเก็บ', 'branchrec', function ($request) {
+            BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
+                ->sortable(),
 
-                $order = \App\Models\Branchrec_order::find($this->order_header_id);
 
-                if ($order->paymenttype === 'E') {
-                    return $order->order_amount;
-                }
-                return '-';
-            })->onlyOnIndex(),
+            Currency::make('ยอดค่าขนส่ง', 'payment_amount')
+                ->exceptOnForms(),
 
             Boolean::make('สถานะการจัดส่ง', 'delivery_status')
                 ->exceptOnForms(),
-            Boolean::make('สถานะการเก็บเงิน', 'payment_status')
-                // ->canSee(function ($request) {
-                //     $order = \App\Models\Branchrec_order::find($this->order_header_id);
-                //     return $order->paymenttype == 'E';
-                // })
-                ->onlyOnIndex(),
-            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+            Boolean::make('สถานะการเก็บเงิน', 'payment_status', function () {
+                if ($this->payment_amount > 0) {
+                    return $this->payment_status;
+                }
+                return true;
+            })->exceptOnForms(),
+            Currency::make('ส่วนลด', 'discount_amount')
                 ->onlyOnDetail(),
-            DateTime::make(__('Created At'), 'created_at')
-                ->format('DD/MM/YYYY HH:mm')
+
+            Currency::make('ภาษีหัก ณ ที่จ่าย', 'tax_amount')
                 ->onlyOnDetail(),
-            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+            Currency::make('จำนวนเงินรับชำระ', 'pay_amount')
                 ->onlyOnDetail(),
-            DateTime::make(__('Updated At'), 'updated_at')
-                ->format('DD/MM/YYYY HH:mm')
-                ->onlyOnDetail()
+
+            // BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+            //     ->onlyOnDetail(),
+            // DateTime::make(__('Created At'), 'created_at')
+            //     ->format('DD/MM/YYYY HH:mm')
+            //     ->onlyOnDetail(),
+            // BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+            //     ->onlyOnDetail(),
+            // DateTime::make(__('Updated At'), 'updated_at')
+            //     ->format('DD/MM/YYYY HH:mm')
+            //     ->onlyOnDetail()
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt'),
+
+            HasMany::make('รายการใบรับส่ง', 'delivery_details', 'App\Nova\Delivery_detail'),
         ];
     }
 
@@ -137,31 +147,44 @@ class Delivery_item extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            DeliveryConfirmed::make($request->resourceId)
+                ->onlyOnDetail()
+                ->confirmText('ยืนยันการจัดส่งรายการนี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('view delivery_items');
+                })
+            // ->canSee(function ($request) {
+            //     return $request instanceof ActionRequest
+            //         || ($this->resource->exists && $this->resource->delivery_status == false);
+            // }),
+        ];
     }
 
-    public static function relatableBranchrec_orders(NovaRequest $request, $query)
-    {
-        // if ($request->viaResourceId && $request->viaRelationship == 'delivery_items') {
+    // public static function relatableBranchrec_orders(NovaRequest $request, $query)
+    // {
+    //     // if ($request->viaResourceId && $request->viaRelationship == 'delivery_items') {
 
-        //     $resourceId = $request->viaResourceId;
+    //     //     $resourceId = $request->viaResourceId;
 
-        //     $order = \App\Models\Order_checker::find($resourceId);
-        //     $district = $order->to_customer->district;
-        //     //dd($district);
-        //     return $query->orWhere('district', $district);
-        // }
-        return $query->whereIn('order_status', ['arrival', 'branch warehouse'])
-            ->where('branch_rec_id', '=', $request->user()->branch_id);
-    }
+    //     //     $order = \App\Models\Order_checker::find($resourceId);
+    //     //     $district = $order->to_customer->district;
+    //     //     //dd($district);
+    //     //     return $query->orWhere('district', $district);
+    //     // }
+    //     return $query->whereIn('order_status', ['arrival', 'branch warehouse'])
+    //         ->where('branch_rec_id', '=', $request->user()->branch_id);
+    // }
 
-    public static function redirectAfterCreate(NovaRequest $request, $resource)
-    {
-        return '/resources/' . $request->input('viaResource') . '/' . $request->input('viaResourceId');
-    }
+    // public static function redirectAfterCreate(NovaRequest $request, $resource)
+    // {
+    //     return '/resources/' . $request->input('viaResource') . '/' . $request->input('viaResourceId');
+    // }
 
-    public static function redirectAfterUpdate(NovaRequest $request, $resource)
-    {
-        return '/resources/' . $request->input('viaResource') . '/' . $request->input('viaResourceId');
-    }
+    // public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    // {
+    //     return '/resources/' . $request->input('viaResource') . '/' . $request->input('viaResourceId');
+    // }
 }

@@ -102,7 +102,8 @@ class LensControllerTest extends IntegrationTest
 
         $filters = base64_encode(json_encode([
             [
-                IdFilter::class => 2,
+                'class' => IdFilter::class,
+                'value' => 2,
             ],
         ]));
 

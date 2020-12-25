@@ -112,13 +112,17 @@ abstract class Value extends RangedMetric
 
         $previousValue = round(with(clone $query)->whereBetween(
             $dateColumn ?? $query->getModel()->getQualifiedCreatedAtColumn(),
-            $this->previousRange($request->range, $timezone)
+            array_map(function ($datetime) {
+                return $this->asQueryDatetime($datetime);
+            }, $this->previousRange($request->range, $timezone))
         )->{$function}($column), $this->precision);
 
         return $this->result(
             round(with(clone $query)->whereBetween(
                 $dateColumn ?? $query->getModel()->getQualifiedCreatedAtColumn(),
-                $this->currentRange($request->range, $timezone)
+                array_map(function ($datetime) {
+                    return $this->asQueryDatetime($datetime);
+                }, $this->currentRange($request->range, $timezone))
             )->{$function}($column), $this->precision)
         )->previous($previousValue);
     }

@@ -31,7 +31,8 @@ export default {
     currentFilters: (state, getters) => {
       return _.map(state.filters, f => {
         return {
-          [f.class]: f.currentValue,
+          class: f.class,
+          value: f.currentValue,
         }
       })
     },
@@ -149,23 +150,11 @@ export default {
     ) {
       if (encodedFilters) {
         const initialFilters = JSON.parse(atob(encodedFilters))
-        _.each(initialFilters, filter => {
-          if (
-            filter.hasOwnProperty('class') &&
-            filter.hasOwnProperty('value')
-          ) {
-            commit('updateFilterState', {
-              filterClass: filter.class,
-              value: filter.value,
-            })
-          } else {
-            for (let key in filter) {
-              commit('updateFilterState', {
-                filterClass: key,
-                value: filter[key],
-              })
-            }
-          }
+        _.each(initialFilters, f => {
+          commit('updateFilterState', {
+            filterClass: f.class,
+            value: f.value,
+          })
         })
       }
     },
@@ -175,9 +164,7 @@ export default {
     updateFilterState(state, { filterClass, value }) {
       const filter = _(state.filters).find(f => f.class == filterClass)
 
-      if (filter !== undefined && filter !== null) {
-        filter.currentValue = value
-      }
+      filter.currentValue = value
     },
 
     /**

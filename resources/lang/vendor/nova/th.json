@@ -593,7 +593,7 @@
     "Bank": "ธนาคาร",
     "Account name": "ชื่อบัญชี",
     "Account type": "ประเภทบัญชี",
-    "Account no": "เลขที่บัญชี",
+    "Bank Account no": "เลขที่บัญชีธนาคาร",
     "Bank branch": "สาขาธนาคาร",
     "Remark": "หมายเหตุ",
     "Bank reference no": "เลขที่รายการโอนเงิน",
@@ -623,7 +623,9 @@
     "Waybill confirmed":"ยืนยันใบกำกับสินค้า",
     "Waybill status":"สถานะใบกำกับ",
     "loading": "กำลังจัดสินค้าขึ้นรถบรรทุก",
-    "Waybill arrival": "กำหนดรถถึงสาขาปลายทางแล้ว"
+    "Waybill arrival": "กำหนดรถถึงสาขาปลายทางแล้ว",
+    "Tran type": "การจัดส่ง"
+
 
 
 

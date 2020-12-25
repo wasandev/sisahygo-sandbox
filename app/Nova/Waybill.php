@@ -229,7 +229,8 @@ class Waybill extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
-                        || ($this->resource->exists && $this->resource->waybill_status == 'loading');
+                        || ($this->resource->exists && $this->resource->waybill_status == 'loading'
+                            && $request->user()->hasPermissionTo('manage waybills'));
                 }),
             (new Actions\WaybillTransporting())
                 ->confirmText('ต้องการกำหนดให้รถออกจากสาขาต้นทาง')

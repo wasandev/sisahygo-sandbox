@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Nova;
+
+use Laravel\Nova\Fields\Date;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
+
+class Receipt extends Resource
+{
+    public static $group = '8.สำหรับสาขา';
+    public static $priority = 5;
+
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = \App\Models\Receipt::class;
+
+    /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $title = 'receipt_no';
+
+    /**
+     * The columns that should be searched.
+     *
+     * @var array
+     */
+    public static $search = [
+        'receipt_no',
+    ];
+    public static function label()
+    {
+        return 'ใบเสร็จรับเงิน';
+    }
+
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function fields(Request $request)
+    {
+        return [
+            ID::make(__('ID'), 'id')->sortable(),
+            Date::make('วันที่', 'receipt_date'),
+            Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no'),
+            BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer'),
+            Currency::make('จำนวนเงิน', 'total_amount'),
+            Select::make('ชำระโดย', 'branchpay_by')->options([
+                'C' => 'เงินสด',
+                'T' => 'เงินโอน',
+                'Q' => 'เช็ค',
+                'R' => 'บัตรเครดิต'
+            ])->displayUsingLabels(),
+            Currency::make('ส่วนลด', 'discount_amount'),
+            Currency::make('ภาษี', 'tax_amount'),
+            Currency::make('ยอดรับชำระ', 'pay_amount'),
+
+
+        ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function cards(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function filters(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the lenses available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function lenses(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return [];
+    }
+}

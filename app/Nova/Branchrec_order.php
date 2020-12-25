@@ -186,17 +186,19 @@ class Branchrec_order extends Resource
                 ->cancelButtonText("ไม่ใช่")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
-            // ->canSee(function ($request) {
-            //     return $request instanceof ActionRequest
-            //         || ($this->resource->exists && $this->resource->order_status == 'arrival');
-            // }),
             (new CreateBranchWarehouseItems())
                 ->confirmText('ต้องการทำ -รายการลงสินค้าไว้สาขา- จากใบรับส่งที่เลือกไว้')
                 ->confirmButtonText('ใช่')
                 ->cancelButtonText("ไม่ใช่")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
             (new CreateBranchDeliveryItems())
                 ->confirmText('ต้องการทำ -รายการจัดส่งโดยรถสาขา- จากใบรับส่งที่เลือกไว้')
@@ -204,11 +206,9 @@ class Branchrec_order extends Resource
                 ->cancelButtonText("ไม่ใช่")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
-            // ->canSee(function ($request) {
-            //     return $request instanceof ActionRequest
-            //         || ($this->resource->exists && $this->resource->order_status == 'branch warehouse');
-            // }),
 
         ];
     }

@@ -103,7 +103,7 @@ class Order_header extends Resource
                 ->default(today())
                 ->format('DD/MM/YYYY')
                 ->exceptOnForms(),
-            Select::make(__('Payment'), 'paymenttype')->options([
+            Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'T' => 'เงินโอนต้นทาง',
                 'E' => 'เงินสดปลายทาง',

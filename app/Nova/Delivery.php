@@ -9,9 +9,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Delivery extends Resource
@@ -60,6 +62,7 @@ class Delivery extends Resource
             ID::make(__('ID'), 'id')
                 ->sortable()
                 ->hideFromIndex(),
+            Boolean::make(__('Status'), 'completed'),
             Text::make('เลขที่จัดส่ง', 'delivery_no')
                 ->readonly(),
             Date::make('วันที่จัดส่ง', 'delivery_date'),
@@ -68,6 +71,7 @@ class Delivery extends Resource
                 '1' => 'สาขาจัดส่ง'
             ])->displayUsingLabels()
                 ->exceptOnForms(),
+            BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User'),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->exceptOnForms(),
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
@@ -97,7 +101,7 @@ class Delivery extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
-            HasMany::make('รายการใบรับส่ง', 'delivery_items', 'App\Nova\Delivery_item'),
+            HasMany::make('รายการจัดส่งตามผู้รับ', 'delivery_items', 'App\Nova\Delivery_item'),
 
         ];
     }

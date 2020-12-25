@@ -27,12 +27,16 @@ class Bankaccount extends Resource
      *
      * @var string
      */
-    public static $title = 'account_no';
+    // public static $title = 'account_no';
 
-    // public function title()
-    // {
-    //     return  $this->bank->name . ' ' . $this->account_no;
-    // }
+    public function title()
+    {
+        return   $this->account_no;
+    }
+    public function subtitle()
+    {
+        return  $this->bank->name . ' ' . $this->bankbranch;
+    }
     /**
      * The columns that should be searched.
      *

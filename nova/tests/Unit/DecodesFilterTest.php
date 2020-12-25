@@ -12,24 +12,28 @@ class DecodesFilterTest extends IntegrationTest
 {
     public function test_decodes_filters_correctly()
     {
-        $filterString = 'W3siSGVtcFxcQ3VzdG9tRmlsdGVyXFxDdXN0b21GaWx0ZXIiOiIifSx7IkFwcFxcTm92YVxcRmlsdGVyc1xcRGF0ZUZpbHRlciI6IjIwMTktMTAtMTQifSx7IkFwcFxcTm92YVxcRmlsdGVyc1xcQWRtaW5GaWx0ZXIiOnsiYWRtaW4iOnRydWUsIm5vcm1pZSI6ZmFsc2V9fSx7IkFwcFxcTm92YVxcRmlsdGVyc1xcVXNlckZpbHRlciI6ImFjdGl2ZSJ9XQ';
+        $filterString = 'W3siY2xhc3MiOiJIZW1wXFxDdXN0b21GaWx0ZXJcXEN1c3RvbUZpbHRlciIsInZhbHVlIjoiIn0seyJjbGFzcyI6IkFwcFxcTm92YVxcRmlsdGVyc1xcRGF0ZUZpbHRlciIsInZhbHVlIjoiMjAxOS0xMC0xNCJ9LHsiY2xhc3MiOiJBcHBcXE5vdmFcXEZpbHRlcnNcXEFkbWluRmlsdGVyIiwidmFsdWUiOnsiYWRtaW4iOnRydWUsIm5vcm1pZSI6ZmFsc2V9fSx7ImNsYXNzIjoiQXBwXFxOb3ZhXFxGaWx0ZXJzXFxVc2VyRmlsdGVyIiwidmFsdWUiOiJhY3RpdmUifV0';
         $decoder = new FilterDecoder($filterString);
 
         $this->assertEquals([
             [
-                'Hemp\CustomFilter\CustomFilter' => '',
+                'class' => 'Hemp\CustomFilter\CustomFilter',
+                'value' => '',
             ],
             [
-                'App\Nova\Filters\DateFilter' => '2019-10-14',
+                'class' => 'App\Nova\Filters\DateFilter',
+                'value' => '2019-10-14',
             ],
             [
-                'App\Nova\Filters\AdminFilter' => [
+                'class' => 'App\Nova\Filters\AdminFilter',
+                'value' => [
                     'admin' => true,
                     'normie' => false,
                 ],
             ],
             [
-                'App\Nova\Filters\UserFilter' => 'active',
+                'class' => 'App\Nova\Filters\UserFilter',
+                'value' => 'active',
             ],
         ], $decoder->decodeFromBase64String());
     }
@@ -46,7 +50,8 @@ class DecodesFilterTest extends IntegrationTest
     {
         $filterString = base64_encode(json_encode([
             [
-                IdFilter::class => '1',
+                'class' => IdFilter::class,
+                'value' => '1',
             ],
         ], true));
 

@@ -395,6 +395,7 @@ export default {
       this.initializeState(this.lens)
     } else {
       this.initializeFilters(this.lens)
+      this.getActions()
     }
   },
 

@@ -52,16 +52,32 @@ class MetricTest extends IntegrationTest
             }
         };
 
-        $now = Carbon::parse('Oct 14 2019 5 pm'); // UTC (future time)
-        $nowCentral = $now->copy()->tz('America/Chicago'); // Now for the user
+        factory(User::class)->create(['created_at' => Carbon::parse('Oct 14 2019 4 pm')]); // 11am Chicago, 12pm New York
+        factory(User::class)->create(['created_at' => Carbon::parse('Oct 14 2019 5 pm')]); // 12pm Chicago, 1pm New York
 
-        Carbon::setTestNow(Carbon::parse($nowCentral));
-
-        factory(User::class)->create(['created_at' => $now]);
-        factory(User::class)->create(['created_at' => $nowCentral]);
+        Carbon::setTestNow(Carbon::parse('Oct 14 2019 10 am', 'America/Chicago'));
 
         $request = NovaRequest::create('/', 'GET', ['timezone' => 'America/Chicago']);
+        $this->assertEquals(0, $metric->calculate($request)->value);
 
+        Carbon::setTestNow(Carbon::parse('Oct 14 2019 11 am', 'America/Chicago'));
+
+        $request = NovaRequest::create('/', 'GET', ['timezone' => 'America/Chicago']);
+        $this->assertEquals(1, $metric->calculate($request)->value);
+
+        Carbon::setTestNow(Carbon::parse('Oct 14 2019 12 pm', 'America/Chicago'));
+
+        $request = NovaRequest::create('/', 'GET', ['timezone' => 'America/Chicago']);
+        $this->assertEquals(2, $metric->calculate($request)->value);
+
+        Carbon::setTestNow(Carbon::parse('Oct 14 2019 11 am', 'America/New_York'));
+
+        $request = NovaRequest::create('/', 'GET', ['timezone' => 'America/New_York']);
+        $this->assertEquals(0, $metric->calculate($request)->value);
+
+        Carbon::setTestNow(Carbon::parse('Oct 14 2019 12 pm', 'America/New_York'));
+
+        $request = NovaRequest::create('/', 'GET', ['timezone' => 'America/New_York']);
         $this->assertEquals(1, $metric->calculate($request)->value);
 
         Carbon::setTestNow(null);

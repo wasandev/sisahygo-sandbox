@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Delivery_item;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DeliveryItemPolicy
+class Delivery_itemPolicy
 {
     use HandlesAuthorization;
 
@@ -37,15 +37,20 @@ class DeliveryItemPolicy
         return $user->role == 'admin' || $user->hasPermissionTo('delete delivery_items');
     }
 
-
-    public function update(User $user, Delivery_item $delivery_items)
+    public function update(User $user, Delivery_item $delivery_item)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('edit delivery_items');
     }
 
-
-    public function delete(User $user, Delivery_item $delivery_items)
+    public function delete(User $user, Delivery_item $delivery_item)
     {
+        if ($delivery_item->payment_status || $delivery_item->delivery_status) {
+            return false;
+        }
         return $user->role == 'admin' || $user->hasPermissionTo('delete delivery_items');
+    }
+    public function addOrder_detail(User $user, Delivery_item $delivery_item)
+    {
+        return false;
     }
 }

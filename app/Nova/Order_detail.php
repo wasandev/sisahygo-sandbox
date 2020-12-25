@@ -76,7 +76,7 @@ class Order_detail extends Resource
             Currency::make('ค่าขนส่ง/หน่วย', 'price')
                 ->onlyOnIndex(),
             Boolean::make('ใช้ราคาจากตาราง', 'usepricetable')
-                //->withMeta(["value" => 1])
+                ->withMeta(["value" => 1])
                 ->hideFromIndex(),
 
             NovaDependencyContainer::make([

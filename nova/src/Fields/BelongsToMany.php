@@ -314,7 +314,7 @@ class BelongsToMany extends Field implements DeletableContract, ListableField, P
             'resourceName' => $this->resourceName,
             'searchable' => $this->searchable,
             'withSubtitles' => $this->withSubtitles,
-            'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
+            'singularLabel' => $this->singularLabel ?? $this->resourceClass::singularLabel(),
         ], parent::jsonSerialize());
     }
 }

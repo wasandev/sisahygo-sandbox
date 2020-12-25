@@ -84,6 +84,7 @@ class OrderHeaderObserver
             if ($order_header->paymenttype == "T") {
                 Order_banktransfer::create([
                     'order_header_id' => $order_header->id,
+                    'branch_id' => $order_header->branch_id,
                     'status' => false,
                     'transfer_amount' => $order_header->order_amount,
                     'bankaccount_id' => $order_header->bankaccount_id,

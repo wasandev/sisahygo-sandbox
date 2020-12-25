@@ -28,6 +28,33 @@ class CurrencyTest extends IntegrationTest
         $this->assertEquals('$200.00', $field->value);
     }
 
+    public function test_the_field_is_displayed_with_symbol()
+    {
+        $field = Currency::make('Cost')->symbol('USD');
+
+        $field->resolveForDisplay((object) ['cost' => 200]);
+
+        $this->assertEquals('USD 200.00', $field->value);
+    }
+
+    public function test_the_field_with_large_value_is_displayed_with_currency_character_on()
+    {
+        $field = Currency::make('Cost');
+
+        $field->resolveForDisplay((object) ['cost' => 2000000]);
+
+        $this->assertEquals('$2,000,000.00', $field->value);
+    }
+
+    public function test_the_field_with_large_value_is_displayed_with_symbol()
+    {
+        $field = Currency::make('Cost')->symbol('USD');
+
+        $field->resolveForDisplay((object) ['cost' => 2000000]);
+
+        $this->assertEquals('USD 2,000,000.00', $field->value);
+    }
+
     public function test_the_field_can_set_currency()
     {
         $field = Currency::make('Cost')->currency('GBP');
@@ -37,6 +64,15 @@ class CurrencyTest extends IntegrationTest
         $this->assertEquals('£200.00', $field->value);
     }
 
+    public function test_the_field_can_set_currency_and_symbol()
+    {
+        $field = Currency::make('Cost')->currency('GBP')->symbol('$');
+
+        $field->resolveForDisplay((object) ['cost' => 200]);
+
+        $this->assertEquals('$200.00', $field->value);
+    }
+
     public function test_the_field_can_change_locale()
     {
         $field = Currency::make('Cost')->currency('EUR')->locale('nl_NL');
@@ -44,6 +80,33 @@ class CurrencyTest extends IntegrationTest
         $field->resolveForDisplay((object) ['cost' => 200]);
 
         $this->assertEquals('€ 200,00', $field->value);
+    }
+
+    public function test_the_field_can_change_locale_and_symbol()
+    {
+        $field = Currency::make('Cost')->currency('EUR')->locale('nl_NL')->symbol('EUR');
+
+        $field->resolveForDisplay((object) ['cost' => 200]);
+
+        $this->assertEquals('EUR 200,00', $field->value);
+    }
+
+    public function test_the_field_with_large_value_can_change_locale()
+    {
+        $field = Currency::make('Cost')->currency('EUR')->locale('nl_NL');
+
+        $field->resolveForDisplay((object) ['cost' => 2000000]);
+
+        $this->assertEquals('€ 2.000.000,00', $field->value);
+    }
+
+    public function test_the_field_with_large_value_can_change_locale_and_symbol()
+    {
+        $field = Currency::make('Cost')->currency('EUR')->locale('nl_NL')->symbol('EUR');
+
+        $field->resolveForDisplay((object) ['cost' => 2000000]);
+
+        $this->assertEquals('EUR 2.000.000,00', $field->value);
     }
 
     public function test_the_field_handles_null()

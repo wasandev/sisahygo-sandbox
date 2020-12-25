@@ -3,6 +3,7 @@
 namespace App\Nova\Actions;
 
 use App\Models\Delivery;
+use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
 use App\Models\Order_status;
 use Illuminate\Bus\Queueable;
@@ -38,8 +39,8 @@ class CreateBranchDeliveryItems extends Action
     {
 
         $branch = \App\Models\Branch::find(auth()->user()->branch_id);
-       // $paymenttype_e = $models->where('paymenttype', 'E');
-       // $branchrec_amount = $paymenttype_e->sum('order_amount');
+        //$paymenttype_e = $models->where('paymenttype', 'E');
+        // $branchrec_amount = $paymenttype_e->sum('order_amount');
         $delivery_no = IdGenerator::generate(['table' => 'deliveries', 'field' => 'delivery_no', 'length' => 15, 'prefix' => $branch->code  . date('Ymd')]);
         $select_orders = $models->filter(function ($item) {
             return data_get($item, 'order_status') == 'branch warehouse';
@@ -59,21 +60,37 @@ class CreateBranchDeliveryItems extends Action
                 'user_id' => auth()->user()->id,
                 'decription' => $fields->description,
             ]);
-            foreach ($select_orders as $model) {
+            $cust_groups = $select_orders->groupBy('customer_rec_id')->all();
+            $bal_custs = $cust_groups;
 
-                $model->order_status = 'delivery';
-                $model->save();
-
-                Delivery_item::create([
-                    'delivery_id' =>  $delivery->id,
-                    'order_header_id' => $model->id,
-                ]);
-
-                Order_status::create([
-                    'order_header_id' => $model->id,
-                    'status' => 'delivery',
+            foreach ($bal_custs as $cust => $cust_groups) {
+                $delivery_item = Delivery_item::create([
+                    'delivery_id' => $delivery->id,
+                    'customer_id' => $cust,
+                    'delivery_status' => false,
+                    'payment_status' => false,
                     'user_id' => auth()->user()->id,
+
                 ]);
+
+                foreach ($cust_groups as $model) {
+
+                    $model->order_status = 'delivery';
+                    $model->save();
+
+                    Delivery_detail::create([
+                        'delivery_item_id' =>  $delivery_item->id,
+                        'order_header_id' => $model->id,
+                        'delivery_status' => false,
+                        'payment_status' => false,
+                    ]);
+
+                    Order_status::create([
+                        'order_header_id' => $model->id,
+                        'status' => 'delivery',
+                        'user_id' => auth()->user()->id,
+                    ]);
+                }
             }
             return Action::message('สร้างรายการจัดส่งโดยรถของสาขาเรียบร้อยแล้ว');
         }

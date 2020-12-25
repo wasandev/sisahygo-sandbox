@@ -174,9 +174,11 @@ use App\Models\Branchrec_order;
 use App\Observers\Branchrec_orderObserver;
 
 use App\Models\Delivery;
+use App\Models\Delivery_detail;
 use App\Observers\DeliveryObserver;
 
 use App\Models\Delivery_item;
+use App\Observers\DeliveryDetailObserver;
 use App\Observers\DeliveryItemObserver;
 
 class AppServiceProvider extends ServiceProvider
@@ -257,5 +259,6 @@ class AppServiceProvider extends ServiceProvider
         Branchrec_order::observe(Branchrec_orderObserver::class);
         Delivery::observe(DeliveryObserver::class);
         Delivery_item::observe(DeliveryItemObserver::class);
+        Delivery_detail::observe(DeliveryDetailObserver::class);
     }
 }

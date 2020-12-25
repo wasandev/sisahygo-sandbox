@@ -47,6 +47,9 @@ class DeliveryPolicy
 
     public function delete(User $user, Delivery $delivery)
     {
+        if ($delivery->completed) {
+            return false;
+        }
         return $user->role == 'admin' || $user->hasPermissionTo('delete deliveries');
     }
 }

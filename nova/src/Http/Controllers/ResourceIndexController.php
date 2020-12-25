@@ -15,8 +15,10 @@ class ResourceIndexController extends Controller
      */
     public function handle(ResourceIndexRequest $request)
     {
+        $query = $request->toQuery();
+
         $paginator = $this->paginator(
-            $request, $resource = $request->resource()
+            $request, $resource = $request->resource(), $query
         );
 
         return response()->json([
@@ -26,6 +28,7 @@ class ResourceIndexController extends Controller
             'next_page_url' => $paginator->nextPageUrl(),
             'per_page' => $paginator->perPage(),
             'per_page_options' => $resource::perPageOptions(),
+            'total' => $query->toBase()->getCountForPagination(),
             'softDeletes' => $resource::softDeletes(),
         ]);
     }
@@ -35,11 +38,12 @@ class ResourceIndexController extends Controller
      *
      * @param  \Laravel\Nova\Http\Requests\ResourceIndexRequest  $request
      * @param  string  $resource
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Pagination\Paginator
      */
-    protected function paginator(ResourceIndexRequest $request, $resource)
+    protected function paginator(ResourceIndexRequest $request, $resource, $query)
     {
-        return $request->toQuery()->simplePaginate(
+        return $query->simplePaginate(
             $request->viaRelationship()
                         ? $resource::$perPageViaRelationship
                         : ($request->perPage ?? $resource::perPageOptions()[0])

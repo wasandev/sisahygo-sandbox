@@ -9,8 +9,10 @@ class Delivery_item extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'delivery_id', 'order_header_id', 'delivery_status', 'payment_status', 'user_id',
-        'updated_by'
+        'delivery_id', 'customer_id', 'delivery_status', 'payment_status', 'user_id',
+        'updated_by', 'receipt_id', 'payment_amount', 'discount_amount',
+        'tax_amount', 'pay_amount', 'receipt_type', 'branchpay_by', 'bankaccount_id', 'bankreference',
+        'chequeno', 'chequedate', 'chequebank_id', 'description'
     ];
 
     public function delivery()
@@ -18,10 +20,7 @@ class Delivery_item extends Model
         return $this->belongsTo('App\Models\Delivery');
     }
 
-    public function branchrec_order()
-    {
-        return $this->belongsTo('App\Models\Branchrec_order', 'order_header_id');
-    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -32,8 +31,18 @@ class Delivery_item extends Model
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
 
-    public function driver()
+
+    public function delivery_details()
     {
-        return $this->belongsTo('App\Models\Employee', 'driver_id');
+        return $this->hasMany('App\Models\Delivery_detail');
+    }
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer');
+    }
+
+    public function receipt()
+    {
+        return $this->belongsTo('App\Models\Receipt');
     }
 }

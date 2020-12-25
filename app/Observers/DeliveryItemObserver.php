@@ -2,51 +2,93 @@
 
 namespace App\Observers;
 
+use App\Models\Branch_balance;
+use App\Models\Branch_balance_item;
 use App\Models\Branchrec_order;
 use App\Models\Delivery;
+use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
-
+use App\Models\Order_banktransfer;
+use App\Models\Order_status;
+use App\Models\Receipt;
+use App\Models\Waybill_status;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class DeliveryItemObserver
 {
 
     public function creating(Delivery_item $delivery_item)
     {
-        $branchrec_order = Branchrec_order::find($delivery_item->order_header_id);
-        $branchrec_order->order_status = 'delivery';
-        $branchrec_order->save();
-
-        $delivery = Delivery::find($delivery_item->delivery_id);
-        $receipt_amount = $delivery->receipt_amount;
-        $delivery->receipt_amount = $receipt_amount + $branchrec_order->order_amount;
-        $delivery->save();
     }
 
     public function updating(Delivery_item $delivery_item)
     {
-        // $delivery_items = \App\Models\Delivery_item::where('delivery_id', $delivery->id);
+        if ($delivery_item->delivery_status && $delivery_item->payment_status && $delivery_item->payment_amount > 0) {
+            //update branch_balance
+            $delivery_detail = Delivery_detail::where('delivery_item_id', $delivery_item->id)->first();
+            $branch_balance_item = Branch_balance_item::where('order_header_id', $delivery_detail->order_header_id)->first();
+            $branch_balance = Branch_balance::where('id', '=', $branch_balance_item->branch_balance_id)
+                ->where('customer_id', '=', $delivery_item->customer_id)->first();
 
-        // if ($delivery->completed) {
-        //     for
-        // }
+            $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => date('Ymd')]);
+
+            $receipt = Receipt::create([
+                'receipt_no' => $receipt_no,
+                'receipt_date' => today(),
+                'customer_id' => $delivery_item->customer_id,
+                'total_amount' => $delivery_item->payment_amount,
+                'discount_amount' => $delivery_item->discount_amount,
+                'tax_amount' => $delivery_item->tax_amount,
+                'pay_amount' => $delivery_item->pay_amount,
+                'receipt_type' => 'A',
+                'branchpay_by' => $delivery_item->branchpay_by,
+                'bankaccount_id' => $delivery_item->bankaccount_id,
+                'bankreference' => $delivery_item->bankreference,
+                'description' => $delivery_item->description,
+                'user_id' => auth()->user()->id,
+            ]);
+            $branch_balance->discount_amount = $delivery_item->discount_amount;
+            $branch_balance->tax_amount = $delivery_item->tax_amount;
+            $branch_balance->pay_amount = $delivery_item->pay_amount;
+            $branch_balance->updated_by = auth()->user()->id;
+            $branch_balance->branchpay_date = today();
+            $branch_balance->payment_status = true;
+            $branch_balance->remark = $delivery_item->description;
+            $branch_balance->receipt_id = $receipt->id;
+            $branch_balance->save();
+        }
+        $delivery_item->updated_by =  auth()->user()->id;
+        if (isset($receipt)) {
+            $delivery_item->receipt_id = $receipt->id;
+        }
     }
-    /**
-     * Handle the post "deleted" event.
-     *
-     * @param  \App\Post  $post
-     * @return void
-     */
-    public function deleting(Delivery_item $delivery_item)
+    public function updated(Delivery_item $delivery_item)
     {
-        $branchrec_order = Branchrec_order::find($delivery_item->order_header_id);
-        $branchrec_order->order_status = 'branch warehouse';
-        $branchrec_order->save();
+
 
         $delivery = Delivery::find($delivery_item->delivery_id);
-        $receipt_amount = $delivery->receipt_amount;
-        if ($receipt_amount > 0) {
-            $delivery->receipt_amount = $receipt_amount - $branchrec_order->order_amount;
+        $ordernotconfirmed = Delivery_item::where('delivery_id', $delivery->id)
+            ->where('delivery_status', '=', false)
+            ->count();
+
+        if ($ordernotconfirmed == 0) {
+            $delivery->completed = true;
             $delivery->save();
+            //update waybill_status
+            if ($delivery->delivery_type ==  0) {
+                $waybill = \App\Models\Waybill::find($delivery->waybill_id);
+                $waybill->waybill_status = 'completed';
+                $waybill->save();
+                Waybill_status::create([
+                    'waybill_id' => $waybill->id,
+                    'status' => 'completed',
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
         }
+    }
+
+    public function deleting(Delivery_item $delivery_item)
+    {
     }
 }

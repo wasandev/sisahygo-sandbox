@@ -6,12 +6,14 @@ use BadMethodCallException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Laravel\Nova\Actions\ActionResource;
+use Laravel\Nova\Events\NovaServiceProviderRegistered;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Http\Middleware\RedirectIfAuthenticated;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -161,7 +163,7 @@ class Nova
      */
     public static function version()
     {
-        return once(function () {
+        return Cache::driver('array')->rememberForever('nova.version', function () {
             $manifest = json_decode(File::get(__DIR__.'/../composer.json'), true);
 
             return $manifest['version'] ?? '3.x';
@@ -198,6 +200,17 @@ class Nova
         Route::aliasMiddleware('nova.guest', RedirectIfAuthenticated::class);
 
         return new PendingRouteRegistration;
+    }
+
+    /**
+     * Register an event listener for the Nova "booted" event.
+     *
+     * @param  \Closure|string  $callback
+     * @return void
+     */
+    public static function booted($callback)
+    {
+        Event::listen(NovaServiceProviderRegistered::class, $callback);
     }
 
     /**

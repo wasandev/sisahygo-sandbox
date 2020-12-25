@@ -15,7 +15,7 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Nova::serving(function (ServingNova $event) {
+        Nova::booted(function (ServingNova $event) {
             Nova::theme(asset('/{{ vendor }}/theme.css'));
         });
 

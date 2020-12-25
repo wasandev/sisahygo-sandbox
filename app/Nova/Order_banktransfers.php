@@ -32,12 +32,12 @@ class Order_banktransfers extends Resource
      *
      * @var string
      */
-    //public static $title = 'order_header_id';
+    public static $title = 'order_header_id';
 
-    public function title()
-    {
-        return $this->order_header->order_header_no;
-    }
+    // public function title()
+    // {
+    //     return $this->order_header->order_header_no;
+    // }
     /**
      * The columns that should be searched.
      *
@@ -65,6 +65,7 @@ class Order_banktransfers extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make(__('Status'), 'status'),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
             BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header'),
             BelongsTo::make(__('Account no'), 'bankaccount', 'App\Nova\Bankaccount'),
             Currency::make(__('Amount'), 'transfer_amount'),

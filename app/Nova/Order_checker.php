@@ -97,11 +97,12 @@ class Order_checker extends Resource
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
-            Select::make(__('Tran type'), 'trantype')->options([
+            Select::make('การจัดส่ง', 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
-                ->sortable(),
+                ->sortable()
+                ->default('1'),
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')

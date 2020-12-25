@@ -591,10 +591,9 @@ export default {
           this.resources = data.resources
           this.softDeletes = data.softDeletes
           this.perPage = data.per_page
+          this.allMatchingResourceCount = data.total
 
           this.loading = false
-
-          this.getAllMatchingResourceCount()
 
           Nova.$emit('resources-loaded')
         })
@@ -797,7 +796,7 @@ export default {
         this.resourceResponse = data
         this.resources = [...this.resources, ...data.resources]
 
-        this.getAllMatchingResourceCount()
+        this.allMatchingResourceCount = data.total
 
         Nova.$emit('resources-loaded')
       })

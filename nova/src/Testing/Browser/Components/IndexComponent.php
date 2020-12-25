@@ -60,10 +60,10 @@ class IndexComponent extends BaseComponent
     public function selectAllMatching(Browser $browser)
     {
         $browser->click('[dusk="select-all-dropdown"]')
-                        ->pause(500)
-                        ->elsewhere('[dusk="select-all-matching-button"]', function ($browser) {
-                            $browser->click('input[type="checkbox"]')
-                                ->pause(250);
+                        ->elsewhere('', function ($browser) {
+                            $browser->whenAvailable('[dusk="select-all-matching-button"]', function ($browser) {
+                                $browser->click('input[type="checkbox"]')->pause(250);
+                            });
                         })
                         ->click('')
                         ->pause(250);
@@ -75,9 +75,10 @@ class IndexComponent extends BaseComponent
     public function setPerPage(Browser $browser, $value)
     {
         $browser->click('@filter-selector')
-                    ->pause(500)
                     ->elsewhere('', function ($browser) use ($value) {
-                        $browser->select('@per-page-select', $value);
+                        $browser->whenAvailable('@per-page-select', function ($browser) use ($value) {
+                            $browser->select('', $value);
+                        });
                     })
                     ->pause(250);
     }
@@ -116,10 +117,11 @@ class IndexComponent extends BaseComponent
     public function withoutTrashed(Browser $browser)
     {
         $browser->click('@filter-selector')
-                ->pause(500)
-                ->elsewhere('[dusk="filter-soft-deletes"]', function ($browser) {
-                    $browser->select('[dusk="trashed-select"]', '');
-                })->click('')->pause(250);
+                ->elsewhere('', function ($browser) {
+                    $browser->whenAvailable('[dusk="filter-soft-deletes"]', function ($browser) {
+                        $browser->select('[dusk="trashed-select"]', '');
+                    })->click('')->pause(350);
+                });
     }
 
     /**
@@ -128,10 +130,11 @@ class IndexComponent extends BaseComponent
     public function onlyTrashed(Browser $browser)
     {
         $browser->click('@filter-selector')
-                ->pause(500)
-                ->elsewhere('[dusk="filter-soft-deletes"]', function ($browser) {
-                    $browser->select('@trashed-select', 'only');
-                })->click('')->pause(350);
+                ->elsewhere('', function ($browser) {
+                    $browser->whenAvailable('[dusk="filter-soft-deletes"]', function ($browser) {
+                        $browser->select('[dusk="trashed-select"]', 'only');
+                    })->click('')->pause(350);
+                });
     }
 
     /**
@@ -140,10 +143,11 @@ class IndexComponent extends BaseComponent
     public function withTrashed(Browser $browser)
     {
         $browser->click('@filter-selector')
-                ->pause(500)
-                ->elsewhere('[dusk="filter-soft-deletes"]', function ($browser) {
-                    $browser->select('@trashed-select', 'with');
-                })->click('')->pause(350);
+                ->elsewhere('', function ($browser) {
+                    $browser->whenAvailable('[dusk="filter-soft-deletes"]', function ($browser) {
+                        $browser->select('[dusk="trashed-select"]', 'with');
+                    })->click('')->pause(350);
+                });
     }
 
     /**
@@ -162,15 +166,16 @@ class IndexComponent extends BaseComponent
     {
         $browser->select('@action-select', $uriKey)
                     ->pause(100)
-                    ->click('@run-action-button')
-                    ->pause(600);
+                    ->click('@run-action-button');
 
-        $browser->elsewhere('.modal', function ($browser) use ($fieldCallback) {
-            if ($fieldCallback) {
-                $fieldCallback($browser);
-            }
+        $browser->elsewhere('', function ($browser) use ($fieldCallback) {
+            $browser->whenAvailable('.modal', function ($browser) use ($fieldCallback) {
+                if ($fieldCallback) {
+                    $fieldCallback($browser);
+                }
 
-            $browser->click('[dusk="confirm-action-button"]')->pause(250);
+                $browser->click('[dusk="confirm-action-button"]')->pause(250);
+            });
         });
     }
 
@@ -180,16 +185,17 @@ class IndexComponent extends BaseComponent
     public function runInlineAction(Browser $browser, $id, $uriKey, $fieldCallback = null)
     {
         $browser->within('[dusk="'.$id.'-row"]', function ($browser) use ($uriKey) {
-            $browser->click('[dusk="run-inline-action-button"][data-testid="'.$uriKey.'"]')
-                    ->pause(600);
+            $browser->click('[dusk="run-inline-action-button"][data-testid="'.$uriKey.'"]');
         });
 
-        $browser->elsewhere('.modal', function ($browser) use ($fieldCallback) {
-            if ($fieldCallback) {
-                $fieldCallback($browser);
-            }
+        $browser->elsewhere('', function ($browser) use ($fieldCallback) {
+            $browser->whenAvailable('.modal', function ($browser) use ($fieldCallback) {
+                if ($fieldCallback) {
+                    $fieldCallback($browser);
+                }
 
-            $browser->click('[dusk="confirm-action-button"]')->pause(250);
+                $browser->click('[dusk="confirm-action-button"]')->pause(250);
+            });
         });
     }
 
@@ -232,11 +238,10 @@ class IndexComponent extends BaseComponent
         $browser->click('@delete-menu')
                     ->pause(300)
                     ->elsewhere('', function ($browser) {
-                        $browser->click('[dusk="delete-selected-button"]');
-                    })
-                    ->pause(1000)
-                    ->elsewhere('.modal', function ($browser) {
-                        $browser->click('#confirm-delete-button');
+                        $browser->click('[dusk="delete-selected-button"]')
+                            ->whenAvailable('.modal', function ($browser) {
+                                $browser->click('#confirm-delete-button');
+                            });
                     })
                     ->pause(1000);
     }
@@ -249,11 +254,10 @@ class IndexComponent extends BaseComponent
         $browser->click('@delete-menu')
                     ->pause(300)
                     ->elsewhere('', function ($browser) {
-                        $browser->click('[dusk="restore-selected-button"]');
-                    })
-                    ->pause(1000)
-                    ->elsewhere('.modal', function ($browser) {
-                        $browser->click('#confirm-restore-button');
+                        $browser->click('[dusk="restore-selected-button"]')
+                            ->whenAvailable('.modal', function ($browser) {
+                                $browser->click('#confirm-restore-button');
+                            });
                     })
                     ->pause(1000);
     }
@@ -266,11 +270,10 @@ class IndexComponent extends BaseComponent
         $browser->click('@delete-menu')
                     ->pause(300)
                     ->elsewhere('', function ($browser) {
-                        $browser->click('[dusk="force-delete-selected-button"]');
-                    })
-                    ->pause(1000)
-                    ->elsewhere('.modal', function ($browser) {
-                        $browser->click('#confirm-delete-button');
+                        $browser->click('[dusk="force-delete-selected-button"]')
+                            ->whenAvailable('.modal', function ($browser) {
+                                $browser->click('#confirm-delete-button');
+                            });
                     })
                     ->pause(1000);
     }
@@ -310,12 +313,11 @@ class IndexComponent extends BaseComponent
     public function assertSelectAllMatchingCount(Browser $browser, $count)
     {
         $browser->click('@select-all-dropdown')
-                        ->pause(500)
                         ->elsewhere('', function (Browser $browser) use ($count) {
-                            $browser->within('@select-all-matching-button', function (Browser $browser) use ($count) {
+                            $browser->whenAvailable('@select-all-matching-button', function (Browser $browser) use ($count) {
                                 $browser->assertSee('('.$count.')');
                             });
-                        })->pause(250);
+                        });
     }
 
     /**

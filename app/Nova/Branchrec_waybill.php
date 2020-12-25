@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Branchrec_waybill extends Resource
@@ -215,6 +216,10 @@ class Branchrec_waybill extends Resource
                 ->cancelButtonText("ไม่ใช่")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_waybills');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && $this->resource->waybill_status == 'in transit' && $request->user()->hasPermissionTo('manage branchrec_waybills'));
                 }),
 
         ];

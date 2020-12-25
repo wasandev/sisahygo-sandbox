@@ -518,8 +518,11 @@ abstract class Trend extends RangedMetric
 
         $results = $query
                 ->select(DB::raw("{$expression} as date_result, {$function}({$wrappedColumn}) as aggregate"))
-                ->whereBetween($dateColumn, [$startingDate, $endingDate])
-                ->groupBy(DB::raw($expression))
+                ->whereBetween(
+                    $dateColumn, array_map(function ($date) {
+                        return $this->asQueryDatetime($date);
+                    }, [$startingDate, $endingDate])
+                )->groupBy(DB::raw($expression))
                 ->orderBy('date_result')
                 ->get();
 

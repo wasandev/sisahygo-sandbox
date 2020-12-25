@@ -9,9 +9,9 @@ class Delivery extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'delivery_no', 'delivery_date', 'delivery_type',
-        'branch_id', 'branch_route_id', 'car_id', 'driver_id', 'description', 'receipt_amount', 'user_id',
-        'updated_by'
+        'delivery_no', 'delivery_date', 'delivery_type', 'waybill_id',
+        'branch_id', 'branch_route_id', 'car_id', 'driver_id', 'sender_id', 'description', 'receipt_amount', 'user_id',
+        'updated_by', 'completed'
     ];
 
     protected $casts = [
@@ -48,7 +48,10 @@ class Delivery extends Model
     {
         return $this->belongsTo('App\Models\Employee', 'driver_id');
     }
-
+    public function sender()
+    {
+        return $this->belongsTo('App\Models\User', 'sender_id');
+    }
     public function delivery_items()
     {
         return $this->hasMany('App\Models\Delivery_item');

@@ -935,6 +935,78 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ค่าใช้จ่ายส่วนกลาง',
         ],
+        //ข้อมูลธนาคาร
+        'view banks' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ข้อมูลธนาคาร',
+        ],
+
+        'create banks' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ข้อมูลธนาคาร',
+        ],
+
+        'edit banks' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ข้อมูลธนาคาร',
+        ],
+
+        'delete banks' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ข้อมูลธนาคาร',
+        ],
+        //ข้อมูลบัญชีธนาคาร
+        'view bankaccounts' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ข้อมูลบัญชีธนาคาร',
+        ],
+
+        'create bankaccounts' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ข้อมูลบัญชีธนาคาร',
+        ],
+
+        'edit bankaccounts' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ข้อมูลบัญชีธนาคาร',
+        ],
+
+        'delete bankaccounts' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ข้อมูลบัญชีธนาคาร',
+        ],
+        //ข้อมูลรายการโอนเงินค่าขนส่ง
+        'view order_banktransfers' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ข้อมูลรายการโอนเงินค่าขนส่ง',
+        ],
+
+        'create order_banktransfers' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ข้อมูลรายการโอนเงินค่าขนส่ง',
+        ],
+
+        'edit order_banktransfers' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ข้อมูลรายการโอนเงินค่าขนส่ง',
+        ],
+
+        'delete order_banktransfers' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ข้อมูลรายการโอนเงินค่าขนส่ง',
+        ],
         //ตรวจนับสินค้า
         'view own order_checkers' => [
             'display_name' => 'ดูข้อมูลของตัวเอง',

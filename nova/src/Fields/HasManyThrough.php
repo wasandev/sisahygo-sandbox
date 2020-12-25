@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Fields;
 
-use Illuminate\Support\Str;
 use Laravel\Nova\Contracts\ListableField;
 use Laravel\Nova\Contracts\RelatableField;
 
@@ -49,7 +48,7 @@ class HasManyThrough extends HasMany implements ListableField, RelatableField
             'listable' => true,
             'perPage'=> $this->resourceClass::$perPageViaRelationship,
             'resourceName' => $this->resourceName,
-            'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
+            'singularLabel' => $this->singularLabel ?? $this->resourceClass::singularLabel(),
         ], parent::jsonSerialize());
     }
 }

@@ -4,7 +4,6 @@ namespace Laravel\Nova\Filters;
 
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use JsonSerializable;
 use Laravel\Nova\AuthorizedToSee;
 use Laravel\Nova\Contracts\Filter as FilterContract;
@@ -76,8 +75,7 @@ abstract class Filter implements FilterContract, JsonSerializable
      */
     public function key()
     {
-        return (string) Str::of(get_class($this))
-                ->ltrim(Container::getInstance()->getNamespace().'Nova\\Filters\\');
+        return get_class($this);
     }
 
     /**
