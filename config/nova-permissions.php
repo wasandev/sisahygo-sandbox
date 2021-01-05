@@ -1261,6 +1261,52 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ใบรับส่งในรายการจัดส่งสินค้า',
         ],
+        //รายการเก็บเงินปลายทาง
+        'view branch_balance' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการเก็บเงินปลายทาง',
+        ],
+        'create branch_balance' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการเก็บเงินปลายทาง',
+        ],
+
+        'edit branch_balance' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการเก็บเงินปลายทาง',
+        ],
+
+        'delete branch_balance' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการเก็บเงินปลายทาง',
+        ],
+        //ใบเสร็จรับเงิน
+        'view receipt' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบเสร็จรับเงิน',
+        ],
+        'create receipt' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบเสร็จรับเงิน',
+        ],
+
+        'edit receipt' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบเสร็จรับเงิน',
+        ],
+
+        'delete receipt' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบเสร็จรับเงิน',
+        ],
         //Metrics
         'view order-incomes' => [
             'display_name' => 'รายได้ค่าขนส่ง',
