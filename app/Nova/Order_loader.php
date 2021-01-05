@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\ShowByOrderStatus;
 use App\Nova\Filters\ToDistrict;
+use App\Nova\Lenses\ValueByDistrict;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -99,7 +100,7 @@ class Order_loader extends Resource
                 ->exceptOnForms()
                 ->hideFromIndex(),
             Currency::make('จำนวนเงิน', 'order_amount')
-                ->onlyOnDetail(),
+                ->exceptOnForms(),
             Select::make(__('Tran type'), 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
@@ -153,7 +154,9 @@ class Order_loader extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new ValueByDistrict()
+        ];
     }
 
     /**
@@ -212,8 +215,10 @@ class Order_loader extends Resource
             $order_loader = \App\Models\Order_loader::find($resourceId);
 
             $routeto_branch = \App\Models\Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
-            return $query->where('routeto_branch_id', '=', $routeto_branch->id)
-                ->where('waybill_status', '=', 'loading');
+            if (isset($routeto_branch)) {
+                return $query->where('routeto_branch_id', '=', $routeto_branch->id)
+                    ->where('waybill_status', '=', 'loading');
+            }
         }
     }
 

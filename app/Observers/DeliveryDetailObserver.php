@@ -55,8 +55,10 @@ class DeliveryDetailObserver
             }
             if ($branchrec_order->paymenttype == 'E') {
                 $branch_balance_item = Branch_balance_item::where('order_header_id', $delivery_detail->order_header_id)->first();
-                $branch_balance_item->payment_status = true;
-                $branch_balance_item->save();
+                if (isset($branch_balance_item)) {
+                    $branch_balance_item->payment_status = true;
+                    $branch_balance_item->save();
+                }
             }
 
 
@@ -79,15 +81,20 @@ class DeliveryDetailObserver
 
         $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
         $payment_amount = $delivery_item->payment_amount;
-        if ($branchrec_order->paymenttype == 'E' and $payment_amount > 0) {
+        if ($branchrec_order->paymenttype == 'E' && $payment_amount > 0) {
             $delivery_item->payment_amount = $payment_amount - $branchrec_order->order_amount;
             $delivery_item->save();
         }
         $delivery = Delivery::find($delivery_item->delivery_id);
         $receipt_amount = $delivery->receipt_amount;
-        if ($branchrec_order->paymenttype == 'E' and $payment_amount > 0) {
+        if ($branchrec_order->paymenttype == 'E' && $receipt_amount > 0) {
             $delivery->receipt_amount = $receipt_amount - $branchrec_order->order_amount;
             $delivery->save();
         }
+        Order_status::create([
+            'order_header_id' => $delivery_detail->order_header_id,
+            'status' => 'branch warehouse',
+            'user_id' => auth()->user()->id,
+        ]);
     }
 }

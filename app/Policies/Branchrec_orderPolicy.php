@@ -28,7 +28,7 @@ class Branchrec_orderPolicy
     public function update(User $user, Branchrec_order $branchrec_order)
     {
 
-        return ($user->role == 'admin' || $user->hasPermissionTo('manage branchrec_orders'));
+        return ($user->role == 'admin');
     }
 
     public function delete(User $user, Branchrec_order $branchrec_order)

@@ -71,9 +71,10 @@ class Delivery extends Resource
                 '1' => 'สาขาจัดส่ง'
             ])->displayUsingLabels()
                 ->exceptOnForms(),
-            BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User'),
+            BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User')
+                ->hideFromIndex(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
                 ->exceptOnForms(),
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')

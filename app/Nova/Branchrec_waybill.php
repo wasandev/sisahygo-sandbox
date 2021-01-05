@@ -160,6 +160,9 @@ class Branchrec_waybill extends Resource
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             HasMany::make(__('Order header'), 'branchrec_orders', 'App\Nova\Branchrec_order'),
+            // ->canSee(function ($request) {
+            //     return $this->waybill_status === 'arrival';
+            // }),
             HasMany::make(__('Waybill status'), 'waybill_statuses', 'App\Nova\Waybill_status'),
         ];
     }

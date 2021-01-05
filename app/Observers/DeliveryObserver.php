@@ -6,6 +6,7 @@ use App\Models\Branchrec_order;
 use App\Models\Delivery;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
+use App\Models\Order_status;
 use App\Models\Waybill;
 use App\Models\Waybill_status;
 
@@ -52,17 +53,22 @@ class DeliveryObserver
                 $branchrec_order = Branchrec_order::find($delivery_detail->order_header_id);
                 $branchrec_order->order_status = 'branch warehouse';
                 $branchrec_order->save();
-            }
-            if ($delivery->delivery_type ==  0) {
-                $waybill = \App\Models\Waybill::find($delivery->waybill_id);
-                $waybill->waybill_status = 'completed';
-                $waybill->save();
-                Waybill_status::create([
-                    'waybill_id' => $waybill->id,
-                    'status' => 'completed',
+                Order_status::create([
+                    'order_header_id' => $delivery_detail->order_header_id,
+                    'status' => 'branch warehouse',
                     'user_id' => auth()->user()->id,
                 ]);
             }
+        }
+        if ($delivery->delivery_type ==  0) {
+            $waybill = \App\Models\Waybill::find($delivery->waybill_id);
+            $waybill->waybill_status = 'completed';
+            $waybill->save();
+            Waybill_status::create([
+                'waybill_id' => $waybill->id,
+                'status' => 'completed',
+                'user_id' => auth()->user()->id,
+            ]);
         }
     }
 }

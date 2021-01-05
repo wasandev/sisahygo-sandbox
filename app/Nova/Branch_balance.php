@@ -62,12 +62,7 @@ class Branch_balance extends Resource
             ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
             BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer'),
             Currency::make('จำนวนเงิน', 'bal_amount'),
-            Select::make('ชำระโดย', 'branchpay_by')->options([
-                'C' => 'เงินสด',
-                'T' => 'เงินโอน',
-                'Q' => 'เช็ค',
-                'R' => 'บัตรเครดิต'
-            ])->displayUsingLabels(),
+
             Currency::make('ส่วนลด', 'discount_amount'),
             Currency::make('ภาษี', 'tax_amount'),
             Currency::make('ยอดรับชำระ', 'pay_amount'),

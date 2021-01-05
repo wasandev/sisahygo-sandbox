@@ -64,8 +64,6 @@ class DeliveryItemObserver
     }
     public function updated(Delivery_item $delivery_item)
     {
-
-
         $delivery = Delivery::find($delivery_item->delivery_id);
         $ordernotconfirmed = Delivery_item::where('delivery_id', $delivery->id)
             ->where('delivery_status', '=', false)
@@ -90,5 +88,26 @@ class DeliveryItemObserver
 
     public function deleting(Delivery_item $delivery_item)
     {
+        $delivery_details = \App\Models\Delivery_detail::where('delivery_item_id', '=', $delivery_item->id)->get();
+        $delivery = \App\Models\Delivery::find($delivery_item->delivery_id);
+        $receipt_amount = $delivery->receipt_amount;
+        if ($receipt_amount > 0) {
+            $delivery->receipt_amount = $receipt_amount - $delivery_item->payment_amount;
+            $delivery->save();
+        }
+        foreach ($delivery_details as $delivery_detail) {
+
+
+            $branchrec_order = \App\Models\Branchrec_order::find($delivery_detail->order_header_id);
+            $branchrec_order->order_status = 'branch warehouse';
+            $branchrec_order->save();
+
+
+            Order_status::create([
+                'order_header_id' => $delivery_detail->order_header_id,
+                'status' => 'branch warehouse',
+                'user_id' => auth()->user()->id,
+            ]);
+        }
     }
 }

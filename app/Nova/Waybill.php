@@ -249,8 +249,10 @@ class Waybill extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         $routeto_branch = \App\Models\Routeto_branch::where('branch_id', $request->user()->branch_id)->get('id');
-
-        return $query->whereIn('routeto_branch_id', $routeto_branch);
+        if (isset($routeto_branch)) {
+            return $query->whereIn('routeto_branch_id', $routeto_branch);
+        }
+        return $query;
     }
 
     public static function relatableEmployees(NovaRequest $request, $query)
