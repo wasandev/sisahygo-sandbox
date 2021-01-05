@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Filters\DateFilter;
 
-class OrderdateFilter extends DateFilter
+class OrderDateFilter extends DateFilter
 {
     public $name = 'ตามวันที่ใบรับส่ง';
     /**

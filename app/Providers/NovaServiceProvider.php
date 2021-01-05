@@ -18,6 +18,7 @@ use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\OrdersByPaymentType;
 use App\Nova\Metrics\OrdersPerMonth;
+use Dniccum\CustomEmailSender\CustomEmailSender;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -137,8 +138,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             \Pktharindu\NovaPermissions\NovaPermissions::make()
                 ->roleResource(Role::class),
             new NovaImport,
-
-
+            (new CustomEmailSender())
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
         ];
     }
 
