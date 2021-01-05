@@ -12,29 +12,29 @@ class Product_stylePolicy
 
     public function viewAny(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view product_styles');
+        return $user->role == 'admin' || $user->hasPermissionTo('view productstyles');
     }
     public function view(User $user, Product_style $product_style)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view product_styles');
+        return $user->role == 'admin' || $user->hasPermissionTo('view productstyles');
     }
 
 
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create product_styles');
+        return $user->role == 'admin' || $user->hasPermissionTo('create productstyles');
     }
 
 
     public function update(User $user, Product_style $product_style)
     {
 
-        return $user->role == 'admin' || $user->hasPermissionTo('edit product_styles');
+        return $user->role == 'admin' || $user->hasPermissionTo('edit productstyles');
     }
 
 
     public function delete(User $user, Product_style $product_style)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete product_styles');
+        return $user->role == 'admin' || $user->hasPermissionTo('delete productstyles');
     }
 }
