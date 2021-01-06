@@ -65,7 +65,7 @@ class Product_style extends Resource
     {
         return [
             ID::make()->hideFromIndex(),
-            Text::make(__('Name'), 'name'),
+            Text::make(__('Name'), 'name')->sortable(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
