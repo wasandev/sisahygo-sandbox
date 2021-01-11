@@ -12,7 +12,7 @@ class Order_detail extends Model
 
     protected $fillable = [
         'order_header_id', 'usepricetable', 'productservice_price_id', 'product_id', 'unit_id', 'price', 'amount',
-        'remark', 'user_id', 'updated_by'
+        'remark', 'user_id', 'updated_by', 'weight'
     ];
     public function order_header()
     {

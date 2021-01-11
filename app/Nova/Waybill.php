@@ -138,7 +138,7 @@ class Waybill extends Resource
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),
             Currency::make('ค่าบรรทุก', 'waybill_payable')
-                ->onlyOnDetail(),
+                ->hideFromindex(),
             Currency::make('รายได้บริษัท', 'waybill_income')
                 ->onlyOnDetail(),
 
@@ -242,6 +242,13 @@ class Waybill extends Resource
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
                         || ($this->resource->exists && $this->resource->waybill_status == 'confirmed');
+                }),
+            (new Actions\PrintWaybill)->onlyOnDetail()
+                ->confirmText('ต้องการพิมพ์ใบกำกับสินค้ารายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return true;
                 }),
         ];
     }

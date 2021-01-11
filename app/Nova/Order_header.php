@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PrintOrder;
 use App\Nova\Filters\BillingUser;
 use App\Nova\Filters\CheckerUser;
 use App\Nova\Filters\OrderdateFilter;
@@ -29,7 +30,7 @@ use Wasandev\Orderstatus\Orderstatus;
 class Order_header extends Resource
 {
     public static $polling = true;
-    public static $pollingInterval = 90;
+    public static $pollingInterval = 60;
     public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 2;
@@ -244,6 +245,13 @@ class Order_header extends Resource
                 ->confirmText('ต้องการยืนยันใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
+            (new Actions\PrintOrder)->onlyOnDetail()
+                ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
                 ->canRun(function ($request, $model) {
                     return true;
                 }),

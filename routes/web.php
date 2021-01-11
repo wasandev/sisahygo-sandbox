@@ -33,4 +33,7 @@ Route::middleware('web', 'auth')
         Route::get('/charterjob/preview/{id}', 'CharterJobController@preview')->name('preview'); //for test
         Route::get('/charterjob/makepdf/{id}', 'CharterJobController@makePDF')->name('makepdf');
         Route::get('/orderheader/makepdf/{id}', 'OrderHeaderController@makePDF')->name('makepdf');
+        Route::get('/orderheader/preview/{id}', 'OrderHeaderController@preview')->name('preview');
+        Route::get('/waybill/makepdf/{id}', 'WaybillController@makePDF')->name('makepdf');
+        Route::get('/waybill/preview/{id}', 'WaybillController@preview')->name('preview');
     });

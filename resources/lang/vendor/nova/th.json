@@ -624,7 +624,9 @@
     "Waybill status":"สถานะใบกำกับ",
     "loading": "กำลังจัดสินค้าขึ้นรถบรรทุก",
     "Waybill arrival": "กำหนดรถถึงสาขาปลายทางแล้ว",
-    "Tran type": "การจัดส่ง"
+    "Tran type": "การจัดส่ง",
+    "Print Order": "พิมพ์ใบรับส่ง",
+    "Print Waybill": "พิมพ์ใบกำกับ"
 
 
 

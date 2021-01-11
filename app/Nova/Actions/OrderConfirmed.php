@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Illuminate\Support\Facades\Storage;
 
 class OrderConfirmed extends Action
 {
@@ -57,7 +58,10 @@ class OrderConfirmed extends Action
                 $model->order_status = 'confirmed';
 
                 $model->save();
-                //return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+
+                // $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
+                // $path = $orderheaderController->makePDF($model->id);
+                // return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
                 return Action::push('/resources/order_headers/');
             }
 

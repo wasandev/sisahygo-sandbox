@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.16",
-    "axios": "^0.18",
+    "axios": "^0.21.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-jest": "^23.0.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
@@ -38,7 +38,7 @@
     "chartist": "^0.11.0",
     "chartist-plugin-tooltips": "^0.0.17",
     "codemirror": "^5.36.0",
-    "flatpickr": "^4.4.4",
+    "flatpickr": "4.6.7",
     "form-backend-validation": "^2.3.3",
     "inflector-js": "^1.0.1",
     "laravel-nova": "^1.7.0",

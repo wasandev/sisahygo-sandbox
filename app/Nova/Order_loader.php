@@ -192,7 +192,7 @@ class Order_loader extends Resource
             $query->select("{$resourceTable}.*");
             $query->addSelect('c.district as customerDistrict');
             $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
-            $query->whereNotIn("{$resourceTable}.order_status", ['checking', 'new']);
+            $query->whereIn("{$resourceTable}.order_status", ['confirmed', 'loaded']);
             $query->where("{$resourceTable}.branch_id", '=', $request->user()->branch_id);
             $orderBy = $request->get('orderBy');
 

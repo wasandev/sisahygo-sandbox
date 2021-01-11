@@ -97,4 +97,30 @@
         bottom: 100px;
         width: 100%;
     }
+
+   table {
+            margin-left: 0px;
+            margin-right: 0px;
+            font-size: 18px;
+            width: 100%;
+            table-layout:fixed;
+
+        }
+
+        td {
+            text-align: left;
+            vertical-align: top;
+            padding: 0px;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+            line-height : 10px;
+            overflow: hidden;
+            text-indent: 85px;
+        }
+
+
+
 </style>

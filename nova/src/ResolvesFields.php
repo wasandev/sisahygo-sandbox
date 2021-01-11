@@ -29,18 +29,7 @@ trait ResolvesFields
     public function indexFields(NovaRequest $request)
     {
         return $this->availableFields($request)
-            ->when($request->viaRelationship(), function ($fields) use ($request) {
-                $fields = $fields->values()->all();
-                $pivotFields = $this->pivotFieldsFor($request, $request->viaResource)->all();
-
-                if ($index = $this->indexToInsertPivotFields($request, $fields)) {
-                    array_splice($fields, $index + 1, 0, $pivotFields);
-                } else {
-                    $fields = array_merge($fields, $pivotFields);
-                }
-
-                return FieldCollection::make($fields);
-            })
+            ->when($request->viaRelationship(), $this->fieldResolverCallback($request))
             ->filterForIndex($request, $this->resource)
             ->withoutListableFields()
             ->authorized($request)
@@ -66,18 +55,7 @@ trait ResolvesFields
     public function detailFields(NovaRequest $request)
     {
         return $this->availableFields($request)
-            ->when($request->viaRelationship(), function ($fields) use ($request) {
-                $fields = $fields->values()->all();
-                $pivotFields = $this->pivotFieldsFor($request, $request->viaResource)->all();
-
-                if ($index = $this->indexToInsertPivotFields($request, $fields)) {
-                    array_splice($fields, $index + 1, 0, $pivotFields);
-                } else {
-                    $fields = array_merge($fields, $pivotFields);
-                }
-
-                return FieldCollection::make($fields);
-            })
+            ->when($request->viaRelationship(), $this->fieldResolverCallback($request))
             ->when($this->shouldAddActionsField($request), function ($fields) {
                 return $fields->push($this->actionfield());
             })
@@ -112,18 +90,7 @@ trait ResolvesFields
             })->all();
 
         return $this->buildAvailableFields($request, $methods)
-            ->when($request->viaRelationship(), function ($fields) use ($request) {
-                $fields = $fields->values()->all();
-                $pivotFields = $this->pivotFieldsFor($request, $request->viaResource)->all();
-
-                if ($index = $this->indexToInsertPivotFields($request, $fields)) {
-                    array_splice($fields, $index + 1, 0, $pivotFields);
-                } else {
-                    $fields = array_merge($fields, $pivotFields);
-                }
-
-                return FieldCollection::make($fields);
-            })
+            ->when($request->viaRelationship(), $this->fieldResolverCallback($request))
             ->whereInstanceOf(Deletable::class)
             ->unique(function ($field) {
                 return $field->attribute;
@@ -158,18 +125,7 @@ trait ResolvesFields
             })->all();
 
         return $this->buildAvailableFields($request, $methods)
-            ->when($request->viaRelationship(), function ($fields) use ($request) {
-                $fields = $fields->values()->all();
-                $pivotFields = $this->pivotFieldsFor($request, $request->viaResource)->all();
-
-                if ($index = $this->indexToInsertPivotFields($request, $fields)) {
-                    array_splice($fields, $index + 1, 0, $pivotFields);
-                } else {
-                    $fields = array_merge($fields, $pivotFields);
-                }
-
-                return FieldCollection::make($fields);
-            })
+            ->when($request->viaRelationship(), $this->fieldResolverCallback($request))
             ->whereInstanceOf(Downloadable::class)
             ->unique(function ($field) {
                 return $field->attribute;
@@ -780,5 +736,27 @@ trait ResolvesFields
 
             return $field;
         });
+    }
+
+    /**
+     * Return the callback used for resolving fields.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return \Closure
+     */
+    protected function fieldResolverCallback(NovaRequest $request)
+    {
+        return function ($fields) use ($request) {
+            $fields = $fields->values()->all();
+            $pivotFields = $this->pivotFieldsFor($request, $request->viaResource)->all();
+
+            if ($index = $this->indexToInsertPivotFields($request, $fields)) {
+                array_splice($fields, $index + 1, 0, $pivotFields);
+            } else {
+                $fields = array_merge($fields, $pivotFields);
+            }
+
+            return FieldCollection::make($fields);
+        };
     }
 }

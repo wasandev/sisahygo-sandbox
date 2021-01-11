@@ -38,8 +38,8 @@ class QuotationController extends Controller
 
         $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $quotation->quotation_no . '.pdf';
         $pdf->save($path);
-        $pdf->stream($path);
-        return $pdf->download($path);
-        //return $path;
+        //return $pdf->stream($path);
+        //return $pdf->download($path);
+        return  $pdf->stream($quotation->quotation_no . '.pdf');
     }
 }

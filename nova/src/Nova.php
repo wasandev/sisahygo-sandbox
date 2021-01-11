@@ -842,9 +842,7 @@ class Nova
      */
     public static function remoteScript($path)
     {
-        static::$scripts[md5($path)] = $path;
-
-        return new static;
+        return static::script(md5($path), $path);
     }
 
     /**
@@ -859,6 +857,17 @@ class Nova
         static::$styles[$name] = $path;
 
         return new static;
+    }
+
+    /**
+     * Register the given remote CSS file with Nova.
+     *
+     * @param  string  $path
+     * @return static
+     */
+    public static function remoteStyle($path)
+    {
+        return static::style(md5($path), $path);
     }
 
     /**

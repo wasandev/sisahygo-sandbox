@@ -67,7 +67,7 @@ class Order_detail extends Resource
 
 
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable()->onlyOnDetail(),
             BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header'),
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->onlyOnIndex(),
@@ -109,6 +109,9 @@ class Order_detail extends Resource
                 }
                 return $this->amount *  $this->price;
             }),
+            Number::make('น้ำหนักสินค้าต่อหน่วย(กก.)', 'weight')
+                ->step('0.01')
+                ->rules('required'),
             Text::make('หมายเหตุ', 'remark')
                 ->nullable(),
         ];

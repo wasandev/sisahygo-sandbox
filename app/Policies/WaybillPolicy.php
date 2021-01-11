@@ -16,9 +16,9 @@ class WaybillPolicy
     }
     public function view(User $user, Waybill $waybill)
     {
-        if ($user->hasPermissionTo('view own waybills')) {
-            return $user->id === $waybill->user_id;
-        }
+        // if ($user->hasPermissionTo('view own waybills')) {
+        //     return $user->id === $waybill->user_id;
+        // }
         return $user->role == 'admin' || $user->hasPermissionTo('view waybills');
     }
 

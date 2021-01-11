@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Order_header;
-use App\Models\CompanyProfile;
+use App\Models\Order_detail;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,24 +21,25 @@ class OrderHeaderController extends Controller
     public function preview($order)
     {
 
-        $company = CompanyProfile::find(1);
+
         $order = Order_header::find($order);
+        $order_detail = Order_detail::find($order);
 
-        return view('documents.printorder', compact('order', 'company'));
+        return view('documents.printorder', compact('order', 'order_detail'));
     }
-
 
 
     public function makePDF($order)
     {
-        $company = CompanyProfile::find(1);
+
         $order = Order_header::find($order);
-
-        $pdf = PDF::loadView('documents.printorder', compact('order', 'company'));
-
-        $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $order->order_header_no . '.pdf';
+        $order_detail = Order_detail::find($order);
+        $pdf = PDF::loadView('documents.printorder', compact('order', 'order_detail'))
+            ->setPaper('a5', 'landscape');
+        $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $order->order_header_no  . '.pdf';
         $pdf->save($path);
+        return $pdf->stream($path);
 
-        return $path;
+        // return  $pdf->stream($order->order_header_no . '.pdf');
     }
 }

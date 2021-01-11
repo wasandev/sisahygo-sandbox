@@ -33,7 +33,7 @@ class ShowByOrderStatus extends Filter
     public function options(Request $request)
     {
         return [
-            'ตรวจนับแล้ว' => 'new',
+            'ตรวจรับสินค้าแล้ว' => 'new',
             'รับสินค้าไว้แล้ว' => 'confirmed',
             'จัดขึ้นรถแล้ว' => 'loaded',
             'อยู่ระหว่างขนส่งไปสาขา' => 'in transit',
