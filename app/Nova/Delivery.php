@@ -72,7 +72,8 @@ class Delivery extends Resource
             ])->displayUsingLabels()
                 ->exceptOnForms(),
             BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->rules('required'),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->onlyOnDetail(),
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
@@ -148,6 +149,14 @@ class Delivery extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Actions\PrintDelivery)->onlyOnDetail()
+                ->confirmText('ต้องการพิมพ์ใบจัดส่งสินค้ารายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
+        ];
     }
 }

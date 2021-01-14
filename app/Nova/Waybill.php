@@ -2,8 +2,19 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\WaybillConfirmed;
 use App\Nova\Filters\RouteToBranch;
 use App\Nova\Filters\ToBranch;
+use App\Nova\Filters\WaybillDateFilter;
+use App\Nova\Filters\WaybillFromDate;
+use App\Nova\Filters\WaybillToDate;
+use App\Nova\Lenses\WaybillConfirmedPerDay;
+use App\Nova\Metrics\WaybillAmount;
+use App\Nova\Metrics\WaybillIncome;
+use App\Nova\Metrics\WaybillIncomePerDay;
+use App\Nova\Metrics\WaybillLoading;
+use App\Nova\Metrics\WaybillPayable;
+use App\Nova\Metrics\WaybillsPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -42,16 +53,16 @@ class Waybill extends Resource
      *
      * @var string
      */
-    //public static $title = 'waybill_no';
+    public static $title = 'waybill_no';
 
-    public function title()
-    {
-        return $this->waybill_no . ' - ' . $this->car->car_regist;
-    }
-    public function subtitle()
-    {
-        return $this->car->car_regist;
-    }
+    // public function title()
+    // {
+    //     return $this->waybill_no . ' - ' . $this->car->car_regist;
+    // }
+    // public function subtitle()
+    // {
+    //     return $this->car->car_regist;
+    // }
 
 
     /**
@@ -137,11 +148,15 @@ class Waybill extends Resource
             Number::make('ค่าขนส่ง', 'total_amount', function () {
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),
-            Currency::make('ค่าบรรทุก', 'waybill_payable')
-                ->hideFromindex(),
+            Currency::make('ค่าบรรทุก', 'waybill_payable')->hideWhenCreating(),
             Currency::make('รายได้บริษัท', 'waybill_income')
                 ->onlyOnDetail(),
-
+            Number::make('%รายได้', 'income', function () {
+                if ($this->waybill_amount > 0) {
+                    return number_format((($this->waybill_amount - $this->waybill_payable) / $this->waybill_amount) * 100, 2, '.', '');
+                }
+                return 0;
+            })->exceptOnForms(),
 
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
                 ->sortable()
@@ -181,7 +196,14 @@ class Waybill extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new WaybillsPerDay(),
+            new WaybillLoading(),
+            new WaybillAmount(),
+            new WaybillPayable(),
+            new WaybillIncome(),
+            new WaybillIncomePerDay()
+        ];
     }
 
     /**
@@ -194,6 +216,9 @@ class Waybill extends Resource
     {
         return [
             (new RouteToBranch()),
+            (new WaybillFromDate()),
+            (new WaybillToDate()),
+
         ];
     }
 
@@ -205,7 +230,10 @@ class Waybill extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new  WaybillConfirmedPerDay(),
+
+        ];
     }
 
     /**
@@ -218,6 +246,7 @@ class Waybill extends Resource
     {
 
         return [
+
             (new Actions\WaybillConfirmed($request->resourceId))
 
                 ->onlyOnDetail()
@@ -250,6 +279,7 @@ class Waybill extends Resource
                 ->canRun(function ($request, $model) {
                     return true;
                 }),
+
         ];
     }
 

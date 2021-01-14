@@ -48,4 +48,48 @@ class WaybillController extends Controller
         $pdf->save($path);
         return $pdf->stream($path);
     }
+
+    public function waybillBydate($from_date, $to_date)
+    {
+        $company = CompanyProfile::find(1);
+        $waybills = Waybill::with(['routeto_branch'])
+            ->where('waybill_date', '>=', $from_date)
+            ->where('waybill_date', '<=', $to_date)
+            ->whereNotIn('waybill_status', ['loading', 'cencle'])
+            ->get();
+
+
+
+        $waybill_groups = $waybills->groupBy('routeto_branch.name')->all();
+
+
+
+        $waybill_branch = $waybill_groups;
+        PDF::setOptions(['fontHeightRatio' => 0.8]);
+        $pdf = PDF::loadView('reports.waybilldate', compact('from_date', 'to_date', 'waybills', 'waybill_groups', 'waybill_branch', 'company'))
+            ->setPaper('a4', 'landscape');
+        $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'reports/' . 'waybill' . $from_date . '.pdf';
+        $pdf->save($path);
+        return $pdf->stream($path);
+    }
+    public function waybillBydatePreview()
+    {
+        $from_date = '2021-01-01';
+        $to_date = '2021-01-13';
+        $company = CompanyProfile::find(1);
+        $waybills = Waybill::with(['routeto_branch'])
+            ->where('waybill_date', '>=', $from_date)
+            ->where('waybill_date', '<=', $to_date)
+            ->whereNotIn('waybill_status', ['loading', 'cancle'])
+            ->get();
+
+
+
+        $waybill_groups = $waybills->groupBy('routeto_branch.name')->all();
+
+
+
+        $waybill_branch = $waybill_groups;
+        return view('reports.waybilldate', compact('from_date', 'to_date', 'waybills', 'waybill_groups', 'waybill_branch', 'company'));
+    }
 }

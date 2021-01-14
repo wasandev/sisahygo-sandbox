@@ -121,4 +121,13 @@ class Bank extends Resource
             (new DownloadExcel)->allFields()->withHeadings(),
         ];
     }
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
 }

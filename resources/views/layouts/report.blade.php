@@ -48,7 +48,7 @@
 
 <body>
     <div id="app">
-        @yield('header')
+
 
         @yield('content')
 
@@ -99,22 +99,24 @@
     }
 
     table {
-        font-size: 18px;
+        font-size: 16px;
         width: 100%;
-        table-layout:fixed;
+        table-layout:auto;
         border-spacing: 0px;
         vertical-align: top;
         border-collapse: collapse;
+        border: 1px solid black;
         padding: 0px;
         margin: 0px;
-
-
     }
-    @page {
+    tr,td,th {
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+@page {
 margin-bottom:0px;
 margin-top:0px;
 
 }
-
 
 </style>

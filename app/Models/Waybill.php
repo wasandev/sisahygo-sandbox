@@ -67,4 +67,12 @@ class Waybill extends Model
     {
         return $this->hasMany('App\Models\Waybill_status');
     }
+    public function scopeConfirmed($query)
+    {
+        return $query->whereNotIn('waybill_status', ['loading', 'cancel']);
+    }
+    public function scopeLoading($query)
+    {
+        return $query->where('waybill_status', 'loading');
+    }
 }

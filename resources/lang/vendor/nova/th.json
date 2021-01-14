@@ -626,7 +626,9 @@
     "Waybill arrival": "กำหนดรถถึงสาขาปลายทางแล้ว",
     "Tran type": "การจัดส่ง",
     "Print Order": "พิมพ์ใบรับส่ง",
-    "Print Waybill": "พิมพ์ใบกำกับ"
+    "Print Waybill": "พิมพ์ใบกำกับ",
+    "Print Delivery": "พิมพ์ใบจัดส่งสินค้า",
+    "Waybill Confirmed": "จำนวนรถออกต่อวัน(เที่ยว)"
 
 
 

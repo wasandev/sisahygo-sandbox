@@ -36,4 +36,9 @@ Route::middleware('web', 'auth')
         Route::get('/orderheader/preview/{id}', 'OrderHeaderController@preview')->name('preview');
         Route::get('/waybill/makepdf/{id}', 'WaybillController@makePDF')->name('makepdf');
         Route::get('/waybill/preview/{id}', 'WaybillController@preview')->name('preview');
+        Route::get('/waybill/waybillbydate', 'WaybillController@waybillbydate')->name('waybillbydate');
+        Route::get('/waybill/waybillbydatepreview', 'WaybillController@waybillbydatePreview')->name('preview');
+
+        Route::get('/delivery/makepdf/{id}', 'DeliveryController@makePDF')->name('makepdf');
+        Route::get('/delivery/preview/{id}', 'DeliveryController@preview')->name('preview');
     });
