@@ -39,6 +39,7 @@ class OrderCheckerObserver
         } else {
             $order_checker->paymenttype = 'H';
         }
+        $order_checker->payment_status = false;
     }
 
     public function updating(Order_checker $order_checker)
@@ -59,9 +60,7 @@ class OrderCheckerObserver
             $order_checker->user_id = auth()->user()->id;
             $order_checker->updated_by = auth()->user()->id;
             $order_items = $order_checker->order_details;
-            if ($order_checker->paymenttype == 'H') {
-                $order_checker->payment_status = true;
-            }
+
             foreach ($order_items as $order_item) {
                 $sub_total = $order_item->price * $order_item->amount;
                 $order_amount = $order_amount + $sub_total;

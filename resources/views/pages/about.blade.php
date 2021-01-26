@@ -4,11 +4,9 @@
     @include('partials.nav')
 @endsection
 
-@section('search')
-    @include('partials.search')
-@endsection
+
 @section('mstorehome')
-    @include('partials.mstorehome')
+    @include('partials.sghome')
 @endsection
 
 

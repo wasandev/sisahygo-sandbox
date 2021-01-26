@@ -108,6 +108,12 @@ abstract class Value extends RangedMetric
 
         $column = $column ?? $query->getModel()->getQualifiedKeyName();
 
+        if ($request->range === 'ALL') {
+            return $this->result(
+                round(with(clone $query)->{$function}($column), $this->precision)
+            );
+        }
+
         $timezone = Nova::resolveUserTimezone($request) ?? $request->timezone;
 
         $previousValue = round(with(clone $query)->whereBetween(

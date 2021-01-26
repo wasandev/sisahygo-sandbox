@@ -921,7 +921,9 @@ class Nova
     public static function jsonVariables(Request $request)
     {
         return collect(static::$jsonVariables)->map(function ($variable) use ($request) {
-            return is_callable($variable) ? $variable($request) : $variable;
+            return is_object($variable) && is_callable($variable)
+                        ? $variable($request)
+                        : $variable;
         })->all();
     }
 

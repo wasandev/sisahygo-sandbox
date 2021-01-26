@@ -40,22 +40,19 @@ class OrderLoaded extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $hasitem = count($model->order_details);
 
 
             if ($model->order_status == 'loaded') {
                 return Action::danger('รายการนี้จัดขึ้นแล้ว');
-            } elseif ($hasitem) {
+            } else {
 
                 $model->order_status = 'loaded';
                 $model->waybill_id = $fields->waybill_branch;
                 $model->save();
                 //return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
-                return Action::push('/resources/order_loaders/');
             }
-
-            return Action::danger('ไม่สามารถทำรายการจัดสินค้าขึ้นรถได้ ->ไม่มีรายการสินค้า!');
         }
+        return Action::push('/resources/order_loaders/');
     }
 
     /**
@@ -65,32 +62,32 @@ class OrderLoaded extends Action
      */
     public function fields()
     {
-        if (isset(request()->resourceId)) {
-            $waybillOptions = array();
-            $order_loader =    Order_loader::find(request()->resourceId);
-            $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
-            // $waybills = Waybill::where('routeto_branch_id', '=', $routeto_branch->id)->get()
-            //     ->pluck('waybill_no', 'id');
-            $waybills = Waybill::all()->pluck('waybill_no', 'id');
-            // $waybills = Waybill::with('car')
-            //     ->where('routeto_branch_id', '=', $routeto_branch->id)
-            //     ->where('waybill_status', '=', 'loading')
-            //     ->get();
-            // foreach ($waybills as $waybill) {
-            //     $waybillOptions = [
-            //         ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
-            //     ];
-            //     $selectOptions = collect($waybillOptions);
-            //     $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
-            // }
+        //  if (isset(request()->resourceId)) {
 
-            return [
+        // $order_loader =    Order_loader::find(request()->resourceId);
+        // $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
+        // $waybills = Waybill::where('routeto_branch_id', '=', $routeto_branch->id)->get()
+        //     ->pluck('waybill_no', 'id');
+        $waybills = Waybill::where('waybill_status', 'loading')->pluck('waybill_no', 'id');
+        // $waybills = Waybill::with('car')
+        //     ->where('routeto_branch_id', '=', $routeto_branch->id)
+        //     ->where('waybill_status', '=', 'loading')
+        //     ->get();
+        // foreach ($waybills as $waybill) {
+        //     $waybillOptions = [
+        //         ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+        //     ];
+        //     $selectOptions = collect($waybillOptions);
+        //     $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
+        // }
 
-                Select::make(__('Waybill'), 'waybill_branch')
-                    ->options($waybills)
-                    ->displayUsingLabels()
-                    ->rules('required'),
-            ];
-        }
+        return [
+
+            Select::make(__('Waybill'), 'waybill_branch')
+                ->options($waybills)
+                ->displayUsingLabels()
+                ->rules('required'),
+        ];
+        // }
     }
 }

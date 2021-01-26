@@ -260,18 +260,19 @@
 </template>
 
 <script>
-import { Errors, Minimum } from 'laravel-nova'
-import HasActions from '@/mixins/HasActions'
-
 import {
   HasCards,
   Deletable,
+  Errors,
   Filterable,
+  Minimum,
   Paginatable,
   PerPageable,
   InteractsWithQueryString,
   InteractsWithResourceInformation,
 } from 'laravel-nova'
+import HasActions from '@/mixins/HasActions'
+import { CancelToken, Cancel } from 'axios'
 
 export default {
   mixins: [
@@ -321,6 +322,7 @@ export default {
   },
 
   data: () => ({
+    canceller: null,
     initialLoading: true,
     loading: true,
 
@@ -380,6 +382,8 @@ export default {
         )
       },
       () => {
+        if (this.canceller !== null) this.canceller()
+
         this.getResources()
       }
     )
@@ -444,24 +448,35 @@ export default {
             '/nova-api/' + this.resourceName + '/lens/' + this.lens,
             {
               params: this.resourceRequestQueryString,
+              cancelToken: new CancelToken(canceller => {
+                this.canceller = canceller
+              }),
             }
           ),
           300
-        ).then(({ data }) => {
-          this.resources = []
+        )
+          .then(({ data }) => {
+            this.resources = []
 
-          this.resourceResponse = data
-          this.resources = data.resources
-          this.softDeletes = data.softDeletes
-          this.perPage = data.per_page
-          this.hasId = data.hasId
+            this.resourceResponse = data
+            this.resources = data.resources
+            this.softDeletes = data.softDeletes
+            this.perPage = data.per_page
+            this.hasId = data.hasId
 
-          this.loading = false
+            this.loading = false
 
-          this.getAllMatchingResourceCount()
+            this.getAllMatchingResourceCount()
 
-          Nova.$emit('resources-loaded')
-        })
+            Nova.$emit('resources-loaded')
+          })
+          .catch(e => {
+            if (e instanceof Cancel) {
+              return
+            }
+
+            throw e
+          })
       })
     },
 

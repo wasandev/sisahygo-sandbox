@@ -79,7 +79,7 @@ class Currency extends Number
         $this->fillUsing(function ($request, $model, $attribute) {
             $value = $request->$attribute;
 
-            if ($this->minorUnits) {
+            if ($this->minorUnits && ! $this->isNullValue($value)) {
                 $model->$attribute = $this->toMoneyInstance($value)->getMinorAmount()->toInt();
             } else {
                 $model->$attribute = $value;

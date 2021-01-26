@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Customer;
 use App\Models\Branch_area;
 use App\Exceptions\MyCustomException;
+use App\Models\Ar_balance;
 
 class OrderHeaderObserver
 {
@@ -45,6 +46,7 @@ class OrderHeaderObserver
             $order_amount = $order_amount + $sub_total;
         }
         $order_header->order_amount = $order_amount;
+        $order_header->payment_status = false;
     }
 
     public function updating(Order_header $order_header)
@@ -83,12 +85,31 @@ class OrderHeaderObserver
 
             if ($order_header->paymenttype == "T") {
                 Order_banktransfer::create([
+                    'customer_id' => $order_header->customer_id,
                     'order_header_id' => $order_header->id,
                     'branch_id' => $order_header->branch_id,
                     'status' => false,
                     'transfer_amount' => $order_header->order_amount,
                     'bankaccount_id' => $order_header->bankaccount_id,
                     'reference' => $order_header->bankreference,
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+            if ($order_header->paymenttype == "F") {
+                Ar_balance::create([
+                    'order_header_id' => $order_header->id,
+                    'customer_id' => $order_header->customer_id,
+                    'ar_amount' => $order_header->order_amount,
+                    'description' => 'ค่าขนส่งสินค้า',
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+            if ($order_header->paymenttype == "L") {
+                Ar_balance::create([
+                    'order_header_id' => $order_header->id,
+                    'customer_id' => $order_header->customer_rec_id,
+                    'ar_amount' => $order_header->order_amount,
+                    'description' => 'ค่าขนส่งสินค้า',
                     'user_id' => auth()->user()->id,
                 ]);
             }

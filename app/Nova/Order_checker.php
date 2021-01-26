@@ -16,14 +16,17 @@ use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\Orderstatus\Orderstatus;
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 
 class Order_checker extends Resource
 {
-
+    use HasDependencies;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 1;
     public static $globallySearchable = false;
-
+    public static $preventFormAbandonment = true;
+    // public static $with = ['customer'];
     /**
      * The model the resource corresponds to.
      *
@@ -92,11 +95,23 @@ class Order_checker extends Resource
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
+            // Boolean::make('ใช้ที่อยู่อื่น', 'use_address')
+            //     ->hideFromIndex(),
+            // NovaDependencyContainer::make([
+            //     BelongsTo::make('เลือกที่อยู่', 'address', 'App\Nova\Address')
+            //         ->hideFromIndex(),
+            // ])->dependsOn('use_address', true),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
+            // Boolean::make('ใช้ที่อยู่อื่น', 'use_to_address')
+            //     ->hideFromIndex(),
+            // NovaDependencyContainer::make([
+            //     BelongsTo::make('เลือกที่อยู่', 'to_address', 'App\Nova\Address')
+            //         ->hideFromIndex(),
+            // ])->dependsOn('use_to_address', true),
             Select::make('การจัดส่ง', 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
@@ -191,14 +206,13 @@ class Order_checker extends Resource
 
         if (!is_null($from_branch)) {
             if ($request->route()->parameter('field') === "customer") {
-                $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
+                $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
                 return $query->whereIn('district', $branch_area);
             }
         }
         if (!is_null($to_branch)) {
             if ($request->route()->parameter('field') === "to_customer") {
                 $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-                //dd($to_branch_area);
                 return $query->whereIn('district', $to_branch_area);
             }
         }

@@ -11,6 +11,10 @@ instance.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector(
 instance.interceptors.response.use(
   response => response,
   error => {
+    if (error instanceof axios.Cancel) {
+      return Promise.reject(error)
+    }
+
     const { status } = error.response
 
     // Show the user a 500 error

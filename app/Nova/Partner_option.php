@@ -12,7 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Partner_option extends Resource
 {
-
+    public static $displayInNavigation = false;
     public static $group = "1.งานสำหรับผู้ดูแลระบบ";
     public static $priority = 3;
     /**

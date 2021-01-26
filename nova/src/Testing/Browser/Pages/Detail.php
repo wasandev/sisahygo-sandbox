@@ -77,9 +77,11 @@ class Detail extends Page
     public function delete(Browser $browser)
     {
         $browser->click('@open-delete-modal-button')
-                    ->pause(500)
-                    ->click('#confirm-delete-button')
-                    ->pause(1000);
+                    ->elsewhere('', function ($browser) {
+                        $browser->whenAvailable('.modal', function ($browser) {
+                            $browser->click('#confirm-delete-button');
+                        });
+                    })->pause(1000);
     }
 
     /**
@@ -88,9 +90,11 @@ class Detail extends Page
     public function restore(Browser $browser)
     {
         $browser->click('@open-restore-modal-button')
-                    ->pause(500)
-                    ->click('#confirm-restore-button')
-                    ->pause(1000);
+                    ->elsewhere('', function ($browser) {
+                        $browser->whenAvailable('.modal', function ($browser) {
+                            $browser->click('#confirm-restore-button');
+                        });
+                    })->pause(1000);
     }
 
     /**
@@ -99,9 +103,11 @@ class Detail extends Page
     public function forceDelete(Browser $browser)
     {
         $browser->click('@open-force-delete-modal-button')
-                    ->pause(500)
-                    ->click('#confirm-delete-button')
-                    ->pause(1000);
+                    ->elsewhere('', function ($browser) {
+                        $browser->whenAvailable('.modal', function ($browser) {
+                            $browser->click('#confirm-delete-button');
+                        });
+                    })->pause(1000);
     }
 
     /**

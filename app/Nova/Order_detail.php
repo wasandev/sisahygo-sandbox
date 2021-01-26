@@ -23,6 +23,9 @@ class Order_detail extends Resource
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 2;
     public static $globallySearchable = false;
+    public static $preventFormAbandonment = true;
+    public static $with = ['productservice_price'];
+
     /**
      * The model the resource corresponds to.
      *
@@ -79,25 +82,22 @@ class Order_detail extends Resource
                 ->withMeta(["value" => 1])
                 ->hideFromIndex(),
 
-            NovaDependencyContainer::make([
-                BelongsTo::make(__('เลือกตารางราคา'), 'productservice_price', 'App\Nova\Productservice_price')
-                    ->searchable()
-                    ->withSubtitles()
-                    ->nullable()
-                    ->showOnIndex()
-                    ->withoutTrashed(),
-            ])->dependsOn('usepricetable', true),
+            // NovaDependencyContainer::make([
+            BelongsTo::make(__('เลือกตารางราคา'), 'productservice_price', 'App\Nova\Productservice_price')
+                ->searchable()
+                ->withSubtitles()
+                ->nullable()
+                ->onlyOnForms(),
+            //])->dependsOn('usepricetable', true),
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                     ->searchable()
-                    ->rules('required')
-
-                    ->withoutTrashed(),
+                    ->rules('required'),
                 BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
                     ->searchable()
                     ->rules('required'),
-                Currency::make('ค่าขนส่ง', 'price')
-                    ->rules('required')
+                Currency::make('ค่าขนส่ง/หน่วย', 'price')
+                    ->rules('required'),
             ])->dependsOn('usepricetable', false),
             Number::make('จำนวน', 'amount')
                 ->step('0.01')
@@ -109,7 +109,7 @@ class Order_detail extends Resource
                 }
                 return $this->amount *  $this->price;
             }),
-            Number::make('น้ำหนักสินค้าต่อหน่วย(กก.)', 'weight')
+            Number::make('น้ำหนักสินค้า/หน่วย(กก.)', 'weight')
                 ->step('0.01')
                 ->rules('required'),
             Text::make('หมายเหตุ', 'remark')
@@ -166,11 +166,12 @@ class Order_detail extends Resource
     // {
     //     $viaResourceId = $request->viaResourceId;
 
+
     //     if (isset($viaResourceId)) {
     //         $order = \App\Models\Order_checker::find($viaResourceId);
     //         $district = $order->to_customer->district;
 
-    //         return $query->where('district', $district);
+    //         return $query->orWhere('district', $district);
     //     }
     // }
 

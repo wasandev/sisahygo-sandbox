@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\LoaderShowByOrderStatus;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\ShowByOrderStatus;
 use App\Nova\Filters\ToDistrict;
@@ -142,7 +143,7 @@ class Order_loader extends Resource
     {
         return [
             new OrderToBranch(),
-            new ShowByOrderStatus(),
+            new LoaderShowByOrderStatus(),
         ];
     }
 
@@ -168,14 +169,14 @@ class Order_loader extends Resource
     public function actions(Request $request)
     {
         return [
-            // (new Actions\OrderLoaded($request->resourceId))
-            //     ->onlyOnDetail()
-            //     ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
-            //     ->confirmButtonText('ยืนยัน')
-            //     ->cancelButtonText("ไม่ยืนยัน")
-            //     ->canRun(function ($request, $model) {
-            //         return true;
-            //     }),
+            (new Actions\OrderLoaded($request->resourceId))
+                //->onlyOnDetail()
+                ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
         ];
     }
     // public static function indexQuery(NovaRequest $request, $query)
@@ -192,7 +193,7 @@ class Order_loader extends Resource
             $query->select("{$resourceTable}.*");
             $query->addSelect('c.district as customerDistrict');
             $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
-            $query->whereIn("{$resourceTable}.order_status", ['confirmed', 'loaded']);
+            // $query->whereIn("{$resourceTable}.order_status", ['confirmed', 'loaded',]);
             $query->where("{$resourceTable}.branch_id", '=', $request->user()->branch_id);
             $orderBy = $request->get('orderBy');
 

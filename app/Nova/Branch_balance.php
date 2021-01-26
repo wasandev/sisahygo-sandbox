@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\BranchReceipt;
+use App\Nova\Metrics\OrderBranchPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -9,7 +11,8 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
 
 class Branch_balance extends Resource
 {
@@ -48,7 +51,7 @@ class Branch_balance extends Resource
     ];
     public static function label()
     {
-        return 'รายการเก็บเงินปลายทาง';
+        return 'รายการลูกหนี้สาขา';
     }
     /**
      * Get the fields displayed by the resource.
@@ -59,15 +62,29 @@ class Branch_balance extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
-            BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer'),
+            ID::make(__('ID'), 'id')->sortable(),
+            Date::make('วันที่ตั้งหนี้', 'branchbal_date')
+                ->sortable(),
+            BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
+                ->sortable(),
             Currency::make('จำนวนเงิน', 'bal_amount'),
-
             Currency::make('ส่วนลด', 'discount_amount'),
             Currency::make('ภาษี', 'tax_amount'),
             Currency::make('ยอดรับชำระ', 'pay_amount'),
-            Boolean::make('สถานะการชำระ', 'payment_status'),
-            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt'),
+            Boolean::make('สถานะการชำระ', 'payment_status')
+                ->sortable(),
+            Text::make('ชำระโดย',  function () {
+                if (isset($this->receipt_id)) {
+                    if ($this->receipt->branchpay_by === 'T') {
+                        return 'โอน';
+                    } else {
+                        return 'เงินสด';
+                    }
+                } else {
+                    return '-';
+                }
+            }),
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
             HasMany::make('รายการใบรับส่ง', 'branch_balance_items', 'App\Nova\Branch_balance_item')
 
         ];
@@ -81,7 +98,9 @@ class Branch_balance extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new OrderBranchPerDay(),
+        ];
     }
 
     /**
@@ -114,6 +133,15 @@ class Branch_balance extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            BranchReceipt::make($request->resourceId)
+                ->onlyOnDetail()
+                ->confirmText('ยืนยันการรับชำระค่าขนส่งรายการนี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('view branch_balance');
+                })
+        ];
     }
 }

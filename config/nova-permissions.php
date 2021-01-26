@@ -1284,28 +1284,166 @@ return [
             'description'  => 'ลบ',
             'group'        => 'รายการเก็บเงินปลายทาง',
         ],
-        //ใบเสร็จรับเงิน
+        //ใบเสร็จรับเงินปลายทาง
         'view receipt' => [
             'display_name' => 'ดู',
             'description'  => 'ดู',
-            'group'        => 'ใบเสร็จรับเงิน',
+            'group'        => 'ใบเสร็จรับเงินปลายทาง',
         ],
         'create receipt' => [
             'display_name' => 'สร้าง',
             'description'  => 'สร้าง',
-            'group'        => 'ใบเสร็จรับเงิน',
+            'group'        => 'ใบเสร็จรับเงินปลายทาง',
         ],
 
         'edit receipt' => [
             'display_name' => 'แก้ไข',
             'description'  => 'แก้ไข',
-            'group'        => 'ใบเสร็จรับเงิน',
+            'group'        => 'ใบเสร็จรับเงินปลายทาง',
         ],
 
         'delete receipt' => [
             'display_name' => 'ลบ',
             'description'  => 'ลบ',
+            'group'        => 'ใบเสร็จรับเงินปลายทาง',
+        ],
+        //ใบเสร็จรับเงิน
+        'view receipt_all' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
             'group'        => 'ใบเสร็จรับเงิน',
+        ],
+        'create receipt_all' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบเสร็จรับเงิน',
+        ],
+
+        'edit receipt_all' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบเสร็จรับเงิน',
+        ],
+
+        'delete receipt_all' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบเสร็จรับเงิน',
+        ],
+        //รายการบิลในใบเสร็จ
+        'view receipt_item' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการบิลในใบเสร็จ',
+        ],
+        'create receipt_item' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการบิลในใบเสร็จ',
+        ],
+
+        'edit receipt_item' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการบิลในใบเสร็จ',
+        ],
+
+        'delete receipt_item' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการบิลในใบเสร็จ',
+        ],
+        //รายการเงินสดต้นทาง
+        'view order_cash' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการเงินสดต้นทาง',
+        ],
+        'create order_cash' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการเงินสดต้นทาง',
+        ],
+
+        'edit order_cash' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการเงินสดต้นทาง',
+        ],
+
+        'delete order_cash' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการเงินสดต้นทาง',
+        ],
+        //รายการเงินสดปลายทาง
+        'view order_branch' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการเงินสดปลายทาง',
+        ],
+        'create order_branch' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการเงินสดปลายทาง',
+        ],
+
+        'edit order_branch' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการเงินสดปลายทาง',
+        ],
+
+        'delete order_branch' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการเงินสดปลายทาง',
+        ],
+        //ข้อมูลลูกค้าวางบิล
+        'view ar_customer' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ข้อมูลลูกค้าวางบิล',
+        ],
+        'create ar_customer' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ข้อมูลลูกค้าวางบิล',
+        ],
+
+        'edit ar_customer' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ข้อมูลลูกค้าวางบิล',
+        ],
+
+        'delete ar_customer' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ข้อมูลลูกค้าวางบิล',
+        ],
+        //ข้อมูลรายการวางบิล
+        'view ar_balance' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ข้อมูลรายการวางบิล',
+        ],
+        'create ar_balance' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ข้อมูลรายการวางบิล',
+        ],
+
+        'edit ar_balance' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ข้อมูลรายการวางบิล',
+        ],
+
+        'delete ar_balance' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ข้อมูลรายการวางบิล',
         ],
         //Metrics
         'view order-incomes' => [

@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class OrderConfirmed extends Action
@@ -46,7 +47,12 @@ class OrderConfirmed extends Action
         foreach ($models as $model) {
             $hasitem = count($model->order_details);
             //$order_amount = $model->order_details->price->sum();
-
+            if ($fields->paymenttype == 'F'  && $model->customer->paymenttype <> 'Y') {
+                return Action::danger('ลูกค้ารายนี้ไม่ใช่ลูกหนี้การค้า');
+            }
+            if ($fields->paymenttype == 'L'  && $model->to_customer->paymenttype <> 'Y') {
+                return Action::danger('ลูกค้ารายนี้ไม่ใช่ลูกหนี้การค้า');
+            }
             if ($model->order_status <> 'new') {
                 return Action::danger('ไม่สามารถยืนยันรายการที่ ยืนยัน/ยกเลิก ไปแล้วได้');
             } elseif ($hasitem) {
@@ -76,7 +82,7 @@ class OrderConfirmed extends Action
      */
     public function fields()
     {
-        $bankaccount = Bankaccount::all()->pluck('account_no', 'id');
+        $bankaccount = Bankaccount::where('defaultflag', '=', true)->pluck('account_no', 'id');
 
         if ($this->model) {
             $order_amount = 0;
@@ -103,7 +109,7 @@ class OrderConfirmed extends Action
                 ])->displayUsingLabels()
                     ->default($paymenttype),
                 NovaDependencyContainer::make([
-                    Select::make(__('Account no'), 'bankaccount')
+                    Select::make(__('Bank Account no'), 'bankaccount')
                         ->options($bankaccount)
                         ->displayUsingLabels(),
                     Text::make(__('Bank reference no'), 'reference'),
@@ -121,7 +127,7 @@ class OrderConfirmed extends Action
                 ->default('H'),
             NovaDependencyContainer::make(
                 [
-                    Select::make(__('Account no'), 'bankaccount')
+                    Select::make(__('Bank Account no'), 'bankaccount')
                         ->options($bankaccount)
                         ->displayUsingLabels(),
                     Text::make(__('Bank reference no'), 'reference'),

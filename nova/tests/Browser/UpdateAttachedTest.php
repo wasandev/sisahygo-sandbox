@@ -17,8 +17,6 @@ class UpdateAttachedTest extends DuskTestCase
      */
     public function attached_resource_can_be_updated()
     {
-        $this->setupLaravel();
-
         $user = User::find(1);
         $role = RoleFactory::new()->create();
         $user->roles()->attach($role, ['notes' => 'Test Notes']);
@@ -26,9 +24,9 @@ class UpdateAttachedTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
-                    ->waitFor('@roles-index-component', 25)
                     ->within(new IndexComponent('roles'), function ($browser) {
-                        $browser->click('@1-edit-attached-button');
+                        $browser->waitForTable()
+                                ->click('@1-edit-attached-button');
                     })
                     ->on(new UpdateAttached('users', 1, 'roles', 1))
                     ->assertDisabled('@attachable-select')
@@ -47,8 +45,6 @@ class UpdateAttachedTest extends DuskTestCase
      */
     public function attached_resource_can_be_updated_and_can_continue_editing()
     {
-        $this->setupLaravel();
-
         $user = User::find(1);
         $role = RoleFactory::new()->create();
         $user->roles()->attach($role, ['notes' => 'Test Notes']);
@@ -56,9 +52,9 @@ class UpdateAttachedTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
-                    ->waitFor('@roles-index-component', 25)
                     ->within(new IndexComponent('roles'), function ($browser) {
-                        $browser->click('@1-edit-attached-button');
+                        $browser->waitForTable()
+                                ->click('@1-edit-attached-button');
                     })
                     ->on(new UpdateAttached('users', 1, 'roles', 1))
                     ->type('@notes', 'Test Notes Updated')
@@ -77,8 +73,6 @@ class UpdateAttachedTest extends DuskTestCase
      */
     public function validation_errors_are_displayed()
     {
-        $this->setupLaravel();
-
         $user = User::find(1);
         $role = RoleFactory::new()->create();
         $user->roles()->attach($role, ['notes' => 'Test Notes']);
@@ -86,9 +80,9 @@ class UpdateAttachedTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
-                    ->waitFor('@roles-index-component', 25)
                     ->within(new IndexComponent('roles'), function ($browser) {
-                        $browser->click('@1-edit-attached-button');
+                        $browser->waitForTable()
+                                ->click('@1-edit-attached-button');
                     })
                     ->on(new UpdateAttached('users', 1, 'roles', 1))
                     ->type('@notes', str_repeat('A', 30))

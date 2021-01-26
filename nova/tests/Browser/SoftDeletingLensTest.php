@@ -17,15 +17,14 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     public function can_soft_delete_a_resource_via_resource_table_row_delete_icon()
     {
-        $this->setupLaravel();
-
         $dock = DockFactory::new()->create();
 
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('docks', 'passthrough-with-trashed-lens'))
                     ->within(new LensComponent('docks', 'passthrough-with-trashed-lens'), function ($browser) {
-                        $browser->deleteResourceById(1);
+                        $browser->waitForTable()
+                                ->deleteResourceById(1);
                     });
 
             $this->assertEquals(1, Dock::withTrashed()->count());
@@ -37,8 +36,6 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     public function can_soft_delete_resources_using_checkboxes()
     {
-        $this->setupLaravel();
-
         DockFactory::new()->create();
         DockFactory::new()->create();
         DockFactory::new()->create();
@@ -47,7 +44,8 @@ class SoftDeletingLensTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('docks', 'passthrough-with-trashed-lens'))
                     ->within(new LensComponent('docks', 'passthrough-with-trashed-lens'), function ($browser) {
-                        $browser->clickCheckboxForId(3)
+                        $browser->waitForTable()
+                            ->clickCheckboxForId(3)
                             ->clickCheckboxForId(2)
                             ->deleteSelected();
                     });
@@ -61,8 +59,6 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     public function can_restore_resources_using_checkboxes()
     {
-        $this->setupLaravel();
-
         DockFactory::new()->create();
         DockFactory::new()->create(['deleted_at' => now()]);
         DockFactory::new()->create(['deleted_at' => now()]);
@@ -71,7 +67,8 @@ class SoftDeletingLensTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('docks', 'passthrough-with-trashed-lens'))
                     ->within(new LensComponent('docks', 'passthrough-with-trashed-lens'), function ($browser) {
-                        $browser->clickCheckboxForId(3)
+                        $browser->waitForTable()
+                            ->clickCheckboxForId(3)
                             ->clickCheckboxForId(2)
                             ->restoreSelected();
                     });
@@ -85,8 +82,6 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     public function can_force_delete_resources_using_checkboxes()
     {
-        $this->setupLaravel();
-
         DockFactory::new()->create();
         DockFactory::new()->create();
         DockFactory::new()->create();
@@ -95,7 +90,8 @@ class SoftDeletingLensTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('docks', 'passthrough-with-trashed-lens'))
                     ->within(new LensComponent('docks', 'passthrough-with-trashed-lens'), function ($browser) {
-                        $browser->clickCheckboxForId(3)
+                        $browser->waitForTable()
+                            ->clickCheckboxForId(3)
                             ->clickCheckboxForId(2)
                             ->forceDeleteSelected()
                             ->assertSeeResource(1)
@@ -110,8 +106,6 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     // public function can_soft_delete_all_matching_resources()
     // {
-    //     $this->setupLaravel();
-
     //     DockFactory::new()->create();
     //     DockFactory::new()->create();
     //     DockFactory::new()->create();
@@ -120,7 +114,8 @@ class SoftDeletingLensTest extends DuskTestCase
     //         $browser->loginAs(User::find(1))
     //                 ->visit(new Lens('docks', 'passthrough-with-trashed-lens'))
     //                 ->within(new LensComponent('docks', 'passthrough-with-trashed-lens'), function ($browser) {
-    //                     $browser->applyFilter('Select First', '2');
+    //                     $browser->waitForTable()
+    //                             ->applyFilter('Select First', '2');
 
     //                     $browser->selectAllMatching()
     //                             ->deleteSelected();
@@ -135,8 +130,6 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     // public function can_restore_all_matching_resources()
     // {
-    //     $this->setupLaravel();
-
     //     DockFactory::new()->times(3)->create(['deleted_at' => now()]);
 
     //     $this->browse(function (Browser $browser) {
@@ -159,15 +152,14 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     // public function can_force_delete_all_matching_resources()
     // {
-    //     $this->setupLaravel();
-
     //     DockFactory::new()->times(3)->create(['deleted_at' => now()]);
 
     //     $this->browse(function (Browser $browser) {
     //         $browser->loginAs(User::find(1))
     //                 ->visit(new Lens('docks', 'passthrough-with-trashed-lens'))
     //                 ->within(new LensComponent('docks', 'passthrough-with-trashed-lens'), function ($browser) {
-    //                     $browser->applyFilter('Select First', '2');
+    //                     $browser->waitForTable()
+    //                             ->applyFilter('Select First', '2');
 
     //                     $browser->selectAllMatching()
     //                         ->forceDeleteSelected();
@@ -183,15 +175,14 @@ class SoftDeletingLensTest extends DuskTestCase
      */
     public function soft_deleted_resources_may_be_restored_via_row_icon()
     {
-        $this->setupLaravel();
-
         DockFactory::new()->create();
 
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Lens('docks', 'passthrough-with-trashed-lens'))
                     ->within(new LensComponent('docks', 'passthrough-with-trashed-lens'), function ($browser) {
-                        $browser->deleteResourceById(1)
+                        $browser->waitForTable()
+                                ->deleteResourceById(1)
                                 ->restoreResourceById(1);
                     });
 

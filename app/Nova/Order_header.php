@@ -25,16 +25,21 @@ use App\Nova\Metrics\OrdersByPaymentType;
 use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerMonth;
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+
 use Wasandev\Orderstatus\Orderstatus;
 
 class Order_header extends Resource
 {
+    use HasDependencies;
     public static $polling = true;
     public static $pollingInterval = 60;
     public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 2;
     public static $trafficCop = false;
+    public static $preventFormAbandonment = true;
 
     /**
      * The model the resource corresponds to.
@@ -135,13 +140,28 @@ class Order_header extends Resource
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
+            // Boolean::make('ใช้ที่อยู่อื่น', 'use_address')
+            //     ->hideFromIndex(),
+            // NovaDependencyContainer::make([
+            //     BelongsTo::make('เลือกที่อยู่', 'address', 'App\Nova\Address')
+            //         ->hideFromIndex()
+            //         ->showCreateRelationButton(),
+            // ])->dependsOn('use_address', true),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
+            // Boolean::make('ใช้ที่อยู่อื่น', 'use_to_address')
+            //     ->hideFromIndex(),
+            // NovaDependencyContainer::make([
+            //     BelongsTo::make('เลือกที่อยู่', 'to_address', 'App\Nova\Address')
+            //         ->hideFromIndex()
+            //         ->showCreateRelationButton(),
+            // ])->dependsOn('use_to_address', true),
+
             Currency::make('จำนวนเงิน', 'order_amount')
-                ->onlyOnDetail(),
+                ->exceptOnForms(),
             Select::make(__('Tran type'), 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
@@ -265,23 +285,33 @@ class Order_header extends Resource
         }
         return $query;
     }
-    // public static function relatableCustomers(NovaRequest $request, $query)
-    // {
-    //     $from_branch = $request->user()->branch_id;
-    //     $to_branch =  $request->user()->branch_rec_id;
+    public static function relatableCustomers(NovaRequest $request, $query)
+    {
+        $from_branch = $request->user()->branch_id;
+        $to_branch =  $request->user()->branch_rec_id;
 
-    //     if (!is_null($from_branch)) {
-    //         if ($request->route()->parameter('field') === "customer") {
-    //             $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
-    //             return $query->whereIn('district', $branch_area);
-    //         }
-    //     }
-    //     if (!is_null($to_branch)) {
-    //         if ($request->route()->parameter('field') === "to_customer") {
-    //             $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-    //             //dd($to_branch_area);
-    //             return $query->whereIn('district', $to_branch_area);
-    //         }
-    //     }
+
+        if (!is_null($from_branch)) {
+            if ($request->route()->parameter('field') === "customer") {
+                $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
+                    ->get('district');
+
+                return $query->whereIn('district', $branch_area);
+            }
+        }
+        if (!is_null($to_branch)) {
+            if ($request->route()->parameter('field') === "to_customer") {
+                $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+                return $query->whereIn('district', $to_branch_area);
+            }
+        }
+    }
+    // public static function relatableAddresses(NovaRequest $request, $query)
+    // {
+    //     return $query->where('customer_id', 1);
+    // }
+    // public static function relatableTo_addresses(NovaRequest $request, $query)
+    // {
+    //     return $query->where('customer_id', 1);
     // }
 }

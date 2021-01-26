@@ -36,7 +36,7 @@ class Waybill extends Resource
 {
     use HasDependencies;
     public static $group = '7.งานบริการขนส่ง';
-    public static $priority = 4;
+    public static $priority = 2;
     public static $polling = true;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
@@ -53,16 +53,16 @@ class Waybill extends Resource
      *
      * @var string
      */
-    public static $title = 'waybill_no';
+    //public static $title = 'waybill_no';
 
-    // public function title()
-    // {
-    //     return $this->waybill_no . ' - ' . $this->car->car_regist;
-    // }
-    // public function subtitle()
-    // {
-    //     return $this->car->car_regist;
-    // }
+    public function title()
+    {
+        return $this->waybill_no . ' - ' . $this->car->car_regist;
+    }
+    public function subtitle()
+    {
+        return $this->car->car_regist;
+    }
 
 
     /**

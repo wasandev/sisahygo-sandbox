@@ -18,14 +18,16 @@ class ResourceIndexRequest extends NovaRequest
      */
     public function searchIndex()
     {
-        return (new QueryBuilder($resource = $this->resource()))->search(
+        $resource = $this->resource();
+
+        $perPage = $this->viaRelationship()
+                        ? $resource::$perPageViaRelationship
+                        : ($this->perPage ?? $resource::perPageOptions()[0]);
+
+        return (new QueryBuilder($resource))->search(
             $this, $this->newQuery(), $this->search,
             $this->filters()->all(), $this->orderings(), $this->trashed()
-        )->paginate(
-            $this->viaRelationship()
-                        ? $resource::$perPageViaRelationship
-                        : ($this->perPage ?? $resource::perPageOptions()[0])
-        );
+        )->paginate((int) $perPage);
     }
 
     /**

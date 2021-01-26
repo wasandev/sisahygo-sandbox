@@ -9,7 +9,8 @@ class Order_banktransfer extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'order_header_id', 'status', 'branch_id', 'transfer_amount', 'bankaccount_id', 'reference', 'transferslip', 'user_id', 'updated_by'
+        'customer_id', 'order_header_id', 'status', 'branch_id', 'transfer_amount',
+        'bankaccount_id', 'reference', 'transferslip', 'user_id', 'updated_by', 'receipt_id'
     ];
 
     public function bankaccount()
@@ -32,5 +33,14 @@ class Order_banktransfer extends Model
     public function branch()
     {
         return $this->belongsTo('App\Models\Branch');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer');
+    }
+    public function receipt_all()
+    {
+        return $this->belongsTo('App\Models\Receipt_all', 'receipt_id');
     }
 }

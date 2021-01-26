@@ -2,12 +2,12 @@
 @section('nav')
     @include('partials.nav')
 @endsection
-
+{{--
 @section('search')
     @include('partials.blogsearch')
-@endsection
-@section('mstorehome')
-    @include('partials.mstorehome')
+@endsection --}}
+@section('sghome')
+    @include('partials.sghome')
 @endsection
 
 

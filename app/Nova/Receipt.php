@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\Date;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -40,7 +41,7 @@ class Receipt extends Resource
     ];
     public static function label()
     {
-        return 'ใบเสร็จรับเงิน';
+        return 'ใบเสร็จรับเงินปลายทาง';
     }
 
 
@@ -54,8 +55,18 @@ class Receipt extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Date::make('วันที่', 'receipt_date'),
             Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no'),
+            Date::make('วันที่', 'receipt_date'),
+
+            Select::make('ประเภทใบเสร็จ', 'receipttype')->options([
+                'ต้นทาง' => 'H',
+                'วางบิล' => 'B',
+                'ปลายทาง' => 'E'
+            ])->withMeta(['value' => 'E'])
+                ->displayUsingLabels()
+                ->readonly(),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
+
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer'),
             Currency::make('จำนวนเงิน', 'total_amount'),
             Select::make('ชำระโดย', 'branchpay_by')->options([
@@ -63,11 +74,15 @@ class Receipt extends Resource
                 'T' => 'เงินโอน',
                 'Q' => 'เช็ค',
                 'R' => 'บัตรเครดิต'
-            ])->displayUsingLabels(),
-            Currency::make('ส่วนลด', 'discount_amount'),
-            Currency::make('ภาษี', 'tax_amount'),
-            Currency::make('ยอดรับชำระ', 'pay_amount'),
-
+            ])->displayUsingLabels()
+                ->hideFromIndex(),
+            Currency::make('ส่วนลด', 'discount_amount')
+                ->hideFromIndex(),
+            Currency::make('ภาษี', 'tax_amount')
+                ->hideFromIndex(),
+            Currency::make('ยอดรับชำระ', 'pay_amount')
+                ->hideFromIndex(),
+            HasOne::make('รายการจัดส่ง', 'delivery_item', 'App\Nova\Delivery_item')
 
         ];
     }
@@ -114,5 +129,14 @@ class Receipt extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->role != 'admin') {
+            return $query->where('receipttype', '=', 'E')
+                ->where('branch_id', '=', $request->user()->branch_id);
+        }
+        return $query;
     }
 }

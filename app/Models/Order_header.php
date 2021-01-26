@@ -69,4 +69,33 @@ class Order_header extends Model
     {
         return $this->belongsTo('App\Models\Waybill');
     }
+    // public function address()
+    // {
+    //     return $this->belongsTo('App\Models\Address', 'address_id');
+    // }
+    // public function to_address()
+    // {
+    //     return $this->belongsTo('App\Models\Address', 'to_address_id');
+    // }
+
+    public function scopeCash($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->where('paymenttype', 'H');
+    }
+    public function scopeTransfer($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->where('paymenttype', 'T');
+    }
+    public function scopeBranchcash($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->where('paymenttype', 'E');
+    }
+    public function scopeBill($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->whereIn('paymenttype', ['F', 'L']);
+    }
 }

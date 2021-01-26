@@ -74,7 +74,7 @@
 
         @yield('nav')
         @yield('search')
-        @yield('mstorehome')
+        @yield('sghome')
         @yield('content')
         @yield('footer')
     </div>

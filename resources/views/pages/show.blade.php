@@ -4,12 +4,10 @@
     @include('partials.nav')
 @endsection
 
-@section('search')
-    @include('partials.search')
-@endsection
+
 
 @section('mstorehome')
-    @include('partials.mstorehome')
+    @include('partials.sghome')
 @endsection
 
 @section('content')
@@ -27,7 +25,7 @@
         </div>
         <div class="flex text-left flex-no-shrink mr-0 ">
 
-            <h2 class="text-gray-100">เกี่ยวกับ mStore</h2>
+            <h2 class="text-gray-100">เกี่ยวกับ SISAHYGO</h2>
 
 
         </div>
@@ -39,7 +37,7 @@
         <nav id = "pages-nav" class="sm:block w-full hidden text-base font-normal   shadow-lg md:w-1/4 ">
             <div class="hidden sm:block text-blue-700 border-b-2 border-gray-200 p-2 items-center text-center text-xl ">
                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-current absolute" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/></svg>
-                <span class="ml-6">เกี่ยวกับ mStore</span>
+                <span class="ml-6">เกี่ยวกับ SISAHYGO</span>
             </div>
             <div class="p-2 sm:flex sm:p-0 ">
                 <div class="w-full mx-auto ">

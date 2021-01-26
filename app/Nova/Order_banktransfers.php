@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\BankTransferStatus;
+use App\Nova\Metrics\OrderTransferPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -15,7 +17,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Order_banktransfers extends Resource
 {
     public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 4;
+    public static $priority = 7;
     public static $polling = true;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
@@ -48,7 +50,7 @@ class Order_banktransfers extends Resource
     ];
     public static function label()
     {
-        return 'ข้อมูลรายการโอนเงินค่าขนส่ง';
+        return 'รายการโอนเงินค่าขนส่ง';
     }
     public static function singularLabel()
     {
@@ -66,17 +68,22 @@ class Order_banktransfers extends Resource
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make(__('Status'), 'status'),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
-            BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header'),
-            BelongsTo::make(__('Account no'), 'bankaccount', 'App\Nova\Bankaccount'),
+            BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
+                ->sortable(),
+            BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header')
+                ->sortable(),
+            BelongsTo::make(__('Bank Account no'), 'bankaccount', 'App\Nova\Bankaccount'),
             Currency::make(__('Amount'), 'transfer_amount'),
-            Text::make(__('Bank reference no'), 'reference'),
+            Text::make(__('Bank reference no'), 'reference')
+                ->hideFromIndex(),
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_all', 'App\Nova\Receipt_all'),
             Image::make('สลิปโอนเงิน', 'transferslip')
                 ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->onlyOnDetail(),
         ];
@@ -90,7 +97,9 @@ class Order_banktransfers extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new OrderTransferPerDay(),
+        ];
     }
 
     /**
@@ -101,7 +110,9 @@ class Order_banktransfers extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            //new BankTransferStatus,
+        ];
     }
 
     /**
@@ -125,7 +136,7 @@ class Order_banktransfers extends Resource
     {
         return [
             (new Actions\ConfirmBanktransfer($request->resourceId))
-                ->onlyOnDetail()
+                //->onlyOnDetail()
                 ->confirmText('ต้องการยืนยันรายการโอนเงิน รายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")

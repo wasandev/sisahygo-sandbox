@@ -12,7 +12,6 @@ use Wasandev\InputThaiAddress\InputPostalCode;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
-use Orlyapps\NovaBelongsToDepend\NovaBelongsToDepend;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 
 class Address extends Resource
@@ -50,6 +49,17 @@ class Address extends Resource
         'name', 'address'
     ];
 
+    //public static $title = 'name';
+    public function title()
+    {
+        return $this->customer->name;
+    }
+
+    public function subtitle()
+    {
+
+        return   $this->address . ' ' . $this->sub_district . ' ' . $this->district . ' ' . $this->province;
+    }
     /**
      * Get the fields displayed by the resource.
      *
@@ -61,12 +71,13 @@ class Address extends Resource
         return [
             ID::make()->sortable()->hideFromIndex(),
             BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
-                ->hideFromIndex(),
-            Text::make(__('Address name'), 'name')->sortable(),
+                ->hideFromIndex()
+                ->searchable(),
+            Text::make(__('Address name'), 'name')->sortable()
+                ->placeholder('ชื่อเรียกที่อยู่ใหม่'),
             Text::make(__('Contact name'), 'contactname')->sortable(),
             Text::make(__('Phone'), 'phoneno')
                 ->rules('required', 'numeric'),
-
             new Panel(__('Address'), $this->addressFields()),
             BelongsTo::make(__('User'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),

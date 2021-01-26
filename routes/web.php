@@ -9,20 +9,21 @@ Route::get('/', function () {
 });
 
 
-Route::middleware('web', 'auth')
+Route::middleware('web')
     ->namespace('\\App\\Http\\Controllers\\')
     ->group(function () {
 
-        Route::get('/test', 'TestController@test');
+        //Route::get('/test', 'TestController@test');
         Route::get('pages/{slug}', array('as' => 'page.show', 'uses' => 'PagesController@show'));
         Route::get('pages', array('as' => 'page.about', 'uses' => 'PagesController@about'));
         Route::any('/blogs', 'BlogController@index');
         Route::get('/blogs/{slug}', 'BlogController@show');
     });
-
-//Pages
-Route::get('pages/{slug}', array('as' => 'page.show', 'uses' => 'PagesController@show'));
-Route::get('pages', array('as' => 'page.about', 'uses' => 'PagesController@about'));
+// Route::any('/blogs', 'BlogController@index');
+// Route::get('/blogs/{slug}', 'BlogController@show');
+// //Pages
+// Route::get('pages/{slug}', array('as' => 'page.show', 'uses' => 'PagesController@show'));
+// Route::get('pages', array('as' => 'page.about', 'uses' => 'PagesController@about'));
 
 Route::middleware('web', 'auth')
     ->namespace('\\App\\Http\\Controllers\\')

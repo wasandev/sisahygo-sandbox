@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Blog;
+use App\Models\Blog;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 //use Illuminate\Support\Facades\Input;

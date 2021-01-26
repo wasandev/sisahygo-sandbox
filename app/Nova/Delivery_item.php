@@ -23,6 +23,7 @@ class Delivery_item extends Resource
     // public static $pollingInterval = 90;
     // public static $showPollingToggle = true;
     public static $globallySearchable = false;
+    public static $preventFormAbandonment = true;
     /**
      * The model the resource corresponds to.
      *
@@ -101,6 +102,7 @@ class Delivery_item extends Resource
             //     ->format('DD/MM/YYYY HH:mm')
             //     ->onlyOnDetail()
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt'),
+            Text::make('หมายเหตุ', 'description'),
 
             HasMany::make('รายการใบรับส่ง', 'delivery_details', 'App\Nova\Delivery_detail'),
         ];

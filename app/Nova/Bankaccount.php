@@ -5,9 +5,11 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
@@ -64,10 +66,12 @@ class Bankaccount extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->hideFromIndex(),
+            Boolean::make('ใช้สำหรับการโอนค่าขนส่ง', 'defaultflag'),
             BelongsTo::make(__('Bank'), 'bank', 'App\Nova\Bank')
                 ->showCreateRelationButton()
                 ->searchable(),
-            Text::make(__('Account no'), 'account_no')
+
+            Text::make(__('Bank Account no'), 'account_no')
                 ->rules('required'),
             Text::make(__('Account name'), 'account_name')
                 ->rules('required'),

@@ -7,6 +7,7 @@ use App\Traits\ThaiSlug;
 
 class BlogsObserver
 {
+    use ThaiSlug;
     public function creating(Blog $blog)
     {
         $blog->user_id = auth()->user()->id;

@@ -4,6 +4,7 @@ namespace Laravel\Nova\Tests\Feature;
 
 use Brick\Money\Context\CustomContext;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\IntegrationTest;
 
 class CurrencyTest extends IntegrationTest
@@ -158,5 +159,35 @@ class CurrencyTest extends IntegrationTest
         $field->resolveForDisplay((object) ['cost' => 200.12345678]);
 
         $this->assertEquals('$200.12345678', $field->value);
+    }
+
+    public function test_the_field_is_filled_correctly_using_minor_units()
+    {
+        $request = NovaRequest::create('/nova-api/users', 'POST', [
+            'editing' => true,
+            'editMode' => 'create',
+            'cost' => '2500',
+        ]);
+
+        $model = new \stdClass();
+
+        $field = Currency::make('Cost')->asMinorUnits()->fill($request, $model);
+
+        $this->assertEquals(2500, $model->cost);
+    }
+
+    public function test_the_field_is_filled_correctly_with_null_when_using_minor_units()
+    {
+        $request = NovaRequest::create('/nova-api/users', 'POST', [
+            'editing' => true,
+            'editMode' => 'create',
+            'cost' => null,
+        ]);
+
+        $model = new \stdClass();
+
+        $field = Currency::make('Cost')->asMinorUnits()->fill($request, $model);
+
+        $this->assertNull($model->cost);
     }
 }

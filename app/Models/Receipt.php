@@ -9,8 +9,8 @@ class Receipt extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'receipt_no', 'receipt_date', 'customer_id', 'total_amount', 'discount_amount',
-        'tax_amount', 'pay_amount', 'receipt_type', 'branchpay_by', 'bankaccount_id', 'bankreference',
+        'receipt_no', 'receipt_date', 'branch_id', 'customer_id', 'total_amount', 'discount_amount',
+        'tax_amount', 'pay_amount', 'receipttype', 'branchpay_by', 'bankaccount_id', 'bankreference',
         'chequeno', 'chequedate', 'chequebank_id', 'description', 'user_id', 'updated_by'
     ];
 
@@ -35,5 +35,13 @@ class Receipt extends Model
     public function user_update()
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
+    }
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch');
+    }
+    public function delivery_item()
+    {
+        return $this->hasOne('App\Models\Delivery_item');
     }
 }

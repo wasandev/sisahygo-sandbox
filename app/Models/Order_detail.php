@@ -26,6 +26,10 @@ class Order_detail extends Model
     {
         return $this->belongsTo('App\Models\Order_loader', 'order_header_id');
     }
+    public function order_cash()
+    {
+        return $this->belongsTo('App\Models\Order_cash', 'order_header_id');
+    }
     public function delivery_detail()
     {
         return $this->belongsTo('App\Models\Delivery_detail', 'order_header_id', 'order_header_id');

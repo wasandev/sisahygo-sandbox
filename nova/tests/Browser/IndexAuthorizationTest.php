@@ -16,8 +16,6 @@ class IndexAuthorizationTest extends DuskTestCase
      */
     public function resource_index_can_be_totally_blocked_via_view_any()
     {
-        $this->setupLaravel();
-
         $post = PostFactory::new()->create();
 
         $user = User::find(1);
@@ -38,8 +36,6 @@ class IndexAuthorizationTest extends DuskTestCase
      */
     public function shouldnt_see_edit_button_if_blocked_from_updating()
     {
-        $this->setupLaravel();
-
         $post = PostFactory::new()->create();
         $post2 = PostFactory::new()->create();
 
@@ -49,10 +45,9 @@ class IndexAuthorizationTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($post, $post2) {
             $browser->loginAs(User::find(1))
                     ->visit(new Index('posts'))
-                    ->waitFor('@posts-index-component', 25)
                     ->within(new IndexComponent('posts'), function ($browser) use ($post, $post2) {
-                        $browser->assertMissing('@'.$post->id.'-edit-button');
-                        $browser->assertVisible('@'.$post2->id.'-edit-button');
+                        $browser->assertMissing('@'.$post->id.'-edit-button')
+                                ->assertVisible('@'.$post2->id.'-edit-button');
                     });
 
             $browser->blank();
@@ -64,8 +59,6 @@ class IndexAuthorizationTest extends DuskTestCase
      */
     public function shouldnt_see_delete_button_if_blocked_from_deleting()
     {
-        $this->setupLaravel();
-
         $post = PostFactory::new()->create();
         $post2 = PostFactory::new()->create();
 
@@ -75,10 +68,9 @@ class IndexAuthorizationTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($post, $post2) {
             $browser->loginAs(User::find(1))
                     ->visit(new Index('posts'))
-                    ->waitFor('@posts-index-component', 25)
                     ->within(new IndexComponent('posts'), function ($browser) use ($post, $post2) {
-                        $browser->assertMissing('@'.$post->id.'-delete-button');
-                        $browser->assertVisible('@'.$post2->id.'-delete-button');
+                        $browser->assertMissing('@'.$post->id.'-delete-button')
+                                ->assertVisible('@'.$post2->id.'-delete-button');
                     });
 
             $browser->blank();
@@ -90,8 +82,6 @@ class IndexAuthorizationTest extends DuskTestCase
      */
     public function can_delete_resources_using_checkboxes_only_if_authorized_to_delete_them()
     {
-        $this->setupLaravel();
-
         PostFactory::new()->times(3)->create();
 
         $user = User::find(1);
@@ -100,9 +90,9 @@ class IndexAuthorizationTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Index('posts'))
-                    ->waitFor('@posts-index-component', 25)
                     ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->clickCheckboxForId(3)
+                        $browser->waitForTable()
+                            ->clickCheckboxForId(3)
                             ->clickCheckboxForId(2)
                             ->clickCheckboxForId(1)
                             ->deleteSelected()
@@ -120,8 +110,6 @@ class IndexAuthorizationTest extends DuskTestCase
      */
     public function can_delete_all_matching_resources_only_if_authorized_to_delete_them()
     {
-        $this->setupLaravel();
-
         PostFactory::new()->times(3)->create();
 
         $user = User::find(1);
@@ -130,9 +118,9 @@ class IndexAuthorizationTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Index('posts'))
-                    ->waitFor('@posts-index-component', 25)
                     ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->selectAllMatching()
+                        $browser->waitForTable()
+                            ->selectAllMatching()
                             ->deleteSelected()
                             ->assertSeeResource(1)
                             ->assertDontSeeResource(2)

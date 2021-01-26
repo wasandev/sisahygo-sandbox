@@ -12,25 +12,25 @@ class Branch_areaPolicy
 
     public function viewAny(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view branch_areas');
+        return $user->role == 'admin' || $user->hasPermissionTo('view branchareas');
     }
     public function view(User $user, Branch_area $branch_area)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view branch_areas');
+        return $user->role == 'admin' || $user->hasPermissionTo('view branchareas');
     }
 
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create branch_areas');
+        return $user->role == 'admin' || $user->hasPermissionTo('create branchareas');
     }
 
     public function update(User $user, Branch_area $branch_area)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('edit branch_areas');
+        return $user->role == 'admin' || $user->hasPermissionTo('edit branchareas');
     }
 
     public function delete(User $user, Branch_area $branch_area)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete branch_areas');
+        return $user->role == 'admin' || $user->hasPermissionTo('delete branchareas');
     }
 }

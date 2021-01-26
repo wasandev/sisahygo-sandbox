@@ -38,12 +38,15 @@ class DeliveryDetailObserver
 
     public function updating(Delivery_detail $delivery_detail)
     {
+        //dd($delivery_detail->delivery_status);
         if ($delivery_detail->delivery_status) {
 
             $branchrec_order = Branchrec_order::find($delivery_detail->order_header_id);
 
-            if ($branchrec_order->branchpay_by == "T") {
+
+            if ($branchrec_order->branchpay_by == "T" && $delivery_detail->payment_status  == false) {
                 Order_banktransfer::create([
+                    'customer_id' => $branchrec_order->customer_rec_id,
                     'order_header_id' => $branchrec_order->id,
                     'branch_id' => $branchrec_order->branch_rec_id,
                     'status' => false,
@@ -56,13 +59,16 @@ class DeliveryDetailObserver
             if ($branchrec_order->paymenttype == 'E') {
                 $branch_balance_item = Branch_balance_item::where('order_header_id', $delivery_detail->order_header_id)->first();
                 if (isset($branch_balance_item)) {
-                    $branch_balance_item->payment_status = true;
+                    if ($delivery_detail->payment_status) {
+                        $branch_balance_item->payment_status = true;
+                    } else {
+                        $branch_balance_item->payment_status = false;
+                    }
                     $branch_balance_item->save();
                 }
             }
 
-
-            Order_status::create([
+            Order_status::updateOrCreate([
                 'order_header_id' => $delivery_detail->order_header_id,
                 'status' => 'completed',
                 'user_id' => auth()->user()->id,

@@ -82,6 +82,10 @@ class Customer extends Model
         return $this->hasMany('App\Models\Order_header', 'customer_rec_id', 'id');
     }
 
+    public function ar_balances()
+    {
+        return $this->hasMany('App\Models\Ar_balance');
+    }
     /*
 	Provide the Location value to the Nova field
 	*/

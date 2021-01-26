@@ -24,6 +24,11 @@ class Order_status extends Model
     {
         return $this->belongsTo('App\Models\Order_loader', 'order_header_id');
     }
+
+    public function order_cash()
+    {
+        return $this->belongsTo('App\Models\Order_cash', 'order_header_id');
+    }
     public function user()
     {
         return $this->belongsTo('App\Models\User');

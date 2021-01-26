@@ -7,7 +7,7 @@
     @include('partials.tracking')
 @endsection
 
-@section('mstorehome')
+@section('sghome')
     @include('partials.sghome')
 @endsection
 

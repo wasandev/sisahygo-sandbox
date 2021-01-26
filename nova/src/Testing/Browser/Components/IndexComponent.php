@@ -31,6 +31,14 @@ class IndexComponent extends BaseComponent
     }
 
     /**
+     * Wait for table to be ready.
+     */
+    public function waitForTable(Browser $browser)
+    {
+        $browser->waitFor('table[data-testid="resource-table"]', 25);
+    }
+
+    /**
      * Search for the given string.
      */
     public function searchFor(Browser $browser, $search)
@@ -214,9 +222,11 @@ class IndexComponent extends BaseComponent
     public function deleteResourceById(Browser $browser, $id)
     {
         $browser->click('@'.$id.'-delete-button')
-                        ->pause(250)
-                        ->click('#confirm-delete-button')
-                        ->pause(500);
+                        ->elsewhere('', function ($browser) {
+                            $browser->whenAvailable('.modal', function ($browser) {
+                                $browser->click('#confirm-delete-button');
+                            });
+                        })->pause(500);
     }
 
     /**
@@ -225,9 +235,11 @@ class IndexComponent extends BaseComponent
     public function restoreResourceById(Browser $browser, $id)
     {
         $browser->click('@'.$id.'-restore-button')
-                        ->pause(250)
-                        ->click('#confirm-restore-button')
-                        ->pause(500);
+                        ->elsewhere('', function ($browser) {
+                            $browser->whenAvailable('.modal', function ($browser) {
+                                $browser->click('#confirm-restore-button');
+                            });
+                        })->pause(500);
     }
 
     /**
@@ -242,8 +254,7 @@ class IndexComponent extends BaseComponent
                             ->whenAvailable('.modal', function ($browser) {
                                 $browser->click('#confirm-delete-button');
                             });
-                    })
-                    ->pause(1000);
+                    })->pause(1000);
     }
 
     /**
@@ -258,8 +269,7 @@ class IndexComponent extends BaseComponent
                             ->whenAvailable('.modal', function ($browser) {
                                 $browser->click('#confirm-restore-button');
                             });
-                    })
-                    ->pause(1000);
+                    })->pause(1000);
     }
 
     /**
@@ -274,8 +284,7 @@ class IndexComponent extends BaseComponent
                             ->whenAvailable('.modal', function ($browser) {
                                 $browser->click('#confirm-delete-button');
                             });
-                    })
-                    ->pause(1000);
+                    })->pause(1000);
     }
 
     /**
@@ -288,7 +297,10 @@ class IndexComponent extends BaseComponent
     {
         $browser->pause(500);
 
-        $browser->assertVisible($this->selector());
+        tap($this->selector(), function ($selector) use ($browser) {
+            $browser->waitFor($selector, 25)
+                    ->assertVisible($selector);
+        });
     }
 
     /**

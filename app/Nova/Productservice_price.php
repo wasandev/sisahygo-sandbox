@@ -75,7 +75,7 @@ class Productservice_price extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()->sortable()->hideFromIndex(),
 
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->sortable()
@@ -162,15 +162,13 @@ class Productservice_price extends Resource
     }
     public static function relatableQuery(NovaRequest $request, $query)
     {
-        if ($request->viaResourceId && $request->viaRelationship == 'order_details') {
+        if (isset($request->viaResourceId) && $request->viaRelationship === 'order_details') {
 
             $resourceId = $request->viaResourceId;
 
             $order = \App\Models\Order_checker::find($resourceId);
             $district = $order->to_customer->district;
-            //dd($district);
-            return $query->orWhere('district', $district);
+            return $query->where('district', '=', $district);
         }
-        // return $query->limit(100);
     }
 }

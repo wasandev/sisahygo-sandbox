@@ -82,7 +82,10 @@ export default {
     },
   },
 
-  data: () => ({ chartist: null }),
+  data: () => ({
+    chartist: null,
+    resizeObserver: null,
+  }),
 
   watch: {
     selectedRangeKey: function (newRange, oldRange) {
@@ -92,6 +95,16 @@ export default {
     chartData: function (newData, oldData) {
       this.renderChart()
     },
+  },
+
+  created() {
+    const debouncer = _.debounce(callback => callback(), Nova.config.debounce)
+
+    this.resizeObserver = new ResizeObserver(entries => {
+      debouncer(() => {
+        this.renderChart()
+      })
+    })
   },
 
   mounted() {
@@ -153,6 +166,12 @@ export default {
         }),
       ],
     })
+
+    this.resizeObserver.observe(this.$refs.chart)
+  },
+
+  destroyed() {
+    this.resizeObserver.unobserve(this.$refs.chart)
   },
 
   methods: {

@@ -4,6 +4,7 @@ namespace Laravel\Nova\Tests\Feature;
 
 use DateTimeZone;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\IntegrationTest;
 
 class SelectTest extends IntegrationTest
@@ -180,6 +181,54 @@ class SelectTest extends IntegrationTest
         $this->assertFalse($field->searchable);
         $this->assertSubset([
             'searchable' => false,
+        ], $field->jsonSerialize());
+    }
+
+    public function test_select_field_can_be_searchable()
+    {
+        $field = Select::make('Sizes')->searchable()->options(collect(['L', 'S']));
+
+        $this->assertTrue(is_bool($field->searchable));
+        $this->assertSubset([
+            'searchable' => true,
+        ], $field->jsonSerialize());
+    }
+
+    public function test_select_field_can_not_be_searchable_by_passing_false()
+    {
+        $field = Select::make('Sizes')->searchable(false)->options(collect(['L', 'S']));
+
+        $this->assertTrue(is_bool($field->searchable));
+        $this->assertSubset([
+            'searchable' => false,
+        ], $field->jsonSerialize());
+    }
+
+    public function test_select_field_can_be_searchable_using_callback()
+    {
+        $field = Select::make('Sizes')->searchable(function () {
+            return true;
+        })->options(collect(['L', 'S']));
+
+        $this->assertTrue(is_callable($field->searchable));
+        $this->assertSubset([
+            'searchable' => true,
+        ], $field->jsonSerialize());
+    }
+
+    public function test_select_field_can_be_searchable_using_callback_using_request()
+    {
+        $this->instance(NovaRequest::class, NovaRequest::create('/', 'GET', [
+            'allowSearching' => true,
+        ]));
+
+        $field = Select::make('Sizes')->searchable(function ($request) {
+            return $request->allowSearching;
+        })->options(collect(['L', 'S']));
+
+        $this->assertTrue(is_callable($field->searchable));
+        $this->assertSubset([
+            'searchable' => true,
         ], $field->jsonSerialize());
     }
 

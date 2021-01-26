@@ -151,19 +151,6 @@ abstract class DuskTestCase extends \Orchestra\Testbench\Dusk\TestCase
     }
 
     /**
-     * Setup Laravel for the test.
-     *
-     * @param  callable|null  $callback
-     * @return void
-     */
-    protected function setupLaravel(callable $callback = null)
-    {
-        if (is_callable($callback)) {
-            $callback($this->app);
-        }
-    }
-
-    /**
      * Run the given callback with searchable functionality enabled.
      *
      * @param  callable  $callback

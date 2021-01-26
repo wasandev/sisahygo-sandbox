@@ -24,9 +24,9 @@ class Branchrec_waybill extends Resource
     use HasDependencies;
     public static $group = '8.สำหรับสาขา';
     public static $priority = 1;
-    // public static $polling = true;
-    // public static $pollingInterval = 90;
-    // public static $showPollingToggle = true;
+    public static $polling = true;
+    public static $pollingInterval = 90;
+    public static $showPollingToggle = true;
     public static $globallySearchable = false;
     /**
      * The model the resource corresponds to.

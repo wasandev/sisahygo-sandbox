@@ -491,7 +491,7 @@
     "Employee status": "สถานะพนักงาน",
     "Charter routes": "เส้นทางขนส่งเหมาคัน",
     "Customer name": "ชื่อลูกค้า",
-    "Address name": "ที่อยู่รับ-ส่งสินค้า",
+    "Address name": "ชื่อ",
     "Assign user": "กำหนดผู้ใช้",
     "Created by": "สร้างโดย",
     "Created At": "สร้างเมื่อ",
@@ -553,8 +553,8 @@
     "From branch area" : "จากพื้นที่บริการของสาขา",
     "Customer code": "รหัสลูกค้า",
     "Employee code": "รหัสพนักงาน",
-    "Vendors": "ข้อมูลเจ้าหนี้/ผู้ร่วมบริการ",
-    "Vendor": "เจ้าหนี้/ผู้ร่วมบริการ",
+    "Vendors": "ข้อมูลเจ้าหนี้/เจ้าของรถ",
+    "Vendor": "เจ้าหนี้/เจ้าของรถ",
     "Owner code": "รหัสเจ้าของรถ",
     "Car Expenses": "ข้อมูลหมวดค่าใช้จ่ายรถ",
     "Car Expense": "หมวดค่าใช้จ่ายรถ",
@@ -628,7 +628,8 @@
     "Print Order": "พิมพ์ใบรับส่ง",
     "Print Waybill": "พิมพ์ใบกำกับ",
     "Print Delivery": "พิมพ์ใบจัดส่งสินค้า",
-    "Waybill Confirmed": "จำนวนรถออกต่อวัน(เที่ยว)"
+    "Waybill Confirmed": "จำนวนรถออกต่อวัน(เที่ยว)",
+    "Ar_balance": "บัญชีลูกหนี้การค้า"
 
 
 

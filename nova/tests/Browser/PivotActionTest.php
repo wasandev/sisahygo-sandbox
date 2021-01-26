@@ -16,8 +16,6 @@ class PivotActionTest extends DuskTestCase
      */
     public function pivot_tables_can_be_referred_to_using_a_custom_name()
     {
-        $this->setupLaravel();
-
         $user = User::find(1);
         $role = RoleFactory::new()->create();
         $user->roles()->attach($role);
@@ -27,7 +25,8 @@ class PivotActionTest extends DuskTestCase
                     ->visit(new Detail('users', 1))
                     ->pause(1500)
                     ->within(new IndexComponent('roles'), function ($browser) {
-                        $browser->clickCheckboxForId(1)
+                        $browser->waitForTable()
+                                ->clickCheckboxForId(1)
                                 ->openActionSelector()
                                 ->within('@action-select', function ($browser) {
                                     $label = $browser->attribute('optgroup.pivot-option-group', 'label');
@@ -42,8 +41,6 @@ class PivotActionTest extends DuskTestCase
      */
     public function actions_can_be_executed_against_pivot_rows()
     {
-        $this->setupLaravel();
-
         $user = User::find(1);
         $role = RoleFactory::new()->create();
         $user->roles()->attach($role);
@@ -53,7 +50,8 @@ class PivotActionTest extends DuskTestCase
                     ->visit(new Detail('users', 1))
                     ->pause(1500)
                     ->within(new IndexComponent('roles'), function ($browser) {
-                        $browser->clickCheckboxForId(1)
+                        $browser->waitForTable()
+                                ->clickCheckboxForId(1)
                                 ->runAction('update-pivot-notes');
                     });
 
