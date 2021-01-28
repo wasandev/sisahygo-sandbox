@@ -14,7 +14,7 @@ use Laravel\Nova\Fields\Trix;
 
 class Page extends Resource
 {
-
+    public static $displayInNavigation = false;
     public static $group = "1.งานสำหรับผู้ดูแลระบบ";
     public static $priority = 6;
     /**

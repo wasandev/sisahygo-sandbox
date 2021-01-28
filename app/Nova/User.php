@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Filters\Branch;
 
 class User extends Resource
 {
@@ -169,7 +170,9 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Branch
+        ];
     }
 
     /**
@@ -191,7 +194,12 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Actions\ImportUsers)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
+            (new Actions\SetUserBranch),
+        ];
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
