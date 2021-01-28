@@ -87,7 +87,7 @@ class Customer extends Resource
     {
         return [
             //ID::make()->sortable(),
-            Boolean::make(__('Status'), 'status'),
+            Boolean::make(__('Status'), 'status')->hideFromIndex(),
             Text::make(__('Customer code'), 'customer_code')
                 ->readonly()
                 ->hideFromIndex(),
@@ -161,8 +161,7 @@ class Customer extends Resource
             Text::make(__('Email'), 'email')
                 ->hideFromIndex(),
             Text::make(__('Phone'), 'phoneno')
-                ->rules('required')
-                ->hideFromIndex(),
+                ->rules('required'),
             Text::make(__('Website Url'), 'weburl')
                 ->hideFromIndex(),
             Text::make(__('Facebook'), 'facebook')
@@ -181,11 +180,12 @@ class Customer extends Resource
     {
         return [
 
-            Text::make(__('Address'), 'address')->hideFromIndex()
+            Text::make(__('Address'), 'address')
                 ->rules('required'),
             InputSubDistrict::make(__('Sub District'), 'sub_district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('district')
+                ->sortable()
                 ->rules('required'),
             InputDistrict::make(__('District'), 'district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
