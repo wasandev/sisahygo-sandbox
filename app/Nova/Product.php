@@ -89,7 +89,8 @@ class Product extends Resource
                 ->hideFromIndex(),
             BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
                 ->nullable()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->sortable(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
