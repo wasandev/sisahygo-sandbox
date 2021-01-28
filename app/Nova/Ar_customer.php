@@ -133,7 +133,7 @@ class Ar_customer extends Resource
             new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
             new Panel('ที่อยู่ในการออกเอกสาร', $this->addressFields()),
             new Panel('อื่นๆ', $this->otherFields()),
-            HasMany::make(__('Customer addresses'), 'addresses', 'App\Nova\Address'),
+            // HasMany::make(__('Customer addresses'), 'addresses', 'App\Nova\Address'),
             //BelongsToMany::make(__('Customer products'), 'product', 'App\Nova\Product'),
             //HasMany::make(__('Customer shipping cost'), 'customer_product_prices', 'App\Nova\Customer_product_price'),
             HasOne::make(__('Assign user'), 'assign_customer', 'App\Nova\User')
