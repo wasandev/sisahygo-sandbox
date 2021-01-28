@@ -10,9 +10,9 @@ class Ar_balance extends Model
     use HasFactory;
     protected $fillable = ['customer_id', 'order_header_id', 'receipt_id', 'description', 'ar_amount', 'user_id', 'updated_by'];
 
-    public function customer()
+    public function ar_customer()
     {
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Ar_customer', 'customer_id');
     }
 
     public function order_header()

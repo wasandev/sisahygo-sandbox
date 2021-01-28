@@ -84,7 +84,7 @@ class Ar_customer extends Model
 
     public function ar_balances()
     {
-        return $this->hasMany('App\Models\Ar_balance');
+        return $this->hasMany('App\Models\Ar_balance', 'customer_id');
     }
     /*
 	Provide the Location value to the Nova field
