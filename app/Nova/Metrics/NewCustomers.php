@@ -16,7 +16,8 @@ class NewCustomers extends Value
      */
     public function calculate(Request $request)
     {
-        return $this->count($request, Customer::class);
+        return $this->count($request, Customer::class)
+            ->format('0,0.00');
     }
 
     /**

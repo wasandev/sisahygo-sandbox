@@ -16,7 +16,8 @@ class CustomersPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->countByDays($request, Customer::class);
+        return $this->countByDays($request, Customer::class)
+            ->format('0,0.00');
     }
 
     /**
