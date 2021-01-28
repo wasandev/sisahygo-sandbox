@@ -161,7 +161,8 @@ class Customer extends Resource
             Text::make(__('Email'), 'email')
                 ->hideFromIndex(),
             Text::make(__('Phone'), 'phoneno')
-                ->rules('required'),
+                ->rules('required')
+                ->sortable(),
             Text::make(__('Website Url'), 'weburl')
                 ->hideFromIndex(),
             Text::make(__('Facebook'), 'facebook')
@@ -181,7 +182,8 @@ class Customer extends Resource
         return [
 
             Text::make(__('Address'), 'address')
-                ->rules('required'),
+                ->rules('required')
+                ->sortable(),
             InputSubDistrict::make(__('Sub District'), 'sub_district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('district')
