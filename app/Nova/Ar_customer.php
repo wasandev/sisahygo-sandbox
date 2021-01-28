@@ -136,10 +136,10 @@ class Ar_customer extends Resource
             // HasMany::make(__('Customer addresses'), 'addresses', 'App\Nova\Address'),
             //BelongsToMany::make(__('Customer products'), 'product', 'App\Nova\Product'),
             //HasMany::make(__('Customer shipping cost'), 'customer_product_prices', 'App\Nova\Customer_product_price'),
-            HasOne::make(__('Assign user'), 'assign_customer', 'App\Nova\User')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin';
-                }),
+            // HasOne::make(__('Assign user'), 'assign_customer', 'App\Nova\User')
+            //     ->canSee(function ($request) {
+            //         return $request->user()->role == 'admin';
+            //     }),
             //HasMany::make('รายการส่งสินค้า', 'order_sends', 'App\Nova\Order_header'),
             //HasMany::make('รายการรับสินค้า', 'order_recs', 'App\Nova\Order_header'),
             HasMany::make('รายการวางบิล', 'ar_balances', 'App\Nova\Ar_balance'),
