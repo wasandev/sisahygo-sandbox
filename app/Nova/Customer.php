@@ -162,7 +162,8 @@ class Customer extends Resource
                 ->hideFromIndex(),
             Text::make(__('Phone'), 'phoneno')
                 ->rules('required')
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex(),
             Text::make(__('Website Url'), 'weburl')
                 ->hideFromIndex(),
             Text::make(__('Facebook'), 'facebook')
@@ -183,7 +184,8 @@ class Customer extends Resource
 
             Text::make(__('Address'), 'address')
                 ->rules('required')
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex(),
             InputSubDistrict::make(__('Sub District'), 'sub_district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('district')
@@ -276,6 +278,7 @@ class Customer extends Resource
     {
         return [
             new Filters\BusinessType,
+            new Filters\District,
             new Filters\Province,
         ];
     }

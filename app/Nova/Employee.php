@@ -17,6 +17,7 @@ use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Wasandev\InputThaiAddress\InputPostalCode;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\DateTime;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
@@ -263,6 +264,9 @@ class Employee extends Resource
     public function actions(Request $request)
     {
         return [
+            (new Actions\SetEmployeeBranch),
+            (new Actions\SetEmployeeDepartment),
+
             (new Actions\ImportEmployees)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),

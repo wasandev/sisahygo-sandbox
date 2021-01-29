@@ -208,4 +208,14 @@ class User extends Resource
         }
         return $query;
     }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
 }
