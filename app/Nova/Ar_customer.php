@@ -110,8 +110,7 @@ class Ar_customer extends Resource
             ])
                 ->hideFromIndex()
                 ->withMeta(['value' => 'Y'])
-                ->displayUsingLabels()
-                ->readonly(),
+                ->displayUsingLabels(),
             Number::make(__('Credit term'), 'creditterm')
                 ->withMeta(['value' => 0])
                 ->hideFromIndex(),

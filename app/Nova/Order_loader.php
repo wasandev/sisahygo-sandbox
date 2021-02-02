@@ -170,10 +170,14 @@ class Order_loader extends Resource
     {
         return [
             (new Actions\OrderLoaded($request->resourceId))
-                //->onlyOnDetail()
+                ->onlyOnDetail()
                 ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
+                ->canSee(function ($request) {
+
+                    return true;
+                })
                 ->canRun(function ($request, $model) {
                     return true;
                 }),

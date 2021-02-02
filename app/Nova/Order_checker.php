@@ -121,7 +121,8 @@ class Order_checker extends Resource
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')

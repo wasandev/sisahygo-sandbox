@@ -114,5 +114,31 @@ class OrderHeaderObserver
                 ]);
             }
         }
+
+        if ($order_header->order_status == 'cancel') {
+            switch ($order_header->paymenttype) {
+                case 'H':
+                    //receipt
+                    $receipt_item = \App\Models\Receipt_item::where('order_header_id', $order_header->id)->delete();
+                    break;
+                case 'F':
+                    $ar_balance  = \App\Models\Ar_balance::where('order_header_id', $order_header->id)->delete();
+                    break;
+                case 'L':
+
+                    $ar_balance  = \App\Models\Ar_balance::where('order_header_id', $order_header->id)->delete();
+                    break;
+                case 'T':
+                    $banktransfer = \App\Models\Order_banktransfer::where('order_header_id', $order_header->id)->delete();
+                    break;
+                case 'E':
+                    $branch_balance_item = \App\Models\Branch_balance_item::where('order_header_id', $order_header->id)->delete();
+                    break;
+            }
+
+            if ($order_header->branchpay_by == 'T') {
+                $banktransfer_branch = \App\Models\Order_banktransfer::where('order_header_id', $order_header->id)->delete();
+            }
+        }
     }
 }
