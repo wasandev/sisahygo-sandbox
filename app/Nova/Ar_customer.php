@@ -31,7 +31,7 @@ class Ar_customer extends Resource
 {
     public static $group = '9.งานการเงิน/บัญชี';
     public static $priority = 3;
-
+    public static $preventFormAbandonment = true;
 
     /**
      * The model the resource corresponds to.

@@ -23,6 +23,8 @@ class Branch_area extends Resource
     //public static $displayInNavigation = false;
     public static $group = '5.งานจัดการการขนส่ง';
     public static $priority = 1;
+    public static $globallySearchable = false;
+    public static $preventFormAbandonment = true;
     /**
      * The model the resource corresponds to.
      *

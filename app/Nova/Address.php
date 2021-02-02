@@ -23,6 +23,8 @@ class Address extends Resource
      */
     public static $displayInNavigation = false;
     public static $model = 'App\Models\Address';
+    public static $globallySearchable = false;
+    public static $preventFormAbandonment = true;
 
 
     /**

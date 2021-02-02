@@ -18,6 +18,8 @@ class Ar_balance extends Resource
     public static $polling = true;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
+    public static $globallySearchable = false;
+    public static $preventFormAbandonment = true;
     /**
      * The model the resource corresponds to.
      *

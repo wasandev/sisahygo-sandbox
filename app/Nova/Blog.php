@@ -19,6 +19,8 @@ class Blog extends Resource
     public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 13;
+    public static $globallySearchable = false;
+    public static $preventFormAbandonment = true;
     /**
      * The model the resource corresponds to.
      *
