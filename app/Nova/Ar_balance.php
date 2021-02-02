@@ -41,7 +41,7 @@ class Ar_balance extends Resource
         'id',
     ];
     public static $searchRelations = [
-        'customer' => ['name'],
+        'ar_customer' => ['name'],
     ];
     public static function label()
     {
@@ -57,7 +57,7 @@ class Ar_balance extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('ชื่อลูกหนี้', 'customer', 'App\Nova\Ar_customer')
+            BelongsTo::make('ชื่อลูกหนี้', 'ar_customer', 'App\Nova\Ar_customer')
                 ->searchable()
                 ->sortable(),
             BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
