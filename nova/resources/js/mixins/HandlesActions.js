@@ -63,6 +63,13 @@ export default {
     },
 
     /**
+     * Close the action response modal.
+     */
+    closeActionResponseModal() {
+      this.showActionResponseModal = false
+    },
+
+    /**
      * Initialize all of the action fields to empty strings.
      */
     initializeActionFields() {
@@ -117,7 +124,10 @@ export default {
      * Handle the action response. Typically either a message, download or a redirect.
      */
     handleActionResponse(data) {
-      if (data.message) {
+      if (data.modal) {
+        this.actionResponseData = data
+        this.showActionResponseModal = true
+      } else if (data.message) {
         this.$emit('actionExecuted')
         Nova.$emit('action-executed')
         Nova.success(data.message)

@@ -63,7 +63,8 @@ class UpdateAttached extends Page
      */
     public function assert(Browser $browser)
     {
-        $browser->pause(500);
+        $browser->pause(500)
+                ->waitFor('#nova .content form', 25);
     }
 
     /**

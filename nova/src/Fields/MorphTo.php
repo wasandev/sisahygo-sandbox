@@ -182,10 +182,17 @@ class MorphTo extends Field implements RelatableField
         if ($value) {
             if (! is_string($this->resourceClass)) {
                 $this->morphToType = $value->getMorphClass();
-                $this->value = $value->getKey();
+                $this->value = (string) $value->getKey();
+
+                if ($this->value != $value->getKey()) {
+                    $this->morphToId = (string) $this->morphToId;
+                }
+
                 $this->viewable = false;
             } else {
                 $resource = new $this->resourceClass($value);
+
+                $this->morphToId = optional(ID::forResource($resource))->value ?? $this->morphToId;
 
                 $this->value = $this->formatDisplayValue(
                     $value, Nova::resourceForModel($value)
@@ -407,7 +414,7 @@ class MorphTo extends Field implements RelatableField
             return call_user_func($display, $resource);
         }
 
-        return $resource->title();
+        return (string) $resource->title();
     }
 
     /**

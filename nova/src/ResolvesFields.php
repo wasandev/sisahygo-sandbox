@@ -8,6 +8,7 @@ use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Contracts\Cover;
 use Laravel\Nova\Contracts\Deletable;
 use Laravel\Nova\Contracts\ListableField;
+use Laravel\Nova\Contracts\RelatableField;
 use Laravel\Nova\Contracts\Resolvable;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Downloadable;
@@ -144,6 +145,31 @@ trait ResolvesFields
                     $field->resolveForDisplay($this->resource);
                 }
             });
+    }
+
+    /**
+     * Determine resource has relatable field by attribute.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  string  $attribute
+     * @return bool
+     */
+    public function hasRelatableField(NovaRequest $request, $attribute)
+    {
+        $methods = collect(['fieldsForIndex', 'fieldsForDetail'])
+            ->filter(function ($method) {
+                return method_exists($this, $method);
+            })->all();
+
+        return $this->buildAvailableFields($request, $methods)
+            ->when($request->viaRelationship(), $this->fieldResolverCallback($request))
+            ->whereInstanceOf(RelatableField::class)
+            ->when($this->shouldAddActionsField($request), function ($fields) {
+                return $fields->push($this->actionfield());
+            })
+            ->first(function ($field) use ($attribute) {
+                return $field->attribute === $attribute;
+            }) !== null;
     }
 
     /**
@@ -534,7 +560,7 @@ trait ResolvesFields
      * @param  array  $methods
      * @return \Laravel\Nova\Fields\FieldCollection
      */
-    protected function buildAvailableFields(NovaRequest $request, array $methods)
+    public function buildAvailableFields(NovaRequest $request, array $methods)
     {
         $fields = collect([
             method_exists($this, 'fields') ? $this->fields($request) : [],

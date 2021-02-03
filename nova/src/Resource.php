@@ -109,9 +109,9 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
     /**
      * The number of results to display when searching relatable resource without Scout.
      *
-     * @var int
+     * @var int|null
      */
-    public static $relatableSearchResults = 200;
+    public static $relatableSearchResults = null;
 
     /**
      * The number of results to display when searching the resource using Scout.
@@ -353,7 +353,7 @@ abstract class Resource implements ArrayAccess, JsonSerializable, UrlRoutable
      */
     public function title()
     {
-        return $this->{static::$title};
+        return (string) $this->{static::$title};
     }
 
     /**

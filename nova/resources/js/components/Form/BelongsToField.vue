@@ -290,6 +290,7 @@ export default {
     handleSetResource({ id }) {
       this.closeRelationModal()
       this.selectedResourceId = id
+      this.initializingWithExistingResource = true
       this.getAvailableResources().then(() => this.selectInitialResource())
     },
   },

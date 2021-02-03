@@ -389,18 +389,18 @@ export default {
     )
   },
 
-  beforeRouteUpdate(to, from, next) {
-    next()
-
-    if (
-      to.params.resourceName === from.params.resourceName &&
-      to.params.lens === from.params.lens
-    ) {
-      this.initializeState(this.lens)
-    } else {
-      this.initializeFilters(this.lens)
-      this.getActions()
-    }
+  watch: {
+    $route(to, from) {
+      if (
+        to.params.resourceName === from.params.resourceName &&
+        to.params.lens === from.params.lens
+      ) {
+        this.initializeState(this.lens)
+      } else {
+        this.initializeFilters(this.lens)
+        this.getActions()
+      }
+    },
   },
 
   methods: {

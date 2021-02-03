@@ -21,10 +21,15 @@ class AttachedResourceUpdateController extends Controller
      */
     public function handle(NovaRequest $request)
     {
-        $this->validate(
-            $request, $model = $request->findModelOrFail(),
-            $resource = $request->resource()
-        );
+        $resource = $request->resource();
+
+        $model = $request->findModelOrFail();
+
+        tap(new $resource($model), function ($resource) use ($request) {
+            abort_unless($resource->hasRelatableField($request, $request->viaRelationship), 404);
+        });
+
+        $this->validate($request, $model, $resource);
 
         return DB::transaction(function () use ($request, $resource, $model) {
             $model->setRelation(

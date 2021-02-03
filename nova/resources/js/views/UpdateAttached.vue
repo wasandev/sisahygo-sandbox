@@ -23,6 +23,25 @@
     >
       <card class="overflow-hidden mb-8">
         <!-- Related Resource -->
+        <div
+          v-if="viaResourceField"
+          dusk="via-resource-field"
+          class="flex border-b border-40"
+        >
+          <div class="w-1/5 px-8 py-6">
+            <label
+              :for="viaResourceField.name"
+              class="inline-block text-80 pt-2 leading-tight"
+            >
+              {{ viaResourceField.name }}
+            </label>
+          </div>
+          <div class="py-6 px-8 w-1/2">
+            <span class="inline-block font-bold text-80 pt-2">
+              {{ viaResourceField.display }}
+            </span>
+          </div>
+        </div>
         <default-field
           :field="field"
           :errors="validationErrors"
@@ -153,6 +172,7 @@ export default {
     loading: true,
     submittedViaUpdateAndContinueEditing: false,
     submittedViaUpdateAttachedResource: false,
+    viaResourceField: null,
     field: null,
     softDeletes: false,
     fields: [],
@@ -276,6 +296,7 @@ export default {
           }
         )
 
+        this.viaResourceField = response.data.viaResource
         this.availableResources = response.data.resources
         this.withTrashed = response.data.withTrashed
         this.softDeletes = response.data.softDeletes

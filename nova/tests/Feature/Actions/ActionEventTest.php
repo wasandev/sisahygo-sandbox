@@ -9,6 +9,60 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class ActionEventTest extends IntegrationTest
 {
+    public function test_it_can_record_changes()
+    {
+        $requestUser = factory(User::class)->create();
+
+        $model = factory(User::class)->create([
+            'name' => 'Taylor Otwell',
+            'email' => 'taylor@laravel.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        User::saving(function ($model) use ($requestUser) {
+            Nova::actionEvent()->forResourceUpdate($requestUser, $model)->save();
+        });
+
+        $model->fresh();
+        $model->name = 'Taylor Otwell Updated';
+        $model->save();
+
+        $actionEvent = ActionEvent::query()->first();
+
+        $this->assertSame(['name' => 'Taylor Otwell'], $actionEvent->original);
+        $this->assertSame(['name' => 'Taylor Otwell Updated'], $actionEvent->changes);
+    }
+
+    public function test_it_can_record_changes_on_array_field()
+    {
+        $requestUser = factory(User::class)->create();
+
+        $model = factory(User::class)->create([
+            'name' => 'Taylor Otwell',
+            'email' => 'taylor@laravel.com',
+            'password' => bcrypt('password'),
+            'meta' => ['notification' => ['email' => true, 'text' => false]],
+        ]);
+
+        User::saving(function ($model) use ($requestUser) {
+            Nova::actionEvent()->forResourceUpdate($requestUser, $model)->save();
+        });
+
+        $model->fresh();
+        $model->meta = [
+            'notification' => [
+                'email' => false,
+                'text' => true,
+            ],
+        ];
+        $model->save();
+
+        $actionEvent = ActionEvent::query()->first();
+
+        $this->assertSame(['meta' => '{"notification":{"email":true,"text":false}}'], $actionEvent->original);
+        $this->assertSame(['meta' => '{"notification":{"email":false,"text":true}}'], $actionEvent->changes);
+    }
+
     public function test_it_can_soft_delete_a_model_without_losing_action_event_history()
     {
         $requestUser = factory(User::class)->create();

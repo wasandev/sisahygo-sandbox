@@ -4,6 +4,7 @@ namespace Laravel\Nova\Actions;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use JsonSerializable;
 use Laravel\Nova\AuthorizedToSee;
@@ -236,6 +237,18 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Return an action modal response from the action.
+     *
+     * @param  string  $modal
+     * @param  array  $data
+     * @return array
+     */
+    public static function modal($modal, $data)
+    {
+        return array_merge(['modal' => $modal], $data);
+    }
+
+    /**
      * Execute the action for the given request.
      *
      * @param  \Laravel\Nova\Http\Requests\ActionRequest  $request
@@ -299,6 +312,18 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    protected function afterValidation(NovaRequest $request, $validator)
+    {
+        //
+    }
+
+    /**
      * Mark the action event record for the model as finished.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
@@ -329,6 +354,32 @@ class Action implements JsonSerializable
     public function fields()
     {
         return [];
+    }
+
+    /**
+     * Validate the given request.
+     *
+     * @param  \Laravel\Nova\Http\Requests\ActionRequest  $request
+     * @return void
+     */
+    public function validateFields(ActionRequest $request)
+    {
+        $fields = collect($this->fields());
+
+        return Validator::make(
+            $request->all(),
+            $fields->mapWithKeys(function ($field) use ($request) {
+                return $field->getCreationRules($request);
+            })->all(),
+            [],
+            $fields->reject(function ($field) {
+                return empty($field->name);
+            })->mapWithKeys(function ($field) {
+                return [$field->attribute => $field->name];
+            })->all()
+        )->after(function ($validator) use ($request) {
+            $this->afterValidation($request, $validator);
+        })->validate();
     }
 
     /**

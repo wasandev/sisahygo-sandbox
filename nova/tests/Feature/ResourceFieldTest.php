@@ -257,4 +257,19 @@ class ResourceFieldTest extends IntegrationTest
             $this->assertStringContainsString('Custom Name', $e->validator->errors()->first(), 'Attribute name not found');
         }
     }
+
+    public function test_resource_can_verify_relatable_field()
+    {
+        $user = factory(User::class)->create();
+        $resource = new UserResource($user);
+        $request = NovaRequest::create('/');
+
+        $this->assertTrue($resource->hasRelatableField($request, 'roles'));
+        $this->assertTrue($resource->hasRelatableField($request, 'posts'));
+        $this->assertTrue($resource->hasRelatableField($request, 'actions'));
+        $this->assertFalse($resource->hasRelatableField($request, 'delete'));
+        $this->assertFalse($resource->hasRelatableField($request, 'forceDelete'));
+        $this->assertFalse($resource->hasRelatableField($request, 'restore'));
+        $this->assertFalse($resource->hasRelatableField($request, 'get'));
+    }
 }

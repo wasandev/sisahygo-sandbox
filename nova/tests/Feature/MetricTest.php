@@ -144,20 +144,32 @@ class MetricTest extends IntegrationTest
         factory(User::class, 7)->create(['created_at' => $nowCentral]);
 
         $request = NovaRequest::create('/?range=2', 'GET', ['timezone' => 'America/Chicago']);
-        $this->assertEquals([0, 9], array_values($metric->countByMonths($request, User::class)->trend));
+        $this->assertEquals([
+            'October 2019' => 0,
+            'November 2019' => 9,
+        ], $metric->countByMonths($request, User::class)->trend);
 
         $request = NovaRequest::create('/?range=2', 'GET', ['timezone' => 'America/Los_Angeles']);
-        $this->assertEquals([2, 7], array_values($metric->countByMonths($request, User::class)->trend));
+        $this->assertEquals([
+            'October 2019' => 2,
+            'November 2019' => 7,
+        ], $metric->countByMonths($request, User::class)->trend);
 
         Chronos::setTestNow(Chronos::parse('Nov 2 2019 8 AM', 'Japan'));
 
         $request = NovaRequest::create('/?range=2', 'GET', ['timezone' => 'Japan']);
-        $this->assertEquals([0, 2], array_values($metric->countByDays($request, User::class)->trend));
+        $this->assertEquals([
+            'October 31, 2019' => 0,
+            'November 1, 2019' => 2,
+        ], $metric->countByDays($request, User::class)->trend);
 
         Chronos::setTestNow(Chronos::parse('Nov 2 2019 9 AM', 'Japan'));
 
         $request = NovaRequest::create('/?range=2', 'GET', ['timezone' => 'Japan']);
-        $this->assertEquals([2, 7], array_values($metric->countByDays($request, User::class)->trend));
+        $this->assertEquals([
+            'November 1, 2019' => 2,
+            'November 2, 2019' => 7,
+        ], $metric->countByDays($request, User::class)->trend);
 
         Chronos::setTestNow(null);
     }
@@ -358,5 +370,260 @@ class MetricTest extends IntegrationTest
             'select max(json_extract(meta, "$.value")) as aggregate from "users" where "users"."created_at" between ? and ? and "users"."deleted_at" is null',
             DB::getQueryLog()[0]['query']
         );
+    }
+
+    /**
+     * @dataProvider userTimezoneForTodayRangesDataProvider
+     */
+    public function test_value_metric_display_today_range_values_for_user_timezone(
+        $userTimezone,
+        $previousStarting,
+        $previousEnding,
+        $currentStarting,
+        $previousValue,
+        $currentValue
+    ) {
+        Carbon::setTestNow(Carbon::parse('2021-01-31 20:00:00'));
+
+        factory(User::class)->create(['created_at' => '2021-01-30 19:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-30 20:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-30 21:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-30 22:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-30 23:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 00:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 01:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 02:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 03:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 04:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 05:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 06:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 07:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 08:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 09:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 10:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 11:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 12:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 13:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 14:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 15:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 16:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 17:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 18:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 19:00:00']);
+        factory(User::class)->create(['created_at' => '2021-01-31 20:00:00']);
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Value {
+            public function calculate(NovaRequest $request)
+            {
+                return $this->count($request, User::class);
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', ['range' => 'TODAY', 'timezone' => $userTimezone]);
+
+        $valueResult = $metric->calculate($request);
+
+        $this->assertSame(
+            'select count("users"."id") as aggregate from "users" where "users"."created_at" between ? and ? and "users"."deleted_at" is null',
+            DB::getQueryLog()[0]['query']
+        );
+
+        $this->assertSame($previousStarting, DB::getQueryLog()[0]['bindings'][0]->toDatetimeString());
+        $this->assertSame($previousEnding, DB::getQueryLog()[0]['bindings'][1]->toDatetimeString());
+
+        $this->assertSame(
+            'select count("users"."id") as aggregate from "users" where "users"."created_at" between ? and ? and "users"."deleted_at" is null',
+            DB::getQueryLog()[1]['query']
+        );
+
+        $this->assertSame($currentStarting, DB::getQueryLog()[1]['bindings'][0]->toDatetimeString());
+        $this->assertSame('2021-01-31 20:00:00', DB::getQueryLog()[1]['bindings'][1]->toDatetimeString());
+
+        $this->assertSame($currentValue, $valueResult->value);
+        $this->assertSame($previousValue, $valueResult->previous);
+
+        Carbon::setTestNow(null);
+    }
+
+    /**
+     * @dataProvider userTimezoneForMTDRangesDataProvider
+     */
+    public function test_value_metric_display_mtd_range_values_for_user_timezone(
+        $userTimezone,
+        $previousStarting,
+        $previousEnding,
+        $currentStarting
+    ) {
+        Carbon::setTestNow(Carbon::parse('2021-01-31 20:00:00'));
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Value {
+            public function calculate(NovaRequest $request)
+            {
+                return $this->count($request, User::class);
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', ['range' => 'MTD', 'timezone' => $userTimezone]);
+
+        $valueResult = $metric->calculate($request);
+
+        $this->assertSame($previousStarting, DB::getQueryLog()[0]['bindings'][0]->toDatetimeString());
+        $this->assertSame($previousEnding, DB::getQueryLog()[0]['bindings'][1]->toDatetimeString());
+
+        $this->assertSame($currentStarting, DB::getQueryLog()[1]['bindings'][0]->toDatetimeString());
+        $this->assertSame('2021-01-31 20:00:00', DB::getQueryLog()[1]['bindings'][1]->toDatetimeString());
+
+        Carbon::setTestNow(null);
+    }
+
+    /**
+     * @dataProvider userTimezoneForQTDRangesDataProvider
+     */
+    public function test_value_metric_display_qtd_range_values_for_user_timezone(
+        $userTimezone,
+        $previousStarting,
+        $previousEnding,
+        $currentStarting
+    ) {
+        Carbon::setTestNow(Carbon::parse('2021-01-31 20:00:00'));
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Value {
+            public function calculate(NovaRequest $request)
+            {
+                return $this->count($request, User::class);
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', ['range' => 'QTD', 'timezone' => $userTimezone]);
+
+        $valueResult = $metric->calculate($request);
+
+        $this->assertSame($previousStarting, DB::getQueryLog()[0]['bindings'][0]->toDatetimeString());
+        $this->assertSame($previousEnding, DB::getQueryLog()[0]['bindings'][1]->toDatetimeString());
+
+        $this->assertSame($currentStarting, DB::getQueryLog()[1]['bindings'][0]->toDatetimeString());
+        $this->assertSame('2021-01-31 20:00:00', DB::getQueryLog()[1]['bindings'][1]->toDatetimeString());
+
+        Carbon::setTestNow(null);
+    }
+
+    /**
+     * @dataProvider userTimezoneForYTDRangesDataProvider
+     */
+    public function test_value_metric_display_ytd_range_values_for_user_timezone(
+        $userTimezone,
+        $previousStarting,
+        $previousEnding,
+        $currentStarting
+    ) {
+        Carbon::setTestNow(Carbon::parse('2021-01-31 20:00:00'));
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Value {
+            public function calculate(NovaRequest $request)
+            {
+                return $this->count($request, User::class);
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', ['range' => 'YTD', 'timezone' => $userTimezone]);
+
+        $valueResult = $metric->calculate($request);
+
+        $this->assertSame($previousStarting, DB::getQueryLog()[0]['bindings'][0]->toDatetimeString());
+        $this->assertSame($previousEnding, DB::getQueryLog()[0]['bindings'][1]->toDatetimeString());
+
+        $this->assertSame($currentStarting, DB::getQueryLog()[1]['bindings'][0]->toDatetimeString());
+        $this->assertSame('2021-01-31 20:00:00', DB::getQueryLog()[1]['bindings'][1]->toDatetimeString());
+
+        Carbon::setTestNow(null);
+    }
+
+    /**
+     * @dataProvider userTimezoneDataProvider
+     */
+    public function test_value_metric_display_5_days_range_values_for_user_timezone($userTimezone)
+    {
+        Carbon::setTestNow(Carbon::parse('2021-01-31 20:00:00'));
+
+        DB::enableQueryLog();
+        DB::flushQueryLog();
+
+        $metric = new class extends Value {
+            public function calculate(NovaRequest $request)
+            {
+                return $this->count($request, User::class);
+            }
+        };
+
+        $request = NovaRequest::create('/', 'GET', ['range' => '5', 'timezone' => $userTimezone]);
+
+        $valueResult = $metric->calculate($request);
+
+        $this->assertSame('2021-01-21 20:00:00', DB::getQueryLog()[0]['bindings'][0]->toDatetimeString());
+        $this->assertSame('2021-01-26 19:59:59', DB::getQueryLog()[0]['bindings'][1]->toDatetimeString());
+
+        $this->assertSame('2021-01-26 20:00:00', DB::getQueryLog()[1]['bindings'][0]->toDatetimeString());
+        $this->assertSame('2021-01-31 20:00:00', DB::getQueryLog()[1]['bindings'][1]->toDatetimeString());
+
+        Carbon::setTestNow(null);
+    }
+
+    public function userTimezoneForTodayRangesDataProvider()
+    {
+        // [$timezone, $previousStarting, $previousEnding, $currentStarting, $previousValue, $currentValue]
+
+        yield ['UTC', '2021-01-30 00:00:00', '2021-01-30 23:59:59', '2021-01-31 00:00:00', 5.0, 21.0];
+        yield ['America/Los_Angeles', '2021-01-30 08:00:00', '2021-01-31 07:59:59', '2021-01-31 08:00:00', 13.0, 13.0];
+        yield ['Africa/Johannesburg', '2021-01-29 22:00:00', '2021-01-30 21:59:59', '2021-01-30 22:00:00', 3.0, 23.0];
+        yield ['Asia/Kuala_Lumpur', '2021-01-30 16:00:00', '2021-01-31 15:59:59', '2021-01-31 16:00:00', 21.0, 5.0];
+    }
+
+    public function userTimezoneForMTDRangesDataProvider()
+    {
+        // [$timezone, $previousStarting, $previousEnding, $currentStarting]
+
+        yield ['UTC', '2020-12-01 00:00:00', '2020-12-31 23:59:59', '2021-01-01 00:00:00'];
+        yield ['America/Los_Angeles', '2020-12-01 08:00:00', '2021-01-01 07:59:59', '2021-01-01 08:00:00'];
+        yield ['Africa/Johannesburg', '2020-11-30 22:00:00', '2020-12-31 21:59:59', '2020-12-31 22:00:00'];
+        yield ['Asia/Kuala_Lumpur', '2020-12-31 16:00:00', '2021-01-31 15:59:59', '2021-01-31 16:00:00'];
+    }
+
+    public function userTimezoneForQTDRangesDataProvider()
+    {
+        // [$timezone, $previousStarting, $previousEnding, $currentStarting]
+
+        yield ['UTC', '2020-10-01 00:00:00', '2020-12-31 23:59:59', '2021-01-01 00:00:00'];
+        yield ['America/Los_Angeles', '2020-09-30 07:00:00', '2020-12-31 07:59:59', '2020-12-31 08:00:00'];
+        yield ['Africa/Johannesburg', '2020-09-30 22:00:00', '2020-12-31 21:59:59', '2020-12-31 22:00:00'];
+        yield ['Asia/Kuala_Lumpur', '2020-09-30 16:00:00', '2020-12-31 15:59:59', '2020-12-31 16:00:00'];
+    }
+
+    public function userTimezoneForYTDRangesDataProvider()
+    {
+        // [$timezone, $previousStarting, $previousEnding, $currentStarting]
+
+        yield ['UTC', '2020-01-01 00:00:00', '2020-12-31 23:59:59', '2021-01-01 00:00:00'];
+        yield ['America/Los_Angeles', '2020-01-01 08:00:00', '2021-01-01 07:59:59', '2021-01-01 08:00:00'];
+        yield ['Africa/Johannesburg', '2019-12-31 22:00:00', '2020-12-31 21:59:59', '2020-12-31 22:00:00'];
+        yield ['Asia/Kuala_Lumpur', '2019-12-31 16:00:00', '2020-12-31 15:59:59', '2020-12-31 16:00:00'];
+    }
+
+    public function userTimezoneDataProvider()
+    {
+        yield ['America/Los_Angeles'];
+        yield ['Africa/Johannesburg'];
+        yield ['Asia/Kuala_Lumpur'];
     }
 }

@@ -159,9 +159,9 @@ class BelongsTo extends Field implements RelatableField
         }
 
         if ($value) {
-            $this->belongsToId = $value->getKey();
-
             $resource = new $this->resourceClass($value);
+
+            $this->belongsToId = optional(ID::forResource($resource))->value ?? $value->getKey();
 
             $this->value = $this->formatDisplayValue($resource);
 

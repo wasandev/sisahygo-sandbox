@@ -338,16 +338,13 @@
 import {
   Capitalize,
   Deletable,
-  Errors,
   Filterable,
   HasCards,
-  Inflector,
   InteractsWithQueryString,
   InteractsWithResourceInformation,
   Minimum,
   Paginatable,
   PerPageable,
-  SingularOrPlural,
   mapProps,
 } from 'laravel-nova'
 import HasActions from '@/mixins/HasActions'
@@ -500,12 +497,6 @@ export default {
     }
   },
 
-  beforeRouteUpdate(to, from, next) {
-    next()
-    this.initializeSearchFromQueryString()
-    this.initializeState(false)
-  },
-
   /**
    * Unbind the keydown even listener when the component is destroyed
    */
@@ -515,6 +506,13 @@ export default {
     }
 
     document.removeEventListener('keydown', this.handleKeydown)
+  },
+
+  watch: {
+    $route(to, from) {
+      this.initializeSearchFromQueryString()
+      this.initializeState(false)
+    },
   },
 
   methods: {

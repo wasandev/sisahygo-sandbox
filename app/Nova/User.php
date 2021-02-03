@@ -148,6 +148,14 @@ class User extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            DateTime::make('Login ล่าสุด', 'logged_in_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            DateTime::make('Log out ล่าสุด', 'logged_out_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            Text::make('IP Address', 'ip_address')
+                ->onlyOnDetail(),
         ];
     }
 

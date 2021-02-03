@@ -124,19 +124,15 @@ export default {
     this.updateLastRetrievedAtTimestamp()
   },
 
-  beforeRouteUpdate(to, from, next) {
-    next()
-
-    if (
-      this.resourceName === to.params.resourceName &&
-      this.resourceId !== to.params.resourceId
-    ) {
-      this.resourceId = to.params.resourceId
-      this.viaResource = to.query.viaResource || null
-      this.viaResourceId = to.query.viaResourceId || null
-      this.viaRelationship = to.query.viaRelationship || null
-      this.getFields()
-    }
+  watch: {
+    $route(to, from) {
+      if (
+        from.params.resourceName === to.params.resourceName &&
+        from.params.resourceId !== to.params.resourceId
+      ) {
+        this.getFields()
+      }
+    },
   },
 
   methods: {

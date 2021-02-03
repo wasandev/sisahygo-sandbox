@@ -51,6 +51,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'logged_in_at' => 'datetime',
+        'logged_out_at' => 'datetime'
     ];
     public function branch()
     {

@@ -80,8 +80,10 @@ class GlobalSearch
         return [
             'resourceName' => $resourceClass::uriKey(),
             'resourceTitle' => $resourceClass::label(),
-            'title' => $resource->title(),
-            'subTitle' => $resource->subtitle(),
+            'title' => (string) $resource->title(),
+            'subTitle' => transform($resource->subtitle(), function ($subtitle) {
+                return (string) $subtitle;
+            }),
             'resourceId' => $model->getKey(),
             'url' => url(Nova::path().'/resources/'.$resourceClass::uriKey().'/'.$model->getKey()),
             'avatar' => $resource->resolveAvatarUrl($this->request),

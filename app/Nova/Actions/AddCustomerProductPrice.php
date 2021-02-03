@@ -18,14 +18,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
-use Illuminate\Database\Eloquent\Builder;
-use Epartment\NovaDependencyContainer\HasDependencies;
-use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+// use Illuminate\Database\Eloquent\Builder;
+// use Epartment\NovaDependencyContainer\HasDependencies;
+// use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 
 
 class AddCustomerProductPrice extends Action
 {
-    use InteractsWithQueue, Queueable, SerializesModels, HasDependencies;
+    use InteractsWithQueue, Queueable, SerializesModels;
     //public $onlyOnIndex = true;
 
     public function uriKey()
