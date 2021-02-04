@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\CustomerByType;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasOne;
@@ -25,6 +26,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\CustomersByDistrict;
 use Illuminate\Support\Str;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Customer extends Resource
@@ -118,7 +120,6 @@ class Customer extends Resource
                 ->withMeta(['value' => 0])
                 ->hideFromIndex(),
             BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
-                ->hideFromIndex()
                 ->showCreateRelationButton(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
@@ -263,8 +264,9 @@ class Customer extends Resource
     public function cards(Request $request)
     {
         return [
-            (new CustomersByProvince())->width('1/2'),
-            (new CustomersByDistrict())->width('1/2'),
+            (new CustomersByProvince()),
+            (new CustomersByDistrict()),
+            (new CustomerByType()),
         ];
     }
 
@@ -307,10 +309,11 @@ class Customer extends Resource
     {
 
         return [
-            (new Actions\AddCustomerProductPrice)
-                ->canSee(function ($request) {
-                    return ($request->user()->hasPermissionTo('create productservice_prices'));
-                }),
+            // (new Actions\AddCustomerProductPrice)
+            //     ->canSee(function ($request) {
+            //         return ($request->user()->hasPermissionTo('create productservice_prices'));
+            //     }),
+            (new Actions\SetCustomerType),
             (new DownloadExcel)->allFields()->withHeadings(),
             (new Actions\ImportCustomers)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
