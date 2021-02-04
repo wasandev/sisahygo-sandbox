@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use App\Nova\Filters\OwnerType;
+use App\Nova\Metrics\CarByType;
+use App\Nova\Metrics\CarOwnerType;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -211,7 +213,12 @@ class Car extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new CarByType())
+                ->width('1/2'),
+            (new CarOwnerType())
+                ->width('1/2'),
+        ];
     }
 
     /**

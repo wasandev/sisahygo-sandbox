@@ -2,6 +2,9 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\EmployeeByBranch;
+use App\Nova\Metrics\EmployeeByDept;
+use App\Nova\Metrics\EmployeeByType;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -230,7 +233,12 @@ class Employee extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new EmployeeByBranch()),
+            (new EmployeeByDept()),
+            (new EmployeeByType())
+
+        ];
     }
 
     /**
