@@ -20,18 +20,10 @@ class OrdersByPaymentType extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->sum($request, Order_header::class, 'order_amount', 'paymenttype');
+        return $this->sum($request, Order_header::whereNotIn('order_status', ['checking', 'new', 'cancel']), 'order_amount', 'paymenttype');
     }
 
-    /**
-     * Determine for how many minutes the metric should be cached.
-     *
-     * @return  \DateTimeInterface|\DateInterval|float|int
-     */
-    public function cacheFor()
-    {
-        //return now()->addMinutes(5);
-    }
+
 
     /**
      * Get the URI key for the metric.

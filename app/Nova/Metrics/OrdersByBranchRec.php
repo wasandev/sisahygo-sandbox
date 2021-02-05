@@ -21,7 +21,7 @@ class OrdersByBranchRec extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->sum($request, Order_header::class, 'order_amount', 'branch_rec_id')
+        return $this->sum($request, Order_header::whereNotIn('order_status', ['checking', 'new', 'cancel']), 'order_amount', 'branch_rec_id')
             ->label(function ($value) {
                 $branchrec = Branch::find($value);
                 switch ($branchrec->name) {
