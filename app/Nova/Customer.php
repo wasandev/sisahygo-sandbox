@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\CustomerByPaymentType;
+use App\Nova\Metrics\CustomerByPtype;
 use App\Nova\Metrics\CustomerByType;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -25,6 +27,7 @@ use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\CustomersByDistrict;
+use App\Nova\Metrics\CustomersPerDay;
 use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -120,7 +123,8 @@ class Customer extends Resource
                 ->withMeta(['value' => 0])
                 ->hideFromIndex(),
             BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->sortable(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -267,6 +271,9 @@ class Customer extends Resource
             (new CustomersByProvince()),
             (new CustomersByDistrict()),
             (new CustomerByType()),
+            (new CustomerByPtype()),
+            (new CustomerByPaymentType()),
+            (new CustomersPerDay())
         ];
     }
 
@@ -280,6 +287,8 @@ class Customer extends Resource
     {
         return [
             new Filters\BusinessType,
+            new Filters\CustomerType,
+            new Filters\CustomerPaymentType,
             new Filters\District,
             new Filters\Province,
         ];
@@ -314,6 +323,8 @@ class Customer extends Resource
             //         return ($request->user()->hasPermissionTo('create productservice_prices'));
             //     }),
             (new Actions\SetCustomerType),
+            (new Actions\SetCustomerPtype),
+            (new Actions\SetCustomerPaymentType),
             (new DownloadExcel)->allFields()->withHeadings(),
             (new Actions\ImportCustomers)->canSee(function ($request) {
                 return $request->user()->role == 'admin';

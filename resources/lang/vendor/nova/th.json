@@ -431,7 +431,7 @@
     "Set Customer Product Price Active": "กำหนดใช้งาน/ไม่ใช้งาน",
     "Print Quotation": "พิมพ์ใบเสนอราคา(PDF)",
     "Print Charter Job": "พิมพ์ใบรับส่งขนส่งเหมาคัน(PDF)",
-    "Customers Per Day": "จำนวนลูกค้า/วัน",
+    "Customers Per Day": "จำนวนลูกค้าใหม่/วัน",
     "Charter Jobs Per Day": "ใบรับส่งเหมาคันตามวัน",
     "Charter Jobs Active": "ยืนยันใบรับงาน",
     "Charter Job Cancel": "ยกเลิกใบรับงาน",
