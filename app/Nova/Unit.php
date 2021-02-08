@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\ProductByUnit;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -79,7 +80,9 @@ class Unit extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new ProductByUnit())->width('full'),
+        ];
     }
 
     /**
