@@ -37,7 +37,7 @@ class Province extends Filter
      */
     public function options(Request $request)
     {
-        $provinces = \App\Models\Province::all();
+        $provinces = \App\Models\Province::has('branch_area');
         return $provinces->pluck('name', 'name')->all();
     }
 }

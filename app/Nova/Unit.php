@@ -9,6 +9,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Unit extends Resource
@@ -59,6 +60,7 @@ class Unit extends Resource
         return [
             ID::make()->hideFromIndex(),
             Text::make(__('Name'), 'name')->sortable(),
+
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')

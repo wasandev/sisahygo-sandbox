@@ -128,7 +128,7 @@ class Productservice_price extends Resource
         return [
             new Filters\Product,
             new Filters\FromBranch,
-            new Filters\ToProvince,
+            new Filters\Province,
             new Filters\ToDistrict,
             new Filters\Unit,
 
