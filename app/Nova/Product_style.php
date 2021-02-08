@@ -3,10 +3,12 @@
 namespace App\Nova;
 
 use App\Nova\Actions\AddProductServicePriceStyle;
+use App\Nova\Metrics\ProductByStyle;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
@@ -66,6 +68,9 @@ class Product_style extends Resource
         return [
             ID::make()->hideFromIndex(),
             Text::make(__('Name'), 'name')->sortable(),
+            Number::make('จำนวนสินค้าในประเภท', 'product_count', function () {
+                return count($this->products);
+            }),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -89,7 +94,9 @@ class Product_style extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new ProductByStyle())
+        ];
     }
 
     /**

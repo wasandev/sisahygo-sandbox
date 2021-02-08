@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\ProductByCategory;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -9,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Category extends Resource
@@ -66,6 +68,9 @@ class Category extends Resource
         return [
             ID::make()->hideFromIndex(),
             Text::make(__('Name'), 'name')->sortable(),
+            Number::make('จำนวนสินค้าในกลุ่ม', 'product_count', function () {
+                return count($this->products);
+            }),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -89,7 +94,9 @@ class Category extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new ProductByCategory()),
+        ];
     }
 
     /**

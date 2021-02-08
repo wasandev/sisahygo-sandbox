@@ -22,7 +22,7 @@ use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 class AddProductServicePriceStyle extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-    public $showOnTableRow = true;
+    //public $showOnTableRow = true;
 
     public function uriKey()
     {
