@@ -95,7 +95,7 @@ class Product_style extends Resource
     public function cards(Request $request)
     {
         return [
-            (new ProductByStyle())
+            (new ProductByStyle())->width('full')
         ];
     }
 

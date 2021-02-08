@@ -95,7 +95,7 @@ class Category extends Resource
     public function cards(Request $request)
     {
         return [
-            (new ProductByCategory()),
+            (new ProductByCategory())->width('full'),
         ];
     }
 
