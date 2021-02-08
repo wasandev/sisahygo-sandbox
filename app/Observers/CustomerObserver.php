@@ -19,9 +19,9 @@ class CustomerObserver
      */
     public function creating(Customer $customer)
     {
-        //$customer_code = IdGenerator::generate(['table' => 'customers', 'field' => 'customer_code', 'length' => 10, 'prefix' => 'S']);
+        $customer_code = IdGenerator::generate(['table' => 'customers', 'field' => 'customer_code', 'length' => 10, 'prefix' => 'S']);
         $customer->user_id = auth()->user()->id;
-        //$customer->customer_code = $customer_code;
+        $customer->customer_code = $customer_code;
         $customer->country = 'thailand';
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\ProductByCategory;
+use App\Nova\Metrics\ProductByStyle;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -125,7 +127,10 @@ class Product extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new ProductByCategory())->width('1/2'),
+            (new ProductByStyle())->width('1/2')
+        ];
     }
 
     /**
