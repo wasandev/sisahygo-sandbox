@@ -63,7 +63,16 @@ class Product extends Resource
         return [
             //ID::make()->sortable(),
             Boolean::make(__('Status'), 'status')
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex(),
+            Boolean::make('มีตารางราคา', 'price', function () {
+                $hasitem = count($this->productservice_price);
+                if ($hasitem) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }),
             BelongsTo::make(__('Category'), 'category', 'App\Nova\Category')
                 ->sortable()
                 ->nullable()

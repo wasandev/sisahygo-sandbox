@@ -35,7 +35,7 @@ class Product extends Filter
      */
     public function options(Request $request)
     {
-        $products = \App\Models\Product::all();
+        $products = \App\Models\Product::has('productservice_price');
         return $products->pluck('id', 'name')->all();
     }
 }
