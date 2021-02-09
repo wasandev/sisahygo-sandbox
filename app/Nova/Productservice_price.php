@@ -130,6 +130,7 @@ class Productservice_price extends Resource
     {
         return [
             new Filters\ProductGroup,
+            new Filters\ProductPriceStyle,
             new Filters\Product,
             new Filters\FromBranch,
             new Filters\Province,
