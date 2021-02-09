@@ -24,8 +24,9 @@ class ProductPriceStyle extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->join('products as ps', 'product_id', 'ps.id')
-            ->where('ps.product_style_id', $value);
+        return $query->whereHas('product', function ($query) use ($value) {
+            $query->where('product_style_id', $value);
+        });
     }
 
     /**

@@ -24,8 +24,11 @@ class ProductGroup extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->join('products as p', 'product_id', 'p.id')
-            ->where('p.category_id', $value);
+        // return $query->join('products as p', 'product_id', 'p.id')
+        //     ->where('p.category_id', $value);
+        return $query->whereHas('product', function ($query) use ($value) {
+            $query->where('category_id', $value);
+        });
     }
 
     /**
