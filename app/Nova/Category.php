@@ -70,7 +70,7 @@ class Category extends Resource
             Text::make(__('Name'), 'name')->sortable(),
             Number::make('จำนวนสินค้าในกลุ่ม', 'product_count', function () {
                 return count($this->products);
-            }),
+            })->exceptOnForms(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')

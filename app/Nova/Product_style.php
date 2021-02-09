@@ -70,7 +70,7 @@ class Product_style extends Resource
             Text::make(__('Name'), 'name')->sortable(),
             Number::make('จำนวนสินค้าในประเภท', 'product_count', function () {
                 return count($this->products);
-            }),
+            })->exceptOnForms(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')

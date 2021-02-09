@@ -19,7 +19,7 @@ class Productservice_price extends Resource
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 7;
 
-    public static $with = ['product'];
+    public static $with = ['product', 'unit'];
     /**
      * The model the resource corresponds to.
      *
@@ -39,7 +39,7 @@ class Productservice_price extends Resource
         if (isset($this->product) && isset($this->unit)) {
             return $this->product->name . '=>' . number_format($this->price, 2, '.', ',') . '/' . $this->unit->name;
         } else {
-            return $this->product_id;
+            return $this->id;
         }
     }
 
