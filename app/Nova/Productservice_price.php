@@ -129,8 +129,8 @@ class Productservice_price extends Resource
     public function filters(Request $request)
     {
         return [
-            new Filters\ProductGroup,
-            new Filters\ProductPriceStyle,
+            //new Filters\ProductGroup,
+            //new Filters\ProductPriceStyle,
             new Filters\Product,
             new Filters\FromBranch,
             new Filters\Province,
