@@ -9,7 +9,7 @@ class Productservice_price extends Model
 {
 
     protected $fillable = [
-        'product_id', 'from_branch_id', 'unit_id', 'price',  'district', 'province', 'user_id', 'updated_by'
+        'product_id', 'from_branch_id', 'unit_id', 'price',  'district', 'province', 'user_id', 'updated_by', 'branch_area_id'
     ];
 
     protected $table = 'productservice_price';
@@ -37,5 +37,10 @@ class Productservice_price extends Model
     public function user_update()
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
+    }
+
+    public function branch_area()
+    {
+        return $this->belongsTo('App\Models\Branch_area');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\District;
+
 use App\Models\Branch_area;
 use App\Models\Branch;
 use App\Models\Unit;
@@ -14,13 +14,13 @@ use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Number;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
-use Silvanite\NovaFieldCheckboxes\Checkboxes;
-
+use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Fields\BooleanGroup;
+use OptimistDigital\MultiselectField\Multiselect;
 
 class AddProductServicePriceDistrict extends Action
 {
@@ -47,7 +47,10 @@ class AddProductServicePriceDistrict extends Action
         foreach ($models as $model) {
 
 
-            $branch_areas = Branch_area::where('branch_id', $fields->to_branch_id)->get();
+            $branch_areas =  $fields->district;
+
+            dd($branch_areas);
+
             if ($fields->product_unit) {
                 $uses_unit = $model->unit_id;
             } else {
@@ -78,8 +81,12 @@ class AddProductServicePriceDistrict extends Action
 
 
         $branches  = Branch::all()->pluck('name', 'id');
-
         $units = Unit::all()->pluck('name', 'id');
+
+        $branch_area = DB::table('branch_areas')
+            ->join('branches', 'branch_areas.branch_id', 'branches.id')
+            ->where('branches.code', '<>', '001')
+            ->pluck('branch_areas.district', 'branch_areas.id');
 
         return [
 
@@ -90,9 +97,9 @@ class AddProductServicePriceDistrict extends Action
             //     ->options($branches)
             //     ->displayUsingLabels(),
 
-            Checkboxes::make('district')
-                ->options(\App\Models\District::pluck('id', 'name'))
-                ->withoutTypeCasting(),
+            BooleanGroup::make('ไปอำเภอ', 'district')
+                ->options($branch_area)
+                ->hideFalseValues(),
 
             Boolean::make(__('Used product unit'), 'product_unit')
                 ->default(true),
@@ -104,8 +111,6 @@ class AddProductServicePriceDistrict extends Action
             ])->dependsOn('product_unit', false),
             Number::make(__('Shipping cost'), 'item_price')
                 ->step('0.01'),
-
-
 
         ];
     }

@@ -11,7 +11,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
-use PHPUnit\Util\Filter;
+use OptimistDigital\MultiselectField\Multiselect;
 
 class Productservice_price extends Resource
 {
@@ -85,6 +85,7 @@ class Productservice_price extends Resource
                 ->searchable(),
             BelongsTo::make(__('From branch'), 'from_branch', 'App\Nova\Branch')
                 ->sortable(),
+
             // InputSubDistrict::make(__('Sub District'), 'sub_district')
             //     ->withValues(['district', 'amphoe', 'province', 'zipcode'])
             //     ->fromValue('district')

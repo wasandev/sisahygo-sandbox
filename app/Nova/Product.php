@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use OptimistDigital\MultiselectField\Multiselect;
 
 class Product extends Resource
 {
@@ -75,7 +76,8 @@ class Product extends Resource
                 } else {
                     return false;
                 }
-            }),
+            })->exceptOnForms(),
+
             BelongsTo::make(__('Category'), 'category', 'App\Nova\Category')
                 ->sortable()
                 ->nullable()

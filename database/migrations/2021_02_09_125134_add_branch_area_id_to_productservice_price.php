@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCarDocdateToCarBalancesTable extends Migration
+class AddBranchAreaIdToProductservicePrice extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddCarDocdateToCarBalancesTable extends Migration
      */
     public function up()
     {
-        Schema::table('car_balances', function (Blueprint $table) {
-            $table->date('cardoc_date')->nullable();
+        Schema::table('productservice_price', function (Blueprint $table) {
+            $table->bigInteger('branch_area_id')->unsigned()->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddCarDocdateToCarBalancesTable extends Migration
      */
     public function down()
     {
-        Schema::table('car_balances', function (Blueprint $table) {
-            $table->dropColumn('cardoc_date');
+        Schema::table('productservice_price', function (Blueprint $table) {
+            $table->dropColumn('branch_area_id');
         });
     }
 }
