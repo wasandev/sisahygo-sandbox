@@ -169,6 +169,7 @@ class Product extends Resource
     public function actions(Request $request)
     {
         return [
+            (new Actions\AddProductServicePriceDistrict),
             (new Actions\AddProductServicePrice),
             //new Actions\AddProductCustomerPrice,
             (new DownloadExcel)->allFields()->withHeadings(),

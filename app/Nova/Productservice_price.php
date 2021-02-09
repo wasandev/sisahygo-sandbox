@@ -11,8 +11,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
-
-
+use PHPUnit\Util\Filter;
 
 class Productservice_price extends Resource
 {
@@ -33,11 +32,15 @@ class Productservice_price extends Resource
      *
      * @var string
      */
-    // public static $title = 'district';
+    //public static $title = 'id';
 
     public function title()
     {
-        return $this->product->name . '=>' . number_format($this->price, 2, '.', ',') . '/' . $this->unit->name;
+        if (isset($this->product) && isset($this->unit)) {
+            return $this->product->name . '=>' . number_format($this->price, 2, '.', ',') . '/' . $this->unit->name;
+        } else {
+            return $this->product_id;
+        }
     }
 
     public function subtitle()
@@ -126,6 +129,7 @@ class Productservice_price extends Resource
     public function filters(Request $request)
     {
         return [
+            new Filters\ProductGroup,
             new Filters\Product,
             new Filters\FromBranch,
             new Filters\Province,

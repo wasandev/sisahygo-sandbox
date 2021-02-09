@@ -28,6 +28,7 @@
         "mikehaertl/php-pdftk": "^0.9.2",
         "orlyapps/nova-belongsto-depend": "^2.0",
         "pktharindu/nova-permissions": "^2.1",
+        "silvanite/novafieldcheckboxes": "^1.2",
         "titasgailius/search-relations": "^1.0",
         "wasandev/input-thai-address": "*",
         "wasandev/orderstatus": "*",
