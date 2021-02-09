@@ -47,26 +47,25 @@ class AddProductServicePriceDistrict extends Action
         foreach ($models as $model) {
 
 
-            $branch_areas =  $fields->district;
-
-            dd($branch_areas);
-
+            $branch_areas = $fields->district;
             if ($fields->product_unit) {
                 $uses_unit = $model->unit_id;
             } else {
                 $uses_unit = $fields->unit;
             }
+            foreach ($branch_areas as $branch_area => $value) {
+                if ($value) {
+                    $area = Branch_area::find($branch_area);
 
-            foreach ($branch_areas as $branch_area) {
-
-                Productservice_price::updateOrCreate([
-                    'product_id' => $model->id,
-                    'from_branch_id' => $fields->from_branch_id,
-                    'district' => $branch_area->district,
-                    'province' => $branch_area->province,
-                    'price' => $fields->item_price,
-                    'unit_id' => $uses_unit,
-                ]);
+                    Productservice_price::updateOrCreate([
+                        'product_id' => $model->id,
+                        'from_branch_id' => $fields->from_branch_id,
+                        'district' => $area->district,
+                        'province' => $area->province,
+                        'price' => $fields->item_price,
+                        'unit_id' => $uses_unit,
+                    ]);
+                }
             }
         }
     }
@@ -93,13 +92,10 @@ class AddProductServicePriceDistrict extends Action
             Select::make(__('From branch'), 'from_branch_id')
                 ->options($branches)
                 ->displayUsingLabels(),
-            // Select::make(__('To branch'), 'to_branch_id')
-            //     ->options($branches)
-            //     ->displayUsingLabels(),
+
 
             BooleanGroup::make('ไปอำเภอ', 'district')
-                ->options($branch_area)
-                ->hideFalseValues(),
+                ->options($branch_area),
 
             Boolean::make(__('Used product unit'), 'product_unit')
                 ->default(true),
