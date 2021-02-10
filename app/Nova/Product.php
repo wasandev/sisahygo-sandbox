@@ -21,7 +21,7 @@ class Product extends Resource
 {
     //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
-    public static $priority = 6;
+    public static $priority = 7;
 
     //public static $displayInNavigation = false;
     /**
@@ -171,17 +171,16 @@ class Product extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\AddProductServicePriceDistrict),
+            (new Actions\AddProductServicePriceZone),
             (new Actions\AddProductServicePrice),
-            //new Actions\AddProductCustomerPrice,
+            (new Actions\AddProductServicePriceDistrict),
+            (new Actions\SetProductCategory),
+            (new Actions\SetProductStyle),
+            (new Actions\SetProductUnit),
             (new DownloadExcel)->allFields()->withHeadings(),
             (new Actions\ImportProducts)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),
-            (new Actions\SetProductCategory),
-            (new Actions\SetProductStyle),
-            (new Actions\SetProductUnit)
-
 
         ];
     }

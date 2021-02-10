@@ -2,23 +2,23 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class District extends Resource
+class Pricezone extends Resource
 {
-    public static $displayInNavigation = false;
-    public static $group = '1.งานสำหรับผู้ดูแลระบบ';
-    public static $globallySearchable = false;
+    //public static $displayInNavigation = false;
+    public static $group = "4.งานด้านการตลาด";
+    public static $priority = 6;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Models\District';
+    public static $model = \App\Models\Pricezone::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -27,11 +27,6 @@ class District extends Resource
      */
     public static $title = 'name';
 
-    public function subtitle()
-    {
-        return   $this->province->name;
-    }
-
     /**
      * The columns that should be searched.
      *
@@ -39,15 +34,15 @@ class District extends Resource
      */
     public static $search = [
         'name',
-    ];
 
+    ];
     public static function label()
     {
-        return 'ข้อมูลอำเภอ';
+        return 'กำหนดโซนราคา';
     }
     public static function singularLabel()
     {
-        return 'อำเภอ';
+        return 'โซนราคา';
     }
     /**
      * Get the fields displayed by the resource.
@@ -58,11 +53,11 @@ class District extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable()
-                ->hideFromIndex(),
-            BelongsTo::make('จังหวัด', 'province', 'App\Nova\Province')->sortable(),
-            Text::make(__('District'), 'name')->sortable(),
-
+            ID::make(__('ID'), 'id')->sortable(),
+            Text::make('ชื่อโซน', 'name'),
+            BelongsToMany::make('อำเภอในโซน', 'districts', 'App\Nova\District')
+                ->searchable()
+                ->withSubtitles(),
         ];
     }
 
@@ -108,5 +103,12 @@ class District extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function relatableDistricts(NovaRequest $request, $query)
+    {
+        //if ($field instanceof BelongsToMany) {
+        return $query->whereHas('branch_area');
+        // return $query;
     }
 }

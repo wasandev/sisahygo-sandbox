@@ -17,7 +17,7 @@ class Productservice_price extends Resource
 {
     //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
-    public static $priority = 7;
+    public static $priority = 8;
 
     public static $with = ['product', 'unit'];
     /**

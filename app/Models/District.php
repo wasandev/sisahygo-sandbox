@@ -28,4 +28,8 @@ class District extends Model
     {
         return $this->hasMany('App\Models\Branch_area', 'district', 'name');
     }
+    public function pricezones()
+    {
+        return $this->belongsToMany('App\Models\Pricezone');
+    }
 }

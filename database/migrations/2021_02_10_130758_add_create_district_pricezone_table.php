@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCreateDistrictPricezonesTable extends Migration
+class AddCreateDistrictPricezoneTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddCreateDistrictPricezonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('district_pricezones', function (Blueprint $table) {
+        Schema::create('district_pricezone', function (Blueprint $table) {
             $table->bigInteger('pricezone_id')->unsigned();
             $table->integer('district_id')->unsigned();
         });
-        Schema::table('district_pricezones', function (Blueprint $table) {
+        Schema::table('district_pricezone', function (Blueprint $table) {
             $table->unique([
                 'pricezone_id',
                 'district_id',
@@ -36,6 +36,6 @@ class AddCreateDistrictPricezonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('district_pricezones');
+        Schema::dropIfExists('district_pricezone');
     }
 }

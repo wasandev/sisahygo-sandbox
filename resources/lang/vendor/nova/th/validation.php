@@ -15,5 +15,6 @@ return [
 
     'attached' => ':attribute นี้ได้ถูกนำไปใช้แล้ว',
     'relatable' => ':attribute นี้ไม่สามารถกำหนดใช้กับรายการนี้ได้',
+    'district' => 'อำเภอ'
 
 ];
