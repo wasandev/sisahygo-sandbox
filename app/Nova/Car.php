@@ -157,6 +157,7 @@ class Car extends Resource
                     ->searchable(),
             ])->dependsOn('ownertype', 'partner'),
             BelongsTo::make('พนักงานขับรถ', 'driver', 'App\Nova\Employee')
+                ->showCreateRelationButton()
                 ->sortable()
                 ->searchable()
                 ->nullable(),
