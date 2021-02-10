@@ -93,7 +93,6 @@ class AddProductServicePriceDistrict extends Action
                 ->options($branches)
                 ->displayUsingLabels(),
 
-
             BooleanGroup::make('ไปอำเภอ', 'district')
                 ->options($branch_area),
 

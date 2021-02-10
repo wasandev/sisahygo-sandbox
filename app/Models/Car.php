@@ -40,6 +40,7 @@ class Car extends Model
         'finance_id',
         'user_id',
         'updated_by',
+        'driver_id'
     ];
 
     protected $casts = [
@@ -93,5 +94,9 @@ class Car extends Model
     public function waybills()
     {
         return $this->hasMany('App\Models\Waybill');
+    }
+    public function driver()
+    {
+        return $this->belongsTo('App\Models\Employee', 'driver_id');
     }
 }
