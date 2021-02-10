@@ -477,6 +477,30 @@ return [
             'description'  => 'ลบ',
             'group'        => 'หน่วยนับ',
         ],
+        //pricezones
+        'view pricezones' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'โซนราคา',
+        ],
+
+        'create pricezones' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'โซนราคา',
+        ],
+
+        'edit pricezones' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'โซนราคา',
+        ],
+
+        'delete pricezones' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'โซนราคา',
+        ],
         //สินค้า
         'view products' => [
             'display_name' => 'ดู',
