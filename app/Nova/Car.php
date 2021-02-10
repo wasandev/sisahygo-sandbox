@@ -153,10 +153,14 @@ class Car extends Resource
             NovaDependencyContainer::make([
                 BelongsTo::make('เจ้าของรถ/ผู้รับรายได้', 'owner', 'App\Nova\Vendor')
                     ->showCreateRelationButton()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
             ])->dependsOn('ownertype', 'partner'),
             BelongsTo::make('พนักงานขับรถ', 'driver', 'App\Nova\Employee')
-                ->sortable(),
+                ->sortable()
+                ->searchable()
+                ->nullable(),
+
             Date::make('วันที่ได้มา/วันที่เข้าร่วม', 'purchase_date')
                 ->hideFromIndex()
                 ->format('DD/MM/YYYY'),
