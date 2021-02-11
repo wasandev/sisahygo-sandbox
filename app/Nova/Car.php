@@ -204,10 +204,10 @@ class Car extends Resource
             Number::make('ปริมาตรรถ', 'car_volumn')
                 ->hideFromIndex()
                 ->step(0.01),
-            Number::make('น้ำหนักรถ', 'car_weight')
+            Number::make('น้ำหนักรถ(กก.)', 'car_weight')
                 ->hideFromIndex()
                 ->step(0.01),
-            Number::make('น้ำหนักบรรทุก', 'load_weight')
+            Number::make('น้ำหนักบรรทุก(กก.)', 'load_weight')
                 ->hideFromIndex()
                 ->step(0.01),
 
