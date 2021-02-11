@@ -250,7 +250,9 @@ class Employee extends Resource
     public function filters(Request $request)
     {
         return [
-            new  Filters\Branch,
+            new Filters\Branch,
+            new Filters\EmployeeType,
+            new Filters\EmployeeStatus
         ];
     }
 
@@ -274,9 +276,10 @@ class Employee extends Resource
     public function actions(Request $request)
     {
         return [
+            (new Actions\SetEmployeeStatus),
             (new Actions\SetEmployeeBranch),
             (new Actions\SetEmployeeDepartment),
-
+            (new Actions\SetEmployeeType),
             (new Actions\ImportEmployees)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),
