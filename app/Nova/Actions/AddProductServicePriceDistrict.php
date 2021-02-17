@@ -91,10 +91,12 @@ class AddProductServicePriceDistrict extends Action
 
             Select::make(__('From branch'), 'from_branch_id')
                 ->options($branches)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
 
             BooleanGroup::make('ไปอำเภอ', 'district')
-                ->options($branch_area),
+                ->options($branch_area)
+                ->rules('required'),
 
             Boolean::make(__('Used product unit'), 'product_unit')
                 ->default(true),

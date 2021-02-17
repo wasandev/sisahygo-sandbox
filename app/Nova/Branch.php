@@ -91,12 +91,17 @@ class Branch extends Resource
                 'owner' => 'บริษัทเป็นเจ้าของ',
                 'partner' => 'ร่วมบริการ'
             ])->displayUsingLabels()
-                ->rules('required'),
+                ->rules('required')
+                ->sortable(),
+            Number::make('รายได้บริษัท(%)', 'partner_rate')
+                ->onlyOnIndex()
+                ->sortable(),
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
                     ->searchable()
                     ->showCreateRelationButton()
                     ->nullable(),
+                Number::make('รายได้บริษัท(%)', 'partner_rate')
 
             ])->dependsOn('type', 'partner'),
             HasMany::make(__('Branch Areas'), 'branch_areas', 'App\Nova\Branch_area'),
@@ -149,7 +154,8 @@ class Branch extends Resource
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('province')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->hideFromIndex(),
             InputPostalCode::make(__('Postal Code'), 'postal_code')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('zipcode')

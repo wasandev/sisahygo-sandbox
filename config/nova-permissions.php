@@ -356,7 +356,78 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ข้อมูลรถ',
         ],
+        //ข้อมูลบัญชีรถ
+        'view car_balances' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'บัญชีรถ',
+        ],
 
+        'create car_balances' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'บัญชีรถ',
+        ],
+
+        'edit car_balances' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'บัญชีรถ',
+        ],
+
+        'delete car_balances' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'บัญชีรถ',
+        ],
+        //จ่ายเงินให้รถ
+        'view car_payments' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'จ่ายเงินให้รถ',
+        ],
+
+        'create car_payments' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'จ่ายเงินให้รถ',
+        ],
+
+        'edit car_payments' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'จ่ายเงินให้รถ',
+        ],
+
+        'delete car_payments' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'จ่ายเงินให้รถ',
+        ],
+        //รับเงินให้รถ
+        'view car_receives' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รับเงินให้รถ',
+        ],
+
+        'create car_receives' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รับเงินให้รถ',
+        ],
+
+        'edit car_receives' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รับเงินให้รถ',
+        ],
+
+        'delete car_receives' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รับเงินให้รถ',
+        ],
         //ประเภทธุรกิจ
         'view businesstypes' => [
             'display_name' => 'ดู',

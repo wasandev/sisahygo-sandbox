@@ -8,7 +8,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
-
+use Laravel\Nova\Fields\HasMany;
 
 class Carstyle extends Resource
 {
@@ -67,6 +67,7 @@ class Carstyle extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            HasMany::make(__('Car'), 'cars', 'App\Nova\Car')
         ];
     }
 

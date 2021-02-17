@@ -18,4 +18,13 @@ class Carstyle extends Model
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
+    /**
+     * Get all of the cars for the Carstyle
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
 }

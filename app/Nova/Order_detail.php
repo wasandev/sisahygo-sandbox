@@ -162,18 +162,6 @@ class Order_detail extends Resource
     }
 
 
-    // public static function relatableProductservice_prices(NovaRequest $request, $query)
-    // {
-    //     $viaResourceId = $request->viaResourceId;
-
-
-    //     if (isset($viaResourceId)) {
-    //         $order = \App\Models\Order_checker::find($viaResourceId);
-    //         $district = $order->to_customer->district;
-
-    //         return $query->orWhere('district', $district);
-    //     }
-    // }
 
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {

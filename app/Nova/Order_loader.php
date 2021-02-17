@@ -190,7 +190,7 @@ class Order_loader extends Resource
     // }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->role != 'admin' && !($request->user()->hasPermissionTo('manage branchrec_orders'))) {
+        if ($request->user()->role != 'admin' && ($request->user()->hasPermissionTo('manage order_loaders'))) {
 
             $resourceTable = 'order_headers';
 

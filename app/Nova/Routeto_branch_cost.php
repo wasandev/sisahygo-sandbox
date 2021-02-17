@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -13,6 +15,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Routeto_branch_cost extends Resource
 {
+    use HasDependencies;
     public static $displayInNavigation = false;
     public static $group = "5.งานจัดการการขนส่ง";
     public static $priority = 2;
@@ -65,20 +68,38 @@ class Routeto_branch_cost extends Resource
                 ->rules('required'),
             BelongsTo::make(__('Car style'), 'carstyle', 'App\Nova\Carstyle')
                 ->sortable()
-                ->nullable(),
+                ->nullable()
+                ->hideFromIndex(),
 
             Currency::make(__('Full truck rate'), 'fulltruckrate')
                 ->sortable()
                 ->nullable(),
-            Currency::make('ค่าจ้างรถ(กรณีรถร่วม)', 'car_charge')
+            Boolean::make('กำหนดค่าจ้างรถเป็น%', 'chargeflag'),
+            Number::make('%ค่าจ้างรถ(กรณีรถร่วม)', 'chargerate')
                 ->sortable()
-                ->nullable(),
+                ->onlyOnIndex()
+                ->step('0.01'),
+            Currency::make('ค่าจ้างรถ(กรณีรถร่วม)(บาท)', 'car_charge')
+                ->sortable()
+                ->onlyOnIndex(),
+            NovaDependencyContainer::make([
+                Currency::make('%ค่าจ้างรถ(กรณีรถร่วม)', 'chargerate')
+                    ->sortable()
+                    ->nullable(),
+            ])->dependsOn('chargeflag', true),
+            NovaDependencyContainer::make([
+                Currency::make('ค่าจ้างรถ(กรณีรถร่วม)', 'car_charge')
+                    ->sortable()
+                    ->nullable(),
+            ])->dependsOn('chargeflag', false),
             Currency::make('ค่าเที่ยวคนขับ(กรณีรถบริษัท)', 'driver_charge')
                 ->sortable()
-                ->nullable(),
+                ->nullable()
+                ->hideFromIndex(),
             Currency::make('ค่าเชื้อเพลิงที่ใช้(บาท)', 'fuel_cost')
                 ->sortable()
-                ->nullable(),
+                ->nullable()
+                ->hideFromIndex(),
             Number::make('จำนวนเชื้อเพลิงที่ใช้(ลิตร)', 'fuel_amount')
                 ->step('0.01')
                 ->sortable()

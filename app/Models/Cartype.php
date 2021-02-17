@@ -11,9 +11,9 @@ class Cartype extends Model
         'name', 'user_id', 'payload', 'updated_by'
     ];
 
-    public function car()
+    public function cars()
     {
-        return $this->belongsTo('App\Models\Car');
+        return $this->hasMany('App\Models\Car');
     }
 
     public function user()

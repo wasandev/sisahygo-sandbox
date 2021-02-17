@@ -99,4 +99,13 @@ class Car extends Model
     {
         return $this->belongsTo('App\Models\Employee', 'driver_id');
     }
+    /**
+     * Get all of the car_balances for the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function car_balances()
+    {
+        return $this->hasMany(Car_balance::class);
+    }
 }

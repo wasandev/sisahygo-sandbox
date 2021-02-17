@@ -2,9 +2,11 @@
 
 namespace App\Nova;
 
+use App\Models\Car_balance;
 use App\Nova\Filters\OwnerType;
 use App\Nova\Metrics\CarByType;
 use App\Nova\Metrics\CarOwnerType;
+use Carbon\Carbon;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -21,6 +23,8 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\DateTime;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Fields\HasMany;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Car extends Resource
@@ -108,6 +112,7 @@ class Car extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            HasMany::make(__('Car Balance'), 'car_balances', 'App\Nova\Car_balance')
 
         ];
     }
@@ -128,7 +133,7 @@ class Car extends Resource
                 ->nullable(),
             BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
                 ->showCreateRelationButton()
-                ->sortable()
+                ->hideFromIndex()
                 ->nullable(),
             BelongsTo::make('จังหวัด', 'province', Province::class)
                 ->hideFromIndex()
@@ -161,7 +166,15 @@ class Car extends Resource
                 ->sortable()
                 ->searchable()
                 ->nullable(),
-
+            Number::make('ค่าบรรทุกเดือนนี้', 'carmonth_amount', function () {
+                $carmonth_amount = DB::table('car_balances')
+                    ->whereYear('cardoc_date', Carbon::now()->year)
+                    ->whereMonth('cardoc_date', Carbon::now()->month)
+                    ->where('car_id', $this->id)
+                    ->sum('amount');
+                return $carmonth_amount;
+            })->exceptOnForms()
+                ->step('0.01'),
             Date::make('วันที่ได้มา/วันที่เข้าร่วม', 'purchase_date')
                 ->hideFromIndex()
                 ->format('DD/MM/YYYY'),

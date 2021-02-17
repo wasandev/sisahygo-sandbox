@@ -18,6 +18,7 @@ class Branch extends Model
         'country',
         'phoneno',
         'type',
+        'partner_rate',
         'vendor_id',
         'location_lat',
         'location_lng',

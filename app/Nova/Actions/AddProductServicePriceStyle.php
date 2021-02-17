@@ -86,10 +86,12 @@ class AddProductServicePriceStyle extends Action
 
             Select::make(__('From branch'), 'from_branch_id')
                 ->options($branches)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
             Select::make(__('To branch'), 'to_branch_id')
                 ->options($branches)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
 
             Boolean::make(__('Used product unit'), 'product_unit')
                 ->default(true),

@@ -84,10 +84,12 @@ class AddProductServicePrice extends Action
 
             Select::make(__('From branch'), 'from_branch_id')
                 ->options($branches)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
             Select::make(__('To branch'), 'to_branch_id')
                 ->options($branches)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
             Boolean::make(__('Used product unit'), 'product_unit')
                 ->default(true),
             NovaDependencyContainer::make([
@@ -97,7 +99,8 @@ class AddProductServicePrice extends Action
                     ->searchable(),
             ])->dependsOn('product_unit', false),
             Number::make(__('Shipping cost'), 'item_price')
-                ->step('0.01'),
+                ->step('0.01')
+                ->rules('required'),
 
 
 

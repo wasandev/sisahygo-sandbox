@@ -171,6 +171,8 @@ use App\Models\Branchrec_waybill;
 use App\Observers\Branchrec_waybillObserver;
 
 use App\Models\Branchrec_order;
+use App\Models\Carpayment;
+use App\Models\Carreceive;
 use App\Observers\Branchrec_orderObserver;
 
 use App\Models\Delivery;
@@ -178,6 +180,8 @@ use App\Models\Delivery_detail;
 use App\Observers\DeliveryObserver;
 
 use App\Models\Delivery_item;
+use App\Observers\CarpaymentObserver;
+use App\Observers\CarreceiveObserver;
 use App\Observers\DeliveryDetailObserver;
 use App\Observers\DeliveryItemObserver;
 
@@ -260,5 +264,7 @@ class AppServiceProvider extends ServiceProvider
         Delivery::observe(DeliveryObserver::class);
         Delivery_item::observe(DeliveryItemObserver::class);
         Delivery_detail::observe(DeliveryDetailObserver::class);
+        Carpayment::observe(CarpaymentObserver::class);
+        Carreceive::observe(CarreceiveObserver::class);
     }
 }

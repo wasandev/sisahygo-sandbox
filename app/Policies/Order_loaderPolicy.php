@@ -34,7 +34,11 @@ class Order_loaderPolicy
         if ($user->hasPermissionTo('manage own order_loaders')) {
             return $user->id === $order_loader->user_id && ($order_loader->order_status == "confirmed" || $order_loader->order_status == "loaded");
         }
-        return ($user->role == 'admin' || $user->hasPermissionTo('manage order_loaders')) && ($order_loader->order_status == "confirmed" || $order_loader->order_status == "loaded");
+        if (isset($order_loader->waybill)) {
+            return ($user->role == 'admin' || ($user->hasPermissionTo('manage order_loaders')) && $order_loader->waybill->waybill_status == "loading");
+        } else {
+            return ($user->role == 'admin' || ($user->hasPermissionTo('manage order_loaders')) && ($order_loader->order_status == "confirmed" || $order_loader->order_status == "loaded"));
+        }
     }
 
     public function delete(User $user, Order_loader $order_loader)

@@ -144,7 +144,13 @@ return [
 
     'attributes' => [
 
-        'district' => 'อำเภอ'
+        'district' => 'อำเภอ',
+        'from_branch_id' => 'จากสาขา',
+        'zone' => 'โซนราคา',
+        'item_price' => 'ค่าขนส่งสินค้า',
+        'to_branch_id' => 'ไปสาขา',
+        'departure_at' => 'กำหนดเวลาออกจากต้นทาง',
+        'arrival_at' => 'กำหนดเวลาถึงปลายทาง'
     ],
 
 ];

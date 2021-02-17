@@ -260,14 +260,7 @@ class Order_header extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\CancelOrder())
 
-                ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
-                ->confirmButtonText('ยกเลิก')
-                ->cancelButtonText("ไม่ยกเลิก")
-                ->canRun(function ($request, $model) {
-                    return true;
-                }),
             (new Actions\OrderConfirmed($request->resourceId))
                 ->onlyOnDetail()
                 ->confirmText('ต้องการยืนยันใบรับส่งรายการนี้?')
@@ -280,6 +273,14 @@ class Order_header extends Resource
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
+            (new Actions\CancelOrder())
+
+                ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
+                ->confirmButtonText('ยกเลิก')
+                ->cancelButtonText("ไม่ยกเลิก")
                 ->canRun(function ($request, $model) {
                     return true;
                 }),

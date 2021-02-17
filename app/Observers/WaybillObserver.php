@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Car_balance;
 use App\Models\Waybill;
 use App\Models\Waybill_status;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -29,6 +30,21 @@ class WaybillObserver
     public function updating(Waybill $waybill)
     {
         if ($waybill->waybill_status == 'confirmed') {
+
+            //create car_balance
+            Car_balance::create([
+                'car_id' => $waybill->car_id,
+                'vendor_id' => $waybill->car->vendor_id,
+                'doctype' => 'R',
+                'docno' => $waybill->waybill_no,
+                'cardoc_date' => $waybill->waybill_date,
+                'waybill_id' => $waybill->id,
+                'description' => 'ค่าขนส่งสินค้า',
+                'amount' => $waybill->waybill_payable,
+                'user_id' => auth()->user()->id,
+
+            ]);
+
             Waybill_status::create([
                 'waybill_id' => $waybill->id,
                 'status' => 'confirmed',

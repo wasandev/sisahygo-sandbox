@@ -89,10 +89,12 @@ class AddProductServicePriceZone extends Action
 
             Select::make(__('From branch'), 'from_branch_id')
                 ->options($branches)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
             Select::make(__('เลือกโซนราคา'), 'zone')
                 ->options($pricezones)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
 
 
             Boolean::make(__('Used product unit'), 'product_unit')
@@ -104,7 +106,8 @@ class AddProductServicePriceZone extends Action
                     ->searchable(),
             ])->dependsOn('product_unit', false),
             Number::make(__('Shipping cost'), 'item_price')
-                ->step('0.01'),
+                ->step('0.01')
+                ->rules('required'),
 
         ];
     }

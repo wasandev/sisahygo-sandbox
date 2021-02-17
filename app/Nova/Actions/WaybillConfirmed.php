@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Branch;
 use App\Models\Routeto_branch;
 use App\Models\Routeto_branch_cost;
 use App\Models\Waybill;
@@ -13,6 +14,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Number;
 
 class WaybillConfirmed extends Action
 {
@@ -77,12 +79,34 @@ class WaybillConfirmed extends Action
                 ->where('cartype_id', '=', $waybill->car->cartype_id)
                 ->first();
 
+            if ($routeto_branch->branch->type == 'partner') {
+                $chargerate = $routeto_branch->branch->partner_rate;
+                $helptext = 'คำนวณค่าบรรทุกจาก ' . $chargerate . '%';
+                $car_payamount = ($waybill_amount * $chargerate) / 100;
+            } elseif ($routeto_branch->dest_branch->type == 'partner') {
+                $chargerate = $routeto_branch->dest_branch->partner_rate;
+                $helptext = 'คำนวณค่าบรรทุกจาก ' . $chargerate . '%';
+                $car_payamount = ($waybill_amount * $chargerate) / 100;
+            } else {
+                if ($routeto_branch_cost->chargeflag) {
+                    $chargerate = $routeto_branch_cost->chargerate;
+                    $helptext = 'คำนวณค่าบรรทุกจาก ' . $chargerate . '%';
+                    $car_payamount = ($waybill_amount * $chargerate) / 100;
+                } else {
+                    $car_payamount = $routeto_branch_cost->car_charge;
+                    $helptext = 'กำหนดค่าบรรทุก ' . $routeto_branch_cost->car_charge . ' บาท';
+                }
+            }
 
             return [
                 Currency::make('ยอดค่าขนส่งรวม', 'waybill_amount')->default($waybill_amount)
                     ->readonly(),
-                Currency::make('หักค่าบรรทุก', 'waybill_payable')->default($routeto_branch_cost->car_charge),
-                Currency::make('รายได้บริษัท', 'waybill_income')->default($waybill_amount - $routeto_branch_cost->car_charge),
+                // Number::make('%ค่าจ้างรถ', 'chargerate')->default($routeto_branch_cost->chargerate)
+                //     ->readonly(),
+                Currency::make('ค่าบรรทุก', 'waybill_payable')->default($car_payamount)
+                    ->help($helptext),
+
+                Currency::make('รายได้บริษัท', 'waybill_income')->default($waybill_amount - $car_payamount),
                 DateTime::make('กำหนดรถออกจากสาขาต้นทาง', 'departure_at')
                     ->format('DD/MM/YYYY HH:mm')
                     ->rules('required'),

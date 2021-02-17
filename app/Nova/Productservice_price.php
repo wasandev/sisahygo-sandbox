@@ -174,8 +174,13 @@ class Productservice_price extends Resource
             $resourceId = $request->viaResourceId;
 
             $order = \App\Models\Order_checker::find($resourceId);
-            $district = $order->to_customer->district;
-            return $query->where('district', '=', $district);
+            if ($order->branch->code === '001') {
+                $district = $order->to_customer->district;
+                return $query->where('district', '=', $district);
+            } else {
+                $district = $order->customer->district;
+                return $query->where('district', '=', $district);
+            }
         }
     }
 }

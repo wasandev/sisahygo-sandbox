@@ -32,7 +32,7 @@ class WaybillPolicy
         if ($user->hasPermissionTo('manage own waybills')) {
             return ($user->id === $waybill->user_id);
         }
-        return ($user->role == 'admin' || $user->hasPermissionTo('manage waybills'));
+        return ($user->role == 'admin' || ($user->hasPermissionTo('manage waybills') && ($waybill->waybill_status == "loading")));
     }
 
     public function delete(User $user, Waybill $waybill)
