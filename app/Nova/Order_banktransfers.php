@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Filters\BankTransferStatus;
+use App\Nova\Filters\Transfertype;
 use App\Nova\Metrics\OrderTransferPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -12,12 +13,13 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Order_banktransfers extends Resource
 {
-    public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 7;
+    public static $group = '9.2 งานการเงิน/บัญชี';
+    public static $priority = 5;
     public static $polling = true;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
@@ -64,10 +66,18 @@ class Order_banktransfers extends Resource
      */
     public function fields(Request $request)
     {
+
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make(__('Status'), 'status'),
-            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
+            Select::make('ประเภทรายการ', 'transfer_type')->options([
+                'H' => 'ต้นทาง',
+                'B' => 'รับชำระหนี้',
+                'E' => 'ปลายทาง'
+            ])->displayUsingLabels()
+                ->exceptOnForms(),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
+                ->hideFromIndex(),
             BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
                 ->sortable(),
             BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header')
@@ -111,7 +121,7 @@ class Order_banktransfers extends Resource
     public function filters(Request $request)
     {
         return [
-            //new BankTransferStatus,
+            new Transfertype,
         ];
     }
 

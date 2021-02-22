@@ -11,6 +11,8 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Illuminate\Support\Facades\DB;
 use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderToDate;
 
 class MostValueableReceivers extends Lens
 {
@@ -26,7 +28,7 @@ class MostValueableReceivers extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('order_headers', 'customers.id', '=', 'order_headers.customer_rec_id')
-                ->where('order_headers.order_status', '=', 'Confirmed')
+                ->whereNotIn('order_headers.order_status', ['checking', 'new', 'problem', 'cancel'])
                 ->orderBy('revenue', 'desc')
                 ->groupBy('customers.id', 'customers.name')
         ));
@@ -81,7 +83,8 @@ class MostValueableReceivers extends Lens
     public function filters(Request $request)
     {
         return [
-            new OrderdateFilter(),
+            new OrderFromDate(),
+            new OrderToDate()
         ];
     }
 

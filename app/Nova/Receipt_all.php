@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\ReceiptFromDate;
+use App\Nova\Filters\ReceiptToDate;
 use App\Nova\Filters\Receipttype;
 use Laravel\Nova\Fields\Date;
 use Illuminate\Http\Request;
@@ -16,8 +18,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Receipt_all extends Resource
 {
 
-    public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 9;
+    public static $group = '9.2 งานการเงิน/บัญชี';
+    public static $priority = 6;
     public static $polling = true;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
@@ -47,9 +49,8 @@ class Receipt_all extends Resource
     ];
     public static function label()
     {
-        return 'ใบเสร็จรับเงิน';
+        return 'ใบเสร็จรับเงินทั้งหมด';
     }
-
 
     /**
      * Get the fields displayed by the resource.
@@ -59,11 +60,11 @@ class Receipt_all extends Resource
      */
     public function fields(Request $request)
     {
+
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no'),
             Date::make('วันที่', 'receipt_date'),
-
             Select::make('ประเภทใบเสร็จ', 'receipttype')->options([
                 'H' => 'ต้นทาง',
                 'B' => 'วางบิล',
@@ -96,8 +97,7 @@ class Receipt_all extends Resource
             Currency::make('ยอดรับชำระ', 'pay_amount')
                 ->hideFromIndex(),
             HasMany::make('รายการใบรับส่ง', 'receipt_items', 'App\Nova\Receipt_item'),
-
-
+            HasMany::make('รายการใบแจ้งหนี้', 'invoices', 'App\Nova\Invoice'),
         ];
     }
 
@@ -122,6 +122,8 @@ class Receipt_all extends Resource
     {
         return [
             new Receipttype,
+            new ReceiptFromDate,
+            new ReceiptToDate,
         ];
     }
 

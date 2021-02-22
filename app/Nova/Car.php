@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\Car_balance;
 use App\Nova\Filters\OwnerType;
+use App\Nova\Lenses\CarMonthSumary;
 use App\Nova\Metrics\CarByType;
 use App\Nova\Metrics\CarOwnerType;
 use Carbon\Carbon;
@@ -167,11 +168,11 @@ class Car extends Resource
                 ->searchable()
                 ->nullable(),
             Number::make('ค่าบรรทุกเดือนนี้', 'carmonth_amount', function () {
-                $carmonth_amount = DB::table('car_balances')
-                    ->whereYear('cardoc_date', Carbon::now()->year)
-                    ->whereMonth('cardoc_date', Carbon::now()->month)
+                $carmonth_amount = DB::table('waybills')
+                    ->whereYear('waybill_date', Carbon::now()->year)
+                    ->whereMonth('waybill_date', Carbon::now()->month)
                     ->where('car_id', $this->id)
-                    ->sum('amount');
+                    ->sum('waybill_payable');
                 return $carmonth_amount;
             })->exceptOnForms()
                 ->step('0.01'),
@@ -263,7 +264,9 @@ class Car extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new CarMonthSumary(),
+        ];
     }
 
     /**

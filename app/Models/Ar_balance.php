@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ar_balance extends Model
 {
     use HasFactory;
-    protected $fillable = ['customer_id', 'order_header_id', 'receipt_id', 'description', 'ar_amount', 'user_id', 'updated_by'];
+    protected $fillable = ['customer_id', 'order_header_id', 'receipt_id', 'invoice_id', 'description', 'ar_amount', 'user_id', 'updated_by'];
 
     public function ar_customer()
     {
@@ -19,9 +19,9 @@ class Ar_balance extends Model
     {
         return $this->belongsTo('App\Models\Order_header');
     }
-    public function receipt()
+    public function receipt_ar()
     {
-        return $this->belongsTo('App\Models\Receipt');
+        return $this->belongsTo('App\Models\Receipt_ar', 'receipt_id');
     }
     public function user()
     {
@@ -31,5 +31,9 @@ class Ar_balance extends Model
     public function user_update()
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
+    }
+    public function invoice()
+    {
+        return $this->belongsTo('App\Models\Invoice');
     }
 }

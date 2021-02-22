@@ -9,8 +9,8 @@ class Order_banktransfer extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'customer_id', 'order_header_id', 'status', 'branch_id', 'transfer_amount',
-        'bankaccount_id', 'reference', 'transferslip', 'user_id', 'updated_by', 'receipt_id'
+        'customer_id', 'order_header_id', 'status', 'transfer_type', 'branch_id', 'transfer_amount',
+        'bankaccount_id', 'reference', 'transferslip', 'user_id', 'updated_by', 'receipt_id', 'invoice_id'
     ];
 
     public function bankaccount()

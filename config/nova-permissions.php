@@ -1540,6 +1540,52 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ข้อมูลรายการวางบิล',
         ],
+        //ใบแจ้งหนี้
+        'view invoices' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบแจ้งหนี้',
+        ],
+        'create invoices' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบแจ้งหนี้',
+        ],
+
+        'edit invoices' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบแจ้งหนี้',
+        ],
+
+        'delete invoices' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบแจ้งหนี้',
+        ],
+        //ใบเสร็จรับเงินวางบิล
+        'view receipt_ar' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบเสร็จรับเงินวางบิล',
+        ],
+        'create receipt_ar' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบเสร็จรับเงินวางบิล',
+        ],
+
+        'edit receipt_ar' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบเสร็จรับเงินวางบิล',
+        ],
+
+        'delete receipt_ar' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบเสร็จรับเงินวางบิล',
+        ],
         //Metrics
         'view order-incomes' => [
             'display_name' => 'รายได้ค่าขนส่ง',

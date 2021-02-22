@@ -86,7 +86,8 @@ class OrderLoaded extends Action
             Select::make(__('Waybill'), 'waybill_branch')
                 ->options($waybills)
                 ->displayUsingLabels()
-                ->rules('required'),
+                ->rules('required')
+                ->searchable(),
         ];
         // }
     }

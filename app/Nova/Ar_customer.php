@@ -29,8 +29,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Ar_customer extends Resource
 {
-    public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 3;
+    public static $group = '9.1 งานลูกหนี้การค้า';
+    public static $priority = 1;
     public static $preventFormAbandonment = true;
 
     /**

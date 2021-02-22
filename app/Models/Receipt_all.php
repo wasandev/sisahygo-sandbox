@@ -49,4 +49,8 @@ class Receipt_all extends Model
     {
         return $this->belongsTo('App\Models\Bank', 'chequebank_id');
     }
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\Invoice', 'receipt_id');
+    }
 }

@@ -36,11 +36,11 @@ use Wasandev\Orderstatus\Orderstatus;
 class Order_cash extends Resource
 {
     use HasDependencies;
+    public static $group = '9.2 งานการเงิน/บัญชี';
+    public static $priority = 3;
     public static $polling = true;
     public static $pollingInterval = 60;
     public static $showPollingToggle = true;
-    public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 5;
     public static $trafficCop = false;
     public static $preventFormAbandonment = true;
 
@@ -161,7 +161,8 @@ class Order_cash extends Resource
                 ->onlyOnDetail(),
             BelongsTo::make(__('Shipper'), 'shipper', 'App\Nova\User')
                 ->onlyOnDetail(),
-            BelongsTo::make('พนักงาน', 'user', 'App\Nova\User'),
+            BelongsTo::make('พนักงาน', 'user', 'App\Nova\User')
+                ->hideFromIndex(),
             DateTime::make(__('Created At'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),

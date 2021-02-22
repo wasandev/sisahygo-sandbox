@@ -14,7 +14,7 @@ class Order_banktransferObserver
 
     public function updating(Order_banktransfer $order_banktransfer)
     {
-        if ($order_banktransfer->status) {
+        if ($order_banktransfer->status && $order_banktransfer->transfer_type <> 'B') {
 
             //update order_status
             $order_header = Order_header::find($order_banktransfer->order_header_id);

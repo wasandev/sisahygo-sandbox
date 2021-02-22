@@ -117,7 +117,7 @@ class Order_checker extends Resource
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable()
-                ->default('1'),
+                ->default(1),
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')

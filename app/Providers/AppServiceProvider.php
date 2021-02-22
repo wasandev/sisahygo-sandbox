@@ -180,10 +180,14 @@ use App\Models\Delivery_detail;
 use App\Observers\DeliveryObserver;
 
 use App\Models\Delivery_item;
+use App\Models\Invoice;
+use App\Models\Receipt_ar;
 use App\Observers\CarpaymentObserver;
 use App\Observers\CarreceiveObserver;
 use App\Observers\DeliveryDetailObserver;
 use App\Observers\DeliveryItemObserver;
+use App\Observers\InvoiceObserver;
+use App\Observers\ReceiptArObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -266,5 +270,7 @@ class AppServiceProvider extends ServiceProvider
         Delivery_detail::observe(DeliveryDetailObserver::class);
         Carpayment::observe(CarpaymentObserver::class);
         Carreceive::observe(CarreceiveObserver::class);
+        Invoice::observe(InvoiceObserver::class);
+        Receipt_ar::observe(ReceiptArObserver::class);
     }
 }

@@ -63,16 +63,23 @@ class Branch_balance extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Date::make('วันที่ตั้งหนี้', 'branchbal_date')
-                ->sortable(),
-            BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
-                ->sortable(),
-            Currency::make('จำนวนเงิน', 'bal_amount'),
-            Currency::make('ส่วนลด', 'discount_amount'),
-            Currency::make('ภาษี', 'tax_amount'),
-            Currency::make('ยอดรับชำระ', 'pay_amount'),
             Boolean::make('สถานะการชำระ', 'payment_status')
                 ->sortable(),
+            Date::make('วันที่ตั้งหนี้', 'branchbal_date')
+                ->sortable()
+                ->format('DD-MM-YYYY'),
+            BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
+                ->sortable(),
+
+            Currency::make('จำนวนเงิน', 'bal_amount')
+                ->sortable(),
+            Currency::make('ส่วนลด', 'discount_amount')
+                ->sortable(),
+            Currency::make('ภาษี', 'tax_amount')
+                ->hideFromIndex(),
+            Currency::make('ยอดรับชำระ', 'pay_amount')
+                ->sortable(),
+
             Text::make('ชำระโดย',  function () {
                 if (isset($this->receipt_id)) {
                     if ($this->receipt->branchpay_by === 'T') {
@@ -83,7 +90,7 @@ class Branch_balance extends Resource
                 } else {
                     return '-';
                 }
-            }),
+            })->hideFromIndex(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
             HasMany::make('รายการใบรับส่ง', 'branch_balance_items', 'App\Nova\Branch_balance_item')
 

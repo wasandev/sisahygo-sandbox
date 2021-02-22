@@ -98,17 +98,21 @@ class Order_header extends Resource
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel', 'problem'])
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->onlyOnDetail(),
-            Text::make(__('Order header no'), 'order_header_no')
-                ->readonly(),
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
                 ->default(today())
                 ->format('DD/MM/YYYY')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
+            Text::make(__('Order header no'), 'order_header_no')
+                ->readonly()
+                ->sortable(),
+
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'T' => 'เงินโอนต้นทาง',
@@ -139,7 +143,8 @@ class Order_header extends Resource
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->sortable(),
             // Boolean::make('ใช้ที่อยู่อื่น', 'use_address')
             //     ->hideFromIndex(),
             // NovaDependencyContainer::make([
@@ -151,7 +156,8 @@ class Order_header extends Resource
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->sortable(),
             // Boolean::make('ใช้ที่อยู่อื่น', 'use_to_address')
             //     ->hideFromIndex(),
             // NovaDependencyContainer::make([
@@ -167,11 +173,13 @@ class Order_header extends Resource
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->default(1),
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->searchable(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->onlyOnDetail(),
             BelongsTo::make(__('Shipper'), 'shipper', 'App\Nova\User')

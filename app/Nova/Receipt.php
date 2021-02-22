@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\ReceiptFromDate;
+use App\Nova\Filters\ReceiptToDate;
 use Laravel\Nova\Fields\Date;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -106,7 +108,10 @@ class Receipt extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new ReceiptFromDate,
+            new ReceiptToDate,
+        ];
     }
 
     /**

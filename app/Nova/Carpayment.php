@@ -19,8 +19,8 @@ use Laravel\Nova\Fields\Number;
 class Carpayment extends Resource
 {
     use HasDependencies;
-    public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 10;
+    public static $group = '9.2 งานการเงิน/บัญชี';
+    public static $priority = 7;
     /**
      * The model the resource corresponds to.
      *

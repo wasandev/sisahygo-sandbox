@@ -21,19 +21,22 @@ class Ar_balancePolicy
 
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create ar_balance');
+        return false;
+        //return $user->role == 'admin' || $user->hasPermissionTo('create ar_balance');
     }
 
 
     public function update(User $user, Ar_balance $ar_balance)
     {
 
-        return $user->role == 'admin' || $user->hasPermissionTo('edit ar_balance');
+        return false;
+        //return $user->role == 'admin' || $user->hasPermissionTo('edit ar_balance');
     }
 
 
     public function delete(User $user, Ar_balance $ar_balance)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete ar_customer');
+        //return $user->role == 'admin' || $user->hasPermissionTo('delete ar_customer');
+        return false;
     }
 }

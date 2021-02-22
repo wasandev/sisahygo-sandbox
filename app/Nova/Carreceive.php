@@ -16,8 +16,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Carreceive extends Resource
 {
-    public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 11;
+    public static $group = '9.2 งานการเงิน/บัญชี';
+    public static $priority = 8;
     /**
      * The model the resource corresponds to.
      *

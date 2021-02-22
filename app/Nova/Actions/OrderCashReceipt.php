@@ -52,6 +52,8 @@ class OrderCashReceipt extends Action
                 $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
                 if ($fields->tax_status) {
                     $tax_amount = $cust_groups->sum('order_amount') * 0.01;
+                } else {
+                    $tax_amount = 0;
                 }
 
 

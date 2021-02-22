@@ -84,10 +84,13 @@ class Order_loader extends Resource
                 ->exceptOnForms(),
 
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
-                ->nullable(),
+                ->nullable()
+                ->searchable()
+                ->withSubtitles(),
 
             Text::make(__('Order header no'), 'order_header_no')
-                ->readonly(),
+                ->readonly()
+                ->sortable(),
 
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
@@ -183,36 +186,36 @@ class Order_loader extends Resource
                 }),
         ];
     }
-    // public static function indexQuery(NovaRequest $request, $query)
-    // {
-    //     return $query->whereNotIn('order_status', ['checking', 'new'])
-    //         ->where('branch_id', '=', $request->user()->branch_id);
-    // }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->role != 'admin' && ($request->user()->hasPermissionTo('manage order_loaders'))) {
-
-            $resourceTable = 'order_headers';
-
-            $query->select("{$resourceTable}.*");
-            $query->addSelect('c.district as customerDistrict');
-            $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
-            // $query->whereIn("{$resourceTable}.order_status", ['confirmed', 'loaded',]);
-            $query->where("{$resourceTable}.branch_id", '=', $request->user()->branch_id);
-            $orderBy = $request->get('orderBy');
-
-            if ($orderBy == 'customer_rec_id') {
-                $query->getQuery()->orders = null;
-                $query->orderBy('customerDistrict', $request->get('orderByDirection'));
-            } else {
-                $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
-                    $q->getQuery()->orders = null;
-                    return $q->orderBy('customerDistrict', 'asc');
-                });
-            }
-        }
-        return $query;
+        return $query->whereNotIn('order_status', ['checking', 'new'])
+            ->where('branch_id', '=', $request->user()->branch_id);
     }
+    // public static function indexQuery(NovaRequest $request, $query)
+    // {
+    //     if ($request->user()->role != 'admin' && ($request->user()->hasPermissionTo('manage order_loaders'))) {
+
+    //         $resourceTable = 'order_headers';
+
+    //         $query->select("{$resourceTable}.*");
+    //         $query->addSelect('c.district as customerDistrict');
+    //         $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
+    //         //$query->whereIn("{$resourceTable}.order_status", ['confirmed', 'loaded',]);
+    //         $query->where("{$resourceTable}.branch_id", '=', $request->user()->branch_id);
+    //         $orderBy = $request->get('orderBy');
+
+    //         if ($orderBy == 'customer_rec_id') {
+    //             $query->getQuery()->orders = null;
+    //             $query->orderBy('customerDistrict', $request->get('orderByDirection'));
+    //         } else {
+    //             $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+    //                 $q->getQuery()->orders = null;
+    //                 return $q->orderBy('customerDistrict', 'asc');
+    //             });
+    //         }
+    //     }
+    //     return $query;
+    // }
     public static function relatableWaybills(NovaRequest $request, $query)
     {
         if (isset($request->resourceId)) {

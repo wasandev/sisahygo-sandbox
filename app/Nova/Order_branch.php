@@ -29,11 +29,13 @@ use Wasandev\Orderstatus\Orderstatus;
 class Order_branch extends Resource
 {
     use HasDependencies;
+    public static $group = '9.2 งานการเงิน/บัญชี';
+    public static $priority = 4;
+
     public static $polling = true;
     public static $pollingInterval = 60;
     public static $showPollingToggle = true;
-    public static $group = '9.งานการเงิน/บัญชี';
-    public static $priority = 6;
+
     public static $trafficCop = false;
     public static $preventFormAbandonment = true;
 

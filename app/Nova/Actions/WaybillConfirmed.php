@@ -51,7 +51,7 @@ class WaybillConfirmed extends Action
 
                 $model->waybill_amount = $fields->waybill_amount;
                 $model->waybill_payable =  $fields->waybill_payable;
-                $model->waybill_income = $fields->waybill_income;
+                //$model->waybill_income = $fields->waybill_income;
                 $model->departure_at = $fields->departure_at;
                 $model->arrival_at = $fields->arrival_at;
                 $model->waybill_status = 'confirmed';
@@ -106,7 +106,7 @@ class WaybillConfirmed extends Action
                 Currency::make('ค่าบรรทุก', 'waybill_payable')->default($car_payamount)
                     ->help($helptext),
 
-                Currency::make('รายได้บริษัท', 'waybill_income')->default($waybill_amount - $car_payamount),
+                //Currency::make('รายได้บริษัท', 'waybill_income')->default($waybill_amount - $car_payamount),
                 DateTime::make('กำหนดรถออกจากสาขาต้นทาง', 'departure_at')
                     ->format('DD/MM/YYYY HH:mm')
                     ->rules('required'),

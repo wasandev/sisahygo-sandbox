@@ -32,7 +32,7 @@ class WaybillObserver
         if ($waybill->waybill_status == 'confirmed') {
 
             //create car_balance
-            Car_balance::create([
+            Car_balance::updateOrCreate([
                 'car_id' => $waybill->car_id,
                 'vendor_id' => $waybill->car->vendor_id,
                 'doctype' => 'R',
@@ -45,19 +45,20 @@ class WaybillObserver
 
             ]);
 
-            Waybill_status::create([
+            Waybill_status::updateOrCreate([
                 'waybill_id' => $waybill->id,
                 'status' => 'confirmed',
                 'user_id' => auth()->user()->id,
             ]);
         }
         if ($waybill->waybill_status == 'in transit') {
-            Waybill_status::create([
+            Waybill_status::updateOrCreate([
                 'waybill_id' => $waybill->id,
                 'status' => 'in transit',
                 'user_id' => auth()->user()->id,
             ]);
         }
         $waybill->updated_by = auth()->user()->id;
+        $waybill->waybill_income = $waybill->waybill_amount - $waybill->waybill_payable;
     }
 }

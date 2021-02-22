@@ -3,6 +3,8 @@
 namespace App\Nova\Lenses;
 
 use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -26,7 +28,7 @@ class MostValueableSenders extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('order_headers', 'customers.id', '=', 'order_headers.customer_id')
-                ->where('order_headers.order_status', '=', 'Confirmed')
+                ->whereNotIn('order_headers.order_status', ['checking', 'new', 'problem', 'cancel'])
                 ->orderBy('revenue', 'desc')
                 ->groupBy('customers.id', 'customers.name')
         ));
@@ -81,7 +83,8 @@ class MostValueableSenders extends Lens
     public function filters(Request $request)
     {
         return [
-            new OrderdateFilter()
+            new OrderFromDate(),
+            new OrderToDate()
         ];
     }
 

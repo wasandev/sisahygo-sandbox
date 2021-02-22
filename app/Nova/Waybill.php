@@ -57,7 +57,7 @@ class Waybill extends Resource
 
     public function title()
     {
-        return $this->waybill_no . ' - ' . $this->car->car_regist;
+        return $this->waybill_no;
     }
     public function subtitle()
     {
@@ -102,12 +102,16 @@ class Waybill extends Resource
             Status::make(__('Status'), 'waybill_status')
                 ->loadingWhen(['loading'])
                 ->failedWhen(['cancel'])
-                ->exceptOnForms(),
-            Text::make(__('Waybill no'), 'waybill_no')->readonly(),
+                ->exceptOnForms()
+                ->sortable(),
+            Text::make(__('Waybill no'), 'waybill_no')
+                ->readonly()
+                ->sortable(),
             Date::make(__('Waybill date'), 'waybill_date')
                 ->readonly()
                 ->default(today())
-                ->format('DD/MM/YYYY'),
+                ->format('DD/MM/YYYY')
+                ->sortable(),
             Select::make(__('Waybill type'), 'waybill_type')->options([
                 'general' => 'ทั่วไป',
                 'charter' => 'เหมาคัน',
@@ -144,7 +148,8 @@ class Waybill extends Resource
                     return 0;
                 }
                 return 0;
-            })->exceptOnForms(),
+            })->exceptOnForms()
+                ->hideFromIndex(),
             Number::make('ค่าขนส่ง', 'total_amount', function () {
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),
@@ -163,7 +168,8 @@ class Waybill extends Resource
                 ->hideFromIndex(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->sortable()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->searchable(),
             DateTime::make(__('วันเวลาออกจากสาขาต้นทาง'), 'departure_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
@@ -278,6 +284,33 @@ class Waybill extends Resource
                 ->cancelButtonText("ไม่พิมพ์")
                 ->canRun(function ($request, $model) {
                     return true;
+                }),
+            (new Actions\WaybillBillRemove($request->resourceId))
+
+                ->onlyOnDetail()
+                ->confirmText('ต้องการนำใบรับส่งออกจากใบกำกับสินค้านี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage waybills');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && ($this->resource->waybill_status == 'confirmed' ||
+                            $this->resource->waybill_status == 'in transit') && $request->user()->hasPermissionTo('manage waybills'));
+                }),
+            (new Actions\WaybillBillAdd($request->resourceId))
+
+                ->onlyOnDetail()
+                ->confirmText('ต้องการนำใบรับส่งเข้าใบกำกับสินค้านี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage waybills');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && ($this->resource->waybill_status == 'confirmed' || $this->resource->waybill_status == 'in transit') && $request->user()->hasPermissionTo('manage waybills'));
                 }),
 
         ];

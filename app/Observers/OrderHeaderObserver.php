@@ -29,9 +29,9 @@ class OrderHeaderObserver
         $order_header->branch_rec_id = $to_branch->branch_id;
         $customer_paymenttype = $order_header->customer->paymenttype;
         $to_customer_paymenttype = $order_header->to_customer->paymenttype;
-        if ($customer_paymenttype == 'H' || $to_customer_paymenttype == 'H') {
+        if ($customer_paymenttype == 'H' && $to_customer_paymenttype == 'H') {
             $order_header->paymenttype = 'H';
-        } elseif ($customer_paymenttype == 'E' || $to_customer_paymenttype == 'E') {
+        } elseif ($customer_paymenttype == 'E' && $to_customer_paymenttype == 'E') {
             $order_header->paymenttype = 'E';
         } elseif ($customer_paymenttype == 'Y') {
             $order_header->paymenttype = 'F';
@@ -92,6 +92,7 @@ class OrderHeaderObserver
                     'transfer_amount' => $order_header->order_amount,
                     'bankaccount_id' => $order_header->bankaccount_id,
                     'reference' => $order_header->bankreference,
+                    'transfer_type' => 'H',
                     'user_id' => auth()->user()->id,
                 ]);
             }

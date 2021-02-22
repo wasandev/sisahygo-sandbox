@@ -15,7 +15,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Bankaccount extends Resource
 {
-    public static $group = '9.งานการเงิน/บัญชี';
+    public static $group = '9.2 งานการเงิน/บัญชี';
     public static $priority = 2;
     /**
      * The model the resource corresponds to.

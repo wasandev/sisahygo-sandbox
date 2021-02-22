@@ -50,6 +50,7 @@ class DeliveryDetailObserver
                     'order_header_id' => $branchrec_order->id,
                     'branch_id' => $branchrec_order->branch_rec_id,
                     'status' => false,
+                    'transfer_type' => 'E',
                     'transfer_amount' => $branchrec_order->order_amount,
                     'bankaccount_id' => $branchrec_order->bankaccount_id,
                     'reference' => $branchrec_order->bankreference,

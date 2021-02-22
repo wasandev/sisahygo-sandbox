@@ -37,7 +37,8 @@ class Order_banktransferPolicy
      */
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create order_banktransfers');
+        return false;
+        //return $user->role == 'admin' || $user->hasPermissionTo('create order_banktransfers');
     }
 
     /**

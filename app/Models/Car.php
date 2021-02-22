@@ -47,7 +47,8 @@ class Car extends Model
         'purchase_date' => 'date',
         'registration_date' => 'date',
         'insurance1_enddate' => 'date',
-        'insurance2_enddate' => 'date'
+        'insurance2_enddate' => 'date',
+        'waybill_date' => 'date',
     ];
     public function user()
     {
