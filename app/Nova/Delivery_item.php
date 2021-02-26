@@ -77,12 +77,7 @@ class Delivery_item extends Resource
 
             Boolean::make('สถานะการจัดส่ง', 'delivery_status')
                 ->exceptOnForms(),
-            Boolean::make('สถานะการเก็บเงิน', 'payment_status', function () {
-                if ($this->payment_amount > 0) {
-                    return $this->payment_status;
-                }
-                return true;
-            })->exceptOnForms(),
+            Boolean::make('สถานะการเก็บเงิน', 'payment_status')->exceptOnForms(),
             Currency::make('ส่วนลด', 'discount_amount')
                 ->onlyOnDetail(),
 

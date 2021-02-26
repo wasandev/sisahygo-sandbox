@@ -100,7 +100,11 @@ class Car extends Resource
             //ID::make()->sortable(),
             Boolean::make('ใช้งาน', 'status'),
             //->hideWhenCreating(),
-            Image::make('รูปรถ', 'carimage')->hideFromIndex(),
+
+            Image::make('รูปรถ', 'carimage')
+                ->hideFromIndex()
+                ->rules("mimes:jpeg,bmp,png", "max:2048")
+                ->help('ขนาดไฟล์ไม่เกิน 2 MB.'),
             new Panel('รายละเอียดของรถ', $this->carFields()),
             new Panel('รายละเอียดอื่นๆของรถ', $this->carotherFields()),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
@@ -153,6 +157,10 @@ class Car extends Resource
                 'partner' => 'รถร่วมบริการ'
             ])->displayUsingLabels()
                 ->sortable(),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
+                ->hideFromIndex()
+                ->help('ให้ระบุกรณีเป็นรถกระจายสินค้าของสาขา')
+                ->nullable(),
             BelongsTo::make('เจ้าของรถ/ผู้รับรายได้', 'owner', 'App\Nova\Vendor')
                 ->sortable()
                 ->onlyOnIndex(),
@@ -285,9 +293,27 @@ class Car extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
-            (new Actions\SetCarType),
-            (new Actions\SetCarStyle),
+            (new Actions\SetCarType)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                }),
+            (new Actions\SetCarStyle)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                }),
             (new Actions\SetCarOwnerType)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                }),
 
         ];
     }
@@ -300,5 +326,14 @@ class Car extends Resource
     public static function redirectAfterUpdate(NovaRequest $request, $resource)
     {
         return '/resources/' . static::uriKey();
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->branch->type == 'partner') {
+
+            return   $query->where('vendor_id', $request->user()->branch->vendor_id);
+        }
+        return $query;
     }
 }

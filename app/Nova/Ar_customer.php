@@ -314,10 +314,33 @@ class Ar_customer extends Resource
     {
 
         return [
-
-            (new DownloadExcel)->allFields()->withHeadings()
+            (new Actions\SetCustomerType)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit ar_customer');
+                })
                 ->canSee(function ($request) {
-                    return $request->user()->role == 'admin';
+                    return $request->user()->hasPermissionTo('edit ar_customer');
+                }),
+            (new Actions\SetCustomerPtype)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit ar_customer');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit ar_customer');
+                }),
+            (new Actions\SetCustomerPaymentType)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit ar_customer');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit ar_customer');
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit ar_customer');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit ar_customer');
                 }),
             (new Actions\ImportCustomers)->canSee(function ($request) {
                 return $request->user()->role == 'admin';

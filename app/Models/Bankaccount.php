@@ -9,7 +9,7 @@ class Bankaccount extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'bank_id', 'account_no', 'account_name', 'account_type', 'bankbranch', 'user_id', 'updated_by', 'defaultflag'
+        'bank_id', 'branch_id', 'account_no', 'account_name', 'account_type', 'bankbranch', 'user_id', 'updated_by', 'defaultflag'
     ];
 
     public function bank()
@@ -24,5 +24,9 @@ class Bankaccount extends Model
     public function user_update()
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
+    }
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch');
     }
 }

@@ -9,6 +9,10 @@ use Laravel\Nova\Filters\DateFilter;
 class OrderFromDate extends DateFilter
 {
     public $name = 'จากวันที่';
+    public function default()
+    {
+        return date(today());
+    }
     /**
      * Apply the filter to the given query.
      *
@@ -19,6 +23,6 @@ class OrderFromDate extends DateFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('order_header_date', '>=', Carbon::parse($value));
+        return  $query->whereDate('order_header_date', '>=', $value);
     }
 }

@@ -118,7 +118,13 @@ class Unit extends Resource
     public function actions(Request $request)
     {
         return [
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit units');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit units');
+                }),
             (new Actions\ImportUnits)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),

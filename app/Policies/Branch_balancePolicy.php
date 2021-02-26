@@ -30,16 +30,19 @@ class Branch_balancePolicy
 
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create branch_balance');
+        return false;
+        //$user->role == 'admin' || $user->hasPermissionTo('create branch_balance');
     }
 
     public function update(User $user, Branch_balance $branch_balance)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('edit branch_balance');
+        return false;
+        //$user->role == 'admin' || $user->hasPermissionTo('edit branch_balance');
     }
 
     public function delete(User $user, Branch_balance $branch_balance)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete branch_balance');
+        return false;
+        //$user->role == 'admin' || $user->hasPermissionTo('delete branch_balance');
     }
 }

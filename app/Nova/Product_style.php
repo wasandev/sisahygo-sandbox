@@ -130,7 +130,13 @@ class Product_style extends Resource
     public function actions(Request $request)
     {
         return [
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productstyles');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productstyles');
+                }),
             (new Actions\ImportProduct_styles)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),

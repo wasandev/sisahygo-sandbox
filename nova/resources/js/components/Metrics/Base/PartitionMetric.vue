@@ -9,7 +9,7 @@
     </h3>
 
     <div v-if="helpText" class="absolute pin-r pin-b p-2">
-      <tooltip trigger="hover">
+      <tooltip trigger="hover" placement="top-start">
         <icon
           type="help"
           viewBox="0 0 17 17"

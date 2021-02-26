@@ -46,6 +46,13 @@
         @confirm="executeAction"
         @close="closeConfirmationModal"
       />
+
+      <component
+        :is="actionResponseData.modal"
+        @close="closeActionResponseModal"
+        v-if="showActionResponseModal"
+        :data="actionResponseData"
+      />
     </portal>
   </span>
 </template>
@@ -60,6 +67,11 @@ export default {
     resource: {},
     actions: {},
   },
+
+  data: () => ({
+    showActionResponseModal: false,
+    actionResponseData: {},
+  }),
 
   methods: {
     handleSelectionChange(event) {

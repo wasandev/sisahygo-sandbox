@@ -105,7 +105,9 @@ class CreateBranchDeliveryItems extends Action
     public function fields()
     {
         $branch_routes = \App\Models\Branch_route::where('branch_id', auth()->user()->branch_id)->pluck('name', 'id');
-        $branch_car = \App\Models\Car::where('ownertype', 'owner')->get()->pluck('car_regist', 'id');
+        $branch_car = \App\Models\Car::where('ownertype', 'owner')
+            ->where('branch_id', auth()->user()->branch_id)
+            ->get()->pluck('car_regist', 'id');
         $driver = \App\Models\Employee::whereIn('type', ['พนักงานขับรถบริษัท', 'พนักงานขับรถร่วม'])->get()->pluck('name', 'id');
 
         return [

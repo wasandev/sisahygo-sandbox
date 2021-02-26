@@ -118,7 +118,9 @@ class Waybill extends Resource
                 'express' => 'Express',
             ])->displayUsingLabels()
                 ->default('general'),
-
+            Text::make('ไปสาขา', 'dest_branch', function () {
+                return $this->routeto_branch->dest_branch->name;
+            })->onlyOnIndex(),
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                     ->nullable()
@@ -150,10 +152,12 @@ class Waybill extends Resource
                 return 0;
             })->exceptOnForms()
                 ->hideFromIndex(),
-            Number::make('ค่าขนส่ง', 'total_amount', function () {
+            Number::make('ค่าขนส่งรวม', 'total_amount', function () {
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),
-            Currency::make('ค่าบรรทุก', 'waybill_payable')->hideWhenCreating(),
+            Currency::make('ค่าบรรทุก', 'waybill_payable')
+                ->hideWhenCreating()
+                ->hideFromIndex(),
             Currency::make('รายได้บริษัท', 'waybill_income')
                 ->onlyOnDetail(),
             Number::make('%รายได้', 'income', function () {
@@ -161,7 +165,8 @@ class Waybill extends Resource
                     return number_format((($this->waybill_amount - $this->waybill_payable) / $this->waybill_amount) * 100, 2, '.', '');
                 }
                 return 0;
-            })->exceptOnForms(),
+            })->exceptOnForms()
+                ->hideFromIndex(),
 
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
                 ->sortable()
@@ -339,7 +344,7 @@ class Waybill extends Resource
     {
         return '/resources/' . static::uriKey();
     }
-    public function addOrder_loader(User $user, Order_loader $order_loader)
+    public function addOrder_header(User $user, Order_header $order_header)
     {
 
         return false;

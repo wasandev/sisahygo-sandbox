@@ -233,15 +233,22 @@ class Order_cash extends Resource
                 ->confirmText('ต้องการออกใบเสร็จรับเงินจากรายการที่เลือก?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
-                ->canRun(function ($request, $model) {
-                    return true;
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit receipt');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit receipt');
                 }),
-            (new Actions\PrintOrder)->onlyOnDetail()
+            (new Actions\PrintOrder)
+                ->onlyOnDetail()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")
-                ->canRun(function ($request, $model) {
-                    return true;
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
                 }),
         ];
     }

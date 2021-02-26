@@ -150,9 +150,21 @@ class Order_banktransfers extends Resource
                 ->confirmText('ต้องการยืนยันรายการโอนเงิน รายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
-                ->canRun(function ($request, $model) {
-                    return true;
-                }),
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit order_banktransfers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit order_banktransfers');
+                })
         ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->branch->type == 'partner') {
+
+            return   $query->where('branch_id', $request->user()->branch_id);
+        }
+        return $query;
     }
 }

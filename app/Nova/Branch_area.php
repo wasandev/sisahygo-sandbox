@@ -149,7 +149,13 @@ class Branch_area extends Resource
     public function actions(Request $request)
     {
         return [
-            new Actions\SetDeliverydays,
+            (new Actions\SetDeliverydays)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit branchareas');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit branchareas');
+                }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';

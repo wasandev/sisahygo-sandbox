@@ -1264,51 +1264,29 @@ return [
             'description'  => 'จัดการข้อมูล',
             'group'        => 'ใบรับส่งเข้าสาขา',
         ],
-        //รายการรับเงินค่าขนส่งของสาขา
-        'view branchorder_payments' => [
+
+        //รายการปัญหาการขนส่ง
+        'view order_problems' => [
             'display_name' => 'ดู',
             'description'  => 'ดู',
-            'group'        => 'รายการรับเงินปลายทาง',
+            'group'        => 'ปัญหาการขนส่ง',
         ],
-        'create branchorder_payments' => [
+        'create order_problems' => [
             'display_name' => 'สร้าง',
             'description'  => 'สร้าง',
-            'group'        => 'รายการรับเงินปลายทาง',
+            'group'        => 'ปัญหาการขนส่ง',
         ],
 
-        'edit branchorder_payments' => [
+        'edit order_problems' => [
             'display_name' => 'แก้ไข',
             'description'  => 'แก้ไข',
-            'group'        => 'รายการรับเงินปลายทาง',
-        ],
-
-        'delete branchorder_payments' => [
-            'display_name' => 'ลบ',
-            'description'  => 'ลบ',
-            'group'        => 'รายการรับเงินปลายทาง',
-        ],
-        //รายการใบรับส่งมีปัญหา
-        'view orders_problems' => [
-            'display_name' => 'ดู',
-            'description'  => 'ดู',
-            'group'        => 'รายการใบรับส่งมีปัญหา',
-        ],
-        'create orders_problems' => [
-            'display_name' => 'สร้าง',
-            'description'  => 'สร้าง',
-            'group'        => 'รายการใบรับส่งมีปัญหา',
-        ],
-
-        'edit orders_problems' => [
-            'display_name' => 'แก้ไข',
-            'description'  => 'แก้ไข',
-            'group'        => 'รายการใบรับส่งมีปัญหา',
+            'group'        => 'ปัญหาการขนส่ง',
         ],
 
         'delete orders_problems' => [
             'display_name' => 'ลบ',
             'description'  => 'ลบ',
-            'group'        => 'รายการใบรับส่งมีปัญหา',
+            'group'        => 'ปัญหาการขนส่ง',
         ],
         //รายการจัดส่งสินค้า
         'view deliveries' => [
@@ -1378,6 +1356,29 @@ return [
             'display_name' => 'ลบ',
             'description'  => 'ลบ',
             'group'        => 'รายการเก็บเงินปลายทาง',
+        ],
+        //รายการเก็บเงินปลายทางสาขาร่วม
+        'view branch_balance_partner' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการเก็บเงินปลายทางสาขาร่วม',
+        ],
+        'create branch_balance_partner' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'รายการเก็บเงินปลายทางสาขาร่วม',
+        ],
+
+        'edit branch_balance_partner' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'รายการเก็บเงินปลายทางสาขาร่วม',
+        ],
+
+        'delete branch_balance_partner' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'รายการเก็บเงินปลายทางสาขาร่วม',
         ],
         //ใบเสร็จรับเงินปลายทาง
         'view receipt' => [

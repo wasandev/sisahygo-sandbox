@@ -276,14 +276,45 @@ class Employee extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\SetEmployeeStatus),
-            (new Actions\SetEmployeeBranch),
-            (new Actions\SetEmployeeDepartment),
-            (new Actions\SetEmployeeType),
-            (new Actions\ImportEmployees)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\SetEmployeeStatus)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                }),
+            (new Actions\SetEmployeeBranch)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                }),
+            (new Actions\SetEmployeeDepartment)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                }),
+            (new Actions\SetEmployeeType)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                }),
+            (new Actions\ImportEmployees)
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit employees');
+                }),
         ];
     }
     public static function redirectAfterCreate(NovaRequest $request, $resource)

@@ -4,6 +4,7 @@ namespace Laravel\Nova\Tests;
 
 use Illuminate\Foundation\Application;
 use Laravel\Dusk\Browser;
+use Orchestra\Testbench\Dusk\Foundation\PackageManifest;
 
 abstract class DuskTestCase extends \Orchestra\Testbench\Dusk\TestCase
 {
@@ -99,7 +100,23 @@ abstract class DuskTestCase extends \Orchestra\Testbench\Dusk\TestCase
             $app->detectEnvironment(function () {
                 return 'testing';
             });
+
+            PackageManifest::swap($app, $this);
         });
+    }
+
+    /**
+     * Resolve application core configuration implementation.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return void
+     */
+    protected function resolveApplicationConfiguration($app)
+    {
+        $app->make('Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables')->bootstrap($app);
+
+        parent::resolveApplicationConfiguration($app);
     }
 
     /**

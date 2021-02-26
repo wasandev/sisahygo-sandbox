@@ -33,7 +33,12 @@ class Vendor extends Model
         'location_lat',
         'location_lng',
         'bussinesstype_id',
-        'updated_by'
+        'updated_by',
+        'bankaccountno',
+        'bankaccountname',
+        'bank_id',
+        'bankbranch',
+        'account_type'
     ];
 
     public function user()
@@ -48,7 +53,10 @@ class Vendor extends Model
     {
         return $this->belongsTo('App\Models\Businesstype');
     }
-
+    public function bank()
+    {
+        return $this->belongsTo('App\Models\Bank');
+    }
 
 
     /*

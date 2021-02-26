@@ -11,7 +11,7 @@ class Branch_balance extends Model
     protected $fillable = [
         'branchbal_date', 'branchpay_date', 'branch_id', 'customer_id',
         'bal_amount', 'discount_amount', 'tax_amount', 'pay_amount', 'user_id', 'payment_status',
-        'updated_by', 'remark', 'receipt_id'
+        'updated_by', 'remark', 'receipt_id', 'type'
     ];
 
     protected $casts = [

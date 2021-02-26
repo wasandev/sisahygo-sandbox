@@ -161,9 +161,27 @@ class Productservice_price extends Resource
     public function actions(Request $request)
     {
         return [
-            new Actions\UpdateProductServicePrice,
-            new Actions\UpdateProductServiceUnit,
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\UpdateProductServicePrice)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new Actions\UpdateProductServiceUnit)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
 
         ];
     }

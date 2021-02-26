@@ -55,7 +55,7 @@ class UpdateProductServiceUnit extends Action
             Select::make('เลือกหน่วยนับสินค้า', 'unit')
                 ->options($units)
                 ->displayUsingLabels()
-
+                ->searchable()
 
         ];
     }

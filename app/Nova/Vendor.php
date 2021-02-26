@@ -107,6 +107,7 @@ class Vendor extends Resource
                 ->onlyOnDetail(),
             new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
             new Panel('ที่อยู่', $this->addressFields()),
+            new Panel('ข้อมูลบัญชีธนาคารสำหรับโอนเงิน', $this->bankaccountFields()),
             new Panel('อื่นๆ', $this->otherFields()),
 
 
@@ -171,7 +172,36 @@ class Vendor extends Resource
 
         ];
     }
-
+    /**
+     * Get the address fields for the resource.
+     *
+     * @return array
+     */
+    protected function bankaccountFields()
+    {
+        return [
+            Text::make(__('Bank Account no'), 'bankaccountno')
+                ->hideFromIndex()
+                ->nullable(),
+            Text::make(__('Account name'), 'bankaccountname')
+                ->hideFromIndex()
+                ->nullable(),
+            BelongsTo::make(__('Bank'), 'bank', 'App\Nova\Bank')
+                ->hideFromIndex()
+                ->nullable(),
+            Text::make(__('Bank branch'), 'bankbranch')
+                ->hideFromIndex()
+                ->nullable(),
+            Select::make(__('Account type'), 'account_type')
+                ->options([
+                    'saving' => 'ออมทรัพย์',
+                    'current' => 'กระแสรายวัน',
+                    'fixed' => 'ฝากประจำ'
+                ])->displayUsingLabels()
+                ->hideFromIndex()
+                ->nullable()
+        ];
+    }
     /**
      * Get the address fields for the resource.
      *

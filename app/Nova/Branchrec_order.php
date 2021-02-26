@@ -154,7 +154,6 @@ class Branchrec_order extends Resource
         return [
             new ByWaybill(),
             new ShowByOrderStatusBranch(),
-            new OrderToBranch()
         ];
     }
 

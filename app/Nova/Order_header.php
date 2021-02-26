@@ -6,6 +6,8 @@ use App\Nova\Actions\PrintOrder;
 use App\Nova\Filters\BillingUser;
 use App\Nova\Filters\CheckerUser;
 use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderToDate;
 use App\Nova\Filters\ShowOwnOrder;
 use App\Nova\Filters\ShowByOrderStatus;
 use Illuminate\Http\Request;
@@ -239,7 +241,8 @@ class Order_header extends Resource
         return [
             new ShowByOrderStatus(),
             new ShowOwnOrder(),
-            new OrderdateFilter(),
+            new OrderFromDate(),
+            new OrderToDate(),
             new BillingUser(),
             new CheckerUser(),
 
@@ -275,22 +278,42 @@ class Order_header extends Resource
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request, $model) {
-                    return true;
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
                 }),
-            (new Actions\PrintOrder)->onlyOnDetail()
+            (new Actions\PrintOrder)
+                ->onlyOnDetail()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")
                 ->canRun(function ($request, $model) {
-                    return true;
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
                 }),
             (new Actions\CancelOrder())
-
                 ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยกเลิก')
                 ->cancelButtonText("ไม่ยกเลิก")
                 ->canRun(function ($request, $model) {
-                    return true;
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                }),
+            (new Actions\OrderProblem())
+                ->onlyOnDetail()
+                ->confirmText('แจ้งปัญหาใบรับส่งรายการนี้?')
+                ->confirmButtonText('ตกลง')
+                ->cancelButtonText('ยกเลิก')
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
                 }),
         ];
     }

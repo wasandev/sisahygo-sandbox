@@ -130,7 +130,13 @@ class Category extends Resource
     public function actions(Request $request)
     {
         return [
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit categories');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit categories');
+                }),
             (new Actions\ImportCategories)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),

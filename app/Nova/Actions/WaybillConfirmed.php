@@ -81,20 +81,20 @@ class WaybillConfirmed extends Action
 
             if ($routeto_branch->branch->type == 'partner') {
                 $chargerate = $routeto_branch->branch->partner_rate;
-                $helptext = 'คำนวณค่าบรรทุกจาก ' . $chargerate . '%';
-                $car_payamount = ($waybill_amount * $chargerate) / 100;
+                $helptext = 'คำนวณค่าบรรทุก ' . (100 - $chargerate) . '%';
+                $car_payamount = ($waybill_amount * (100 - $chargerate)) / 100;
             } elseif ($routeto_branch->dest_branch->type == 'partner') {
                 $chargerate = $routeto_branch->dest_branch->partner_rate;
-                $helptext = 'คำนวณค่าบรรทุกจาก ' . $chargerate . '%';
-                $car_payamount = ($waybill_amount * $chargerate) / 100;
+                $helptext = 'คำนวณค่าบรรทุก ' . (100 - $chargerate) . '%';
+                $car_payamount = ($waybill_amount * (100 - $chargerate)) / 100;
             } else {
                 if ($routeto_branch_cost->chargeflag) {
                     $chargerate = $routeto_branch_cost->chargerate;
-                    $helptext = 'คำนวณค่าบรรทุกจาก ' . $chargerate . '%';
-                    $car_payamount = ($waybill_amount * $chargerate) / 100;
+                    $helptext = 'คำนวณค่าบรรทุก' . (100 - $chargerate) . '%';
+                    $car_payamount = ($waybill_amount * (100 - $chargerate)) / 100;
                 } else {
                     $car_payamount = $routeto_branch_cost->car_charge;
-                    $helptext = 'กำหนดค่าบรรทุก ' . $routeto_branch_cost->car_charge . ' บาท';
+                    $helptext = 'ค่าบรรทุก ' . $routeto_branch_cost->car_charge . ' บาท';
                 }
             }
 

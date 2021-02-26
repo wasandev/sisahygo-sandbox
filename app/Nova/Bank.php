@@ -118,7 +118,13 @@ class Bank extends Resource
             (new Actions\ImportBanks)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit banks');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit banks');
+                }),
         ];
     }
     public static function redirectAfterCreate(NovaRequest $request, $resource)

@@ -33,9 +33,9 @@ class IndexComponent extends BaseComponent
     /**
      * Wait for table to be ready.
      */
-    public function waitForTable(Browser $browser)
+    public function waitForTable(Browser $browser, $seconds = null)
     {
-        $browser->waitFor('table[data-testid="resource-table"]', 25);
+        $browser->waitFor('table[data-testid="resource-table"]', $seconds);
     }
 
     /**

@@ -171,13 +171,55 @@ class Product extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\AddProductServicePriceZone),
-            (new Actions\AddProductServicePrice),
-            (new Actions\AddProductServicePriceDistrict),
-            (new Actions\SetProductCategory),
-            (new Actions\SetProductStyle),
-            (new Actions\SetProductUnit),
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new Actions\AddProductServicePriceZone)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new Actions\AddProductServicePrice)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new Actions\AddProductServicePriceDistrict)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new Actions\SetProductCategory)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                }),
+            (new Actions\SetProductStyle)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                }),
+            (new Actions\SetProductUnit)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit products');
+                }),
             (new Actions\ImportProducts)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),

@@ -65,8 +65,11 @@ class Bankaccount extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->hideFromIndex(),
+            ID::make(__('ID'), 'id'),
             Boolean::make('ใช้สำหรับการโอนค่าขนส่ง', 'defaultflag'),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
+                ->nullable()
+                ->help('ระบุสาขากรณีเป็นบัญชีของสาขาร่วมบริการที่ใช้สำหรับรับเงินโอน'),
             BelongsTo::make(__('Bank'), 'bank', 'App\Nova\Bank')
                 ->showCreateRelationButton()
                 ->searchable(),
@@ -74,7 +77,8 @@ class Bankaccount extends Resource
             Text::make(__('Bank Account no'), 'account_no')
                 ->rules('required'),
             Text::make(__('Account name'), 'account_name')
-                ->rules('required'),
+                ->rules('required')
+                ->hideFromIndex(),
             Select::make(__('Account type'), 'account_type')
                 ->options([
                     'saving' => 'ออมทรัพย์',
@@ -144,7 +148,14 @@ class Bankaccount extends Resource
             (new Actions\ImportBankaccounts)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit bankaccounts');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit bankaccounts');
+                }),
+
         ];
     }
 

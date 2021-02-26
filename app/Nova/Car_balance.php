@@ -132,4 +132,12 @@ class Car_balance extends Resource
     {
         return [];
     }
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->branch->type == 'partner') {
+
+            return   $query->where('vendor_id', $request->user()->branch->vendor_id);
+        }
+        return $query;
+    }
 }

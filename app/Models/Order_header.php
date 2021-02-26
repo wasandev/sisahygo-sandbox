@@ -39,7 +39,7 @@ class Order_header extends Model
     }
     public function loader()
     {
-        return $this->belongsTo('App\Models\Employee', 'loader_id');
+        return $this->belongsTo('App\Models\User', 'loader_id');
     }
 
     public function shipper()

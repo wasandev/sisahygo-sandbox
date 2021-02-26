@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Bankaccount;
 use App\Models\Branchrec_order;
+use App\Models\Delivery;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
 use Brick\Money\CurrencyConverter;
@@ -52,13 +53,14 @@ class DeliveryConfirmed extends Action
             if ($model->delivery_status) {
                 return Action::danger('รายการนี้ยืนยันไปแล้ว');
             }
-
+            $delivery = Delivery::find($model->delivery_id);
             $delivery_details = Delivery_detail::where('delivery_item_id', $model->id)->get();
 
             foreach ($delivery_details as $delivery_detail) {
 
                 $branch_order = Branchrec_order::find($delivery_detail->order_header_id);
                 $branch_order->order_status = 'completed';
+                $branch_order->shipper_id = $delivery->sender_id;
                 $branch_order->branchpay_by =  $fields->payment_by;
 
                 if ($branch_order->paymenttype === 'E') {
@@ -120,8 +122,14 @@ class DeliveryConfirmed extends Action
      */
     public function fields()
     {
-
-        $bankaccount = Bankaccount::where('defaultflag', '=', true)->pluck('account_no', 'id');
+        if (auth()->user()->branch->type == 'partner') {
+            $bankaccount = Bankaccount::where('defaultflag', '=', true)
+                ->where('branch_id', auth()->user()->branch_id)
+                ->pluck('account_no', 'id');
+        } else {
+            $bankaccount = Bankaccount::where('defaultflag', '=', true)
+                ->pluck('account_no', 'id');
+        }
 
         if ($this->model) {
             $delivery_item = Delivery_item::find($this->model);

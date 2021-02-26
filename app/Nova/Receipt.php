@@ -17,7 +17,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Receipt extends Resource
 {
     public static $group = '8.สำหรับสาขา';
-    public static $priority = 5;
+    public static $priority = 6;
 
     /**
      * The model the resource corresponds to.

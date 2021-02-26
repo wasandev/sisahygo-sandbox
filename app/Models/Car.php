@@ -40,7 +40,9 @@ class Car extends Model
         'finance_id',
         'user_id',
         'updated_by',
-        'driver_id'
+        'driver_id',
+        'branch_id'
+
     ];
 
     protected $casts = [
@@ -108,5 +110,15 @@ class Car extends Model
     public function car_balances()
     {
         return $this->hasMany(Car_balance::class);
+    }
+
+    /**
+     * Get the branch that owns the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 }

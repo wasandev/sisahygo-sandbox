@@ -209,11 +209,23 @@ class Branch extends Resource
     public function actions(Request $request)
     {
         return [
-            new Actions\AddBranchArea,
+            (new Actions\AddBranchArea)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit branches');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit branches');
+                }),
             (new Actions\ImportBranches)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),
-            (new DownloadExcel)->allFields()->withHeadings(),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit branches');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit branches');
+                }),
         ];
     }
 

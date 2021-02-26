@@ -17,6 +17,9 @@ class OrderDetailObserver
             $order_detail->unit_id = $product_price->unit_id;
             $order_detail->price = $product_price->price;
         }
+        if ($order_detail->unit->name == 'กิโลกรัม') {
+            $order_detail->weight = 1;
+        }
         $order_detail->user_id = auth()->user()->id;
     }
     public function updating(Order_detail $order_detail)
@@ -30,5 +33,8 @@ class OrderDetailObserver
             $order_detail->price = $product_price->price;
         }
         $order_detail->updated_by = auth()->user()->id;
+        if ($order_detail->unit->name == 'กิโลกรัม') {
+            $order_detail->weight = 1;
+        }
     }
 }

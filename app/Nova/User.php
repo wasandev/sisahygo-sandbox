@@ -206,7 +206,10 @@ class User extends Resource
             (new Actions\ImportUsers)->canSee(function ($request) {
                 return $request->user()->role == 'admin';
             }),
-            (new Actions\SetUserBranch),
+            (new Actions\SetUserBranch)
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)

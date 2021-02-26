@@ -2,7 +2,29 @@
 
 namespace App\Observers;
 
+use App\Models\Order_header;
+use App\Models\Order_problem;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 class Order_problemObserver
 {
-    //
+    public function creating(Order_problem $order_problem)
+    {
+        $problem_no = IdGenerator::generate(['table' => 'order_problems', 'field' => 'problem_no', 'length' => 15, 'prefix' => 'QC' . date('Ymd')]);
+        $order_header = Order_header::find($order_problem->order_header_id);
+        if ($order_problem->customer_flag == 'S') {
+            $order_problem->customer_id = $order_header->customer->id;
+        } else {
+            $order_problem->customer_id = $order_header->to_customer->id;
+        }
+        $order_problem->problem_no = $problem_no;
+        $order_problem->problem_date = today();
+        $order_problem->user_id = auth()->user()->id;
+    }
+
+    public function updating(Order_problem $order_problem)
+    {
+
+        $order_problem->checker_id = auth()->user()->id;
+    }
 }

@@ -28,6 +28,10 @@ class CarPolicy
 
     public function update(User $user, Car $car)
     {
+        if ($user->branch->type == 'partner') {
+            return $user->role == 'admin' || $user->hasPermissionTo('edit edit cars') ||
+                $car->vendor_id == $user->branch->vendor_id;
+        }
 
         return $user->role == 'admin' || $user->hasPermissionTo('edit cars');
     }

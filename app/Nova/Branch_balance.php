@@ -51,7 +51,7 @@ class Branch_balance extends Resource
     ];
     public static function label()
     {
-        return 'รายการลูกหนี้สาขา';
+        return 'รายการเก็บเงินปลายทางสาขา';
     }
     /**
      * Get the fields displayed by the resource.
@@ -63,7 +63,11 @@ class Branch_balance extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+
+
             Boolean::make('สถานะการชำระ', 'payment_status')
+                ->sortable(),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->sortable(),
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
                 ->sortable()
@@ -74,9 +78,11 @@ class Branch_balance extends Resource
             Currency::make('จำนวนเงิน', 'bal_amount')
                 ->sortable(),
             Currency::make('ส่วนลด', 'discount_amount')
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex(),
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
+
             Currency::make('ยอดรับชำระ', 'pay_amount')
                 ->sortable(),
 
@@ -150,5 +156,10 @@ class Branch_balance extends Resource
                     return $request->user()->hasPermissionTo('view branch_balance');
                 })
         ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('type', 'owner');
     }
 }

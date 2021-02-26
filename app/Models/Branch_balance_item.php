@@ -21,6 +21,10 @@ class Branch_balance_item extends Model
     {
         return $this->belongsTo('App\Models\Branch_balance', 'order_header_id');
     }
+    public function branch_balance_partner()
+    {
+        return $this->belongsTo('App\Models\Branch_balance_partner', 'order_header_id');
+    }
     public function branchrec_order()
     {
         return $this->belongsTo('App\Models\Branchrec_order', 'order_header_id');

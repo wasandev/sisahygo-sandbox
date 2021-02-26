@@ -64,7 +64,33 @@ class ID extends Field
      */
     public static function forModel($model)
     {
-        return tap(static::make('ID', $model->getKeyName()))->resolve($model);
+        return tap(static::make('ID', $model->getKeyName()), function ($field) use ($model) {
+            $value = $model->getKey();
+
+            if (is_int($value) && $value >= 9007199254740991) {
+                $field->asBigInt();
+            }
+
+            $field->resolve($model);
+        });
+    }
+
+    /**
+     * Resolve the given attribute from the given resource.
+     *
+     * @param  mixed  $resource
+     * @param  string  $attribute
+     * @return mixed
+     */
+    protected function resolveAttribute($resource, $attribute)
+    {
+        $value = parent::resolveAttribute($resource, $attribute);
+
+        if (is_int($value) && $value >= 9007199254740991) {
+            return (string) $value;
+        }
+
+        return $value;
     }
 
     /**

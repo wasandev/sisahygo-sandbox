@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Tests;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Mix;
 use Illuminate\Queue\WorkerOptions;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
@@ -198,6 +199,20 @@ abstract class IntegrationTest extends TestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+    }
+
+    /**
+     * Run tests Without Mix.
+     *
+     * @return $this
+     */
+    protected function withoutMix()
+    {
+        $this->instance(Mix::class, function () {
+            //
+        });
+
+        return $this;
     }
 
     /**

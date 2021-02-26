@@ -49,7 +49,10 @@ class BankaccountPolicy
      */
     public function update(User $user, Bankaccount $Bankaccount)
     {
-
+        if ($user->branch->type == 'partner') {
+            return $user->role == 'admin' || $user->hasPermissionTo('edit bankaccounts') ||
+                $user->branch_id == $Bankaccount->branch_id;
+        }
         return $user->role == 'admin' || $user->hasPermissionTo('edit bankaccounts');
     }
 

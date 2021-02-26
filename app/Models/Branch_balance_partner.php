@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Branch_balance_partner extends Model
+{
+    use HasFactory;
+    protected $table = 'branch_balances';
+    protected $fillable = [
+        'branchbal_date', 'branchpay_date', 'branch_id', 'customer_id',
+        'bal_amount', 'discount_amount', 'tax_amount', 'pay_amount', 'user_id', 'payment_status',
+        'updated_by', 'remark', 'receipt_id', 'type'
+    ];
+
+    protected $casts = [
+        'branchbal_date' => 'date',
+        'branchpay_date' => 'date',
+    ];
+
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function user_update()
+    {
+        return $this->belongsTo('App\models\User', 'updated_by');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer');
+    }
+
+    public function receipt()
+    {
+        return $this->belongsTo('App\Models\Receipt');
+    }
+    public function branch_balance_items()
+    {
+        return $this->hasMany('App\Models\Branch_balance_item', 'branch_balance_id');
+    }
+}

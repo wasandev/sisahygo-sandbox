@@ -4,7 +4,7 @@
       <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
 
       <div v-if="helpText" class="absolute pin-r pin-b p-2 z-20">
-        <tooltip trigger="click">
+        <tooltip trigger="click" placement="top-start">
           <icon
             type="help"
             viewBox="0 0 17 17"
@@ -170,7 +170,7 @@ export default {
     this.resizeObserver.observe(this.$refs.chart)
   },
 
-  destroyed() {
+  beforeDestroy() {
     this.resizeObserver.unobserve(this.$refs.chart)
   },
 

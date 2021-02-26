@@ -318,17 +318,36 @@ class Customer extends Resource
     {
 
         return [
-            // (new Actions\AddCustomerProductPrice)
-            //     ->canSee(function ($request) {
-            //         return ($request->user()->hasPermissionTo('create productservice_prices'));
-            //     }),
-            (new Actions\SetCustomerType),
-            (new Actions\SetCustomerPtype),
-            (new Actions\SetCustomerPaymentType),
-            (new DownloadExcel)->allFields()->withHeadings(),
-            (new Actions\ImportCustomers)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+
+            (new Actions\SetCustomerType)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit customers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit customers');
+                }),
+            (new Actions\SetCustomerPtype)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit customers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit customers');
+                }),
+            (new Actions\SetCustomerPaymentType)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit customers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit customers');
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
+            (new Actions\ImportCustomers)
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
 
 
         ];

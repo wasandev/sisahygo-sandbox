@@ -197,6 +197,7 @@ export default {
     resourceId: function (newResourceId, oldResourceId) {
       if (newResourceId != oldResourceId) {
         this.initializeComponent()
+        this.fetchCards()
       }
     },
   },
