@@ -19,6 +19,7 @@ use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\OrdersByPaymentType;
 use App\Nova\Metrics\OrdersPerMonth;
 use Dniccum\CustomEmailSender\CustomEmailSender;
+use Dniccum\NovaDocumentation\NovaDocumentation;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -142,6 +143,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
+            new NovaDocumentation
         ];
     }
 

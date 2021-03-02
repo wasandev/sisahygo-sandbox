@@ -19,7 +19,7 @@ class Serviceprice extends Resource
 {
     public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
-    public static $priority = 10;
+    public static $priority = 9;
 
 
     /**

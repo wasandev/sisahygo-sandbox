@@ -17,7 +17,7 @@ class Serviceprice_item extends Resource
 {
     public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
-    public static $priority = 11;
+    public static $priority = 10;
     /**
      * The model the resource corresponds to.
      *

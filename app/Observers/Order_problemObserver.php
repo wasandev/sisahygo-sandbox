@@ -20,11 +20,20 @@ class Order_problemObserver
         $order_problem->problem_no = $problem_no;
         $order_problem->problem_date = today();
         $order_problem->user_id = auth()->user()->id;
+
+        $order_header->order_status = 'problem';
+        $order_header->save();
     }
 
     public function updating(Order_problem $order_problem)
     {
-
-        $order_problem->checker_id = auth()->user()->id;
+        if ($order_problem->status == 'new') {
+            $order_problem->status = 'checking';
+            $order_problem->checker_id = auth()->user()->id;
+        } elseif ($order_problem->status == 'checking') {
+            $order_problem->status = 'discuss';
+        } elseif ($order_problem->status == 'discuss' && $order_problem->approve_amount > 0) {
+            $order_problem->status = 'approved';
+        }
     }
 }

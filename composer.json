@@ -13,6 +13,7 @@
         "barryvdh/laravel-dompdf": "^0.8.7",
         "cloudcake/nova-fixed-bars": "^1.1",
         "dniccum/custom-email-sender": "^3.0",
+        "dniccum/nova-documentation": "^2.0",
         "doctrine/dbal": "^2.12",
         "epartment/nova-dependency-container": "^1.2",
         "fideloper/proxy": "^4.2",

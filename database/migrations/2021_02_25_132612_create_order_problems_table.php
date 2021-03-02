@@ -33,6 +33,14 @@ class CreateOrderProblemsTable extends Migration
             $table->string('discuss_detail')->nullable();
             $table->decimal('approve_amount', 10, 2)->nullable();
             $table->boolean('order_amount_flag')->nullable();
+            $table->date('payment_date')->nullable();
+            $table->enum('payment_by', ['H', 'T', 'Q'])->default('H');
+            $table->string('bankaccountname')->nullable();
+            $table->string('bankaccount', 20)->nullable();
+            $table->integer('bank_id')->nullable();
+            $table->string('chequeno')->nullable();
+            $table->string('chequedate')->nullable();
+            $table->integer('chequebank_id')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('checker_id')->unsigned()->nullable();
             $table->integer('appprove_id')->unsigned()->nullable();

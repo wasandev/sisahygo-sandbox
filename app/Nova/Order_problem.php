@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -18,6 +20,7 @@ use Laravel\Nova\Panel;
 
 class Order_problem extends Resource
 {
+    use HasDependencies;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 5;
     public static $polling = true;
@@ -67,11 +70,11 @@ class Order_problem extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
             Status::make('สถานะ', 'status')
                 ->loadingWhen(['checking'])
                 ->failedWhen(['new'])
-                ->exceptOnForms()
+                ->readonly()
                 ->sortable(),
             Text::make('เลขที่เอกสาร', 'problem_no')
                 ->readonly()
@@ -83,6 +86,8 @@ class Order_problem extends Resource
             new Panel('2.การตรวจสอบ', $this->checkFields()),
             new Panel('3.การพิจารณาและอนุมัติ', $this->discussFields()),
             new Panel('4.พนักงานที่เกี่ยวของ', $this->employeeFields()),
+            new Panel('5.การชำระเงิน', $this->paymentFields()),
+
             HasMany::make('เอกสารประกอบ', 'order_problem_images', 'App\Nova\Order_problem_image')
         ];
     }
@@ -97,10 +102,11 @@ class Order_problem extends Resource
         return [
             BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->showOnCreating(),
             Text::make('จุดรับสินค้า', 'branchpoint', function () {
                 return $this->order_header->branch->name . '-' . $this->order_header->to_branch->name;
-            })->onlyOnForms(),
+            })->onlyOnDetail(),
             Boolean::make('การชำระค่าขนส่ง', 'payment_status', function () {
                 return $this->order_header->payment_status;
             })->onlyOnDetail(),
@@ -115,9 +121,9 @@ class Order_problem extends Resource
                 ->options([
                     'S' => 'ลูกค้าผู้ส่ง',
                     'R' => 'ลูกค้าผู้รับ',
-                ])->showOnCreating(),
+                ])->showOnCreating()
+                ->hideFromIndex(),
             BelongsTo::make('ลูกค้าผู้เรียกร้อง', 'customer', 'App\Nova\Customer')
-                ->hideFromIndex()
                 ->searchable()
                 ->onlyOnDetail(),
             Text::make('ผู้แจ้งเรื่อง', 'contact_person')->nullable()
@@ -183,6 +189,41 @@ class Order_problem extends Resource
 
         ];
     }
+    protected function paymentFields()
+    {
+        return [
+            Date::make('วันที่จ่าย', 'payment_date')
+                ->hideWhenCreating()
+                ->hideFromIndex(),
+
+            Select::make('จ่ายด้วย', 'payment_by')->options([
+                'H' => 'เงินสด',
+                'T' => 'เงินโอน',
+                'Q' => 'เช็ค'
+            ])->displayUsingLabels()
+                ->sortable()
+                ->hideFromIndex()
+                ->hideWhenCreating(),
+            NovaDependencyContainer::make([
+                Text::make('บัญชีเลขที่', 'bankaccount')
+                    ->nullable(),
+                BelongsTo::make(__('Bank'), 'bank', 'App\Nova\Bank')
+                    ->nullable(),
+                Text::make('ชื่อบัญชี', 'bankaccountname')
+                    ->nullable()
+
+            ])->dependsOn('payment_by', 'T'),
+
+            NovaDependencyContainer::make([
+                Text::make(__('Cheque No'), 'chequeno')
+                    ->nullable(),
+                Text::make(__('Cheque Date'), 'chequedate')
+                    ->nullable(),
+                BelongsTo::make(__('Cheque Bank'), 'chequebank', 'App\Nova\Bank')
+                    ->nullable()
+            ])->dependsOn('payment_by', 'Q'),
+        ];
+    }
     /**
      * Get the address fields for the resource.
      *
@@ -198,16 +239,21 @@ class Order_problem extends Resource
                 return $this->order_header->user->name;
             })->onlyOnDetail(),
             Text::make('พนักงานจัดขึ้น', 'loader', function () {
-                return $this->order_header->loader->name;
+                if (isset($this->order_header->loader)) {
+                    return $this->order_header->loader->name;
+                } else {
+                    return  null;
+                }
             })->onlyOnDetail(),
             Text::make('พนักงานจัดส่ง', 'shipper', function () {
                 if (isset($this->order_header->shipper)) {
                     return $this->order_header->shipper->name;
+                } else {
+                    return null;
                 }
-                return null;
             })->onlyOnDetail(),
             Text::make('พนักงานขับรถ', 'car_driver', function () {
-                if (isset($this->order_header->waybill)) {
+                if (isset($this->order_header->waybill->car->driver)) {
                     return $this->order_header->waybill->car->driver->name;
                 } else {
                     return null;
@@ -275,5 +321,15 @@ class Order_problem extends Resource
     {
 
         return $query->where('order_status', '<>', 'problem');
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

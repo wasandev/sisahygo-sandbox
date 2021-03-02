@@ -12,10 +12,15 @@ class Order_problem extends Model
         'order_header_id', 'customer_flag', 'customer_id', 'contact_person', 'contact_phoneno', 'problem_no', 'problem_date', 'status', 'problem_type',
         'problem_detail', 'problem_claim', 'claim_amount', 'problem_personclaim',
         'problem_process', 'check_detail', 'discuss_detail', 'approve_amount',
-        'order_amount_flag', 'user_id', 'checker_id', 'appprove_id', 'employee_id'
+        'order_amount_flag', 'user_id', 'checker_id', 'appprove_id', 'employee_id',
+        'payment_date', 'payment_by', 'bankaccountname', 'bankaccount', 'bank_id', 'chequeno',
+        'chequedate', 'chequebank_id'
     ];
 
-    protected $casts = ['problem_date' => 'date'];
+    protected $casts = [
+        'problem_date' => 'date',
+        'paymnet_date' => 'date'
+    ];
 
     /**
      * Get the order_header that owns the Order_problem
@@ -47,6 +52,15 @@ class Order_problem extends Model
     {
         return $this->belongsTo('App\Models\User', 'employee_id');
     }
+    public function bank()
+    {
+        return $this->belongsTo('App\Models\Bank');
+    }
+    public function chequebank()
+    {
+        return $this->belongsTo('App\Models\Bank', 'chequebank_id');
+    }
+
 
     /**
      * Get all of the order_problem_images for the Order_problem
