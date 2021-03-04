@@ -1,15 +1,15 @@
 ---
 title: "งานด้านรถบรรทุก"
 path: "carpage"
-order: 4
+order: 5
 ---
 
 # งานด้านรถบรรทุก
 
 สำหรับจัดการข้อมูลเกี่ยวกับรถบรรทุก:
 
--   Define features
--   Add how-to's
--   Link to tutorial videos/images
-
-To see any other Markdown syntax and examples, please see [the sample](sample.md).
+-   [ข้อมูลประเภทรถ](carpage/cartype.md)
+-   [ข้อมูลลักษณะรถ](carpage/carstyle.md)
+-   [ข้อมูลรถ](carpage/car.md)
+-   [ข้อมูลเจ้าหนี้/เจ้าของรถ](carpage/vendor.md)
+-   [บัญชีรถ](carpage/car_balance.md)

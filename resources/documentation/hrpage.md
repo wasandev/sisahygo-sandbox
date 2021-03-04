@@ -1,16 +1,14 @@
 ---
-title: "งานด้านข้อมูลบุคคล"
+title: "งานด้านบุคคล"
 path: "hrpage"
-order: 3
+order: 4
 ---
 
 # งานด้านบุคคล
 
-สำหรับจัดการข้อมูลพนักงาน:
+สำหรับจัดการข้อมูลเกี่ยวกับพนักงาน:
 
--   [ข้อมูลฝ่าย/แผนก](department.md)
--   [ข้อมูลตำแหน่งงาน](position.md)
--   [ข้อมูลประเภทใบขับขี่](driving_license_types.md)
--   [ข้อมูลพนักงาน](employee.md)
-
-To see any other Markdown syntax and examples, please see [the sample](sample.md).
+-   [ข้อมูลฝ่าย/แผนก](้hrpage/department.md)
+-   [ข้อมูลตำแหน่งงาน](hrpage/position.md)
+-   [ข้อมูลประเภทใบขับขี่](hrpage/driving_license_type.md)
+-   [ข้อมูลพนักงาน](hrpage/employee.md)
