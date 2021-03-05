@@ -8,8 +8,8 @@ order: 8
 
 สำหรับงานด้านบริการขนส่ง
 
--   [รายการตรวจรับสินค้า](checking.md)
--   [รายการใบรับส่งสินค้า](order_header.md)
--   [รายการใบกำกับสินค้า](waybill.md)
--   [รายการจัดขึ้นสินค้า](loader.md)
--   [รายการปัญหาการขนส่ง](order_problem.md)
+-   [รายการตรวจรับสินค้า](service/checking.md)
+-   [รายการใบรับส่งสินค้า](service/order_header.md)
+-   [รายการใบกำกับสินค้า](service/waybill.md)
+-   [รายการจัดขึ้นสินค้า](service/loader.md)
+-   [รายการปัญหาการขนส่ง](service/order_problem.md)

@@ -1,7 +1,7 @@
 ---
 title: "ระบบส่งอีเมล์"
 path: "mailing"
-order: 12
+order: 13
 ---
 
 # ระบบส่งอีเมล์
