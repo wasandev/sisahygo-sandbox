@@ -1,16 +1,11 @@
 ---
-title: "รูปแบบหน้าจอและเครื่องมือ"
+title: "รูปแบบหน้าจอ (User Interface)"
 path: "screen"
-order: 1
+order: 1.1
 ---
 
-## รูปแบบหน้าจอและเครื่องมือ
+## รูปแบบหน้าจอ (User Interface)
 
 ![ตัวอย่างหน้าจอ](/images/documents/sisahygo_s1.png)
-Within this area, you can:
 
--   Define features
--   Add how-to's
--   Link to tutorial videos/images
-
-To see any other Markdown syntax and examples, please see [the sample](sample.md).
+SISAHYGO User Interface
