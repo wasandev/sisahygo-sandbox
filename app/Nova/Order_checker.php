@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -157,7 +159,8 @@ class Order_checker extends Resource
     public function filters(Request $request)
     {
         return [
-            new OrderdateFilter(),
+            new OrderFromDate(),
+            new  OrderToDate()
         ];
     }
 

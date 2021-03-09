@@ -75,7 +75,7 @@ class Branch_route extends Resource
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             //HasMany::make('อำเภอในเส้นทาง', 'branch_route_districts', 'App\Nova\Branch_route_district'),
-            //HasMany::make('ต้นทุนตามเส้นทางของสาขา', 'branch_route_costs', 'App\Nova\Branch_route_cost')
+            HasMany::make('ต้นทุนตามเส้นทางของสาขา', 'branch_route_costs', 'App\Nova\Branch_route_cost')
 
         ];
     }
