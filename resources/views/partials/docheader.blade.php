@@ -1,7 +1,7 @@
 <table style="border-bottom: 1px solid black; padding-bottom: 10px">
     <tr style="width: 100%;">
         <td style="width: 100%">
-            <img src="{{ url('storage/'.$company->logofile) }}" alt="{{$company->company_name}}" height="92">
+            <img src="{{ url('storage/'.$company->imagefile) }}" alt="{{$company->company_name}}" height="92">
         </td>
     </tr>
     <tr>

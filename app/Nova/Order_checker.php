@@ -160,7 +160,7 @@ class Order_checker extends Resource
     {
         return [
             new OrderFromDate(),
-            new  OrderToDate()
+            new OrderToDate()
         ];
     }
 

@@ -27,7 +27,8 @@ class CompanyProfile extends Model
         'location_lat',
         'location_lng',
         'user_id',
-        'updated_by'
+        'updated_by',
+        'orderprint_option'
     ];
 
     public function user()

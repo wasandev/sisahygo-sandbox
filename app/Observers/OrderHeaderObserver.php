@@ -55,8 +55,13 @@ class OrderHeaderObserver
 
         if ($order_header->order_status == 'confirmed' && is_null($order_header->order_header_no)) {
             $order_amount = 0;
+            $branchtrack = $order_header->branch->code . $order_header->to_branch->code;
             $order_header_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'order_header_no', 'length' => 15, 'prefix' => date('Ymd')]);
+            $tracking_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'tracking_no', 'length' => 20, 'prefix' => $branchtrack . date('Ymd')]);
+
             $order_header->order_header_no = $order_header_no;
+            $order_header->tracking_no = $tracking_no;
+
             $to_customer = Customer::find($order_header->customer_rec_id);
             $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
             if (is_null($to_branch)) {

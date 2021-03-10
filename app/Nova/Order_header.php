@@ -64,7 +64,7 @@ class Order_header extends Resource
      * @var array
      */
     public static $search = [
-        'order_header_no'
+        'order_header_no', 'id'
     ];
 
     public static $searchRelations = [
@@ -95,8 +95,7 @@ class Order_header extends Resource
     {
         return [
             ID::make('ลำดับ', 'id')
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel', 'problem'])

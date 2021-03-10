@@ -15,6 +15,7 @@ use Wasandev\InputThaiAddress\InputPostalCode;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\DateTime;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
+use Laravel\Nova\Fields\Select;
 
 class CompanyProfile extends Resource
 {
@@ -92,7 +93,8 @@ class CompanyProfile extends Resource
     {
         return [
             Text::make(__('Phone'), 'phoneno')
-                ->rules('required'),
+                ->rules('required')
+                ->hideFromIndex(),
             Text::make(__('Website Url'), 'weburl')
                 ->hideFromIndex(),
             Text::make(__('Facebook'), 'facebook')
@@ -163,6 +165,12 @@ class CompanyProfile extends Resource
                 ->hideFromIndex()
                 ->rules("mimes:jpeg,bmp,png", "max:2048")
                 ->help('ขนาดไฟล์ไม่เกิน 2 MB.'),
+            Select::make('รูปแบบการพิมพ์ใบรับส่ง', 'orderprint_option')->options([
+                'form1' => 'พิมพ์ลงฟอร์ม',
+                'form2' => 'พิมพ์ลงกระดาษเปล่า(A5)',
+                'form3' => 'พิมพ์กระดาษเทอร์มอล'
+            ])->displayUsingLabels()
+                ->hideFromIndex(),
 
             Textarea::make(__('Other'), 'description')->hideFromIndex(),
 

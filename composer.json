@@ -30,6 +30,8 @@
         "optimistdigital/nova-multiselect-field": "^2.0",
         "orlyapps/nova-belongsto-depend": "^2.0",
         "pktharindu/nova-permissions": "^2.1",
+        "rawilk/laravel-printing": "^1.3",
+        "simplesoftwareio/simple-qrcode": "~4",
         "titasgailius/search-relations": "^1.0",
         "wasandev/input-thai-address": "*",
         "wasandev/orderstatus": "*",
