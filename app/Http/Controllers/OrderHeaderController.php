@@ -69,9 +69,9 @@ class OrderHeaderController extends Controller
                     ->setPaper('a5', 'landscape');
         }
 
-        //$path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $order->order_header_no  . '.pdf';
-        //$pdf->save($path);
-        return $pdf->stream();
+        $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $order->order_header_no  . '.pdf';
+        $pdf->save($path);
+        return $pdf->stream($path);
 
         // return  $pdf->stream($order->order_header_no . '.pdf');
     }
