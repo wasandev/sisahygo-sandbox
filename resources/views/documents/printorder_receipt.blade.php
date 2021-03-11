@@ -118,7 +118,7 @@
 
 </table>
 
-<table  style="width: 100%;height: 2.5cm;border-top: 1px solid black;font-size: .8em;">
+<table  style="width: 100%;height: 2cm;border-top: 1px solid black;font-size: .8em;">
         @foreach ($order->order_details as $item )
          <tr style="vertical-align:top">
             <td  style="width: 47%;text-align: left">
