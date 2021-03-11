@@ -60,7 +60,7 @@
         </td>
     </tr>
 </table>
-<table style="width: 100%;border-top: 1px solid black">
+<table style="width: 100%;border-top: 0.5px solid black">
 
     <tr>
         <td style="width: 50%;font-size: .8em;vertical-align:top" >
@@ -118,7 +118,7 @@
 
 </table>
 
-<table  style="width: 100%;height: 3cm;border-top: 1px solid black;font-size: .8em;">
+<table  style="width: 100%;height: 3cm;border-top: 0.5px solid black;font-size: .8em;">
         @foreach ($order->order_details as $item )
          <tr style="vertical-align:top">
             <td  style="width: 47%;text-align: left">
@@ -139,7 +139,7 @@
 
 
 </table>
-<table  style="width: 100%;border-top: 1px solid black;">
+<table  style="width: 100%;border-top: 0.5px solid black;">
     <tr style="vertical-align:top">
         <td style="width: 50%;font-size: .8em;">
             เลขที่ตรวจสอบสถานะ : <strong>{{$order->tracking_no}}</strong> Ref ID: {{$order->id}} <br/>
@@ -149,7 +149,7 @@
             @isset($order->loader->name)
                 พนักงานจัดขึ้น : {{ $order->loader->name }}<br/>
             @endisset
-            ผู้รับเงิน.................................................................
+
         </td>
         <td style="width: 50%;font-size: .8em;">
 
@@ -158,19 +158,20 @@
             รวมจำนวนสินค้า : {{$order->order_details->sum('amount')}} ชิ้น<br/>
             รวมจำนวนเงิน : {{number_format($order->order_amount,2)}} บาท  (จำนวนเงิน)<br>
             </strong>
-            (ลงชื่อ) ผู้ส่งสินค้า........................................ ผู้รับสินค้า......................................................
+
         </td>
 
 
 
     </tr>
 </table>
-<table  style="width: 100%;border-top: 1px solid black;">
+<table  style="width: 100%;border-top: .05px solid black;">
     <tr style="vertical-align:top;">
         <td style="width: 50%;font-size: .7em;">
             สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
             ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน
-            สินค้าไวเพลิง สินค้าผิดกฎหมาย สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น
+            สินค้าไวเพลิง สินค้าผิดกฎหมาย สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br/><br/>
+            <center>(ลงชื่อ) ผู้รับเงิน...........................................................................    (ลงชื่อ) ผู้ส่งสินค้า...........................................................................  (ลงชื่อ) ผู้รับสินค้า...........................................................................</center>
 
 
         </td>
