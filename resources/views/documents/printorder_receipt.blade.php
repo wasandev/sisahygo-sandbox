@@ -68,7 +68,7 @@
            @if($order->customer->taxid != '')
              Tax ID. {{$order->customer->taxid}}
            @endif
-           <br>
+
             {{ $order->customer->address }}
            @if ( $order->customer->province === "กรุงเทพมหานคร" )
                 แขวง{{ $order->customer->sub_district}}
@@ -83,8 +83,8 @@
             @endif
 
             จ.{{$order->customer->province.' '.
-            $order->customer->postal_code }} <br/>
-           <strong>Tel: {{ $order->customer->phoneno }}</strong>
+            $order->customer->postal_code }}
+           <strong> Tel: {{ $order->customer->phoneno }}</strong>
 
         </td>
         <td style="width: 50%;font-size: .8em;vertical-align:top" >
@@ -93,8 +93,8 @@
             @if($order->to_customer->taxid != '')
             Tax ID. {{$order->to_customer->taxid}}
            @endif
-           <br>
-            {{ $order->to_customer->address }}
+
+             {{ $order->to_customer->address }}
             @if ( $order->to_customer->province === "กรุงเทพมหานคร" )
                 แขวง{{ $order->to_customer->sub_district}}
             @else
@@ -109,8 +109,8 @@
             @endif
 
             จ.{{$order->to_customer->province.' '.
-            $order->to_customer->postal_code}}<br/>
-            <strong>Tel:{{ $order->to_customer->phoneno }}</strong>
+            $order->to_customer->postal_code}}
+            <strong> Tel:{{ $order->to_customer->phoneno }}</strong>
 
         </td>
     </tr>
