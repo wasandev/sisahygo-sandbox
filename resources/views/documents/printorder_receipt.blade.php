@@ -60,7 +60,7 @@
         </td>
     </tr>
 </table>
-<table style="width: 100%;border-top: 0.5px solid black">
+<table style="width: 100%;border-top: 0.5px dotted black">
 
     <tr>
         <td style="width: 50%;font-size: .8em;vertical-align:top" >
@@ -118,7 +118,7 @@
 
 </table>
 
-<table  style="width: 100%;height: 3cm;border-top: 0.5px solid black;font-size: .8em;">
+<table  style="width: 100%;height: 3cm;border-top: 0.5px dotted black;font-size: .8em;">
         @foreach ($order->order_details as $item )
          <tr style="vertical-align:top">
             <td  style="width: 47%;text-align: left">
@@ -139,7 +139,7 @@
 
 
 </table>
-<table  style="width: 100%;border-top: 0.5px solid black;">
+<table  style="width: 100%;border-top: 0.5px dotted black;">
     <tr style="vertical-align:top">
         <td style="width: 50%;font-size: .8em;">
             เลขที่ตรวจสอบสถานะ : <strong>{{$order->tracking_no}}</strong> Ref ID: {{$order->id}} <br/>
@@ -165,7 +165,7 @@
 
     </tr>
 </table>
-<table  style="width: 100%;border-top: .05px solid black;">
+<table  style="width: 100%;border-top: .05px dotted black;">
     <tr style="vertical-align:top;">
         <td style="width: 50%;font-size: .7em;">
             สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
