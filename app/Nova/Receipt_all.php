@@ -51,7 +51,10 @@ class Receipt_all extends Resource
     {
         return 'ใบเสร็จรับเงินทั้งหมด';
     }
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit receipt_all');
+    }
     /**
      * Get the fields displayed by the resource.
      *

@@ -38,7 +38,10 @@ class Branch_area extends Resource
      * @var string
      */
     public static $title = 'district';
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit brancheareas');
+    }
     /**
      * The columns that should be searched.
      *

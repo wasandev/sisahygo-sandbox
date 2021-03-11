@@ -28,7 +28,10 @@ class Branch_route extends Resource
      * @var string
      */
     public static $title = 'name';
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit branch_routes');
+    }
     /**
      * The columns that should be searched.
      *

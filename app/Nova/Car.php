@@ -40,7 +40,10 @@ class Car extends Resource
      * @var string
      */
     public static $model = 'App\Models\Car';
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit cars');
+    }
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

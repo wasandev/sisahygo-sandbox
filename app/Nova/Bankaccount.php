@@ -23,7 +23,10 @@ class Bankaccount extends Resource
      * @var string
      */
     public static $model = \App\Models\Bankaccount::class;
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit bankaccounts');
+    }
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

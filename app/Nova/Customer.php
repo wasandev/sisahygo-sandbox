@@ -268,12 +268,24 @@ class Customer extends Resource
     public function cards(Request $request)
     {
         return [
-            (new CustomersByProvince()),
-            (new CustomersByDistrict()),
-            (new CustomerByType()),
-            (new CustomerByPtype()),
-            (new CustomerByPaymentType()),
-            (new CustomersPerDay())
+            (new CustomersByProvince())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('edit customers');
+            }),
+            (new CustomersByDistrict())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('edit customers');
+            }),
+            (new CustomerByType())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('edit customers');
+            }),
+            (new CustomerByPtype())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('edit customers');
+            }),
+            (new CustomerByPaymentType())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('edit customers');
+            }),
+            (new CustomersPerDay())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('edit customers');
+            }),
         ];
     }
 

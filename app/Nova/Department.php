@@ -29,6 +29,10 @@ class Department extends Resource
      * @var string
      */
     public static $title = 'name';
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit departments');
+    }
 
     /**
      * The columns that should be searched.

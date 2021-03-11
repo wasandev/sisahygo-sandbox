@@ -64,7 +64,7 @@ class Order_header extends Resource
      * @var array
      */
     public static $search = [
-        'order_header_no', 'id'
+        'order_header_no', 'tracking_no', 'id'
     ];
 
     public static $searchRelations = [
@@ -113,6 +113,9 @@ class Order_header extends Resource
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly()
                 ->sortable(),
+            Text::make(__('Tracking no'), 'tracking_no')
+                ->onlyOnDetail(),
+
 
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',

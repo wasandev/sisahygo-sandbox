@@ -25,6 +25,7 @@ use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 class Branch extends Resource
 {
     use HasDependencies;
+
     //public static $displayInNavigation = false;
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
     public static $priority = 2;
@@ -45,6 +46,10 @@ class Branch extends Resource
      */
     public static $title = 'name';
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit branches');
+    }
     /**
      * The columns that should be searched.
      *

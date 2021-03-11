@@ -29,7 +29,10 @@ class Carstyle extends Resource
      * @var string
      */
     public static $title = 'name';
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit carstyles');
+    }
     /**
      * The columns that should be searched.
      *

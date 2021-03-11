@@ -61,6 +61,11 @@ class Employee extends Resource
         return 'พนักงาน';
     }
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit employees');
+    }
+
     /**
      * Get the fields displayed by the resource.
      *

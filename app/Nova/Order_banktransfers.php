@@ -38,6 +38,11 @@ class Order_banktransfers extends Resource
      */
     public static $title = 'order_header_id';
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit order_banktransfers');
+    }
+
     // public function title()
     // {
     //     return $this->order_header->order_header_no;
