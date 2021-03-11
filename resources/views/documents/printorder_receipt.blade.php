@@ -155,7 +155,7 @@
 
             หมายเหตุ : {{$order->remark}}<br/>
              <strong>
-            รวมจำนวนสินค้า : {{$order->order_details->sum('amount')}} ชิ้น<br/>
+            รวมจำนวนสินค้า : {{$order->order_details->sum('amount')}} <br/>
             รวมจำนวนเงิน : {{number_format($order->order_amount,2)}} บาท  (จำนวนเงิน)<br>
             </strong>
 
