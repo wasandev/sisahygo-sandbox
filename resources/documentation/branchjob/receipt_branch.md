@@ -1,7 +1,7 @@
 ---
 title: "- รายการใบเสร็จรับเงินปลายทาง"
 path: "branchjob/receipt_branch"
-order: 10.5
+order: 5.5
 ---
 
 ## รายการใบเสร็จรับเงินปลายทาง

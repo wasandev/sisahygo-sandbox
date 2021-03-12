@@ -1,7 +1,7 @@
 ---
 title: "- รายการจัดส่งสินค้า"
 path: "branchjob/delivery"
-order: 10.3
+order: 5.3
 ---
 
 ## รายการจัดส่งสินค้า

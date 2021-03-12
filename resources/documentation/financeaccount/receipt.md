@@ -1,7 +1,7 @@
 ---
 title: "- ใบเสร็จรับเงินทั้งหมด"
 path: "financeaccount/receipt"
-order: 12.5
+order: 7.5
 ---
 
 ## ใบเสร็จรับเงินทั้งหมด

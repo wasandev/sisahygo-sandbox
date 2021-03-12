@@ -1,7 +1,7 @@
 ---
 title: "- ข้อมูลลูกค้าวางบิล"
 path: "crmpage/ar_customer"
-order: 11.1
+order: 6.1
 ---
 
 ## ข้อมูลลูกค้าวางบิล

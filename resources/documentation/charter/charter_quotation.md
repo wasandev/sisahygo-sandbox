@@ -1,7 +1,7 @@
 ---
 title: "- ใบเสนอราคาเหมาคัน"
 path: "charter/charter_quotation"
-order: 9.3
+order: 4.3
 ---
 
 ## ใบเสนอราคาเหมาคัน

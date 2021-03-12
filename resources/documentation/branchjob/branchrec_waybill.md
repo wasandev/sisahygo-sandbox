@@ -1,7 +1,7 @@
 ---
 title: "- รายการรถเข้าสาขา"
 path: "branchjob/branchrec_waybill"
-order: 10.1
+order: 5.1
 ---
 
 ## รายการรถเข้าสาขา

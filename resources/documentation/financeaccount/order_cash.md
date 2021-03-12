@@ -1,7 +1,7 @@
 ---
 title: "- รายการเงินสดต้นทาง"
 path: "financeaccount/order_cash"
-order: 12.3
+order: 7.3
 ---
 
 ## รายการเงินสดต้นทาง

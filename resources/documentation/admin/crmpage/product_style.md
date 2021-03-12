@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลประเภทสินค้า"
-path: "crmpage/product_style"
-order: 6.5
+title: "->  ข้อมูลประเภทสินค้า"
+path: "admin/crmpage/product_style"
+order: 8.85
 ---
 
 ## ข้อมูลประเภทสินค้า

@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลสินค้า"
-path: "crmpage/product"
-order: 6.7
+title: "->  ข้อมูลสินค้า"
+path: "admin/crmpage/product"
+order: 8.87
 ---
 
 ## ข้อมูลสินค้า

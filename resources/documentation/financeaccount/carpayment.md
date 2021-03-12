@@ -1,7 +1,7 @@
 ---
 title: "- จ่ายเงินให้รถ"
 path: "financeaccount/carpayment"
-order: 12.6
+order: 7.6
 ---
 
 ## จ่ายเงินให้รถ

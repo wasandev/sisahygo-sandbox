@@ -1,7 +1,7 @@
 ---
 title: "- รายการใบรับส่งเข้าสาขา"
 path: "branchjob/branchrec_order"
-order: 10.2
+order: 5.2
 ---
 
 ## รายการใบรับส่งเข้าสาขา

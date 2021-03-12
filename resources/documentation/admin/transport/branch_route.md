@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลเส้นทางขนส่งของสาขา"
-path: "transport/branch_route"
-order: 7.3
+title: "->  ข้อมูลเส้นทางขนส่งของสาขา"
+path: "admin/transport/branch_route"
+order: 8.33
 ---
 
 ## ข้อมูลเส้นทางขนส่งของสาขา

@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลประเภทธุรกิจ"
-path: "crmpage/businesstype"
-order: 6.1
+title: "->  ข้อมูลประเภทธุรกิจ"
+path: "admin/crmpage/businesstype"
+order: 8.81
 ---
 
 ## ข้อมูลประเภทธุรกิจ

@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลพื้นทีบริการของสาขา"
-path: "transport/brancharea"
-order: 7.1
+title: "->  ข้อมูลพื้นทีบริการของสาขา"
+path: "admin/transport/brancharea"
+order: 8.31
 ---
 
 ## ข้อมูลพื้นทีบริการของสาขา

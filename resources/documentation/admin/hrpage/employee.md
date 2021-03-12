@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลพนักงาน"
-path: "hrpage/employee"
-order: 4.4
+title: "->  ข้อมูลพนักงาน"
+path: "admin/hrpage/employee"
+order: 8.64
 ---
 
 ## ข้อมูลพนักงาน

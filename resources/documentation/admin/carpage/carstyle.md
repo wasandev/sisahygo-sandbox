@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลลักษณะรถ"
-path: "carpage/carstyle"
-order: 5.2
+title: "->  ข้อมูลลักษณะรถ"
+path: "admin/carpage/carstyle"
+order: 8.72
 ---
 
 ## ข้อมูลลักษณะรถ

@@ -1,7 +1,7 @@
 ---
 title: "- ข้อมูลบัญชีธนาคาร"
 path: "financeaccount/bankaccount"
-order: 12.2
+order: 7.2
 ---
 
 ## ข้อมูลบัญชีธนาคาร

@@ -1,7 +1,7 @@
 ---
 title: "- รายการใบแจ้งหนี้"
 path: "arbalance/invoice"
-order: 11.3
+order: 6.3
 ---
 
 ## รายการใบแจ้งหนี้

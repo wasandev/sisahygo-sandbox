@@ -1,7 +1,7 @@
 ---
 title: "- ราคาขนส่งแบบเหมาคัน"
 path: "charter/charter_price"
-order: 9.2
+order: 4.2
 ---
 
 ## ราคาขนส่งแบบเหมาคัน

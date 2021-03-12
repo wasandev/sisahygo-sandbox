@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลกลุ่มสินค้า"
-path: "crmpage/category"
-order: 6.4
+title: "->  ข้อมูลกลุ่มสินค้า"
+path: "admin/crmpage/category"
+order: 8.84
 ---
 
 ## ข้อมูลกลุ่มสินค้า

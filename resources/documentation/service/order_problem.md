@@ -1,7 +1,7 @@
 ---
 title: "- รายการปัญหาการขนส่ง"
 path: "service/order_problem"
-order: 8.5
+order: 3.5
 ---
 
 ## รายการปัญหาการขนส่ง

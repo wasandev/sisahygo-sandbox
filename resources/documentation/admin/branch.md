@@ -1,7 +1,7 @@
 ---
 title: "- ข้อมูลสาขา"
 path: "admin/branch"
-order: 3.2
+order: 8.2
 ---
 
 ## ข้อมูลสาขา

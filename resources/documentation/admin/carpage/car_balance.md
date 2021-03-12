@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลบัญชีรถ"
-path: "carpage/car_balance"
-order: 5.5
+title: "->  ข้อมูลบัญชีรถ"
+path: "admin/carpage/car_balance"
+order: 8.75
 ---
 
 ## ข้อมูลบัญชีรถบรรทุก

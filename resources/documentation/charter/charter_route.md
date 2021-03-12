@@ -1,7 +1,7 @@
 ---
 title: "- เส้นทางขนส่งแบบเหมาคัน"
 path: "charter/charter_route"
-order: 9.1
+order: 4.1
 ---
 
 ## เส้นทางขนส่งแบบเหมาคัน

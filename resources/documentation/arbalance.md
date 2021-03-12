@@ -1,7 +1,7 @@
 ---
 title: "งานลูกหนี้การค้า"
 path: "arbalance"
-order: 11
+order: 6
 ---
 
 # งานลูกหนี้การค้า

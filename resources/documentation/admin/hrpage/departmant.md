@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลฝ่าย/แผนก"
-path: "hrpage/department"
-order: 4.1
+title: "->  ข้อมูลฝ่าย/แผนก"
+path: "admin/hrpage/department"
+order: 8.61
 ---
 
 ## ข้อมูลฝ่าย/แผนก

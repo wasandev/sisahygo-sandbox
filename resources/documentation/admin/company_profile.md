@@ -1,7 +1,7 @@
 ---
 title: "- ข้อมูลบริษัท"
 path: "admin/company_profile"
-order: 3.1
+order: 8.1
 ---
 
 ## ข้อมูลบริษัท

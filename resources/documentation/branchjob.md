@@ -1,7 +1,7 @@
 ---
 title: "สำหรับสาขา"
 path: "branchjob"
-order: 10
+order: 5
 ---
 
 # สำหรับสาขา

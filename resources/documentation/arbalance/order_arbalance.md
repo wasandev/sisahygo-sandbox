@@ -1,7 +1,7 @@
 ---
 title: "- รายการวางบิล"
 path: "arbalance/order_arbalance"
-order: 11.2
+order: 6.2
 ---
 
 ## รายการวางบิล

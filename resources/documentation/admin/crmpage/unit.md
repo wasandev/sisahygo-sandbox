@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลหน่วยนับสินค้า"
-path: "crmpage/unit"
-order: 6.3
+title: "->  ข้อมูลหน่วยนับสินค้า"
+path: "admin/crmpage/unit"
+order: 8.83
 ---
 
 ## ข้อมูลหน่วยนับสินค้า

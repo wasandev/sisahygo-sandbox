@@ -1,7 +1,7 @@
 ---
 title: "- รายการเงินสดปลายทาง"
 path: "financeaccount/order_branch"
-order: 12.4
+order: 7.4
 ---
 
 ## รายการเงินสดปลายทาง

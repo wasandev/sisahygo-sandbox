@@ -1,7 +1,7 @@
 ---
 title: "งานการเงิน/บัญชี"
 path: "financaccount"
-order: 12
+order: 7
 ---
 
 # งานการเงิน/บัญชี

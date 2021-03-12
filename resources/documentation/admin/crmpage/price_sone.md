@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลโซนราคา"
-path: "crmpage/price_zone"
-order: 6.6
+title: "->  ข้อมูลโซนราคา"
+path: "admin/crmpage/price_zone"
+order: 8.86
 ---
 
 ## ข้อมูลโซนราคา

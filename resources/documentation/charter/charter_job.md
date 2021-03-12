@@ -1,7 +1,7 @@
 ---
 title: "- ใบงานขนส่งแบบเหมาคัน"
 path: "charter/charter_job"
-order: 9.4
+order: 4.4
 ---
 
 ## ใบงานขนส่งแบบเหมาคัน

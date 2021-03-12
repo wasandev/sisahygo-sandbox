@@ -1,7 +1,7 @@
 ---
 title: "- ข้อมูลผู้ใช้"
 path: "admin/user"
-order: 3.3
+order: 8.4
 ---
 
 ## ข้อมูลผู้ใช้

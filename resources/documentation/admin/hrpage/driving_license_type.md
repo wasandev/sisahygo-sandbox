@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลประเภทใบขับขี่"
-path: "hrpage/driving_license_type"
-order: 4.3
+title: "->  ข้อมูลประเภทใบขับขี่"
+path: "admin/hrpage/driving_license_type"
+order: 8.63
 ---
 
 ## ข้อมูลประเภทใบขับขี่

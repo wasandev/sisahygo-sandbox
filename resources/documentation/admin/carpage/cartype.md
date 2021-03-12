@@ -1,7 +1,7 @@
 ---
-title: "- ข้อมูลประเภทรถ"
-path: "carpage/cartype"
-order: 5.1
+title: "->  ข้อมูลประเภทรถ"
+path: "admin/carpage/cartype"
+order: 8.71
 ---
 
 ## ข้อมูลประเภทรถ
