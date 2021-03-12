@@ -24,6 +24,6 @@ return [
   |
   */
 
-    'fixedNavbar' => true,
+    'fixedNavbar' => false,
 
 ];
