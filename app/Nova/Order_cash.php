@@ -60,7 +60,7 @@ class Order_cash extends Resource
     public static $title = 'order_header_no';
     public static function availableForNavigation(Request $request)
     {
-        return $request->user()->hasPermissionTo('edit order_cashs');
+        return $request->user()->hasPermissionTo('view order_cash');
     }
     /**
      * The columns that should be searched.
