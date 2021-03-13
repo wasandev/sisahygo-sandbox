@@ -37,6 +37,10 @@ class CompanyProfile extends Resource
      */
     public static $title = 'company_name';
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit companyprofile');
+    }
     /**
      * The columns that should be searched.
      *

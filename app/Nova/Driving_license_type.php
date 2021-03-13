@@ -29,6 +29,11 @@ class Driving_license_type extends Resource
      */
     public static $title = 'name';
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit driving_license_types');
+    }
+
     /**
      * The columns that should be searched.
      *

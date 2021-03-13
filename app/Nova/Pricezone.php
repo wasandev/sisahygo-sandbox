@@ -27,6 +27,10 @@ class Pricezone extends Resource
      */
     public static $title = 'name';
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit pricezones');
+    }
     /**
      * The columns that should be searched.
      *
