@@ -42,6 +42,7 @@ class Order_header extends Resource
     public static $priority = 2;
     public static $trafficCop = false;
     public static $preventFormAbandonment = true;
+    public static $perPageOptions = [50, 100, 150];
 
     /**
      * The model the resource corresponds to.
