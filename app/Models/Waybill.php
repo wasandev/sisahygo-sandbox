@@ -48,6 +48,7 @@ class Waybill extends Model
     {
         return $this->belongsTo('App\Models\User', 'loader_id',);
     }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -61,6 +62,10 @@ class Waybill extends Model
     public function order_loaders()
     {
         return $this->hasMany('App\Models\Order_loader');
+    }
+    public function order_headers()
+    {
+        return $this->hasMany('App\Models\Order_header');
     }
 
     public function waybill_statuses()

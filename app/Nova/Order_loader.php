@@ -117,7 +117,6 @@ class Order_loader extends Resource
             Text::make(__('Remark'), 'remark')->nullable()
                 ->onlyOnDetail(),
 
-
             HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
             HasMany::make(__('Order status'), 'order_statuses', 'App\Nova\Order_status'),
         ];
@@ -184,12 +183,12 @@ class Order_loader extends Resource
                 })
         ];
     }
-    // public static function indexQuery(NovaRequest $request, $query)
-    // {
-    //     return $query->whereNotIn('order_status', ['checking', 'new'])
-    //         ->where('branch_id', '=', $request->user()->branch_id)
-    //         ->where('branch_rec_id', '=', $request->user()->branch_rec_id);
-    // }
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new'])
+            ->where('branch_id', '=', $request->user()->branch_id);
+        //  ->where('branch_rec_id', '=', $request->user()->branch_rec_id);
+    }
     // public static function indexQuery(NovaRequest $request, $query)
     // {
     //     if ($request->user()->role != 'admin' && ($request->user()->hasPermissionTo('manage order_loaders'))) {
