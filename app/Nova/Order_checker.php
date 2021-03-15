@@ -77,7 +77,7 @@ class Order_checker extends Resource
     public function fields(Request $request)
     {
         return [
-            //ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['checking'])
                 ->failedWhen(['cancel'])
