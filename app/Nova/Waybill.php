@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+
 use App\Nova\Actions\WaybillConfirmed;
 use App\Nova\Filters\RouteToBranch;
 use App\Nova\Filters\ToBranch;
@@ -22,6 +23,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
@@ -152,6 +154,10 @@ class Waybill extends Resource
                 return 0;
             })->exceptOnForms()
                 ->hideFromIndex(),
+            Number::make('น้ำหนักสินค้ารวม', 'waybill_totalweight', function () {
+                $waybill_weight = $this->order_loaders->sum('total_weight');
+                return number_format($waybill_weight, 2, '.', ',');
+            })->exceptOnForms(),
             Number::make('ค่าขนส่งรวม', 'total_amount', function () {
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),

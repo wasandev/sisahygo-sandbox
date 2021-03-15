@@ -55,6 +55,7 @@ class OrderHeaderObserver
 
         if ($order_header->order_status == 'confirmed' && is_null($order_header->order_header_no)) {
             $order_amount = 0;
+            $total_weight = 0;
             $branchtrack = $order_header->branch->code . $order_header->to_branch->code;
             $order_header_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'order_header_no', 'length' => 15, 'prefix' => date('Ymd')]);
             $tracking_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'tracking_no', 'length' => 20, 'prefix' => $branchtrack . date('Ymd')]);
@@ -78,9 +79,13 @@ class OrderHeaderObserver
             }
             foreach ($order_items as $order_item) {
                 $sub_total = $order_item->price * $order_item->amount;
+                $item_weight = $order_item->weight * $order_item->amount;
                 $order_amount = $order_amount + $sub_total;
+                $total_weight = $total_weight +  $item_weight;
             }
+
             $order_header->order_amount = $order_amount;
+            $order_header->total_weight = $total_weight;
 
             Order_status::create([
                 'order_header_id' => $order_header->id,

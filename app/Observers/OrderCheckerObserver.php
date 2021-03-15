@@ -48,6 +48,8 @@ class OrderCheckerObserver
 
         if ($order_checker->order_status == 'new') {
             $order_amount = 0;
+            $total_weight = 0;
+
             $to_customer = $order_checker->customer_rec_id;
             $to_customer = Customer::find($order_checker->customer_rec_id);
             $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
@@ -63,9 +65,12 @@ class OrderCheckerObserver
 
             foreach ($order_items as $order_item) {
                 $sub_total = $order_item->price * $order_item->amount;
+                $item_weight = $order_item->weight * $order_item->amount;
                 $order_amount = $order_amount + $sub_total;
+                $total_weight = $total_weight +  $item_weight;
             }
             $order_checker->order_amount = $order_amount;
+            $order_checker->total_weight = $total_weight;
         }
     }
 }

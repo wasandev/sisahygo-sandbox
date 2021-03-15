@@ -184,12 +184,12 @@ class Order_loader extends Resource
                 })
         ];
     }
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->whereNotIn('order_status', ['checking', 'new'])
-            ->where('branch_id', '=', $request->user()->branch_id)
-            ->orWhere('branch_rec_id', '=', $request->user()->branch_rec_id);
-    }
+    // public static function indexQuery(NovaRequest $request, $query)
+    // {
+    //     return $query->whereNotIn('order_status', ['checking', 'new'])
+    //         ->where('branch_id', '=', $request->user()->branch_id)
+    //         ->where('branch_rec_id', '=', $request->user()->branch_rec_id);
+    // }
     // public static function indexQuery(NovaRequest $request, $query)
     // {
     //     if ($request->user()->role != 'admin' && ($request->user()->hasPermissionTo('manage order_loaders'))) {
