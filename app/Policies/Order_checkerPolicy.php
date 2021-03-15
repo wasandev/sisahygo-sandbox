@@ -45,7 +45,7 @@ class Order_checkerPolicy
         return ($user->role == 'admin' || $user->hasPermissionTo('manage order_checkers')) && $order_checker->order_status == "checking";
     }
 
-    public function addOrder_detail(User $user, Order_checker $order_checker)
+    public function addChecker_detail(User $user, Order_checker $order_checker)
     {
         if ($order_checker->order_status == "checking") {
             return true;

@@ -187,7 +187,7 @@ class Productservice_price extends Resource
     }
     public static function relatableQuery(NovaRequest $request, $query)
     {
-        if (isset($request->viaResourceId) && $request->viaRelationship === 'order_details') {
+        if (isset($request->viaResourceId) && ($request->viaRelationship === 'order_details' || $request->viaRelationship === 'checker_details')) {
 
             $resourceId = $request->viaResourceId;
 

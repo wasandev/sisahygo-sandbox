@@ -20,6 +20,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\Orderstatus\Orderstatus;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Laravel\Nova\Http\Requests\ActionRequest;
 
 class Order_checker extends Resource
 {
@@ -135,7 +136,7 @@ class Order_checker extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
+            HasMany::make(__('Order detail'), 'checker_details', 'App\Nova\Checker_detail'),
         ];
     }
 
@@ -190,9 +191,14 @@ class Order_checker extends Resource
                 ->confirmText('ต้องการยืนยันใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
-                ->canRun(function ($request, $model) {
-                    return true;
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_checkers');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && $this->resource->order_status == 'checking');
                 }),
+
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)

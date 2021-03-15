@@ -36,7 +36,7 @@ class OrderChecked extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $hasitem = count($model->order_details);
+            $hasitem = count($model->checker_details);
             //$order_amount = $model->order_details->price->sum();
 
             if ($model->order_status <> 'checking') {

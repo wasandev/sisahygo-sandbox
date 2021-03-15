@@ -1194,6 +1194,29 @@ return [
             'description'  => 'จัดการข้อมูล',
             'group'        => 'รายการสินค้าในใบรับส่ง',
         ],
+        //รายการสินค้าในรายการตรวจรับ
+        'view own checker_details' => [
+            'display_name' => 'ดูข้อมูลของตัวเอง',
+            'description'  => 'ดูข้อมูลของตัวเอง',
+            'group'        => 'รายการสินค้าในรายการตรวจรับ',
+        ],
+        'view checker_details' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'รายการสินค้าในรายการตรวจรับ',
+        ],
+
+        'manage own checker_details' => [
+            'display_name' => 'จัดการข้อมูลของตัวเอง',
+            'description'  => 'จัดการข้อมูลของตัวเอง',
+            'group'        => 'รายการสินค้าในรายการตรวจรับ',
+        ],
+
+        'manage checker_details' => [
+            'display_name' => 'จัดการข้อมูล',
+            'description'  => 'จัดการข้อมูล',
+            'group'        => 'รายการสินค้าในรายการตรวจรับ',
+        ],
         //ใบกำกับสินค้า
         'view own waybills' => [
             'display_name' => 'ดูข้อมูลของตัวเอง',

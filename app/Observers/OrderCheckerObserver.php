@@ -61,7 +61,7 @@ class OrderCheckerObserver
             $order_checker->branch_rec_id = $to_branch->branch_id;
             $order_checker->user_id = auth()->user()->id;
             $order_checker->updated_by = auth()->user()->id;
-            $order_items = $order_checker->order_details;
+            $order_items = $order_checker->checker_details;
 
             foreach ($order_items as $order_item) {
                 $sub_total = $order_item->price * $order_item->amount;

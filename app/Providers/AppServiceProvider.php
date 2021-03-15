@@ -173,6 +173,7 @@ use App\Observers\Branchrec_waybillObserver;
 use App\Models\Branchrec_order;
 use App\Models\Carpayment;
 use App\Models\Carreceive;
+use App\Models\Checker_detail;
 use App\Observers\Branchrec_orderObserver;
 
 use App\Models\Delivery;
@@ -185,6 +186,7 @@ use App\Models\Order_problem;
 use App\Models\Receipt_ar;
 use App\Observers\CarpaymentObserver;
 use App\Observers\CarreceiveObserver;
+use App\Observers\CheckerDetailObserver;
 use App\Observers\DeliveryDetailObserver;
 use App\Observers\DeliveryItemObserver;
 use App\Observers\InvoiceObserver;
@@ -275,5 +277,6 @@ class AppServiceProvider extends ServiceProvider
         Invoice::observe(InvoiceObserver::class);
         Receipt_ar::observe(ReceiptArObserver::class);
         Order_problem::observe(Order_problemObserver::class);
+        Checker_detail::observe(CheckerDetailObserver::class);
     }
 }

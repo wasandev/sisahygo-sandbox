@@ -52,9 +52,9 @@ class Order_checker extends Model
         return $this->belongsTo('App\Models\Branch', 'branch_rec_id');
     }
 
-    public function order_details()
+    public function checker_details()
     {
-        return $this->hasMany('App\Models\Order_detail', 'order_header_id');
+        return $this->hasMany('App\Models\Checker_detail', 'order_header_id');
     }
 
     public function order_statuses()
