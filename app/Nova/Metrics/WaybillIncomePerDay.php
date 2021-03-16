@@ -61,6 +61,6 @@ class WaybillIncomePerDay extends Trend
     }
     public function name()
     {
-        return '%รายได้บริษัท';
+        return 'รายได้บริษัทตามวัน';
     }
 }
