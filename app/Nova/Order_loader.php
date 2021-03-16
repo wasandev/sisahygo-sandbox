@@ -21,6 +21,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\Orderstatus\Orderstatus;
 
@@ -186,9 +187,11 @@ class Order_loader extends Resource
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage waybills');
                 })
-                ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('manage waybills');
-                })
+
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($request->user()->hasPermissionTo('manage waybills') && ($this->resource->exists && $this->resource->order_status == 'confirmed'));
+                }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
