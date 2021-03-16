@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Filters\LoaderShowByOrderStatus;
+use App\Nova\Filters\LoaderToBranch;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\ShowByOrderStatus;
 use App\Nova\Filters\ToDistrict;
@@ -145,7 +146,7 @@ class Order_loader extends Resource
     public function filters(Request $request)
     {
         return [
-            new OrderToBranch(),
+            new LoaderToBranch(),
             new LoaderShowByOrderStatus(),
         ];
     }
