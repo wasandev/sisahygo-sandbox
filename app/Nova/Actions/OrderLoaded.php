@@ -51,8 +51,8 @@ class OrderLoaded extends Action
                 $model->save();
                 //return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
             }
+            return Action::push('/resources/order_loaders/');
         }
-        return Action::push('/resources/order_loaders/');
     }
 
     /**
