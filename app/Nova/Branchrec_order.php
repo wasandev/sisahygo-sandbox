@@ -107,15 +107,16 @@ class Branchrec_order extends Resource
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms(),
-            // Text::make('อำเภอ', 'districe', function () {
-            //     return $this->to_customer->district;
-            // })->onlyOnIndex(),
+            Text::make('อำเภอ', 'districe', function () {
+                return $this->to_customer->district;
+            })->onlyOnIndex(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms()
                 ->hideFromIndex(),
             Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->hideFromIndex(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->searchable()
