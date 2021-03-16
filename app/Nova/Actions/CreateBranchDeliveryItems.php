@@ -53,7 +53,7 @@ class CreateBranchDeliveryItems extends Action
                 'delivery_date' => $fields->delivery_date,
                 'delivery_type' => 1,
                 'branch_id' => $branch->id,
-                //'receipt_amount' => $branchrec_amount,
+                'sender_id' => $fields->sender,
                 'branch_route_id' => $fields->branch_route,
                 'car_id' => $fields->car,
                 'driver_id' => $fields->driver,
@@ -109,7 +109,7 @@ class CreateBranchDeliveryItems extends Action
             ->where('branch_id', auth()->user()->branch_id)
             ->get()->pluck('car_regist', 'id');
         $driver = \App\Models\Employee::whereIn('type', ['พนักงานขับรถบริษัท', 'พนักงานขับรถร่วม'])->get()->pluck('name', 'id');
-
+        $sender = \App\Models\Employee::where('branch_id', auth()->user()->branch_id)->get()->pluck('name', 'id');
         return [
             Date::make('วันที่จัดส่ง', 'delivery_date')
                 ->rules('required'),
@@ -121,6 +121,10 @@ class CreateBranchDeliveryItems extends Action
             Select::make(__('Driver'), 'driver')
                 ->rules('required')
                 ->options($driver)
+                ->displayUsingLabels()
+                ->searchable(),
+            Select::make('พนักงานจัดส่ง', 'sender')
+                ->options($sender)
                 ->displayUsingLabels()
                 ->searchable(),
             Select::make('เส้นทางขนส่งของสาขา', 'branch_route')
