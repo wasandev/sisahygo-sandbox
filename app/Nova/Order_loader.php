@@ -28,6 +28,7 @@ class Order_loader extends Resource
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 3;
     public static $globallySearchable = false;
+    public static $perPageOptions = [50, 100, 150];
 
     /**
      * The model the resource corresponds to.

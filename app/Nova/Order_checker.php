@@ -29,6 +29,7 @@ class Order_checker extends Resource
     public static $priority = 1;
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
+    public static $perPageOptions = [50, 100, 150];
     // public static $with = ['customer'];
     /**
      * The model the resource corresponds to.

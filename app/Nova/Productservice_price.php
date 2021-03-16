@@ -13,11 +13,13 @@ use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use OptimistDigital\MultiselectField\Multiselect;
 
+
 class Productservice_price extends Resource
 {
     //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 8;
+    public static $perPageOptions = [50, 100, 150];
 
     public static $with = ['product', 'unit'];
     /**
