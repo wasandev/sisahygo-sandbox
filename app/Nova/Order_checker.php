@@ -204,8 +204,8 @@ class Order_checker extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->role != 'admin') {
-            return $query->where('checker_id', $request->user()->id)
-                ->whereIn('order_status', ['new', 'checking']);
+            return $query->where('checker_id', $request->user()->id);
+            // ->whereIn('order_status', ['new', 'checking']);
         }
         return $query;
     }
