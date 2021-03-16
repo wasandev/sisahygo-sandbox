@@ -18,10 +18,10 @@ class OrderLoaded extends Action
     use InteractsWithQueue, Queueable;
     protected $model;
 
-    public function __construct($model = null)
-    {
-        $this->model = $model;
-    }
+    // public function __construct($model = null)
+    // {
+    //     $this->model = $model;
+    // }
     public function uriKey()
     {
         return 'order_loaded';

@@ -187,9 +187,7 @@ class Order_loader extends Resource
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage waybills');
                 })
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage waybills');
-                })
+
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
