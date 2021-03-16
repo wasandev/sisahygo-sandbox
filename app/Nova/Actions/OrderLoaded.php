@@ -49,10 +49,10 @@ class OrderLoaded extends Action
                 $model->order_status = 'loaded';
                 $model->waybill_id = $fields->waybill_branch;
                 $model->save();
-                //return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
             }
-            return Action::push('/resources/order_loaders/');
+            //return Action::push('/resources/order_loaders/');
         }
+        return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
     }
 
     /**
