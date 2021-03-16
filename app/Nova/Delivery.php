@@ -161,6 +161,11 @@ class Delivery extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return   $query->where('branch_id', $request->user()->branch_id);
+        if ($request->user()->role = 'driver') {
+            return   $query->where('branch_id', $request->user()->branch_id)
+                ->where('sender_id', $request->user()->id);
+        } else {
+            return  $query->where('branch_id', $request->user()->branch_id);
+        }
     }
 }
