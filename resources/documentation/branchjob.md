@@ -6,11 +6,14 @@ order: 5
 
 # สำหรับสาขา
 
-งานสำหรับสาขาปลายทาง
+งานสำหรับสาขาปลายทาง สามารถใช้ Application ในงานต่างๆ ได้แก่
+1. งานบริการขนส่ง สามารภทำรายการได้เหมือนสาขาต้นทางในการ ตรวจรับสินค้า งานออกเอกสารใบส่งสินค้า งานจัดขึ้นสินค้าและใบกำกับสินค้า ดูวิธีใช้ได้ที่ -   [งานบริการขนส่ง](service.md)
+2. งานสำหรับสาขา เป็นงานสำหรับการกระจายสินค้าที่เข้ามาที่สาขา ได้แก่งานต่างๆ ได้แก่
+    -   [รายการรถเข้าสาขา](branchjob/branchrec_waybill.md)
+    -   [รายการใบรับส่งเข้าสาขา](branchjob/branchrec_order.md)
+    -   [รายการจัดส่งสินค้า](branchjob/delivery.md)
+    -   [รายการเก็บเงินปลายทางสาขา](branchjob/branch_balance.md)
+    -   [รายการเก็บเงินปลายทางสาขาร่วม](branchjob/branch_balance_partner.md)
+    -   [ใบเสร็จรับเงินปลายทาง](branchjob/receipt_branch.md)
 
--   [รายการรถเข้าสาขา](branchjob/branchrec_waybill.md)
--   [รายการใบรับส่งเข้าสาขา](branchjob/branrec_order.md)
--   [รายการจัดส่งสินค้า](branchjob/delivery.md)
--   [รายการเก็บเงินปลายทางสาขา](branhjob/branch_balance.md)
--   [รายการเก็บเงินปลายทางสาขาร่วม](branchjob/branh_balance_partner.md)
--   [ใบเสร็จรับเงินปลายทาง](branchjob/receipt_branch.md)
+(ภาพกระบวนการทำงานของสาขา )

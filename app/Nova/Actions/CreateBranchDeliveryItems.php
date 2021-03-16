@@ -116,11 +116,13 @@ class CreateBranchDeliveryItems extends Action
             Select::make(__('Car regist'), 'car')
                 ->rules('required')
                 ->options($branch_car)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->searchable(),
             Select::make(__('Driver'), 'driver')
                 ->rules('required')
                 ->options($driver)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->searchable(),
             Select::make('เส้นทางขนส่งของสาขา', 'branch_route')
                 ->options($branch_routes)
                 ->displayUsingLabels(),
