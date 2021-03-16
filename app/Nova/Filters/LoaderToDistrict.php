@@ -17,10 +17,7 @@ class LoaderToDistrict extends Filter
     public $component = 'select-filter';
     public $name = 'ตามอำเภอปลายทาง';
 
-    public function default()
-    {
-        return auth()->user()->branch_rec_id;
-    }
+
 
     /**
      * Apply the filter to the given query.
