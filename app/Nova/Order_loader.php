@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Filters\LoaderShowByOrderStatus;
 use App\Nova\Filters\LoaderToBranch;
+use App\Nova\Filters\LoaderToDistrict;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\ShowByOrderStatus;
 use App\Nova\Filters\ToDistrict;
@@ -96,7 +97,11 @@ class Order_loader extends Resource
 
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->hideFromIndex(),
+            Text::make('อำเภอ', 'branch_district', function () {
+                return $this->to_customer->district;
+            })->exceptOnForms(),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
@@ -147,6 +152,7 @@ class Order_loader extends Resource
     {
         return [
             new LoaderToBranch(),
+            new LoaderToDistrict(),
             new LoaderShowByOrderStatus(),
         ];
     }
