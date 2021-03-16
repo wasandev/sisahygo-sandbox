@@ -180,7 +180,7 @@ class Order_loader extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\OrderLoaded($request->resourceId))
+            (new Actions\OrderLoaded())
                 ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
