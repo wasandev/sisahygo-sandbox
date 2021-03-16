@@ -109,7 +109,7 @@ class CreateBranchDeliveryItems extends Action
             ->where('branch_id', auth()->user()->branch_id)
             ->get()->pluck('car_regist', 'id');
         $driver = \App\Models\Employee::whereIn('type', ['พนักงานขับรถบริษัท', 'พนักงานขับรถร่วม'])->get()->pluck('name', 'id');
-        $sender = \App\Models\Employee::where('branch_id', auth()->user()->branch_id)->get()->pluck('name', 'id');
+        $sender = \App\Models\User::where('branch_id', auth()->user()->branch_id)->get()->pluck('name', 'id');
         return [
             Date::make('วันที่จัดส่ง', 'delivery_date')
                 ->rules('required'),
