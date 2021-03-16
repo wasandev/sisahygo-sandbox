@@ -29,7 +29,7 @@ use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerMonth;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
-
+use Laravel\Nova\Http\Requests\ActionRequest;
 use Wasandev\Orderstatus\Orderstatus;
 
 class Order_header extends Resource
@@ -284,7 +284,8 @@ class Order_header extends Resource
                     return $request->user()->hasPermissionTo('manage order_headers');
                 })
                 ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
+                    return $request instanceof ActionRequest
+                        || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'new'));
                 }),
             (new Actions\PrintOrder)
                 ->onlyOnDetail()
