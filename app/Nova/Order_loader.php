@@ -102,7 +102,7 @@ class Order_loader extends Resource
                 ->hideFromIndex(),
             Text::make('อำเภอ', 'branch_district', function () {
                 return $this->to_customer->district;
-            })->exceptOnForms(),
+            })->onlyOnIndex(),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
@@ -153,7 +153,7 @@ class Order_loader extends Resource
     {
         return [
             new LoaderToBranch(),
-            new LoaderToDistrict(),
+            //new LoaderToDistrict(),
             new LoaderShowByOrderStatus(),
         ];
     }
