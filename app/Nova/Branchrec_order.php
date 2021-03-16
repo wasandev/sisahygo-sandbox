@@ -36,6 +36,10 @@ class Branchrec_order extends Resource
     public static $globallySearchable = false;
     public static $perPageOptions = [50, 100, 150];
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('manage branchrec_orders');
+    }
     /**
      * The model the resource corresponds to.
      *
