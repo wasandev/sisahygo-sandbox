@@ -175,10 +175,9 @@ class Waybill extends Resource
                 ->hideFromIndex(),
 
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
-                ->sortable()
+                ->searchable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
-                ->sortable()
                 ->hideFromIndex()
                 ->searchable(),
             DateTime::make(__('วันเวลาออกจากสาขาต้นทาง'), 'departure_at')

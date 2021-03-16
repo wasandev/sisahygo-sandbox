@@ -112,7 +112,8 @@ class User extends Resource
                 ->rules('required')
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
-                }),
+                })
+                ->hideFromIndex(),
             Text::make(__('User Code'), 'usercode')
                 ->hideFromIndex()
                 ->canSee(function ($request) {
