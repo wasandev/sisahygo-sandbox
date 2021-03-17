@@ -12,8 +12,7 @@ order: 5
 
 2. งานสำหรับสาขา เป็นงานสำหรับการกระจายสินค้าที่เข้ามาที่สาขา ได้แก่งานต่างๆ ได้แก่
 
-    -   [รายการรถเข้าสาขา](branchjob/branchrec_waybill.md)
-    -   [รายการใบรับส่งเข้าสาขา](branchjob/branchrec_order.md)
+    -   [รายการรถและใบรับส่งเข้าสาขา](branchjob/branchrec_waybill.md)
     -   [รายการจัดส่งสินค้า](branchjob/delivery.md)
     -   [รายการเก็บเงินปลายทางสาขา](branchjob/branch_balance.md)
     -   [รายการเก็บเงินปลายทางสาขาร่วม](branchjob/branch_balance_partner.md)
