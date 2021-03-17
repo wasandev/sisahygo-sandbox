@@ -24,7 +24,6 @@ order: 5.1
 
     ![branch-s7](/images/documents/branch_s7.jpeg)
 
-
     ![branch-s11](/images/documents/branch_s11.jpeg)
 
 5.  เลือกรายการที่ต้องทำรายการจัดส่ง แล้วเลือก ***การประมวลผล**  มีให้เลือกทำรายการ 3 รายการคือ
@@ -49,7 +48,7 @@ order: 5.1
 
 7. พิมพ์ใบจัดส่งสินค้า ให้กับพนักงานจัดส่งสินค้าที่ไปกับรถ เพื่อประกอบการจัดส่งสินค้า  ไปยังลูกค้าปลายทาง ตามภาพ
 
-    ![branch-s15](/images/documents/branch_s15.jpeg)
+    ![branch-s15](/images/documents/branch_s15.png)
 
 
         
