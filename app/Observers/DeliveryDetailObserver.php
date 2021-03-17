@@ -24,6 +24,8 @@ class DeliveryDetailObserver
         $receipt_amount = $delivery_item->payment_amount;
         if ($branchrec_order->paymenttype == 'E') {
             $delivery_item->payment_amount = $receipt_amount + $branchrec_order->order_amount;
+        } elseif ($branchrec_order->paymenttype == 'H') {
+            $delivery_item->payment_status = true;
         }
         $delivery_item->save();
 
