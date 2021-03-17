@@ -62,8 +62,8 @@ class Branch_balance_item extends Resource
                 return $this->branchrec_order->order_status;
             }),
             Text::make('เลขที่ใบจัดส่ง', 'delivery', function () {
-                $delivery = \App\Models\Delivery_detail::find($this->order_header_id);
-                return $delivery->delivery_no;
+                $delivery_detail = \App\Models\Delivery_detail::find($this->order_header_id);
+                return $delivery_detail->delivery_item->delivery->delivery_no;
             }),
 
             HasMany::make('รายการสินค้า', 'order_details', 'App\Nova\Order_detail')
