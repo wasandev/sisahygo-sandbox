@@ -58,14 +58,13 @@ class Branch_balance_item extends Resource
                 return $order->order_amount;
             })->step('0.01'),
             Boolean::make('สถานะการชำระเงิน', 'payment_status'),
-            Boolean::make('สถานะการจัดส่ง', 'delivery_status', function () {
-                if ($this->branchrec_order->order_status == 'completed') {
-                    return true;
-                } else {
-                    return false;
-                }
+            Text::make('สถานะการจัดส่ง', 'delivery_status', function () {
+                $this->branchrec_order->order_status;
             }),
-
+            Text::make('เลขที่ใบจัดส่ง', 'delivery', function () {
+                $delivery_no = \App\Models\Delivery_detail::find($this->order_header_id);
+                return $delivery_no;
+            }),
 
             HasMany::make('รายการสินค้า', 'order_details', 'App\Nova\Order_detail')
         ];
