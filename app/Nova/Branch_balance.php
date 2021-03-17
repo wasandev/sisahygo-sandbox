@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\BranchReceipt;
+use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Metrics\OrderBranchPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -68,7 +69,8 @@ class Branch_balance extends Resource
             Boolean::make('สถานะการชำระ', 'payment_status')
                 ->sortable(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex(),
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
                 ->sortable()
                 ->format('DD-MM-YYYY'),
@@ -124,7 +126,9 @@ class Branch_balance extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new BranchBalanceFilter(),
+        ];
     }
 
     /**
