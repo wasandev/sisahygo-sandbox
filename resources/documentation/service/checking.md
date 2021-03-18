@@ -6,7 +6,9 @@ order: 3.1
 
 ## การตรวจรับสินค้า-Checking
 
-(ภาพกระบวนการทำงานการตรวจรับสินค้า)
+![sisahygo-02](/images/documents/sisahygo-02.png)
+
+![sisahygo-03](/images/documents/sisahygo-03.png)
 
 -   **ขั้นตอนการตรวจรับสินค้า**
 

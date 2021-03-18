@@ -6,6 +6,8 @@ order: 3.4
 
 ## การจัดขึ้นสินค้าและใบกำกับ
 
+![sisahygo-05](/images/documents/sisahygo-05.png)
+
 1.  สร้างใบกำกับสินค้า
 
     ![loader-s6](/images/documents/loader_s6.jpeg)

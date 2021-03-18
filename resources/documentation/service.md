@@ -15,6 +15,13 @@ order: 3
 -   รายการปัญหาการขนส่ง สำหรับทำรายการบันทึกปัญหาการขนส่งสินค้า
 
 แสดงกระบวนการ การทำงานของ Application ในงานบริการขนส่ง ตามภาพ
+![sisahygo-02](/images/documents/sisahygo-02.png)
+
+![sisahygo-03](/images/documents/sisahygo-03.png)
+
+![sisahygo-04](/images/documents/sisahygo-04.png)
+
+![sisahygo-05](/images/documents/sisahygo-05.png)
 
 ในงานบริการขนส่ง แบ่งงานออกเป็น 5 งานดังนี้
 
