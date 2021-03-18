@@ -1380,29 +1380,7 @@ return [
             'description'  => 'ลบ',
             'group'        => 'รายการเก็บเงินปลายทาง',
         ],
-        //ใบรับส่งในรายการเก็บเงินปลายทาง
-        'view branch_balance_item' => [
-            'display_name' => 'ดู',
-            'description'  => 'ดู',
-            'group'        => 'ใบรับส่งในรายการเก็บเงินปลายทาง',
-        ],
-        'create branch_balance_item' => [
-            'display_name' => 'สร้าง',
-            'description'  => 'สร้าง',
-            'group'        => 'ใบรับส่งในรายการเก็บเงินปลายทาง',
-        ],
 
-        'edit branch_balance_item' => [
-            'display_name' => 'แก้ไข',
-            'description'  => 'แก้ไข',
-            'group'        => 'ใบรับส่งในรายการเก็บเงินปลายทาง',
-        ],
-
-        'delete branch_balance_item' => [
-            'display_name' => 'ลบ',
-            'description'  => 'ลบ',
-            'group'        => 'ใบรับส่งในรายการเก็บเงินปลายทาง',
-        ],
         //รายการเก็บเงินปลายทางสาขาร่วม
         'view branch_balance_partner' => [
             'display_name' => 'ดู',

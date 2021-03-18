@@ -21,11 +21,11 @@ class Branch_balance_itemPolicy
     }
     public function viewAny(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view branch_balance_item');
+        return true;
     }
     public function view(User $user, Branch_balance_item $branch_balance_item)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view branch_balance_item');
+        return  true;
     }
 
     public function create(User $user)
