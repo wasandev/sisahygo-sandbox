@@ -65,18 +65,15 @@ class OrderConfirmed extends Action
 
                 $model->save();
 
-                $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
-                $path = $orderheaderController->makePDF($model->id);
-                return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
-
+                // $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
+                // $path = $orderheaderController->makePDF($model->id);
                 // return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
-
-
+                //return Action::push('/resources/order_headers/');
+                return Action::message('ยืนยันรายการใบรับส่งสินค้าเรียบร้อยแล้ว');
             }
 
             return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');
         }
-        return Action::push('/resources/order_headers/');
     }
 
     /**
