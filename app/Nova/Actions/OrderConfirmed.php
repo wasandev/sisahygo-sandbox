@@ -70,12 +70,13 @@ class OrderConfirmed extends Action
                 return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
 
                 // return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
-                //return Action::push('/resources/order_headers/');
-                // return Action::message('ยืนยันรายการใบรับส่งสินค้าเรียบร้อยแล้ว');
+
+
             }
 
             return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');
         }
+        return Action::push('/resources/order_headers/');
     }
 
     /**
