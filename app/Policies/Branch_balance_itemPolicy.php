@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Branch_balance;
+use App\Models\Branch_balance_item;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class Branch_balancePolicy
+class Branch_balance_itemPolicy
 {
     use HandlesAuthorization;
 
@@ -21,11 +21,11 @@ class Branch_balancePolicy
     }
     public function viewAny(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view branch_balance');
+        return $user->role == 'admin' || $user->hasPermissionTo('view branch_balance_item');
     }
-    public function view(User $user, Branch_balance $branch_balance)
+    public function view(User $user, Branch_balance_item $branch_balance_item)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view branch_balance');
+        return $user->role == 'admin' || $user->hasPermissionTo('view branch_balance_item');
     }
 
     public function create(User $user)
@@ -34,19 +34,13 @@ class Branch_balancePolicy
         //$user->role == 'admin' || $user->hasPermissionTo('create branch_balance');
     }
 
-    public function update(User $user, Branch_balance $branch_balance)
+    public function update(User $user, Branch_balance_item $branch_balance_item)
     {
         return false;
         //$user->role == 'admin' || $user->hasPermissionTo('edit branch_balance');
     }
 
-    public function delete(User $user, Branch_balance $branch_balance)
-    {
-        return false;
-        //$user->role == 'admin' || $user->hasPermissionTo('delete branch_balance');
-    }
-
-    public function addBranch_balance_item(User $user, Branch_balance $branch_balance)
+    public function delete(User $user, Branch_balance_item $branch_balance_item)
     {
         return false;
         //$user->role == 'admin' || $user->hasPermissionTo('delete branch_balance');

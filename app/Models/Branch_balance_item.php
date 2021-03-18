@@ -9,7 +9,7 @@ class Branch_balance_item extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'branch_balance_id', 'order_header_id', 'payment_status', 'user_id', 'updated_by'
+        'branch_balance_id', 'order_header_id', 'payment_status', 'user_id', 'updated_by', 'delivery_id'
     ];
 
     public function user()
@@ -36,5 +36,15 @@ class Branch_balance_item extends Model
     public function order_details()
     {
         return $this->hasMany('App\Models\Order_detail', 'order_header_id', 'order_header_id');
+    }
+
+    /**
+     * Get the delivery that owns the Branch_balance_item
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function delivery()
+    {
+        return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 }

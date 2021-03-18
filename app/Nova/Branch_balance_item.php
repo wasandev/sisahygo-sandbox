@@ -61,10 +61,10 @@ class Branch_balance_item extends Resource
             Text::make('สถานะการจัดส่ง', 'delivery_status', function () {
                 return $this->branchrec_order->order_status;
             })->onlyOnIndex(),
-            Text::make('เลขที่ใบจัดส่ง', 'delivery', function () {
-                $delivery_detail = \App\Models\Delivery_detail::find($this->order_header_id);
-                return $delivery_detail->delivery_item->delivery->delivery_no;
-            })->onlyOnIndex(),
+
+            BelongsTo::make('เลขใบจัดส่งสินค้า', 'delivery', 'App\Nova\Delivery')
+                ->nullable()
+                ->exceptOnForms(),
 
             HasMany::make('รายการสินค้า', 'order_details', 'App\Nova\Order_detail')
         ];
