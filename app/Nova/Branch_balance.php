@@ -50,6 +50,11 @@ class Branch_balance extends Resource
     public static $search = [
         'id',
     ];
+
+    public static $searchRelations = [
+        'customer' => ['name'],
+    ];
+
     public static function label()
     {
         return 'รายการเก็บเงินปลายทางสาขา';
