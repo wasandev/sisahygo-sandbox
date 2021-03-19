@@ -50,6 +50,10 @@ class Bankaccount extends Resource
     public static $search = [
         'account_no', 'account_name', 'account_type', 'bankbranch'
     ];
+
+    public static $searchRelations = [
+        'bank' => ['name'],
+    ];
     public static function label()
     {
         return 'ข้อมูลบัญชีธนาคาร';

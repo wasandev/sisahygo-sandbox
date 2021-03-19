@@ -105,7 +105,11 @@ class Order_checker extends Resource
             //     BelongsTo::make('เลือกที่อยู่', 'address', 'App\Nova\Address')
             //         ->hideFromIndex(),
             // ])->dependsOn('use_address', true),
-
+            Select::make('ประเภท', 'order_type')->options([
+                'general' => 'ทั่วไป',
+                'charter' => 'เหมาคัน',
+                'express' => 'Express',
+            ])->sortable(),
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()

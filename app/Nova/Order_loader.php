@@ -86,7 +86,11 @@ class Order_loader extends Resource
                 ->loadingWhen(['confirmed'])
                 ->failedWhen(['cancel'])
                 ->exceptOnForms(),
-
+            Select::make('ประเภท', 'order_type')->options([
+                'general' => 'ทั่วไป',
+                'charter' => 'เหมาคัน',
+                'express' => 'Express',
+            ])->onlyOnIndex(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->searchable()

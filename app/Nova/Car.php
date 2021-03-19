@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Car_balance;
+use App\Nova\Filters\CarType;
 use App\Nova\Filters\OwnerType;
 use App\Nova\Lenses\CarMonthSumary;
 use App\Nova\Metrics\CarByType;
@@ -263,7 +264,8 @@ class Car extends Resource
     public function filters(Request $request)
     {
         return [
-            new OwnerType
+            new OwnerType,
+            new CarType,
         ];
     }
 

@@ -102,6 +102,11 @@ class Order_header extends Resource
                 ->failedWhen(['cancel', 'problem'])
                 ->exceptOnForms()
                 ->sortable(),
+            Select::make('ประเภท', 'order_type')->options([
+                'general' => 'ทั่วไป',
+                'charter' => 'เหมาคัน',
+                'express' => 'Express',
+            ])->sortable(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->onlyOnDetail(),
