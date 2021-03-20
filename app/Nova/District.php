@@ -5,6 +5,8 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -62,6 +64,17 @@ class District extends Resource
                 ->hideFromIndex(),
             BelongsTo::make('จังหวัด', 'province', 'App\Nova\Province')->sortable(),
             Text::make(__('District'), 'name')->sortable(),
+            BelongsToMany::make('อำเภอในโซน', 'pricezones', 'App\Nova\Pricezone')
+                ->searchable()
+                ->withSubtitles()
+                ->fields(new DistrictPricezoneFields)
+                ->actions(function () {
+                    return [
+                        new Actions\SetExpressFee,
+                        new Actions\SetFarawayFee
+                    ];
+                }),
+
 
         ];
     }

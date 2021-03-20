@@ -104,9 +104,9 @@ class Order_header extends Resource
                 ->sortable(),
             Select::make('ประเภท', 'order_type')->options([
                 'general' => 'ทั่วไป',
-                'charter' => 'เหมาคัน',
                 'express' => 'Express',
-            ])->sortable(),
+            ])->sortable()
+                ->default('general'),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->onlyOnDetail(),

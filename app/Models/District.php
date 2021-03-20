@@ -30,6 +30,6 @@ class District extends Model
     }
     public function pricezones()
     {
-        return $this->belongsToMany('App\Models\Pricezone');
+        return $this->belongsToMany('App\Models\Pricezone')->withPivot('express_fee', 'faraway_fee');
     }
 }

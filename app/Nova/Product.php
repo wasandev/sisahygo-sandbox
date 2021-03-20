@@ -92,18 +92,18 @@ class Product extends Resource
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
-            Number::make(__('Width'), 'width')
-                ->step('0.01')
-                ->hideFromIndex(),
-            Number::make(__('Length'), 'length')
-                ->step('0.01')
-                ->hideFromIndex(),
-            Number::make(__('Height'), 'height')
-                ->step('0.01')
-                ->hideFromIndex(),
-            Number::make(__('Weight'), 'weight')
-                ->step('0.01')
-                ->hideFromIndex(),
+            // Number::make(__('Width'), 'width')
+            //     ->step('0.01')
+            //     ->hideFromIndex(),
+            // Number::make(__('Length'), 'length')
+            //     ->step('0.01')
+            //     ->hideFromIndex(),
+            // Number::make(__('Height'), 'height')
+            //     ->step('0.01')
+            //     ->hideFromIndex(),
+            // Number::make(__('Weight'), 'weight')
+            //     ->step('0.01')
+            //     ->hideFromIndex(),
             BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
                 ->nullable()
                 ->showCreateRelationButton()

@@ -3,7 +3,9 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -61,9 +63,17 @@ class Pricezone extends Resource
             Text::make('ชื่อโซน', 'name'),
             BelongsToMany::make('อำเภอในโซน', 'districts', 'App\Nova\District')
                 ->searchable()
-                ->withSubtitles(),
+                ->withSubtitles()
+                ->fields(new DistrictPricezoneFields)
+                ->actions(function () {
+                    return [
+                        new Actions\SetExpressFee,
+                        new Actions\SetFarawayFee
+                    ];
+                }),
         ];
     }
+
 
     /**
      * Get the cards available for the request.
