@@ -123,7 +123,8 @@ class Customer extends Resource
                 ->hideFromIndex(),
             BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
                 ->showCreateRelationButton()
-                ->sortable(),
+                ->sortable()
+                ->nullable(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
