@@ -153,7 +153,7 @@ class DeliveryConfirmed extends Action
                                 ->rules('required'),
                             Text::make(__('Bank reference no'), 'reference'),
                         ])->dependsOn('payment_by', 'T'),
-                        Currency::make('ส่วนลด', 'discount_amount'),
+                        //Currency::make('ส่วนลด', 'discount_amount'),
                         Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
                     ])->dependsOn('payment_status', true),
                     Text::make('หมายเหตุเพิ่มเติม', 'description')
@@ -178,7 +178,7 @@ class DeliveryConfirmed extends Action
                     ->rules('required'),
                 Text::make(__('Bank reference no'), 'reference'),
             ])->dependsOn('payment_by', 'T'),
-            Currency::make('ส่วนลด', 'discount_amount'),
+            //Currency::make('ส่วนลด', 'discount_amount'),
             Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
         ];
     }
