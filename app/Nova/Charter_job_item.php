@@ -56,23 +56,23 @@ class Charter_job_item extends Resource
      */
     public function fields(Request $request)
     {
+        // $job = Charter_job::find(1);
+        // $charter_price = Charter_price::find($job->charter_price_id);
+        // $charter_route = Charter_route::find($charter_price->charter_route_id);
+        // $branch_area = Branch_area::find($charter_route->branch_area_id);
         $job = Charter_job::find(1);
         $charter_price = Charter_price::find($job->charter_price_id);
-        $charter_route = Charter_route::find($charter_price->charter_route_id);
-        $branch_area = Branch_area::find($charter_route->branch_area_id);
-        $job = Charter_job::find(1);
-        $charter_price = Charter_price::find($job->charter_price_id);
-        $charter_route = Charter_route::find($charter_price->charter_route_id);
-        $branch_area = Branch_area::find($charter_route->branch_area_id);
-        $from_address = Address::where('customer_id', $job->customer_id)
-            ->where('district', $branch_area->district)
-            ->where('province', $branch_area->province)
-            ->pluck('name', 'id');
+        // $charter_route = Charter_route::find($charter_price->charter_route_id);
+        // $branch_area = Branch_area::find($charter_route->branch_area_id);
+        // $from_address = Address::where('customer_id', $job->customer_id)
+        //     ->where('district', $branch_area->district)
+        //     ->where('province', $branch_area->province)
+        //     ->pluck('name', 'id');
 
-        $to_address = Address::where('customer_id', $job->customer_id)
-            ->where('district', $charter_route->to_district)
-            ->where('province', $charter_route->to_province)
-            ->pluck('name', 'id');
+        // $to_address = Address::where('customer_id', $job->customer_id)
+        //     ->where('district', $charter_route->to_district)
+        //     ->where('province', $charter_route->to_province)
+        //     ->pluck('name', 'id');
 
 
 
@@ -80,18 +80,18 @@ class Charter_job_item extends Resource
             ID::make()->sortable(),
             BelongsTo::make('ใบรับงานขนส่งเหมาคัน', 'charter_job', 'App\Nova\Charter_job')
                 ->hideFromIndex(),
-            Select::make('จุดรับสินค้าของลูกค้า', 'from_address_id')
-                ->options($from_address)
-                ->rules('required')
-                ->onlyOnForms(),
-            Select::make('จุดส่งสินค้าของลูกค้า', 'to_address_id')
-                ->options($to_address)
-                ->rules('required')
-                ->onlyOnForms(),
+            // Select::make('จุดรับสินค้าของลูกค้า', 'from_address_id')
+            //     ->options($from_address)
+            //     ->rules('required')
+            //     ->onlyOnForms(),
+            // Select::make('จุดส่งสินค้าของลูกค้า', 'to_address_id')
+            //     ->options($to_address)
+            //     ->rules('required')
+            //     ->onlyOnForms(),
             BelongsTo::make('จุดรับสินค้าของลูกค้า', 'from_address', 'App\Nova\Address')
-                ->exceptOnForms(),
+                ->showCreateRelationButton(),
             BelongsTo::make('จุดส่งสินค้าของลูกค้า', 'to_address', 'App\Nova\Address')
-                ->exceptOnForms(),
+                ->showCreateRelationButton(),
 
             BelongsTo::make('สินค้า', 'product', 'App\Nova\Product')
                 ->rules('required')

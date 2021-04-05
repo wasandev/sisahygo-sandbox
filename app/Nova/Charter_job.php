@@ -70,7 +70,6 @@ class Charter_job extends Resource
 
                 ->readonly(true),
             Text::make('เลขที่ใบงานขนส่ง', 'job_no')
-
                 ->readonly(true),
 
             BelongsTo::make('ลูกค้า/ผู้ว่าจ้าง', 'customer', 'App\Nova\Customer')
@@ -84,24 +83,24 @@ class Charter_job extends Resource
 
                 ->rules('required')
                 ->hideFromIndex(),
-            Select::make('จุดรับเงินค่าขนส่ง', 'paymentpoint')->options([
-                'จุดรับสินค้าต้นทาง' => 'จุดรับสินค้าต้นทาง',
-                'จุดส่งสินค้าปลายทาง' => 'จุดส่งสินค้าปลายทาง',
-            ])->displayUsingLabels()
+            // Select::make('จุดรับเงินค่าขนส่ง', 'paymentpoint')->options([
+            //     'จุดรับสินค้าต้นทาง' => 'จุดรับสินค้าต้นทาง',
+            //     'จุดส่งสินค้าปลายทาง' => 'จุดส่งสินค้าปลายทาง',
+            // ])->displayUsingLabels()
 
-                ->rules('required')
-                ->hideFromIndex(),
+            //     ->rules('required')
+            //     ->hideFromIndex(),
 
-            BelongsTo::make('เลขที่ใบเสนอราคา', 'quotation', 'App\Nova\Quotation')->nullable()
-
+            BelongsTo::make('เลขที่ใบเสนอราคา', 'quotation', 'App\Nova\Quotation')
+                ->nullable()
+                ->searchable()
                 ->hideFromIndex(),
             Text::make('อ้างถึงใบสั่งซื้อลูกค้า', 'reference')
-
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->nullable(),
             BelongsTo::make('พนักงานตรวจรับสินค้า', 'employee', 'App\Nova\Employee')
-
-                ->hideFromIndex(),
-
+                ->hideFromIndex()
+                ->nullable(),
             DateTime::make('วันที่สร้างรายการ', 'created_at')
 
                 ->onlyOnDetail(),

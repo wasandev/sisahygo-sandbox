@@ -39,9 +39,10 @@ class Ar_customer extends Resource
      * @var string
      */
     public static $model = 'App\Models\Ar_customer';
+
     public static function availableForNavigation(Request $request)
     {
-        return $request->user()->hasPermissionTo('edit ar_customers');
+        return $request->user()->hasPermissionTo('edit ar_customer');
     }
     /**
      * The single value that should be used to represent the resource when being displayed.

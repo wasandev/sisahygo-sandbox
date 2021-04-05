@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -13,6 +14,7 @@ use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Support\Carbon;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Quotation extends Resource
@@ -57,7 +59,8 @@ class Quotation extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'active'),
+            Boolean::make('ใช้งาน', 'active')
+                ->default(true),
             BelongsTo::make('สาขาที่ทำรายการ', 'branch', 'App\Nova\Branch')
                 ->withMeta([
                     'value' => $this->user_id ?? auth()->user()->branch_id,
@@ -69,26 +72,32 @@ class Quotation extends Resource
                 ->failedWhen(['Reject']),
 
             Text::make('เลขที่ใบเสนอราคา', 'quotation_no')
-
                 ->readonly(true),
 
             DateTime::make('วันที่', 'quotation_date')
-
-                ->readonly(true),
+                ->readonly()
+                ->default(today())
+                ->format('DD/MM/YYYY')
+                ->sortable(),
 
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
-
                 ->searchable(),
             Select::make('เงื่อนไขการชำระเงิน', 'paymenttype')->options([
-                'เงินสด' => 'เงินสด',
-                'เงินโอน' => 'เงินโอน',
-                'วางบิล' => 'วางบิล',
-
-            ])->displayUsingLabels(),
-            Text::make('หมายเหตุ/เงื่อนไข', 'terms')
+                'H' => 'เงินสด',
+                'T' => 'เงินโอน',
+                'F' => 'วางบิล',
+            ])->displayUsingLabels()
                 ->hideFromIndex(),
-            DateTime::make('ใช้ได้ถึงวันที่', 'expiration_date')
+            DateTime::make('กำหนดส่ง', 'duedate')
+                ->hideFromIndex()
+                ->nullable(),
+            DateTime::make('วันที่จัดส่ง', 'delivery_date')
+                ->hideFromIndex()
+                ->nullable(),
 
+            DateTime::make('ใช้ได้ถึงวันที่', 'expiration_date')
+                ->hideFromIndex(),
+            Text::make('หมายเหตุ/เงื่อนไขอื่นๆ', 'terms')
                 ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -101,6 +110,23 @@ class Quotation extends Resource
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
             BelongsToMany::make('รายการ', 'charter_prices', 'App\Nova\Charter_price')
+
+                ->fields(function () {
+                    return [
+                        Select::make(__('Product'), 'product_id')->options(\App\Models\Product::pluck('name', 'id')->toArray())->displayUsingLabels()
+                            ->searchable(),
+                        Number::make('จำนวนสินค้า', 'product_amount'),
+                        Select::make(__('Unit'), 'unit_id')->options(\App\Models\Unit::pluck('name', 'id')->toArray())->displayUsingLabels()
+                            ->searchable(),
+                        Number::make('น้ำหนักสินค้ารวม(กก.)', 'product_weight'),
+                        Text::make(__('Description'), 'description')
+                            ->nullable()
+                            ->hideFromIndex(),
+                        Number::make('จำนวนเที่ยว', 'charter_amount'),
+
+
+                    ];
+                }),
 
 
 

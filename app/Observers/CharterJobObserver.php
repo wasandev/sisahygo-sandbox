@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Charter_job;
 use App\Models\Charter_job_status;
 use App\Models\Charter_price;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Carbon;
 
 
@@ -20,7 +21,9 @@ class CharterJobObserver
         $charter_job->user_id = auth()->user()->id;
         $charter_job->status = 'new';
         $charter_job->branch_id = auth()->user()->branch_id;
-        $charter_job->job_no = Charter_job::nextCharterJobNumber();
+        $job_no = IdGenerator::generate(['table' => 'quotations', 'field' => 'quotation_no', 'length' => 15, 'prefix' => 'J' . date('Ymd')]);
+
+        $charter_job->job_no = $job_no;
         $charter_job->job_date = Carbon::now()->toDateTimeString();
     }
 

@@ -34,4 +34,15 @@ class Charter_price extends Model
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
+
+    /**
+     * The quotations that belong to the Charter_price
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function quotations()
+    {
+        return $this->belongsToMany(Quotation::class, 'charter_price_quotation', 'quotation_id', 'charter_price_id')
+            ->withPivot('product_id', 'description', 'unit_id', 'product_amount', 'product_weight', 'charter_amount');
+    }
 }

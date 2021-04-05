@@ -14,13 +14,16 @@ class Quotation extends Model
     const REJECT_STATUS = 'Reject';
 
     protected $fillable = [
-        'active', 'status', 'quotation_no', 'quotation_date', 'branch_id', 'customer_id', 'paymenttype', 'terms', 'expiration_date', 'user_id', 'updated_by'
+        'active', 'status', 'quotation_no', 'quotation_date', 'branch_id', 'customer_id', 'paymenttype', 'terms', 'expiration_date', 'user_id', 'updated_by',
+        'duedate', 'delivery_date', 'remark'
 
     ];
 
     protected $casts = [
         'quotation_date' => 'datetime',
-        'expiration_date' => 'datetime'
+        'expiration_date' => 'datetime',
+        'duedate' => 'date',
+        'delivery_date' => 'date'
     ];
     public function branch()
     {
@@ -41,41 +44,7 @@ class Quotation extends Model
     }
     public function charter_prices()
     {
-        return $this->belongsToMany('App\Models\Charter_price', 'charter_price_quotation', 'quotation_id', 'charter_price_id');
-    }
-
-    public static function getStatuses()
-    {
-        return [
-            self::OPEN_STATUS => self::OPEN_STATUS,
-            self::EDIT_STATUS => self::EDIT_STATUS,
-            self::CONFIRM_STATUS => self::CONFIRM_STATUS,
-            self::REJECT_STATUS => self::REJECT_STATUS,
-
-        ];
-    }
-
-    static function  nextQuotationNumber()
-    {
-        if (Quotation::count() == 0) {
-            $nextQuotationNumber = 'Q' . date('Y') . '-000001';
-        } else {
-
-            //get last record
-            $record = Quotation::latest()->first();
-
-            $expNum = explode('-', $record->quotation_no);
-
-            //check first day in a year
-            if (date('z') === '0') {
-                $nextQuotationNumber = 'Q' . date('Y') . '-000001';
-            } else {
-                //increase 1 with last tranjob number
-                $nextQuotationNumber = $expNum[0] . '-' . sprintf('%06d', intval($expNum[1]) + 1);
-            }
-        }
-
-
-        return  $nextQuotationNumber;
+        return $this->belongsToMany('App\Models\Charter_price', 'charter_price_quotation', 'quotation_id', 'charter_price_id')
+            ->withPivot('product_id', 'description', 'unit_id', 'product_amount', 'product_weight', 'charter_amount');
     }
 }

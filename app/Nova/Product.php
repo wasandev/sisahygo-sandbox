@@ -92,6 +92,9 @@ class Product extends Resource
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
+            Text::make('ขนาด(กว้าง+ยาว+สูง ) ซม.', 'size', function () {
+                return $this->width + $this->length + $this->weight;
+            })->exceptOnForms(),
             Number::make(__('Width'), 'width')
                 ->step('0.01')
                 ->hideFromIndex(),

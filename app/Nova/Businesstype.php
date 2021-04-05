@@ -35,7 +35,7 @@ class Businesstype extends Resource
 
     public static function availableForNavigation(Request $request)
     {
-        return $request->user()->hasPermissionTo('edit businesstyps');
+        return $request->user()->hasPermissionTo('edit businesstypes');
     }
     /**
      * The columns that should be searched.

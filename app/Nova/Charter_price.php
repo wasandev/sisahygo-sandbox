@@ -4,11 +4,14 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Charter_price extends Resource
@@ -32,8 +35,12 @@ class Charter_price extends Resource
 
     public function title()
     {
-        return $this->charter_route->name . '->' . $this->cartype->name . '->' . $this->carstyle->name . '->' . $this->price;
+        return $this->charter_route->name . '->' . $this->cartype->name  . ' ค่าขนส่ง/เที่ยว  = ' . $this->price;
     }
+    // public function subtitle()
+    // {
+    //     return $this->cartype->name . '->' . $this->carstyle->name . '->' . $this->price;
+    // }
     /**
      * The columns that should be searched.
      *
@@ -58,7 +65,7 @@ class Charter_price extends Resource
             ID::make()->sortable(),
             Boolean::make(__('Status'), 'status')
                 ->sortable()
-                ->rules('required'),
+                ->default(true),
             BelongsTo::make('เส้นทางขนส่ง', 'charter_route', 'App\Nova\Charter_route')
                 ->sortable()
                 ->rules('required')
@@ -70,7 +77,8 @@ class Charter_price extends Resource
             BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
                 ->sortable()
                 ->rules('required')
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->hideFromIndex(),
 
             Currency::make('ค่าขนส่ง/เที่ยว', 'price')
                 ->sortable()
@@ -78,7 +86,8 @@ class Charter_price extends Resource
 
             Number::make('จำนวนจุดรับส่งไม่เกิน', 'pickuppoint')
                 ->step('0.01')
-                ->withMeta(['value' => 2]),
+                ->withMeta(['value' => 2])
+                ->hideFromIndex(),
 
             Currency::make('จุดรับส่งเกินที่กำหนดคิดค่าบริการจุดละ', 'overpointcharge')
                 ->sortable()
@@ -115,6 +124,23 @@ class Charter_price extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            BelongsToMany::make('ใบเสนอราคา', 'quotations', 'App\Nova\Quotation')
+                ->withSubtitles()
+                ->fields(function () {
+                    return [
+                        Select::make(__('Product'), 'product_id')->options(\App\Models\Product::pluck('name', 'id')->toArray())->displayUsingLabels()
+                            ->searchable(),
+                        Number::make('จำนวนสินค้า', 'product_amount'),
+                        Select::make(__('Unit'), 'unit_id')->options(\App\Models\Unit::pluck('name', 'id')->toArray())->displayUsingLabels()
+                            ->searchable(),
+                        Number::make('น้ำหนักสินค้ารวม(กก.)', 'product_weight'),
+                        Text::make(__('Description'), 'description')
+                            ->nullable()
+                            ->hideFromIndex(),
+                        Number::make('จำนวนเที่ยว', 'charter_amount'),
+
+                    ];
+                }),
 
         ];
     }
@@ -163,5 +189,22 @@ class Charter_price extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function relatableQuery(NovaRequest $request, $query)
+    {
+        if (isset($request->viaResourceId) && ($request->viaRelationship === 'charter_job_items')) {
+
+            $resourceId = $request->viaResourceId;
+
+            $order = \App\Models\Order_checker::find($resourceId);
+            if ($order->branch->code === '001') {
+                $district = $order->to_customer->district;
+                return $query->where('district', '=', $district);
+            } else {
+                $district = $order->customer->district;
+                return $query->where('district', '=', $district);
+            }
+        }
     }
 }

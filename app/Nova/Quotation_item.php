@@ -53,59 +53,25 @@ class Quotation_item extends Resource
      */
     public function fields(Request $request)
     {
-        if (($request->editMode == "create" || $request->editMode == "update") && !empty($request->viaResource) && !empty($request->viaResourceId) && !empty($request->viaRelationship)) {
 
-            $quotation = Quotation::find($request->viaResourceId);
-            $address = Address::where('customer_id', $quotation->customer_id)->pluck('name', 'id');
-            return [
-                ID::make()->sortable(),
-                Select::make('เลขที่ใบเสนอราคา', 'quotation_id')
-                    ->options($quotation)
-                    ->options([$quotation->id => $quotation->quotation_no])
-                    ->displayUsingLabels()
-                    ->withMeta(['value' => $quotation->id])
-                    ->hideWhenUpdating()
-                    ->readonly(true),
-                Select::make('จุดรับสินค้า', 'from_address_id')
-                    ->options($address)
-                    ->onlyOnForms(),
-                Select::make('จุดส่งสินค้า', 'to_address_id')
-                    ->options($address)
-                    ->onlyOnForms(),
-                BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype'),
-                BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
-
-                    ->hideFromIndex(),
-                Belongsto::make('สินค้า', 'product', 'App\Nova\Product')
-
-                    ->searchable(),
-                Currency::make('จำนวน', 'number'),
-                BelongsTo::make('หน่วยนับสินค้า', 'unit', 'App\Nova\Unit')
-
-                    ->searchable(),
-                Currency::make('น้ำหนักสินค้ารวม(กก.)', 'total_weight'),
-                Currency::make('ค่าขนส่ง', 'amount'),
-                DateTime::make('เวลารับสินค้า', 'pickup_date')
-
-                    ->hideFromIndex(),
-                DateTime::make('เวลาส่งสินค้า', 'delivery_date')
-
-                    ->hideFromIndex(),
-
-            ];
-        }
         return [
             ID::make()->sortable(),
-            BelongsTo::make('เลขที่ใบเสนอราคา', 'quotation', 'App\Nova\Quotation'),
-            BelongsTo::make('จุดรับสินค้า', 'from_address', 'App\Nova\Address'),
-            BelongsTo::make('จุดส่งสินค้า', 'to_address', 'App\Nova\Address'),
+            BelongsTo::make('ใบเสนอราคา', 'quotation', 'App\Nova\Quotation'),
+            BelongsTo::make('จุดรับสินค้า', 'from_address', 'App\Nova\Address')
+                ->showCreateRelationButton(),
+            BelongsTo::make('จุดส่งสินค้า', 'to_address', 'App\Nova\Address')
+                ->showCreateRelationButton(),
             BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype'),
             BelongsTo::make('ลักษณะรถ', 'carstyle', 'App\Nova\Carstyle')
 
                 ->hideFromIndex(),
-            Belongsto::make('สินค้า', 'product', 'App\Nova\Product'),
+            Belongsto::make('สินค้า', 'product', 'App\Nova\Product')
+
+                ->searchable(),
             Currency::make('จำนวน', 'number'),
-            BelongsTo::make('หน่วยนับสินค้า', 'unit', 'App\Nova\Unit'),
+            BelongsTo::make('หน่วยนับสินค้า', 'unit', 'App\Nova\Unit')
+
+                ->searchable(),
             Currency::make('น้ำหนักสินค้ารวม(กก.)', 'total_weight'),
             Currency::make('ค่าขนส่ง', 'amount'),
             DateTime::make('เวลารับสินค้า', 'pickup_date')
@@ -114,8 +80,6 @@ class Quotation_item extends Resource
             DateTime::make('เวลาส่งสินค้า', 'delivery_date')
 
                 ->hideFromIndex(),
-
-
 
         ];
     }

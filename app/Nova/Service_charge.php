@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\DateTime;
 
 class Service_charge extends Resource
 {
-    public static $displayInNavigation = false;
+    //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 12;
     /**
@@ -61,7 +61,8 @@ class Service_charge extends Resource
             ID::make()->sortable(),
             Boolean::make(__('Status'), 'status')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->default(true),
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
@@ -123,5 +124,15 @@ class Service_charge extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }
