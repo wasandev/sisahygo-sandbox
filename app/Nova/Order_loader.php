@@ -197,7 +197,8 @@ class Order_loader extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->whereNotIn('order_status', ['checking', 'new'])
-            ->where('branch_id', '=', $request->user()->branch_id);
+            ->where('branch_id', '=', $request->user()->branch_id)
+            ->where('order_type', '<>', 'charter');
         //  ->where('branch_rec_id', '=', $request->user()->branch_rec_id);
     }
     // public static function indexQuery(NovaRequest $request, $query)

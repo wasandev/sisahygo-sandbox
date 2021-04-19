@@ -48,13 +48,13 @@ class Address extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'address'
+        'name', 'address', 'district'
     ];
 
     //public static $title = 'name';
     public function title()
     {
-        return $this->customer->name;
+        return $this->name . ' ' . $this->district;
     }
 
     public function subtitle()
@@ -76,8 +76,11 @@ class Address extends Resource
                 ->hideFromIndex()
                 ->searchable(),
             Text::make(__('Address name'), 'name')->sortable()
-                ->placeholder('ชื่อเรียกที่อยู่ใหม่'),
-            Text::make(__('Contact name'), 'contactname')->sortable(),
+                ->placeholder('ชื่อเรียกที่อยู่')
+                ->rules('required'),
+            Text::make(__('Contact name'), 'contactname')
+                ->sortable()
+                ->rules('required'),
             Text::make(__('Phone'), 'phoneno')
                 ->rules('required', 'numeric'),
             new Panel(__('Address'), $this->addressFields()),
@@ -163,5 +166,16 @@ class Address extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+    public static function relatableQuery(NovaRequest $request, $query)
+    {
+        if (isset($request->viaResourceId) && ($request->viaRelationship === 'charter_job_items')) {
+
+            $resourceId = $request->viaResourceId;
+
+            $charter_job = \App\Models\Charter_job::find($resourceId);
+            $customer  = $charter_job->customer;
+            return $query->where('customer_id', '=', $customer->id);
+        }
     }
 }

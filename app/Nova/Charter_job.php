@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\CharterJobsActive;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -12,10 +13,8 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Yassi\NestedForm\NestedForm;
 
 class Charter_job extends Resource
 {
@@ -44,6 +43,7 @@ class Charter_job extends Resource
     public static $search = [
         'id', 'job_no'
     ];
+
     public static function label()
     {
         return 'ใบงานขนส่งเหมาคัน';
@@ -65,31 +65,22 @@ class Charter_job extends Resource
                 ->failedWhen(['Cancel'])
                 ->exceptOnForms(),
             BelongsTo::make('สาขาที่ทำรายการ', 'branch', 'App\Nova\Branch')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
             DateTime::make('วันที่', 'job_date')
-
+                ->format('DD/MM/YYYY')
                 ->readonly(true),
             Text::make('เลขที่ใบงานขนส่ง', 'job_no')
                 ->readonly(true),
 
             BelongsTo::make('ลูกค้า/ผู้ว่าจ้าง', 'customer', 'App\Nova\Customer')
-
                 ->searchable(),
-            Select::make('เงื่อนไขการชำระเงิน', 'paymenttype')->options([
-                'เงินสด' => 'เงินสด',
-                'เงินโอน' => 'เงินโอน',
-                'วางบิล' => 'วางบิล',
-            ])->displayUsingLabels()
-
-                ->rules('required')
-                ->hideFromIndex(),
-            // Select::make('จุดรับเงินค่าขนส่ง', 'paymentpoint')->options([
-            //     'จุดรับสินค้าต้นทาง' => 'จุดรับสินค้าต้นทาง',
-            //     'จุดส่งสินค้าปลายทาง' => 'จุดส่งสินค้าปลายทาง',
+            // Select::make('เงื่อนไขการชำระเงิน', 'paymenttype')->options([
+            //     'H' => 'เงินสด',
+            //     'T' => 'เงินโอน',
+            //     'F' => 'วางบิล',
             // ])->displayUsingLabels()
-
-            //     ->rules('required')
             //     ->hideFromIndex(),
+
 
             BelongsTo::make('เลขที่ใบเสนอราคา', 'quotation', 'App\Nova\Quotation')
                 ->nullable()
@@ -98,9 +89,28 @@ class Charter_job extends Resource
             Text::make('อ้างถึงใบสั่งซื้อลูกค้า', 'reference')
                 ->hideFromIndex()
                 ->nullable(),
+
+            BelongsTo::make('เลือกราคาค่าขนส่งเหมาคัน', 'charter_price', 'App\Nova\Charter_price')
+                ->hideFromIndex()
+                ->rules('required'),
+            Currency::make('จำนวนค่าขนส่ง(บาท)', 'sub_total')
+                ->readonly(true)
+                ->onlyOnDetail(),
+
+            Currency::make('ส่วนลด(บาท)', 'discount')
+                ->nullable()
+                ->default(0.00)
+                ->hideFromIndex(),
+
+            Currency::make('รวมจำนวนเงิน(บาท)', 'total')
+                ->rules('required')
+                ->onlyOnDetail(),
+            Text::make('หมายเหตุ/เงื่อนไขอื่นๆ', 'terms')
+                ->hideFromIndex(),
             BelongsTo::make('พนักงานตรวจรับสินค้า', 'employee', 'App\Nova\Employee')
                 ->hideFromIndex()
-                ->nullable(),
+                ->nullable()
+                ->searchable(),
             DateTime::make('วันที่สร้างรายการ', 'created_at')
 
                 ->onlyOnDetail(),
@@ -117,29 +127,18 @@ class Charter_job extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            BelongsTo::make('เลือกราคาค่าขนส่งเหมาคัน', 'charter_price', 'App\Nova\Charter_price')
-                ->hideFromIndex()
-                ->rules('required'),
-            Currency::make('จำนวนค่าขนส่ง(บาท)', 'sub_total')
-                ->readonly(true)
-                ->onlyOnDetail(),
-
-            Currency::make('ส่วนลด(บาท)', 'discount')
-
-                ->rules('required')
-                ->hideFromIndex(),
-
-            Currency::make('รวมจำนวนเงิน(บาท)', 'total')
-                ->rules('required')
-                ->onlyOnDetail(),
-            Text::make('หมายเหตุ/เงื่อนไขอื่นๆ', 'terms')
-                ->hideFromIndex(),
+            BelongsTo::make('ใบรับส่ง', 'order_charter', 'App\Nova\Order_charter')
+                ->exceptOnForms(),
 
             HasMany::make('จุดรับส่ง-รายการสินค้า', 'charter_job_items', 'App\Nova\Charter_job_item'),
-            BelongsToMany::make('ค่าบริการอื่นๆ', 'service_charges', 'App\Nova\Service_charge'),
-            HasOne::make('ประกันภัยสินค้า', 'charter_job_insurance', 'App\Nova\Charter_job_insurance')
-                ->nullable(),
-            HasMany::make('สถานะการขนส่ง', 'charter_job_statuses', 'App\Nova\Charter_job_status')
+            BelongsToMany::make('ค่าบริการอื่นๆ', 'service_charges', 'App\Nova\Service_charge')
+                ->fields(function () {
+                    return [
+                        Currency::make('จำนวนเงิน', 'amount')
+                    ];
+                }),
+            // HasOne::make('ประกันภัยสินค้า', 'charter_job_insurance', 'App\Nova\Charter_job_insurance')
+            //     ->nullable(),
 
 
         ];
@@ -229,7 +228,7 @@ class Charter_job extends Resource
             }
         }
         return [
-            (new Actions\CharterJobsActive)
+            CharterJobsActive::make($request->resourceId)
                 ->onlyOnDetail()
                 ->confirmText('ต้องการยืนยันใบรับงานเหมาคันรายการนี้?')
                 ->confirmButtonText('ยืนยัน')

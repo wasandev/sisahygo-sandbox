@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\DateTime;
 
@@ -66,9 +67,9 @@ class Service_charge extends Resource
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required'),
-            Currency::make(__('Amount'), 'amount')
-                ->sortable()
-                ->rules('required'),
+            // Currency::make(__('Amount'), 'amount')
+            //     ->sortable()
+            //     ->rules('required'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -79,6 +80,12 @@ class Service_charge extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            BelongsToMany::make('ใบรับงานเหมาคัน', 'charter_jobs', 'App\Nova\Charter_job')
+                ->fields(function () {
+                    return [
+                        Currency::make('จำนวนเงิน', 'amount')
+                    ];
+                }),
         ];
     }
 

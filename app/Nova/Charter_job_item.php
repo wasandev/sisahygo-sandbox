@@ -14,8 +14,10 @@ use App\Models\Charter_job;
 use App\Models\Charter_route;
 use App\Models\Charter_price;
 use App\Models\Branch_area;
+use App\Models\Customer;
 use App\Rules\Truckweight;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 
 class Charter_job_item extends Resource
 {
@@ -56,23 +58,7 @@ class Charter_job_item extends Resource
      */
     public function fields(Request $request)
     {
-        // $job = Charter_job::find(1);
-        // $charter_price = Charter_price::find($job->charter_price_id);
-        // $charter_route = Charter_route::find($charter_price->charter_route_id);
-        // $branch_area = Branch_area::find($charter_route->branch_area_id);
-        $job = Charter_job::find(1);
-        $charter_price = Charter_price::find($job->charter_price_id);
-        // $charter_route = Charter_route::find($charter_price->charter_route_id);
-        // $branch_area = Branch_area::find($charter_route->branch_area_id);
-        // $from_address = Address::where('customer_id', $job->customer_id)
-        //     ->where('district', $branch_area->district)
-        //     ->where('province', $branch_area->province)
-        //     ->pluck('name', 'id');
 
-        // $to_address = Address::where('customer_id', $job->customer_id)
-        //     ->where('district', $charter_route->to_district)
-        //     ->where('province', $charter_route->to_province)
-        //     ->pluck('name', 'id');
 
 
 
@@ -80,17 +66,14 @@ class Charter_job_item extends Resource
             ID::make()->sortable(),
             BelongsTo::make('ใบรับงานขนส่งเหมาคัน', 'charter_job', 'App\Nova\Charter_job')
                 ->hideFromIndex(),
-            // Select::make('จุดรับสินค้าของลูกค้า', 'from_address_id')
-            //     ->options($from_address)
-            //     ->rules('required')
-            //     ->onlyOnForms(),
-            // Select::make('จุดส่งสินค้าของลูกค้า', 'to_address_id')
-            //     ->options($to_address)
-            //     ->rules('required')
-            //     ->onlyOnForms(),
+
             BelongsTo::make('จุดรับสินค้าของลูกค้า', 'from_address', 'App\Nova\Address')
+                //->searchable()
+                ->withSubtitles()
                 ->showCreateRelationButton(),
             BelongsTo::make('จุดส่งสินค้าของลูกค้า', 'to_address', 'App\Nova\Address')
+                //->searchable()
+                ->withSubtitles()
                 ->showCreateRelationButton(),
 
             BelongsTo::make('สินค้า', 'product', 'App\Nova\Product')
@@ -102,10 +85,7 @@ class Charter_job_item extends Resource
             BelongsTo::make('หน่วยนับ', 'unit', 'App\Nova\Unit')
                 ->rules('required')
                 ->showCreateRelationButton(),
-            Currency::make('น้ำหนักสินค้ารวม(กก.)', 'total_weight')
-                ->rules('required', new Truckweight($charter_price->cartype_id))
-                //->creationRules(new Truckweight($charter_price->cartype_id))
-                //->updateRules(new Truckweight($charter_price->cartype_id), '{{resourceId}}')
+            Number::make('น้ำหนักสินค้ารวม(กก.)', 'total_weight')
                 ->hideFromIndex(),
             Currency::make('มูลค่าสินค้ารวม(บาท)', 'productvalue')
 
@@ -115,7 +95,6 @@ class Charter_job_item extends Resource
                 ->rules('required')
                 ->hideFromIndex(),
             DateTime::make('วันที่กำหนดส่งสินค้า', 'delivery_date')
-
                 ->rules('required')
                 ->hideFromIndex(),
 
@@ -166,5 +145,14 @@ class Charter_job_item extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . $request->input('viaResource') . '/' . $request->input('viaResourceId');
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . $request->input('viaResource') . '/' . $request->input('viaResourceId');
     }
 }

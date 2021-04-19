@@ -19,6 +19,10 @@ class Charter_job_status extends Resource
      */
     public static $model = 'App\Models\Charter_job_status';
 
+    public static function label()
+    {
+        return 'สถานะใบงานขนส่งเหมาคัน';
+    }
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

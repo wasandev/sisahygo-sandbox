@@ -230,6 +230,7 @@ class Order_branch extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->whereNotIn('order_status', ['checking', 'new'])
-            ->where('paymenttype', '=', 'E');
+            ->where('paymenttype', '=', 'E')
+            ->where('order_type', '<>', 'charter');
     }
 }

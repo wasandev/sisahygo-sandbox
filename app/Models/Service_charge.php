@@ -19,4 +19,15 @@ class Service_charge extends Model
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
+
+    /**
+     * The charter_jobs that belong to the Service_charge
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function charter_jobs()
+    {
+        return $this->belongsToMany(Charter_job::class, 'service_charge_charter_job', 'charter_job_id', 'service_charge_id')
+            ->withPivot('amount');
+    }
 }

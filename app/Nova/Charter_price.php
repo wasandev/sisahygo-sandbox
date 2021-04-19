@@ -124,23 +124,23 @@ class Charter_price extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            BelongsToMany::make('ใบเสนอราคา', 'quotations', 'App\Nova\Quotation')
-                ->withSubtitles()
-                ->fields(function () {
-                    return [
-                        Select::make(__('Product'), 'product_id')->options(\App\Models\Product::pluck('name', 'id')->toArray())->displayUsingLabels()
-                            ->searchable(),
-                        Number::make('จำนวนสินค้า', 'product_amount'),
-                        Select::make(__('Unit'), 'unit_id')->options(\App\Models\Unit::pluck('name', 'id')->toArray())->displayUsingLabels()
-                            ->searchable(),
-                        Number::make('น้ำหนักสินค้ารวม(กก.)', 'product_weight'),
-                        Text::make(__('Description'), 'description')
-                            ->nullable()
-                            ->hideFromIndex(),
-                        Number::make('จำนวนเที่ยว', 'charter_amount'),
+            // BelongsToMany::make('ใบเสนอราคา', 'quotations', 'App\Nova\Quotation')
+            //     ->withSubtitles()
+            //     ->fields(function () {
+            //         return [
+            //             Select::make(__('Product'), 'product_id')->options(\App\Models\Product::pluck('name', 'id')->toArray())->displayUsingLabels()
+            //                 ->searchable(),
+            //             Number::make('จำนวนสินค้า', 'product_amount'),
+            //             Select::make(__('Unit'), 'unit_id')->options(\App\Models\Unit::pluck('name', 'id')->toArray())->displayUsingLabels()
+            //                 ->searchable(),
+            //             Number::make('น้ำหนักสินค้ารวม(กก.)', 'product_weight'),
+            //             Text::make(__('Description'), 'description')
+            //                 ->nullable()
+            //                 ->hideFromIndex(),
+            //             Number::make('จำนวนเที่ยว', 'charter_amount'),
 
-                    ];
-                }),
+            //         ];
+            //     }),
 
         ];
     }
@@ -189,22 +189,5 @@ class Charter_price extends Resource
     public function actions(Request $request)
     {
         return [];
-    }
-
-    public static function relatableQuery(NovaRequest $request, $query)
-    {
-        if (isset($request->viaResourceId) && ($request->viaRelationship === 'charter_job_items')) {
-
-            $resourceId = $request->viaResourceId;
-
-            $order = \App\Models\Order_checker::find($resourceId);
-            if ($order->branch->code === '001') {
-                $district = $order->to_customer->district;
-                return $query->where('district', '=', $district);
-            } else {
-                $district = $order->customer->district;
-                return $query->where('district', '=', $district);
-            }
-        }
     }
 }

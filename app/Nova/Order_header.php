@@ -328,11 +328,10 @@ class Order_header extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->role != 'admin') {
-            return $query->where('order_status', '<>', 'checking')
-                ->where('branch_id', '=', $request->user()->branch_id);
-        }
-        return $query;
+
+        return $query->where('order_status', '<>', 'checking')
+            ->where('branch_id', '=', $request->user()->branch_id)
+            ->where('order_type', '<>', 'charter');
     }
     public static function relatableCustomers(NovaRequest $request, $query)
     {

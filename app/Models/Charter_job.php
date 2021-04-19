@@ -8,7 +8,10 @@ class Charter_job extends Model
 {
 
     protected $fillable = [
-        'status', 'job_no', 'job_date', 'branch_id', 'customer_id', 'reference', 'quotation_id', 'paymenttype', 'paymentpoint', 'charter_price_id', 'terms', 'sub_total', 'discount', 'tax_amount', 'total', 'employee_id', 'user_id', 'updated_by'
+        'status', 'job_no', 'job_date', 'branch_id', 'customer_id', 'reference',
+        'quotation_id', 'paymenttype', 'paymentpoint', 'charter_price_id', 'terms',
+        'sub_total', 'discount', 'tax_amount',
+        'total', 'employee_id', 'user_id', 'updated_by', 'order_header_id', 'car_id', 'driver_id'
 
     ];
 
@@ -64,29 +67,17 @@ class Charter_job extends Model
 
     public function service_charges()
     {
-        return $this->belongsToMany('App\Models\Service_charge', 'service_charge_charter_job', 'charter_job_id', 'service_charge_id');
+        return $this->belongsToMany('App\Models\Service_charge', 'service_charge_charter_job', 'charter_job_id', 'service_charge_id')
+            ->withPivot('amount');
     }
-    static function  nextCharterJobNumber()
+
+    /**
+     * Get the order_header that owns the Charter_job
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order_charter()
     {
-        if (Charter_job::count() == 0) {
-            $nextCharterJobNumber = 'J' . date('Y') . '-000001';
-        } else {
-
-            //get last record
-            $record = Charter_job::latest()->first();
-
-            $expNum = explode('-', $record->job_no);
-
-            //check first day in a year
-            if (date('z') === '0') {
-                $nextCharterJobNumber = 'J' . date('Y') . '-000001';
-            } else {
-                //increase 1 with last tranjob number
-                $nextCharterJobNumber = $expNum[0] . '-' . sprintf('%06d', intval($expNum[1]) + 1);
-            }
-        }
-
-
-        return  $nextCharterJobNumber;
+        return $this->belongsTo(Order_charter::class, 'order_header_id');
     }
 }

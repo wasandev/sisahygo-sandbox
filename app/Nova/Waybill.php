@@ -330,7 +330,8 @@ class Waybill extends Resource
     {
         $routeto_branch = \App\Models\Routeto_branch::where('branch_id', $request->user()->branch_id)->get('id');
         if (isset($routeto_branch)) {
-            return $query->whereIn('routeto_branch_id', $routeto_branch);
+            return $query->whereIn('routeto_branch_id', $routeto_branch)
+                ->where('waybill_type', '<>', 'charter');
         }
         return $query;
     }

@@ -3,8 +3,13 @@
 namespace App\Observers;
 
 use App\Models\Charter_job;
+use App\Models\Charter_job_item;
 use App\Models\Charter_job_status;
 use App\Models\Charter_price;
+use App\Models\Order_detail;
+use App\Models\Order_header;
+use App\Models\Unit;
+use App\Models\Waybill;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Carbon;
 
@@ -20,8 +25,9 @@ class CharterJobObserver
         $charter_job->total = $charter_price->price - $charter_job->discount;
         $charter_job->user_id = auth()->user()->id;
         $charter_job->status = 'new';
+        $charter_job->paymenttype = 'F';
         $charter_job->branch_id = auth()->user()->branch_id;
-        $job_no = IdGenerator::generate(['table' => 'quotations', 'field' => 'quotation_no', 'length' => 15, 'prefix' => 'J' . date('Ymd')]);
+        $job_no = IdGenerator::generate(['table' => 'charter_jobs', 'field' => 'job_no', 'length' => 15, 'prefix' => 'J' . date('Ymd')]);
 
         $charter_job->job_no = $job_no;
         $charter_job->job_date = Carbon::now()->toDateTimeString();
@@ -43,17 +49,70 @@ class CharterJobObserver
         $charter_job->sub_total = $charter_price->price;
         $charter_job->total = $charter_price->price - $charter_job->discount;
         $charter_job->updated_by = auth()->user()->id;
-    }
-    public function updated(Charter_job $charter_job)
-    {
-        $charter_price = Charter_price::find($charter_job->charter_price_id);
 
-        $charter_job->sub_total = $charter_price->price;
-        $charter_job->total = $charter_price->price - $charter_job->discount;
-        if ($charter_job->status == 'active') {
+        if ($charter_job->status == 'Confirmed') {
+
+            $waybill_no = IdGenerator::generate(['table' => 'waybills', 'field' => 'waybill_no', 'length' => 15, 'prefix' => 'W' . date('Ymd')]);
+            $order_header_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'order_header_no', 'length' => 15, 'prefix' => date('Ymd')]);
+            $charter_job_items = Charter_job_item::where('charter_job_id', $charter_job->id)->get();
+            $service_charge = $charter_job->service_charges->sum('pivot.amount');
+
+            $waybill = Waybill::create([
+                'waybill_no' => $waybill_no,
+                'waybill_date' => today(),
+                'waybill_type' => 'charter',
+                'charter_route_id' => $charter_price->charter_route_id,
+                'car_id' => $charter_job->car_id,
+                'driver_id' => $charter_job->driver_id,
+                'loader_id' => auth()->user()->id,
+                'waybill_amount' => $charter_job->total + $service_charge,
+                'waybill_payable' => $charter_price->car_charge,
+                'waybill_income' => $charter_job->total - $charter_price->car_charge,
+                'waybill_status' => 'loading',
+                'user_id' => auth()->user()->id,
+
+            ]);
+            //create order_header
+            $order_header = Order_header::create([
+                'order_header_no' => $order_header_no,
+                'order_header_date' => today(),
+                'order_type' => 'charter',
+                'branch_id' => $charter_job->branch_id,
+                'branch_rec_id' => $charter_job->branch_id,
+                'customer_id' => $charter_job->customer_id,
+                'customer_rec_id' => $charter_job->customer_id,
+                'paymenttype' => $charter_job->paymenttype,
+                'payment_status' => false,
+                'remark' => $charter_job->terms,
+                'waybill_id' => $waybill->id,
+                'order_amount' => $charter_job->total + $service_charge,
+                'user_id' => auth()->user()->id,
+                'order_status' => 'new',
+
+            ]);
+
+            $charter_job->order_header_id = $order_header->id;
+
+            $unit = Unit::where('name', '=', 'เที่ยว')->first();
+
+            foreach ($charter_job_items as $charter_job_item) {
+                $item_unit = Unit::find($charter_job_item->unit_id);
+                $order_details = Order_detail::create([
+                    'order_header_id' => $order_header->id,
+                    'usepricetable' => false,
+                    'product_id' => $charter_job_item->product_id,
+                    'unit_id' => $unit->id,
+                    'price' => $charter_job->total + $service_charge,
+                    'amount' => 1,
+                    'weight' => $charter_job_item->total_weight,
+                    'remark' =>  $charter_job_item->amount . ' ' . $item_unit->name,
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+
             Charter_job_status::create([
                 'charter_job_id' => $charter_job->id,
-                'status' => 'open',
+                'status' => 'Confirmed',
                 'user_id' => auth()->user()->id,
             ]);
         }
