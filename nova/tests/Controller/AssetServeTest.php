@@ -3,11 +3,11 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Nova;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class AssetServeTest extends IntegrationTest
+class AssetServeTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

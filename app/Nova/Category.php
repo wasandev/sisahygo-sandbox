@@ -141,9 +141,9 @@ class Category extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('edit categories');
                 }),
-            (new Actions\ImportCategories)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportCategories)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
         ];
     }
     public static function redirectAfterCreate(NovaRequest $request, $resource)

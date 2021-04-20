@@ -118,9 +118,9 @@ class Bank extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\ImportBanks)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportBanks)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('edit banks');

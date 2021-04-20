@@ -44,7 +44,7 @@ class Order_headerPolicy
         return ($user->role == 'admin');
     }
 
-    public function addOrder_detail(User $user, ORder_header $Order_header)
+    public function addOrder_detail(User $user, Order_header $Order_header)
     {
         if ($Order_header->order_status == "new") {
             return true;

@@ -8,9 +8,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceDetailRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 use Laravel\Nova\Tests\Fixtures\NoopAction;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class TextTest extends IntegrationTest
+class TextTest extends IntegrationTestCase
 {
     public function test_field_does_not_output_suggestions_for_index_request()
     {

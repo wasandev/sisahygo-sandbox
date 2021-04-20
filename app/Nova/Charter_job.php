@@ -73,7 +73,8 @@ class Charter_job extends Resource
                 ->readonly(true),
 
             BelongsTo::make('ลูกค้า/ผู้ว่าจ้าง', 'customer', 'App\Nova\Customer')
-                ->searchable(),
+                ->searchable()
+                ->withSubtitles(),
             // Select::make('เงื่อนไขการชำระเงิน', 'paymenttype')->options([
             //     'H' => 'เงินสด',
             //     'T' => 'เงินโอน',
@@ -85,6 +86,7 @@ class Charter_job extends Resource
             BelongsTo::make('เลขที่ใบเสนอราคา', 'quotation', 'App\Nova\Quotation')
                 ->nullable()
                 ->searchable()
+                ->withSubtitles()
                 ->hideFromIndex(),
             Text::make('อ้างถึงใบสั่งซื้อลูกค้า', 'reference')
                 ->hideFromIndex()
@@ -107,9 +109,9 @@ class Charter_job extends Resource
                 ->onlyOnDetail(),
             Text::make('หมายเหตุ/เงื่อนไขอื่นๆ', 'terms')
                 ->hideFromIndex(),
-            BelongsTo::make('พนักงานตรวจรับสินค้า', 'employee', 'App\Nova\Employee')
+            BelongsTo::make('พนักงานตรวจสอบรายการ', 'employee', 'App\Nova\Employee')
                 ->hideFromIndex()
-                ->nullable()
+                ->rules('required')
                 ->searchable(),
             DateTime::make('วันที่สร้างรายการ', 'created_at')
 

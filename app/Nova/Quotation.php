@@ -37,6 +37,11 @@ class Quotation extends Resource
      */
     public static $title = 'quotation_no';
 
+    public function subtitle()
+    {
+        return $this->customer->name;
+    }
+
     /**
      * The columns that should be searched.
      *
@@ -44,6 +49,10 @@ class Quotation extends Resource
      */
     public static $search = [
         'id', 'quotation_no'
+    ];
+    public static $searchRelations = [
+        'customer' => ['name'],
+
     ];
     public static function label()
     {
@@ -87,7 +96,8 @@ class Quotation extends Resource
                 'T' => 'เงินโอน',
                 'F' => 'วางบิล',
             ])->displayUsingLabels()
-                ->hideFromIndex(),
+                ->onlyOnDetail()
+                ->default('F'),
             DateTime::make('กำหนดส่ง', 'duedate')
                 ->hideFromIndex()
                 ->nullable(),

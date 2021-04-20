@@ -5,9 +5,9 @@ namespace Laravel\Nova\Tests\Feature\Actions;
 use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ActionEventTest extends IntegrationTest
+class ActionEventTest extends IntegrationTestCase
 {
     public function test_it_can_record_changes()
     {

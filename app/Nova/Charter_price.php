@@ -112,7 +112,7 @@ class Charter_price extends Resource
                 ->rules('required')
                 ->hideFromIndex(),
             Number::make('ระยะเวลาขนส่ง(ชม.)', 'timespent')
-                ->hideFromIndex()
+                ->onlyOnDetail()
                 ->step('0.01'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -124,23 +124,23 @@ class Charter_price extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            // BelongsToMany::make('ใบเสนอราคา', 'quotations', 'App\Nova\Quotation')
-            //     ->withSubtitles()
-            //     ->fields(function () {
-            //         return [
-            //             Select::make(__('Product'), 'product_id')->options(\App\Models\Product::pluck('name', 'id')->toArray())->displayUsingLabels()
-            //                 ->searchable(),
-            //             Number::make('จำนวนสินค้า', 'product_amount'),
-            //             Select::make(__('Unit'), 'unit_id')->options(\App\Models\Unit::pluck('name', 'id')->toArray())->displayUsingLabels()
-            //                 ->searchable(),
-            //             Number::make('น้ำหนักสินค้ารวม(กก.)', 'product_weight'),
-            //             Text::make(__('Description'), 'description')
-            //                 ->nullable()
-            //                 ->hideFromIndex(),
-            //             Number::make('จำนวนเที่ยว', 'charter_amount'),
+            BelongsToMany::make('ใบเสนอราคา', 'quotations', 'App\Nova\Quotation')
+                ->withSubtitles()
+                ->fields(function () {
+                    return [
+                        Select::make(__('Product'), 'product_id')->options(\App\Models\Product::pluck('name', 'id')->toArray())->displayUsingLabels()
+                            ->searchable(),
+                        Number::make('จำนวนสินค้า', 'product_amount'),
+                        Select::make(__('Unit'), 'unit_id')->options(\App\Models\Unit::pluck('name', 'id')->toArray())->displayUsingLabels()
+                            ->searchable(),
+                        Number::make('น้ำหนักสินค้ารวม(กก.)', 'product_weight'),
+                        Text::make(__('Description'), 'description')
+                            ->nullable()
+                            ->hideFromIndex(),
+                        Number::make('จำนวนเที่ยว', 'charter_amount'),
 
-            //         ];
-            //     }),
+                    ];
+                }),
 
         ];
     }

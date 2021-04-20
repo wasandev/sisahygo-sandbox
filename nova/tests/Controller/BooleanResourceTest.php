@@ -3,11 +3,11 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Tests\Fixtures\Boolean;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class BooleanResourceTest extends IntegrationTest
+class BooleanResourceTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -84,7 +84,9 @@ class ActionRequest extends NovaRequest
         $this->toSelectedResourceQuery()->when(! $this->forAllMatchingResources(), function ($query) {
             $query->whereKey(explode(',', $this->resources))
                 ->latest($this->model()->getQualifiedKeyName());
-        })->chunk($count, function ($chunk) use ($callback, &$output) {
+        })->cursor()
+        ->chunk($count)
+        ->each(function ($chunk) use ($callback, &$output) {
             $output[] = $callback($this->mapChunk($chunk));
         });
 

@@ -2,13 +2,13 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
-use Laravel\Nova\Tests\MySqlIntegrationTest;
+use Laravel\Nova\Tests\MySqlIntegrationTestCase;
 
-class MySqlSearchControllerTest extends MySqlIntegrationTest
+class MySqlSearchControllerTest extends MySqlIntegrationTestCase
 {
     use SearchControllerTests;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->skipIfNotRunning();
 

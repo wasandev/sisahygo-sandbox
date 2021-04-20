@@ -8,16 +8,11 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\RoleResource;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class IDFieldTest extends IntegrationTest
+class IDFieldTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

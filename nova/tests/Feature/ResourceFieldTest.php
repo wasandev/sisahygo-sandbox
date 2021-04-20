@@ -13,15 +13,10 @@ use Laravel\Nova\Tests\Fixtures\PostResource;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserResource;
 use Laravel\Nova\Tests\Fixtures\UserWithCustomFields;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ResourceFieldTest extends IntegrationTest
+class ResourceFieldTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_can_resolve_fields()
     {
         $user = factory(User::class)->create();

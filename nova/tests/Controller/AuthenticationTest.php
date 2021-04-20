@@ -5,15 +5,10 @@ namespace Laravel\Nova\Tests\Controller;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class AuthenticationTest extends IntegrationTest
+class AuthenticationTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_access_is_denied_when_unauthenticated()
     {
         $response = $this->withExceptionHandling()

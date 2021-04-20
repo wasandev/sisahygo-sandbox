@@ -33,11 +33,11 @@ use Laravel\Nova\Tests\Fixtures\UpdateStatusAction;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
 use Laravel\Nova\Tests\Fixtures\UserResource;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ActionControllerTest extends IntegrationTest
+class ActionControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +46,7 @@ class ActionControllerTest extends IntegrationTest
         Action::$chunkCount = 200;
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($_SERVER['queuedAction.applied']);
         unset($_SERVER['queuedAction.appliedFields']);
@@ -64,8 +64,73 @@ class ActionControllerTest extends IntegrationTest
         $response = $this->withExceptionHandling()
                         ->get('/nova-api/users/actions');
 
+        $actions = $response->original['actions']->filter(function ($action) {
+            return $action instanceof Action;
+        })->mapWithKeys(function ($action) {
+            return [get_class($action) => $action];
+        });
+
         $response->assertStatus(200);
-        $this->assertInstanceOf(Action::class, $response->original['actions'][0]);
+        $this->assertCount(17, $actions);
+        $this->assertSame([
+            'Laravel\Nova\Tests\Fixtures\OpensInNewTabAction',
+            'Laravel\Nova\Tests\Fixtures\RedirectAction',
+            'Laravel\Nova\Tests\Fixtures\DestructiveAction',
+            'Laravel\Nova\Tests\Fixtures\EmptyAction',
+            'Laravel\Nova\Tests\Fixtures\ExceptionAction',
+            'Laravel\Nova\Tests\Fixtures\FailingAction',
+            'Laravel\Nova\Tests\Fixtures\NoopAction',
+            'Laravel\Nova\Tests\Fixtures\StandaloneAction',
+            'Laravel\Nova\Tests\Fixtures\QueuedAction',
+            'Laravel\Nova\Tests\Fixtures\QueuedResourceAction',
+            'Laravel\Nova\Tests\Fixtures\QueuedUpdateStatusAction',
+            'Laravel\Nova\Tests\Fixtures\RequiredFieldAction',
+            'Laravel\Nova\Tests\Fixtures\UnrunnableAction',
+            'Laravel\Nova\Tests\Fixtures\UnrunnableDestructiveAction',
+            'Laravel\Nova\Tests\Fixtures\UpdateStatusAction',
+            'Laravel\Nova\Tests\Fixtures\NoopActionWithoutActionable',
+            'Laravel\Nova\Tests\Fixtures\HandleResultAction',
+        ], $actions->keys()->all());
+    }
+
+    public function test_can_retrieve_actions_for_a_resource_for_index()
+    {
+        $response = $this->withExceptionHandling()
+                        ->get('/nova-api/users/actions?'.http_build_query([
+                            'display' => 'index',
+                        ]));
+
+        $actions = $response->original['actions']->filter(function ($action) {
+            return $action instanceof Action;
+        })->mapWithKeys(function ($action) {
+            return [get_class($action) => $action];
+        });
+
+        $response->assertStatus(200);
+        $this->assertCount(15, $actions);
+        $this->assertTrue($actions->has('Laravel\Nova\Tests\Fixtures\OpensInNewTabAction'));
+        $this->assertFalse($actions->has('Laravel\Nova\Tests\Fixtures\EmptyAction'));
+        $this->assertFalse($actions->has('Laravel\Nova\Tests\Fixtures\NoopAction'));
+    }
+
+    public function test_can_retrieve_actions_for_a_resource_for_detail()
+    {
+        $response = $this->withExceptionHandling()
+                        ->get('/nova-api/users/actions?'.http_build_query([
+                            'display' => 'detail',
+                        ]));
+
+        $actions = $response->original['actions']->filter(function ($action) {
+            return $action instanceof Action;
+        })->mapWithKeys(function ($action) {
+            return [get_class($action) => $action];
+        });
+
+        $response->assertStatus(200);
+        $this->assertCount(16, $actions);
+        $this->assertTrue($actions->has('Laravel\Nova\Tests\Fixtures\OpensInNewTabAction'));
+        $this->assertTrue($actions->has('Laravel\Nova\Tests\Fixtures\EmptyAction'));
+        $this->assertFalse($actions->has('Laravel\Nova\Tests\Fixtures\NoopAction'));
     }
 
     public function test_can_retrieve_actions_for_a_resource_with_field()
@@ -749,7 +814,7 @@ class ActionControllerTest extends IntegrationTest
         $queryLog = DB::getQueryLog()[0];
 
         $this->assertSame(
-            'select * from "users" where "users"."id" in (?, ?) order by "users"."id" desc limit 200 offset 0',
+            'select * from "users" where "users"."id" in (?, ?) order by "users"."id" desc',
             $queryLog['query']
         );
     }
@@ -771,7 +836,7 @@ class ActionControllerTest extends IntegrationTest
         $queryLog = DB::getQueryLog()[0];
 
         $this->assertSame(
-            'select * from "users" where "users"."deleted_at" is null order by "users"."id" desc limit 200 offset 0',
+            'select * from "users" where "users"."deleted_at" is null order by "users"."id" desc',
             $queryLog['query']
         );
     }

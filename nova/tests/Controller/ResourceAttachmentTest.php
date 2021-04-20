@@ -9,11 +9,11 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ResourceAttachmentTest extends IntegrationTest
+class ResourceAttachmentTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

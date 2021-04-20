@@ -20,6 +20,7 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
+                    ->waitForTextIn('h1', 'User Details: 1')
                     ->assertSee('User Details: 1')
                     ->assertSee('Taylor Otwell')
                     ->assertSee('taylor@laravel.com');
@@ -40,41 +41,9 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', $user->id))
+                    ->waitForTextIn('h1', 'User Details: '.$user->id)
                     ->assertSee('User Details: '.$user->id)
                     ->assertSee($user->email);
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function can_run_actions_on_resource()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new Detail('users', 1))
-                    ->runAction('mark-as-active')
-                    ->waitForText('The action ran successfully!', 25);
-
-            $this->assertEquals(1, User::find(1)->active);
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function actions_can_be_cancelled_without_effect()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new Detail('users', 1))
-                    ->cancelAction('mark-as-active');
-
-            $this->assertEquals(0, User::find(1)->active);
 
             $browser->blank();
         });
@@ -88,8 +57,24 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
-                    ->click('@edit-resource-button')
-                    ->waitForTextIn('h1', 'Update User', 25)
+                    ->edit()
+                    ->waitForTextIn('h1', 'Update User')
+                    ->assertPathIs('/nova/resources/users/1/edit');
+
+            $browser->blank();
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function can_navigate_to_edit_page_using_shortcut()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::find(1))
+                    ->visit(new Detail('users', 1))
+                    ->keys('', ['e'])
+                    ->waitForTextIn('h1', 'Update User')
                     ->assertPathIs('/nova/resources/users/1/edit');
 
             $browser->blank();
@@ -104,14 +89,14 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 2))
-                    ->waitForTextIn('h1', 'User Details: 2', 25)
+                    ->waitForTextIn('h1', 'User Details: 2')
                     ->assertSeeIn('@users-detail-component', 'Mohamed Said');
 
             $browser->script([
                 'Nova.app.$router.push({ name: "detail", params: { resourceName: "users", resourceId: 3 }});',
             ]);
 
-            $browser->waitForTextIn('h1', 'User Details: 3', 25)
+            $browser->waitForTextIn('h1', 'User Details: 3')
                     ->assertPathIs('/nova/resources/users/3')
                     ->assertSeeIn('@users-detail-component', 'David Hemphill');
 
@@ -127,8 +112,9 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 3))
+                    ->waitForTextIn('h1', 'User Details: 3')
                     ->delete()
-                    ->waitForText('The user was deleted', 25)
+                    ->waitForText('The user was deleted')
                     ->assertPathIs('/nova/resources/users');
 
             $this->assertNull(User::where('id', 3)->first());
@@ -148,8 +134,9 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
+                    ->waitForTextIn('h1', 'User Details: 1')
                     ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->waitForTable(25)
+                        $browser->waitForTable()
                                 ->assertSeeResource(1)
                                 ->searchFor('No Matching Posts')
                                 ->assertDontSeeResource(1);
@@ -170,8 +157,10 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
+                    ->waitForTextIn('h1', 'User Details: 1')
                     ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->click('@create-button')
+                        $browser->waitFor('@create-button')
+                                ->click('@create-button')
                                 ->assertPathIs('/nova/resources/posts/new')
                                 ->assertQueryStringHas('viaResource', 'users')
                                 ->assertQueryStringHas('viaResourceId', '1')
@@ -196,8 +185,9 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
+                    ->waitForTextIn('h1', 'User Details: 1')
                     ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->waitForTable(25)
+                        $browser->waitForTable()
                                 ->assertSeeResource(10)
                                 ->assertDontSeeResource(1)
                                 ->nextPage()
@@ -226,6 +216,7 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
+                    ->waitForTextIn('h1', 'User Details: 1')
                     ->within(new IndexComponent('posts'), function ($browser) {
                         $browser->waitForTable(25)
                                 ->assertSeeResource(10)
@@ -245,33 +236,6 @@ class DetailTest extends DuskTestCase
     /**
      * @test
      */
-    public function actions_on_all_matching_relations_should_be_scoped_to_the_relation()
-    {
-        $user = User::find(1);
-        $user->posts()->save($post = PostFactory::new()->create());
-
-        $user2 = User::find(2);
-        $user2->posts()->save($post2 = PostFactory::new()->create());
-
-        $this->browse(function (Browser $browser) use ($post, $post2) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new Detail('users', 1))
-                    ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->waitForTable(25)
-                                ->selectAllMatching()
-                                ->runAction('mark-as-active');
-                    });
-
-            $this->assertEquals(1, $post->fresh()->active);
-            $this->assertEquals(0, $post2->fresh()->active);
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
     public function deleting_all_matching_relations_is_scoped_to_the_relationships()
     {
         $user = User::find(1);
@@ -283,8 +247,9 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($post, $post2) {
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
+                    ->waitForTextIn('h1', 'User Details: 1')
                     ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->waitForTable(25)
+                        $browser->waitForTable()
                                 ->selectAllMatching()
                                 ->deleteSelected();
                     });

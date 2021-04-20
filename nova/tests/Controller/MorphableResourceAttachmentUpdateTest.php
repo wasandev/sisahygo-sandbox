@@ -4,11 +4,11 @@ namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Tag;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class MorphableResourceAttachmentUpdateTest extends IntegrationTest
+class MorphableResourceAttachmentUpdateTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

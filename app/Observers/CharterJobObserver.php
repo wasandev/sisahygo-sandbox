@@ -2,14 +2,19 @@
 
 namespace App\Observers;
 
+use App\Models\Ar_balance;
+use App\Models\Car_balance;
 use App\Models\Charter_job;
 use App\Models\Charter_job_item;
 use App\Models\Charter_job_status;
 use App\Models\Charter_price;
+use App\Models\Order_charter;
 use App\Models\Order_detail;
 use App\Models\Order_header;
+use App\Models\Order_status;
 use App\Models\Unit;
 use App\Models\Waybill;
+use App\Models\Waybill_status;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Carbon;
 
@@ -46,6 +51,7 @@ class CharterJobObserver
     {
         $charter_price = Charter_price::find($charter_job->charter_price_id);
 
+
         $charter_job->sub_total = $charter_price->price;
         $charter_job->total = $charter_price->price - $charter_job->discount;
         $charter_job->updated_by = auth()->user()->id;
@@ -68,7 +74,7 @@ class CharterJobObserver
                 'waybill_amount' => $charter_job->total + $service_charge,
                 'waybill_payable' => $charter_price->car_charge,
                 'waybill_income' => $charter_job->total - $charter_price->car_charge,
-                'waybill_status' => 'loading',
+                'waybill_status' => 'confirmed',
                 'user_id' => auth()->user()->id,
 
             ]);
@@ -87,7 +93,7 @@ class CharterJobObserver
                 'waybill_id' => $waybill->id,
                 'order_amount' => $charter_job->total + $service_charge,
                 'user_id' => auth()->user()->id,
-                'order_status' => 'new',
+                'order_status' => 'confirmed',
 
             ]);
 
@@ -115,6 +121,69 @@ class CharterJobObserver
                 'status' => 'Confirmed',
                 'user_id' => auth()->user()->id,
             ]);
+            //create ar_balance
+            Ar_balance::create([
+                'order_header_id' => $order_header->id,
+                'customer_id' => $order_header->customer_id,
+                'ar_amount' => $order_header->order_amount,
+                'description' => 'ค่าขนส่งสินค้าเหมาคัน',
+                'user_id' => auth()->user()->id,
+            ]);
+            //Order status
+            Order_status::create([
+                'order_header_id' => $order_header->id,
+                'status' => 'confirmed',
+                'user_id' => auth()->user()->id,
+            ]);
+
+            //create car_balance
+            Car_balance::updateOrCreate([
+                'car_id' => $waybill->car_id,
+                'vendor_id' => $waybill->car->vendor_id,
+                'doctype' => 'R',
+                'docno' => $waybill->waybill_no,
+                'cardoc_date' => $waybill->waybill_date,
+                'waybill_id' => $waybill->id,
+                'description' => 'ค่าขนส่งสินค้าเหมาคัน',
+                'amount' => $charter_price->car_charge,
+                'user_id' => auth()->user()->id,
+
+            ]);
+
+            Waybill_status::updateOrCreate([
+                'waybill_id' => $waybill->id,
+                'status' => 'confirmed',
+                'user_id' => auth()->user()->id,
+            ]);
+        }
+    }
+    public function deleting(Charter_job $charter_job)
+    {
+        $order_charter = Order_charter::find($charter_job->order_header_id);
+        $waybill_charter = Waybill::find($order_charter->waybill_id);
+        if (isset($order_charter)) {
+
+            $order_charter->order_status = 'cancel';
+            $order_charter->save();
+            Order_status::create([
+                'order_header_id' => $charter_job->order_header_id,
+                'status' => 'cancel',
+                'user_id' => auth()->user()->id,
+            ]);
+            $ar_balance = Ar_balance::where('order_header_id', $order_charter->id)->delete();
+        }
+
+
+        if (isset($waybill_charter)) {
+
+            $waybill_charter->waybill_status = 'cancel';
+            $waybill_charter->save();
+            Waybill_status::create([
+                'waybill_id' => $waybill_charter->id,
+                'status' => 'cancel',
+                'user_id' => auth()->user()->id,
+            ]);
+            $car_balance = Car_balance::where('waybill_id', $waybill_charter->id)->delete();
         }
     }
 }

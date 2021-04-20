@@ -2,9 +2,16 @@
 
 namespace Laravel\Nova\Tests\Feature\Rules;
 
-use Laravel\Nova\Tests\PostgresIntegrationTest;
+use Laravel\Nova\Tests\PostgresIntegrationTestCase;
 
-class PostgresRelatableTest extends PostgresIntegrationTest
+class PostgresRelatableTest extends PostgresIntegrationTestCase
 {
     use RelatableTest;
+
+    protected function setUp(): void
+    {
+        $this->skipIfNotRunning();
+
+        parent::setUp();
+    }
 }

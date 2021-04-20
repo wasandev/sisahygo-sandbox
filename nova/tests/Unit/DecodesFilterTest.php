@@ -6,9 +6,9 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\FilterDecoder;
 use Laravel\Nova\Query\ApplyFilter;
 use Laravel\Nova\Tests\Fixtures\IdFilter;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class DecodesFilterTest extends IntegrationTest
+class DecodesFilterTest extends IntegrationTestCase
 {
     public function test_decodes_filters_correctly()
     {

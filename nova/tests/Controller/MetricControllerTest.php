@@ -10,11 +10,11 @@ use Laravel\Nova\Tests\Fixtures\PostCountTrend;
 use Laravel\Nova\Tests\Fixtures\TotalUsers;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserGrowth;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class MetricControllerTest extends IntegrationTest
+class MetricControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

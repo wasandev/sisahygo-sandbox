@@ -3,13 +3,13 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Resource;
-use Laravel\Nova\Tests\PostgresIntegrationTest;
+use Laravel\Nova\Tests\PostgresIntegrationTestCase;
 
-class PostgresSearchControllerTest extends PostgresIntegrationTest
+class PostgresSearchControllerTest extends PostgresIntegrationTestCase
 {
     use SearchControllerTests;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->skipIfNotRunning();
 
@@ -18,7 +18,7 @@ class PostgresSearchControllerTest extends PostgresIntegrationTest
         $this->authenticate();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Resource::$maxPrimaryKeySize = PHP_INT_MAX;
 

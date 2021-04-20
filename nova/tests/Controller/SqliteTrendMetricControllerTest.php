@@ -2,13 +2,13 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class SqliteTrendMetricControllerTest extends IntegrationTest
+class SqliteTrendMetricControllerTest extends IntegrationTestCase
 {
     use TrendDateTests;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

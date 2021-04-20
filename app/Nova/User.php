@@ -204,9 +204,9 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\ImportUsers)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportUsers)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
             (new Actions\SetUserBranch)
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';

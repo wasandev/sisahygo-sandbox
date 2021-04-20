@@ -5,9 +5,9 @@ namespace Laravel\Nova\Tests\Feature;
 use Brick\Money\Context\CustomContext;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class CurrencyTest extends IntegrationTest
+class CurrencyTest extends IntegrationTestCase
 {
     public function test_computed_currency_field_can_be_resolved_for_display()
     {

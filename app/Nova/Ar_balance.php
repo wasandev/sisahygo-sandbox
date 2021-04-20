@@ -71,7 +71,10 @@ class Ar_balance extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('การชำระเงิน', 'status', function () {
-                return $this->order_header->payment_status;
+                if (isset($this->order_header)) {
+                    return $this->order_header->payment_status;
+                }
+                return false;
             }),
             Date::make('วันที่ตั้งหนี้', 'created_at')
                 ->format('DD/MM/YYYY')

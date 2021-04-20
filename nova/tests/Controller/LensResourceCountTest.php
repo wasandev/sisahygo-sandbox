@@ -6,11 +6,11 @@ use Laravel\Nova\Tests\Fixtures\IdFilter;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class LensResourceCountTest extends IntegrationTest
+class LensResourceCountTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

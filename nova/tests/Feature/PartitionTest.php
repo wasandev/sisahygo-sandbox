@@ -4,15 +4,10 @@ namespace Laravel\Nova\Tests\Feature;
 
 use Illuminate\Support\Str;
 use Laravel\Nova\Metrics\PartitionResult;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class PartitionTest extends IntegrationTest
+class PartitionTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_partition_keys_and_values_are_formatted_correctly_when_serialized()
     {
         $result = new PartitionResult(['Monthly' => 60, 'Yearly' => 90]);

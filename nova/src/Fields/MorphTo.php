@@ -393,7 +393,7 @@ class MorphTo extends Field implements RelatableField
             'avatar' => $resource->resolveAvatarUrl($request),
             'display' => $this->formatDisplayValue($resource, $relatedResource),
             'subtitle' => $resource->subtitle(),
-            'value' => $resource->getKey(),
+            'value' => optional(ID::forResource($resource))->value ?? $resource->getKey(),
         ]);
     }
 

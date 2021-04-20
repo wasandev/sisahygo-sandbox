@@ -226,9 +226,9 @@ class Product extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('edit products');
                 }),
-            (new Actions\ImportProducts)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportProducts)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
 
         ];
     }

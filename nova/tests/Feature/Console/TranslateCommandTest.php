@@ -3,10 +3,10 @@
 namespace Laravel\Nova\Tests\Feature\Console;
 
 use Illuminate\Support\Facades\File;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 use Orchestra\Testbench\Concerns\InteractsWithPublishedFiles;
 
-class TranslateCommandTest extends IntegrationTest
+class TranslateCommandTest extends IntegrationTestCase
 {
     use InteractsWithPublishedFiles;
 
@@ -15,7 +15,7 @@ class TranslateCommandTest extends IntegrationTest
         'resources/lang/vendor/nova/nb.json',
     ];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -23,7 +23,7 @@ class TranslateCommandTest extends IntegrationTest
         $this->prepareDirectories();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->tearDownInteractsWithPublishedFiles();
 

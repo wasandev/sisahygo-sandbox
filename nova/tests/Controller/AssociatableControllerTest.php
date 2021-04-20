@@ -4,11 +4,12 @@ namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserResource;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\Fixtures\Vehicle;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class AssociatableControllerTest extends IntegrationTest
+class AssociatableControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -34,6 +35,36 @@ class AssociatableControllerTest extends IntegrationTest
         ], $response->original['resources']->all());
 
         $this->assertTrue($response->original['softDeletes']);
+        $this->assertFalse($response->original['withTrashed']);
+    }
+
+    public function test_can_retrieve_associatable_resources_with_big_int()
+    {
+        Vehicle::forceCreate([
+            'id' => 9007199254741001,
+            'model' => 'A3',
+        ]);
+
+        Vehicle::forceCreate([
+            'id' => 9007199254741002,
+            'model' => 'A6',
+        ]);
+
+        $response = $this->withExceptionHandling()
+                        ->getJson('/nova-api/wheels/associatable/vehicle');
+
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'resources', 'softDeletes', 'withTrashed',
+        ]);
+
+        $this->assertEquals([
+            ['value' => '9007199254741001', 'display' => '9007199254741001'],
+            ['value' => '9007199254741002', 'display' => '9007199254741002'],
+        ], $response->original['resources']->all());
+
+        $this->assertFalse($response->original['softDeletes']);
         $this->assertFalse($response->original['withTrashed']);
     }
 

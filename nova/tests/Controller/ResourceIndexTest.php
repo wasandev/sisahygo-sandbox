@@ -14,11 +14,12 @@ use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\Fixtures\UserResource;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ResourceIndexTest extends IntegrationTest
+class ResourceIndexTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -337,15 +338,19 @@ class ResourceIndexTest extends IntegrationTest
 
     public function test_can_limit_resources_per_page()
     {
-        factory(User::class)->create();
-        factory(User::class)->create();
-        factory(User::class)->create();
+        factory(User::class)->times(3)->create();
+
+        $perPageOptions = UserResource::$perPageOptions;
+
+        UserResource::$perPageOptions = [2, 4, 10];
 
         $response = $this->withExceptionHandling()
                         ->getJson('/nova-api/users?perPage=2');
 
         $response->assertJsonCount(2, 'resources');
         $this->assertEquals(3, $response->original['total']);
+
+        UserResource::$perPageOptions = $perPageOptions;
     }
 
     public function test_can_include_soft_deleted_resources()

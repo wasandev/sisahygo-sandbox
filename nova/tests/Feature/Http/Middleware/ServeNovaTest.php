@@ -5,12 +5,11 @@ namespace Laravel\Nova\Tests\Feature\Http\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Laravel\Nova\Events\NovaServiceProviderRegistered;
-use Laravel\Nova\Http\Middleware\ServeNova;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ServeNovaTest extends IntegrationTest
+class ServeNovaTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -66,13 +65,37 @@ class ServeNovaTest extends IntegrationTest
     }
 
     /**
+     * Uses custom subdomain with root path environment setup.
+     */
+    protected function usesCustomLocalSubdomainWithRootPath($app)
+    {
+        $app['config']->set([
+            'app.url' => 'http://localhost',
+            'nova.domain' => 'http://nova.localhost',
+            'nova.path' => '/',
+        ]);
+    }
+
+    /**
      * Uses custom subdomain with http prefix + root path environment setup.
      */
     protected function usesCustomSubdomainWithPortAndRootPath($app)
     {
         $app['config']->set([
             'app.url' => 'http://localhost',
-            'nova.domain' => 'nova.app:8080',
+            'nova.domain' => 'nova.app',
+            'nova.path' => '/',
+        ]);
+    }
+
+    /**
+     * Uses custom subdomain with http prefix + root path environment setup.
+     */
+    protected function usesCustomLocalSubdomainWithPortAndRootPath($app)
+    {
+        $app['config']->set([
+            'app.url' => 'http://localhost',
+            'nova.domain' => 'nova.localhost',
             'nova.path' => '/',
         ]);
     }
@@ -108,15 +131,7 @@ class ServeNovaTest extends IntegrationTest
     {
         Event::fake();
 
-        $request = Request::create('http://nova.app/nova-api/users');
-
-        $serveNova = new ServeNova();
-
-        $response = $serveNova->handle($request, function (Request $request) {
-            return 'OK';
-        });
-
-        $this->assertSame('OK', $response);
+        $this->get('http://nova.app/nova-api/users')->assertOk();
 
         Event::assertDispatched(NovaServiceProviderRegistered::class);
     }
@@ -128,15 +143,19 @@ class ServeNovaTest extends IntegrationTest
     {
         Event::fake();
 
-        $request = Request::create('http://nova.app/nova-api/users');
+        $this->get('http://nova.app/nova-api/users')->assertOk();
 
-        $serveNova = new ServeNova();
+        Event::assertDispatched(NovaServiceProviderRegistered::class);
+    }
 
-        $response = $serveNova->handle($request, function (Request $request) {
-            return 'OK';
-        });
+    /**
+     * @environment-setup usesCustomLocalSubdomainWithRootPath
+     */
+    public function test_it_can_serve_from_local_subdomain_will_trigger_service_provider_registered()
+    {
+        Event::fake();
 
-        $this->assertSame('OK', $response);
+        $this->get('http://nova.localhost/nova-api/users')->assertOk();
 
         Event::assertDispatched(NovaServiceProviderRegistered::class);
     }
@@ -148,15 +167,7 @@ class ServeNovaTest extends IntegrationTest
     {
         Event::fake();
 
-        $request = Request::create('http://nova.app/nova-api/users');
-
-        $serveNova = new ServeNova();
-
-        $response = $serveNova->handle($request, function (Request $request) {
-            return 'OK';
-        });
-
-        $this->assertSame('OK', $response);
+        $this->get('http://nova.app/nova-api/users')->assertOk();
 
         Event::assertDispatched(NovaServiceProviderRegistered::class);
     }
@@ -168,15 +179,19 @@ class ServeNovaTest extends IntegrationTest
     {
         Event::fake();
 
-        $request = Request::create('http://nova.app:8080/nova-api/users');
+        $this->get('http://nova.app:8080/nova-api/users')->assertOk();
 
-        $serveNova = new ServeNova();
+        Event::assertDispatched(NovaServiceProviderRegistered::class);
+    }
 
-        $response = $serveNova->handle($request, function (Request $request) {
-            return 'OK';
-        });
+    /**
+     * @environment-setup usesCustomLocalSubdomainWithPortAndRootPath
+     */
+    public function test_it_can_serve_from_local_subdomain_with_port_will_trigger_service_provider_registered()
+    {
+        Event::fake();
 
-        $this->assertSame('OK', $response);
+        $this->get('http://nova.localhost:8080/nova-api/users')->assertOk();
 
         Event::assertDispatched(NovaServiceProviderRegistered::class);
     }
@@ -188,15 +203,7 @@ class ServeNovaTest extends IntegrationTest
     {
         Event::fake();
 
-        $request = Request::create('http://httpsnova.app/nova-api/users');
-
-        $serveNova = new ServeNova();
-
-        $response = $serveNova->handle($request, function (Request $request) {
-            return 'OK';
-        });
-
-        $this->assertSame('OK', $response);
+        $this->get('http://httpsnova.app/nova-api/users')->assertOk();
 
         Event::assertDispatched(NovaServiceProviderRegistered::class);
     }

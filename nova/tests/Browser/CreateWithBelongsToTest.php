@@ -20,6 +20,7 @@ class CreateWithBelongsToTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Create('posts'))
+                    ->waitFor('.content form')
                     ->select('@user', 1)
                     ->type('@title', 'Test Post')
                     ->type('@body', 'Test Post Body')
@@ -45,10 +46,10 @@ class CreateWithBelongsToTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('users', 1))
                     ->within(new IndexComponent('posts'), function ($browser) {
-                        $browser->click('@create-button');
+                        $browser->waitFor('@create-button')->click('@create-button');
                     })
                     ->on(new Create('posts'))
-                    ->pause(175)
+                    ->waitFor('.content form')
                     ->assertDisabled('@user')
                     ->type('@title', 'Test Post')
                     ->type('@body', 'Test Post Body')
@@ -94,9 +95,10 @@ class CreateWithBelongsToTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit(new Detail('docks', 1))
                     ->within(new IndexComponent('ships'), function ($browser) {
-                        $browser->click('@create-button');
+                        $browser->waitFor('@create-button')->click('@create-button');
                     })
                     ->on(new Create('ships'))
+                    ->waitFor('.content form')
                     ->assertDisabled('@dock')
                     ->type('@name', 'Test Ship')
                     ->create();
@@ -115,7 +117,9 @@ class CreateWithBelongsToTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                     ->visit(new Create('invoice-items'))
-                    ->assertSee('Client Invoice');
+                    ->waitFor('.content form')
+                    ->waitFor('.content form')
+                    ->assertSeeIn('.content', 'Create Invoice Item');
 
             $browser->blank();
         });
@@ -133,6 +137,7 @@ class CreateWithBelongsToTest extends DuskTestCase
                         'viaResourceId' => 1,
                         'viaRelationship' => 'posts',
                     ]))
+                    ->waitFor('.content form')
                     ->assertValue('@user', 1);
 
             $browser->blank();

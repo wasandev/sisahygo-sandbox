@@ -3,9 +3,9 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Fields\Sparkline;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class SparklineTest extends IntegrationTest
+class SparklineTest extends IntegrationTestCase
 {
     public function test_can_change_chart_style()
     {

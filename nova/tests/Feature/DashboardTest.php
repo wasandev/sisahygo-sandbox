@@ -5,15 +5,10 @@ namespace Laravel\Nova\Tests\Feature;
 use Illuminate\Http\Request;
 use Laravel\Nova\Dashboard;
 use Laravel\Nova\Nova;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class DashboardTest extends IntegrationTest
+class DashboardTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_authorization_callback_is_executed()
     {
         Nova::dashboards([

@@ -3,11 +3,11 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Tests\Fixtures\Snippet;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class CodeFieldTest extends IntegrationTest
+class CodeFieldTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -9,9 +9,9 @@ use Laravel\Nova\Tests\Fixtures\AddressResource;
 use Laravel\Nova\Tests\Fixtures\Profile;
 use Laravel\Nova\Tests\Fixtures\ProfileResource;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class HasOneTest extends IntegrationTest
+class HasOneTest extends IntegrationTestCase
 {
     public function test_can_determine_if_field_is_not_filled()
     {

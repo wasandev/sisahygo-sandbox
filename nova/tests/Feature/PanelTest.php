@@ -4,15 +4,10 @@ namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class PanelTest extends IntegrationTest
+class PanelTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_panels_can_have_custom_help_text()
     {
         $panel = Panel::make('Personal Information', [

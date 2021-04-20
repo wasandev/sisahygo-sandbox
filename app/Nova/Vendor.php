@@ -263,9 +263,9 @@ class Vendor extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\ImportVendors)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportVendors)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
         ];
     }
 }

@@ -17,18 +17,18 @@ use Laravel\Nova\Tests\Fixtures\RoleAssignment;
 use Laravel\Nova\Tests\Fixtures\RolePolicy;
 use Laravel\Nova\Tests\Fixtures\UpdateStatusAction;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class PivotActionControllerTest extends IntegrationTest
+class PivotActionControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->authenticate();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($_SERVER['queuedAction.applied']);
         unset($_SERVER['queuedAction.appliedFields']);

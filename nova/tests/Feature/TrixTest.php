@@ -6,15 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\Post;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class TrixTest extends IntegrationTest
+class TrixTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_fields_can_execute_custom_filling_callback()
     {
         $field = Trix::make('Trix key')->fillUsing(

@@ -5,15 +5,10 @@ namespace Laravel\Nova\Tests\Feature;
 use Illuminate\Http\Request;
 use Laravel\Nova\Tests\Fixtures\CreateDateFilter;
 use Laravel\Nova\Tests\Fixtures\IdFilter;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class FilterTest extends IntegrationTest
+class FilterTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_component_can_be_customized()
     {
         $this->assertEquals('select-filter', (new IdFilter)->component());

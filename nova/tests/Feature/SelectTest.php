@@ -5,9 +5,9 @@ namespace Laravel\Nova\Tests\Feature;
 use DateTimeZone;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class SelectTest extends IntegrationTest
+class SelectTest extends IntegrationTestCase
 {
     public function test_select_fields_resolve_the_correct_values()
     {

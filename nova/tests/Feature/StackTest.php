@@ -8,9 +8,9 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceDetailRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class StackTest extends IntegrationTest
+class StackTest extends IntegrationTestCase
 {
     public function test_stack_fields_resolve_the_correct_values()
     {

@@ -5,11 +5,11 @@ namespace Laravel\Nova\Tests\Controller;
 use Laravel\Nova\Tests\Fixtures\IdFilter;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ResourceCountTest extends IntegrationTest
+class ResourceCountTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

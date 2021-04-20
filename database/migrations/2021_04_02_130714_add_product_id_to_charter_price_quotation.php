@@ -34,7 +34,9 @@ class AddProductIdToCharterPriceQuotation extends Migration
             $table->dropColumn('product_id');
             $table->dropColumn('unit_id');
             $table->dropColumn('description');
-            $table->dropColumn('amount');
+            $table->dropColumn('product_amount');
+            $table->dropColumn('product_weight');
+            $table->dropColumn('charter_amount');
         });
     }
 }

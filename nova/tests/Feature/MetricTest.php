@@ -19,16 +19,11 @@ use Laravel\Nova\Tests\Fixtures\PostCountTrend;
 use Laravel\Nova\Tests\Fixtures\PostWithCustomCreatedAt;
 use Laravel\Nova\Tests\Fixtures\TotalUsers;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class MetricTest extends IntegrationTest
+class MetricTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         DB::disableQueryLog();
         DB::flushQueryLog();

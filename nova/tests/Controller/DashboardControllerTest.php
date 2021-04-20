@@ -2,11 +2,11 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class DashboardControllerTest extends IntegrationTest
+class DashboardControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

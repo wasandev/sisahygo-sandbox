@@ -62,12 +62,13 @@ class Charter_route extends Resource
         return [
             ID::make()->sortable(),
             Boolean::make(__('Status'), 'status')
-                ->sortable(),
+                ->sortable()
+                ->default(true),
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required'),
+                ->exceptOnForms(),
             //Belongsto::make('สาขาต้นทาง', 'branch', 'App\Nova\Branch'),
-            Belongsto::make(__('From branch area'), 'branch_area', 'App\Nova\Branch_area')
+            Belongsto::make('อำเภอต้นทาง', 'branch_area', 'App\Nova\Branch_area')
                 ->showCreateRelationButton(),
 
             InputDistrict::make(__('To district'), 'to_district')
@@ -84,7 +85,7 @@ class Charter_route extends Resource
             Number::make(__('Distance'), 'distance')
                 ->step('0.01')
                 ->sortable()
-                ->rules('required'),
+                ->exceptOnForms(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -146,5 +147,15 @@ class Charter_route extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

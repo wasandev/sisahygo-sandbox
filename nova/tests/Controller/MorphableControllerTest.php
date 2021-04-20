@@ -3,11 +3,11 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Tests\Fixtures\Post;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class MorphableControllerTest extends IntegrationTest
+class MorphableControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

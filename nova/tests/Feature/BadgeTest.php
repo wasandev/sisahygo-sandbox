@@ -3,15 +3,10 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class BadgeTest extends IntegrationTest
+class BadgeTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_badge_resolves_correct_value_and_display_class()
     {
         $field = Badge::make('Status');

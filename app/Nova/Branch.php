@@ -221,9 +221,9 @@ class Branch extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('edit branches');
                 }),
-            (new Actions\ImportBranches)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportBranches)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('edit branches');

@@ -4,9 +4,9 @@ namespace Laravel\Nova\Tests\Feature;
 
 use Illuminate\Testing\Assert;
 use Laravel\Nova\Fields\BooleanGroup;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class BooleanGroupTest extends IntegrationTest
+class BooleanGroupTest extends IntegrationTestCase
 {
     public function test_by_default_the_field_is_displayed_with_the_name_as_the_label()
     {

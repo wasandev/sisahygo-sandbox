@@ -152,9 +152,9 @@ class Bankaccount extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\ImportBankaccounts)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportBankaccounts)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('edit bankaccounts');

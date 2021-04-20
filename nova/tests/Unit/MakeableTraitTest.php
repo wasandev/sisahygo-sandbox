@@ -3,9 +3,9 @@
 namespace Laravel\Nova\Tests\Unit;
 
 use Laravel\Nova\Makeable;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class MakeableTraitTest extends IntegrationTest
+class MakeableTraitTest extends IntegrationTestCase
 {
     public function test_makeable_trait_works()
     {

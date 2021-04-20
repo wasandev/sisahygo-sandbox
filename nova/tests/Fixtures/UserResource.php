@@ -247,10 +247,10 @@ class UserResource extends Resource
             new OpensInNewTabAction,
             new RedirectAction,
             new DestructiveAction,
-            new EmptyAction,
+            EmptyAction::make()->onlyOnDetail(),
             new ExceptionAction,
             new FailingAction,
-            new NoopAction,
+            NoopAction::make()->onlyOnTableRow(),
             StandaloneAction::make()->standalone(),
             tap(new QueuedAction, function (QueuedAction $action) {
                 if ($_SERVER['nova.user.actionCallbacks'] ?? false) {

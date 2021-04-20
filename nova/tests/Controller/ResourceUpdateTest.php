@@ -10,11 +10,11 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ResourceUpdateTest extends IntegrationTest
+class ResourceUpdateTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -480,7 +480,7 @@ class ResourceUpdateTest extends IntegrationTest
         });
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($_SERVER['weight-field.readonly']);
         unset($_SERVER['weight-field.canSee']);

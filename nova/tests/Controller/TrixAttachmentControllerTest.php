@@ -7,13 +7,13 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Tests\Fixtures\Discussion;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 use Laravel\Nova\Trix\Attachment;
 use Laravel\Nova\Trix\PendingAttachment;
 
-class TrixAttachmentControllerTest extends IntegrationTest
+class TrixAttachmentControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

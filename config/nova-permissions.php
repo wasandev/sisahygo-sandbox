@@ -958,6 +958,54 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ใบงานขนส่งเหมาคัน',
         ],
+        //ใบรับส่งเหมาคัน
+        'view order_charters' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบรับส่งเหมาคัน',
+        ],
+
+        'create order_charters' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบรับส่งเหมาคัน',
+        ],
+
+        'edit order_charters' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบรับส่งเหมาคัน',
+        ],
+
+        'delete order_charters' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบรับส่งเหมาคัน',
+        ],
+        //ใบกำกับเหมาคัน
+        'view waybill_charters' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบกำกับเหมาคัน',
+        ],
+
+        'create waybill_charters' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบกำกับเหมาคัน',
+        ],
+
+        'edit waybill_charters' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบกำกับเหมาคัน',
+        ],
+
+        'delete waybill_charters' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบกำกับเหมาคัน',
+        ],
         //ผู้จำหน่าย
         'view vendors' => [
             'display_name' => 'ดู',

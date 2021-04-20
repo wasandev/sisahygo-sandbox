@@ -3,9 +3,9 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class TextareaTest extends IntegrationTest
+class TextareaTest extends IntegrationTestCase
 {
     public function test_field_content_is_escaped_for_display()
     {

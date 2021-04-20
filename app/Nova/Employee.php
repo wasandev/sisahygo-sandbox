@@ -44,6 +44,8 @@ class Employee extends Resource
      */
     public static $title = 'name';
 
+
+
     /**
      * The columns that should be searched.
      *
@@ -309,10 +311,10 @@ class Employee extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('edit employees');
                 }),
-            (new Actions\ImportEmployees)
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin';
-                }),
+            // (new Actions\ImportEmployees)
+            //     ->canSee(function ($request) {
+            //         return $request->user()->role == 'admin';
+            //     }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('edit employees');

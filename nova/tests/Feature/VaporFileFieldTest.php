@@ -9,9 +9,9 @@ use Laravel\Nova\Fields\VaporFile;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\VaporFile as Model;
 use Laravel\Nova\Tests\Fixtures\VaporFileResource;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class VaporFileFieldTest extends IntegrationTest
+class VaporFileFieldTest extends IntegrationTestCase
 {
     protected function makeField($name = 'Avatar', $attribute = 'avatar')
     {

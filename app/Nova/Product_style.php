@@ -141,9 +141,9 @@ class Product_style extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('edit productstyles');
                 }),
-            (new Actions\ImportProduct_styles)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportProduct_styles)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
             (new AddProductServicePriceStyle)->canSee(function ($request) {
                 return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('manage productservice_prices');
             }),

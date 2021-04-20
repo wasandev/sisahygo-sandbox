@@ -9,12 +9,12 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Tests\Fixtures\File;
 use Laravel\Nova\Tests\Fixtures\VaporFile;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class VaporFileFieldControllerTest extends IntegrationTest
+class VaporFileFieldControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

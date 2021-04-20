@@ -2,16 +2,16 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
-use Laravel\Nova\Tests\PostgresIntegrationTest;
+use Laravel\Nova\Tests\PostgresIntegrationTestCase;
 
 /**
  * @group postgres
  */
-class PostgresTrendMetricControllerTest extends PostgresIntegrationTest
+class PostgresTrendMetricControllerTest extends PostgresIntegrationTestCase
 {
     use TrendDateTests;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->skipIfNotRunning();
 

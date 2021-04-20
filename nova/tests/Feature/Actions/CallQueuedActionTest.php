@@ -6,9 +6,9 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Actions\CallQueuedAction;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class CallQueuedActionTest extends IntegrationTest
+class CallQueuedActionTest extends IntegrationTestCase
 {
     public function test_it_can_serialize_and_unserialize_models()
     {

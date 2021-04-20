@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Tests\Fixtures\Comment;
 use Laravel\Nova\Tests\Fixtures\CommentPolicy;
 use Laravel\Nova\Tests\Fixtures\Post;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class MorphableResourceCreationTest extends IntegrationTest
+class MorphableResourceCreationTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

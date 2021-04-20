@@ -5,9 +5,9 @@ namespace Laravel\Nova\Tests\Feature;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class KeyValueTest extends IntegrationTest
+class KeyValueTest extends IntegrationTestCase
 {
     public function test_field_can_be_resolved()
     {

@@ -4,9 +4,9 @@ namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class NullableTest extends IntegrationTest
+class NullableTest extends IntegrationTestCase
 {
     public function test_nullable_can_be_null()
     {

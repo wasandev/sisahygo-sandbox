@@ -4,9 +4,9 @@ namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserResource;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ResourceTest extends IntegrationTest
+class ResourceTest extends IntegrationTestCase
 {
     public function test_can_use_title_from_json_attribute()
     {

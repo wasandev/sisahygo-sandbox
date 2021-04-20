@@ -9,11 +9,11 @@ use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class FieldControllerTest extends IntegrationTest
+class FieldControllerTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -122,8 +122,14 @@ class FieldControllerTest extends IntegrationTest
 
     public function test_can_return_creation_pivot_fields()
     {
+        $queryString = http_build_query([
+            'editing' => true,
+            'editMode' => 'attach',
+            'viaRelationship' => 'roles',
+        ]);
+
         $response = $this->withExceptionHandling()
-                        ->get('/nova-api/users/6/creation-pivot-fields/roles');
+                        ->get('/nova-api/users/6/creation-pivot-fields/roles?'.$queryString);
 
         $fields = collect($response->original);
 
@@ -134,8 +140,14 @@ class FieldControllerTest extends IntegrationTest
 
     public function test_can_return_creation_pivot_fields_with_parent_belongs_to()
     {
+        $queryString = http_build_query([
+            'editing' => true,
+            'editMode' => 'attach',
+            'viaRelationship' => 'users',
+        ]);
+
         $response = $this->withoutExceptionHandling()
-            ->get('/nova-api/roles/5/creation-pivot-fields/users?editing=true&editMode=attach');
+            ->get('/nova-api/roles/5/creation-pivot-fields/users?'.$queryString);
 
         $fields = collect($response->original);
 
@@ -150,8 +162,14 @@ class FieldControllerTest extends IntegrationTest
         $role = factory(Role::class)->create();
         $user->roles()->attach($role);
 
+        $queryString = http_build_query([
+            'editing' => true,
+            'editMode' => 'update-attached',
+            'viaRelationship' => 'roles',
+        ]);
+
         $response = $this->withExceptionHandling()
-                        ->get('/nova-api/users/'.$user->id.'/update-pivot-fields/roles/'.$role->id.'?viaRelationship=roles');
+                        ->get('/nova-api/users/'.$user->id.'/update-pivot-fields/roles/'.$role->id.'?'.$queryString);
 
         $response->assertStatus(200);
         $this->assertEquals(1, $response->original['title']);

@@ -14,9 +14,9 @@ use Laravel\Nova\Tests\Fixtures\NotAvailableForNavigationUserResource;
 use Laravel\Nova\Tests\Fixtures\NotSearchableUserResource;
 use Laravel\Nova\Tests\Fixtures\TagResource;
 use Laravel\Nova\Tests\Fixtures\UserResource;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class NovaTest extends IntegrationTest
+class NovaTest extends IntegrationTestCase
 {
     public function test_nova_version()
     {

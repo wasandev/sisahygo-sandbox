@@ -346,9 +346,9 @@ class Ar_customer extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('edit ar_customer');
                 }),
-            (new Actions\ImportCustomers)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportCustomers)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
 
 
         ];

@@ -30,7 +30,7 @@ class IndexTest extends DuskTestCase
                                 ->assertSeeResource(3)
                                 ->assertSee('1-4 of 4');
                     })
-                    ->assertTitle('Users | Nova Dusk Suite');
+                    ->assertTitle('Users | Nova Site');
 
             $browser->blank();
         });
@@ -60,9 +60,32 @@ class IndexTest extends DuskTestCase
             $browser->loginAs(User::find(1))
                     ->visit(new UserIndex)
                     ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->click('@create-button');
+                        $browser->waitFor('@create-button')->click('@create-button');
                     })
-                    ->waitForTextIn('h1', 'Create User', 25)
+                    ->waitForTextIn('h1', 'Create User')
+                    ->assertPathIs('/nova/resources/users/new')
+                    ->assertSee('Create & Add Another')
+                    ->assertSee('Create User');
+
+            $browser->blank();
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function can_navigate_to_create_resource_screen_using_shortcut()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(User::find(1))
+                    ->visit(new UserIndex)
+                    ->waitFor('@users-index-component')
+                    ->within(new IndexComponent('users'), function ($browser) {
+                        $browser->waitFor('@create-button');
+                    })
+                    ->keys('', ['c'])
+                    ->waitForTextIn('h1', 'Create User')
+                    ->assertPathIs('/nova/resources/users/new')
                     ->assertSee('Create & Add Another')
                     ->assertSee('Create User');
 
@@ -193,6 +216,7 @@ class IndexTest extends DuskTestCase
                                 ->assertValue('@search', '3');
                     })
                     ->click('@users-resource-link')
+                    ->waitForTextIn('h1', 'Users', 25)
                     ->within(new IndexComponent('users'), function ($browser) {
                         $browser->waitForTable(25)
                                 ->assertValue('@search', '')
@@ -321,148 +345,6 @@ class IndexTest extends DuskTestCase
     /**
      * @test
      */
-    public function number_of_resources_displayed_per_page_can_be_changed()
-    {
-        UserFactory::new()->times(50)->create();
-
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new UserIndex)
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                                ->setPerPage('50')
-                                ->pause(1500)
-                                ->assertSeeResource(50)
-                                ->assertSeeResource(25)
-                                ->assertDontSeeResource(1)
-                                ->assertSee('1-50 of 54');
-                    });
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function number_of_resources_displayed_per_page_is_saved_in_query_params()
-    {
-        UserFactory::new()->times(50)->create();
-
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new UserIndex)
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                                ->setPerPage('50')
-                                ->pause(1500)
-                                ->assertSeeResource(50)
-                                ->assertSeeResource(25)
-                                ->assertDontSeeResource(1)
-                                ->assertSee('1-50 of 54');
-                    })
-                    ->refresh()
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                                ->assertSeeResource(50)
-                                ->assertSeeResource(25)
-                                ->assertDontSeeResource(1)
-                                ->assertSee('1-50 of 54');
-                    });
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function test_filters_can_be_applied_to_resources()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new UserIndex)
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                            ->applyFilter('Select First', '1')
-                            ->pause(1500)
-                            ->assertSeeResource(1)
-                            ->assertDontSeeResource(2)
-                            ->assertDontSeeResource(3)
-                            ->assertSee('1-1 of 1')
-                            ->applyFilter('Select First', '2')
-                            ->pause(1500)
-                            ->assertDontSeeResource(1)
-                            ->assertSeeResource(2)
-                            ->assertDontSeeResource(3)
-                            ->assertSee('1-1 of 1');
-                    });
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function test_filters_can_be_deselected()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new UserIndex)
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                            ->applyFilter('Select First', '1')
-                            ->pause(1500)
-                            ->assertSeeResource(1)
-                            ->assertDontSeeResource(2)
-                            ->assertDontSeeResource(3)
-                            ->assertSee('1-1 of 1')
-                            ->applyFilter('Select First', '')
-                            ->pause(1500)
-                            ->assertSeeResource(1)
-                            ->assertSeeResource(2)
-                            ->assertSeeResource(3)
-                            ->assertSee('1-4 of 4');
-                    });
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function test_date_filter_interactions_does_not_close_filter_dropdown()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new UserIndex)
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                            ->assertMissing('@filter-per-page')
-                            ->click('@filter-selector')
-                            ->pause(500)
-                            ->elsewhere('', function ($browser) {
-                                $browser->assertVisible('@filter-per-page')
-                                    ->type('[dusk="date-filter"] + input', '')
-                                    ->elsewhere('', function ($browser) {
-                                        $browser->click('.flatpickr-prev-month');
-                                    })
-                                    ->assertVisible('@filter-per-page');
-
-                                $browser->click('@global-search')
-                                    ->assertMissing('@filter-per-page');
-                            });
-                    });
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
     public function can_delete_a_resource_via_resource_table_row_delete_icon()
     {
         $this->browse(function (Browser $browser) {
@@ -526,54 +408,6 @@ class IndexTest extends DuskTestCase
                             ->assertSee('1-3 of 3');
                     })
                     ->assertPathIs('/nova/resources/users');
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function can_run_actions_on_selected_resources()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new UserIndex)
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                            ->clickCheckboxForId(3)
-                            ->clickCheckboxForId(2)
-                            ->runAction('mark-as-active');
-                    });
-
-            $this->assertEquals(0, User::find(1)->active);
-            $this->assertEquals(1, User::find(2)->active);
-            $this->assertEquals(1, User::find(3)->active);
-
-            $browser->blank();
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function can_run_table_row_actions_on_selected_resources()
-    {
-        User::whereIn('id', [2, 3, 4])->update(['active' => true]);
-
-        $this->browse(function (Browser $browser) {
-            $browser->loginAs(User::find(1))
-                    ->visit(new UserIndex)
-                    ->within(new IndexComponent('users'), function ($browser) {
-                        $browser->waitForTable(25)
-                            ->assertDontSeeIn('@1-row', 'Mark As Inactive')
-                            ->assertSeeIn('@2-row', 'Mark As Inactive')
-                            ->runInlineAction(2, 'mark-as-inactive');
-                    });
-
-            $this->assertEquals(0, User::find(1)->active);
-            $this->assertEquals(0, User::find(2)->active);
-            $this->assertEquals(1, User::find(3)->active);
 
             $browser->blank();
         });

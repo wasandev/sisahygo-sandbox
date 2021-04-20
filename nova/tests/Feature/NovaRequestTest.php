@@ -9,9 +9,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\PostResource;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class NovaRequestTest extends IntegrationTest
+class NovaRequestTest extends IntegrationTestCase
 {
     public function test_checking_if_create_request()
     {

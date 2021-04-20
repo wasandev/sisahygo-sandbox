@@ -291,9 +291,9 @@ class Car extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Actions\ImportCars)->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            }),
+            // (new Actions\ImportCars)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin';
+            // }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';

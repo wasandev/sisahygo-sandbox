@@ -356,10 +356,10 @@ class Customer extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
-            (new Actions\ImportCustomers)
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin';
-                }),
+            // (new Actions\ImportCustomers)
+            //     ->canSee(function ($request) {
+            //         return $request->user()->role == 'admin';
+            //     }),
 
 
         ];

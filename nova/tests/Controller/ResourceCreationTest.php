@@ -14,11 +14,11 @@ use Laravel\Nova\Tests\Fixtures\Profile;
 use Laravel\Nova\Tests\Fixtures\Recipient;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ResourceCreationTest extends IntegrationTest
+class ResourceCreationTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -536,7 +536,7 @@ class ResourceCreationTest extends IntegrationTest
         });
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($_SERVER['weight-field.readonly']);
         unset($_SERVER['weight-field.canSee']);

@@ -4,11 +4,11 @@ namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Tag;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class MorphableResourceAttachmentTest extends IntegrationTest
+class MorphableResourceAttachmentTest extends IntegrationTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -103,7 +103,9 @@ class MorphableResourceAttachmentTest extends IntegrationTest
     {
         $post = factory(Post::class)->create();
         $tag = factory(Tag::class)->create();
-        $post->tags()->attach($tag);
+        $post->tags()->attach($tag, [
+            'admin' => 'Y',
+        ]);
 
         $response = $this->withExceptionHandling()
                         ->postJson('/nova-api/posts/'.$post->id.'/attach/tags', [

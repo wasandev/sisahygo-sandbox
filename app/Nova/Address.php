@@ -74,6 +74,7 @@ class Address extends Resource
             ID::make()->sortable()->hideFromIndex(),
             BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
                 ->hideFromIndex()
+                ->withSubtitles()
                 ->searchable(),
             Text::make(__('Address name'), 'name')->sortable()
                 ->placeholder('ชื่อเรียกที่อยู่')

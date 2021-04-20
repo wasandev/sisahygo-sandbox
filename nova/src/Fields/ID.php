@@ -14,6 +14,13 @@ class ID extends Field
     public $component = 'id-field';
 
     /**
+     * The field's resolved pivot value.
+     *
+     * @var mixed
+     */
+    public $pivotValue = null;
+
+    /**
      * Create a new field.
      *
      * @param  string|null  $name
@@ -84,6 +91,14 @@ class ID extends Field
      */
     protected function resolveAttribute($resource, $attribute)
     {
+        if (! is_null($resource)) {
+            $pivotValue = optional($resource->pivot)->getKey();
+
+            if (is_int($pivotValue) || is_string($pivotValue)) {
+                $this->pivotValue = $pivotValue;
+            }
+        }
+
         $value = parent::resolveAttribute($resource, $attribute);
 
         if (is_int($value) && $value >= 9007199254740991) {
@@ -120,5 +135,17 @@ class ID extends Field
         $this->showOnUpdate = false;
 
         return $this;
+    }
+
+    /**
+     * Prepare the field for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), array_filter([
+            'pivotValue' => $this->pivotValue ?? null,
+        ]));
     }
 }

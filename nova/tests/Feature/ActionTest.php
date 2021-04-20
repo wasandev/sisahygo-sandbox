@@ -6,15 +6,10 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 
-class ActionTest extends IntegrationTest
+class ActionTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_action_messages_can_be_generated()
     {
         $this->assertEquals(['message' => 'test'], Action::message('test'));

@@ -22,17 +22,12 @@ use Laravel\Nova\Tests\Fixtures\FileResource;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\PostResource;
 use Laravel\Nova\Tests\Fixtures\UserResource;
-use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Tests\IntegrationTestCase;
 use stdClass;
 
-class FieldTest extends IntegrationTest
+class FieldTest extends IntegrationTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
