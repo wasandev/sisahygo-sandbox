@@ -98,4 +98,24 @@ class Order_header extends Model
         return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
             ->whereIn('paymenttype', ['F', 'L']);
     }
+
+    public function scopeGeneral($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->where('order_type', 'general');
+    }
+    public function scopeExpress($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->where('order_type', 'express');
+    }
+    public function scopeCharter($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->where('order_type', 'charter');
+    }
+    public function scopeOrder($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel']);
+    }
 }

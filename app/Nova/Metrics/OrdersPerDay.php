@@ -2,11 +2,11 @@
 
 namespace App\Nova\Metrics;
 
-use App\Models\Order_header;
 use Illuminate\Http\Request;
-use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\Trend;
+use App\Models\Order_header;
 
-class CharterIncomes extends Value
+class OrdersPerDay extends Trend
 {
     /**
      * Calculate the value of the metric.
@@ -16,7 +16,9 @@ class CharterIncomes extends Value
      */
     public function calculate(Request $request)
     {
-        return $this->sum($request, Order_header::charter(), 'order_amount')
+
+        return $this->sumByDays($request, Order_header::whereNotIn('order_status', ['checking', 'new', 'cancel']), 'order_amount')
+            ->showSumValue()
             ->format('0,0.00');
     }
 
@@ -28,13 +30,11 @@ class CharterIncomes extends Value
     public function ranges()
     {
         return [
-            'TODAY' => 'วันนี้',
-            'MTD' => 'เดือนนี้',
-            'QTD' => 'ไตรมาสนี้',
-            'YTD' => 'ปีนี้',
+            7 => '7 วัน',
             30 => '30 วัน',
             60 => '60 วัน',
             365 => '365 วัน',
+
         ];
     }
 
@@ -55,10 +55,10 @@ class CharterIncomes extends Value
      */
     public function uriKey()
     {
-        return 'charter-incomes';
+        return 'orders-per-day';
     }
     public function name()
     {
-        return 'ยอดค่าขนส่งสินค้าเหมาคัน';
+        return 'รายได้ค่าขนส่งตามวัน';
     }
 }

@@ -6,7 +6,7 @@ use App\Models\Order_header;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
 
-class CharterIncomes extends Value
+class ExpressIncomes extends Value
 {
     /**
      * Calculate the value of the metric.
@@ -16,7 +16,7 @@ class CharterIncomes extends Value
      */
     public function calculate(Request $request)
     {
-        return $this->sum($request, Order_header::charter(), 'order_amount')
+        return $this->sum($request, Order_header::express(), 'order_amount')
             ->format('0,0.00');
     }
 
@@ -59,6 +59,6 @@ class CharterIncomes extends Value
     }
     public function name()
     {
-        return 'ยอดค่าขนส่งสินค้าเหมาคัน';
+        return 'ยอดค่าขนส่งสินค้า Express';
     }
 }

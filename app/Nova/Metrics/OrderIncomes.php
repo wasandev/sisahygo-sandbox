@@ -16,7 +16,8 @@ class OrderIncomes extends Value
      */
     public function calculate(Request $request)
     {
-        return $this->sum($request, Order_header::whereNotIn('order_status',['checking','new','cancel']), 'order_amount')
+
+        return $this->sum($request, Order_header::general(), 'order_amount')
             ->format('0,0.00');
     }
 

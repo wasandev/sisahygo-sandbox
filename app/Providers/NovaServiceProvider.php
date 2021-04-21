@@ -13,11 +13,19 @@ use Anaseqal\NovaImport\NovaImport;
 use App\Nova\Metrics\CharterIncomes;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersByProvince;
+use App\Nova\Metrics\ExpressIncomes;
+use App\Nova\Metrics\OrderAllIncomes;
 use App\Nova\Metrics\OrderIncomes;
 use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\OrdersByPaymentType;
 use App\Nova\Metrics\OrdersPerMonth;
+use App\Nova\Metrics\WaybillAmount;
+use App\Nova\Metrics\WaybillIncome;
+use App\Nova\Metrics\WaybillIncomePerDay;
+use App\Nova\Metrics\WaybillLoading;
+use App\Nova\Metrics\WaybillPayable;
+use App\Nova\Metrics\WaybillsPerDay;
 use Dniccum\CustomEmailSender\CustomEmailSender;
 use Dniccum\NovaDocumentation\NovaDocumentation;
 
@@ -71,47 +79,36 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new OrderIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view order-incomes');
-                }),
-            (new CharterIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view charter-incomes');
-                }),
 
-            (new OrdersPerMonth())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-per-day');
-                }),
-            (new CharterJobsPerDay)->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view charter-jobs-per-day');
-                }),
-            (new CustomersPerDay)->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view customers-per-day');
-                }),
-            (new NewCustomers)->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view new-customers');
-                }),
-            (new CustomersByProvince())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view customers-by-province');
-                }),
-            (new CustomersByDistrict())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view customers-by-district');
-                }),
-            (new OrdersByPaymentType())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
-            (new OrdersByBranchRec())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
+            (new OrderAllIncomes())->width('1/2'),
+            (new OrderIncomes())->width('1/2'),
+
+            (new ExpressIncomes())->width('1/2'),
+            (new CharterIncomes())->width('1/2'),
+
+            (new OrdersPerMonth())->width('1/2'),
+            (new OrdersPerDay())->width('1/2'),
+
+            (new OrdersByPaymentType())->width('1/2'),
+            (new OrdersByBranchRec())->width('1/2'),
+
+            (new WaybillsPerDay()),
+            (new WaybillLoading()),
+
+            (new WaybillAmount()),
+            (new WaybillPayable()),
+
+            (new WaybillIncome()),
+            (new WaybillIncomePerDay()),
+
+            (new CustomersPerDay)->width('1/2'),
+            (new NewCustomers)->width('1/2'),
+
+            (new CustomersByProvince())->width('1/2'),
+            (new CustomersByDistrict())->width('1/2'),
+            // ->canSee(function ($request) {
+            //     return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
+            // }),
         ];
     }
 
