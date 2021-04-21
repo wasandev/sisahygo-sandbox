@@ -33,7 +33,7 @@ class ShowByOrderStatusBranch extends Filter
     public function options(Request $request)
     {
         return [
-
+            'รับสินค้าไว้แล้ว' => 'confirmed',
             'จัดขึ้นรถแล้ว' => 'loaded',
             'อยู่ระหว่างขนส่งไปสาขา' => 'in transit',
             'สินค้าถึงสาขาปลายทางแล้ว' => 'arrival',
