@@ -30,9 +30,9 @@ class Branchrec_order extends Resource
 {
     public static $group = '8.สำหรับสาขา';
     public static $priority = 2;
-    // public static $polling = true;
-    // public static $pollingInterval = 90;
-    // public static $showPollingToggle = true;
+    public static $polling = true;
+    public static $pollingInterval = 90;
+    public static $showPollingToggle = true;
     public static $globallySearchable = false;
     public static $perPageOptions = [50, 100, 150];
 
