@@ -95,31 +95,21 @@ class Order_checker extends Resource
                 ->exceptOnForms(),
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->exceptOnForms(),
+            Select::make('ประเภท', 'order_type')->options([
+                'general' => 'ทั่วไป',
+                'express' => 'Express',
+            ])->sortable()
+                ->default('general'),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
-            // Boolean::make('ใช้ที่อยู่อื่น', 'use_address')
-            //     ->hideFromIndex(),
-            // NovaDependencyContainer::make([
-            //     BelongsTo::make('เลือกที่อยู่', 'address', 'App\Nova\Address')
-            //         ->hideFromIndex(),
-            // ])->dependsOn('use_address', true),
-            Select::make('ประเภท', 'order_type')->options([
-                'general' => 'ทั่วไป',
-                'charter' => 'เหมาคัน',
-                'express' => 'Express',
-            ])->sortable(),
+
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
-            // Boolean::make('ใช้ที่อยู่อื่น', 'use_to_address')
-            //     ->hideFromIndex(),
-            // NovaDependencyContainer::make([
-            //     BelongsTo::make('เลือกที่อยู่', 'to_address', 'App\Nova\Address')
-            //         ->hideFromIndex(),
-            // ])->dependsOn('use_to_address', true),
+
             Select::make('การจัดส่ง', 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
