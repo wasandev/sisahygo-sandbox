@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
+use App\Nova\Filters\ShowByOrderStatus;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -25,6 +26,9 @@ use Laravel\Nova\Http\Requests\ActionRequest;
 class Order_checker extends Resource
 {
     use HasDependencies;
+    public static $polling = true;
+    public static $pollingInterval = 60;
+    public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 1;
     public static $globallySearchable = false;
@@ -157,6 +161,7 @@ class Order_checker extends Resource
     public function filters(Request $request)
     {
         return [
+            new ShowByOrderStatus(),
             new OrderFromDate(),
             new OrderToDate()
         ];
