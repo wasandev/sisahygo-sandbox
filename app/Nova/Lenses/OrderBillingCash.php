@@ -29,7 +29,7 @@ class OrderBillingCash extends Lens
                 ->join('users', 'users.id', '=', 'order_headers.user_id')
                 ->where('order_headers.order_status', '=', 'confirmed')
                 ->where('order_headers.paymenttype', '=', 'H')
-                ->orderBy('cash', 'desc')
+                ->orderBy('order_headers.order_header_date', 'desc')
                 ->groupBy('users.id', 'users.name', 'order_headers.order_header_date')
         ));
     }
