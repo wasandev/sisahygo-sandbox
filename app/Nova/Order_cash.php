@@ -99,8 +99,7 @@ class Order_cash extends Resource
     {
         return [
             ID::make('ลำดับ', 'id')
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->onlyOnDetail(),
             Status::make(__('Order status'), 'order_status')

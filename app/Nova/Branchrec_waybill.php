@@ -72,7 +72,7 @@ class Branchrec_waybill extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->hideFromIndex(),
+            ID::make(),
             Status::make(__('Status'), 'waybill_status')
                 ->loadingWhen(['in transit'])
                 ->failedWhen(['cancel'])

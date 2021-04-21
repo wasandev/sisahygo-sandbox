@@ -91,8 +91,7 @@ class Order_branch extends Resource
     {
         return [
             ID::make('ลำดับ', 'id')
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel', 'problem'])

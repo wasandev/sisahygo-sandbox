@@ -76,7 +76,7 @@ class Branchrec_order extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable()->hideFromIndex(),
+            ID::make()->sortable(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['in transit'])
                 ->failedWhen(['cancel'])
