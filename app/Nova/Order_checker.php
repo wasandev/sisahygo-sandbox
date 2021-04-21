@@ -85,7 +85,7 @@ class Order_checker extends Resource
                 ->failedWhen(['cancel'])
                 ->exceptOnForms(),
 
-            Date::make(__('Date'), 'order_header_date')
+            Date::make('วันที่', 'order_header_date')
                 ->readonly()
                 ->default(today())
                 ->format('DD/MM/YYYY')
@@ -99,7 +99,8 @@ class Order_checker extends Resource
                 'general' => 'ทั่วไป',
                 'express' => 'Express',
             ])->sortable()
-                ->default('general'),
+                ->default('general')
+                ->displayUsingLabels(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
@@ -115,7 +116,8 @@ class Order_checker extends Resource
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable()
-                ->default(1),
+                ->default(1)
+                ->hideFromIndex(),
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
