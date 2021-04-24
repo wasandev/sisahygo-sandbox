@@ -1173,6 +1173,12 @@ return [
             'description'  => 'จัดการข้อมูล',
             'group'        => 'ตรวจนับสินค้า',
         ],
+        //ใบรับส่งสินค้าจากตัวแทน
+        'view order_dropships' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู    ',
+            'group'        => 'ใบรับส่งสินค้าจากตัวแทน',
+        ],
         //ใบรับส่งสินค้า
         'view own order_headers' => [
             'display_name' => 'ดูข้อมูลของตัวเอง',
@@ -1195,6 +1201,29 @@ return [
             'display_name' => 'จัดการข้อมูล',
             'description'  => 'จัดการข้อมูล',
             'group'        => 'ใบรับส่งสินค้า',
+        ],
+        //ใบจัดส่งสินค้าจากตัวแทน
+        'view dropship_trans' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ใบจัดส่งสินค้าจากตัวแทน',
+        ],
+        'create dropship_trans' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ใบจัดส่งสินค้าจากตัวแทน',
+        ],
+
+        'edit dropship_trans' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ใบจัดส่งสินค้าจากตัวแทน',
+        ],
+
+        'delete dropship_trans' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ใบจัดส่งสินค้าจากตัวแทน',
         ],
         //รายการจัดขึ้น
         'view own order_loaders' => [
@@ -1660,46 +1689,51 @@ return [
             'group'        => 'ใบเสร็จรับเงินวางบิล',
         ],
         //Metrics
-        'view order-incomes' => [
-            'display_name' => 'รายได้ค่าขนส่ง',
-            'description'  => 'ดูรายได้ค่าขนส่ง',
-            'group'        => 'กราฟสรุป',
+        'view dashboards' => [
+            'display_name' => 'Dash Board',
+            'description'  => 'Dash Board',
+            'group'        => 'Dash Board',
         ],
-        'view orders-per-day' => [
-            'display_name' => 'จำนวนใบรับส่งต่อวัน',
-            'description'  => 'จำนวนใบรับส่งต่อวัน',
-            'group'        => 'กราฟสรุป',
-        ],
-        'view charter-incomes' => [
-            'display_name' => 'รายได้ค่าขนส่งเหมาคัน',
-            'description'  => 'ดูรายได้ค่าขนส่งเหมาคัน',
-            'group'        => 'กราฟสรุป',
-        ],
-        'view charter-jobs-per-day' => [
-            'display_name' => 'จำนวนงานเหมาคันต่อวัน',
-            'description'  => 'ดูจำนวนงานเหมาคันต่อวัน',
-            'group'        => 'กราฟสรุป',
-        ],
-        'view customers-by-province' => [
-            'display_name' => 'จำนวนลูกค้าตามจังหวัด',
-            'description'  => 'จำนวนลูกค้าตามจังหวัด',
-            'group'        => 'กราฟสรุป',
-        ],
-        'view customers-by-district' => [
-            'display_name' => 'จำนวนลูกค้าตามอำเภอ',
-            'description'  => 'จำนวนลูกค้าตามอำเภอ',
-            'group'        => 'กราฟสรุป',
-        ],
-        'view new-customers' => [
-            'display_name' => 'จำนวนลูกค้าใหม่',
-            'description'  => 'จำนวนลูกค้าใหม่',
-            'group'        => 'กราฟสรุป',
-        ],
-        'view customers-per-day' => [
-            'display_name' => 'ลูกค้าใหม่/วัน',
-            'description'  => 'ลูกค้าใหม่/วัน',
-            'group'        => 'กราฟสรุป',
-        ],
+        // 'view order-incomes' => [
+        //     'display_name' => 'รายได้ค่าขนส่ง',
+        //     'description'  => 'ดูรายได้ค่าขนส่ง',
+        //     'group'        => 'กราฟสรุป',
+        // ],
+        // 'view orders-per-day' => [
+        //     'display_name' => 'จำนวนใบรับส่งต่อวัน',
+        //     'description'  => 'จำนวนใบรับส่งต่อวัน',
+        //     'group'        => 'กราฟสรุป',
+        // ],
+        // 'view charter-incomes' => [
+        //     'display_name' => 'รายได้ค่าขนส่งเหมาคัน',
+        //     'description'  => 'ดูรายได้ค่าขนส่งเหมาคัน',
+        //     'group'        => 'กราฟสรุป',
+        // ],
+        // 'view charter-jobs-per-day' => [
+        //     'display_name' => 'จำนวนงานเหมาคันต่อวัน',
+        //     'description'  => 'ดูจำนวนงานเหมาคันต่อวัน',
+        //     'group'        => 'กราฟสรุป',
+        // ],
+        // 'view customers-by-province' => [
+        //     'display_name' => 'จำนวนลูกค้าตามจังหวัด',
+        //     'description'  => 'จำนวนลูกค้าตามจังหวัด',
+        //     'group'        => 'กราฟสรุป',
+        // ],
+        // 'view customers-by-district' => [
+        //     'display_name' => 'จำนวนลูกค้าตามอำเภอ',
+        //     'description'  => 'จำนวนลูกค้าตามอำเภอ',
+        //     'group'        => 'กราฟสรุป',
+        // ],
+        // 'view new-customers' => [
+        //     'display_name' => 'จำนวนลูกค้าใหม่',
+        //     'description'  => 'จำนวนลูกค้าใหม่',
+        //     'group'        => 'กราฟสรุป',
+        // ],
+        // 'view customers-per-day' => [
+        //     'display_name' => 'ลูกค้าใหม่/วัน',
+        //     'description'  => 'ลูกค้าใหม่/วัน',
+        //     'group'        => 'กราฟสรุป',
+        // ],
         //Actions
     ],
 ];

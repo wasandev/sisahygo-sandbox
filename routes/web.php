@@ -40,6 +40,9 @@ Route::middleware('web', 'auth')
         Route::get('/waybill/waybillbydate', 'WaybillController@waybillbydate')->name('waybillbydate');
         Route::get('/waybill/waybillbydatepreview', 'WaybillController@waybillbydatePreview')->name('preview');
 
+        Route::get('/dropship/makepdf/{id}', 'DropshipController@makePDF')->name('makepdf');
+        Route::get('/dropship/preview/{id}', 'DropshipController@preview')->name('preview');
+
         Route::get('/delivery/makepdf/{id}', 'DeliveryController@makePDF')->name('makepdf');
         Route::get('/delivery/preview/{id}', 'DeliveryController@preview')->name('preview');
     });

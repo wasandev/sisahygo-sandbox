@@ -234,31 +234,7 @@ class Customer extends Resource
         ];
     }
 
-    // public static function relatableQuery(NovaRequest $request, $query)
-    // {
 
-    //     //dd()
-    //     $from_branch = $request->user()->branch_id;
-    //     $to_branch =  $request->user()->branch_rec_id;
-
-    //     if (!is_null($from_branch)) {
-    //         if ($request->route()->parameter('field') === "customer") {
-    //             $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
-    //             return $query->whereIn('district', $branch_area);
-    //         }
-    //     }
-    //     if (!is_null($to_branch)) {
-    //         if ($request->route()->parameter('field') === "to_customer") {
-    //             $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-    //             return $query->whereIn('district', $to_branch_area);
-    //         }
-    //     } else {
-    //         if ($request->route()->parameter('field') === "to_customer") {
-    //             $to_branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get('district');
-    //             return $query->whereIn('district', $to_branch_area);
-    //         }
-    //     }
-    // }
     /**
      * Get the cards available for the request.
      *
@@ -269,22 +245,22 @@ class Customer extends Resource
     {
         return [
             (new CustomersByProvince())->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('edit customers');
+                return  $request->user()->hasPermissionTo('view dashboards');
             }),
             (new CustomersByDistrict())->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('edit customers');
+                return  $request->user()->hasPermissionTo('view dashboards');
             }),
             (new CustomerByType())->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('edit customers');
+                return  $request->user()->hasPermissionTo('view dashboards');
             }),
             (new CustomerByPtype())->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('edit customers');
+                return  $request->user()->hasPermissionTo('view dashboards');
             }),
             (new CustomerByPaymentType())->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('edit customers');
+                return  $request->user()->hasPermissionTo('view dashboards');
             }),
             (new CustomersPerDay())->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('edit customers');
+                return  $request->user()->hasPermissionTo('view dashboards');
             }),
         ];
     }

@@ -70,6 +70,10 @@ class Order_status extends Resource
                         $car_regist = '';
                     }
                     $status = 'จัดสินค้าขึ้นรถแล้ว' . '- ทะเบียน' . ' ' . $car_regist;
+                } elseif ($this->status == 'in transit to center') {
+                    $status = 'สินค้าออกจาก' . $this->order_header->from_branch->name;
+                } elseif ($this->status == 'arrival at center') {
+                    $status = 'สินค้าถึงสำนักงานใหญ่';
                 } elseif ($this->status == 'in transit') {
                     $status = 'สินค้าอยู่ระหว่างขนส่งไปสาขา' . '-' . $this->order_header->to_branch->name;
                 } elseif ($this->status == 'arrival') {

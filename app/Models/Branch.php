@@ -19,6 +19,8 @@ class Branch extends Model
         'phoneno',
         'type',
         'partner_rate',
+        'dropship_rate',
+        'dropship_flag',
         'vendor_id',
         'location_lat',
         'location_lng',

@@ -22,6 +22,10 @@ class OrderHeaderObserver
             $order_header->order_header_date = today();
             $order_header->user_id = auth()->user()->id;
             $order_header->branch_id =  auth()->user()->branch_id;
+            $branch = \App\Models\Branch::find(auth()->user()->branch_id);
+            if ($branch->dropship_flag) {
+                $order_header->shipto_center  = '0';
+            }
             $to_customer = Customer::find($order_header->customer_rec_id);
             $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
             if (is_null($to_branch)) {

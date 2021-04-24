@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order_header extends Model
+class Order_dropship extends Model
 {
     protected $fillable = [
         'order_header_no', 'order_header_date', 'order_status', 'branch_id', 'branch_rec_id',
@@ -16,6 +16,7 @@ class Order_header extends Model
         'order_header_date' => 'date',
         'created_at' => 'datetime',
     ];
+    protected $table = 'order_headers';
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer');
@@ -42,6 +43,11 @@ class Order_header extends Model
         return $this->belongsTo('App\Models\User', 'loader_id');
     }
 
+    public function dropship_tran()
+    {
+        return $this->belongsTo('App\Models\Dropship_tran');
+    }
+
     public function shipper()
     {
         return $this->belongsTo('App\Models\Employee', 'shipper_id');
@@ -55,16 +61,14 @@ class Order_header extends Model
         return $this->belongsTo('App\Models\Branch', 'branch_rec_id');
     }
 
-
-
     public function order_details()
     {
-        return $this->hasMany('App\Models\Order_detail');
+        return $this->hasMany('App\Models\Order_detail', 'order_header_id');
     }
 
     public function order_statuses()
     {
-        return $this->hasMany('App\Models\Order_status');
+        return $this->hasMany('App\Models\Order_status', 'order_header_id');
     }
 
     public function waybill()

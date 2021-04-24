@@ -10,10 +10,10 @@ class ShowByOrderStatus extends Filter
 
     public $name = 'ตามสถานะ';
 
-    public function default()
-    {
-        return 'new';
-    }
+    // public function default()
+    // {
+    //     return 'new';
+    // }
     /**
      * Apply the filter to the given query.
      *

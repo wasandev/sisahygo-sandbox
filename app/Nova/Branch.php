@@ -21,6 +21,7 @@ use Laravel\Nova\Fields\Number;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Laravel\Nova\Fields\Boolean;
 
 class Branch extends Resource
 {
@@ -98,7 +99,10 @@ class Branch extends Resource
             ])->displayUsingLabels()
                 ->rules('required')
                 ->sortable(),
-            Number::make('รายได้บริษัท(%)', 'partner_rate')
+            Number::make('% บริษัท', 'partner_rate')
+                ->onlyOnIndex()
+                ->sortable(),
+            Number::make('% Dropship', 'dropship_rate')
                 ->onlyOnIndex()
                 ->sortable(),
             NovaDependencyContainer::make([
@@ -106,8 +110,10 @@ class Branch extends Resource
                     ->searchable()
                     ->showCreateRelationButton()
                     ->nullable(),
-                Number::make('รายได้บริษัท(%)', 'partner_rate')
-
+                Number::make('รายได้บริษัท(%)', 'partner_rate'),
+                Boolean::make('Dropship', 'dropship_flag'),
+                Number::make('รายได้ Dropship (%)', 'dropship_rate')->nullable()
+                    ->help('รายได้ของผู้ร่วมบริการต้นทาง(Dropship)%'),
             ])->dependsOn('type', 'partner'),
             HasMany::make(__('Branch Areas'), 'branch_areas', 'App\Nova\Branch_area'),
             // BelongsToMany::make(__('Route to branch'), 'routeto', 'App\Nova\Branch')

@@ -6,9 +6,10 @@ use App\Nova\Actions\PrintOrder;
 use App\Nova\Filters\BillingUser;
 use App\Nova\Filters\CheckerUser;
 use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\OrderDropshipFromDate;
+use App\Nova\Filters\OrderDropshipToDate;
 use App\Nova\Filters\OrderFromBranch;
 use App\Nova\Filters\OrderFromDate;
-use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\OrderToDate;
 use App\Nova\Filters\ShowOwnOrder;
 use App\Nova\Filters\ShowByOrderStatus;
@@ -34,14 +35,14 @@ use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Wasandev\Orderstatus\Orderstatus;
 
-class Order_header extends Resource
+class Order_dropship extends Resource
 {
     use HasDependencies;
     public static $polling = true;
-    public static $pollingInterval = 120;
+    public static $pollingInterval = 60;
     public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
-    public static $priority = 2;
+    public static $priority = 0;
     public static $trafficCop = false;
     public static $preventFormAbandonment = true;
     public static $perPageOptions = [50, 100, 150];
@@ -51,7 +52,7 @@ class Order_header extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Order_header::class;
+    public static $model = \App\Models\Order_dropship::class;
 
 
     /**
@@ -82,11 +83,11 @@ class Order_header extends Resource
     public static function label()
     {
 
-        return "รายการใบรับส่งสินค้า";
+        return "ใบรับส่งสินค้าจากตัวแทน";
     }
     public static function singularLabel()
     {
-        return 'ใบรับส่งสินค้า';
+        return 'ใบรับส่งสินค้าจากตัวแทน';
     }
     /**
      * Get the fields displayed by the resource.
@@ -99,33 +100,30 @@ class Order_header extends Resource
         return [
             ID::make('ลำดับ', 'id')
                 ->sortable(),
-            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
-                ->hideWhenCreating(),
 
-            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->hideWhenCreating()
-                ->showOnUpdating(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel', 'problem'])
                 ->exceptOnForms()
                 ->sortable(),
-
             Select::make('สถานะสินค้า', 'shipto_center')->options([
                 '0' => 'อยู่จุดรับสินค้า',
                 '1' => 'ออกจากจุดรับสินค้าแล้ว',
                 '2' => 'ถึงสำนักงานใหญ่'
-            ])->displayUsingLabels()
-                ->canSee(function ($request) {
-                    $branch = \App\Models\Branch::find($request->user()->branch_id);
-                    return $branch->dropship_flag;
-                }),
+            ])->displayUsingLabels(),
             Select::make('ประเภท', 'order_type')->options([
                 'general' => 'ทั่วไป',
                 'express' => 'Express',
             ])->sortable()
                 ->default('general')
                 ->displayUsingLabels(),
+            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
+                ->hideWhenCreating(),
+            //->hideFromIndex(),
+
+            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
+                ->hideWhenCreating()
+                ->showOnUpdating(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->onlyOnDetail(),
@@ -140,6 +138,7 @@ class Order_header extends Resource
                 ->sortable(),
             Text::make(__('Tracking no'), 'tracking_no')
                 ->onlyOnDetail(),
+
 
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
@@ -160,17 +159,20 @@ class Order_header extends Resource
                 ->exceptOnForms(),
 
 
+
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton()
                 ->sortable(),
 
+
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton()
                 ->sortable(),
+
 
             Currency::make('จำนวนเงิน', 'order_amount')
                 ->exceptOnForms(),
@@ -213,25 +215,7 @@ class Order_header extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new Orderstatus()),
-            (new OrderIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view order-incomes');
-                }),
-            (new OrdersPerMonth())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-per-day');
-                }),
-            (new OrdersByPaymentType())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
-            (new OrdersByBranchRec())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
-        ];
+        return [];
     }
 
     /**
@@ -243,14 +227,9 @@ class Order_header extends Resource
     public function filters(Request $request)
     {
         return [
-            new ShowByOrderStatus(),
             new OrderFromBranch(),
-            new OrderToBranch(),
-            new ShowOwnOrder(),
-            new OrderFromDate(),
-            new OrderToDate(),
-            new BillingUser(),
-            new CheckerUser(),
+            new OrderDropshipFromDate(),
+            new OrderDropshipToDate(),
 
         ];
     }
@@ -263,9 +242,7 @@ class Order_header extends Resource
      */
     public function lenses(Request $request)
     {
-        return [
-            new Lenses\OrderBillingCash(),
-        ];
+        return [];
     }
 
     /**
@@ -278,18 +255,7 @@ class Order_header extends Resource
     {
         return [
 
-            (new Actions\OrderConfirmed($request->resourceId))
-                ->onlyOnDetail()
-                ->confirmText('ต้องการยืนยันใบรับส่งรายการนี้?')
-                ->confirmButtonText('ยืนยัน')
-                ->cancelButtonText("ไม่ยืนยัน")
-                ->canRun(function ($request, $model) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                })
-                ->canSee(function ($request) {
-                    return $request instanceof ActionRequest
-                        || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'new'));
-                }),
+
             (new Actions\PrintOrder)
                 ->onlyOnDetail()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
@@ -301,27 +267,7 @@ class Order_header extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
                 }),
-            (new Actions\ShiptoCenter())
-                ->confirmText('ต้องการสร้างรายการจัดส่งสินค้าไปสำนักงานใหญ่ จากรายการที่เลือก?')
-                ->confirmButtonText('สร้าง')
-                ->cancelButtonText("ยกเลิก")
-                ->canRun(function ($request, $model) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                })
-                ->canSee(function ($request) {
-                    $branch = \App\Models\Branch::find($request->user()->branch_id);
-                    return $branch->dropship_flag;
-                }),
-            (new Actions\CancelOrder())
-                ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
-                ->confirmButtonText('ยกเลิก')
-                ->cancelButtonText("ไม่ยกเลิก")
-                ->canRun(function ($request, $model) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                })
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
+
             (new Actions\OrderProblem())
                 ->onlyOnDetail()
                 ->confirmText('แจ้งปัญหาใบรับส่งรายการนี้?')
@@ -337,16 +283,11 @@ class Order_header extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        $branch = \App\Models\Branch::find($request->user()->branch_id);
-        if ($branch->code == '001') {
-            return $query->where('order_status', '<>', 'checking')
-                ->where('shipto_center', '=', '2')
-                ->where('order_type', '<>', 'charter');
-        } else {
-            return $query->where('order_status', '<>', 'checking')
-                ->where('branch_id', '=', $request->user()->branch_id)
-                ->where('order_type', '<>', 'charter');
-        }
+        $dropship = \App\Models\Branch::where('dropship_flag', true)->get('id');
+
+        return $query->where('order_status', '<>', 'checking')
+            ->whereIn('branch_id', $dropship)
+            ->where('order_type', '<>', 'charter');
     }
     public static function relatableCustomers(NovaRequest $request, $query)
     {

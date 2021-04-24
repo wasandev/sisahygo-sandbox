@@ -7,11 +7,9 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Http\Requests\NovaRequest;
-//use Wasandev\InputThaiAddress\InputSubDistrict;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
-use OptimistDigital\MultiselectField\Multiselect;
 
 
 class Productservice_price extends Resource
@@ -194,7 +192,7 @@ class Productservice_price extends Resource
             $resourceId = $request->viaResourceId;
 
             $order = \App\Models\Order_checker::find($resourceId);
-            if ($order->branch->code === '001') {
+            if ($order->branch->code === '001' || $order->branch->dropship_flag) {
                 $district = $order->to_customer->district;
                 return $query->where('district', '=', $district);
             } else {

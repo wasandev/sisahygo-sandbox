@@ -73,14 +73,14 @@ class Order_detail extends Resource
             ID::make(__('ID'), 'id')->sortable()->onlyOnDetail(),
             BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header'),
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
-                ->onlyOnIndex(),
+                ->exceptOnForms(),
             BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
-                ->onlyOnIndex(),
+                ->exceptOnForms(),
             Currency::make('ค่าขนส่ง/หน่วย', 'price')
-                ->onlyOnIndex(),
+                ->exceptOnForms(),
             Boolean::make('ใช้ราคาจากตาราง', 'usepricetable')
-                ->withMeta(["value" => 1])
-                ->hideFromIndex(),
+                ->default(true)
+                ->onlyOnForms(),
 
             // NovaDependencyContainer::make([
             BelongsTo::make(__('เลือกตารางราคา'), 'productservice_price', 'App\Nova\Productservice_price')
@@ -89,6 +89,7 @@ class Order_detail extends Resource
                 ->nullable()
                 ->onlyOnForms(),
             //])->dependsOn('usepricetable', true),
+
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                     ->searchable()

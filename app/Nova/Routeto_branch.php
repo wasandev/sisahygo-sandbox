@@ -62,7 +62,8 @@ class Routeto_branch extends Resource
             Text::make(__('Name'), 'name')
                 ->exceptOnForms(),
             Number::make(__('Collect days'), 'collectdays')
-                ->step('0.01'),
+                ->step('0.01')
+                ->default(2),
             Number::make(__('Distance'), 'distance')
                 ->step('0.01')
                 ->exceptOnForms(),

@@ -80,35 +80,69 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
 
-            (new OrderAllIncomes())->width('1/2'),
-            (new OrderIncomes())->width('1/2'),
+            (new OrderAllIncomes())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new OrderIncomes())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
 
-            (new ExpressIncomes())->width('1/2'),
-            (new CharterIncomes())->width('1/2'),
+            (new ExpressIncomes())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new CharterIncomes())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
 
-            (new OrdersPerMonth())->width('1/2'),
-            (new OrdersPerDay())->width('1/2'),
+            (new OrdersPerMonth())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new OrdersPerDay())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
 
-            (new OrdersByPaymentType())->width('1/2'),
-            (new OrdersByBranchRec())->width('1/2'),
+            (new OrdersByPaymentType())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new OrdersByBranchRec())->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
 
-            (new WaybillsPerDay()),
-            (new WaybillLoading()),
+            (new WaybillsPerDay())->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new WaybillLoading())->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
 
-            (new WaybillAmount()),
-            (new WaybillPayable()),
+            (new WaybillAmount())->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new WaybillPayable())->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
 
-            (new WaybillIncome()),
-            (new WaybillIncomePerDay()),
+            (new WaybillIncome())->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new WaybillIncomePerDay())->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
 
-            (new CustomersPerDay)->width('1/2'),
-            (new NewCustomers)->width('1/2'),
-
-            (new CustomersByProvince())->width('1/2'),
-            (new CustomersByDistrict())->width('1/2'),
-            // ->canSee(function ($request) {
-            //     return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-            // }),
+            (new CustomersPerDay)->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new NewCustomers)->width('1/2')->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+            }),
+            (new CustomersByProvince())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+                }),
+            (new CustomersByDistrict())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+                }),
         ];
     }
 
