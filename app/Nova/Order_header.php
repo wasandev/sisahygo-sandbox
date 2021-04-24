@@ -119,7 +119,8 @@ class Order_header extends Resource
                 ->canSee(function ($request) {
                     $branch = \App\Models\Branch::find($request->user()->branch_id);
                     return $branch->dropship_flag;
-                }),
+                })
+                ->exceptOnForms(),
             Select::make('ประเภท', 'order_type')->options([
                 'general' => 'ทั่วไป',
                 'express' => 'Express',
