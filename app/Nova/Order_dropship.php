@@ -110,7 +110,8 @@ class Order_dropship extends Resource
                 '0' => 'อยู่จุดรับสินค้า',
                 '1' => 'ออกจากจุดรับสินค้าแล้ว',
                 '2' => 'ถึงสำนักงานใหญ่'
-            ])->displayUsingLabels(),
+            ])->displayUsingLabels()
+                ->exceptOnForms(),
             Select::make('ประเภท', 'order_type')->options([
                 'general' => 'ทั่วไป',
                 'express' => 'Express',
