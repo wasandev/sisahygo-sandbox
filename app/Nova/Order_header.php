@@ -161,7 +161,7 @@ class Order_header extends Resource
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
 
-            QrCodeReader::make('scan Qr code ผู้ส่ง(ถ้ามี)', 'customer_id')   // Name -> label name, name_id -> save to column
+            QrCodeReader::make('Scan Qrcode ผู้ส่ง', 'customer', 'App\Nova\Customer')   // Name -> label name, name_id -> save to column
                 ->canInput()                        // the user able to input the code using keyboard, default false
                 ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
                 ->displayValue()                    // set qr size on detail, default 100
@@ -175,6 +175,7 @@ class Order_header extends Resource
                 ->withSubtitles()
                 ->showCreateRelationButton()
                 ->sortable(),
+
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
