@@ -94,7 +94,7 @@ class Customer extends Resource
             //ID::make()->sortable(),
             Qrcode::make('QR Code')
                 ->text($this->customer_code)
-                ->detailSize(100)
+                ->detailSize(200)
                 ->onlyOnDetail(),
 
             Boolean::make(__('Status'), 'status')->hideFromIndex(),
