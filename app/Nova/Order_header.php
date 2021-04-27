@@ -138,7 +138,7 @@ class Order_header extends Resource
                 ->exceptOnForms()
                 ->sortable(),
             Text::make(__('Order header no'), 'order_header_no')
-                ->readonly()
+                ->exceptOnForms()
                 ->sortable(),
             Text::make(__('Tracking no'), 'tracking_no')
                 ->onlyOnDetail(),
