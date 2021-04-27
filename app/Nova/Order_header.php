@@ -162,7 +162,7 @@ class Order_header extends Resource
                 ->exceptOnForms(),
 
             QrCodeReader::make('สแกน Qrcode ผู้ส่ง', 'customer_id')   // Name -> label name, name_id -> save to column
-                ->canInput('true')                        // the user able to input the code using keyboard, default false
+                ->canInput()                        // the user able to input the code using keyboard, default false
                 ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
                 ->displayValue()                    // set qr size on detail, default 100
                 ->qrSizeIndex()                     // set qr size on index, default 30

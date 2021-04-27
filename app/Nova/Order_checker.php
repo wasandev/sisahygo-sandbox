@@ -108,9 +108,9 @@ class Order_checker extends Resource
                 ->default('general')
                 ->displayUsingLabels(),
             QrCodeReader::make('scan Qr code ผู้ส่ง(ถ้ามี)', 'customer_id')   // Name -> label name, name_id -> save to column
-                ->canInput('true')                        // the user able to input the code using keyboard, default false
-                ->canSubmit('true')                       // on modal scan need to click submit to send the code to the input value, default false
-                ->displayValue('true')                    // set qr size on detail, default 100
+                ->canInput()                        // the user able to input the code using keyboard, default false
+                ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
+                ->displayValue()                    // set qr size on detail, default 100
                 ->qrSizeIndex()                     // set qr size on index, default 30
                 ->qrSizeDetail()                    // set qr size on detail, default 100
                 ->qrSizeForm()                      // set qr size on form, default 50
