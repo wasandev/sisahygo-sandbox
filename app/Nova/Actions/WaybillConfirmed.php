@@ -57,7 +57,7 @@ class WaybillConfirmed extends Action
                 $model->waybill_status = 'confirmed';
                 $model->save();
                 //return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
-                return Action::push('/resources/waybills/');
+                //return Action::push('/resources/waybills/');
             }
 
             return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการใบรับส่ง!');
@@ -74,6 +74,8 @@ class WaybillConfirmed extends Action
         if ($this->model) {
             $waybill = Waybill::find($this->model);
             $waybill_amount = $waybill->order_loaders->sum('order_amount');
+            $dropship_amount = $waybill->order_loaders->where('branch.dropship_flag', '=', true)->sum('order_amount');
+            //dd($dropship_amount);
             $routeto_branch = Routeto_branch::find($waybill->routeto_branch_id);
             $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $waybill->routeto_branch_id)
                 ->where('cartype_id', '=', $waybill->car->cartype_id)

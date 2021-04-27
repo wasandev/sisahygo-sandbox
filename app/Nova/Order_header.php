@@ -33,6 +33,7 @@ use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Wasandev\Orderstatus\Orderstatus;
+use Tsungsoft\QrCodeReader\QrCodeReader;
 
 class Order_header extends Resource
 {
@@ -160,7 +161,13 @@ class Order_header extends Resource
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
 
-
+            QrCodeReader::make('ผู้ส่ง', 'customer_id')   // Name -> label name, name_id -> save to column
+                ->canInput()                        // the user able to input the code using keyboard, default false
+                ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
+                ->displayValue()                    // set qr size on detail, default 100
+                ->qrSizeForm()                      // set qr size on form, default 50
+                ->viewable()                        // set viewable if has belongto value, default true
+                ->displayWidth('200px'),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
@@ -363,24 +370,24 @@ class Order_header extends Resource
                 ->get('district');
         }
 
-        if (!is_null($from_branch)) {
-            if ($request->route()->parameter('field') === "customer") {
-                // $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
-                //     ->get('district');
+        // if (!is_null($from_branch)) {
+        //     if ($request->route()->parameter('field') === "customer") {
+        //         // $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
+        //         //     ->get('district');
 
-                return $query->whereIn('district', $from_branch_area);
-            }
+        //         return $query->whereIn('district', $from_branch_area);
+        //     }
+        // }
+        // if (is_null($to_branch)) {
+        if ($request->route()->parameter('field') === "to_customer") {
+            $to_branch_area = \App\Models\Branch_area::whereNotIn('district', $from_branch_area)->get('district');
+            return $query->whereIn('district', $to_branch_area);
         }
-        if (is_null($to_branch)) {
-            if ($request->route()->parameter('field') === "to_customer") {
-                $to_branch_area = \App\Models\Branch_area::whereNotIn('district', $from_branch_area)->get('district');
-                return $query->whereIn('district', $to_branch_area);
-            }
-        } else {
-            if ($request->route()->parameter('field') === "to_customer") {
-                $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-                return $query->whereIn('district', $to_branch_area);
-            }
-        }
+        // } else {
+        //     if ($request->route()->parameter('field') === "to_customer") {
+        //         $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+        //         return $query->whereIn('district', $to_branch_area);
+        //     }
+        // }
     }
 }

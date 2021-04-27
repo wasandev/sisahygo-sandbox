@@ -19,7 +19,7 @@ class Dropship_tran extends Resource
 {
 
     public static $group = '7.งานบริการขนส่ง';
-    public static $priority = 1.1;
+    public static $priority = 2.2;
     public static $trafficCop = false;
     public static $preventFormAbandonment = true;
     public static $perPageOptions = [50, 100, 150];

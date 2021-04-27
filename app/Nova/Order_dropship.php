@@ -42,7 +42,7 @@ class Order_dropship extends Resource
     public static $pollingInterval = 60;
     public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
-    public static $priority = 0;
+    public static $priority = 2.1;
     public static $trafficCop = false;
     public static $preventFormAbandonment = true;
     public static $perPageOptions = [50, 100, 150];

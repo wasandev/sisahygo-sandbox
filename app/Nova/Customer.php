@@ -29,6 +29,7 @@ use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersPerDay;
 use Illuminate\Support\Str;
+use Kristories\Qrcode\Qrcode;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -55,7 +56,7 @@ class Customer extends Resource
     //public static $title = 'name';
     public function title()
     {
-        return $this->name;
+        return $this->name . '-' . $this->customer_code;
     }
 
     public function subtitle()
@@ -70,7 +71,7 @@ class Customer extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'phoneno', 'sub_district',  'district', 'province'
+        'name', 'customer_code',  'district', 'province'
     ];
 
     public static function label()
@@ -91,6 +92,11 @@ class Customer extends Resource
     {
         return [
             //ID::make()->sortable(),
+            Qrcode::make('QR Code')
+                ->text($this->customer_code)
+                ->detailSize(100)
+                ->onlyOnDetail(),
+
             Boolean::make(__('Status'), 'status')->hideFromIndex(),
             Text::make(__('Customer code'), 'customer_code')
                 ->readonly()

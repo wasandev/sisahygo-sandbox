@@ -45,13 +45,14 @@ class OrderProblem extends Action
             if ($model->order_status == 'problem') {
                 return Action::danger('รายการนี้แจ้งปัญหาไปแล้ว');
             }
-            if ($fields->problem_cust == '1') {
+            if ($fields->problem_cust == 'S') {
                 $customer_id = $model->customer_id;
             } else {
                 $customer_id = $model->customer_rec_id;
             }
             $order_problem = Order_problem::create([
                 'problem_no' => $problem_no,
+                'customer_flag' => $fields->problem_cust,
                 'problem_date' => today(),
                 'order_header_id' => $model->id,
                 'customer_id' => $customer_id,
@@ -85,8 +86,8 @@ class OrderProblem extends Action
         return [
             Select::make('ผู้แจ้งเรื่อง', 'problem_cust')
                 ->options([
-                    '1' => 'ผู้ส่ง',
-                    '2' => 'ผู้รับ'
+                    'S' => 'ผู้ส่ง',
+                    'R' => 'ผู้รับ'
                 ])->displayUsingLabels(),
             Select::make('ประเภท', 'problem_type')
                 ->options([
