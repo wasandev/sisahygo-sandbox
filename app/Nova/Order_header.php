@@ -161,7 +161,7 @@ class Order_header extends Resource
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
 
-            QrCodeReader::make('Scan Qrcode ผู้ส่ง', 'customer', 'App\Nova\Customer')   // Name -> label name, name_id -> save to column
+            QrCodeReader::make('Scan Qrcode ผู้ส่ง', 'customer_id')   // Name -> label name, name_id -> save to column
                 ->canInput(true)                        // the user able to input the code using keyboard, default false
                 ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
                 ->displayValue()                    // set qr size on detail, default 100
