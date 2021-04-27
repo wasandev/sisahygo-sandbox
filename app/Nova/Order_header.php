@@ -169,7 +169,7 @@ class Order_header extends Resource
                 ->qrSizeDetail()                    // set qr size on detail, default 100
                 ->qrSizeForm()                      // set qr size on form, default 50
                 ->viewable()                    // set viewable if has belongto value, default true
-                ->displayWidth()
+                ->displayWidth('520px')
                 ->onlyOnForms(),         // set display width, default auto
 
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
