@@ -56,7 +56,7 @@ class Customer extends Resource
     //public static $title = 'name';
     public function title()
     {
-        return $this->name . '-' . $this->customer_code;
+        return $this->name . '-' . $this->id;
     }
 
     public function subtitle()
@@ -71,7 +71,7 @@ class Customer extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'customer_code',  'district', 'province'
+        'id', 'name', 'customer_code',  'district', 'province'
     ];
 
     public static function label()
@@ -91,9 +91,9 @@ class Customer extends Resource
     public function fields(Request $request)
     {
         return [
-            //ID::make()->sortable(),
+            ID::make()->sortable(),
             Qrcode::make('QR Code')
-                ->text($this->customer_code)
+                ->text(strval($this->id))
                 ->detailSize(200)
                 ->onlyOnDetail(),
 
