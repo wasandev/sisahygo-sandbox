@@ -11,10 +11,16 @@ use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterJobsPerDay;
 use Anaseqal\NovaImport\NovaImport;
 use App\Nova\Metrics\CharterIncomes;
+use App\Nova\Metrics\CheckerbyUser;
+use App\Nova\Metrics\CheckerCancelbyUser;
+use App\Nova\Metrics\CheckerProblembyUser;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\ExpressIncomes;
 use App\Nova\Metrics\OrderAllIncomes;
+use App\Nova\Metrics\OrderbyUser;
+use App\Nova\Metrics\OrderCashbyUser;
+use App\Nova\Metrics\OrderCashUser;
 use App\Nova\Metrics\OrderIncomes;
 use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerDay;
@@ -28,6 +34,8 @@ use App\Nova\Metrics\WaybillPayable;
 use App\Nova\Metrics\WaybillsPerDay;
 use Dniccum\CustomEmailSender\CustomEmailSender;
 use Dniccum\NovaDocumentation\NovaDocumentation;
+
+use Wasandev\Checkers\Checkers;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -79,7 +87,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+            (new CheckerbyUser())->canSee(function ($request) {
+                return $request->user()->hasPermissionTo('view order_checkers');
+            }),
+            (new CheckerCancelbyUser())->canSee(function ($request) {
+                return $request->user()->hasPermissionTo('view order_checkers');
+            }),
+            (new CheckerProblembyUser())->canSee(function ($request) {
+                return $request->user()->hasPermissionTo('view order_checkers');
+            }),
 
+            (new OrderbyUser())->canSee(function ($request) {
+                return $request->user()->hasPermissionTo('manage order_headers');
+            }),
+            (new OrderCashbyUser())->canSee(function ($request) {
+                return $request->user()->hasPermissionTo('manage order_headers');
+            }),
             (new OrderAllIncomes())->width('1/2')->canSee(function ($request) {
                 return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
             }),
@@ -153,9 +176,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        return [
-            //new Sisahygo,
-        ];
+        return [];
     }
 
     /**

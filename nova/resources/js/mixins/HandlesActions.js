@@ -205,11 +205,30 @@ export default {
     },
 
     /**
+     * Get all of the available actions for the resource.
+     */
+    availableActions() {
+      return _(this.actions)
+        .filter(action => {
+          if (this.selectedResources.length == 0) {
+            return action.standalone
+          }
+
+          return true
+        })
+        .value()
+    },
+
+    /**
      * Get all of the available pivot actions for the resource.
      */
     availablePivotActions() {
       return _(this.pivotActions.actions)
         .filter(action => {
+          if (this.selectedResources.length == 0) {
+            return action.standalone
+          }
+
           if (this.selectedResources != 'all') {
             return true
           }

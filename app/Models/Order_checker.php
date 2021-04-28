@@ -61,12 +61,4 @@ class Order_checker extends Model
     {
         return $this->hasMany('App\Models\Order_status', 'order_header_id');
     }
-    // public function address()
-    // {
-    //     return $this->belongsTo('App\Models\Address', 'address_id');
-    // }
-    // public function to_address()
-    // {
-    //     return $this->belongsTo('App\Models\Address', 'to_address_id');
-    // }
 }

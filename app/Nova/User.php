@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Filters\Branch;
+use App\Nova\Filters\CurrentUser;
 
 class User extends Resource
 {
@@ -180,7 +181,8 @@ class User extends Resource
     public function filters(Request $request)
     {
         return [
-            new Branch
+            new Branch,
+            new CurrentUser
         ];
     }
 

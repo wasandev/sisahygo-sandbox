@@ -12,7 +12,9 @@
         "build-thai-address": "cd nova-components/ThaiAddress && npm run dev",
         "build-thai-address-prod": "cd nova-components/ThaiAddress && npm run prod",
         "build-orderstatus": "cd nova-components/Orderstatus && npm run dev",
-        "build-orderstatus-prod": "cd nova-components/Orderstatus && npm run prod"
+        "build-orderstatus-prod": "cd nova-components/Orderstatus && npm run prod",
+        "build-checkers": "cd nova-components/Checkers && npm run dev",
+        "build-checkers-prod": "cd nova-components/Checkers && npm run prod"
     },
     "devDependencies": {
         "@babel/plugin-syntax-dynamic-import": "^7.8.3",

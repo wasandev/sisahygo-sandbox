@@ -37,7 +37,8 @@
         "wasandev/input-thai-address": "*",
         "wasandev/orderstatus": "*",
         "wasandev/sisahy-go": "*",
-        "wasandev/thai-address": "*"
+        "wasandev/thai-address": "*",
+        "wasandev/checkers": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -110,8 +111,12 @@
             "url": "./nova-components/Orderstatus"
         },
         {
-        "type": "vcs",
-        "url": "https://github.com/anditsung/laravel-nova-qr-code-reader"
-    }
+            "type": "vcs",
+            "url": "https://github.com/anditsung/laravel-nova-qr-code-reader"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Checkers"
+        }
     ]
 }
