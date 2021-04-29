@@ -55,18 +55,18 @@ class OrderHeaderController extends Controller
         switch ($company->orderprint_option) {
             case 'form1':
                 $pdf = PDF::loadView('documents.printorder', compact('order', 'order_detail', 'company'))
-                    ->setPaper('a5', 'landscape');
+                    ->setPaper('a4');
                 break;
             case 'form2':
-                $pdf = PDF::loadView('documents.printorder_receipt', compact('order', 'order_detail', 'company'))
-                    ->setPaper('a5', 'landscape');
+                $pdf = PDF::loadView('documents.printorderpdf_receipt', compact('order', 'order_detail', 'company'))
+                    ->setPaper('a4');
                 break;
             case 'form3':
                 $pdf = PDF::loadView('documents.printorder', compact('order', 'order_detail', 'company'));
                 break;
             default:
-                $pdf = PDF::loadView('documents.printorder', compact('order', 'order_detail', 'company'))
-                    ->setPaper('a5', 'landscape');
+                $pdf = PDF::loadView('documents.printorderpdf_receipt', compact('order', 'order_detail', 'company'))
+                    ->setPaper('a4');
         }
 
         $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $order->order_header_no  . '.pdf';

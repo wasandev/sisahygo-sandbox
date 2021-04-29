@@ -34,11 +34,11 @@
         "simplesoftwareio/simple-qrcode": "~4",
         "titasgailius/search-relations": "^1.0",
         "tsungsoft/qr-code-reader": "^0.1.3",
+        "wasandev/checkers": "*",
         "wasandev/input-thai-address": "*",
         "wasandev/orderstatus": "*",
         "wasandev/sisahy-go": "*",
-        "wasandev/thai-address": "*",
-        "wasandev/checkers": "*"
+        "wasandev/thai-address": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

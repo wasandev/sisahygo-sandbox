@@ -315,6 +315,17 @@ class Order_header extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
                 }),
+            (new Actions\PrintPdfOrder)
+                ->onlyOnDetail()
+                ->confirmText('ต้องการบันทึกใบรับส่งรายการนี้เป็นไฟล์ PDF?')
+                ->confirmButtonText('บันทึก')
+                ->cancelButtonText("ไม่บันทึก")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                }),
             (new Actions\ShiptoCenter())
                 ->confirmText('ต้องการสร้างรายการจัดส่งสินค้าไปสำนักงานใหญ่ จากรายการที่เลือก?')
                 ->confirmButtonText('สร้าง')

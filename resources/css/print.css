@@ -1,0 +1,23 @@
+body {
+  font-size: 14px;
+  font-family: sans-serif;
+  color: black;
+}
+.header {
+  display: block;
+}
+@media print {
+  @page {
+    size: 20.5cm 14cm;
+    margin: 0.20cm 0.0cm 0.0cm 0.0cm;
+  }
+  body {
+    font-size: 9pt;
+    font-family: serif;
+    color: black;
+  }
+  .header {
+    display: none;
+  }
+
+}

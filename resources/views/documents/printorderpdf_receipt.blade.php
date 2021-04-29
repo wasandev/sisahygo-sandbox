@@ -1,4 +1,4 @@
-@extends('layouts.form')
+@extends('layouts.pdfform')
 
 @section('header')
     @include('partials.orderheader')

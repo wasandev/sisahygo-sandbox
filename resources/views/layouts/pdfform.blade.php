@@ -61,3 +61,64 @@
 
 </html>
 
+<style>
+    @font-face {
+        font-family: 'THSarabunNew';
+        font-style: normal;
+        font-weight: normal;
+        src: url("{{ asset('fonts/THSarabunNew.ttf') }}") format('truetype');
+    }
+
+    @font-face {
+        font-family: 'THSarabunNew';
+        font-style: normal;
+        font-weight: bold;
+        src: url("{{ asset('fonts/THSarabunNew Bold.ttf') }}") format('truetype');
+    }
+
+    @font-face {
+        font-family: 'THSarabunNew';
+        font-style: italic;
+        font-weight: normal;
+        src: url("{{ asset('fonts/THSarabunNew Italic.ttf') }}") format('truetype');
+    }
+
+    @font-face {
+        font-family: 'THSarabunNew';
+        font-style: italic;
+        font-weight: bold;
+        src: url("{{ asset('fonts/THSarabunNew BoldItalic.ttf') }}") format('truetype');
+    }
+
+    body {
+        font-family: "THSarabunNew";
+
+    }
+
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 100px;
+        width: 100%;
+    }
+
+    table {
+        font-size: 16px;
+        width: 100%;
+        table-layout:auto;
+        border-spacing: 0px;
+        vertical-align: top;
+        border-collapse: collapse;
+        border: 0px solid black;
+        padding: 0px;
+        margin: 0px;
+    }
+    tr,td,th {
+        border-collapse: collapse;
+        border: 0px solid black;
+    }
+
+
+
+
+</style>

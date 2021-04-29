@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fafed09f0d2d04400f47393b9df29ec",
+    "content-hash": "e98828fcb9b1eed72f2aed33181e057c",
     "packages": [
         {
             "name": "anaseqal/nova-import",
@@ -2064,16 +2064,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.39.0",
+            "version": "v8.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680"
+                "reference": "a654897ad7f97aea9d7ef292803939798c4a02a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680",
-                "reference": "0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a654897ad7f97aea9d7ef292803939798c4a02a4",
+                "reference": "a654897ad7f97aea9d7ef292803939798c4a02a4",
                 "shasum": ""
             },
             "require": {
@@ -2224,7 +2224,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2021-04-27T14:24:05+00:00"
+            "time": "2021-04-28T14:38:56+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -3670,16 +3670,16 @@
         },
         {
             "name": "optimistdigital/nova-multiselect-field",
-            "version": "2.1.0",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/optimistdigital/nova-multiselect-field.git",
-                "reference": "553fda5e8f0fbe03a07a99cfb275ba03e8dc03c3"
+                "reference": "8986ca68b1c8bf5076e02913af13ce0fcce64f24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/optimistdigital/nova-multiselect-field/zipball/553fda5e8f0fbe03a07a99cfb275ba03e8dc03c3",
-                "reference": "553fda5e8f0fbe03a07a99cfb275ba03e8dc03c3",
+                "url": "https://api.github.com/repos/optimistdigital/nova-multiselect-field/zipball/8986ca68b1c8bf5076e02913af13ce0fcce64f24",
+                "reference": "8986ca68b1c8bf5076e02913af13ce0fcce64f24",
                 "shasum": ""
             },
             "require": {
@@ -3729,7 +3729,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-27T12:11:12+00:00"
+            "time": "2021-04-28T10:18:06+00:00"
         },
         {
             "name": "optimistdigital/nova-translations-loader",

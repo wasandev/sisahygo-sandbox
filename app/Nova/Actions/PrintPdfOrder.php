@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class PrintOrder extends Action
+class PrintPdfOrder extends Action
 {
     use InteractsWithQueue, Queueable;
 
     public function uriKey()
     {
-        return 'print-order';
+        return 'print-pdf-order';
     }
     public function name()
     {
-        return __('Print Order');
+        return 'บันทึกเป็น PDF';
     }
 
 
@@ -38,12 +38,10 @@ class PrintOrder extends Action
                 return Action::danger('ไม่สามารถพิมพ์ใบรับส่งที่ยังไม่ยืนยันรายการ');
             }
             $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
-            //$path = $orderheaderController->preview($model->id);
-            return Action::openInNewTab('/orderheader/preview/' . $model->id);
 
-            //$path = $orderheaderController->makePDF($model->id);
+            $path = $orderheaderController->makePDF($model->id);
 
-            //return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
+            return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
         }
     }
     /**
