@@ -17,6 +17,7 @@ use App\Nova\Metrics\CheckerProblembyUser;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\ExpressIncomes;
+use App\Nova\Metrics\LoaderbyUser;
 use App\Nova\Metrics\OrderAllIncomes;
 use App\Nova\Metrics\OrderbyUser;
 use App\Nova\Metrics\OrderCashbyUser;
@@ -27,6 +28,7 @@ use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\OrdersByPaymentType;
 use App\Nova\Metrics\OrdersPerMonth;
 use App\Nova\Metrics\WaybillAmount;
+use App\Nova\Metrics\WaybillbyLoader;
 use App\Nova\Metrics\WaybillIncome;
 use App\Nova\Metrics\WaybillIncomePerDay;
 use App\Nova\Metrics\WaybillLoading;
@@ -102,6 +104,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }),
             (new OrderCashbyUser())->canSee(function ($request) {
                 return $request->user()->hasPermissionTo('manage order_headers');
+            }),
+            (new LoaderbyUser())->canSee(function ($request) {
+                return $request->user()->hasPermissionTo('view order_loaders');
+            }),
+            (new WaybillbyLoader())->canSee(function ($request) {
+                return $request->user()->hasPermissionTo('view waybills');
             }),
             (new OrderAllIncomes())->width('1/2')->canSee(function ($request) {
                 return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
