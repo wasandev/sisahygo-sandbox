@@ -56,7 +56,7 @@ class Customer extends Resource
     //public static $title = 'name';
     public function title()
     {
-        return $this->name . '-' . $this->id;
+        return $this->name;
     }
 
     public function subtitle()
