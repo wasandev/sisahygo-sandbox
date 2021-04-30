@@ -105,6 +105,7 @@ class WaybillConfirmed extends Action
                     }
                 } else {
                     $car_payamount = 0;
+                    $helptext = '';
                 }
             }
 
