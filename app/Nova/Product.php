@@ -41,6 +41,10 @@ class Product extends Resource
     {
         return $request->user()->hasPermissionTo('edit products');
     }
+    public function subtitle()
+    {
+        return 'น้ำหนัก/หน่วย(กก.) ' . $this->weight;
+    }
     /**
      * The columns that should be searched.
      *
@@ -105,8 +109,7 @@ class Product extends Resource
                 ->step('0.01')
                 ->hideFromIndex(),
             Number::make(__('Weight'), 'weight')
-                ->step('0.01')
-                ->hideFromIndex(),
+                ->step('0.01'),
             BelongsTo::make(__('Unit'), 'unit', 'App\Nova\Unit')
                 ->nullable()
                 ->showCreateRelationButton()

@@ -202,7 +202,7 @@ class Order_checker extends Resource
             // (new Orderstatus()),
             (new Actions\OrderChecked($request->resourceId))
                 ->onlyOnDetail()
-                ->confirmText('ต้องการยืนยันใบรับส่งรายการนี้?')
+                ->confirmText('ยืนยันรายการตรวจรับสินค้า?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request) {

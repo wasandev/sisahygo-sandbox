@@ -81,7 +81,7 @@ class WaybillConfirmed extends Action
             $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $waybill->routeto_branch_id)
                 ->where('cartype_id', '=', $waybill->car->cartype_id)
                 ->first();
-            if (isset($routeto_branch_cost)) {
+            if (!isset($routeto_branch_cost)) {
                 throw new MyCustomException('ยังไม่ได้กำหนดต้นทุนรถบรรทุกของเส้นทางไปสาขานี้ โปรดตรวจสอบที่เมนู "เส้นทางขนส่งระหว่างสาขา"');
             }
 

@@ -116,9 +116,10 @@ class Order_detail extends Resource
                 ->step('0.01'),
             Number::make('น้ำหนักสินค้า/หน่วย(กก.)', 'weight')
                 ->step('0.01')
-                ->rules('required')
+                //->rules('required')
                 ->help('สินค้าที่มีหน่วย กิโลกรัม ให้ใส่ 1')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->default(0.00),
             Text::make('หมายเหตุ', 'remark')
                 ->nullable(),
         ];

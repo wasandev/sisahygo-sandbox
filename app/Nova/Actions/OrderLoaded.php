@@ -62,25 +62,34 @@ class OrderLoaded extends Action
      */
     public function fields()
     {
-        //  if (isset(request()->resourceId)) {
-
-        // $order_loader =    Order_loader::find(request()->resourceId);
-        // $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
-        // $waybills = Waybill::where('routeto_branch_id', '=', $routeto_branch->id)->get()
-        //     ->pluck('waybill_no', 'id');
         $waybills = Waybill::where('waybill_status', 'loading')->pluck('waybill_no', 'id');
-        // $waybills = Waybill::with('car')
-        //     ->where('routeto_branch_id', '=', $routeto_branch->id)
-        //     ->where('waybill_status', '=', 'loading')
-        //     ->get();
-        // foreach ($waybills as $waybill) {
-        //     $waybillOptions = [
-        //         ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
-        //     ];
-        //     $selectOptions = collect($waybillOptions);
-        //     $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
-        // }
+        if (isset(request()->resourceId)) {
 
+            $order_loader =    Order_loader::find(request()->resourceId);
+            $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_loader->branch_rec_id)->first();
+
+            $waybills = Waybill::with('car')
+                ->where('routeto_branch_id', '=', $routeto_branch->id)
+                ->where('waybill_status', '=', 'loading')
+                ->get();
+            foreach ($waybills as $waybill) {
+                $waybillOptions = [
+                    ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+                ];
+                $selectOptions = collect($waybillOptions);
+                $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
+            }
+            if (isset($waybillOptions)) {
+                return [
+
+                    Select::make(__('Waybill'), 'waybill_branch')
+                        ->options($waybillOptions)
+                        ->displayUsingLabels()
+                        ->rules('required')
+                        ->searchable(),
+                ];
+            }
+        }
         return [
 
             Select::make(__('Waybill'), 'waybill_branch')
@@ -89,6 +98,5 @@ class OrderLoaded extends Action
                 ->rules('required')
                 ->searchable(),
         ];
-        // }
     }
 }

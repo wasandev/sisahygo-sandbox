@@ -29,7 +29,8 @@ class ValueByDistrict extends Lens
                 ->join('customers', 'customers.id', '=', 'order_headers.customer_rec_id')
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
                 ->where('order_headers.order_status', '=', 'confirmed')
-                ->orderBy('amount', 'desc')
+                ->where('order_headers.order_type', '<>', 'charter')
+                ->orderBy('customers.district', 'desc')
                 ->groupBy('order_headers.branch_rec_id', 'customers.district')
         ));
     }

@@ -101,7 +101,10 @@ class Order_header extends Resource
             ID::make('ลำดับ', 'id')
                 ->sortable(),
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->withMeta([
+                    'belongsToId' => $this->branch_id ?? $request->user()->branch_id
+                ]),
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->hideWhenCreating()
@@ -130,7 +133,12 @@ class Order_header extends Resource
                 ->displayUsingLabels(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
-                ->onlyOnDetail(),
+                ->searchable()
+                ->withSubtitles()
+                ->hideWhenCreating(),
+
+
+
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
                 ->default(today())
@@ -201,6 +209,7 @@ class Order_header extends Resource
                 ->hideFromIndex()
                 ->searchable(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
+                ->nullable()
                 ->onlyOnDetail(),
             BelongsTo::make(__('Shipper'), 'shipper', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -257,12 +266,12 @@ class Order_header extends Resource
     public function filters(Request $request)
     {
         return [
-            new ShowByOrderStatus(),
-            new OrderFromBranch(),
-            new OrderToBranch(),
             new ShowOwnOrder(),
             new OrderFromDate(),
             new OrderToDate(),
+            new ShowByOrderStatus(),
+            new OrderFromBranch(),
+            new OrderToBranch(),
             new BillingUser(),
             new CheckerUser(),
 

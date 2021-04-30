@@ -262,7 +262,18 @@ class Waybill extends Resource
     {
 
         return [
-
+            (new Actions\AddorderWaybillQrcode($request->resourceId))
+                ->onlyOnDetail()
+                ->confirmText('ต้องการนำใบรับส่งเข้าใบกำกับสินค้านี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage waybills');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && ($this->resource->waybill_status == 'loading') && $request->user()->hasPermissionTo('manage waybills'));
+                }),
             (new Actions\WaybillConfirmed($request->resourceId))
 
                 ->onlyOnDetail()

@@ -42,6 +42,12 @@
             @endswitch
         </td>
         <td style="width: 50%;text-align: right;vertical-align:top">
+            @if($order->waybill_id == '')
+                ใบกำกับสินค้า: .................................................... ทะเบียนรถ:  .....................
+            @else
+                ใบกำกับสินค้า: {{ $order->waybill->waybill_no}} ทะเบียนรถ:  {{ $order->waybill->car->car_regist }}
+
+            @endif
             @switch($order->order_type)
                 @case('general')
                     ประเภท : ทั่วไป<br/>
@@ -64,9 +70,7 @@
                 @break
             @endswitch
 
-            @isset($order->waybill->car->car_regist)
-                ทะเบียนรถ : {{ $order->waybill->car->car_regist }}
-            @endisset
+
 
         </td>
     </tr>

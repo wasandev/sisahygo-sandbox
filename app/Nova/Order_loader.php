@@ -185,24 +185,29 @@ class Order_loader extends Resource
     {
         return [
             (new Actions\OrderLoaded())
+                ->onlyOnDetail()
                 ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage waybills');
                 })
-
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && $this->resource->order_status == 'confirmed'
+                            && $request->user()->hasPermissionTo('manage waybills'));
+                }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
         $branch = \App\Models\Branch::find($request->user()->branch_id);
         if ($branch->code == '001') {
-            return $query->where('order_status', '<>', 'checking')
+            return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
                 ->where('shipto_center', '=', '2')
                 ->where('order_type', '<>', 'charter');
         } else {
-            return $query->where('order_status', '<>', 'checking')
+            return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
                 ->where('branch_id', '=', $request->user()->branch_id)
                 ->where('order_type', '<>', 'charter');
         }
