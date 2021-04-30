@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
+use App\Exceptions\MyCustomException;
 
 class WaybillConfirmed extends Action
 {
@@ -80,6 +81,9 @@ class WaybillConfirmed extends Action
             $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $waybill->routeto_branch_id)
                 ->where('cartype_id', '=', $waybill->car->cartype_id)
                 ->first();
+            if (isset($routeto_branch_cost)) {
+                throw new MyCustomException('ยังไม่ได้กำหนดต้นทุนรถบรรทุกของเส้นทางไปสาขานี้ โปรดตรวจสอบที่เมนู "เส้นทางขนส่งระหว่างสาขา"');
+            }
 
             if ($routeto_branch->branch->type == 'partner') {
                 $chargerate = $routeto_branch->branch->partner_rate;
@@ -90,13 +94,15 @@ class WaybillConfirmed extends Action
                 $helptext = 'คำนวณค่าบรรทุก ' . (100 - $chargerate) . '%';
                 $car_payamount = ($waybill_amount * (100 - $chargerate)) / 100;
             } else {
-                if ($routeto_branch_cost->chargeflag) {
-                    $chargerate = $routeto_branch_cost->chargerate;
-                    $helptext = 'คำนวณค่าบรรทุก' . (100 - $chargerate) . '%';
-                    $car_payamount = ($waybill_amount * (100 - $chargerate)) / 100;
-                } else {
-                    $car_payamount = $routeto_branch_cost->car_charge;
-                    $helptext = 'ค่าบรรทุก ' . $routeto_branch_cost->car_charge . ' บาท';
+                if (isset($routeto_branch_cost)) {
+                    if ($routeto_branch_cost->chargeflag) {
+                        $chargerate = $routeto_branch_cost->chargerate;
+                        $helptext = 'คำนวณค่าบรรทุก' . (100 - $chargerate) . '%';
+                        $car_payamount = ($waybill_amount * (100 - $chargerate)) / 100;
+                    } else {
+                        $car_payamount = $routeto_branch_cost->car_charge;
+                        $helptext = 'ค่าบรรทุก ' . $routeto_branch_cost->car_charge . ' บาท';
+                    }
                 }
             }
 
