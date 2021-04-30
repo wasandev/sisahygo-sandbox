@@ -103,6 +103,8 @@ class WaybillConfirmed extends Action
                         $car_payamount = $routeto_branch_cost->car_charge;
                         $helptext = 'ค่าบรรทุก ' . $routeto_branch_cost->car_charge . ' บาท';
                     }
+                } else {
+                    $car_payamount = 0;
                 }
             }
 
