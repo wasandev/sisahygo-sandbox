@@ -41,7 +41,7 @@ class AddorderWaybillQrcode extends Action
         foreach ($models as $model) {
             $order_loader = Order_loader::where('tracking_no', '=', $fields->order_header)->get();
 
-            if (isNull($order_loader)) {
+            if (!isNull($order_loader)) {
                 if ($order_loader->branch_rec_id <> $model->routeto_branch->dest_branch_id) {
 
                     return Action::danger('ใบรับส่งนี้ไม่สามารถนำเข้าใบกำกับนี้ได้ สาขาปลายทางไม่ถูกต้อง');
