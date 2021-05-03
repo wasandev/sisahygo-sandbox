@@ -38,7 +38,8 @@
         "wasandev/input-thai-address": "*",
         "wasandev/orderstatus": "*",
         "wasandev/sisahy-go": "*",
-        "wasandev/thai-address": "*"
+        "wasandev/thai-address": "*",
+        "wasandev/qr-code-scan": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -117,6 +118,10 @@
         {
             "type": "path",
             "url": "./nova-components/Checkers"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/QrCodeScan"
         }
     ]
 }

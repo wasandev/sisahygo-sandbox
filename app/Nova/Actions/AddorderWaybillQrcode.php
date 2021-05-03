@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Tsungsoft\QrCodeReader\QrCodeReader;
+use Wasandev\QrCodeScan\QrCodeScan;
 
 class AddorderWaybillQrcode extends Action
 {
@@ -37,7 +37,7 @@ class AddorderWaybillQrcode extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $order_loader = Order_loader::where('tracking_no', '=', $fields->order_header);
+            $order_loader = Order_loader::where('tracking_no', '=', $fields->order_header)->get();
             if ($order_loader->to_branch->id <> $model->routeto_branch->dest_branch->id) {
 
                 return Action::message('ใบรับส่งนี้ไม่สามารถนำเข้าใบกำกับนี้ได้ สาขาปลายทางไม่ถูกต้อง');
@@ -62,7 +62,7 @@ class AddorderWaybillQrcode extends Action
     public function fields()
     {
         return [
-            QrCodeReader::make('Qr code ใบรับส่ง', 'order_header')   // Name -> label name, name_id -> save to column
+            QrCodeScan::make('Qr code ใบรับส่ง', 'order_header')   // Name -> label name, name_id -> save to column
                 ->canInput(true)                        // the user able to input the code using keyboard, default false
                 ->canSubmit(true)                       // on modal scan need to click submit to send the code to the input value, default false
                 ->displayValue(true)                    // set qr size on detail, default 100
