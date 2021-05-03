@@ -17,7 +17,7 @@
          <td style="width: 10%;margin-left: 15px ">
             <div class="visible-print text-center">
 
-                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(60)->generate($order->tracking_no)) }} ">
+                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(80)->generate($order->id)) }} ">
             </div>
          </td>
     </tr>
