@@ -12,6 +12,8 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Wasandev\QrCodeScan\QrCodeScan;
 
+use function PHPUnit\Framework\isNull;
+
 class AddorderWaybillQrcode extends Action
 {
     use InteractsWithQueue, Queueable;
@@ -38,8 +40,9 @@ class AddorderWaybillQrcode extends Action
     {
         foreach ($models as $model) {
             $order_loader = Order_loader::where('tracking_no', '=', $fields->order_header)->get();
-            if (isset($order_loader)) {
-                if ($order_loader->to_branch->id <> $model->routeto_branch->dest_branch->id) {
+
+            if (isNull($order_loader)) {
+                if ($order_loader->branch_rec_id <> $model->routeto_branch->dest_branch_id) {
 
                     return Action::danger('ใบรับส่งนี้ไม่สามารถนำเข้าใบกำกับนี้ได้ สาขาปลายทางไม่ถูกต้อง');
                 }
