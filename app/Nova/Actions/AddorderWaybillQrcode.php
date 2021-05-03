@@ -63,14 +63,14 @@ class AddorderWaybillQrcode extends Action
     {
         return [
             QrCodeScan::make('Qr code ใบรับส่ง', 'order_header')   // Name -> label name, name_id -> save to column
-                ->canInput(true)                        // the user able to input the code using keyboard, default false
-                ->canSubmit(true)                       // on modal scan need to click submit to send the code to the input value, default false
-                ->displayValue(true)                    // set qr size on detail, default 100
+                ->canInput()                        // the user able to input the code using keyboard, default false
+                ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
+                ->displayValue()                    // set qr size on detail, default 100
                 ->qrSizeIndex()                     // set qr size on index, default 30
                 ->qrSizeDetail()                    // set qr size on detail, default 100
                 ->qrSizeForm()                      // set qr size on form, default 50
                 ->viewable()                        // set viewable if has belongto value, default true
-                ->displayWidth('800px')          // set display width, default auto
+                ->displayWidth('520px')          // set display width, default auto
                 ->rules('required')
         ];
     }
