@@ -37,15 +37,19 @@ class AddorderWaybillQrcode extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $order_loader = Order_loader::find($fields->order_header_id);
+            $order_loader = Order_loader::where('tracking_no', '=', $fields->order_header);
+            if ($order_loader->to_branch->id <> $model->routeto_branch->dest_branch->id) {
+
+                return Action::message('ใบรับส่งนี้ไม่สามารถนำเข้าใบกำกับนี้ได้ สาขาปลายทางไม่ถูกต้อง');
+            }
             $order_loader->waybill_id = $model->id;
             $order_loader->save();
 
-            Order_status::Create([
-                'order_header_id' => $order_loader->id,
-                'status' => 'loaded',
-                'user_id' => auth()->user()->id,
-            ]);
+            // Order_status::Create([
+            //     'order_header_id' => $order_loader->id,
+            //     'status' => 'loaded',
+            //     'user_id' => auth()->user()->id,
+            // ]);
         }
         return Action::message('เพิ่มใบรับส่งเข้าใบกำกับเรียบร้อยแล้ว');
     }
@@ -58,15 +62,15 @@ class AddorderWaybillQrcode extends Action
     public function fields()
     {
         return [
-            QrCodeReader::make('Qr code ใบรับส่ง', 'order_header_id')   // Name -> label name, name_id -> save to column
-                ->canInput()                        // the user able to input the code using keyboard, default false
-                ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
-                ->displayValue()                    // set qr size on detail, default 100
+            QrCodeReader::make('Qr code ใบรับส่ง', 'order_header')   // Name -> label name, name_id -> save to column
+                ->canInput(true)                        // the user able to input the code using keyboard, default false
+                ->canSubmit(true)                       // on modal scan need to click submit to send the code to the input value, default false
+                ->displayValue(true)                    // set qr size on detail, default 100
                 ->qrSizeIndex()                     // set qr size on index, default 30
                 ->qrSizeDetail()                    // set qr size on detail, default 100
                 ->qrSizeForm()                      // set qr size on form, default 50
                 ->viewable()                        // set viewable if has belongto value, default true
-                ->displayWidth('80px')          // set display width, default auto
+                ->displayWidth('800px')          // set display width, default auto
                 ->rules('required')
         ];
     }
