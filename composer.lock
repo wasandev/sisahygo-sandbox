@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d310c5c749b2b5f804deda0bdb72e666",
+    "content-hash": "5c699c86a96d73bd8e30e0b13b370d60",
     "packages": [
         {
             "name": "anaseqal/nova-import",
@@ -7691,53 +7691,6 @@
                 "search"
             ],
             "time": "2020-10-09T09:25:10+00:00"
-        },
-        {
-            "name": "tsungsoft/qr-code-reader",
-            "version": "0.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anditsung/laravel-nova-qr-code-reader.git",
-                "reference": "31044394760316a44ed3cbceb606629abce8b5d2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anditsung/laravel-nova-qr-code-reader/zipball/31044394760316a44ed3cbceb606629abce8b5d2",
-                "reference": "31044394760316a44ed3cbceb606629abce8b5d2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Tsungsoft\\QrCodeReader\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Tsungsoft\\QrCodeReader\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "AndiTsung",
-                    "email": "anditsung@gmail.com"
-                }
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "time": "2019-11-20T08:27:43+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

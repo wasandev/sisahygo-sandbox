@@ -33,7 +33,7 @@ use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Wasandev\Orderstatus\Orderstatus;
-use Tsungsoft\QrCodeReader\QrCodeReader;
+use Wasandev\QrCodeScan\QrCodeScan;
 
 class Order_header extends Resource
 {
@@ -169,7 +169,7 @@ class Order_header extends Resource
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
 
-            QrCodeReader::make('สแกน Qrcode ผู้ส่ง', 'customer_id')   // Name -> label name, name_id -> save to column
+            QrCodeScan::make('สแกน Qrcode ผู้ส่ง', 'customer_id')   // Name -> label name, name_id -> save to column
                 ->canInput()                        // the user able to input the code using keyboard, default false
                 ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
                 ->displayValue()                    // set qr size on detail, default 100
@@ -177,7 +177,7 @@ class Order_header extends Resource
                 ->qrSizeDetail()                    // set qr size on detail, default 100
                 ->qrSizeForm()                      // set qr size on form, default 50
                 ->viewable()                    // set viewable if has belongto value, default true
-                ->displayWidth('520px')
+                ->displayWidth('320px')
                 ->onlyOnForms(),         // set display width, default auto
 
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
