@@ -1663,6 +1663,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     props: ['showSubmit', 'displayWidth'],
 
     data: function data() {
+
         return {
             code: "",
             showInput: false,
@@ -1740,7 +1741,42 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             return onInit;
         }(),
+        paintBoundingBox: function paintBoundingBox(detectedCodes, ctx) {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = detectedCodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var detectedCode = _step.value;
+                    var _detectedCode$boundin = detectedCode.boundingBox,
+                        x = _detectedCode$boundin.x,
+                        y = _detectedCode$boundin.y,
+                        width = _detectedCode$boundin.width,
+                        height = _detectedCode$boundin.height;
+
+
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#007bff';
+                    ctx.strokeRect(x, y, width, height);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+        },
         onDecode: function onDecode(decodedString) {
+
             this.code = decodedString;
             if (!this.showSubmit) {
                 this.$emit('decoded', this.code);
@@ -14022,6 +14058,7 @@ var render = function() {
                         ])
                       : _c("qrcode-stream", {
                           style: { width: _vm.displayWidth },
+                          attrs: { track: _vm.paintBoundingBox },
                           on: { init: _vm.onInit, decode: _vm.onDecode }
                         })
                   ],

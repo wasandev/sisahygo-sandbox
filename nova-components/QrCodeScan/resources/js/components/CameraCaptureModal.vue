@@ -32,7 +32,7 @@
                                 {{ __(this.cameraErrorMessage) }}
                             </div>
                         </span>
-                        <qrcode-stream v-bind:style="{width: displayWidth}" v-else @init="onInit" @decode="onDecode"></qrcode-stream>
+                        <qrcode-stream v-bind:style="{width: displayWidth}" :track="paintBoundingBox" v-else @init="onInit" @decode="onDecode"></qrcode-stream>
                     </div>
                 </div>
             </div>
@@ -77,6 +77,7 @@
         ],
 
         data() {
+
             return {
                 code: "",
                 showInput: false,
@@ -88,6 +89,7 @@
         },
 
         methods: {
+
             async onInit(promise) {
                 try {
                     await promise
@@ -118,8 +120,17 @@
                     }
                 }
             },
+            paintBoundingBox (detectedCodes, ctx) {
+                for (const detectedCode of detectedCodes) {
+                    const { boundingBox: { x, y, width, height } } = detectedCode
 
+                    ctx.lineWidth = 2
+                    ctx.strokeStyle = '#007bff'
+                    ctx.strokeRect(x, y, width, height)
+                }
+            },
             onDecode(decodedString) {
+
                 this.code = decodedString
                 if(!this.showSubmit) {
                     this.$emit('decoded', this.code)
