@@ -71,7 +71,7 @@ class Order_status extends Resource
                     }
                     $status = 'จัดสินค้าขึ้นรถแล้ว' . '- ทะเบียน' . ' ' . $car_regist;
                 } elseif ($this->status == 'in transit to center') {
-                    $status = 'สินค้าออกจาก' . $this->order_header->from_branch->name;
+                    $status = 'สินค้าออกจาก' . $this->order_header->branch->name;
                 } elseif ($this->status == 'arrival at center') {
                     $status = 'สินค้าถึงสำนักงานใหญ่';
                 } elseif ($this->status == 'in transit') {
