@@ -70,7 +70,7 @@ class AddorderWaybillQrcode extends Action
                 ->qrSizeDetail()                    // set qr size on detail, default 100
                 ->qrSizeForm()                      // set qr size on form, default 50
                 ->viewable()                        // set viewable if has belongto value, default true
-                ->displayWidth('520px')          // set display width, default auto
+                ->displayWidth('320px')          // set display width, default auto
                 ->rules('required')
         ];
     }
