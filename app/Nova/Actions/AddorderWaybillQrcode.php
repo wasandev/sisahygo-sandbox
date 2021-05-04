@@ -50,11 +50,11 @@ class AddorderWaybillQrcode extends Action
                 $order_loader->order_status = 'loaded';
                 $order_loader->save();
 
-                Order_status::Create([
-                    'order_header_id' => $order_loader->id,
-                    'status' => 'loaded',
-                    'user_id' => auth()->user()->id,
-                ]);
+                // Order_status::Create([
+                //     'order_header_id' => $order_loader->id,
+                //     'status' => 'loaded',
+                //     'user_id' => auth()->user()->id,
+                // ]);
             } else {
                 return Action::danger('ไม่พบใบรับส่งที่สแกนในระบบ');
             }
