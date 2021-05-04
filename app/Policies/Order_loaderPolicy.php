@@ -32,11 +32,8 @@ class Order_loaderPolicy
     public function update(User $user, Order_loader $order_loader)
     {
 
-        if (isset($order_loader->waybill)) {
-            return ($user->hasPermissionTo('manage order_loaders') && $order_loader->waybill->waybill_status == "loading");
-        } else {
-            return ($user->hasPermissionTo('manage order_loaders') && ($order_loader->order_status == "confirmed"));
-        }
+
+        return ($user->hasPermissionTo('manage order_loaders') && ($order_loader->order_status == "loaded" || $order_loader->order_status == "confirmed"));
     }
 
     public function delete(User $user, Order_loader $order_loader)

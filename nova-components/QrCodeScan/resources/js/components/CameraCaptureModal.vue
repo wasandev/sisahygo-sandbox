@@ -11,7 +11,7 @@
             class="bg-white rounded-lg shadow-lg overflow-hidden"
         >
             <div>
-                <heading :level="2" class="border-b border-40 py-8 px-8 text-center">{{ __('Scan QR Code') }}</heading>
+                <heading :level="2" class="border-b border-40 py-8 px-8 text-center">สแกน QR Code</heading>
                 <div class="border-b border-40" v-if="showSubmit">
                     <div class="py-6 px-8 w-full">
                         <input
@@ -55,7 +55,7 @@
                         type="submit"
                         class="btn btn-default btn-primary">
                         <loader v-if="working" width="30"></loader>
-                        <span v-else>{{ __('Submit') }}</span>
+                        <span v-else>ตกลง</span>
                     </button>
                 </div>
             </div>

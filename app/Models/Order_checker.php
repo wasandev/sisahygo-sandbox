@@ -9,7 +9,7 @@ class Order_checker extends Model
     protected $fillable = [
         'order_header_date', 'order_status', 'branch_id', 'branch_rec_id',
         'customer_id', 'customer_rec_id', 'paymenttype', 'remark',  'trantype',
-        'checker_id', 'order_amount', 'user_id', 'updated_by'
+        'checker_id', 'order_amount', 'user_id', 'updated_by', 'useqrcode'
         //, 'use_address', 'address_id',
         //'use_to_address', 'to_address_id'
     ];

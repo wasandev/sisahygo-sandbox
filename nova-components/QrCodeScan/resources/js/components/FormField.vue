@@ -14,7 +14,7 @@
                         :disabled="isReadonly"
                     />
                 </div>
-                <button class="btn btn-default btn-primary ml-3" @click.prevent="showModal = true">{{ __('Scan') }}</button>
+                <button class="btn btn-default btn-primary ml-3" @click.prevent="showModal = true">สแกน</button>
             </div>
             <camera-capture-modal :displayWidth="displayWidth" :showSubmit="showSubmit" v-if="showModal" @close="showModal = false" @decoded="scanData"></camera-capture-modal>
         </template>

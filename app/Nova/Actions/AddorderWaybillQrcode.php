@@ -39,24 +39,25 @@ class AddorderWaybillQrcode extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $order_loader = Order_loader::where('tracking_no', '=', $fields->order_header)->get();
+            $order_loader = Order_loader::where('tracking_no', '=', $fields->order_header)->first();
 
-            if (!isNull($order_loader)) {
+            if (isset($order_loader)) {
                 if ($order_loader->branch_rec_id <> $model->routeto_branch->dest_branch_id) {
 
                     return Action::danger('ใบรับส่งนี้ไม่สามารถนำเข้าใบกำกับนี้ได้ สาขาปลายทางไม่ถูกต้อง');
                 }
                 $order_loader->waybill_id = $model->id;
+                $order_loader->order_status = 'loaded';
                 $order_loader->save();
+
+                Order_status::Create([
+                    'order_header_id' => $order_loader->id,
+                    'status' => 'loaded',
+                    'user_id' => auth()->user()->id,
+                ]);
             } else {
                 return Action::danger('ไม่พบใบรับส่งที่สแกนในระบบ');
             }
-
-            // Order_status::Create([
-            //     'order_header_id' => $order_loader->id,
-            //     'status' => 'loaded',
-            //     'user_id' => auth()->user()->id,
-            // ]);
         }
         return Action::message('เพิ่มใบรับส่งเข้าใบกำกับเรียบร้อยแล้ว');
     }

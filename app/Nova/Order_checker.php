@@ -106,25 +106,34 @@ class Order_checker extends Resource
             ])->sortable()
                 ->default('general')
                 ->displayUsingLabels(),
-            QrCodeScan::make('scan Qr code ผู้ส่ง(ถ้ามี)', 'customer_id')   // Name -> label name, name_id -> save to column
-                ->canInput()                        // the user able to input the code using keyboard, default false
-                ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
-                ->displayValue()                    // set qr size on detail, default 100
-                ->qrSizeIndex()                     // set qr size on index, default 30
-                ->qrSizeDetail()                    // set qr size on detail, default 100
-                ->qrSizeForm()                      // set qr size on form, default 50
-                ->viewable()                        // set viewable if has belongto value, default true
-                ->displayWidth('320px')          // set display width, default auto
+            Boolean::make('สแกน Qr Code ผู้ส่ง', 'useqrcode')
                 ->onlyOnForms(),
+            NovaDependencyContainer::make([
+                QrCodeScan::make('Qr code ผู้ส่ง', 'customer_id')   // Name -> label name, name_id -> save to column
+                    ->canInput()                        // the user able to input the code using keyboard, default false
+                    ->canSubmit()                       // on modal scan need to click submit to send the code to the input value, default false
+                    ->displayValue()                    // set qr size on detail, default 100
+                    ->qrSizeIndex()                     // set qr size on index, default 30
+                    ->qrSizeDetail()                    // set qr size on detail, default 100
+                    ->qrSizeForm()                      // set qr size on form, default 50
+                    ->viewable()                        // set viewable if has belongto value, default true
+                    ->displayWidth('320px')          // set display width, default auto
+                    ->onlyOnForms(),
+            ])->dependsOn('useqrcode', true),
+            NovaDependencyContainer::make([
+                BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
+                    ->searchable()
+                    ->withSubtitles()
+                    ->onlyOnForms(),
+            ])->dependsOn('useqrcode', false),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
-                ->showCreateRelationButton(),
+                ->onlyOnIndex(),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
-                ->withSubtitles()
-                ->showCreateRelationButton(),
+                ->withSubtitles(),
 
             Select::make('การจัดส่ง', 'trantype')->options([
                 '0' => 'รับเอง',

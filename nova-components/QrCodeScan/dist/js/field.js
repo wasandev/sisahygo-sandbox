@@ -13983,7 +13983,7 @@ var render = function() {
                   staticClass: "border-b border-40 py-8 px-8 text-center",
                   attrs: { level: 2 }
                 },
-                [_vm._v(_vm._s(_vm.__("Scan QR Code")))]
+                [_vm._v("สแกน QR Code")]
               ),
               _vm._v(" "),
               _vm.showSubmit
@@ -14111,7 +14111,7 @@ var render = function() {
                 [
                   _vm.working
                     ? _c("loader", { attrs: { width: "30" } })
-                    : _c("span", [_vm._v(_vm._s(_vm.__("Submit")))])
+                    : _c("span", [_vm._v("ตกลง")])
                 ],
                 1
               )
@@ -40482,7 +40482,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v(_vm._s(_vm.__("Scan")))]
+                [_vm._v("สแกน")]
               )
             ],
             1
