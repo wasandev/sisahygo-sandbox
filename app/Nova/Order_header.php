@@ -181,15 +181,16 @@ class Order_header extends Resource
                     ->qrSizeForm()                      // set qr size on form, default 50
                     ->viewable()                        // set viewable if has belongto value, default true
                     ->displayWidth('320px')          // set display width, default auto
-                    ->onlyOnForms()
-            ])->dependsOn('useqrcode', true),
+
+            ])->dependsOn('useqrcode', true)
+                ->onlyOnForms(),
             NovaDependencyContainer::make([
                 BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                     ->searchable()
                     ->withSubtitles()
-                    ->onlyOnForms(),
 
-            ])->dependsOn('useqrcode', false),
+            ])->dependsOn('useqrcode', false)
+                ->onlyOnForms(),
 
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
