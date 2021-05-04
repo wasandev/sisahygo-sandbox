@@ -24,4 +24,8 @@ body {
   .header {
     display: none;
   }
+
+  #printbtn {
+    display :  none;
+  }
 }

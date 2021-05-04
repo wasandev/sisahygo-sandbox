@@ -188,12 +188,13 @@ class Order_header extends Resource
                     ->searchable()
                     ->withSubtitles()
                     ->onlyOnForms(),
+
             ])->dependsOn('useqrcode', false),
+
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->exceptOnForms(),
-
 
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')

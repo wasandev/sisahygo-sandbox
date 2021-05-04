@@ -1,7 +1,7 @@
 <table style="width: 100%">
     <tr>
         <td style="width: 10%;">
-            <img src="{{ url('storage/'.$company->logofile) }}" alt="{{$company->company_name}}" width="60" height="60">
+            <img src="{{ url('storage/'.$company->logofile) }}" alt="{{$company->company_name}}" width="70" height="70">
 
         </td>
 
@@ -16,8 +16,8 @@
         </td>
          <td style="width: 10%;margin-left: 15px ">
             <div class="visible-print text-center">
-                {!! QrCode::size(70)->generate($order->tracking_no); !!}
-                {{-- <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(70)->generate($order->tracking_no)) }} "> --}}
+                {{-- {!! QrCode::size(70)->generate($order->tracking_no); !!} --}}
+                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(70)->generate($order->tracking_no)) }} ">
             </div>
          </td>
     </tr>

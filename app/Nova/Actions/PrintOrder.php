@@ -38,12 +38,9 @@ class PrintOrder extends Action
                 return Action::danger('ไม่สามารถพิมพ์ใบรับส่งที่ยังไม่ยืนยันรายการ');
             }
             $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
-            //$path = $orderheaderController->preview($model->id);
+            $path = $orderheaderController->preview($model->id);
+            //return Action::modal('$path');
             return Action::openInNewTab('/orderheader/preview/' . $model->id);
-
-            //$path = $orderheaderController->makePDF($model->id);
-
-            //return Action::openInNewTab(Storage::url('documents/' . $model->order_header_no . '.pdf'));
         }
     }
     /**
