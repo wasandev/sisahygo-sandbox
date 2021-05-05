@@ -9,10 +9,10 @@ use Laravel\Nova\Filters\DateFilter;
 class OrderFromDate extends DateFilter
 {
     public $name = 'จากวันที่';
-    public function default()
-    {
-        return date(today());
-    }
+    // public function default()
+    // {
+    //     return date(today());
+    // }
     /**
      * Apply the filter to the given query.
      *

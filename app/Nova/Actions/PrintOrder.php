@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\ActionFields;
 class PrintOrder extends Action
 {
     use InteractsWithQueue, Queueable;
-
+    public $withoutActionEvents = true;
     public function uriKey()
     {
         return 'print-order';
@@ -38,9 +38,10 @@ class PrintOrder extends Action
                 return Action::danger('ไม่สามารถพิมพ์ใบรับส่งที่ยังไม่ยืนยันรายการ');
             }
             $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
-            $path = $orderheaderController->preview($model->id);
-            //return Action::modal('$path');
+            //$path = $orderheaderController->preview($model->id);
+
             return Action::openInNewTab('/orderheader/preview/' . $model->id);
+            //return Action::push('/resources/order_orders');
         }
     }
     /**

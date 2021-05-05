@@ -357,6 +357,7 @@ class Order_header extends Resource
                     return $branch->dropship_flag;
                 }),
             (new Actions\CancelOrder())
+                ->onlyOnDetail()
                 ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยกเลิก')
                 ->cancelButtonText("ไม่ยกเลิก")

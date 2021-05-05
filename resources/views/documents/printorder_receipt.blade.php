@@ -156,28 +156,55 @@
 <table  style="width: 100%;height: 3.0cm;border-top: 0.5px dotted black;">
 
         @foreach ($order->order_details as $item )
-         <tr style="vertical-align:top">
-            <td  style="width: 47%;text-align: left">
-                {{ $loop->iteration }}.{{$item->product->name }}
-                @isset($item->remark)
-                 ( {{ $item->remark }} )
-                 @endisset
-            </td>
-            <td style="width: 9%;text-align: right">
-                {{number_format($item->amount,2)}}
-            </td>
-            <td style="width: 9%;text-align: center">
-                {{$item->unit->name}}
-            </td>
-            <td style="width: 15%;text-align: right">
-                {{number_format($item->price,2)}} บ./{{$item->unit->name}}
-            </td>
-            <td style="width: 20%;text-align: right">
-                {{number_format($item->price*$item->amount,2)}}
 
-            </td>
-        </tr>
+            <tr style="vertical-align:top;height:14px">
+                <td  style="width: 47%;text-align: left">
+                    {{ $loop->iteration }}.{{$item->product->name }}
+                    @isset($item->remark)
+                    ( {{ $item->remark }} )
+                    @endisset
+                </td>
+                <td style="width: 9%;text-align: right">
+                    {{number_format($item->amount,2)}}
+                </td>
+                <td style="width: 9%;text-align: center">
+                    {{$item->unit->name}}
+                </td>
+                <td style="width: 15%;text-align: right">
+                    {{number_format($item->price,2)}} บ./{{$item->unit->name}}
+                </td>
+                <td style="width: 20%;text-align: right">
+                    {{number_format($item->price*$item->amount,2)}}
+
+                </td>
+            </tr>
+
+
         @endforeach
+        @if(count($order->order_details) < 5)
+         @for ($i = 1; $i <= 5 - count($order->order_details); $i++)
+            <tr style="vertical-align:top;height:14px">
+                <td  style="width: 47%;text-align: left">
+
+                </td>
+                <td style="width: 9%;text-align: right">
+
+                </td>
+                <td style="width: 9%;text-align: center">
+
+                </td>
+                <td style="width: 15%;text-align: right">
+
+                </td>
+                <td style="width: 20%;text-align: right">
+
+                </td>
+
+            </tr>
+
+            @endfor
+        @endif
+
 
 
 </table>

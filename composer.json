@@ -122,5 +122,6 @@
             "type": "path",
             "url": "./nova-components/QrCodeScan"
         }
+
     ]
 }
