@@ -306,6 +306,13 @@ class Waybill extends Resource
                 ->canRun(function ($request, $model) {
                     return true;
                 }),
+            // (new Actions\PrintWaybillPdf)->onlyOnDetail()
+            //     ->confirmText('ต้องการบันทึกใบกำกับสินค้ารายการนี้เป็นไฟล์ PDF?')
+            //     ->confirmButtonText('บันทึก')
+            //     ->cancelButtonText("ไม่บันทึก")
+            //     ->canRun(function ($request, $model) {
+            //         return true;
+            //     }),
             (new Actions\WaybillBillRemove($request->resourceId))
 
                 ->onlyOnDetail()

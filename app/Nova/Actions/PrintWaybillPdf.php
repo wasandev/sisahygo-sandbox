@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class PrintWaybill extends Action
+class PrintWaybillPdf extends Action
 {
     use InteractsWithQueue, Queueable;
 
     public function uriKey()
     {
-        return 'print-waybill';
+        return 'print-waybill-pdf';
     }
     public function name()
     {
-        return __('Print Waybill');
+        return 'บันทึกเป็นไฟล์ PDF';
     }
 
 
@@ -35,9 +35,12 @@ class PrintWaybill extends Action
     {
         foreach ($models as $model) {
             if ($model->waybill_status == 'loading') {
-                return Action::danger('ไม่สามารถพิมพ์ใบกำกับสินค้าที่ยังไม่ยืนยันรายการ');
+                return Action::danger('ไม่สามารถบันทึกใบกำกับสินค้าที่ยังไม่ยืนยันรายการ');
             }
-            return Action::openInNewTab('/waybill/preview/' . $model->id);
+            $waybillController =  new \App\Http\Controllers\WaybillController();
+            $path = $waybillController->makePDF($model->id);
+
+            return Action::openInNewTab(Storage::url('documents/' . $model->waybill_no . '.pdf'));
         }
     }
     /**

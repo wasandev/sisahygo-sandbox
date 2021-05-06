@@ -1,35 +1,30 @@
-@extends('layouts.doc')
+@extends('layouts.pdfdoc')
 
 @section('header')
-    @include('partials.docheader')
+    @include('partials.docheaderpdf')
 
 @endsection
 
 @section('content')
 <table style="width:100%;">
     <tr>
-        <h2 style="text-align: center;font-size: 1.0em;">
+        <h2 style="text-align: center;font-size: 2.0em;">
             ใบกำกับสินค้า
         </h2>
     </tr>
 </table>
-<table style="width:100%;">
+<table>
 
     <tr>
-        <td style="width: 50%;text-align: left;vertical-align:top">
+        <td>
             เลขที่ใบกำกับสินค้า: {{ $waybill->waybill_no }}<br />
             ทะเบียนรถ: {{ $waybill->car->car_regist }}<br />
             เจ้าของรถ:
             @isset($waybill->car->owner->name)
                 {{ $waybill->car->owner->name }}
             @endisset
-             พนักงานขับรถ:
-            @isset($waybill->driver->name)
-                {{$waybill->driver->name}}
-            @endisset
-
         </td>
-        <td style="width:50%;vertical-align: middle;">
+        <td style="width:50%;vertical-align: top;">
             วันที่ใบกำกับ:{{ $waybill->waybill_date }}<br />
             วันที่-เวลารถออกจากต้นทาง :{{ $waybill->departure_at }}<br />
             วันที่-เวลาถึงปลายทาง :{{ $waybill->arrival_at }}
@@ -40,28 +35,28 @@
 </table>
 
 
-<table style="border-bottom:1px solid black;border-top:1px solid black" >
+<table style="border-bottom: 1px solid black;border-top: 1px solid black;padding: 5px;" cellspacing="3" cellpadding="5">
     <thead>
-        <tr style="border-bottom:1px solid black">
-            <th style="width: 5%;">ลำดับ</th>
-            <th style="width: 15%;">ใบรับส่งสินค้า</th>
-            <th style="text-align: left;width: 25%;">ผู้ส่งสินค้า</th>
-            <th style="text-align: left;width: 25%;">ผู้รับสินค้า</th>
-            <th style="width: 5%;">จำนวน</th>
-            <th style="text-align: right;width: 8%;">เก็บสด</th>
-            <th style="text-align: right;width: 7%;">วางบิล</th>
-            <th style="text-align: right;width: 10%;">ปลายทาง</th>
+        <tr>
+            <th style="width: 5%">ลำดับ</th>
+            <th style="width: 15%">ใบรับส่งสินค้า</th>
+            <th style="text-align: left;width: 25%">ผู้ส่งสินค้า</th>
+            <th style="text-align: left;width: 25%">ผู้รับสินค้า</th>
+            <th style="width: 5%">จำนวน</th>
+            <th style="width: 8%">เก็บสด</th>
+            <th style="width: 7%">วางบิล</th>
+            <th style="width: 10%">ปลายทาง</th>
         </tr>
 
     </thead>
 
-    <tbody style="vertical-align: middle;">
+    <tbody style="border-top: 1px solid black;vertical-align: top;">
         @foreach ($order_district as $district => $order_groups)
             <tr>
-                <td colspan="8" style="border-top: 1.0px solid black;">
-
+                <td colspan="8" style="border-bottom: 1px solid black;">
+                    <strong>
                     {{$district}} จำนวนใบรับส่ง  {{count($order_groups)}} รายการ ยอดค่าขนส่ง = {{ number_format($order_groups->sum('order_amount'),2,'.',',')}}
-
+                    </strong>
                 </td>
 
             </tr>
@@ -101,7 +96,7 @@
             </tr>
             @endforeach
         @endforeach
-        <tr style="padding-top: 10px;border-top: 1px solid black;vertical-align: middle;">
+        <tr style="padding-top: 20px;border-top: 1px solid black;vertical-align: top;font-size:18px;font-weight: bold;">
 
             <td colspan="5">รวมจำนวนใบรับส่งทั้งหมด {{count($order) }} รายการ</td>
 
@@ -114,56 +109,22 @@
 
 </table>
 <br>
-<table style="width: 100%;height:2cm;border: 1px solid black;padding: 10px">
-    <tr>
-        <td style="width: 25%">
-            ค่าระวาง:
-        </td>
-        <td style="width: 25%;text-align: right">
-            {{ number_format($waybill->waybill_amount,2,'.',',') }} บาท
+<table style="width:100%;height:3.0cm;padding:20px;">
+    <tr style="width:100%;">
+        <td style="width:50%;vertical-align: top;font-weight: bold;text-align: left">
+            ค่าระวาง: {{ number_format($waybill->waybill_amount,2,'.',',') }}<br />
+            ค่าบรรทุก: {{ number_format($waybill->waybill_payable ,2,'.',',')}}<br />
+
 
         </td>
-        <td style="width: 25%;text-align: right">
-            ผู้ส่งมอบสินค้า:
+        <td style="width:50%;vertical-align: top;font-weight: bold;text-align: left">
+            ผู้ส่งมอบสินค้า:........................................................<br />
+            ผู้รับมอบสินค้า(สาขา):..................................................<br />
+            พนักงานขับรถ:........................................................<br />
 
-        </td>
-        <td style="width: 25%;text-align: right">
-            ..............................................................
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 25%">
-            ค่าบรรทุก:
-        </td>
-        <td style="width: 25%;text-align: right">
-            {{ number_format($waybill->waybill_payable ,2,'.',',')}} บาท
-
-        </td>
-        <td style="width: 25%;text-align: right">
-            พนักงานขับรถ:
-
-        </td>
-        <td style="width: 25%;text-align: right">
-            ..............................................................
         </td>
     </tr>
 
-<tr>
-        <td style="width: 25%">
-
-        </td>
-        <td style="width: 25%;text-align: right">
-
-
-        </td>
-        <td style="width: 25%;text-align: right">
-            ผู้รับมอบสินค้า(สาขา):
-
-        </td>
-        <td style="width: 25%;text-align: right">
-            ..............................................................
-        </td>
-    </tr>
 
 </table>
 

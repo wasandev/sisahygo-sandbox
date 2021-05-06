@@ -16,6 +16,7 @@
         integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
+
     <!-- Scripts -->
     <script src="{{ mix('/js/app.js') }}" defer></script>
 
@@ -34,87 +35,47 @@
     <script>
         window.Laravel.userId = <?php echo auth()->user()->id; ?>
     </script>
+
+
     @endif
 
 
-
-
-
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('/css/doc.css') }}" rel="stylesheet" media="print">
     @stack('scripts')
+    <script>
+var is_chrome = function () { return Boolean(window.chrome); }
+if(is_chrome)
+{
+   window.print();
+   setTimeout(function(){window.close();}, 5000);
+   //give them 10 seconds to print, then close
+}
+else
+{
+   window.print();
+    setTimeout(function(){window.close();}, 5000);
+
+}
+</script>
 
 
 </head>
 
-<body>
-    <div id="app">
-        @yield('header')
 
-        @yield('content')
+    <body onLoad="loadHandler();>
 
-        @yield('footer')
-    </div>
-</body>
+            <div id="app">
+                @yield('header')
+
+                @yield('content')
+
+                @yield('footer')
+            </div>
+
+
+    </body>
+
+
 
 </html>
-<style>
-    @font-face {
-        font-family: 'THSarabunNew';
-        font-style: normal;
-        font-weight: normal;
-        src: url("{{ asset('fonts/THSarabunNew.ttf') }}") format('truetype');
-    }
 
-    @font-face {
-        font-family: 'THSarabunNew';
-        font-style: normal;
-        font-weight: bold;
-        src: url("{{ asset('fonts/THSarabunNew Bold.ttf') }}") format('truetype');
-    }
-
-    @font-face {
-        font-family: 'THSarabunNew';
-        font-style: italic;
-        font-weight: normal;
-        src: url("{{ asset('fonts/THSarabunNew Italic.ttf') }}") format('truetype');
-    }
-
-    @font-face {
-        font-family: 'THSarabunNew';
-        font-style: italic;
-        font-weight: bold;
-        src: url("{{ asset('fonts/THSarabunNew BoldItalic.ttf') }}") format('truetype');
-    }
-
-    body {
-        font-family: "THSarabunNew";
-
-    }
-
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 100px;
-        width: 100%;
-    }
-
-    table {
-        font-size: 18px;
-        width: 100%;
-        table-layout:fixed;
-        border-spacing: 0px;
-        vertical-align: top;
-        border-collapse: collapse;
-        padding: 0px;
-        margin: 0px;
-
-
-    }
-    @page {
-margin-bottom:0px;
-margin-top:0px;
-
-}
-
-
-</style>

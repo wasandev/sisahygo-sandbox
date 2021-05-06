@@ -57,7 +57,7 @@ class WaybillConfirmed extends Action
                 $model->arrival_at = $fields->arrival_at;
                 $model->waybill_status = 'confirmed';
                 $model->save();
-                //return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
+                return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
                 //return Action::push('/resources/waybills/');
             }
 

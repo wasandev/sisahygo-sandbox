@@ -43,7 +43,7 @@ class WaybillController extends Controller
 
         $order_district = $order_groups;
         PDF::setOptions(['fontHeightRatio' => 1.0]);
-        $pdf = PDF::loadView('documents.printwaybill', compact('waybill', 'order', 'order_groups', 'order_district', 'company'));
+        $pdf = PDF::loadView('documents.printwaybillpdf', compact('waybill', 'order', 'order_groups', 'order_district', 'company'));
         $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $waybill->waybill_no  . '.pdf';
         $pdf->save($path);
         return $pdf->stream($path);
