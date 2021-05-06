@@ -169,7 +169,4 @@
 
 
 @endsection
-@section('footer')
-    @include('partials.printfooter')
 
-@endsection

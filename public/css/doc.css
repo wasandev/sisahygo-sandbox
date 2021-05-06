@@ -22,7 +22,7 @@ body {
   }
 
   .header {
-    display: none;
+    display: block;
   }
 
   #pageFooter {

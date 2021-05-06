@@ -18,7 +18,7 @@ body {
     color: black;
   }
   .header {
-    display: none;
+    display: block;
   }
   #pageFooter {
     display: table-footer-group;
