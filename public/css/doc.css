@@ -24,4 +24,13 @@ body {
   .header {
     display: none;
   }
+
+  #pageFooter {
+    display: table-footer-group;
+  }
+
+  #pageFooter:after {
+    counter-increment: page;
+    content: counter(page);
+  }
 }

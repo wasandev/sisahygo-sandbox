@@ -10,6 +10,7 @@ body {
   @page {
     size: A4;
     margin: 1.00cm;
+
   }
   body {
     font-size: 10pt;
@@ -19,6 +20,16 @@ body {
   .header {
     display: none;
   }
+  #pageFooter {
+    display: table-footer-group;
+}
+
+#pageFooter:after {
+    counter-increment: page;
+    content: counter(page);
+}
+
+
 
 
 }
