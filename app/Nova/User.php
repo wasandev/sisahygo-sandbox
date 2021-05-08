@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Filters\Branch;
 use App\Nova\Filters\CurrentUser;
+use Laravel\Nova\Fields\Avatar;
 
 class User extends Resource
 {
@@ -74,7 +75,10 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
+            //Gravatar::make()->maxWidth(50),
+
+            Avatar::make('รูปโปรไฟล์', 'avatar')
+                ->maxWidth(500),
 
             Text::make(__('Name'), 'name')
                 ->sortable()

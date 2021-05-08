@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\CompanyProfile;
 use App\Models\Order_header;
 use App\Models\Order_detail;
@@ -74,5 +75,42 @@ class OrderHeaderController extends Controller
         return $pdf->stream($path);
 
         // return  $pdf->stream($order->order_header_no . '.pdf');
+    }
+
+    public function report_1($branch, $orderdate)
+    {
+        $report_title = 'รายงานนำส่งเงินสดประจำวัน';
+        $company = CompanyProfile::find(1);
+        $branchdata = Branch::find($branch);
+        $order = Order_header::whereNotIn('order_headers.order_status', ['checking', 'new'])
+            ->where('paymenttype', 'H')
+            ->where('branch_id', $branch)
+            ->where('order_header_date', '=', $orderdate)
+            ->orderBy('branch_id', 'asc')
+            ->orderBy('order_header_date', 'asc')
+            ->get();
+        $order_groups = $order->groupBy('user.name')->all();
+
+        $order_user = $order_groups;
+        return view('reports.orderbillingcash', compact('company', 'report_title', 'order', 'order_user', 'branchdata', 'orderdate'));
+    }
+
+    public function report_2($branch, $from, $to)
+    {
+        $report_title = 'รายงานรายการขนส่งประจำวัน';
+        $company = CompanyProfile::find(1);
+        $branchdata = Branch::find($branch);
+
+        $order = Order_header::whereNotIn('order_headers.order_status', ['checking', 'new', 'cancel'])
+            ->where('branch_id', $branch)
+            ->where('order_header_date', '>=', $from)
+            ->where('order_header_date', '<=', $to)
+            ->orderBy('branch_id', 'asc')
+            ->orderBy('order_header_no', 'asc')
+            ->get();
+        $order_groups = $order->groupBy('order_header_date')->all();
+
+        $order_date = $order_groups;
+        return view('reports.orderbillingcash', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
     }
 }

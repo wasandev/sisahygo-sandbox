@@ -1,8 +1,13 @@
 <?php
 
-namespace App\Nova\Lenses;
+namespace App\Nova\Lenses\accounts;
 
+use App\Nova\Actions\Accounts\PrintOrderBillingCash;
+use App\Nova\Filters\Branch;
+use App\Nova\Filters\LensBranchFilter;
 use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -12,6 +17,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Date;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class OrderBillingCash extends Lens
 {
@@ -26,11 +32,13 @@ class OrderBillingCash extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
+                ->join('branches', 'branches.id', '=', 'order_headers.branch_id')
                 ->join('users', 'users.id', '=', 'order_headers.user_id')
-                ->where('order_headers.order_status', '=', 'confirmed')
+                ->whereNotIn('order_headers.order_status', ['checking', 'new'])
                 ->where('order_headers.paymenttype', '=', 'H')
-                ->orderBy('order_headers.order_header_date', 'desc')
-                ->groupBy('users.id', 'users.name', 'order_headers.order_header_date')
+                ->orderBy('order_headers.branch_id', 'asc')
+                ->orderBy('order_headers.order_header_date', 'asc')
+                ->groupBy('order_headers.branch_id', 'order_headers.user_id', 'order_headers.order_header_date')
         ));
     }
     /**
@@ -41,11 +49,15 @@ class OrderBillingCash extends Lens
     protected static function columns()
     {
         return [
-            'users.name',
+
+            'branches.name as branch_name',
+            'users.name as user_name',
             'order_headers.order_header_date',
             DB::raw('sum(order_headers.order_amount) as cash'),
         ];
     }
+
+
     /**
      * Get the fields available to the lens.
      *
@@ -55,8 +67,9 @@ class OrderBillingCash extends Lens
     public function fields(Request $request)
     {
         return [
-            // ID::make(__('ID'), 'id')->sortable(),
-            Text::make(__('Name'), 'name'),
+
+            Text::make(__('Branch'), 'branch_name'),
+            Text::make('ชื่อพนักงาน', 'user_name'),
             Date::make(__('Order date'), 'order_header_date')
                 ->format('DD/MM/YYYY'),
             Currency::make(__('จำนวนเงิน'), 'cash', function ($value) {
@@ -85,7 +98,8 @@ class OrderBillingCash extends Lens
     public function filters(Request $request)
     {
         return [
-            new OrderdateFilter()
+            new LensBranchFilter(),
+            new OrderdateFilter(),
         ];
     }
 
@@ -97,7 +111,21 @@ class OrderBillingCash extends Lens
      */
     public function actions(Request $request)
     {
-        return parent::actions($request);
+
+
+        return [
+            (new DownloadExcel)->allFields()
+                ->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
+
+            (new PrintOrderBillingCash($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
+        ];
     }
 
     /**
@@ -111,6 +139,6 @@ class OrderBillingCash extends Lens
     }
     public function name()
     {
-        return 'รายงานรับเงินสดตามพนักงาน';
+        return 'รายงานเงินสดรับตามพนักงาน';
     }
 }

@@ -1688,52 +1688,32 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ใบเสร็จรับเงินวางบิล',
         ],
-        //Metrics
-        'view dashboards' => [
-            'display_name' => 'Dash Board',
-            'description'  => 'Dash Board',
-            'group'        => 'Dash Board',
+        //dashboards
+        'view admindashboards' => [
+            'display_name' => 'Admin Dashboard',
+            'description'  => 'Admin Dashboard',
+            'group'        => 'Dashboard',
         ],
-        // 'view order-incomes' => [
-        //     'display_name' => 'รายได้ค่าขนส่ง',
-        //     'description'  => 'ดูรายได้ค่าขนส่ง',
-        //     'group'        => 'กราฟสรุป',
-        // ],
-        // 'view orders-per-day' => [
-        //     'display_name' => 'จำนวนใบรับส่งต่อวัน',
-        //     'description'  => 'จำนวนใบรับส่งต่อวัน',
-        //     'group'        => 'กราฟสรุป',
-        // ],
-        // 'view charter-incomes' => [
-        //     'display_name' => 'รายได้ค่าขนส่งเหมาคัน',
-        //     'description'  => 'ดูรายได้ค่าขนส่งเหมาคัน',
-        //     'group'        => 'กราฟสรุป',
-        // ],
-        // 'view charter-jobs-per-day' => [
-        //     'display_name' => 'จำนวนงานเหมาคันต่อวัน',
-        //     'description'  => 'ดูจำนวนงานเหมาคันต่อวัน',
-        //     'group'        => 'กราฟสรุป',
-        // ],
-        // 'view customers-by-province' => [
-        //     'display_name' => 'จำนวนลูกค้าตามจังหวัด',
-        //     'description'  => 'จำนวนลูกค้าตามจังหวัด',
-        //     'group'        => 'กราฟสรุป',
-        // ],
-        // 'view customers-by-district' => [
-        //     'display_name' => 'จำนวนลูกค้าตามอำเภอ',
-        //     'description'  => 'จำนวนลูกค้าตามอำเภอ',
-        //     'group'        => 'กราฟสรุป',
-        // ],
-        // 'view new-customers' => [
-        //     'display_name' => 'จำนวนลูกค้าใหม่',
-        //     'description'  => 'จำนวนลูกค้าใหม่',
-        //     'group'        => 'กราฟสรุป',
-        // ],
-        // 'view customers-per-day' => [
-        //     'display_name' => 'ลูกค้าใหม่/วัน',
-        //     'description'  => 'ลูกค้าใหม่/วัน',
-        //     'group'        => 'กราฟสรุป',
-        // ],
+        'view checkerdashboards' => [
+            'display_name' => 'Checker Dashboard',
+            'description'  => 'Checker Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view billingdashboards' => [
+            'display_name' => 'Billing Dashboard',
+            'description'  => 'Billing Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view loaderdashboards' => [
+            'display_name' => 'Loader Dashboard',
+            'description'  => 'Loader Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view checkercards' => [
+            'display_name' => 'Checker Quick Menu',
+            'description'  => 'Checker Quick Menu',
+            'group'        => 'Dashboard',
+        ],
         //Actions
     ],
 ];

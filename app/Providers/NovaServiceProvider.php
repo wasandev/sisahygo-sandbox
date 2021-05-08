@@ -3,37 +3,31 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
-use App\Nova\Dashboards\Sisahygo;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use App\Nova\Metrics\CustomersPerDay;
-use App\Nova\Metrics\NewCustomers;
-use App\Nova\Metrics\CharterJobsPerDay;
 use Anaseqal\NovaImport\NovaImport;
-use App\Nova\Metrics\CharterIncomes;
-use App\Nova\Metrics\CheckerbyUser;
-use App\Nova\Metrics\CheckerCancelbyUser;
-use App\Nova\Metrics\CheckerProblembyUser;
-use App\Nova\Metrics\CustomersByDistrict;
-use App\Nova\Metrics\CustomersByProvince;
-use App\Nova\Metrics\ExpressIncomes;
-use App\Nova\Metrics\LoaderbyUser;
+use App\Nova\Dashboards\AdminDashboard;
+use App\Nova\Dashboards\BillingDashboard;
+use App\Nova\Dashboards\CheckerDashboard;
+use App\Nova\Dashboards\LoaderDashboard;
+use App\Nova\Metrics\WaybillIncome;
+use App\Nova\Metrics\WaybillIncomePerDay;
+use App\Nova\Metrics\WaybillLoading;
+use App\Nova\Metrics\WaybillPayable;
+use App\Nova\Metrics\WaybillsPerDay;
 use App\Nova\Metrics\OrderAllIncomes;
-use App\Nova\Metrics\OrderbyUser;
-use App\Nova\Metrics\OrderCashbyUser;
-use App\Nova\Metrics\OrderCashUser;
 use App\Nova\Metrics\OrderIncomes;
 use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerDay;
 use App\Nova\Metrics\OrdersByPaymentType;
 use App\Nova\Metrics\OrdersPerMonth;
 use App\Nova\Metrics\WaybillAmount;
-use App\Nova\Metrics\WaybillbyLoader;
-use App\Nova\Metrics\WaybillIncome;
-use App\Nova\Metrics\WaybillIncomePerDay;
-use App\Nova\Metrics\WaybillLoading;
-use App\Nova\Metrics\WaybillPayable;
-use App\Nova\Metrics\WaybillsPerDay;
+use App\Nova\Metrics\CustomersByDistrict;
+use App\Nova\Metrics\CustomersByProvince;
+use App\Nova\Metrics\ExpressIncomes;
+use App\Nova\Metrics\CustomersPerDay;
+use App\Nova\Metrics\NewCustomers;
+use App\Nova\Metrics\CharterIncomes;
 use Dniccum\CustomEmailSender\CustomEmailSender;
 use Dniccum\NovaDocumentation\NovaDocumentation;
 
@@ -89,90 +83,88 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new CheckerbyUser())->canSee(function ($request) {
-                return $request->user()->hasPermissionTo('view order_checkers');
+            (new Checkers())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view checkercards');
             }),
-            (new CheckerCancelbyUser())->canSee(function ($request) {
-                return $request->user()->hasPermissionTo('view order_checkers');
-            }),
-            (new CheckerProblembyUser())->canSee(function ($request) {
-                return $request->user()->hasPermissionTo('view order_checkers');
-            }),
+            //admin
+            (new OrderAllIncomes())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new OrderIncomes())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new ExpressIncomes())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new CharterIncomes())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
 
-            (new OrderbyUser())->canSee(function ($request) {
-                return $request->user()->hasPermissionTo('manage order_headers');
-            }),
-            (new OrderCashbyUser())->canSee(function ($request) {
-                return $request->user()->hasPermissionTo('manage order_headers');
-            }),
-            (new LoaderbyUser())->canSee(function ($request) {
-                return $request->user()->hasPermissionTo('view order_loaders');
-            }),
-            (new WaybillbyLoader())->canSee(function ($request) {
-                return $request->user()->hasPermissionTo('view waybills');
-            }),
-            (new OrderAllIncomes())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new OrderIncomes())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
+            (new OrdersPerMonth())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new OrdersPerDay())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
 
-            (new ExpressIncomes())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new CharterIncomes())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
+            (new OrdersByPaymentType())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new OrdersByBranchRec())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
 
-            (new OrdersPerMonth())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new OrdersPerDay())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
+            (new WaybillsPerDay())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new WaybillLoading())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
 
-            (new OrdersByPaymentType())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new OrdersByBranchRec())->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
+            (new WaybillAmount())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new WaybillPayable())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
 
-            (new WaybillsPerDay())->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new WaybillLoading())->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
+            (new WaybillIncome())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new WaybillIncomePerDay())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
 
-            (new WaybillAmount())->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new WaybillPayable())->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-
-            (new WaybillIncome())->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new WaybillIncomePerDay())->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-
-            (new CustomersPerDay)->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
-            (new NewCustomers)->width('1/2')->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
-            }),
+            (new CustomersPerDay)->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new NewCustomers)->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
             (new CustomersByProvince())->width('1/2')
                 ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
                 }),
+
             (new CustomersByDistrict())->width('1/2')
                 ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view dashboards');
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
                 }),
         ];
     }
@@ -184,7 +176,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        return [];
+        return [
+            (new AdminDashboard())
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+            (new CheckerDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view checkerdashboards');
+                }),
+            (new BillingDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view billingdashboards');
+                }),
+            (new LoaderDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view loaderdashboards');
+                }),
+        ];
     }
 
     /**

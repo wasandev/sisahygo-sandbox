@@ -297,7 +297,10 @@ class Order_header extends Resource
     public function lenses(Request $request)
     {
         return [
-            new Lenses\OrderBillingCash(),
+            new Lenses\accounts\OrderBillingCash(),
+            new lenses\accounts\OrderReportBillByDay(),
+            new lenses\accounts\OrderReportByDay(),
+            new lenses\accounts\OrderReportByBranchrec(),
         ];
     }
 
