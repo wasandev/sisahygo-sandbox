@@ -1709,9 +1709,80 @@ return [
             'description'  => 'Loader Dashboard',
             'group'        => 'Dashboard',
         ],
+        'view ardashboards' => [
+            'display_name' => 'Ar Dashboard',
+            'description'  => 'Ar Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view fndashboards' => [
+            'display_name' => 'Fn Dashboard',
+            'description'  => 'Fn Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view mkdashboards' => [
+            'display_name' => 'Mk Dashboard',
+            'description'  => 'Mk Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view acdashboards' => [
+            'display_name' => 'AC Dashboard',
+            'description'  => 'AC Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view truckdashboards' => [
+            'display_name' => 'Truck Dashboard',
+            'description'  => 'Truck Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        'view branchdashboards' => [
+            'display_name' => 'Branch Dashboard',
+            'description'  => 'Branch Dashboard',
+            'group'        => 'Dashboard',
+        ],
+        //Quick menu
         'view checkercards' => [
             'display_name' => 'Checker Quick Menu',
             'description'  => 'Checker Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view billingcards' => [
+            'display_name' => 'Billing Quick Menu',
+            'description'  => 'Billing Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view loadingcards' => [
+            'display_name' => 'Loading Quick Menu',
+            'description'  => 'Loading Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view arbalancecards' => [
+            'display_name' => 'Ar Quick Menu',
+            'description'  => 'Ar Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view financialcards' => [
+            'display_name' => 'Fn Quick Menu',
+            'description'  => 'Fn Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view marketingcards' => [
+            'display_name' => 'Mk Quick Menu',
+            'description'  => 'Mk Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view accountcards' => [
+            'display_name' => 'AC Quick Menu',
+            'description'  => 'AC Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view truckcards' => [
+            'display_name' => 'Truck Quick Menu',
+            'description'  => 'Truck Quick Menu',
+            'group'        => 'Dashboard',
+        ],
+        'view branchcards' => [
+            'display_name' => 'Branch Quick Menu',
+            'description'  => 'Branch Quick Menu',
             'group'        => 'Dashboard',
         ],
         //Actions

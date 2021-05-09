@@ -186,9 +186,7 @@ class Order_cash extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            new OrderCashPerDay(),
-        ];
+        return [];
     }
 
     /**
@@ -216,9 +214,7 @@ class Order_cash extends Resource
      */
     public function lenses(Request $request)
     {
-        return [
-            new Lenses\OrderBillingCash(),
-        ];
+        return [];
     }
 
     /**

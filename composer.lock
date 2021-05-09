@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c699c86a96d73bd8e30e0b13b370d60",
+    "content-hash": "8f3d1026360fa2fd3541673f7b5c2b69",
     "packages": [
         {
             "name": "anaseqal/nova-import",
@@ -2544,16 +2544,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "19a9673b833cc37770439097b381d86cd125bfe8"
+                "reference": "2651c497f005de305c7ba3f232cbd87b8c00ee8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/19a9673b833cc37770439097b381d86cd125bfe8",
-                "reference": "19a9673b833cc37770439097b381d86cd125bfe8",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/2651c497f005de305c7ba3f232cbd87b8c00ee8c",
+                "reference": "2651c497f005de305c7ba3f232cbd87b8c00ee8c",
                 "shasum": ""
             },
             "require": {
@@ -2635,7 +2635,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-01T19:00:49+00:00"
+            "time": "2021-05-08T16:08:00+00:00"
         },
         {
             "name": "league/flysystem",
@@ -3670,16 +3670,16 @@
         },
         {
             "name": "optimistdigital/nova-multiselect-field",
-            "version": "2.1.2",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/optimistdigital/nova-multiselect-field.git",
-                "reference": "8986ca68b1c8bf5076e02913af13ce0fcce64f24"
+                "reference": "184a83f75c62941ffe430f65785ca4f0b956e237"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/optimistdigital/nova-multiselect-field/zipball/8986ca68b1c8bf5076e02913af13ce0fcce64f24",
-                "reference": "8986ca68b1c8bf5076e02913af13ce0fcce64f24",
+                "url": "https://api.github.com/repos/optimistdigital/nova-multiselect-field/zipball/184a83f75c62941ffe430f65785ca4f0b956e237",
+                "reference": "184a83f75c62941ffe430f65785ca4f0b956e237",
                 "shasum": ""
             },
             "require": {
@@ -3729,7 +3729,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-28T10:18:06+00:00"
+            "time": "2021-05-06T14:47:36+00:00"
         },
         {
             "name": "optimistdigital/nova-translations-loader",
@@ -3777,16 +3777,16 @@
         },
         {
             "name": "orlyapps/nova-belongsto-depend",
-            "version": "2.0.14",
+            "version": "2.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orlyapps/nova-belongsto-depend.git",
-                "reference": "69a23f701667ff2bbd0d918588dce3178090cfe9"
+                "reference": "4190df3b1b842d60acc42723946aa8a8906659ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orlyapps/nova-belongsto-depend/zipball/69a23f701667ff2bbd0d918588dce3178090cfe9",
-                "reference": "69a23f701667ff2bbd0d918588dce3178090cfe9",
+                "url": "https://api.github.com/repos/orlyapps/nova-belongsto-depend/zipball/4190df3b1b842d60acc42723946aa8a8906659ff",
+                "reference": "4190df3b1b842d60acc42723946aa8a8906659ff",
                 "shasum": ""
             },
             "require": {
@@ -3814,7 +3814,7 @@
                 "laravel",
                 "nova"
             ],
-            "time": "2021-04-12T08:09:30+00:00"
+            "time": "2021-05-07T11:02:41+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -7839,6 +7839,150 @@
             "time": "2020-11-12T00:07:28+00:00"
         },
         {
+            "name": "wasandev/account",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Account",
+                "reference": "ad2ac0eb663307f636fb73a7cea0085b78078a11"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Account\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Account\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/araccount",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Araccount",
+                "reference": "a08efc65f8b67cd9286ce69c5aeb7355aef1dc37"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Araccount\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Araccount\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/billing",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Billing",
+                "reference": "1ea1ef91ed6e6bf3b6a4fdfc4d65d5110d712d3c"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Billing\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Billing\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/branch",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Branch",
+                "reference": "809796993e5360318bdc3dc54322cd868be81237"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Branch\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Branch\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "wasandev/checkers",
             "version": "dev-master",
             "dist": {
@@ -7860,6 +8004,42 @@
             "autoload": {
                 "psr-4": {
                     "Wasandev\\Checkers\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/financial",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Financial",
+                "reference": "e5ecef005ca03089f71f41ba7bebadf4e14bfc2d"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Financial\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Financial\\": "src/"
                 }
             },
             "license": [
@@ -7903,6 +8083,78 @@
                 "MIT"
             ],
             "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/loading",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Loading",
+                "reference": "fbaf6df3ddc8f910067db6e7d233bf3db4570ea9"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Loading\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Loading\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/marketing",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Marketing",
+                "reference": "199df6b3d7179a1ad0f71736e7e4d70750fb6986"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Marketing\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Marketing\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
             "keywords": [
                 "laravel",
                 "nova"
@@ -8047,6 +8299,42 @@
                 "MIT"
             ],
             "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "wasandev/truck",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Truck",
+                "reference": "ab94c266482efcd8232142ec7ed6999da649f950"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wasandev\\Truck\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wasandev\\Truck\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
             "keywords": [
                 "laravel",
                 "nova"
@@ -8239,16 +8527,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.8.4",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "87fb348dab0ae1a7c206c3e902a5a44ba541742f"
+                "reference": "e7db3b601ce742568b92648818ef903904d20164"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/87fb348dab0ae1a7c206c3e902a5a44ba541742f",
-                "reference": "87fb348dab0ae1a7c206c3e902a5a44ba541742f",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/e7db3b601ce742568b92648818ef903904d20164",
+                "reference": "e7db3b601ce742568b92648818ef903904d20164",
                 "shasum": ""
             },
             "require": {
@@ -8306,7 +8594,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2021-04-29T13:55:26+00:00"
+            "time": "2021-05-05T06:45:12+00:00"
         },
         {
             "name": "facade/ignition-contracts",

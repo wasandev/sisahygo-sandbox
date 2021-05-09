@@ -23,6 +23,7 @@ class Branch_balance extends Resource
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
+
     /**
     /**
      * The model the resource corresponds to.
@@ -118,9 +119,7 @@ class Branch_balance extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            new OrderBranchPerDay(),
-        ];
+        return [];
     }
 
     /**

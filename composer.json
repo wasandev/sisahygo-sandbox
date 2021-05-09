@@ -38,7 +38,15 @@
         "wasandev/orderstatus": "*",
         "wasandev/sisahy-go": "*",
         "wasandev/thai-address": "*",
-        "wasandev/qr-code-scan": "*"
+        "wasandev/qr-code-scan": "*",
+        "wasandev/billing": "*",
+        "wasandev/loading": "*",
+        "wasandev/araccount": "*",
+        "wasandev/financial": "*",
+        "wasandev/marketing": "*",
+        "wasandev/truck": "*",
+        "wasandev/account": "*",
+        "wasandev/branch": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -121,7 +129,38 @@
         {
             "type": "path",
             "url": "./nova-components/QrCodeScan"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Billing"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Loading"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Araccount"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Financial"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Marketing"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Truck"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Account"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Branch"
         }
-
     ]
 }

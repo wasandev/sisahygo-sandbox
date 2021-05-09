@@ -6,10 +6,16 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Anaseqal\NovaImport\NovaImport;
+use App\Nova\Dashboards\AcDashboard;
 use App\Nova\Dashboards\AdminDashboard;
+use App\Nova\Dashboards\ArDashboard;
 use App\Nova\Dashboards\BillingDashboard;
+use App\Nova\Dashboards\BranchDashboard;
 use App\Nova\Dashboards\CheckerDashboard;
+use App\Nova\Dashboards\FnDashboard;
 use App\Nova\Dashboards\LoaderDashboard;
+use App\Nova\Dashboards\MkDashboard;
+use App\Nova\Dashboards\TruckDashboard;
 use App\Nova\Metrics\WaybillIncome;
 use App\Nova\Metrics\WaybillIncomePerDay;
 use App\Nova\Metrics\WaybillLoading;
@@ -30,8 +36,15 @@ use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterIncomes;
 use Dniccum\CustomEmailSender\CustomEmailSender;
 use Dniccum\NovaDocumentation\NovaDocumentation;
-
+use Wasandev\Account\Account;
+use Wasandev\Araccount\Araccount;
+use Wasandev\Billing\Billing;
+use Wasandev\Branch\Branch;
 use Wasandev\Checkers\Checkers;
+use Wasandev\Financial\Financial;
+use Wasandev\Loading\Loading;
+use Wasandev\Marketing\Marketing;
+use Wasandev\Truck\Truck;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -85,6 +98,30 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new Checkers())->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view checkercards');
+            }),
+            (new Billing())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view billingcards');
+            }),
+            (new Loading())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view loadingcards');
+            }),
+            (new Araccount())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view arbalancecards');
+            }),
+            (new Financial())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view financialcards');
+            }),
+            (new Marketing())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view marketingcards');
+            }),
+            (new Account())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view accountcards');
+            }),
+            (new Truck())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view truckcards');
+            }),
+            (new Branch())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view branchcards');
             }),
             //admin
             (new OrderAllIncomes())->width('1/2')
@@ -192,6 +229,30 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new LoaderDashboard())
                 ->canSee(function ($request) {
                     return  $request->user()->hasPermissionTo('view loaderdashboards');
+                }),
+            (new ArDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view ardashboards');
+                }),
+            (new FnDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view fndashboards');
+                }),
+            (new MkDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view mkdashboards');
+                }),
+            (new AcDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view acdashboards');
+                }),
+            (new TruckDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view truckdashboards');
+                }),
+            (new BranchDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view branchdashboards');
                 }),
         ];
     }

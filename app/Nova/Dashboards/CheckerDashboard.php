@@ -6,7 +6,7 @@ use App\Nova\Metrics\CheckerbyUser;
 use App\Nova\Metrics\CheckerCancelbyUser;
 use App\Nova\Metrics\CheckerProblembyUser;
 use Laravel\Nova\Dashboard;
-
+use Wasandev\Orderstatus\Orderstatus;
 
 class CheckerDashboard extends Dashboard
 {
@@ -21,6 +21,7 @@ class CheckerDashboard extends Dashboard
             (new CheckerbyUser())->width('1/3'),
             (new CheckerCancelbyUser())->width('1/3'),
             (new CheckerProblembyUser())->width('1/3'),
+            (new Orderstatus())
         ];
     }
 
@@ -40,6 +41,6 @@ class CheckerDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'พนักงานตรวจรับ';
+        return 'Checker dashboard';
     }
 }

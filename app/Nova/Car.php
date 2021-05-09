@@ -247,12 +247,7 @@ class Car extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new CarByType())
-                ->width('1/2'),
-            (new CarOwnerType())
-                ->width('1/2'),
-        ];
+        return [];
     }
 
     /**

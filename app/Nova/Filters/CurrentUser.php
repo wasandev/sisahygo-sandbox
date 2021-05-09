@@ -18,7 +18,11 @@ class CurrentUser extends Filter
 
     public function default()
     {
-        return auth()->user()->id;
+        if (auth()->user()->role == 'admin') {
+            return '';
+        } else {
+            return auth()->user()->id;
+        }
     }
     /**
      * Apply the filter to the given query.

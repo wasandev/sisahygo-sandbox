@@ -212,14 +212,7 @@ class Waybill extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            new WaybillsPerDay(),
-            new WaybillLoading(),
-            new WaybillAmount(),
-            new WaybillPayable(),
-            new WaybillIncome(),
-            new WaybillIncomePerDay()
-        ];
+        return [];
     }
 
     /**

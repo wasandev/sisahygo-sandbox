@@ -105,9 +105,7 @@ class Ar_balance extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            new OrderBillPerDay(),
-        ];
+        return [];
     }
 
     /**

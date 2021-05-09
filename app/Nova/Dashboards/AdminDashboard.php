@@ -21,6 +21,7 @@ use App\Nova\Metrics\ExpressIncomes;
 use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterIncomes;
+use Wasandev\Orderstatus\Orderstatus;
 
 class AdminDashboard extends Dashboard
 {
@@ -57,6 +58,8 @@ class AdminDashboard extends Dashboard
             (new CustomersByProvince())->width('1/2'),
 
             (new CustomersByDistrict())->width('1/2'),
+            (new Orderstatus())
+
         ];
     }
 
@@ -76,6 +79,6 @@ class AdminDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'สำหรับผู้บริหาร';
+        return 'Executive dashboard';
     }
 }

@@ -246,25 +246,7 @@ class Order_header extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new Orderstatus()),
-            (new OrderIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view order-incomes');
-                }),
-            (new OrdersPerMonth())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-per-day');
-                }),
-            (new OrdersByPaymentType())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
-            (new OrdersByBranchRec())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
-        ];
+        return [];
     }
 
     /**

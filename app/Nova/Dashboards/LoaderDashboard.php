@@ -6,7 +6,7 @@ namespace App\Nova\Dashboards;
 use App\Nova\Metrics\LoaderbyUser;
 use App\Nova\Metrics\WaybillbyLoader;
 use Laravel\Nova\Dashboard;
-
+use Wasandev\Orderstatus\Orderstatus;
 
 class LoaderDashboard extends Dashboard
 {
@@ -19,7 +19,7 @@ class LoaderDashboard extends Dashboard
     {
         return [
             (new LoaderbyUser())->width('1/2'),
-            (new WaybillbyLoader())->width('1/2')
+            (new WaybillbyLoader())->width('1/2')(new Orderstatus())
         ];
     }
 
@@ -39,6 +39,6 @@ class LoaderDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'พนักงานจัดขึ้น';
+        return 'Loading dashboard';
     }
 }
