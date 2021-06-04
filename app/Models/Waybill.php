@@ -12,7 +12,7 @@ class Waybill extends Model
         'waybill_no', 'waybill_date', 'waybill_status', 'waybill_type',
         'routeto_branch_id', 'charter_route_id', 'car_id', 'driver_id', 'branchcar_id',
         'waybill_amount', 'waybill_date', 'waybill_income', 'branch_car_rate', 'branch_car_income',
-        'loader_id', 'departure_at', 'arrival_at', 'arrivaled_at', 'user_id', 'updated_by'
+        'loader_id', 'departure_at', 'arrival_at', 'arrivaled_at', 'user_id', 'updated_by', 'branch_id', 'branch_rec_id'
     ];
     protected $casts = [
         'waybill_date' => 'date',
@@ -79,5 +79,14 @@ class Waybill extends Model
     public function scopeLoading($query)
     {
         return $query->where('waybill_status', 'loading');
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch');
+    }
+    public function to_branch()
+    {
+        return $this->belongsTo('App\Models\Branch', 'branch_rec_id');
     }
 }

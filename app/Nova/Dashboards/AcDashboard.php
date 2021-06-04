@@ -77,6 +77,6 @@ class AcDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'Accounting dashboard';
+        return 'ข้อมูลสรุป';
     }
 }

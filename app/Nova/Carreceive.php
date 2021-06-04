@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PrintCarreceive;
+use App\Nova\Lenses\accounts\CarreceiveReportByDay;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -75,7 +77,7 @@ class Carreceive extends Resource
                     return auth()->user()->branch_id;
                 })->searchable()
                 ->hideFromIndex(),
-            Select::make('ประเภทการจ่าย', 'type')
+            Select::make('ประเภทการรับ', 'type')
                 ->options([
                     'T' => 'ค่าบรรทุก',
                     'B' => 'อื่นๆ',
@@ -93,7 +95,7 @@ class Carreceive extends Resource
                 'H' => 'เงินสด',
                 'T' => 'เงินโอน',
                 'Q' => 'เช็ค',
-                'A' => 'รายการปรับปรุงบัญชี'
+                'A' => 'รายการตัดบัญชี'
             ])->displayUsingLabels()
                 ->sortable()
                 ->hideFromIndex(),
@@ -162,7 +164,9 @@ class Carreceive extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new CarreceiveReportByDay()
+        ];
     }
 
     /**
@@ -173,6 +177,17 @@ class Carreceive extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new PrintCarreceive)->onlyOnDetail()
+                ->confirmText('ต้องการพิมพ์ใบสำคัญรับรายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('view car_receives');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view car_receives');
+                }),
+        ];
     }
 }

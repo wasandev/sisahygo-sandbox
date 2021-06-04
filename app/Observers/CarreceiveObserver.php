@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Exceptions\MyCustomException;
 use App\Models\Car_balance;
 use App\Models\Carreceive;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -13,6 +14,9 @@ class CarreceiveObserver
         $carreceive->receive_date = today();
         $receive_no = IdGenerator::generate(['table' => 'carreceives', 'field' => 'receive_no', 'length' => 15, 'prefix' => 'R' . date('Ymd')]);
         $carreceive->receive_no = $receive_no;
+        if (is_null($carreceive->car->vendor_id)) {
+            throw new MyCustomException('รถคันนี้ยังไม่ได้ระบุข้อมูลเจ้าของรถ โปรดตรวจสอบ');
+        }
         $carreceive->vendor_id = $carreceive->car->vendor_id;
 
         $carreceive->user_id = auth()->user()->id;

@@ -2,8 +2,11 @@
 
 namespace App\Observers;
 
+use App\Exceptions\MyCustomException;
+use App\Models\Car;
 use App\Models\Car_balance;
 use App\Models\Carpayment;
+use App\Models\Vendor;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class CarpaymentObserver
@@ -13,6 +16,10 @@ class CarpaymentObserver
         $carpayment->payment_date = today();
         $payment_no = IdGenerator::generate(['table' => 'carpayments', 'field' => 'payment_no', 'length' => 15, 'prefix' => 'P' . date('Ymd')]);
         $carpayment->payment_no = $payment_no;
+
+        if (is_null($carpayment->car->vendor_id)) {
+            throw new MyCustomException('รถคันนี้ยังไม่ได้ระบุข้อมูลเจ้าของรถ โปรดตรวจสอบ');
+        }
         $carpayment->vendor_id = $carpayment->car->vendor_id;
         if ($carpayment->tax_flag) {
             $carpayment->tax_amount = $carpayment->amount * 0.01;

@@ -38,16 +38,30 @@ Route::middleware('web', 'auth')
         Route::get('/orderheader/preview/{id}', 'OrderHeaderController@preview')->name('preview');
         //report
         Route::get('/orderheader/report_1/{branch}/{orderdate}', 'OrderHeaderController@report_1')->name('report_1');
-        Route::get('/orderheader/report_2/{branch}/{from}/{to}', 'OrderHeaderController@report_2')->name('report_2');
+        Route::get('/orderheader/report_2/{branch}/{from}/{to}/{cancelflag}', 'OrderHeaderController@report_2')->name('report_2');
+        Route::get('/orderheader/report_3/{branch}/{from}/{to}', 'OrderHeaderController@report_3')->name('report_3');
+        Route::get('/orderheader/report_4/{branch}/{from}/{to}', 'OrderHeaderController@report_4')->name('report_4');
+        Route::get('/orderheader/report_5/{branch}/{from}/{to}', 'OrderHeaderController@report_5')->name('report_5');
+        Route::get('/orderheader/report_6/{branch}/{from}/{to}', 'OrderHeaderController@report_6')->name('report_6');
+        Route::get('/orderheader/report_7/{branch}/{from}/{to}', 'OrderHeaderController@report_7')->name('report_7');
+        Route::get('/orderheader/report_8/{branch}/{from}/{to}', 'OrderHeaderController@report_8')->name('report_8');
+        Route::get('/orderheader/report_9/{branch}/{from}/{to}', 'OrderHeaderController@report_9')->name('report_9');
+
 
         Route::get('/waybill/makepdf/{id}', 'WaybillController@makePDF')->name('makepdf');
         Route::get('/waybill/preview/{id}', 'WaybillController@preview')->name('preview');
-        Route::get('/waybill/waybillbydate', 'WaybillController@waybillbydate')->name('waybillbydate');
-        Route::get('/waybill/waybillbydatepreview', 'WaybillController@waybillbydatePreview')->name('preview');
+        //waybill report
+        Route::get('/waybill/report_10/{from}/{to}', 'WaybillController@report_10')->name('waybillbydate');
 
         Route::get('/dropship/makepdf/{id}', 'DropshipController@makePDF')->name('makepdf');
         Route::get('/dropship/preview/{id}', 'DropshipController@preview')->name('preview');
 
         Route::get('/delivery/makepdf/{id}', 'DeliveryController@makePDF')->name('makepdf');
         Route::get('/delivery/preview/{id}', 'DeliveryController@preview')->name('preview');
+
+        //car
+        Route::get('/car/carpaymentprint/{id}', 'CarController@carpaymentprint')->name('carpaymentprint');
+        Route::get('/car/carreceiveprint/{id}', 'CarController@carreceiveprint')->name('carreceivetprint');
+        Route::get('/car/report_11/{from}/{to}/{type}', 'CarController@report_11')->name('report_11');
+        Route::get('/car/report_12/{from}/{to}', 'CarController@report_12')->name('report_12');
     });

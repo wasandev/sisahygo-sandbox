@@ -58,7 +58,15 @@ class Vendor extends Model
         return $this->belongsTo('App\Models\Bank');
     }
 
-
+    /**
+     * Get all of the car_balances for the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function car_balances()
+    {
+        return $this->hasMany(Car_balance::class);
+    }
     /*
 	Provide the Location value to the Nova field
 	*/

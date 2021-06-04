@@ -2,7 +2,10 @@
 
 namespace App\Nova\Lenses\accounts;
 
+
+use App\Nova\Actions\Accounts\PrintOrderReportBillByDay;
 use App\Nova\Filters\Branch;
+use App\Nova\Filters\CancelFlag;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
@@ -95,9 +98,11 @@ class OrderReportBillByDay extends Lens
     public function filters(Request $request)
     {
         return [
+
             new Branch(),
             new OrderFromDate(),
-            new OrderToDate()
+            new OrderToDate(),
+            new CancelFlag()
         ];
     }
 
@@ -110,10 +115,17 @@ class OrderReportBillByDay extends Lens
     public function actions(Request $request)
     {
         return [
+
+            (new PrintOrderReportBillByDay($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
                 }),
+
         ];
     }
 

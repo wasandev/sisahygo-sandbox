@@ -2,7 +2,7 @@
 
 namespace App\Nova\Lenses\accounts;
 
-
+use App\Nova\Actions\Accounts\PrintOrderReportByBranchrec;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\OrderToDate;
@@ -31,9 +31,9 @@ class OrderReportByBranchrec extends Lens
             $query->select(self::columns())
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
                 ->whereNotIn('order_headers.order_status', ['checking', 'new'])
-                ->orderBy('order_headers.branch_rec_id', 'asc')
                 ->orderBy('order_headers.order_header_date', 'asc')
-                ->groupBy('order_headers.branch_rec_id', 'order_headers.order_header_date')
+                ->orderBy('order_headers.branch_rec_id', 'asc')
+                ->groupBy('order_headers.order_header_date', 'order_headers.branch_rec_id')
         ));
     }
     /**
@@ -44,9 +44,8 @@ class OrderReportByBranchrec extends Lens
     protected static function columns()
     {
         return [
-
-            'branches.name',
             'order_headers.order_header_date',
+            'branches.name',
             DB::raw('sum(order_headers.order_amount) as amount'),
         ];
     }
@@ -59,9 +58,8 @@ class OrderReportByBranchrec extends Lens
     public function fields(Request $request)
     {
         return [
-
-            Text::make(__('Branch'), 'name'),
             Date::make('วันที่', 'order_header_date'),
+            Text::make(__('Branch'), 'name'),
             Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
                 return $value;
             }),
@@ -103,6 +101,11 @@ class OrderReportByBranchrec extends Lens
     public function actions(Request $request)
     {
         return [
+            (new PrintOrderReportByBranchrec($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');

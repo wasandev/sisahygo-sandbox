@@ -15,6 +15,7 @@ use App\Nova\Dashboards\CheckerDashboard;
 use App\Nova\Dashboards\FnDashboard;
 use App\Nova\Dashboards\LoaderDashboard;
 use App\Nova\Dashboards\MkDashboard;
+use App\Nova\Dashboards\ReportDashboard;
 use App\Nova\Dashboards\TruckDashboard;
 use App\Nova\Metrics\WaybillIncome;
 use App\Nova\Metrics\WaybillIncomePerDay;
@@ -44,6 +45,7 @@ use Wasandev\Checkers\Checkers;
 use Wasandev\Financial\Financial;
 use Wasandev\Loading\Loading;
 use Wasandev\Marketing\Marketing;
+use Wasandev\Report\Report;
 use Wasandev\Truck\Truck;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -123,6 +125,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new Branch())->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view branchcards');
             }),
+
             //admin
             (new OrderAllIncomes())->width('1/2')
                 ->canSee(function ($request) {
@@ -253,6 +256,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new BranchDashboard())
                 ->canSee(function ($request) {
                     return  $request->user()->hasPermissionTo('view branchdashboards');
+                }),
+            (new ReportDashboard())
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view reportdashboards');
                 }),
         ];
     }

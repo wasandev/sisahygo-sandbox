@@ -119,8 +119,7 @@ class Branchrec_order extends Resource
                 ->exceptOnForms()
                 ->hideFromIndex(),
             Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms()
-                ->hideFromIndex(),
+                ->exceptOnForms(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->searchable()

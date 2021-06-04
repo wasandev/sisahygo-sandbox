@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\CompanyProfile;
 use App\Models\Order_header;
 use App\Models\Waybill;
@@ -49,47 +50,29 @@ class WaybillController extends Controller
         return $pdf->stream($path);
     }
 
-    public function waybillBydate($from_date, $to_date)
+    public function report_10($from, $to)
     {
+        $report_title = 'รายงานรถออกประจำวัน';
         $company = CompanyProfile::find(1);
-        $waybills = Waybill::with(['routeto_branch'])
-            ->where('waybill_date', '>=', $from_date)
-            ->where('waybill_date', '<=', $to_date)
-            ->whereNotIn('waybill_status', ['loading', 'cencle'])
+
+
+        $waybills = Waybill::where('waybill_date', '>=', $from)
+            ->where('waybill_date', '<=', $to)
+            ->whereNotIn('waybill_status', ['loading', 'cancel'])
+            ->orderBy('waybill_date', 'asc')
+            ->orderBy('branch_rec_id', 'asc')
+            ->orderBy('waybill_type', 'asc')
             ->get();
 
 
-
-        $waybill_groups = $waybills->groupBy('routeto_branch.name')->all();
-
-
-
-        $waybill_branch = $waybill_groups;
-        PDF::setOptions(['fontHeightRatio' => 0.8]);
-        $pdf = PDF::loadView('reports.waybilldate', compact('from_date', 'to_date', 'waybills', 'waybill_groups', 'waybill_branch', 'company'))
-            ->setPaper('a4', 'landscape');
-        $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'reports/' . 'waybill' . $from_date . '.pdf';
-        $pdf->save($path);
-        return $pdf->stream($path);
-    }
-    public function waybillBydatePreview()
-    {
-        $from_date = '2021-01-01';
-        $to_date = '2021-01-13';
-        $company = CompanyProfile::find(1);
-        $waybills = Waybill::with(['routeto_branch'])
-            ->where('waybill_date', '>=', $from_date)
-            ->where('waybill_date', '<=', $to_date)
-            ->whereNotIn('waybill_status', ['loading', 'cancle'])
-            ->get();
+        $waybill_groups = $waybills->groupBy([function ($item) {
+            return $item->waybill_date->format('Y-m-d');
+        },  'branch_rec_id', 'waybill_type']);
 
 
+        // dd($waybill_groups);
+        $waybill_groups = $waybill_groups->all();
 
-        $waybill_groups = $waybills->groupBy('routeto_branch.name')->all();
-
-
-
-        $waybill_branch = $waybill_groups;
-        return view('reports.waybilldate', compact('from_date', 'to_date', 'waybills', 'waybill_groups', 'waybill_branch', 'company'));
+        return view('reports.waybilldate', compact('company', 'report_title', 'waybills', 'waybill_groups', 'from', 'to'));
     }
 }

@@ -59,7 +59,7 @@ class Waybill extends Resource
 
     public function title()
     {
-        return $this->waybill_no;
+        return $this->waybill_no . '-' . $this->car->car_regist;
     }
     public function subtitle()
     {
@@ -116,13 +116,13 @@ class Waybill extends Resource
                 ->sortable(),
             Select::make(__('Waybill type'), 'waybill_type')->options([
                 'general' => 'ทั่วไป',
-                'charter' => 'เหมาคัน',
                 'express' => 'Express',
             ])->displayUsingLabels()
                 ->default('general'),
-            Text::make('ไปสาขา', 'dest_branch', function () {
-                return $this->routeto_branch->dest_branch->name;
-            })->onlyOnIndex(),
+            // Text::make('ไปสาขา', 'dest_branch', function () {
+            //     return $this->routeto_branch->dest_branch->name;
+            // })->onlyOnIndex(),
+            BelongsTo::make('ไปสาขา', 'to_branch', 'App\Nova\Branch')->onlyOnIndex(),
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                     ->nullable()
@@ -317,7 +317,7 @@ class Waybill extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
-                        || ($this->resource->exists && ($this->resource->waybill_status == 'confirmed' ||
+                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status == 'confirmed' ||
                             $this->resource->waybill_status == 'in transit') && $request->user()->hasPermissionTo('manage waybills'));
                 }),
             (new Actions\WaybillBillAdd($request->resourceId))
@@ -331,7 +331,7 @@ class Waybill extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
-                        || ($this->resource->exists && ($this->resource->waybill_status == 'confirmed' || $this->resource->waybill_status == 'in transit') && $request->user()->hasPermissionTo('manage waybills'));
+                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status == 'confirmed' || $this->resource->waybill_status == 'in transit') && $request->user()->hasPermissionTo('manage waybills'));
                 }),
 
         ];

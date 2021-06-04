@@ -36,6 +36,11 @@ class Car_balance extends Model
         return $this->belongsTo(Car::class);
     }
 
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
     /**
      * Get the user_update that owns the Car_balance
      *

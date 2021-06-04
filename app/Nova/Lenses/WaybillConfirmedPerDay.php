@@ -2,10 +2,11 @@
 
 namespace App\Nova\Lenses;
 
-use App\Models\Routeto_branch;
-use App\Nova\Actions\WaybillByDatePrint;
-use App\Nova\Filters\WaybillFromDate;
-use App\Nova\Filters\WaybillToDate;
+use App\Models\Car;
+use App\Models\Cartype;
+use App\Nova\Actions\Accounts\PrintWaybillConfirmPerDay;
+use App\Nova\Filters\Lenses\WaybillLensFromDate;
+use App\Nova\Filters\Lenses\WaybillLensToDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -15,6 +16,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class WaybillConfirmedPerDay extends Lens
 {
@@ -30,11 +32,12 @@ class WaybillConfirmedPerDay extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('cars', 'cars.id', '=', 'waybills.car_id')
-                //->join('cartypes', 'cars.cartype_id', '=', 'cars.car_id')
-                ->join('routeto_branch', 'routeto_branch.id', '=', 'waybills.routeto_branch_id')
+                ->join('branches', 'branches.id', '=', 'waybills.branch_rec_id')
                 ->whereNotIn('waybills.waybill_status', ['loading', 'cancel'])
-                ->orderBy('waybills.routeto_branch_id', 'asc')
-                ->groupBy('waybills.routeto_branch_id', 'waybills.waybill_type', 'cars.cartype_id', 'waybills.id')
+                ->orderBy('waybills.waybill_date', 'asc')
+                ->orderBy('waybills.waybill_type', 'asc')
+                ->orderBy('waybills.branch_rec_id', 'asc')
+                ->groupBy('waybills.waybill_date', 'waybills.waybill_type', 'waybills.branch_rec_id', 'waybills.car_id', 'cars.cartype_id')
         ));
     }
     /**
@@ -45,12 +48,11 @@ class WaybillConfirmedPerDay extends Lens
     protected static function columns()
     {
         return [
-            'routeto_branch.name',
-            'waybills.waybill_type',
             'waybills.waybill_date',
-            'waybills.routeto_branch_id',
+            'waybills.waybill_type',
+            'branches.name as branch_rec',
+            'waybills.car_id',
             'cars.cartype_id',
-            'cars.car_regist',
             DB::raw('sum(waybills.waybill_amount) as amount'),
             DB::raw('sum(waybills.waybill_payable) as payable'),
             DB::raw('sum(waybills.waybill_income) as income'),
@@ -68,11 +70,6 @@ class WaybillConfirmedPerDay extends Lens
             // ID::make(__('ID'), 'id')->sortable(),
             Date::make('วันที่', 'waybill_date')
                 ->format('DD/MM/YYYY'),
-            Text::make(__('To branch'), 'tobranch', function () {
-                $routetobranch = \App\Models\Routeto_branch::find($this->routeto_branch_id);
-                $tobranch = \App\Models\Branch::find($routetobranch->dest_branch_id);
-                return $tobranch->name;
-            }),
             Text::make('ประเภท', 'waybill_type', function () {
                 if ($this->waybill_type === 'general') {
                     return 'เบ็ดเตล็ด';
@@ -82,11 +79,15 @@ class WaybillConfirmedPerDay extends Lens
                     return 'เหมาคัน';
                 }
             }),
-            Text::make(__('Car type'), 'cartype', function () {
-                $cartype = \App\Models\Cartype::find($this->cartype_id);
+            Text::make(__('To branch'), 'branch_rec'),
+            Text::make(__('Car type'), function () {
+                $cartype = Cartype::find($this->cartype_id);
                 return $cartype->name;
             }),
-            Text::make(__('Car regist'), 'car_regist'),
+            Text::make(__('Car regist'), function () {
+
+                return $this->car->car_regist;
+            }),
             Currency::make(__('ค่าระวาง'), 'amount', function ($value) {
                 return $value;
             }),
@@ -122,8 +123,8 @@ class WaybillConfirmedPerDay extends Lens
     public function filters(Request $request)
     {
         return [
-            new WaybillFromDate(),
-            new WaybillToDate()
+            new WaybillLensFromDate(),
+            new WaybillLensToDate()
         ];
     }
 
@@ -136,7 +137,15 @@ class WaybillConfirmedPerDay extends Lens
     public function actions(Request $request)
     {
         return [
-            WaybillByDatePrint::make()->standalone(),
+            (new PrintWaybillConfirmPerDay($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view waybills');
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view waybills');
+                }),
         ];
     }
 
@@ -151,6 +160,6 @@ class WaybillConfirmedPerDay extends Lens
     }
     public function name()
     {
-        return 'ข้อมูลรถออกตามวัน';
+        return 'รายงานรถออกประจำวัน';
     }
 }

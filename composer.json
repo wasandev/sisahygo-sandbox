@@ -46,7 +46,8 @@
         "wasandev/marketing": "*",
         "wasandev/truck": "*",
         "wasandev/account": "*",
-        "wasandev/branch": "*"
+        "wasandev/branch": "*",
+        "wasandev/report": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -161,6 +162,10 @@
         {
             "type": "path",
             "url": "./nova-components/Branch"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Report"
         }
     ]
 }

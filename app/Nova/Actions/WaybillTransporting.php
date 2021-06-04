@@ -52,7 +52,8 @@ class WaybillTransporting extends Action
                 $model->departure_at = Carbon::now()->toDateTimeString();
                 $model->waybill_status = 'in transit';
                 $model->save();
-                return Action::message('กำหนดรถออกเดินทางแล้ว');
+                //return Action::message('กำหนดรถออกเดินทางแล้ว');
+                return Action::push('/resources/waybills/');
             }
 
             return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการใบรับส่ง!');

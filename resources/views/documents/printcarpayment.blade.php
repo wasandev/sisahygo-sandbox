@@ -1,114 +1,146 @@
-@extends('layouts.doc')
+@extends('layouts.form')
 
 @section('header')
-    @include('partials.docheader')
-
+    @include('partials.cardocheader')
 @endsection
 
 @section('content')
-<table style="width:100%;padding: 0px;margin: 0px;">
-    <tr>
-        <p style="text-align: center;font-size: 1.5em;padding: 0px">
-            ใบสำคัญจ่าย
-        </p>
-    </tr>
-</table>
-<table>
 
-    <tr>
-        <td style="width: 50%">
-            จ่ายให้: {{ $carpayment->carpayment_no }}<br />
-            ที่อยู่: {{$carpayment->vendor->name }}<br/>
-            ทะเบียนรถ: {{ $carpayment->car->car_regist }}<br />
-            จ่ายโดย: {{ $carpayment->payment_by}}<br/>
-
+<table style="width: 100%">
+    <tr >
+        <td style="width: 100%;text-align: center;vertical-align:top">
 
         </td>
-        <td style="width:50%;vertical-align: top;">
-            เลขที่: {{ $carpayment->payment_no }}<br />
-            วันที่: {{ $carpayment->payment_date }}<br />
-            ยอดเก็บเงินปลายทาง: {{ number_format($delivery->receipt_amount,2,'.',',') }}<br />
-            พนักงานจัดส่ง:
-            @isset($delivery->sender->name)
-                {{ $delivery->sender->name }}
+    </tr>
+</table>
+<table style="width: 100%;">
+    <tr>
+        <td style="width: 50%;">
+           จ่ายให้ : {{ $carpayment->vendor->name }} <br/>
+           ที่อยู่ : {{ $carpayment->vendor->address }}
+            @if ( $carpayment->vendor->province === "กรุงเทพมหานคร" )
+                แขวง{{ $carpayment->vendor->sub_district}}
+            @else
+                ต.{{ $carpayment->vendor->sub_district}}
+            @endif
+
+            @if($carpayment->vendor->province === "กรุงเทพมหานคร")
+                เขต{{$carpayment->vendor->district}}
+            @else
+                อ.{{ $carpayment->vendor->district}}
+            @endif
+
+            จ.{{$carpayment->vendor->province.' '.
+            $carpayment->vendor->postal_code }}
+            @isset($carpayment->vendor->phoneno)
+                Tel: {{ $carpayment->vendor->phoneno }}
             @endisset
             <br/>
-            เส้นทางจัดส่ง: {{ $delivery->branch_route->name}}<br/>
-            รายละเอียด/หมายเหตุ: {{$delivery->remark}}
+
+           ทะเบียนรถ : {{$carpayment->car->car_regist}}
+
 
         </td>
-
-
+        <td style="width: 50%;text-align: right">
+            เลขที่: {{ $carpayment->payment_no }}<br/>
+            วันที่: {{ $carpayment->payment_date->format('d/m/Y') }}<br/>
+        </td>
     </tr>
+    <tr>
+        <td colspan="3"  style="width: 100%;">
+            @switch($carpayment->payment_by)
+                @case('H')
+                    จ่ายโดย : เงินสด<br/>
+                    @break
 
+                @case('T')
+                    จ่ายโดย : เงินโอน เข้าบัญชี {{$carpayment->tobank->name }} เลขที่ {{$carpayment->tobankaccount }} ชื่อบัญชี {{tobankaccountname}}
+                    <br/>
 
+                    @break
+                @case('Q')
+                    จ่ายโดย : เช็ค ธนาคาร {{$carpayment->chequebank->name}} เลขที่ {{ $carpayment->chequeno }} ลงวันที่ {{ $carpayment->chequedate }}<br/>
+                    @break
+                @case('A')
+                    จ่ายโดย : รายการตัดบัญชี <br/>
+                    @break
+
+            @endswitch
+        </td>
+    </tr>
 </table>
 
+<table  style="width: 100%;border-top: 0.5px dotted black;">
+    <tr style="vertical-align:top;">
+            <td  style="width: 70%;text-align: left">
+                รายการ
+            </td>
 
-<table style="border-bottom: 1px solid black;border-top: 1px solid black;padding: 5px;" cellspacing="3" cellpadding="5">
-    <thead>
-        <tr>
-            <th style="width: 5%";>ลำดับ</th>
-            <th style="text-align: left;width: 10%;">อำเภอ</th>
-            <th style="text-align: left;width: 25%">ผู้รับสินค้า</th>
-            <th style="width: 10%;">จำนวนรายการ</th>
-            <th style="text-align: left;width: 15%;">เลขที่ใบรับส่ง</th>
-            <th style="width: 10%;">ยอดจัดเก็บ</th>
-            <th style="width: 10%;">การจัดส่ง</th>
-            <th style="width: 10%;">การเก็บเงิน</th>
+            <td style="width: 30%;text-align: right">
+                จำนวนเงิน
+            </td>
         </tr>
+</table>
+<table  style="width: 100%;height: 4.0cm;border-top: 0.5px dotted black;">
 
-    </thead>
+            <tr style="vertical-align:top;height:14px">
+                <td  style="text-align: left">
+                   1. {{ $carpayment->description }}
 
-    <tbody style="border-top: 1px solid black;vertical-align: top;">
-
-            <tr>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td style="border-bottom: 1px solid black;">
-                    <strong>
-                    {{$district}}
-                    </strong>
                 </td>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td style="text-align: center;border-bottom: 1px solid black;">
-                    <strong>
-                    {{count($item_groups)}} ผู้รับ
-                    </strong>
+                <td style="text-align: right">
+                    {{number_format($carpayment->amount,2)}}
                 </td>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td  style="text-align: right;border-bottom: 1px solid black;">
-                    <strong>
-                    {{ number_format($item_groups->sum('payment_amount'),2,'.',',')}}
-                    </strong>
-                </td>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td style="border-bottom: 1px solid black;"></td>
 
             </tr>
 
-
-
-    </tbody>
-
 </table>
-<br>
-<table style="padding: 10px;" >
-    <tr>
-        <td style="width:50%;vertical-align: top;font-size:18px;font-weight: bold;">
-            พนักงานขับรถ.......................................<br/>
-            ผู้จัดการ............................................<br/>
+<table  style="width: 100%;border-top: 0.5px dotted black;">
+    <tr style="vertical-align:top">
+        <td style="width: 50%;text-align: center">
+            ( {{ baht_text($carpayment->amount)}} )
+
 
         </td>
-        <td style="width:50%;vertical-align: top;text-align: right;font-size:18px;font-weight: bold;">
-
-            ผู้ทำรายการ.........................................<br/>
-            พนักงานจัดส่ง.......................................<br/>
+        <td style="width: 50%;text-align: right">
+             {{number_format($carpayment->amount,2)}}
 
 
         </td>
     </tr>
-
 </table>
+<table  style="width: 100%;">
+    <tr style="vertical-align:middle">
+        <td style="width: 50%;">
+            @if ($carpayment->tax_flag)
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/>
+                </svg>
+                ภาษีหัก ณ ที่จ่าย (1%)   จำนวนเงินภาษีหัก ณ ที่จ่าย : {{ $carpayment->tax_amount}}
+            @endif
+        </td>
 
+        <td style="width: 50%;text-align: right">
+            คงเหลือจ่ายสุทธิ : {{number_format($carpayment->amount - $carpayment->tax_amount,2)}}
+
+        </td>
+    </tr>
+</table>
+<br/>
+<br/>
+<table  style="width: 100%;border-top: .05px dotted black;height: 2.0cm;">
+    <tr style="vertical-align:middle;">
+        <td style="width: 33%;text-align: center">
+            ผู้อนุมัติ..........................................
+        </td>
+         <td style="width: 33%;text-align: center">
+            ผู้จ่าย............................................
+        </td>
+         <td style="width: 34%;text-align: center">
+            ผู้รับเงิน..........................................<br/>
+            {{ $carpayment->user->name}}
+        </td>
+    </tr>
+</table>
 
 @endsection

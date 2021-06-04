@@ -50,9 +50,9 @@ class OrderLoaded extends Action
                 $model->waybill_id = $fields->waybill_branch;
                 $model->save();
             }
-            //return Action::push('/resources/order_loaders/');
+            return Action::push('/resources/order_loaders/');
         }
-        return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
+        //return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
     }
 
     /**
@@ -72,13 +72,15 @@ class OrderLoaded extends Action
                 ->where('routeto_branch_id', '=', $routeto_branch->id)
                 ->where('waybill_status', '=', 'loading')
                 ->get();
+
             foreach ($waybills as $waybill) {
-                $waybillOptions = [
+                $waybillOptions[] = [
                     ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
                 ];
-                $selectOptions = collect($waybillOptions);
-                $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
             }
+            $selectOptions = collect($waybillOptions)->flatten(1);
+
+            $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
             if (isset($waybillOptions)) {
                 return [
 

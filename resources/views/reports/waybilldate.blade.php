@@ -1,15 +1,26 @@
-@extends('layouts.report')
+@extends('layouts.doclandscape')
+
+@section('header')
+    @include('partials.reportheader')
+
+@endsection
+
 
 
 @section('content')
 
-<table style="width:100%;padding: 0px;margin: 0px;">
-    <tr>
-        <p style="text-align: center;font-size: 1.0em;padding: 0px">
-            รายงานรถออกประจำวัน<br>
-            <span style="text-align: center;font-size: 1.0em;padding: 0px">
-            จากวันที่ {{$from_date }} ถึงวันที่ {{ $to_date }}</span>
-        </p>
+<table style="width:100%;">
+     <tr>
+        <td style="width: 50%;text-align: left;border:0px">
+
+                ระหว่างวันที่: {{$from}}  ถึงวันที่: {{$to}}
+
+        </td>
+        <td style="width:50%;text-align: right;border:0px">
+
+                เรียงตามวันที่ ประเภท สาขาปลายทาง
+
+        </td>
     </tr>
 </table>
 
@@ -18,18 +29,17 @@
 <table style="padding: 5px;" cellspacing="3" cellpadding="5">
     <thead>
         <tr>
-            <th>ลำดับ</th>
-            <th>เลขที่ใบกำกับ</th>
-            <th>ทะเบียนรถ</th>
-            <th>ประเภทรถ</th>
-            <th>ประเภท</th>
-            <th>ค่าระวาง</th>
-            <th>ค่าบรรทุก</th>
-            <th>%รายได้</th>
-            <th>รายได้</th>
-            <th>ต้นทาง</th>
-            <th>วางบิล</th>
-            <th>ปลายทาง</th>
+            <th style="width: 5%;text-align: center">ลำดับ</th>
+            <th style="width: 5%;text-align: center">เลขที่ใบกำกับ</th>
+            <th style="width: 10%;text-align: center">ทะเบียนรถ</th>
+            <th style="width: 10%;text-align: center">ประเภทรถ</th>
+            <th style="width: 10%;text-align: center">ค่าระวาง</th>
+            <th style="width: 10%;text-align: center">ค่าบรรทุก</th>
+            <th style="width: 10%;text-align: center">รายได้</th>
+            <th style="width: 10%;text-align: center">%รายได้</th>
+            <th style="width: 10%;text-align: center">ต้นทาง</th>
+            <th style="width: 10%;text-align: center">วางบิล</th>
+            <th style="width: 10%;text-align: center">ปลายทาง</th>
 
         </tr>
 
@@ -37,167 +47,420 @@
 
     <tbody style="vertical-align: top;">
 
-        @foreach ($waybill_branch as $branch => $waybill_groups)
+        @foreach ($waybill_groups as $waybill_date => $branches)
 
-            <tr>
+            <tr style="font-weight: bold">
 
-                <td colspan="5">
-                    <strong>
-                    {{$branch}} - {{count($waybill_groups)}} เที่ยว
-                    </strong>
+                <td colspan="4" >
+                    วันที่ : {{ date('d/m/Y',strtotime($waybill_date)) }}
+                    @foreach ($waybills as $item )
+                        @php
+                            $date_count =  $item->where('waybill_date',$waybill_date)->count();
+                        @endphp
+
+                    @endforeach
+                    - {{ $date_count}} เที่ยว
                 </td>
                 <td  style="text-align: right;">
-                    <strong>
-                    {{ number_format($waybill_groups->sum('waybill_amount'),2,'.',',')}}
-                    </strong>
-                </td>
-                <td style="text-align: right;">
-                    <strong>
-                    {{ number_format($waybill_groups->sum('waybill_payable'),2,'.',',')}}
-                    </strong>
-                </td>
-                <td style="text-align: right;">
-                    <strong>
-                    {{ number_format( ($waybill_groups->sum('waybill_income') / $waybill_groups->sum('waybill_amount'))  * 100 ,2,'.',',')}}
-                    </strong>
-                </td>
-                <td style="text-align: right;">
-                    <strong>
-                    {{ number_format($waybill_groups->sum('waybill_income'),2,'.',',')}}
-                    </strong>
-                </td>
-                <td style="text-align: right;">
-                    @php
-                        $order_h = 0 ;
-                    @endphp
 
-                    @foreach ($waybill_groups as $item)
-                    @php
-                        $order_h = $order_h + $item->order_loaders->whereIn('paymenttype',['H','T'])->sum('order_amount')
-                    @endphp
+                    @foreach ($waybills as $item )
+                        @php
+                            $sumdate_amount =  $item->where('waybill_date',$waybill_date)->sum('waybill_amount');
+                        @endphp
 
                     @endforeach
-                    <strong>
-                    {{ number_format($order_h,2,'.',',') }}
-                    </strong>
+
+                    {{ number_format($sumdate_amount,2,'.',',') }}
+
+
+                </td>
+                <td style="text-align: right;">
+                    @foreach ($waybills as $item )
+                        @php
+                            $sumdate_payable =  $item->where('waybill_date',$waybill_date)->sum('waybill_payable');
+                        @endphp
+
+                    @endforeach
+
+                    {{ number_format($sumdate_payable,2,'.',',') }}
+
+                </td>
+
+                <td style="text-align: right;">
+
+                    @foreach ($waybills as $item )
+                        @php
+                            $sumdate_income =  $item->where('waybill_date',$waybill_date)->sum('waybill_income');
+                        @endphp
+
+                    @endforeach
+
+                    {{ number_format($sumdate_income,2,'.',',') }}
+
+                </td>
+                <td style="text-align: right;">
+
+                    {{ number_format( ($sumdate_income / $sumdate_amount)  * 100 ,2,'.',',')}}
+
+                </td>
+                <td style="text-align: right;">
+
+                    @php
+                        $orderdate_h = 0 ;
+                    @endphp
+
+                    @foreach ($waybills as $item)
+                        @php
+                            if($item->waybill_date->format('Y-m-d') == $waybill_date){
+                                $orderdate_h +=  $item->order_loaders
+                                            ->whereIn('paymenttype',['H','T'])
+                                            ->sum('order_amount');
+                            }
+                        @endphp
+                    @endforeach
+                    {{ number_format($orderdate_h,2,'.',',') }}
                 </td>
                 <td style="text-align: right;">
                     @php
-                        $order_f = 0 ;
+                        $orderdate_f = 0 ;
                     @endphp
 
-                    @foreach ($waybill_groups as $item)
-                    @php
-                        $order_f = $order_f + $item->order_loaders->whereIn('paymenttype',['F','L'])->sum('order_amount')
-                    @endphp
-
+                    @foreach ($waybills as $item)
+                        @php
+                            if($item->waybill_date->format('Y-m-d') == $waybill_date){
+                                $orderdate_f +=  $item->order_loaders
+                                            ->whereIn('paymenttype',['F','L'])
+                                            ->sum('order_amount');
+                            }
+                        @endphp
                     @endforeach
-                    <strong>
-                    {{ number_format($order_f,2,'.',',') }}
-                    </strong>
+                    {{ number_format($orderdate_f,2,'.',',') }}
                 </td>
                 <td style="text-align: right;">
                      @php
-                        $order_e = 0 ;
+                        $orderdate_e = 0 ;
                     @endphp
 
-                    @foreach ($waybill_groups as $item)
-                    @php
-                        $order_e = $order_e + $item->order_loaders->where('paymenttype','E')->sum('order_amount')
-                    @endphp
+                    @foreach ($waybills as $item)
+                        @php
+                            if($item->waybill_date->format('Y-m-d') == $waybill_date){
+                                $orderdate_e +=  $item->order_loaders
+                                            ->where('paymenttype','E')
+                                            ->sum('order_amount');
+                            }
+                        @endphp
+                    @endforeach
+                    {{ number_format($orderdate_e,2,'.',',') }}
+                </td>
+
+            </tr>
+            @foreach ($branches as $branch => $types)
+                <tr style="font-weight: bold">
+                    <td colspan="4">
+                        @php
+                            $branchdata = \App\Models\Branch::find($branch);
+                        @endphp
+
+                        {{$branchdata->name}}
+                        @foreach ($waybills as $item )
+                            @php
+                                $branch_count =  $item->where('waybill_date',$waybill_date)
+                                                    ->where('branch_rec_id',$branch)
+                                                    ->count();
+                            @endphp
+
+                        @endforeach
+                        - {{ $branch_count}} เที่ยว
+                    </td>
+                    <td  style="text-align: right;">
+                    @foreach ($waybills as $item )
+                        @php
+                            $sumbranch_amount =  $item->where('waybill_date',$waybill_date)
+                                                      ->where('branch_rec_id',$branch)
+                                                      ->sum('waybill_amount');
+                        @endphp
 
                     @endforeach
-                    <strong>
-                    {{ number_format($order_e,2,'.',',') }}
-                    </strong>
-                </td>
 
-            </tr>
-            @foreach ($waybill_groups as $item )
-            <tr style="vertical-align: top;">
-                <td style="text-align: center">
-                    {{ $loop->iteration }}
-                </td>
-                <td>
-                     {{$item->waybill_no}}
-                </td>
+                    {{ number_format($sumbranch_amount,2,'.',',') }}
 
-                <td>
-                    {{$item->car->car_regist}}
-                </td>
-                <td>
-                    {{$item->car->cartype->name}}
-                </td>
-                <td>
-                    @if($item->waybill_type === 'general')
-                        เบ็ดเตล็ด
-                    @elseif ($item->waybill_type === 'express')
-                        Express
-                    @else
-                        เหมาคัน'
-                    @endif
+                    </td>
+                    <td style="text-align: right;">
 
-                </td>
-                <td style="text-align: right">
-                    {{number_format($item->waybill_amount,2,'.',',')}}
+                        @foreach ($waybills as $item )
+                            @php
+                                $sumbranch_payable =  $item->where('waybill_date',$waybill_date)
+                                                        ->where('branch_rec_id',$branch)
+                                                        ->sum('waybill_payable');
+                            @endphp
 
-                </td>
-                 <td style="text-align: right">
-                    {{number_format($item->waybill_payable,2,'.',',')}}
+                        @endforeach
 
-                </td>
-                <td style="text-align: right">
-                    {{number_format(($item->waybill_income/$item->waybill_amount)*100,2,'.',',')}}
+                        {{ number_format($sumbranch_payable,2,'.',',') }}
 
-                </td>
-                <td style="text-align: right">
-                    {{number_format($item->waybill_income,2,'.',',')}}
-                </td>
-                <td style="text-align: right;">
-                    {{ number_format($item->order_loaders->whereIn('paymenttype',['H','T'])->sum('order_amount'),2,'.',',') }}
+                    </td>
+                    <td style="text-align: right;">
+                        @foreach ($waybills as $item )
+                            @php
+                                $sumbranch_income =  $item->where('waybill_date',$waybill_date)
+                                                        ->where('branch_rec_id',$branch)
+                                                        ->sum('waybill_income');
+                            @endphp
 
-                </td>
-                <td style="text-align: right;">
-                    {{ number_format($item->order_loaders->whereIn('paymenttype',['F','L'])->sum('order_amount'),2,'.',',') }}
+                        @endforeach
 
-                </td>
-                <td style="text-align: right;">
-                    {{ number_format($item->order_loaders->where('paymenttype','E')->sum('order_amount'),2,'.',',') }}
+                        {{ number_format($sumbranch_income,2,'.',',') }}
+                    </td>
+                    <td style="text-align: right;">
+
+                        {{ number_format( ($sumbranch_income / $sumbranch_amount)  * 100 ,2,'.',',')}}
+
+                    </td>
+                    <td style="text-align: right;">
+                        @php
+                            $orderbranch_h = 0 ;
+                        @endphp
+
+                        @foreach ($waybills as $item)
+                            @php
+                                if($item->waybill_date->format('Y-m-d') == $waybill_date && $item->branch_rec_id == $branch){
+                                    $orderbranch_h +=  $item->order_loaders
+                                                ->whereIn('paymenttype',['H','T'])
+                                                ->sum('order_amount');
+                                }
+                            @endphp
+                        @endforeach
+                        {{ number_format($orderbranch_h,2,'.',',') }}
+                    </td>
+                    <td style="text-align: right;">
+                        @php
+                            $orderbranch_f = 0 ;
+                        @endphp
+
+                        @foreach ($waybills as $item)
+                            @php
+                                if($item->waybill_date->format('Y-m-d') == $waybill_date && $item->branch_rec_id == $branch){
+                                    $orderbranch_f +=  $item->order_loaders
+                                                ->whereIn('paymenttype',['F','L'])
+                                                ->sum('order_amount');
+                                }
+                            @endphp
+                        @endforeach
+                        {{ number_format($orderbranch_f,2,'.',',') }}
+                    </td>
+                    <td style="text-align: right;">
+                        @php
+                            $orderbranch_e = 0 ;
+                        @endphp
+
+                        @foreach ($waybills as $item)
+                            @php
+                                if($item->waybill_date->format('Y-m-d') == $waybill_date && $item->branch_rec_id == $branch){
+                                    $orderbranch_e +=  $item->order_loaders
+                                                ->where('paymenttype','E')
+                                                ->sum('order_amount');
+                                }
+                            @endphp
+                        @endforeach
+                        {{ number_format($orderbranch_e,2,'.',',') }}
+                    </td>
+                </tr>
+                @foreach($types as $type => $waybill_items )
+                <tr style="vertical-align: top;font-weight: bold">
+                    <td colspan="4">
+                        @if($type == 'general')
+                            ทั่วไป
+                        @elseif($type == 'charter')
+                            เหมาคัน
+                        @else
+                            Express
+                        @endif
+                        @foreach ($waybills as $item )
+                            @php
+                                $type_count =  $item->where('waybill_date',$waybill_date)
+                                                    ->where('branch_rec_id',$branch)
+                                                    ->where('waybill_type',$type)
+                                                    ->count();
+                            @endphp
+
+                        @endforeach
+                        - {{ $type_count}} เที่ยว
+                    </td>
+                    <td style="text-align: right;">
+                        @foreach ($waybills as $item )
+                            @php
+                                $sumtype_amount =  $item->where('waybill_date',$waybill_date)
+                                                        ->where('branch_rec_id',$branch)
+                                                        ->where('waybill_type',$type)
+                                                        ->sum('waybill_amount');
+                            @endphp
+                        @endforeach
+                        {{ number_format($sumtype_amount,2,'.',',') }}
+                    </td>
+                    <td style="text-align: right;">
+                        @foreach ($waybills as $item )
+                            @php
+                                $sumtype_payable =  $item->where('waybill_date',$waybill_date)
+                                                        ->where('branch_rec_id',$branch)
+                                                        ->where('waybill_type',$type)
+                                                        ->sum('waybill_payable');
+                            @endphp
+                        @endforeach
+                        {{ number_format($sumtype_payable,2,'.',',') }}
+                    </td>
+                    <td style="text-align: right;">
+                        @foreach ($waybills as $item )
+                            @php
+                                $sumtype_income =  $item->where('waybill_date',$waybill_date)
+                                                        ->where('branch_rec_id',$branch)
+                                                        ->where('waybill_type',$type)
+                                                        ->sum('waybill_income');
+                            @endphp
+                        @endforeach
+                        {{ number_format($sumtype_income,2,'.',',') }}
+                    </td>
+                    <td style="text-align: right;">
+                        {{ number_format( ($sumtype_income / $sumtype_amount)  * 100 ,2,'.',',')}}
+
+                    </td>
+                    <td style="text-align: right;">
+                        @php
+                            $ordertype_h = 0 ;
+                        @endphp
+
+                        @foreach ($waybills as $item)
+                            @php
+                                if($item->waybill_date->format('Y-m-d') == $waybill_date
+                                    && $item->branch_rec_id == $branch && $item->waybill_type == $type){
+                                    $ordertype_h +=  $item->order_loaders
+                                                ->whereIn('paymenttype',['H','T'])
+                                                ->sum('order_amount');
+                                }
+                            @endphp
+                        @endforeach
+                        {{ number_format($ordertype_h,2,'.',',') }}
+
+                    </td>
+                    <td style="text-align: right;">
+                        @php
+                            $ordertype_f = 0 ;
+                        @endphp
+
+                        @foreach ($waybills as $item)
+                            @php
+                                if($item->waybill_date->format('Y-m-d') == $waybill_date
+                                    && $item->branch_rec_id == $branch && $item->waybill_type == $type){
+                                    $ordertype_f +=  $item->order_loaders
+                                                ->whereIn('paymenttype',['F','L'])
+                                                ->sum('order_amount');
+                                }
+                            @endphp
+                        @endforeach
+                        {{ number_format($ordertype_f,2,'.',',') }}
+                    </td>
+
+                    <td style="text-align: right;">
+                        @php
+                            $ordertype_e = 0 ;
+                        @endphp
+
+                        @foreach ($waybills as $item)
+                            @php
+                                if($item->waybill_date->format('Y-m-d') == $waybill_date
+                                    && $item->branch_rec_id == $branch && $item->waybill_type == $type){
+                                    $ordertype_e +=  $item->order_loaders
+                                                ->where('paymenttype','E')
+                                                ->sum('order_amount');
+                                }
+                            @endphp
+                        @endforeach
+                        {{ number_format($ordertype_e,2,'.',',') }}
+                    </td>
+
+                </tr>
+
+                    @foreach ($waybill_items as $item )
+
+                    <tr style="vertical-align: top;">
+                        <td style="text-align: center">
+                            {{ $loop->iteration }}
+                        </td>
+                        <td>
+                            {{$item->waybill_no}}
+                        </td>
+
+                        <td>
+                            {{$item->car->car_regist}}
+                        </td>
+                        <td>
+                            {{$item->car->cartype->name}}
+                        </td>
+
+                        <td style="text-align: right">
+                            {{number_format($item->waybill_amount,2,'.',',')}}
+
+                        </td>
+                        <td style="text-align: right">
+                            {{number_format($item->waybill_payable,2,'.',',')}}
+
+                        </td>
+
+                        <td style="text-align: right">
+                            {{number_format($item->waybill_income,2,'.',',')}}
+                        </td>
+                        <td style="text-align: right">
+                            {{number_format(($item->waybill_income/$item->waybill_amount)*100,2,'.',',')}}
+
+                        </td>
+
+                        <td style="text-align: right;">
+                            {{ number_format($item->order_loaders->whereIn('paymenttype',['H','T'])->sum('order_amount'),2,'.',',') }}
+
+                        </td>
+                        <td style="text-align: right;">
+                            {{ number_format($item->order_loaders->whereIn('paymenttype',['F','L'])->sum('order_amount'),2,'.',',') }}
+
+                        </td>
+                        <td style="text-align: right;">
+                            {{ number_format($item->order_loaders->where('paymenttype','E')->sum('order_amount'),2,'.',',') }}
 
 
-                </td>
-            </tr>
+                        </td>
+                    </tr>
+                    @endforeach
+                @endforeach
             @endforeach
         @endforeach
 
     </tbody>
-    <tr>
+    <tr style="font-weight: bold">
 
-                <td colspan="5">
-                    <strong>
+                <td colspan="4">
+
                     รวมทั้งหมด - {{count($waybills)}} เที่ยว
-                    </strong>
+
                 </td>
                 <td  style="text-align: right;">
-                    <strong>
+
                     {{ number_format($waybills->sum('waybill_amount'),2,'.',',')}}
-                    </strong>
+
                 </td>
                 <td style="text-align: right;">
-                    <strong>
+
                     {{ number_format($waybills->sum('waybill_payable'),2,'.',',')}}
-                    </strong>
+
                 </td>
                 <td style="text-align: right;">
-                    <strong>
-                    {{ number_format( ($waybills->sum('waybill_income') / $waybills->sum('waybill_amount'))  * 100 ,2,'.',',')}}
-                    </strong>
-                </td>
-                <td style="text-align: right;">
-                    <strong>
+
                     {{ number_format($waybills->sum('waybill_income'),2,'.',',')}}
-                    </strong>
+
                 </td>
+                <td style="text-align: right;">
+
+                    {{ number_format( ($waybills->sum('waybill_income') / $waybills->sum('waybill_amount'))  * 100 ,2,'.',',')}}
+
+                </td>
+
                 <td style="text-align: right;">
                     @php
                         $orderall_h = 0 ;
@@ -205,13 +468,13 @@
 
                     @foreach ($waybills as $item)
                     @php
-                        $orderall_h = $orderall_h + $item->order_loaders->whereIn('paymenttype',['H','E'])->sum('order_amount')
+                        $orderall_h += $item->order_loaders->whereIn('paymenttype',['H','E'])->sum('order_amount')
                     @endphp
 
                     @endforeach
-                    <strong>
+
                     {{ number_format($orderall_h,2,'.',',') }}
-                    </strong>
+
                 </td>
                 <td style="text-align: right;">
                     @php
@@ -220,13 +483,13 @@
 
                     @foreach ($waybills as $item)
                     @php
-                        $orderall_f = $orderall_f + $item->order_loaders->whereIn('paymenttype',['F','L'])->sum('order_amount')
+                        $orderall_f += $item->order_loaders->whereIn('paymenttype',['F','L'])->sum('order_amount')
                     @endphp
 
                     @endforeach
-                    <strong>
+
                     {{ number_format($orderall_f,2,'.',',') }}
-                    </strong>
+
                 </td>
                 <td style="text-align: right;">
                     @php
@@ -235,18 +498,16 @@
 
                     @foreach ($waybills as $item)
                     @php
-                        $orderall_e = $orderall_e + $item->order_loaders->where('paymenttype','E')->sum('order_amount')
+                        $orderall_e +=  $item->order_loaders->where('paymenttype','E')->sum('order_amount')
                     @endphp
 
                     @endforeach
-                    <strong>
+
                     {{ number_format($orderall_e,2,'.',',') }}
-                    </strong>
+
                 </td>
 
             </tr>
 </table>
-@section('footer')
-    @include('partials.reportfooter')
-@endsection
 
+@endsection

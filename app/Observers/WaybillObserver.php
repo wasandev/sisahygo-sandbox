@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Exceptions\MyCustomException;
 use App\Models\Car_balance;
 use App\Models\Waybill;
 use App\Models\Waybill_status;
@@ -17,6 +18,8 @@ class WaybillObserver
             $waybill_no = IdGenerator::generate(['table' => 'waybills', 'field' => 'waybill_no', 'length' => 15, 'prefix' => 'W' . date('Ymd')]);
             $waybill->waybill_no = $waybill_no;
             $waybill->user_id = auth()->user()->id;
+            $waybill->branch_id = $waybill->routeto_branch->branch_id;
+            $waybill->branch_rec_id = $waybill->routeto_branch->dest_branch_id;
         }
     }
     public function created(Waybill $waybill)
@@ -29,13 +32,17 @@ class WaybillObserver
                     'user_id' => auth()->user()->id,
                 ]);
             }
+            $waybill->branch_id = $waybill->routeto_branch->branch_id;
+            $waybill->branch_rec_id = $waybill->routeto_branch->dest_branch_id;
         }
     }
     public function updating(Waybill $waybill)
     {
         if ($waybill->waybill_type <> 'charter') {
             if ($waybill->waybill_status == 'confirmed') {
-
+                if (is_null($waybill->car->vendor_id)) {
+                    throw new MyCustomException('รถบรรทุกคันนี้ ยังไม้ได้กำหนดเจ้าของรถ โปรดตรวจสอบ');
+                }
                 //create car_balance
                 Car_balance::updateOrCreate([
                     'car_id' => $waybill->car_id,
@@ -65,6 +72,8 @@ class WaybillObserver
             }
             $waybill->updated_by = auth()->user()->id;
             $waybill->waybill_income = $waybill->waybill_amount - $waybill->waybill_payable;
+            $waybill->branch_id = $waybill->routeto_branch->branch_id;
+            $waybill->branch_rec_id = $waybill->routeto_branch->dest_branch_id;
         }
     }
 }

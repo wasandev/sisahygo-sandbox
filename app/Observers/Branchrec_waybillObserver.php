@@ -47,7 +47,7 @@ class Branchrec_waybillObserver
                     'vendor_id' => $branchrec_waybill->car->vendor_id,
                     'payment_date' => $branchrec_waybill->waybill_date,
                     'amount' => $branch_balances->sum('order_amount'),
-                    'payment_by' => 'A',
+                    'payment_by' => 'H',
                     'tax_flag' => true,
                     'tax_amount' => $branch_balances->sum('order_amount') * 0.01,
                     'description' => 'ค่าบรรทุกสินค้าเก็บเงินปลายทาง-' . $branchrec_waybill->waybill_no,

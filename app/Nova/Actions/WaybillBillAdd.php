@@ -105,16 +105,18 @@ class WaybillBillAdd extends Action
     {
         if ($this->model) {
             $waybill = Waybill::find($this->model);
-            $routeto_branch = Routeto_branch::find($waybill->routeto_branch_id);
-            $order_add = Order_header::where('order_status', 'confirmed')
-                ->where('branch_rec_id', $routeto_branch->dest_branch_id)
-                ->pluck('order_header_no', 'id');
+            if ($waybill->waybill_type <> 'charter') {
+                $routeto_branch = Routeto_branch::find($waybill->routeto_branch_id);
+                $order_add = Order_header::where('order_status', 'confirmed')
+                    ->where('branch_rec_id', $routeto_branch->dest_branch_id)
+                    ->pluck('order_header_no', 'id');
 
-            return [
-                Select::make('ใบรับส่ง', 'order_add')
-                    ->options($order_add)
-                    ->searchable(),
-            ];
+                return [
+                    Select::make('ใบรับส่ง', 'order_add')
+                        ->options($order_add)
+                        ->searchable(),
+                ];
+            }
         }
         $order_add = Order_header::where('order_status', 'confirmed')->pluck('order_header_no', 'id');
 

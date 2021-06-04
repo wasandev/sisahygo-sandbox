@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Waybill;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
@@ -81,13 +82,18 @@ class OrderChecked extends Action
                 ->where('routeto_branch_id', '=', $routeto_branch->id)
                 ->where('waybill_status', '=', 'loading')
                 ->get();
+
             foreach ($waybills as $waybill) {
-                $waybillOptions = [
+                $waybillOptions[] = [
                     ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
                 ];
-                $selectOptions = collect($waybillOptions);
-                $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
             }
+            $selectOptions = collect($waybillOptions)->flatten(1);
+
+            $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
+
+
+
             if (isset($waybillOptions)) {
                 return [
 

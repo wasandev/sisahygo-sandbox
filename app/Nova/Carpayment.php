@@ -2,6 +2,11 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PrintCarpayment;
+use App\Nova\Filters\CarpaymentFromDate;
+use App\Nova\Filters\CarpaymentToDate;
+use App\Nova\Filters\PaymentType;
+use App\Nova\Lenses\accounts\CarpaymentReportByDay;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -77,14 +82,23 @@ class Carpayment extends Resource
                 ->default(function () {
                     return auth()->user()->branch_id;
                 })->searchable()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->readonly(),
             Select::make('ประเภทการจ่าย', 'type')
                 ->options([
                     'T' => 'ค่าบรรทุก',
-                    'B' => 'อื่นๆ',
+                    'O' => 'อื่นๆ',
+                    'B' => 'ค่าบรรทุกเก็บปลายทาง'
                 ])->default('T')
                 ->displayUsingLabels()
-                ->hideFromIndex(),
+                ->exceptOnForms(),
+            Select::make('ประเภทการจ่าย', 'type')
+                ->options([
+                    'T' => 'ค่าบรรทุก',
+                    'O' => 'อื่นๆ',
+                ])->default('T')
+                ->displayUsingLabels()
+                ->onlyOnForms(),
 
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
                 ->searchable(),
@@ -122,7 +136,7 @@ class Carpayment extends Resource
                     ->nullable()
             ])->dependsOn('payment_by', 'Q'),
             Boolean::make('มีภาษีหัก ณ ที่จ่าย', 'tax_flag')->hideFromIndex(),
-            Number::make('จำนวนภาษี', 'taxamount', function () {
+            Currency::make('จำนวนภาษี', 'taxamount', function () {
                 return $this->amount * 0.01;
             })->exceptOnForms()
                 ->hideFromIndex(),
@@ -159,7 +173,11 @@ class Carpayment extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new PaymentType,
+            new CarpaymentFromDate,
+            new CarpaymentToDate,
+        ];
     }
 
     /**
@@ -170,7 +188,9 @@ class Carpayment extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new CarpaymentReportByDay(),
+        ];
     }
 
     /**
@@ -181,6 +201,17 @@ class Carpayment extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new PrintCarpayment)->onlyOnDetail()
+                ->confirmText('ต้องการพิมพ์ใบสำคัญจ่ายรายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('view car_payments');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view car_payments');
+                }),
+        ];
     }
 }

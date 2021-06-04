@@ -3,8 +3,10 @@
 namespace App\Nova;
 
 use App\Nova\Filters\CarbalanceByCar;
+use App\Nova\Filters\CarbalanceByOwner;
 use App\Nova\Filters\CarbalanceFromDate;
 use App\Nova\Filters\CarbalanceToDate;
+use App\Nova\Lenses\cars\CarcardReport;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -105,6 +107,7 @@ class Car_balance extends Resource
     public function filters(Request $request)
     {
         return [
+            new CarbalanceByOwner,
             new CarbalanceByCar,
             new CarbalanceFromDate,
             new CarbalanceToDate,
@@ -119,7 +122,9 @@ class Car_balance extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new CarcardReport(),
+        ];
     }
 
     /**

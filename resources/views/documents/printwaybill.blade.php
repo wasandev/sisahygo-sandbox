@@ -13,10 +13,11 @@
         </h2>
     </tr>
 </table>
+
 <table style="width:100%;">
 
     <tr>
-        <td style="width: 50%;text-align: left;vertical-align:top">
+        <td style="width: 50%;text-align: left;border:0px">
             เลขที่ใบกำกับสินค้า: {{ $waybill->waybill_no }}<br />
             ทะเบียนรถ: {{ $waybill->car->car_regist }}<br />
             เจ้าของรถ:
@@ -29,7 +30,7 @@
             @endisset
 
         </td>
-        <td style="width:50%;vertical-align: middle;">
+        <td style="width:50%;vertical-align: middle;border:0px">
             วันที่ใบกำกับ:{{ $waybill->waybill_date }}<br />
             วันที่-เวลารถออกจากต้นทาง :{{ $waybill->departure_at }}<br />
             วันที่-เวลาถึงปลายทาง :{{ $waybill->arrival_at }}
@@ -38,11 +39,11 @@
     </tr>
 
 </table>
+<br/>
 
-
-<table style="border-bottom:1px solid black;border-top:1px solid black" >
+<table style="width: 100%" >
     <thead>
-        <tr style="border-bottom:1px solid black">
+        <tr>
             <th style="width: 5%;">ลำดับ</th>
             <th style="width: 15%;">ใบรับส่งสินค้า</th>
             <th style="text-align: left;width: 25%;">ผู้ส่งสินค้า</th>
@@ -55,7 +56,7 @@
 
     </thead>
 
-    <tbody style="vertical-align: middle;">
+    <tbody>
         @foreach ($order_district as $district => $order_groups)
             <tr>
                 <td colspan="8" style="border-top: 1.0px solid black;">
@@ -101,7 +102,7 @@
             </tr>
             @endforeach
         @endforeach
-        <tr style="padding-top: 10px;border-top: 1px solid black;vertical-align: middle;">
+        <tr>
 
             <td colspan="5">รวมจำนวนใบรับส่งทั้งหมด {{count($order) }} รายการ</td>
 
@@ -114,7 +115,7 @@
 
 </table>
 <br>
-<table style="width: 100%;height:2cm;border: 1px solid black;padding: 10px">
+<table>
     <tr>
         <td style="width: 25%">
             ค่าระวาง:
@@ -128,7 +129,7 @@
 
         </td>
         <td style="width: 25%;text-align: right">
-            ..............................................................
+
         </td>
     </tr>
     <tr>
@@ -144,7 +145,7 @@
 
         </td>
         <td style="width: 25%;text-align: right">
-            ..............................................................
+
         </td>
     </tr>
 
@@ -161,7 +162,7 @@
 
         </td>
         <td style="width: 25%;text-align: right">
-            ..............................................................
+
         </td>
     </tr>
 

@@ -8,6 +8,23 @@ body {
   display: block;
 }
 
+table {
+  border-top: 0px solid black;
+  border-bottom: .5px solid gray;
+  border-collapse: collapse;
+  vertical-align:top;
+}
+
+th{
+  border: 0.5px solid gray;
+  border-collapse: collapse;
+}
+
+td {
+  border: 0.5px solid gray;
+  border-collapse: collapse;
+}
+
 @media print {
   @page {
     size: A4;
@@ -16,7 +33,7 @@ body {
   }
 
   body {
-    font-size: 10pt;
+    font-size: 8pt;
     font-family:serif;
     color: black;
   }
@@ -24,13 +41,6 @@ body {
   .header {
     display: block;
   }
-
-  #pageFooter {
-    display: table-footer-group;
-  }
-
-  #pageFooter:after {
-    counter-increment: page;
-    content: counter(page);
-  }
 }
+
+

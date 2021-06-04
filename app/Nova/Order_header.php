@@ -101,7 +101,8 @@ class Order_header extends Resource
             ID::make('ลำดับ', 'id')
                 ->sortable(),
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
-                ->hideWhenCreating()
+                //->hideWhenCreating()
+                ->onlyOnDetail()
                 ->withMeta([
                     'belongsToId' => $this->branch_id ?? $request->user()->branch_id
                 ]),
@@ -283,6 +284,9 @@ class Order_header extends Resource
             new lenses\accounts\OrderReportBillByDay(),
             new lenses\accounts\OrderReportByDay(),
             new lenses\accounts\OrderReportByBranchrec(),
+            new lenses\accounts\OrderReportCancelByDay(),
+            new Lenses\accounts\OrderReportCashByDay(),
+            new Lenses\accounts\OrderReportCrByDay(),
         ];
     }
 

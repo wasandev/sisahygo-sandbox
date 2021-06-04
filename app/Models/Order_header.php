@@ -15,6 +15,7 @@ class Order_header extends Model
     protected $casts = [
         'order_header_date' => 'date',
         'created_at' => 'datetime',
+        'canceled_at' => 'datetime',
     ];
     public function customer()
     {

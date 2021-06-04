@@ -1739,6 +1739,12 @@ return [
             'description'  => 'Branch Dashboard',
             'group'        => 'Dashboard',
         ],
+        //report
+        'view reportdashboards' => [
+            'display_name' => 'Report Dashboard',
+            'description'  => 'Report Dashboard',
+            'group'        => 'Dashboard',
+        ],
         //Quick menu
         'view checkercards' => [
             'display_name' => 'Checker Quick Menu',
@@ -1785,6 +1791,8 @@ return [
             'description'  => 'Branch Quick Menu',
             'group'        => 'Dashboard',
         ],
+
+
         //Actions
     ],
 ];

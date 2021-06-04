@@ -11,7 +11,10 @@ class Order_status extends Model
     protected $fillable = [
         'order_header_id', 'status', 'user_id', 'updated_by'
     ];
-
+    protected $casts = [
+        
+        'created_at' => 'datetime',
+    ];
     public function order_header()
     {
         return $this->belongsTo('App\Models\Order_header');

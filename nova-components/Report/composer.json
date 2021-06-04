@@ -1,0 +1,29 @@
+{
+    "name": "wasandev/report",
+    "description": "A Laravel Nova card.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wasandev\\Report\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wasandev\\Report\\CardServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

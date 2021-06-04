@@ -92,9 +92,9 @@ class Order_loader extends Resource
             ])->onlyOnIndex()
                 ->displayUsingLabels(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
-                ->nullable()
-                ->searchable()
-                ->withSubtitles(),
+                ->nullable(),
+            // ->searchable()
+            // ->withSubtitles(),
 
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly()

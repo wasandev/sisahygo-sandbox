@@ -2,6 +2,7 @@
 
 namespace App\Nova\Lenses\accounts;
 
+use App\Nova\Actions\Accounts\PrintOrderReportByDay;
 use App\Nova\Filters\Branch;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
@@ -29,10 +30,11 @@ class OrderReportByDay extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_id')
-                ->whereNotIn('order_headers.order_status', ['checking', 'new'])
+                ->whereNotIn('order_headers.order_status', ['checking', 'new', 'cancel'])
                 ->orderBy('order_headers.branch_id', 'asc')
                 ->orderBy('order_headers.order_header_date')
-                ->groupBy('order_headers.branch_id', 'order_headers.order_header_date')
+                ->orderBy('order_headers.order_type')
+                ->groupBy('order_headers.branch_id', 'order_headers.order_header_date', 'order_headers.order_type')
         ));
     }
     /**
@@ -46,6 +48,7 @@ class OrderReportByDay extends Lens
 
             'branches.name',
             'order_headers.order_header_date',
+            'order_headers.order_type',
             DB::raw('sum(order_headers.order_amount) as amount'),
         ];
     }
@@ -61,6 +64,16 @@ class OrderReportByDay extends Lens
 
             Text::make(__('Branch'), 'name'),
             Date::make('วันที่', 'order_header_date'),
+            Text::make('ประเภท', function () {
+                if ($this->order_type == 'general') {
+                    $order_type = 'ทั่วไป';
+                } elseif ($this->order_type == 'express') {
+                    $order_type = 'Express';
+                } else {
+                    $order_type = 'เหมาคัน';
+                }
+                return $order_type;
+            }),
             Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
                 return $value;
             }),
@@ -102,6 +115,11 @@ class OrderReportByDay extends Lens
     public function actions(Request $request)
     {
         return [
+            (new PrintOrderReportByDay($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');

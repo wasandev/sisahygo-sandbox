@@ -2,7 +2,6 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\Waybill;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -10,20 +9,20 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Date;
 
-class WaybillByDatePrint extends Action
+class PrintCarpayment extends Action
 {
     use InteractsWithQueue, Queueable;
-
+    public $withoutActionEvents = true;
     public function uriKey()
     {
-        return 'waybill_by_date_print';
+        return 'print-carpayment';
     }
     public function name()
     {
-        return 'รายงานรถออกประจำวัน';
+        return 'พิมพ์ใบสำคัญจ่าย';
     }
+
 
     /**
      * Perform the action on the given models.
@@ -34,13 +33,13 @@ class WaybillByDatePrint extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        foreach ($models as $model) {
 
-        $waybillController =  new \App\Http\Controllers\WaybillController();
-        $path = $waybillController->waybillBydate($fields->from_date, $fields->to_date);
 
-        return Action::openInNewTab(Storage::url('reports/' . 'waybill' . $fields->from_date . '.pdf'));
+            return Action::openInNewTab('/car/carpaymentprint/' . $model->id);
+        }
+        return Action::push('/resources/carpayments');
     }
-
     /**
      * Get the fields available on the action.
      *
@@ -48,9 +47,6 @@ class WaybillByDatePrint extends Action
      */
     public function fields()
     {
-        return [
-            Date::make('จากวันที่', 'from_date')->rules('required'),
-            Date::make('ถึงวันที่', 'to_date')->rules('required'),
-        ];
+        return [];
     }
 }

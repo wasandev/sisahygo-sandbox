@@ -42,13 +42,13 @@ class PrintOrderBillingCash extends Action
         $branch_value = Arr::get($branch, 'value');
 
         if ($branch_value == '') {
-            return Action::message('เลือกสาขาที่ต้องการที่เมนูกรองข้อมูลก่อน');
+            return Action::danger('เลือกสาขาที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
 
         $orderdate  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderDateFilter');
         $orderdate_value = Arr::get($orderdate, 'value');
         if ($orderdate_value == '') {
-            return Action::message('เลือกวันที่ ที่ต้องการที่เมนูกรองข้อมูลก่อน');
+            return Action::danger('เลือกวันที่ ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
         return Action::openInNewTab('/orderheader/report_1/' . $branch_value . '/' . $orderdate_value);
     }

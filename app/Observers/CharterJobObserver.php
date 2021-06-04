@@ -74,6 +74,8 @@ class CharterJobObserver
                 'waybill_amount' => $charter_job->total + $service_charge,
                 'waybill_payable' => $charter_price->car_charge,
                 'waybill_income' => $charter_job->total - $charter_price->car_charge,
+                'branch_id' => $charter_job->branch_id,
+                'branch_rec_id' => $charter_job->branch_id,
                 'waybill_status' => 'confirmed',
                 'user_id' => auth()->user()->id,
 

@@ -75,6 +75,7 @@ class OrderBillingCash extends Lens
             Currency::make(__('จำนวนเงิน'), 'cash', function ($value) {
                 return $value;
             }),
+
         ];
     }
 
@@ -114,17 +115,18 @@ class OrderBillingCash extends Lens
 
 
         return [
+            (new PrintOrderBillingCash($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
             (new DownloadExcel)->allFields()
                 ->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
                 }),
 
-            (new PrintOrderBillingCash($request->filters))
-                ->standalone()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('view order_headers');
-                }),
+
         ];
     }
 
