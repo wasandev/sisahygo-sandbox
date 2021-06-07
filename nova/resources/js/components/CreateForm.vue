@@ -246,6 +246,8 @@ export default {
           if (error.response.status == 422) {
             this.validationErrors = new Errors(error.response.data.errors)
             Nova.error(this.__('There was a problem submitting the form.'))
+          } else if (error.response.status == 500) {
+            Nova.error(this.__('There was a problem submitting the form.'))
           } else {
             Nova.error(
               this.__('There was a problem submitting the form.') +

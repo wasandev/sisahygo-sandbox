@@ -37,7 +37,9 @@ class AssociatableController extends Controller
                         ->filter->authorizedToAdd($request, $request->model())
                         ->map(function ($resource) use ($request, $field) {
                             return $field->formatAssociatableResource($request, $resource);
-                        })->sortBy('display')->values(),
+                        })->when(optional($field)->shouldReorderAssociatableValues($request) ?? true, function ($collection) {
+                            return $collection->sortBy('display');
+                        })->values(),
             'softDeletes' => $associatedResource::softDeletes(),
             'withTrashed' => $withTrashed,
         ];

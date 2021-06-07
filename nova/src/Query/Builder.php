@@ -6,12 +6,13 @@ use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\LazyCollection;
+use Laravel\Nova\Contracts\QueryBuilder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\TrashedStatus;
 use Laravel\Scout\Builder as ScoutBuilder;
 use RuntimeException;
 
-class Builder
+class Builder implements QueryBuilder
 {
     /**
      * The resource class.
@@ -40,6 +41,13 @@ class Builder
      * @var array
      */
     protected $queryCallbacks = [];
+
+    /**
+     * Determine query callbacks has been applied.
+     *
+     * @var bool
+     */
+    protected $appliedQueryCallbacks = false;
 
     /**
      * Construct a new query builder for a resource.
@@ -198,7 +206,7 @@ class Builder
         if ($queryBuilder instanceof EloquentBuilder) {
             return [
                 $queryBuilder->simplePaginate($perPage),
-                $queryBuilder->toBase()->getCountForPagination(),
+                $this->getCountForPagination(),
             ];
         }
 
@@ -220,6 +228,16 @@ class Builder
     }
 
     /**
+     * Get the count of the total records for the paginator.
+     *
+     * @return int|null
+     */
+    public function getCountForPagination()
+    {
+        return $this->toBaseQueryBuilder()->getCountForPagination();
+    }
+
+    /**
      * Convert the query builder to an Eloquent query builder (skip using Scout).
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -227,6 +245,16 @@ class Builder
     public function toBase()
     {
         return $this->applyQueryCallbacks($this->originalQueryBuilder);
+    }
+
+    /**
+     * Convert the query builder to an fluent query builder (skip using Scout).
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function toBaseQueryBuilder()
+    {
+        return $this->toBase()->toBase();
     }
 
     /**
@@ -252,6 +280,10 @@ class Builder
      */
     protected function applyQueryCallbacks($queryBuilder)
     {
+        if ($this->appliedQueryCallbacks === true) {
+            return $queryBuilder;
+        }
+
         $callback = function ($queryBuilder) {
             collect($this->queryCallbacks)
                 ->filter()
@@ -265,6 +297,8 @@ class Builder
         } else {
             $queryBuilder->tap($callback);
         }
+
+        $this->appliedQueryCallbacks = true;
 
         return $queryBuilder;
     }

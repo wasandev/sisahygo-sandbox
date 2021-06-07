@@ -15,9 +15,7 @@ class ReportDashboard extends Dashboard
     public function cards()
     {
         return [
-            (new Report())->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('view reportcards');
-            }),
+            new Report(),
         ];
     }
 

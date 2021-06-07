@@ -14,7 +14,12 @@
         slot="field"
         :value="resourceType"
         @change="refreshResourcesForTypeChange"
-        class="block w-full form-control form-input form-input-bordered form-select mb-3"
+        class="
+          block
+          w-full
+          form-control form-input form-input-bordered form-select
+          mb-3
+        "
       >
         <option value="" selected :disabled="!field.nullable">
           {{ __('Choose Type') }}
