@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
+use App\Models\Car_balance;
 use App\Models\Carpayment;
 use App\Models\Carreceive;
 use App\Models\CompanyProfile;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -74,5 +77,74 @@ class CarController extends Controller
         });
         $receive_date = $receive_groups->all();
         return view('reports.carreceivereportbyday', compact('company', 'report_title', 'carreceives', 'receive_date', 'from', 'to'));
+    }
+
+    public function report_13($car, $from, $to)
+    {
+        $report_title = 'รายงานบัญชีคุมรถ';
+        $company = CompanyProfile::find(1);
+        $cardata = Car::find($car);
+        $recforword = Car_balance::where('car_id', $car)
+            ->where('cardoc_date', '<', $from)
+            ->where('doctype', '=', 'R')
+            ->sum('amount');
+        $payforword = Car_balance::where('car_id', $car)
+            ->where('cardoc_date', '<', $from)
+            ->where('doctype', '=', 'P')
+            ->sum('amount');
+
+        $carcards = Car_balance::where('car_id', $car)
+            ->where('cardoc_date', '>=', $from)
+            ->where('cardoc_date', '<=', $to)
+            ->orderBy('cardoc_date', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return view('reports.carcardreportbyday', compact('company', 'report_title', 'carcards', 'recforword', 'payforword', 'cardata', 'from', 'to'));
+    }
+    public function report_14($owner, $from, $to)
+    {
+        $report_title = 'รายงานบัญชีคุมรถตามเจ้าของรถ';
+        $company = CompanyProfile::find(1);
+        $ownerdata = Vendor::find($owner);
+        $recforword = Car_balance::where('vendor_id', $owner)
+            ->where('cardoc_date', '<', $from)
+            ->where('doctype', '=', 'R')
+            ->sum('amount');
+        $payforword = Car_balance::where('vendor_id', $owner)
+            ->where('cardoc_date', '<', $from)
+            ->where('doctype', '=', 'P')
+            ->sum('amount');
+
+        $ownercards = Car_balance::where('vendor_id', $owner)
+            ->where('cardoc_date', '>=', $from)
+            ->where('cardoc_date', '<=', $to)
+            ->orderBy('cardoc_date', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $car_groups = $ownercards->groupBy(function ($item) {
+            return $item->car_id;
+        });
+        $car_groups = $car_groups->all();
+
+        return view('reports.ownercardreportbyday', compact('company', 'report_title', 'ownercards', 'car_groups', 'recforword', 'payforword', 'ownerdata', 'from', 'to'));
+    }
+    public function report_15($to)
+    {
+        $report_title = 'รายงานสรุปยอดคงเหลือของรถ';
+        $company = CompanyProfile::find(1);
+
+
+        $car_balances = Car_balance::where('cardoc_date', '<=', $to)
+            ->orderBy('vendor_id', 'asc')
+            ->orderBy('car_id', 'asc')
+            ->get();
+
+        $balance_groups = $car_balances->groupBy(['vendor_id', 'car_id']);
+
+        $balance_groups = $balance_groups->all();
+
+        return view('reports.carsummaryreportbyday', compact('company', 'report_title', 'car_balances', 'balance_groups',  'to'));
     }
 }

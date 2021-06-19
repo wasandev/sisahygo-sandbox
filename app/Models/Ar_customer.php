@@ -86,6 +86,10 @@ class Ar_customer extends Model
     {
         return $this->hasMany('App\Models\Ar_balance', 'customer_id');
     }
+    public function receipt_ars()
+    {
+        return $this->hasMany('App\Models\Receipt_ar', 'customer_id');
+    }
     /*
 	Provide the Location value to the Nova field
 	*/

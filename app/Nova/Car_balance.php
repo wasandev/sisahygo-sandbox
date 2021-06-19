@@ -7,6 +7,7 @@ use App\Nova\Filters\CarbalanceByOwner;
 use App\Nova\Filters\CarbalanceFromDate;
 use App\Nova\Filters\CarbalanceToDate;
 use App\Nova\Lenses\cars\CarcardReport;
+use App\Nova\Lenses\cars\CarsummaryReport;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -124,6 +125,7 @@ class Car_balance extends Resource
     {
         return [
             new CarcardReport(),
+            new CarsummaryReport(),
         ];
     }
 

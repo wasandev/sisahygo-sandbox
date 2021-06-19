@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PrintReceipt;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
 use App\Nova\Filters\Receipttype;
@@ -149,6 +150,8 @@ class Receipt_all extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new PrintReceipt(),
+        ];
     }
 }

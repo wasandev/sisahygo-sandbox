@@ -112,6 +112,7 @@ class Vendor extends Resource
             new Panel('ที่อยู่', $this->addressFields()),
             new Panel('ข้อมูลบัญชีธนาคารสำหรับโอนเงิน', $this->bankaccountFields()),
             new Panel('อื่นๆ', $this->otherFields()),
+            HasMany::make('รถบรรทุก', 'cars', 'App\Nova\Car')
 
 
         ];

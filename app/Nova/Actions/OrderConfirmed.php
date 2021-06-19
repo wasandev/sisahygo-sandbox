@@ -18,6 +18,7 @@ use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
+
 class OrderConfirmed extends Action
 {
     use InteractsWithQueue, Queueable;
@@ -48,16 +49,17 @@ class OrderConfirmed extends Action
     {
         foreach ($models as $model) {
             $hasitem = count($model->order_details);
-            //$order_amount = $model->order_details->price->sum();
-            if ($fields->paymenttype == 'F'  && $model->customer->paymenttype <> 'Y') {
-                return Action::danger('ลูกค้ารายนี้ไม่ใช่ลูกหนี้การค้า');
-            }
-            if ($fields->paymenttype == 'L'  && $model->to_customer->paymenttype <> 'Y') {
-                return Action::danger('ลูกค้ารายนี้ไม่ใช่ลูกหนี้การค้า');
-            }
-            if ($model->order_status <> 'new') {
-                return Action::danger('ไม่สามารถยืนยันรายการที่ ยืนยัน/ยกเลิก ไปแล้วได้');
-            } elseif ($hasitem) {
+            if ($hasitem) {
+
+                if ($fields->paymenttype == 'F'  && $model->customer->paymenttype <> 'Y') {
+                    return Action::danger('ลูกค้ารายนี้ไม่ใช่ลูกหนี้การค้า');
+                }
+                if ($fields->paymenttype == 'L'  && $model->to_customer->paymenttype <> 'Y') {
+                    return Action::danger('ลูกค้ารายนี้ไม่ใช่ลูกหนี้การค้า');
+                }
+                if ($model->order_status <> 'new') {
+                    return Action::danger('ไม่สามารถยืนยันรายการที่ ยืนยัน/ยกเลิก ไปแล้วได้');
+                }
 
                 $model->order_amount = $fields->order_amount;
                 $model->paymenttype =  $fields->paymenttype;
@@ -67,13 +69,11 @@ class OrderConfirmed extends Action
 
                 $model->save();
 
-                $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
-                $path = $orderheaderController->preview($model->id);
-                Action::message('ยืนยันรายการแล้ว');
-                return Action::openInNewTab('/orderheader/preview/' . $model->id);
-            }
 
-            return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');
+                return Action::push('/resources/order_headers/');
+            } else {
+                return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');
+            }
         }
     }
 

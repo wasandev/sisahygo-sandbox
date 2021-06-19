@@ -1,0 +1,45 @@
+body {
+  font-size: 14px;
+  font-family: sans-serif;
+  color: black;
+}
+
+.header {
+  display: block;
+}
+
+table {
+  border-top: 0px solid black;
+  border-bottom: .5px solid gray;
+  border-collapse: collapse;
+  vertical-align:top;
+  border-radius: 10px;
+}
+
+th{
+  border-top: 0.5px solid gray;
+  border-bottom: 0.5px solid gray;
+  border-collapse: collapse;
+}
+
+td {
+  border: 0.5px solid gray;
+  border-collapse: collapse;
+}
+
+@media print {
+  @page {
+    size: 20.5cm 14cm;
+    margin: 0.5cm;
+  }
+
+  body {
+    font-size: 9pt;
+    font-family:serif;
+    color: black;
+  }
+
+  .header {
+    display: none;
+  }
+}

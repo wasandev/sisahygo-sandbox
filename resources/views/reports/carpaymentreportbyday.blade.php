@@ -15,7 +15,7 @@
         </td>
         <td style="width:50%;text-align: right;border:0px">
             <strong>
-            ระหว่างวันที่: {{$from}}<br/> ถึงวันที่: {{$to}}<br/>
+            ระหว่างวันที่: {{date("d-m-Y", strtotime($from))}}<br/> ถึงวันที่: {{date("d-m-Y", strtotime($to))}}<br/>
             </strong>
         </td>
     </tr>

@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\InvoiceReceipt;
+use App\Nova\Actions\PrintInvoice;
 use App\Nova\Filters\ArbalanceByCustomer;
 use App\Nova\Filters\InvoiceFromDate;
 use App\Nova\Filters\InvoiceNotReceipt;
@@ -163,6 +164,7 @@ class Invoice extends Resource
     public function actions(Request $request)
     {
         return [
+            (new PrintInvoice),
             (new InvoiceReceipt)
                 ->showOnIndex()
                 ->confirmText('ต้องการรับชำระหนี้จากใบแจ้งหนี้ที่เลือกไว้')
@@ -170,7 +172,8 @@ class Invoice extends Resource
                 ->cancelButtonText("ยกเลิก")
                 ->canRun(function ($request, $model) {
                     return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('edit receipt_ar');
-                })
+                }),
+
 
         ];
     }

@@ -73,6 +73,7 @@ class OrderChecked extends Action
     {
         $waybills = Waybill::where('waybill_status', 'loading')->pluck('waybill_no', 'id');
         $loaders = User::where('branch_id', '=', auth()->user()->branch_id);
+        $waybillOptions = [];
 
         if (isset(request()->resourceId)) {
             $order_checker   =    Order_checker::find(request()->resourceId);
@@ -82,16 +83,16 @@ class OrderChecked extends Action
                 ->where('routeto_branch_id', '=', $routeto_branch->id)
                 ->where('waybill_status', '=', 'loading')
                 ->get();
+            if (isset($waybills)) {
+                foreach ($waybills as $waybill) {
+                    $waybillOptions[] = [
+                        ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+                    ];
+                }
+                $selectOptions = collect($waybillOptions)->flatten(1);
 
-            foreach ($waybills as $waybill) {
-                $waybillOptions[] = [
-                    ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
-                ];
+                $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
             }
-            $selectOptions = collect($waybillOptions)->flatten(1);
-
-            $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
-
 
 
             if (isset($waybillOptions)) {

@@ -44,8 +44,8 @@ Route::middleware('web', 'auth')
         Route::get('/orderheader/report_5/{branch}/{from}/{to}', 'OrderHeaderController@report_5')->name('report_5');
         Route::get('/orderheader/report_6/{branch}/{from}/{to}', 'OrderHeaderController@report_6')->name('report_6');
         Route::get('/orderheader/report_7/{branch}/{from}/{to}', 'OrderHeaderController@report_7')->name('report_7');
-        Route::get('/orderheader/report_8/{branch}/{from}/{to}', 'OrderHeaderController@report_8')->name('report_8');
-        Route::get('/orderheader/report_9/{branch}/{from}/{to}', 'OrderHeaderController@report_9')->name('report_9');
+        Route::get('/orderheader/report_8/{branch}/{from}/{to}/{artype}', 'OrderHeaderController@report_8')->name('report_8');
+        Route::get('/orderheader/report_9/{branch}/{from}/{to}/{artype}', 'OrderHeaderController@report_9')->name('report_9');
 
 
         Route::get('/waybill/makepdf/{id}', 'WaybillController@makePDF')->name('makepdf');
@@ -64,4 +64,15 @@ Route::middleware('web', 'auth')
         Route::get('/car/carreceiveprint/{id}', 'CarController@carreceiveprint')->name('carreceivetprint');
         Route::get('/car/report_11/{from}/{to}/{type}', 'CarController@report_11')->name('report_11');
         Route::get('/car/report_12/{from}/{to}', 'CarController@report_12')->name('report_12');
+        Route::get('/car/report_13/{car}/{from}/{to}', 'CarController@report_13')->name('report_13');
+        Route::get('/car/report_14/{owner}/{from}/{to}', 'CarController@report_14')->name('report_14');
+        Route::get('/car/report_15/{to}', 'CarController@report_15')->name('report_15');
+
+        //ar
+        Route::get('/invoice/preview/{id}', 'InvoiceController@preview')->name('preview');
+        Route::get('/receipt/preview/{id}', 'ReceiptController@preview')->name('preview');
+        Route::get('/ar/report_16/{customer}/{from}/{to}', 'ArController@report_16')->name('report_16');
+        Route::get('/ar/report_17/{from}/{to}', 'ArController@report_17')->name('report_17');
+        Route::get('/ar/report_18/{from}/{to}', 'ArController@report_18')->name('report_18');
+        Route::get('/ar/report_19/{cutomer}/{from}/{to}', 'ArController@report_19')->name('report_19');
     });

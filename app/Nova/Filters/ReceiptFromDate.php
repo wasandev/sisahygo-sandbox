@@ -9,6 +9,8 @@ use Laravel\Nova\Filters\DateFilter;
 class ReceiptFromDate extends DateFilter
 {
     public $name = 'จากวันที่';
+
+
     /**
      * Apply the filter to the given query.
      *
@@ -17,6 +19,11 @@ class ReceiptFromDate extends DateFilter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
+
+    public function default()
+    {
+        return date('Y-m-01');
+    }
     public function apply(Request $request, $query, $value)
     {
         return $query->whereDate('receipt_date', '>=', $value);

@@ -109,6 +109,7 @@ class Order_header extends Resource
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->hideWhenCreating()
+                ->hideFromIndex()
                 ->showOnUpdating(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
@@ -131,12 +132,13 @@ class Order_header extends Resource
                 'express' => 'Express',
             ])->sortable()
                 ->default('general')
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->hideFromIndex(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->searchable()
                 ->withSubtitles()
-                ->hideWhenCreating(),
+                ->onlyOnDetail(),
 
 
 
@@ -158,17 +160,10 @@ class Order_header extends Resource
                 'E' => 'เงินสดปลายทาง',
                 'F' => 'วางบิลต้นทาง',
                 'L' => 'วางบิลปลายทาง'
-            ])->onlyOnIndex(),
-            Select::make(__('Payment type'), 'paymenttype')->options([
-                'H' => 'เงินสดต้นทาง',
-                'T' => 'เงินโอนต้นทาง',
-                'E' => 'เงินสดปลายทาง',
-                'F' => 'วางบิลต้นทาง',
-                'L' => 'วางบิลปลายทาง'
             ])->displayUsingLabels()
                 ->onlyOnDetail(),
             Boolean::make(__('Payment status'), 'payment_status')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
 
             Boolean::make('สแกน Qr Code ผู้ส่ง', 'useqrcode')
                 ->onlyOnForms(),
@@ -313,15 +308,15 @@ class Order_header extends Resource
                         || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'new'));
                 }),
             (new Actions\PrintOrder)
-                ->onlyOnDetail()
+                ->showOnTableRow()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")
                 ->canRun(function ($request, $model) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
+                    return $request->user()->hasPermissionTo('view order_headers');
                 })
                 ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
+                    return $request->user()->hasPermissionTo('view order_headers');
                 }),
             (new Actions\PrintPdfOrder)
                 ->onlyOnDetail()

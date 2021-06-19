@@ -10,7 +10,7 @@
             <strong>{{ $company->company_name }}</strong>
             สำนักงานใหญ่ เลขประตัวผู้เสียภาษีอากร {{ $company->taxid}}<br/>
             {{ $company->address .' '.$company->sub_district.' '.$company->district.' ' .$company->province.' '.$company->postal_code }}
-            <br/>โทรศัพท์ {{$company->phoneno}} อีเมล : {{$company->email}}
+            <br/>โทรศัพท์ {{$company->phoneno}} E-mail : {{$company->email}} Web Site: {{$company->weburl}}
 
         </td>
     </tr>

@@ -9,6 +9,10 @@ use Laravel\Nova\Filters\DateFilter;
 class ArbalanceToDate extends DateFilter
 {
     public $name = 'ถึงวันที่';
+    public function default()
+    {
+        return date(today());
+    }
     /**
      * Apply the filter to the given query.
      *
@@ -19,6 +23,6 @@ class ArbalanceToDate extends DateFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->whereDate('created_at', '<=', $value);
+        return $query->where('ar_balances.docdate', '<=', $value);
     }
 }

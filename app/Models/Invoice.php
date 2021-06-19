@@ -10,6 +10,7 @@ class Invoice extends Model
     use HasFactory;
     protected $fillable = ['customer_id', 'status', 'invoice_no', 'invoice_date', 'due_date', 'description', 'user_id', 'updated_by'];
     protected $casts = ['invoice_date' => 'date', 'due_date' => 'date'];
+
     public function ar_customer()
     {
         return $this->belongsTo('App\Models\Ar_customer', 'customer_id');

@@ -28,9 +28,11 @@ class OrderCheckerObserver
         $order_checker->branch_id =  auth()->user()->branch_id;
         $customer_paymenttype = $order_checker->customer->paymenttype;
         $to_customer_paymenttype = $order_checker->to_customer->paymenttype;
-        if ($customer_paymenttype == 'H' || $to_customer_paymenttype == 'H') {
+        if ($customer_paymenttype == 'H') {
             $order_checker->paymenttype = 'H';
-        } elseif ($customer_paymenttype == 'E' || $to_customer_paymenttype == 'E') {
+        } elseif ($to_customer_paymenttype == 'H') {
+            $order_checker->paymenttype = 'H';
+        } elseif ($customer_paymenttype == 'E') {
             $order_checker->paymenttype = 'E';
         } elseif ($customer_paymenttype == 'Y') {
             $order_checker->paymenttype = 'F';

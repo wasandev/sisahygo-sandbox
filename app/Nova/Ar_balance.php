@@ -10,6 +10,9 @@ use App\Nova\Filters\ArbalanceFromDate;
 use App\Nova\Filters\ArbalanceNotInvoice;
 use App\Nova\Filters\ArbalanceNotReceipt;
 use App\Nova\Filters\ArbalanceToDate;
+use App\Nova\Lenses\ar\ArcardReport;
+use App\Nova\Lenses\ar\ArOutstandingReport;
+use App\Nova\Lenses\ar\ArSummaryReport;
 use App\Nova\Metrics\OrderBillPerDay;
 use App\Nova\Metrics\OrderBranchPerDay;
 use Illuminate\Http\Request;
@@ -58,7 +61,7 @@ class Ar_balance extends Resource
     ];
     public static function label()
     {
-        return 'รายการวางบิล';
+        return 'ใบรับส่งวางบิล';
     }
     /**
      * Get the fields displayed by the resource.
@@ -76,22 +79,24 @@ class Ar_balance extends Resource
                 }
                 return false;
             }),
-            Date::make('วันที่ตั้งหนี้', 'created_at')
+            Date::make('วันที่ตั้งหนี้', 'docdate')
                 ->format('DD/MM/YYYY')
+                ->sortable(),
+            BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
                 ->sortable(),
             BelongsTo::make('ชื่อลูกค้า', 'ar_customer', 'App\Nova\Ar_customer')
                 ->searchable()
                 ->sortable()
                 ->readonly(),
-            BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
-                ->sortable(),
+
 
             Currency::make('จำนวนเงิน', 'ar_amount')
                 ->sortable(),
             BelongsTo::make('ใบแจ้งหนี้', 'invoice', 'App\Nova\Invoice')
                 ->sortable(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_ar', 'App\Nova\Receipt_ar')
-                ->sortable(),
+                ->sortable()
+                ->hideFromIndex(),
 
 
         ];
@@ -133,7 +138,11 @@ class Ar_balance extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new ArOutstandingReport(),
+            new ArcardReport(),
+            new ArSummaryReport()
+        ];
     }
 
     /**
@@ -145,6 +154,7 @@ class Ar_balance extends Resource
     public function actions(Request $request)
     {
         return [
+
             (new CreateInvoice)
                 ->showOnIndex()
                 ->confirmText('ต้องการสร้างใบแจ้งหนี้จากใบรับส่งที่เลือกไว้')
@@ -189,5 +199,11 @@ class Ar_balance extends Resource
                     return $this->resource instanceof Model && $this->resource->invoice_id === null;
                 }),
         ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+
+        return $query->where('doctype', '=', 'P');
     }
 }

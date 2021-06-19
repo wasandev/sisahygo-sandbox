@@ -23,7 +23,7 @@
         </td>
         <td style="width:50%;text-align: right;vertical-align: middle;">
             <strong>
-            วันที่: {{$orderdate}}<br/>
+            วันที่: {{ date("d-m-Y", strtotime($orderdate))}}<br/>
             </strong>
         </td>
     </tr>

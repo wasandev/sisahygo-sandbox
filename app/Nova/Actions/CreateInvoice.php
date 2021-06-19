@@ -62,11 +62,11 @@ class CreateInvoice extends Action
                         $model->save();
                     }
                 }
+                return Action::message('สร้างใบแจ้งหนี้เรียบร้อยแล้ว');
             } else {
                 return Action::danger('ไม่มีรายการสร้างใบแจ้งหนี้หรือรายการที่เลือกสร้างใบแจ้งหนี้แล้ว');
             }
         }
-        return Action::message('สร้างใบแจ้งหนี้เรียบร้อยแล้ว');
     }
 
     /**

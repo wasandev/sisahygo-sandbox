@@ -4,15 +4,20 @@ namespace App\Observers;
 
 use App\Models\Ar_balance;
 use App\Models\Invoice;
+use Illuminate\Support\Carbon;
 
 class InvoiceObserver
 {
 
     public function creating(Invoice $invoice)
     {
+        $invoice_date = Carbon::parse($invoice->invoice_date);
+        $invoice->due_date = $invoice_date->addDays($invoice->ar_customer->creditterm);
     }
     public function updating(Invoice $invoice)
     {
+        $invoice_date = Carbon::parse($invoice->invoice_date);
+        $invoice->due_date = $invoice_date->addDays($invoice->ar_customer->creditterm);
         $invoice->updated_by = auth()->user()->id;
     }
 

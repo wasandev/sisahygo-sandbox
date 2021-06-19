@@ -9,7 +9,7 @@ class Receipt_ar extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'receipt_no', 'receipt_date', 'branch_id', 'customer_id', 'total_amount', 'discount_amount',
+        'receipt_no', 'status', 'receipt_date', 'branch_id', 'customer_id', 'total_amount', 'discount_amount',
         'tax_amount', 'pay_amount', 'receipttype', 'branchpay_by', 'bankaccount_id', 'bankreference',
         'chequeno', 'chequedate', 'chequebank_id', 'description', 'user_id', 'updated_by'
     ];

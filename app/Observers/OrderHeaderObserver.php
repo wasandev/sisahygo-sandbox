@@ -11,6 +11,11 @@ use App\Models\Customer;
 use App\Models\Branch_area;
 use App\Exceptions\MyCustomException;
 use App\Models\Ar_balance;
+use App\Nova\Actions\OrderConfirmed;
+use App\Nova\Actions\PrintOrder;
+use Illuminate\Database\Eloquent\Collection;
+use Laravel\Nova\Actions\DispatchAction;
+use Laravel\Nova\Http\Requests\ActionRequest;
 
 class OrderHeaderObserver
 {
@@ -34,9 +39,12 @@ class OrderHeaderObserver
             $order_header->branch_rec_id = $to_branch->branch_id;
             $customer_paymenttype = $order_header->customer->paymenttype;
             $to_customer_paymenttype = $order_header->to_customer->paymenttype;
-            if ($customer_paymenttype == 'H' && $to_customer_paymenttype == 'H') {
+
+            if ($customer_paymenttype == 'H') {
                 $order_header->paymenttype = 'H';
-            } elseif ($customer_paymenttype == 'E' && $to_customer_paymenttype == 'E') {
+            } elseif ($to_customer_paymenttype == 'H') {
+                $order_header->paymenttype = 'H';
+            } elseif ($customer_paymenttype == 'E') {
                 $order_header->paymenttype = 'E';
             } elseif ($customer_paymenttype == 'Y') {
                 $order_header->paymenttype = 'F';
@@ -115,6 +123,9 @@ class OrderHeaderObserver
                 if ($order_header->paymenttype == "F") {
                     Ar_balance::create([
                         'order_header_id' => $order_header->id,
+                        'doctype' => 'P',
+                        'docno' => $order_header->order_header_no,
+                        'docdate' => $order_header->order_header_date,
                         'customer_id' => $order_header->customer_id,
                         'ar_amount' => $order_header->order_amount,
                         'description' => 'ค่าขนส่งสินค้า',
@@ -124,6 +135,9 @@ class OrderHeaderObserver
                 if ($order_header->paymenttype == "L") {
                     Ar_balance::create([
                         'order_header_id' => $order_header->id,
+                        'doctype' => 'P',
+                        'docno' => $order_header->order_header_no,
+                        'docdate' => $order_header->order_header_date,
                         'customer_id' => $order_header->customer_rec_id,
                         'ar_amount' => $order_header->order_amount,
                         'description' => 'ค่าขนส่งสินค้า',

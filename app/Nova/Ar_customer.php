@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Lenses\ar\ArcardReport;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
@@ -301,8 +302,9 @@ class Ar_customer extends Resource
     public function lenses(Request $request)
     {
         return [
-            new Lenses\MostValueableSenders(),
-            new Lenses\MostValueableReceivers()
+            // new Lenses\MostValueableSenders(),
+            // new Lenses\MostValueableReceivers()
+            //new ArcardReport()
         ];
     }
 

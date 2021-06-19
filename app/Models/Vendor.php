@@ -57,6 +57,10 @@ class Vendor extends Model
     {
         return $this->belongsTo('App\Models\Bank');
     }
+    public function cars()
+    {
+        return $this->hasMany('App\Models\Car');
+    }
 
     /**
      * Get all of the car_balances for the Car

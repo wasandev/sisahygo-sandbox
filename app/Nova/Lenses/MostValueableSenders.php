@@ -55,7 +55,7 @@ class MostValueableSenders extends Lens
     public function fields(Request $request)
     {
         return [
-            // ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             Text::make(__('Name'), 'name'),
             Currency::make(__('Revenue'), 'revenue', function ($value) {
                 return $value;

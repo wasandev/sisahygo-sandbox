@@ -7,7 +7,7 @@ use Laravel\Nova\Filters\BooleanFilter;
 
 class ArbalanceNotReceipt extends BooleanFilter
 {
-    public $name = 'ยังไม่รับชำระหนี้';
+    public $name = 'ค้างชำระ';
     /**
      * Apply the filter to the given query.
      *
@@ -32,7 +32,7 @@ class ArbalanceNotReceipt extends BooleanFilter
     public function options(Request $request)
     {
         return [
-            'ยังไม่รับชำระหนี้' => 'receipt'
+            'ค้างชำระ' => 'receipt'
         ];
     }
 }

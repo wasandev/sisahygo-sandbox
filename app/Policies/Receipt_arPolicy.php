@@ -36,12 +36,12 @@ class Receipt_arPolicy
 
     public function update(User $user, Receipt_ar $receipt_ar)
     {
-        return  $user->hasPermissionTo('edit receipt_ar') && $receipt_ar->status <> 'completed';
+        return  false;
     }
 
     public function delete(User $user, Receipt_ar $receipt)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete receipt_ar');
-        //return false;
+        //return $user->role == 'admin' || $user->hasPermissionTo('delete receipt_ar');
+        return false;
     }
 }

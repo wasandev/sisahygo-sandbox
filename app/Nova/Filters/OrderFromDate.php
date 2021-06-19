@@ -11,7 +11,7 @@ class OrderFromDate extends DateFilter
     public $name = 'จากวันที่';
     public function default()
     {
-        return date(today());
+        return date('Y-m-01');
     }
     /**
      * Apply the filter to the given query.

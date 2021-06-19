@@ -8,8 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Ar_balance extends Model
 {
     use HasFactory;
-    protected $fillable = ['customer_id', 'order_header_id', 'receipt_id', 'invoice_id', 'description', 'ar_amount', 'user_id', 'updated_by'];
+    protected $fillable = [
+        'customer_id', 'doctype', 'docno',
+        'docdate', 'order_header_id', 'receipt_id', 'invoice_id',
+        'description', 'ar_amount', 'user_id', 'updated_by'
+    ];
 
+    protected $casts = [
+        'docdate' => 'date',
+
+    ];
     public function ar_customer()
     {
         return $this->belongsTo('App\Models\Ar_customer', 'customer_id');

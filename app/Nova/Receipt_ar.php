@@ -2,17 +2,24 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\CancelReceipt;
+use App\Nova\Actions\PrintReceipt;
 use App\Nova\Filters\ArbalanceByCustomer;
+use App\Nova\Filters\Customer;
+use App\Nova\Filters\ReceiptByCustomer;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
+use App\Nova\Lenses\ar\ArReceiptReport;
 use Laravel\Nova\Fields\Date;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Receipt_ar extends Resource
@@ -63,6 +70,8 @@ class Receipt_ar extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+            Boolean::make('สถานะ', 'status')
+                ->readonly(),
             Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no'),
             Date::make('วันที่', 'receipt_date'),
 
@@ -125,7 +134,7 @@ class Receipt_ar extends Resource
     public function filters(Request $request)
     {
         return [
-            new ArbalanceByCustomer,
+            new ReceiptByCustomer,
             new ReceiptFromDate,
             new ReceiptToDate,
         ];
@@ -139,7 +148,9 @@ class Receipt_ar extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new ArReceiptReport(),
+        ];
     }
 
     /**
@@ -150,7 +161,23 @@ class Receipt_ar extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new PrintReceipt(),
+            (new CancelReceipt())
+                ->onlyOnDetail()
+                ->confirmText('ต้องการยกเลิกใบเสร็จรับเงินรายการนี้?')
+                ->confirmButtonText('ยกเลิก')
+                ->cancelButtonText("ไม่ยกเลิก")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit receipt_ar');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && ($this->resource->status == true
+                            && $request->user()->hasPermissionTo('edit receipt_ar')));
+                }),
+
+        ];
     }
 
     public static function indexQuery(NovaRequest $request, $query)

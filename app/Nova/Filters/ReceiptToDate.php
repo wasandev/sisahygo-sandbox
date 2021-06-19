@@ -17,6 +17,11 @@ class ReceiptToDate extends DateFilter
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
+
+    public function default()
+    {
+        return date(today());
+    }
     public function apply(Request $request, $query, $value)
     {
         return $query->whereDate('receipt_date', '<=', $value);

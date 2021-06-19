@@ -24,7 +24,7 @@ class ArbalanceByCustomer extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('customer_id', $value);
+        return $query->where('ar_balances.customer_id', $value);
     }
 
     /**
@@ -35,7 +35,7 @@ class ArbalanceByCustomer extends Filter
      */
     public function options(Request $request)
     {
-        $customers = \App\Models\Ar_customer::where('paymenttype', '=', 'Y')->has('ar_balances');
+        $customers = \App\Models\Ar_customer::has('ar_balances');
         return $customers->pluck('id', 'name')->all();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Nova\Lenses\cars;
 
+use App\Nova\Actions\Accounts\PrintCarCardReportByDay;
 use App\Nova\Filters\CarbalanceByCar;
 use App\Nova\Filters\CarbalanceByOwner;
 use App\Nova\Filters\CarbalanceFromDate;
@@ -14,6 +15,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class CarcardReport extends Lens
 {
@@ -106,7 +108,18 @@ class CarcardReport extends Lens
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new PrintCarCardReportByDay($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view car_balances');
+                }),
+            (new DownloadExcel)->allFields()
+                ->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view car_balances');
+                }),
+        ];
     }
 
     /**

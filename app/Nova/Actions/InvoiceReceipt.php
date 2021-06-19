@@ -25,11 +25,7 @@ use Laravel\Nova\Fields\Text;
 class InvoiceReceipt extends Action
 {
     use InteractsWithQueue, Queueable;
-    // protected $model;
-    // public function __construct($model = null)
-    // {
-    //     $this->model = $model;
-    // }
+
     public function uriKey()
     {
         return 'invoice_receipt';
@@ -38,6 +34,8 @@ class InvoiceReceipt extends Action
     {
         return 'รับชำระหนี้';
     }
+
+
 
     /**
      * Perform the action on the given models.
@@ -73,6 +71,7 @@ class InvoiceReceipt extends Action
                 }
                 $receipt = Receipt::create([
                     'receipt_no' => $receipt_no,
+                    'status' => true,
                     'receipt_date' => today(),
                     'branch_id' => auth()->user()->branch_id,
                     'customer_id' => $invoice_cust,
@@ -89,6 +88,18 @@ class InvoiceReceipt extends Action
                     'chequebank_id' => $fields->chequebank,
                     'description' => $fields->description,
                     'user_id' => auth()->user()->id,
+                ]);
+
+                Ar_balance::create([
+                    'customer_id' => $invoice_cust,
+                    'doctype' => 'R',
+                    'docno' => $receipt_no,
+                    'docdate' => today(),
+                    'description' => 'รับชำระหนี้',
+                    'ar_amount' => $pay_amount,
+                    'user_id' => auth()->user()->id,
+                    'receipt_id' => $receipt->id,
+
                 ]);
                 if ($fields->payment_by == "T") {
                     Order_banktransfer::create([
@@ -119,11 +130,10 @@ class InvoiceReceipt extends Action
                     }
                 }
             }
+            return Action::message('รับชำระหนี้เรียบร้อยแล้ว');
+        } else {
+            return Action::danger('ไม่มีใบแจ้งที่ต้องการรับชำระหรือใบแจ้งหนี้ที่เลือกรับชำระเรียบร้อยแล้ว');
         }
-
-
-
-        return Action::message('รับชำระหนี้เรียบร้อยแล้ว');
     }
 
     /**
@@ -135,6 +145,8 @@ class InvoiceReceipt extends Action
     {
         $bankaccount = Bankaccount::where('defaultflag', '=', true)->pluck('account_no', 'id');
         $banks = Bank::all()->pluck('name', 'id');
+
+
         return [
             Currency::make('จำนวนเงินรับชำระ', 'pay_amount'),
             Select::make('รับชำระด้วย', 'payment_by')->options([

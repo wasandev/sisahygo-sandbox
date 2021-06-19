@@ -10,14 +10,16 @@
             {{ $company->company_name }}
             {{ $company->address .' '.$company->sub_district.' '.$company->district.' ' .$company->province.' '.$company->postal_code }}
             <br/>สำนักงานใหญ่ Tax ID: {{ $company->taxid}}
-            <br/>Tel: {{$company->phoneno}} อีเมล : {{$company->email}}
+            <br/>Tel: {{$company->phoneno}} E-Mail : {{$company->email}} Web Site: {{$company->weburl}}
 
 
         </td>
          <td style="width: 10%;margin-left: 15px ">
             <div class="visible-print text-center">
                 {{-- {!! QrCode::size(70)->generate($order->tracking_no); !!} --}}
-                <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(70)->generate($order->tracking_no)) }} ">
+                @isset($order->tracking_no)
+                    <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(70)->generate($order->tracking_no)) }} ">
+                @endisset
             </div>
          </td>
     </tr>

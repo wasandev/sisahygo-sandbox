@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PrintReceipt;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
 use Laravel\Nova\Fields\Date;
@@ -133,7 +134,10 @@ class Receipt extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+
+            new PrintReceipt(),
+        ];
     }
 
     public static function indexQuery(NovaRequest $request, $query)

@@ -30,7 +30,8 @@ class ReceiptPolicy
 
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create receipt');
+        //return $user->role == 'admin' || $user->hasPermissionTo('create receipt');
+        return false;
     }
 
     public function update(User $user, Receipt $receipt)
@@ -40,6 +41,7 @@ class ReceiptPolicy
 
     public function delete(User $user, Receipt $receipt)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete receipt');
+        //return $user->role == 'admin' || $user->hasPermissionTo('delete receipt');
+        return false;
     }
 }

@@ -31,17 +31,20 @@ class Receipt_allPolicy
 
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create receipt_all');
+        return false;
+        // $user->role == 'admin' || $user->hasPermissionTo('create receipt_all');
     }
 
     public function update(User $user, Receipt_all $receipt_all)
     {
         return $user->role == 'admin' || $user->hasPermissionTo('edit receipt_all');
+        //return false;
     }
 
     public function delete(User $user, Receipt_all $receipt_all)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete receipt_all');
+        return false;
+        //return $user->role == 'admin' || $user->hasPermissionTo('delete receipt_all');
     }
 
     public function addReceipt_item(User $user, Receipt_all $receipt_all)

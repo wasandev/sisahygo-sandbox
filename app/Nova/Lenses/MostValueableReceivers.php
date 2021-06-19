@@ -27,7 +27,7 @@ class MostValueableReceivers extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('order_headers', 'customers.id', '=', 'order_headers.customer_rec_id')
+                ->leftJoin('order_headers', 'customers.id', '=', 'order_headers.customer_rec_id')
                 ->whereNotIn('order_headers.order_status', ['checking', 'new', 'problem', 'cancel'])
                 ->orderBy('revenue', 'desc')
                 ->groupBy('customers.id', 'customers.name')
@@ -55,7 +55,7 @@ class MostValueableReceivers extends Lens
     public function fields(Request $request)
     {
         return [
-            //ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             Text::make(__('Name'), 'name'),
             Currency::make(__('Revenue'), 'revenue', function ($value) {
                 return $value;

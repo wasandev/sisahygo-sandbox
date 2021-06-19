@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Select;
 
 class PrintOrderReportCrByDay extends Action
 {
@@ -37,12 +36,23 @@ class PrintOrderReportCrByDay extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
+
         $branch = $decodedFilters->firstWhere('class', 'App\Nova\Filters\Branch');
+
 
         $branch_value = Arr::get($branch, 'value');
 
         if ($branch_value == '') {
             return Action::danger('เลือกสาขาที่ต้องการที่เมนูกรองข้อมูลก่อน');
+        }
+        $artype  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\ArType');
+
+        $artype_value = Arr::get($artype, 'value.artype');
+
+        if ($artype_value) {
+            $artype_str = 'true';
+        } else {
+            $artype_str = 'false';
         }
 
         $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderFromDate');
@@ -55,10 +65,12 @@ class PrintOrderReportCrByDay extends Action
         if ($to_value == '') {
             return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
+
+
         if ($fields->report_type) {
-            return Action::openInNewTab('/orderheader/report_8/' . $branch_value . '/' . $from_value . '/' . $to_value);
+            return Action::openInNewTab('/orderheader/report_8/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $artype_str);
         } else {
-            return Action::openInNewTab('/orderheader/report_9/' . $branch_value . '/' . $from_value . '/' . $to_value);
+            return Action::openInNewTab('/orderheader/report_9/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $artype_str);
         }
     }
 
