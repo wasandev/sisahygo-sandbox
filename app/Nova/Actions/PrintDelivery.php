@@ -36,10 +36,7 @@ class PrintDelivery extends Action
     {
         foreach ($models as $model) {
 
-            $deliveryController =  new \App\Http\Controllers\DeliveryController();
-            $path = $deliveryController->makePDF($model->id);
-
-            return Action::openInNewTab(Storage::url('documents/' . $model->delivery_no . '.pdf'));
+            return Action::openInNewTab('/delivery/preview/' . $model->id);
         }
     }
     /**

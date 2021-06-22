@@ -25,7 +25,7 @@ class Branch_balance extends Resource
     public static $globallySearchable = false;
 
     /**
-    /**
+
      * The model the resource corresponds to.
      *
      * @var string
@@ -168,6 +168,10 @@ class Branch_balance extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('type', 'owner');
+        if ($request->user()->branch->code <> '001') {
+            return  $query->where('branch_id', $request->user()->branch_id);
+        } else {
+            return $query->where('type', 'owner');
+        }
     }
 }

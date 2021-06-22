@@ -1,43 +1,49 @@
-@extends('layouts.doc')
+@extends('layouts.forma4')
 
 @section('header')
-    @include('partials.docheader')
+    @include('partials.reportheader')
 
 @endsection
 
 @section('content')
-<table style="width:100%;padding: 0px;margin: 0px;">
+
+{{-- <table style="width: 100%;border: 0px;">
     <tr>
-        <p style="text-align: center;font-size: 1.5em;padding: 0px">
-            ใบจัดส่งสินค้า
-        </p>
+       <td style="width: 100%;text-align: center;vertical-align:top;border:0px;">
+              <h2>ใบจัดส่งสินค้า</h2>
+        </td>
     </tr>
-</table>
-<table>
+</table> --}}
+<br/>
+<table style="width: 100%">
 
     <tr>
-        <td style="width: 50%">
-            เลขที่ใบจัดส่ง: {{ $delivery->delivery_no }}<br />
+        <td style="width: 50%;vertical-align:top;padding: 10px;" >
+
             สาขา: {{$delivery->branch->name }}<br/>
-            ทะเบียนรถ: {{ $delivery->car->car_regist }}<br />
-            พนักงานขับรถ: {{ $delivery->driver->name}}<br/>
             จัดส่งโดย:
             @if($delivery->delivery_type === '1')
                 รถบรรทุกจัดส่ง
             @else
                 สาขาจัดส่ง
             @endif
-        </td>
-        <td style="width:50%;vertical-align: top;">
-            วันที่: {{ $delivery->delivery_date }}<br />
-            ยอดเก็บเงินปลายทาง: {{ number_format($delivery->receipt_amount,2,'.',',') }}<br />
+            <br/>
+            ทะเบียนรถ: {{ $delivery->car->car_regist }}<br />
+            พนักงานขับรถ: {{ $delivery->driver->name}}<br/>
             พนักงานจัดส่ง:
             @isset($delivery->sender->name)
                 {{ $delivery->sender->name }}
             @endisset
             <br/>
+
+
+        </td>
+        <td style="width: 50%;vertical-align:top;padding: 10px;" >
+            เลขที่ใบจัดส่ง: {{ $delivery->delivery_no }}<br />
+            วันที่: {{ $delivery->delivery_date->format('d/y/Y') }}<br />
             เส้นทางจัดส่ง: {{ $delivery->branch_route->name}}<br/>
-            รายละเอียด/หมายเหตุ: {{$delivery->remark}}
+            รายละเอียด/หมายเหตุ: {{$delivery->remark}}<br/>
+            <strong>ยอดเก็บเงินปลายทาง: {{ number_format($delivery->receipt_amount,2,'.',',') }}</strong><br />
 
         </td>
 
@@ -46,141 +52,155 @@
 
 
 </table>
+<br/>
 
+<table  style="width: 100%;border: 0.5px soild black;">
+    <tr style="vertical-align:middle;font-weight: bold;height:1cm">
+        <td style="width: 5%;text-align:center;">ลำดับ</td>
+        <td style="width: 20%;text-align: center;">อำเภอ</td>
+        <td style="width: 25%;text-align: center;">ผู้รับสินค้า</td>
+        <td style="width: 10%;text-align: center">จำนวนรายการ</td>
+        <td style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</td>
+        <td style="width: 10%;text-align: center;">ยอดจัดเก็บปลายทาง</td>
+        <td style="width: 10%;text-align: center;">การจัดส่ง</td>
+        <td style="width: 10%;text-align: center;">การเก็บเงิน</td>
+    </tr>
 
-<table style="border-bottom: 1px solid black;border-top: 1px solid black;padding: 5px;" cellspacing="3" cellpadding="5">
-    <thead>
-        <tr>
-            <th style="width: 5%";>ลำดับ</th>
-            <th style="text-align: left;width: 10%;">อำเภอ</th>
-            <th style="text-align: left;width: 25%">ผู้รับสินค้า</th>
-            <th style="width: 10%;">จำนวนรายการ</th>
-            <th style="text-align: left;width: 15%;">เลขที่ใบรับส่ง</th>
-            <th style="width: 10%;">ยอดจัดเก็บ</th>
-            <th style="width: 10%;">การจัดส่ง</th>
-            <th style="width: 10%;">การเก็บเงิน</th>
+    @foreach ($delivery_district as $district => $item_groups)
+        <tr style="vertical-align:top;font-weight:bold">
+            <td></td>
+            <td style="text-align:left">
+                {{$district}}
+            </td>
+            <td></td>
+            <td style="text-align: center">
+                {{count($item_groups)}} ผู้รับ
+            </td>
+            <td></td>
+            <td  style="text-align: right;">
+                {{ number_format($item_groups->sum('payment_amount'),2,'.',',')}}
+            </td>
+            <td></td>
+            <td></td>
+
         </tr>
+        @foreach ($item_groups as $item )
+        <tr>
+            <td style="text-align: center">
+                {{ $loop->iteration }}
+            </td>
+            <td>
 
-    </thead>
+            </td>
 
-    <tbody style="border-top: 1px solid black;vertical-align: top;">
-        @foreach ($delivery_district as $district => $item_groups)
-            <tr>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td style="border-bottom: 1px solid black;">
-                    <strong>
-                    {{$district}}
-                    </strong>
-                </td>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td style="text-align: center;border-bottom: 1px solid black;">
-                    <strong>
-                    {{count($item_groups)}} ผู้รับ
-                    </strong>
-                </td>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td  style="text-align: right;border-bottom: 1px solid black;">
-                    <strong>
-                    {{ number_format($item_groups->sum('payment_amount'),2,'.',',')}}
-                    </strong>
-                </td>
-                <td style="border-bottom: 1px solid black;"></td>
-                <td style="border-bottom: 1px solid black;"></td>
-
-            </tr>
-            @foreach ($item_groups as $item )
-            <tr style="border-bottom: 1px solid black;vertical-align: top;">
+            <td>
+                {{$item->customer->name}}
+            </td>
                 <td style="text-align: center">
-                    {{ $loop->iteration }}
-                </td>
-                <td>
+                {{count($item->delivery_details)}} ใบรับส่ง
+            </td>
+            <td>
+            </td>
+            <td style="text-align: right">
+                @if($item->payment_amount > 0)
+                    {{number_format($item->payment_amount,2,'.',',')}}
+                @else
+                -
+                @endif
+            </td>
+            <td style="text-align: center">
 
-                </td>
+                @if($item->delivery_status)
+                    <input type="checkbox"  name="delivery_status" value="{{$item->delivery_status}}" checked>
+                @else
+                    <input  type="checkbox"  name="delivery_status" value="{{$item->delivery_status}}">
+                @endif
 
-                <td style="word-wrap: break-word;">
-                    {{$item->customer->name}}
-                </td>
-                 <td style="word-wrap: break-word;text-align: center">
-                    {{count($item->delivery_details)}} ใบรับส่ง
-                </td>
-                <td>
-                </td>
-                <td style="text-align: right">
-                    @if($item->payment_amount > 0)
-                        {{number_format($item->payment_amount,2,'.',',')}}
-                    @else
-                    -
-                    @endif
-                </td>
-                <td style="horizontal-align: center">
-
-                    @if($item->delivery_status)
-                        <input type="checkbox"  name="delivery_status" value="{{$item->delivery_status}}" checked>
-                    @else
-                        <input  type="checkbox"  name="delivery_status" value="{{$item->delivery_status}}">
-                    @endif
-
-                </td>
-                 <td style="text-align: center">
-                   @if($item->payment_status)
+            </td>
+                <td style="text-align: center">
+                @if($item->payment_amount > 0 )
+                    @if($item->payment_status)
                         <input type="checkbox"  name="payment_status" value="{{$item->payment_status}}" checked>
                     @else
                         <input type="checkbox"  name="payment_status" value="{{$item->payment_status}}">
                     @endif
+                @endif
 
-                </td>
-            </tr>
-                @foreach ($item->delivery_details as $detail )
-                    <tr>
-                        <td>
+            </td>
+        </tr>
+            @foreach ($item->delivery_details as $detail )
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        {{$detail->branchrec_order->order_header_no}}
+                    </td>
+                    <td style="text-align: right">
+                        @if($detail->branchrec_order->paymenttype === "E")
+                            {{number_format($detail->branchrec_order->order_amount,2,'.',',')}}
+                        @else
+                            -
+                        @endif
                         </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            {{$detail->branchrec_order->order_header_no}}
-                        </td>
-                       <td style="text-align: right">
-                            @if($detail->branchrec_order->paymenttype === "E")
-                              {{number_format($detail->branchrec_order->order_amount,2,'.',',')}}
-                            @else
-                             -
-                            @endif
-                            </td>
-                        <td>
+                    <td>
 
-                        </td>
-                        <td>
+                    </td>
+                    <td>
 
-                        </td>
-                    </tr>
-                @endforeach
+                    </td>
+                </tr>
             @endforeach
         @endforeach
-        <tr style="padding-top: 20px;border-top: 1px solid black;vertical-align: middle;font-size:18px;font-weight: bold;">
+    @endforeach
+    <tr style="font-weight: bold">
 
-            <td colspan="4">รวมรายการจัดส่งทั้งหมด {{count($delivery->delivery_items) }} รายการ</td>
-            {{-- <td colspan="4">รวมรายการใบรับส่งทั้งหมด {{count($delivery->delivery_details) }} รายการ</td> --}}
+        <td colspan="5" style="text-align: center">รวมรายการจัดส่งทั้งหมด {{count($delivery->delivery_items) }} รายการ  ยอดเก็บปลายทาง รวม</td>
 
-        </tr>
-    </tbody>
+        <td style="text-align: right">{{ number_format($delivery->receipt_amount,2,'.',',') }}</td>
+        <td></td>
+        <td></td>
+
+    </tr>
+
 
 </table>
-<br>
-<table style="padding: 10px;" >
+<br/>
+<table style="width: 100%">
     <tr>
-        <td style="width:50%;vertical-align: top;font-size:18px;font-weight: bold;">
-            พนักงานขับรถ.......................................<br/>
-            ผู้จัดการ............................................<br/>
+        <td style="width:25%;vertical-align: top;text-align:center;padding: 10px;">
+            <br/>
+            .......................................<br/>
+            ผู้ทำรายการ<br/>
+
 
         </td>
-        <td style="width:50%;vertical-align: top;text-align: right;font-size:18px;font-weight: bold;">
+        <td style="width:25%;vertical-align: top;text-align:center;padding: 10px;">
 
-            ผู้ทำรายการ.........................................<br/>
-            พนักงานจัดส่ง.......................................<br/>
+            <br/>
+            .......................................<br/>
+            พนักงานขับรถ<br/>
+
+
+        </td>
+         <td style="width:25%;vertical-align: top;text-align:center;padding: 10px;">
+
+            <br/>
+            .......................................<br/>
+            พนักงานจัดส่งสินค้า<br/>
+
+
+        </td>
+         <td style="width:25%;vertical-align: top;text-align:center;padding: 10px;">
+
+            <br/>
+            .......................................<br/>
+            ผู้จัดการสาขา<br/>
 
 
         </td>

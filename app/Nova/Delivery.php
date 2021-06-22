@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-
+use App\Nova\Filters\Branch;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -127,7 +127,9 @@ class Delivery extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Branch()
+        ];
     }
 
     /**
@@ -164,8 +166,10 @@ class Delivery extends Resource
         if ($request->user()->role == 'driver') {
             return   $query->where('branch_id', $request->user()->branch_id)
                 ->where('sender_id', $request->user()->id);
-        } else {
+        } elseif ($request->user()->branch->code <> '001') {
             return  $query->where('branch_id', $request->user()->branch_id);
+        } else {
+            return $query;
         }
     }
 }

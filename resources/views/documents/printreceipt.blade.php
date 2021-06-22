@@ -12,7 +12,7 @@
         </td>
     </tr>
 </table>
-<br/>
+
 <table style="width: 100%;">
     <tr>
         <td style="width: 70%;text-align: left;vertical-align:top;padding:10px">

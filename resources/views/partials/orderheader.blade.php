@@ -20,6 +20,7 @@
                 @isset($order->tracking_no)
                     <img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(70)->generate($order->tracking_no)) }} ">
                 @endisset
+
             </div>
          </td>
     </tr>

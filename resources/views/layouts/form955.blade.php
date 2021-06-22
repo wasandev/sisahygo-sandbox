@@ -61,7 +61,7 @@ else
 </head>
 
 
-    <body onLoad="loadHandler();>
+    <body onLoad="loadHandler();">
 
             <div id="app">
                 @yield('header')

@@ -25,7 +25,7 @@ class ToBranch extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('to_branch_id', $value);
+        return $query->where('branch_rec_id', $value);
     }
 
     /**

@@ -91,8 +91,10 @@ class CreateTruckDeliveryItems extends Action
                     $model->save();
 
                     $branch_balance_item = Branch_balance_item::where('order_header_id', '=', $model->id)->first();
-                    $branch_balance_item->delivery_id = $delivery->id;
-                    $branch_balance_item->save();
+                    if (isset($branch_balance_item)) {
+                        $branch_balance_item->delivery_id = $delivery->id;
+                        $branch_balance_item->save();
+                    }
 
                     Delivery_detail::create([
                         'delivery_item_id' =>  $delivery_item->id,

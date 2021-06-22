@@ -73,6 +73,8 @@ class OrderLoaded extends Action
                 ->where('waybill_status', '=', 'loading')
                 ->get();
 
+            $waybillOptions = [];
+
             foreach ($waybills as $waybill) {
                 $waybillOptions[] = [
                     ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],

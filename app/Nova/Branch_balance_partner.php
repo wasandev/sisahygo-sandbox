@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\BranchReceipt;
+use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Metrics\OrderBranchPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -22,7 +23,7 @@ class Branch_balance_partner extends Resource
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
-    /**
+
     /**
      * The model the resource corresponds to.
      *
@@ -122,7 +123,10 @@ class Branch_balance_partner extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new BranchBalanceFilter(),
+
+        ];
     }
 
     /**
@@ -157,6 +161,11 @@ class Branch_balance_partner extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('type', 'partner');
+        if ($request->user()->branch->code <> '001') {
+            return  $query->where('branch_id', $request->user()->branch_id)
+                ->where('type', 'partner');
+        } else {
+            return $query->where('type', 'partner');
+        }
     }
 }

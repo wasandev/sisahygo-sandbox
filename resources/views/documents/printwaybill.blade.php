@@ -14,7 +14,7 @@
     </tr>
 </table>
 
-<table style="width:100%;">
+<table style="width:100%;border:0px">
 
     <tr>
         <td style="width: 50%;text-align: left;border:0px">

@@ -22,7 +22,8 @@ class BillingDashboard extends Dashboard
     {
         return [
             (new OrderbyUser())->width('1/2'),
-            (new OrderCashbyUser())->width('1/2')(new OrderIncomes())->width('1/2')
+            (new OrderCashbyUser())->width('1/2'),
+            (new OrderIncomes())->width('1/2')
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view order-incomes');
                 }),

@@ -70,11 +70,8 @@ class Delivery_item extends Resource
 
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
                 ->sortable(),
-
-
-            Currency::make('ยอดค่าขนส่ง', 'payment_amount')
+            Currency::make('ยอดจัดเก็บ', 'payment_amount')
                 ->exceptOnForms(),
-
             Boolean::make('สถานะการจัดส่ง', 'delivery_status')
                 ->exceptOnForms(),
             Boolean::make('สถานะการเก็บเงิน', 'payment_status')->exceptOnForms(),

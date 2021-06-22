@@ -46,10 +46,10 @@
                         :to="{
                             name: 'index',
                             params:{
-                            resourceName: 'deliveries'
+                            resourceName: 'branchrec_orders'
                             },
                             }"
-                        :title="รายการจัดส่งสินค้าของสาขา">
+                        :title="รายการใบรับส่งเข้าสาขา">
                         <div class="flex justify-center w-11 flex-no-shrink mr-6">
                             <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -64,15 +64,147 @@
                             </svg>
                         </div>
                         <div>
-                            <heading :level="3" class="mb-3">รายการจัดส่งสินค้าของสาขา</heading>
+                            <heading :level="3" class="mb-3">รายการใบรับส่งเข้าสาขา</heading>
                             <p class="text-90 leading-normal">
-                                ดูรายการจัดส่งสินค้าของสาขา
+                                รายการใบรับส่งเข้าสาขา
                             </p>
                         </div>
                 </router-link>
                 </td>
 
             </tr>
+            <tr>
+                <td class="align-top w-1/2 border-r border-b border-50">
+                    <router-link
+                            class="no-underline dim flex p-6"
+                            :to="{
+                                name: 'index',
+                                params:{
+                                resourceName: 'deliveries'
+                                },
+                                }"
+                            :title="ใบจัดส่งสินค้า">
+                            <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                                <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="40"
+                                height="40"
+                                viewBox="0 0 20 20"
+                                >
+                                <path
+                                    fill="var(--primary)"
+                                    d="M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
+                                />
+                                </svg>
+                            </div>
+                            <div>
+                                <heading :level="3" class="mb-3">รายการจัดส่งสินค้าของสาขา</heading>
+                                <p class="text-90 leading-normal">
+                                    รายการจัดส่งสินค้าของสาขา
+                                </p>
+                            </div>
+                    </router-link>
+                </td>
+                <td class="align-top w-1/2 border-r border-b border-50">
+                    <router-link
+                        class="no-underline dim flex p-6"
+                        :to="{
+                            name: 'index',
+                            params:{
+                            resourceName: 'branch_balances'
+                            },
+                            }"
+                        :title="รายการเก็บเงินปลายทางของสาขา">
+                        <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 20 20"
+                            >
+                            <path
+                                fill="var(--primary)"
+                                d="M10 0l10 10-10 10L0 10 10 0zM6 10v3h2v-3h3v3l4-4-4-4v3H8a2 2 0 0 0-2 2z"
+                            />
+                            </svg>
+                        </div>
+                        <div>
+                            <heading :level="3" class="mb-3">รายการเก็บเงินปลายทางของสาขา</heading>
+                            <p class="text-90 leading-normal">
+                                ดูรายการเก็บเงินปลายทางของสาขา
+                            </p>
+                        </div>
+                </router-link>
+                </td>
+
+            </tr>
+            <tr>
+
+                <td class="align-top w-1/2 border-r border-b border-50">
+                    <router-link
+                            class="no-underline dim flex p-6"
+                            :to="{
+                                name: 'index',
+                                params:{
+                                resourceName: 'receipts'
+                                },
+                                }"
+                            :title="รายการใบเสร็จรับเงินปลายทาง">
+                            <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                                <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="40"
+                                height="40"
+                                viewBox="0 0 20 20"
+                                >
+                                <path
+                                    fill="var(--primary)"
+                                    d="M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
+                                />
+                                </svg>
+                            </div>
+                            <div>
+                                <heading :level="3" class="mb-3">รายการใบเสร็จรับเงินปลายทาง</heading>
+                                <p class="text-90 leading-normal">
+                                    ดูรายการใบเสร็จรับเงินปลายทาง
+                                </p>
+                            </div>
+                    </router-link>
+                </td>
+                <td class="align-top w-1/2 border-r border-b border-50">
+                    <router-link
+                        class="no-underline dim flex p-6"
+                        :to="{
+                            name: 'index',
+                            params:{
+                            resourceName: 'order_headers'
+                            },
+                            }"
+                        :title="ใบรับส่งสินค้า">
+                        <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            >
+                            <path
+                                fill="var(--primary)"
+                                d="M29 7h5c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1h-5v5c0 .5522847-.4477153 1-1 1s-1-.4477153-1-1V9h-5c-.5522847 0-1-.44771525-1-1s.4477153-1 1-1h5V2c0-.55228475.4477153-1 1-1s1 .44771525 1 1v5zM4 0h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4V4c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2V4c0-1.1045695-.8954305-2-2-2H4zm20 18h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4h-8c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2h-8zM4 20h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2H4z"
+                            />
+                            </svg>
+
+                        </div>
+                        <div>
+                            <heading :level="3" class="mb-3">ใบรับส่งสินค้า</heading>
+                            <p class="text-90 leading-normal">
+                                ค้นหา ดู สร้าง แก้ไข ใบรับส่งสินค้าจากสาขา
+                            </p>
+                        </div>
+                </router-link>
+                </td>
+            </tr>
+            
             <tr>
 
                 <td class="align-top w-1/2 border-r border-b border-50">
@@ -140,9 +272,6 @@
                 </td>
             </tr>
             <tr>
-
-
-
                 <td class="align-top w-1/2 border-r border-b border-50">
                     <router-link
                         class="no-underline dim flex p-6"

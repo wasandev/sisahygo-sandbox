@@ -136,7 +136,13 @@ class Receipt extends Resource
     {
         return [
 
-            new PrintReceipt(),
+            (new PrintReceipt())
+                ->canRun(function ($request) {
+                    return  $request->user()->hasPermissionTo('view receipt');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view receipt');
+                })
         ];
     }
 

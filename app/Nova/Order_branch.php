@@ -7,6 +7,7 @@ use App\Nova\Filters\BillingUser;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
 use App\Nova\Filters\ToBranch;
+use App\Nova\Lenses\accounts\OrderBillingCash;
 use App\Nova\Metrics\OrderBranchPerDay;
 use App\Nova\Metrics\OrderCashPerDay;
 use Illuminate\Http\Request;
@@ -99,8 +100,6 @@ class Order_branch extends Resource
             Boolean::make('การชำระ', 'payment_status'),
             BelongsTo::make('สาขา', 'to_branch', 'App\Nova\Branch')
                 ->sortable(),
-
-
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->onlyOnDetail(),
@@ -111,7 +110,6 @@ class Order_branch extends Resource
                 ->default(today())
                 ->format('DD/MM/YYYY')
                 ->exceptOnForms(),
-
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'T' => 'เงินโอนต้นทาง',
@@ -121,10 +119,7 @@ class Order_branch extends Resource
             ])->displayUsingLabels()
                 ->hideFromIndex(),
 
-
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt'),
-
-
             BelongsTo::make(__('From Branch'), 'branch', 'App\Nova\Branch')
                 ->onlyOnDetail(),
 
@@ -186,11 +181,9 @@ class Order_branch extends Resource
     public function filters(Request $request)
     {
         return [
-
+            new ToBranch(),
             new OrderFromDate(),
             new OrderToDate(),
-            new ToBranch()
-
         ];
     }
 
@@ -203,7 +196,7 @@ class Order_branch extends Resource
     public function lenses(Request $request)
     {
         return [
-            new Lenses\OrderBillingCash(),
+            new OrderBillingCash(),
         ];
     }
 
@@ -228,8 +221,13 @@ class Order_branch extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->whereNotIn('order_status', ['checking', 'new'])
-            ->where('paymenttype', '=', 'E')
-            ->where('order_type', '<>', 'charter');
+        if ($request->user()->branch->code == '001') {
+            return $query->whereNotIn('order_status', ['checking', 'new'])
+                ->where('paymenttype', '=', 'E');
+        } else {
+            return $query->whereNotIn('order_status', ['checking', 'new'])
+                ->where('paymenttype', '=', 'E')
+                ->where('branch_id', '=', $request->user()->branch_id);
+        }
     }
 }

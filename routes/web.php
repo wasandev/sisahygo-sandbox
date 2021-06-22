@@ -56,7 +56,7 @@ Route::middleware('web', 'auth')
         Route::get('/dropship/makepdf/{id}', 'DropshipController@makePDF')->name('makepdf');
         Route::get('/dropship/preview/{id}', 'DropshipController@preview')->name('preview');
 
-        Route::get('/delivery/makepdf/{id}', 'DeliveryController@makePDF')->name('makepdf');
+        //Route::get('/delivery/makepdf/{id}', 'DeliveryController@makePDF')->name('makepdf');
         Route::get('/delivery/preview/{id}', 'DeliveryController@preview')->name('preview');
 
         //car

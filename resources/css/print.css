@@ -9,7 +9,7 @@ body {
 @media print {
   @page {
     size: 20.5cm 14cm;
-    margin: 0.20cm 0.0cm 0.0cm 0.0cm;
+    margin: 0.20cm 0.0cm 0.00cm 0.0cm;
   }
   body {
     font-size: 9pt;
