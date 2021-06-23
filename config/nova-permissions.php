@@ -1791,7 +1791,11 @@ return [
             'description'  => 'Branch Quick Menu',
             'group'        => 'Dashboard',
         ],
-
+        'view sendercards' => [
+            'display_name' => 'Sender Quick Menu',
+            'description'  => 'Sender Quick Menu',
+            'group'        => 'Dashboard',
+        ],
 
         //Actions
     ],

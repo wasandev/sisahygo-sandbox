@@ -40,8 +40,7 @@ class DeliveryPolicy
 
     public function update(User $user, Delivery $delivery)
     {
-
-        return ($user->role == 'admin' || $user->hasPermissionTo('edit deliveries')) && $delivery->completed === false;
+        return (($user->role == 'admin') || ($user->hasPermissionTo('edit deliveries') && $delivery->completed == false));
     }
 
 

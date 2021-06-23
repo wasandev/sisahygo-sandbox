@@ -65,11 +65,11 @@ class Delivery_item extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
+            ID::make(__('ID'), 'id')->sortable(),
             BelongsTo::make('เลขที่รายการจัดส่ง', 'delivery', 'App\Nova\Delivery'),
-
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
-                ->sortable(),
+                ->sortable()
+                ->viewable(false),
             Currency::make('ยอดจัดเก็บ', 'payment_amount')
                 ->exceptOnForms(),
             Boolean::make('สถานะการจัดส่ง', 'delivery_status')
@@ -77,7 +77,6 @@ class Delivery_item extends Resource
             Boolean::make('สถานะการเก็บเงิน', 'payment_status')->exceptOnForms(),
             Currency::make('ส่วนลด', 'discount_amount')
                 ->onlyOnDetail(),
-
             Currency::make('ภาษีหัก ณ ที่จ่าย', 'tax_amount')
                 ->onlyOnDetail(),
             Currency::make('จำนวนเงินรับชำระ', 'pay_amount')

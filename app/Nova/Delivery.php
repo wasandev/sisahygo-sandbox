@@ -60,8 +60,7 @@ class Delivery extends Resource
     {
         return [
             ID::make(__('ID'), 'id')
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
             Boolean::make(__('Status'), 'completed'),
             Text::make('เลขที่จัดส่ง', 'delivery_no')
                 ->readonly(),
@@ -156,9 +155,12 @@ class Delivery extends Resource
                 ->confirmText('ต้องการพิมพ์ใบจัดส่งสินค้ารายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")
-                ->canRun(function ($request, $model) {
-                    return true;
-                }),
+                ->canRun(function ($request) {
+                    return  $request->user()->hasPermissionTo('edit deliveries');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('edit deliveries');
+                })
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)

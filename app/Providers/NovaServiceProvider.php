@@ -46,6 +46,7 @@ use Wasandev\Financial\Financial;
 use Wasandev\Loading\Loading;
 use Wasandev\Marketing\Marketing;
 use Wasandev\Report\Report;
+use Wasandev\Sender\Sender;
 use Wasandev\Truck\Truck;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -124,6 +125,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }),
             (new Branch())->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view branchcards');
+            }),
+            (new Sender())->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view sendercards');
             }),
 
             //admin
