@@ -9,7 +9,7 @@
       <card>
         <table class="w-full" cellpadding="10" cellspacing="10">
           <tr>
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <td class="align-top w-1/2">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -42,7 +42,7 @@
               </router-link>
             </td>
 
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <td class="align-top w-1/2">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -75,7 +75,7 @@
             </td>
           </tr>
           <tr>
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <td class="align-top w-1/2">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -106,7 +106,7 @@
                       </div>
               </router-link>
             </td>
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <td class="align-top w-1/2">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -140,7 +140,7 @@
 
           </tr>
           <tr>
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <td class="align-top w-1/2">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -172,7 +172,7 @@
               </router-link>
             </td>
 
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <td class="align-top w-1/2">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{

@@ -495,9 +495,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
+                  { staticClass: "align-top w-1/2" },
                   [
                     _c(
                       "router-link",
@@ -569,9 +567,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
+                  { staticClass: "align-top w-1/2" },
                   [
                     _c(
                       "router-link",
@@ -645,9 +641,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
+                  { staticClass: "align-top w-1/2" },
                   [
                     _c(
                       "router-link",
@@ -719,9 +713,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
+                  { staticClass: "align-top w-1/2" },
                   [
                     _c(
                       "router-link",
@@ -795,9 +787,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
+                  { staticClass: "align-top w-1/2" },
                   [
                     _c(
                       "router-link",
@@ -869,9 +859,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
+                  { staticClass: "align-top w-1/2" },
                   [
                     _c(
                       "router-link",
