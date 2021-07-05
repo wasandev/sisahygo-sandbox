@@ -6,13 +6,12 @@
         สำหรับพนักงานจัดขึ้นสินค้า
       </p>
 
-
+      <card>
         <table class="w-full" cellpadding="10" cellspacing="10">
           <tr>
-            <td class="align-top w-1/2">
-            <card>
+            <td class="align-top w-1/2 border-b border-r border-50">
                 <router-link
-                    class="no-underline dim flex p-6"
+                    class="no-underline dim flex p-6 w-full"
                       :to="{
                         name: 'create',
                         params:{
@@ -35,19 +34,15 @@
 
                       </div>
                       <div>
-                        <heading :level="3" class="mb-3">ตรวจรับสินค้า</heading>
-                          <p class="text-90 leading-normal">
-                            ทำรายการตรวจรับสินค้า
-                          </p>
+                        <heading :level="3" class="align-middle">ตรวจรับสินค้า</heading>
+
                       </div>
               </router-link>
-            </card>
             </td>
 
-            <td class="align-top w-1/2">
-            <card>
+            <td class="align-top w-1/2 border-b border-r border-50 ">
                 <router-link
-                    class="no-underline dim flex p-6"
+                    class="no-underline dim flex p-6 w-full"
                       :to="{
                         name: 'index',
                         params:{
@@ -69,18 +64,14 @@
                         </svg>
                       </div>
                       <div>
-                        <heading :level="3" class="mb-3">ทำรายการจัดขึ้นสินค้า</heading>
-                          <p class="text-90 leading-normal">
-                            ทำรายการจัดขึ้นสินค้า
-                          </p>
+                        <heading :level="3" class="mb-3">รายการจัดขึ้นสินค้า</heading>
+
                       </div>
               </router-link>
-            </card>
             </td>
           </tr>
           <tr>
-            <td class="align-top w-1/2">
-            <card>
+            <td class="align-top w-1/2 border-b border-r border-50 ">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -105,15 +96,11 @@
                       </div>
                       <div>
                         <heading :level="3" class="mb-3">ใบกำกับสินค้า</heading>
-                          <p class="text-90 leading-normal">
-                            ดู แก้ไข เพิ่ม พิมพ์ ใบกำกับสินค้า
-                          </p>
+
                       </div>
               </router-link>
-            </card>
             </td>
-            <td class="align-top w-1/2">
-            <card>
+            <td class="align-top w-1/2 border-b border-r border-50  ">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -138,18 +125,14 @@
                       </div>
                       <div>
                         <heading :level="3" class="mb-3">ข้อมูลลูกค้า</heading>
-                          <p class="text-90 leading-normal">
-                            ค้นหา ดู แก้ไข เพิ่มข้อมูลลูกค้า
-                          </p>
+
                       </div>
               </router-link>
-              </card>
             </td>
 
           </tr>
           <tr>
-            <td class="align-top w-1/2">
-            <card>
+            <td class="align-top w-1/2 border-b border-r border-50">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -172,18 +155,15 @@
                           />
                         </svg>
                       </div>
-                      <div>
-                        <heading :level="3" class="mb-3">ดูราคาค่าขนส่งสินค้า</heading>
-                          <p class="text-90 leading-normal">
-                            ค้นหา ดู รายละเอียดราคาค่าขนส่งสินค้า
-                          </p>
+                       <div>
+
+                        <heading :level="3" >ดูราคาค่าขนส่งสินค้า</heading>
+
                       </div>
               </router-link>
-            </card>
             </td>
 
-            <td class="align-top w-1/2">
-                <card>
+            <td class="align-top w-1/2 border-b border-r border-50 ">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -208,18 +188,15 @@
                       </div>
                       <div>
                         <heading :level="3" class="mb-3">ข้อมูลผู้ใช้</heading>
-                          <p class="text-90 leading-normal">
-                            แก้ไขรายละเอียดบัญชีผู้ใช้ของตัวเอง
-                          </p>
+
                       </div>
               </router-link>
-                </card>
             </td>
           </tr>
 
 
         </table>
-
+      </card>
     </div>
   </div>
 </template>
