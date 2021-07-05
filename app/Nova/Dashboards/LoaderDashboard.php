@@ -19,7 +19,8 @@ class LoaderDashboard extends Dashboard
     {
         return [
             (new LoaderbyUser())->width('1/2'),
-            (new WaybillbyLoader())->width('1/2')(new Orderstatus())
+            (new WaybillbyLoader())->width('1/2'),
+            (new Orderstatus())
         ];
     }
 
