@@ -6,10 +6,11 @@
         สำหรับพนักงานจัดขึ้นสินค้า
       </p>
 
-      <card>
+
         <table class="w-full" cellpadding="10" cellspacing="10">
           <tr>
             <td class="align-top w-1/2">
+            <card>
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -40,9 +41,11 @@
                           </p>
                       </div>
               </router-link>
+            </card>
             </td>
 
             <td class="align-top w-1/2">
+            <card>
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -72,10 +75,12 @@
                           </p>
                       </div>
               </router-link>
+            </card>
             </td>
           </tr>
           <tr>
             <td class="align-top w-1/2">
+            <card>
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -105,8 +110,10 @@
                           </p>
                       </div>
               </router-link>
+            </card>
             </td>
             <td class="align-top w-1/2">
+            <card>
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -136,11 +143,13 @@
                           </p>
                       </div>
               </router-link>
+              </card>
             </td>
 
           </tr>
           <tr>
             <td class="align-top w-1/2">
+            <card>
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -170,9 +179,11 @@
                           </p>
                       </div>
               </router-link>
+            </card>
             </td>
 
             <td class="align-top w-1/2">
+                <card>
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -202,12 +213,13 @@
                           </p>
                       </div>
               </router-link>
+                </card>
             </td>
           </tr>
 
 
         </table>
-      </card>
+
     </div>
   </div>
 </template>
