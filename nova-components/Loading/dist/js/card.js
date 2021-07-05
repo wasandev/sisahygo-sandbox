@@ -495,7 +495,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  { staticClass: "align-top w-1/2" },
+                  { staticClass: "align-top w-1/2  border-b border-50" },
                   [
                     _c(
                       "router-link",
@@ -567,7 +567,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "td",
-                  { staticClass: "align-top w-1/2" },
+                  { staticClass: "align-top w-1/2  border-b border-50" },
                   [
                     _c(
                       "router-link",
@@ -641,7 +641,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  { staticClass: "align-top w-1/2" },
+                  { staticClass: "align-top w-1/2  border-b border-50" },
                   [
                     _c(
                       "router-link",
@@ -713,7 +713,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "td",
-                  { staticClass: "align-top w-1/2" },
+                  { staticClass: "align-top w-1/2  border-b border-50" },
                   [
                     _c(
                       "router-link",
@@ -787,7 +787,7 @@ var render = function() {
               _c("tr", [
                 _c(
                   "td",
-                  { staticClass: "align-top w-1/2" },
+                  { staticClass: "align-top w-1/2  border-b border-50" },
                   [
                     _c(
                       "router-link",
@@ -859,7 +859,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "td",
-                  { staticClass: "align-top w-1/2" },
+                  { staticClass: "align-top w-1/2  border-b border-50" },
                   [
                     _c(
                       "router-link",
