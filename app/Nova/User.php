@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Filters\Branch;
 use App\Nova\Filters\CurrentUser;
+use App\Nova\Filters\UserDepartment;
 use Laravel\Nova\Fields\Avatar;
 
 class User extends Resource
@@ -104,6 +105,11 @@ class User extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
+            BelongsTo::make('ฝ่าย/แผนก', 'department', 'App\Nova\Department')
+                ->sortable()
+                ->nullable()
+                ->showCreateRelationButton(),
+
             BelongsTo::make('รายการสาขาปลายทาง(ที่ทำงานประจำ)', 'branch_rec', 'App\Nova\Branch')
                 ->sortable()
                 ->nullable()
@@ -186,6 +192,7 @@ class User extends Resource
     {
         return [
             new Branch,
+            new UserDepartment,
             new CurrentUser
         ];
     }
@@ -210,9 +217,9 @@ class User extends Resource
     public function actions(Request $request)
     {
         return [
-            // (new Actions\ImportUsers)->canSee(function ($request) {
-            //     return $request->user()->role == 'admin';
-            // }),
+            (new Actions\SetUserDepartment)->canSee(function ($request) {
+                return $request->user()->role == 'admin';
+            }),
             (new Actions\SetUserBranch)
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';

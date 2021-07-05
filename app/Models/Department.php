@@ -19,4 +19,23 @@ class Department extends Model
     {
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
+
+    /**
+     * Get all of the employees for the Department
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function employees()
+    {
+        return $this->hasMany('App\Models\Employee');
+    }
+    /**
+     * Get all of the employees for the Department
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
+    {
+        return $this->hasMany('App\Models\User');
+    }
 }

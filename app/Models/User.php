@@ -31,7 +31,8 @@ class User extends Authenticatable
         'employee_id',
         'customer_id',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'department_id'
     ];
 
     /**
@@ -95,5 +96,9 @@ class User extends Authenticatable
     public function loader()
     {
         return $this->belongsTo('App\Models\User', 'loader_id');
+    }
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department');
     }
 }
