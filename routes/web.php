@@ -75,4 +75,9 @@ Route::middleware('web', 'auth')
         Route::get('/ar/report_17/{from}/{to}', 'ArController@report_17')->name('report_17');
         Route::get('/ar/report_18/{from}/{to}', 'ArController@report_18')->name('report_18');
         Route::get('/ar/report_19/{cutomer}/{from}/{to}', 'ArController@report_19')->name('report_19');
+
+        //Branch
+        Route::get('/ar/report_20/{branch}/{from}/{to}', 'BranchController@report_20')->name('report_20');
+        Route::get('/ar/report_21/{branch}/{from}/{to}', 'BranchController@report_21')->name('report_21');
+        Route::get('/ar/report_22/{branch}/{to}', 'BranchController@report_22')->name('report_22');
     });

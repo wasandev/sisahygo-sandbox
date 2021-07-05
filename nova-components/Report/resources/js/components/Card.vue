@@ -523,6 +523,106 @@
                     </router-link>
                 </td>
             </tr>
+            <tr>
+                <td class="align-top w-1/2 border-r border-b border-50">
+                    <router-link
+                        class="no-underline dim flex p-6"
+                        :to="{
+                            name: 'lens',
+                            params:{
+                            resourceName: 'branch_balances',
+                            lens: 'branch-branch-balance-bydate'
+                            },
+                            }"
+                        :title="รายงานตั้งหนี้ลูกหนี้สาขา">
+                        <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 20 20"
+                            >
+                            <path
+                                fill="var(--primary)"
+                                d="M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
+                            />
+                            </svg>
+
+                        </div>
+                        <div>
+                            <heading :level="3" class="mb-3">รายงานตั้งหนี้ลูกหนี้สาขา</heading>
+
+                        </div>
+                    </router-link>
+                </td>
+                <td class="align-top w-1/2 border-r border-b border-50">
+                    <router-link
+                        class="no-underline dim flex p-6"
+                        :to="{
+                            name: 'lens',
+                            params:{
+                            resourceName: 'branch_balances',
+                            lens: 'branch-branch-balance-receipt'
+                            },
+                            }"
+                        :title="รายงานรับชำระหนี้ลูกหนี้สาขา">
+                        <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 20 20"
+                            >
+                            <path
+                                fill="var(--primary)"
+                                d="M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
+                            />
+                            </svg>
+
+                        </div>
+                        <div>
+                            <heading :level="3" class="mb-3">รายงานรับชำระหนี้ลูกหนี้สาขา</heading>
+
+                        </div>
+                    </router-link>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-top w-1/2 border-r border-b border-50">
+                    <router-link
+                        class="no-underline dim flex p-6"
+                        :to="{
+                            name: 'lens',
+                            params:{
+                            resourceName: 'branch_balances',
+                            lens: 'branch-branch-balance-report'
+                            },
+                            }"
+                        :title="รายงานลูกหนี้สาขาค้างชำระ">
+                        <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 20 20"
+                            >
+                            <path
+                                fill="var(--primary)"
+                                d="M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
+                            />
+                            </svg>
+
+                        </div>
+                        <div>
+                            <heading :level="3" class="mb-3">รายงานลูกหนี้สาขาค้างชำระ</heading>
+
+                        </div>
+                    </router-link>
+                </td>
+                <td class="align-top w-1/2 border-r border-b border-50">
+
+                </td>
+            </tr>
         </table>
       </card>
     </div>

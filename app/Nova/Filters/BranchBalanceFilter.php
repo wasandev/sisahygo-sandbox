@@ -18,7 +18,9 @@ class BranchBalanceFilter extends Filter
 
     public function default()
     {
-        return auth()->user()->branch_id;
+        if (auth()->user()->branch->code != '001') {
+            return auth()->user()->branch_id;
+        }
     }
 
     /**

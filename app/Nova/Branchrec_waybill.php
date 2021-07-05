@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use App\Nova\Filters\RouteToBranch;
+use App\Nova\Filters\WaybillFromDate;
+use App\Nova\Filters\WaybillToDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -189,6 +191,8 @@ class Branchrec_waybill extends Resource
     {
         return [
             (new RouteToBranch()),
+            (new WaybillFromDate()),
+            (new WaybillToDate())
         ];
     }
 
@@ -231,7 +235,11 @@ class Branchrec_waybill extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        $routeto_branch = \App\Models\Routeto_branch::where('dest_branch_id', $request->user()->branch_id)->get('id');
-        return $query->whereIn('routeto_branch_id', $routeto_branch);
+        if ($request->user()->role != 'admin') {
+            $routeto_branch = \App\Models\Routeto_branch::where('dest_branch_id', $request->user()->branch_id)->get('id');
+            return $query->whereIn('routeto_branch_id', $routeto_branch);
+        } else {
+            return $query;
+        }
     }
 }

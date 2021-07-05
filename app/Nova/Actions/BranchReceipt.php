@@ -35,7 +35,7 @@ class BranchReceipt extends Action
     }
     public function name()
     {
-        return 'รับชำระเงินเก็บปลายทาง';
+        return 'รับชำระเงิน';
     }
     /**
      * Perform the action on the given models.
@@ -56,34 +56,38 @@ class BranchReceipt extends Action
 
                 $branch_order = Branchrec_order::find($branch_balance_item->order_header_id);
                 $delivery_detail = Delivery_detail::where('order_header_id', $branch_balance_item->order_header_id)->first();
-                $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
+                if (isset($delivery_detail)) {
+                    $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
 
-                $branch_order->branchpay_by =  $fields->payment_by;
+                    $branch_order->branchpay_by =  $fields->payment_by;
 
-                if ($fields->payment_by === 'T') {
-                    $branch_order->branchpay_by = 'T';
-                    $branch_order->bankaccount_id = $fields->bankaccount;
-                    $branch_order->bankreference = $fields->refernce;
-                    $branch_order->payment_status = false;
-                    $branch_balance_item->payment_status = false;
-                    $delivery_detail->payment_status = false;
-                    $delivery_item->branchpay_by = 'T';
-                    $delivery_item->bankaccount_id = $fields->bankaccount;
-                    $delivery_item->bankreference = $fields->reference;
-                    $delivery_item->payment_status = false;
-                } elseif ($fields->payment_by === 'C') {
-                    $branch_order->branchpay_by = 'C';
-                    $branch_order->payment_status = true;
-                    $branch_balance_item->payment_status = true;
-                    $delivery_detail->payment_status = true;
-                    $delivery_item->branchpay_by = 'C';
-                    $delivery_item->payment_status = true;
+                    if ($fields->payment_by === 'T') {
+                        $branch_order->branchpay_by = 'T';
+                        $branch_order->bankaccount_id = $fields->bankaccount;
+                        $branch_order->bankreference = $fields->refernce;
+                        $branch_order->payment_status = false;
+                        $branch_balance_item->payment_status = false;
+                        $delivery_detail->payment_status = false;
+                        $delivery_item->branchpay_by = 'T';
+                        $delivery_item->bankaccount_id = $fields->bankaccount;
+                        $delivery_item->bankreference = $fields->reference;
+                        $delivery_item->payment_status = false;
+                    } elseif ($fields->payment_by === 'C') {
+                        $branch_order->branchpay_by = 'C';
+                        $branch_order->payment_status = true;
+                        $branch_balance_item->payment_status = true;
+                        $delivery_detail->payment_status = true;
+                        $delivery_item->branchpay_by = 'C';
+                        $delivery_item->payment_status = true;
+                    }
+
+                    $branch_order->save();
+                    $branch_balance_item->save();
+                    $delivery_detail->save();
+                    $delivery_item->save();
+                } else {
+                    return Action::danger('รายการนี้ยังไม่ได้ทำรายการจัดส่ง โปรดตรวจสอบ');
                 }
-
-                $branch_order->save();
-                $branch_balance_item->save();
-                $delivery_detail->save();
-                $delivery_item->save();
             }
 
             $model->discount_amount = $fields->discount_amount;

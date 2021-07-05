@@ -13,10 +13,8 @@
         bg-40
         pl-2
         pr-6
-        active:outline-none
-        active:shadow-outline
-        focus:outline-none
-        focus:shadow-outline
+        active:outline-none active:shadow-outline
+        focus:outline-none focus:shadow-outline
       "
       style="max-width: 90px"
       @change="handleSelectionChange"

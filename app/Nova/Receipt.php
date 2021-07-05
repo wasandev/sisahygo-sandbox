@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\PrintReceipt;
+use App\Nova\Filters\Branch;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
 use Laravel\Nova\Fields\Date;
@@ -62,11 +63,10 @@ class Receipt extends Resource
             Date::make('วันที่', 'receipt_date'),
 
             Select::make('ประเภทใบเสร็จ', 'receipttype')->options([
-                'ต้นทาง' => 'H',
-                'วางบิล' => 'B',
-                'ปลายทาง' => 'E'
-            ])->withMeta(['value' => 'E'])
-                ->displayUsingLabels()
+                'H' => 'ต้นทาง',
+                'B' => 'วางบิล',
+                'E' => 'ปลายทาง'
+            ])->displayUsingLabels()
                 ->readonly(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
 
@@ -110,6 +110,7 @@ class Receipt extends Resource
     public function filters(Request $request)
     {
         return [
+            new Branch(),
             new ReceiptFromDate,
             new ReceiptToDate,
         ];
@@ -148,10 +149,11 @@ class Receipt extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->role != 'admin') {
+        if ($request->user()->branch->code <> '001') {
             return $query->where('receipttype', '=', 'E')
                 ->where('branch_id', '=', $request->user()->branch_id);
+        } else {
+            return $query->where('receipttype', '=', 'E');
         }
-        return $query;
     }
 }

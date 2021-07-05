@@ -7,9 +7,11 @@ use App\Nova\Actions\CreateBranchWarehouseItems;
 use App\Nova\Actions\CreateTruckDeliveryItems;
 use App\Nova\Actions\SetDeliverydays;
 use App\Nova\Actions\SetDeliveryOption;
+use App\Nova\Filters\Branch;
 use App\Nova\Filters\ByWaybill;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\ShowByOrderStatusBranch;
+use App\Nova\Filters\ToBranch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -156,6 +158,7 @@ class Branchrec_order extends Resource
     public function filters(Request $request)
     {
         return [
+            new ToBranch(),
             new ByWaybill(),
             new ShowByOrderStatusBranch(),
         ];
@@ -217,26 +220,28 @@ class Branchrec_order extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        // if ($request->user()->role != 'admin') {
+        if ($request->user()->role != 'admin') {
 
-        $resourceTable = 'order_headers';
-        $query->select("{$resourceTable}.*");
-        $query->addSelect('c.district as customerDistrict');
-        $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
-        $query->whereNotIn("{$resourceTable}.order_status", ['checking', 'new']);
-        $query->where("{$resourceTable}.order_type", '<>', 'charter');
-        $query->where("{$resourceTable}.branch_rec_id", '=', $request->user()->branch_id);
-        $orderBy = $request->get('orderBy');
+            $resourceTable = 'order_headers';
+            $query->select("{$resourceTable}.*");
+            $query->addSelect('c.district as customerDistrict');
+            $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
+            $query->whereNotIn("{$resourceTable}.order_status", ['checking', 'new']);
+            $query->where("{$resourceTable}.order_type", '<>', 'charter');
+            $query->where("{$resourceTable}.branch_rec_id", '=', $request->user()->branch_id);
+            $orderBy = $request->get('orderBy');
 
-        if ($orderBy == 'customer_rec_id') {
-            $query->getQuery()->orders = null;
-            $query->orderBy('customerDistrict', $request->get('orderByDirection'));
+            if ($orderBy == 'customer_rec_id') {
+                $query->getQuery()->orders = null;
+                $query->orderBy('customerDistrict', $request->get('orderByDirection'));
+            } else {
+                $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+                    $q->getQuery()->orders = null;
+                    return $q->orderBy('order_headers.id', 'desc');
+                });
+            }
         } else {
-            $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
-                $q->getQuery()->orders = null;
-                return $q->orderBy('order_headers.id', 'desc');
-            });
+            return $query;
         }
-        //return $query;
     }
 }

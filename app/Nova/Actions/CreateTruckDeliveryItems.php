@@ -64,12 +64,12 @@ class CreateTruckDeliveryItems extends Action
                 'waybill_id' => $waybill->id,
                 'delivery_type' => 0,
                 'branch_id' => $branch->id,
-                //'receipt_amount' => $branchrec_amount,
                 'branch_route_id' => $fields->branch_route,
                 'car_id' => $waybill->car_id,
                 'driver_id' => $waybill->driver_id,
                 'user_id' => auth()->user()->id,
                 'decription' => $fields->description,
+                'sender_id' => $fields->sender
             ]);
             $cust_groups = $select_orders->groupBy('customer_rec_id')->all();
             $bal_custs = $cust_groups;
@@ -136,14 +136,21 @@ class CreateTruckDeliveryItems extends Action
     public function fields()
     {
         $branch_routes = \App\Models\Branch_route::where('branch_id', auth()->user()->branch_id)->pluck('name', 'id');
-
+        $senders = \App\Models\User::where('branch_id', auth()->user()->branch_id)
+            ->where('role', 'driver')
+            ->pluck('name', 'id');
         return [
             Date::make('วันที่จัดส่ง', 'delivery_date')
+                ->rules('required'),
+            Select::make('กำหนดพนักงานจัดส่ง', 'sender')
+                ->options($senders)
+                ->displayUsingLabels()
                 ->rules('required'),
             Select::make('เส้นทางขนส่งของสาขา', 'branch_route')
                 ->options($branch_routes)
                 ->displayUsingLabels()
                 ->rules('required'),
+
             Text::make('คำอธิบายรายการ/หมายเหตุ', 'description'),
         ];
     }

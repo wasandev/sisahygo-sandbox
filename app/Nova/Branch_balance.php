@@ -4,6 +4,11 @@ namespace App\Nova;
 
 use App\Nova\Actions\BranchReceipt;
 use App\Nova\Filters\BranchBalanceFilter;
+use App\Nova\Filters\BranchbalanceFromDate;
+use App\Nova\Filters\BranchbalanceToDate;
+use App\Nova\Lenses\Branch\BranchBalanceBydate;
+use App\Nova\Lenses\Branch\BranchBalanceReceipt;
+use App\Nova\Lenses\Branch\BranchBalanceReport;
 use App\Nova\Metrics\OrderBranchPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -39,7 +44,7 @@ class Branch_balance extends Resource
      */
     public function title()
     {
-        return $this->customer->name;
+        return $this->id;
     }
 
 
@@ -70,13 +75,11 @@ class Branch_balance extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-
-
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
+                ->sortable(),
             Boolean::make('สถานะการชำระ', 'payment_status')
                 ->sortable(),
-            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->sortable()
-                ->hideFromIndex(),
+
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
                 ->sortable()
                 ->format('DD-MM-YYYY'),
@@ -91,8 +94,9 @@ class Branch_balance extends Resource
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
 
-            Currency::make('ยอดรับชำระ', 'pay_amount')
-                ->sortable(),
+            Currency::make('ยอดรับชำระ', function () {
+                return $this->pay_amount + $this->discount_amount + $this->tax_amount;
+            })->sortable(),
 
             Text::make('ชำระโดย',  function () {
                 if (isset($this->receipt_id)) {
@@ -132,6 +136,8 @@ class Branch_balance extends Resource
     {
         return [
             new BranchBalanceFilter(),
+            new BranchbalanceFromDate(),
+            new BranchbalanceToDate()
         ];
     }
 
@@ -143,7 +149,11 @@ class Branch_balance extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new BranchBalanceBydate(),
+            new BranchBalanceReceipt(),
+            new BranchBalanceReport(),
+        ];
     }
 
     /**

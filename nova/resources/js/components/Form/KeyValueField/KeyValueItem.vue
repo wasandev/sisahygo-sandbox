@@ -73,10 +73,8 @@
           cursor-pointer
           text-70
           hover:text-primary
-          active:outline-none
-          active:shadow-outline
-          focus:outline-none
-          focus:shadow-outline
+          active:outline-none active:shadow-outline
+          focus:outline-none focus:shadow-outline
         "
         title="Delete"
       >
