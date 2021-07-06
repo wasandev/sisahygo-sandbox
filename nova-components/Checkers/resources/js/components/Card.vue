@@ -7,17 +7,16 @@
       </p>
 
       <card>
-        <table class="w-full" cellpadding="10" cellspacing="10">
-          <tr>
-            <td class="align-top w-1/2 border-r border-b border-50">
+        <div class="w-full flex flex-wrap" cellpadding="10" cellspacing="10">
+            <div class="align-top w-1/2 border-r border-b border-50">
                 <router-link
-                    class="no-underline dim flex p-6" 
-                      :to="{ 
-                        name: 'create', 
+                    class="no-underline dim flex p-6"
+                      :to="{
+                        name: 'create',
                         params:{
                           resourceName: 'order_checkers'
                           },
-                        }" 
+                        }"
                       :title="ตรวจรับสินค้า">
                       <div class="flex justify-center w-11 flex-no-shrink mr-6">
                         <svg
@@ -31,26 +30,26 @@
                             d="M29 7h5c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1h-5v5c0 .5522847-.4477153 1-1 1s-1-.4477153-1-1V9h-5c-.5522847 0-1-.44771525-1-1s.4477153-1 1-1h5V2c0-.55228475.4477153-1 1-1s1 .44771525 1 1v5zM4 0h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4V4c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2V4c0-1.1045695-.8954305-2-2-2H4zm20 18h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4h-8c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2h-8zM4 20h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2H4z"
                           />
                         </svg>
-                        
+
                       </div>
                       <div>
                         <heading :level="3" class="mb-3">ตรวจรับสินค้า</heading>
-                          <p class="text-90 leading-normal">                    
+                          <p class="text-90 leading-normal">
                             ทำรายการตรวจรับสินค้า
                           </p>
                       </div>
               </router-link>
-            </td>
+            </div>
 
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <div class="align-top w-1/2 border-r border-b border-50">
                 <router-link
-                    class="no-underline dim flex p-6" 
-                      :to="{ 
-                        name: 'index', 
+                    class="no-underline dim flex p-6"
+                      :to="{
+                        name: 'index',
                         params:{
                           resourceName: 'customers'
                           },
-                        }" 
+                        }"
                       :title="ข้อมูลลูกค้า">
                       <div class="flex justify-center w-11 flex-no-shrink mr-6">
                         <svg
@@ -67,24 +66,24 @@
                       </div>
                       <div>
                         <heading :level="3" class="mb-3">ข้อมูลลูกค้า</heading>
-                          <p class="text-90 leading-normal">                    
+                          <p class="text-90 leading-normal">
                             ค้นหา ดู QR Code และรายละเอียดต่างๆของลูกค้า
                           </p>
                       </div>
               </router-link>
-            </td>
-          </tr>
+            </div>
+        </div>
 
-          <tr>
-            <td class="align-top w-1/2 border-r border-b border-50">
+        <div class="w-full flex flex-wrap" cellpadding="10" cellspacing="10">
+            <div class="align-top w-1/2 border-r border-b border-50">
                 <router-link
-                    class="no-underline dim flex p-6" 
-                      :to="{ 
-                        name: 'index', 
+                    class="no-underline dim flex p-6"
+                      :to="{
+                        name: 'index',
                         params:{
                           resourceName: 'productservice_prices'
                           },
-                        }" 
+                        }"
                       :title="ราคาค่าขนส่งสินค้า">
                       <div class="flex justify-center w-11 flex-no-shrink mr-6">
                         <svg
@@ -101,22 +100,22 @@
                       </div>
                       <div>
                         <heading :level="3" class="mb-3">ดูราคาค่าขนส่งสินค้า</heading>
-                          <p class="text-90 leading-normal">                    
+                          <p class="text-90 leading-normal">
                             ค้นหา ดู รายละเอียดราคาค่าขนส่งสินค้า
                           </p>
                       </div>
               </router-link>
-            </td>
+            </div>
 
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <div class="align-top w-1/2 border-r border-b border-50">
                 <router-link
-                    class="no-underline dim flex p-6" 
-                      :to="{ 
-                        name: 'index', 
+                    class="no-underline dim flex p-6"
+                      :to="{
+                        name: 'index',
                         params:{
                           resourceName: 'users'
                           },
-                        }" 
+                        }"
                       :title="ข้อมูลผู้ใช้">
                       <div class="flex justify-center w-11 flex-no-shrink mr-6">
                         <svg
@@ -125,7 +124,7 @@
                           height="40"
                           viewBox="0 0 20 20"
                         >
-                         <path 
+                         <path
                             fill="var(--primary)"
                             d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z"
                           />
@@ -133,16 +132,13 @@
                       </div>
                       <div>
                         <heading :level="3" class="mb-3">ข้อมูลผู้ใช้</heading>
-                          <p class="text-90 leading-normal">                    
+                          <p class="text-90 leading-normal">
                             แก้ไขรายละเอียดบัญชีผู้ใช้ของตัวเอง
                           </p>
                       </div>
               </router-link>
-            </td>
-          </tr>
-
-
-        </table>
+            </div>
+        </div>
       </card>
     </div>
   </div>

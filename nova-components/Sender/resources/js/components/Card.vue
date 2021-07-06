@@ -7,9 +7,8 @@
       </p>
 
       <card>
-        <table class="w-full" cellpadding="10" cellspacing="10">
-          <tr>
-            <td class="align-top w-1/2 border-r border-b border-50">
+        <div class="w-full flex flex-wrap" cellpadding="10" cellspacing="10">
+            <div class="align-top w-1/2 border-r border-b border-50">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -40,10 +39,10 @@
                             รายการจัดส่งสินค้า
                           </p>
                       </div>
-              </router-link>
-            </td>
+                </router-link>
+            </div>
 
-            <td class="align-top w-1/2 border-r border-b border-50">
+            <div class="align-top w-1/2 border-r border-b border-50">
                 <router-link
                     class="no-underline dim flex p-6"
                       :to="{
@@ -73,11 +72,8 @@
                           </p>
                       </div>
               </router-link>
-            </td>
-          </tr>
-
-
-        </table>
+            </div>
+        </div>
       </card>
     </div>
   </div>

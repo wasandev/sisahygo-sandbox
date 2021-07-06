@@ -870,8 +870,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Report',
@@ -900,1351 +898,1393 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("p", { staticClass: "text-90 leading-tight mb-8" }, [
-          _vm._v("\n      รวม Link รายงานต่างๆ\n    ")
+          _vm._v("\n          รวม Link รายงานต่างๆ\n      ")
         ]),
         _vm._v(" "),
         _c("card", [
           _c(
-            "table",
+            "div",
             {
-              staticClass: "w-full",
+              staticClass: "w-full flex flex-wrap",
               attrs: { cellpadding: "10", cellspacing: "10" }
             },
             [
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "order_headers",
-                              lens: "order-billing-cash"
-                            }
-                          },
-                          title: _vm.รายงานเงินสดรับตามพนักงาน
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "order_headers",
+                            lens: "order-billing-cash"
+                          }
+                        },
+                        title: _vm.รายงานเงินสดรับตามพนักงาน
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานเงินสดรับ ตามพนักงาน")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "order_headers",
-                              lens: "accounts-order-report-bill-by-day"
-                            }
-                          },
-                          title: _vm.รายงานรายการขนส่งประจำวัน
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานรายการขนส่งประจำวัน")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานเงินสดรับ ตามพนักงาน")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "order_headers",
-                              lens: "accounts-order-report-by-day"
-                            }
-                          },
-                          title: _vm.รายงานยอดค่าขนส่งตามวัน
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "order_headers",
+                            lens: "accounts-order-report-bill-by-day"
+                          }
+                        },
+                        title: _vm.รายงานรายการขนส่งประจำวัน
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานยอดค่าขนส่งตามวัน")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "order_headers",
-                              lens: "accounts-order-report-by-branchrec"
-                            }
-                          },
-                          title: _vm.รายงานยอดค่าขนส่งตามสาขาปลายทาง
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานรายการขนส่งประจำวัน")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "order_headers",
+                            lens: "accounts-order-report-by-day"
+                          }
+                        },
+                        title: _vm.รายงานยอดค่าขนส่งตามวัน
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานยอดค่าขนส่งตามสาขาปลายทาง")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานยอดค่าขนส่งตามวัน")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "order_headers",
-                              lens: "accounts-order-report-cancel-by-day"
-                            }
-                          },
-                          title: _vm.รายงานรายการยกเลิกใบรับส่ง
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "order_headers",
+                            lens: "accounts-order-report-by-branchrec"
+                          }
+                        },
+                        title: _vm.รายงานยอดค่าขนส่งตามสาขาปลายทาง
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานรายการยกเลิกใบรับส่ง")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "order_headers",
-                              lens: "accounts-order-report-cash-by-day"
-                            }
-                          },
-                          title: _vm.รายงานขายสดประจำวัน
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานยอดค่าขนส่งตามสาขาปลายทาง")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "order_headers",
+                            lens: "accounts-order-report-cancel-by-day"
+                          }
+                        },
+                        title: _vm.รายงานรายการยกเลิกใบรับส่ง
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานขายสดประจำวัน")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานรายการยกเลิกใบรับส่ง")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "order_headers",
-                              lens: "accounts-order-report-cr-by-day"
-                            }
-                          },
-                          title: _vm.รายงานขายเชื่อประจำวัน
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "order_headers",
+                            lens: "accounts-order-report-cash-by-day"
+                          }
+                        },
+                        title: _vm.รายงานขายสดประจำวัน
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานขายเชื่อประจำวัน")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "waybills",
-                              lens: "waybill-confirmed-per-day"
-                            }
-                          },
-                          title: _vm.รายงานรถออกประจำวัน
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานขายสดประจำวัน")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "order_headers",
+                            lens: "accounts-order-report-cr-by-day"
+                          }
+                        },
+                        title: _vm.รายงานขายเชื่อประจำวัน
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานรถออกประจำวัน")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานขายเชื่อประจำวัน")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "carreceives",
-                              lens: "accounts-carreceive-report-by-day"
-                            }
-                          },
-                          title: _vm.รายงานสรุปรับเงินรถ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "waybills",
+                            lens: "waybill-confirmed-per-day"
+                          }
+                        },
+                        title: _vm.รายงานรถออกประจำวัน
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานสรุปรับเงินรถ")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "carpayments",
-                              lens: "accounts-carpayment-report-by-day"
-                            }
-                          },
-                          title: _vm.รายงานสรุปจ่ายเงินรถ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานรถออกประจำวัน")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "carreceives",
+                            lens: "accounts-carreceive-report-by-day"
+                          }
+                        },
+                        title: _vm.รายงานสรุปรับเงินรถ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานสรุปจ่ายเงินรถ")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานสรุปรับเงินรถ")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "car_balances",
-                              lens: "cars-carcard-report"
-                            }
-                          },
-                          title: _vm.รายงานสรุปรับเงินรถ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "carpayments",
+                            lens: "accounts-carpayment-report-by-day"
+                          }
+                        },
+                        title: _vm.รายงานสรุปจ่ายเงินรถ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานบัญชีคุมรถบรรทุก")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "car_balances",
-                              lens: "cars-summary-report"
-                            }
-                          },
-                          title: _vm.รายงานสรุปยอดคงเหลือรถ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานสรุปจ่ายเงินรถ")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "car_balances",
+                            lens: "cars-carcard-report"
+                          }
+                        },
+                        title: _vm.รายงานสรุปรับเงินรถ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานสรุปยอดคงเหลือรถ")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานบัญชีคุมรถบรรทุก")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "ar_balances",
-                              lens: "ar-outstanding-report"
-                            }
-                          },
-                          title: _vm.รายงานลูกหนี้ค้างชำระ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "car_balances",
+                            lens: "cars-summary-report"
+                          }
+                        },
+                        title: _vm.รายงานสรุปยอดคงเหลือรถ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานลูกหนี้ค้างชำระ")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "receipt_ars",
-                              lens: "ar-receipt-report"
-                            }
-                          },
-                          title: _vm.รายงานรับชำระหนี้ลูกหนี้การค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานสรุปยอดคงเหลือรถ")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "ar_balances",
+                            lens: "ar-outstanding-report"
+                          }
+                        },
+                        title: _vm.รายงานลูกหนี้ค้างชำระ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานรับชำระหนี้ลูกหนี้การค้า")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานลูกหนี้ค้างชำระ")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "ar_balances",
-                              lens: "ar-card-report"
-                            }
-                          },
-                          title: _vm.รายงานทะเบียนคุมลูกหนี้
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "receipt_ars",
+                            lens: "ar-receipt-report"
+                          }
+                        },
+                        title: _vm.รายงานรับชำระหนี้ลูกหนี้การค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานทะเบียนคุมลูกหนี้")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "ar_balances",
-                              lens: "ar-summary-report"
-                            }
-                          },
-                          title: _vm.รายงานสรุปยอดลูกหนี้การค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานรับชำระหนี้ลูกหนี้การค้า")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "ar_balances",
+                            lens: "ar-card-report"
+                          }
+                        },
+                        title: _vm.รายงานทะเบียนคุมลูกหนี้
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานสรุปยอดลูกหนี้การค้า")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานทะเบียนคุมลูกหนี้")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "branch_balances",
-                              lens: "branch-branch-balance-bydate"
-                            }
-                          },
-                          title: _vm.รายงานตั้งหนี้ลูกหนี้สาขา
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "ar_balances",
+                            lens: "ar-summary-report"
+                          }
+                        },
+                        title: _vm.รายงานสรุปยอดลูกหนี้การค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานตั้งหนี้ลูกหนี้สาขา")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "branch_balances",
-                              lens: "branch-branch-balance-receipt"
-                            }
-                          },
-                          title: _vm.รายงานรับชำระหนี้ลูกหนี้สาขา
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานสรุปยอดลูกหนี้การค้า")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "branch_balances",
+                            lens: "branch-branch-balance-bydate"
+                          }
+                        },
+                        title: _vm.รายงานตั้งหนี้ลูกหนี้สาขา
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานรับชำระหนี้ลูกหนี้สาขา")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานตั้งหนี้ลูกหนี้สาขา")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "lens",
-                            params: {
-                              resourceName: "branch_balances",
-                              lens: "branch-branch-balance-report"
-                            }
-                          },
-                          title: _vm.รายงานลูกหนี้สาขาค้างชำระ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "branch_balances",
+                            lens: "branch-branch-balance-receipt"
+                          }
+                        },
+                        title: _vm.รายงานรับชำระหนี้ลูกหนี้สาขา
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายงานลูกหนี้สาขาค้างชำระ")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("td", {
-                  staticClass: "align-top w-1/2 border-r border-b border-50"
-                })
-              ])
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานรับชำระหนี้ลูกหนี้สาขา")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "branch_balances",
+                            lens: "branch-branch-balance-report"
+                          }
+                        },
+                        title: _vm.รายงานลูกหนี้สาขาค้างชำระ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานลูกหนี้สาขาค้างชำระ")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "align-top w-1/2 border-r border-b border-50"
+              })
             ]
           )
         ])

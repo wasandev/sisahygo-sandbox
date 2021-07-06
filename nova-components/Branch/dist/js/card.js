@@ -643,15 +643,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Branch',
@@ -683,911 +674,920 @@ var render = function() {
         _vm._v(" "),
         _c("card", [
           _c(
-            "table",
+            "div",
             {
-              staticClass: "w-full",
+              staticClass: "w-full flex flex-wrap",
               attrs: { cellpadding: "10", cellspacing: "10" }
             },
             [
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "branchrec_waybills"
-                            }
-                          },
-                          title: _vm.รายการรถเข้าสาขา
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "branchrec_waybills"
+                          }
+                        },
+                        title: _vm.รายการรถเข้าสาขา
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 24 24"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 24 24"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M11 14.59V3a1 1 0 0 1 2 0v11.59l3.3-3.3a1 1 0 0 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 0 1 1.4-1.42l3.3 3.3zM3 17a1 1 0 0 1 2 0v3h14v-3a1 1 0 0 1 2 0v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M11 14.59V3a1 1 0 0 1 2 0v11.59l3.3-3.3a1 1 0 0 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 0 1 1.4-1.42l3.3 3.3zM3 17a1 1 0 0 1 2 0v3h14v-3a1 1 0 0 1 2 0v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายการรถเข้าสาขา")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              ดูรายการรถเข้าสาขา\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายการรถเข้าสาขา")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                              ดูรายการรถเข้าสาขา\n                          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "branchrec_orders"
-                            }
-                          },
-                          title: _vm.รายการใบรับส่งเข้าสาขา
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M10 0l10 10-10 10L0 10 10 0zM6 10v3h2v-3h3v3l4-4-4-4v3H8a2 2 0 0 0-2 2z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายการใบรับส่งเข้าสาขา")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                              รายการใบรับส่งเข้าสาขา\n                          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "deliveries"
-                            }
-                          },
-                          title: _vm.ใบจัดส่งสินค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "branchrec_orders"
+                          }
+                        },
+                        title: _vm.รายการใบรับส่งเข้าสาขา
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M10 0l10 10-10 10L0 10 10 0zM6 10v3h2v-3h3v3l4-4-4-4v3H8a2 2 0 0 0-2 2z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายการใบรับส่งเข้าสาขา")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              รายการใบรับส่งเข้าสาขา\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายการจัดส่งสินค้าของสาขา")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                                  รายการจัดส่งสินค้าของสาขา\n                              "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "branch_balances"
-                            }
-                          },
-                          title: _vm.รายการเก็บเงินปลายทางของสาขา
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "deliveries"
+                          }
+                        },
+                        title: _vm.ใบจัดส่งสินค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M10 0l10 10-10 10L0 10 10 0zM6 10v3h2v-3h3v3l4-4-4-4v3H8a2 2 0 0 0-2 2z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายการจัดส่งสินค้าของสาขา")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                                  รายการจัดส่งสินค้าของสาขา\n                              "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายการเก็บเงินปลายทางของสาขา")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                              ดูรายการเก็บเงินปลายทางของสาขา\n                          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "receipts"
-                            }
-                          },
-                          title: _vm.รายการใบเสร็จรับเงินปลายทาง
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "branch_balances"
+                          }
+                        },
+                        title: _vm.รายการเก็บเงินปลายทางของสาขา
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M10 0l10 10-10 10L0 10 10 0zM6 10v3h2v-3h3v3l4-4-4-4v3H8a2 2 0 0 0-2 2z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายการเก็บเงินปลายทางของสาขา")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              ดูรายการเก็บเงินปลายทางของสาขา\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายการใบเสร็จรับเงินปลายทาง")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                                  ดูรายการใบเสร็จรับเงินปลายทาง\n                              "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "order_headers"
-                            }
-                          },
-                          title: _vm.ใบรับส่งสินค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "receipts"
+                          }
+                        },
+                        title: _vm.รายการใบเสร็จรับเงินปลายทาง
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 40 40"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M29 7h5c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1h-5v5c0 .5522847-.4477153 1-1 1s-1-.4477153-1-1V9h-5c-.5522847 0-1-.44771525-1-1s.4477153-1 1-1h5V2c0-.55228475.4477153-1 1-1s1 .44771525 1 1v5zM4 0h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4V4c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2V4c0-1.1045695-.8954305-2-2-2H4zm20 18h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4h-8c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2h-8zM4 20h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2H4z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายการใบเสร็จรับเงินปลายทาง")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                                  ดูรายการใบเสร็จรับเงินปลายทาง\n                              "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ใบรับส่งสินค้า")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                              ค้นหา ดู สร้าง แก้ไข ใบรับส่งสินค้าจากสาขา\n                          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "branch_balances"
-                            }
-                          },
-                          title: _vm.รายการเก็บเงินปลายทางของสาขา
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "order_headers"
+                          }
+                        },
+                        title: _vm.ใบรับส่งสินค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 40 40"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M29 7h5c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1h-5v5c0 .5522847-.4477153 1-1 1s-1-.4477153-1-1V9h-5c-.5522847 0-1-.44771525-1-1s.4477153-1 1-1h5V2c0-.55228475.4477153-1 1-1s1 .44771525 1 1v5zM4 0h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4V4c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2V4c0-1.1045695-.8954305-2-2-2H4zm20 18h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4h-8c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2h-8zM4 20h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2H4z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ใบรับส่งสินค้า")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              ค้นหา ดู สร้าง แก้ไข ใบรับส่งสินค้าจากสาขา\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("รายการเก็บเงินปลายทางของสาขา")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                                  ดูรายการเก็บเงินปลายทางของสาขา\n                              "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "order_headers"
-                            }
-                          },
-                          title: _vm.ใบรับส่งสินค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "branch_balances"
+                          }
+                        },
+                        title: _vm.รายการเก็บเงินปลายทางของสาขา
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 40 40"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M18 9.87V20H2V9.87a4.25 4.25 0 0 0 3-.38V14h10V9.5a4.26 4.26 0 0 0 3 .37zM3 0h4l-.67 6.03A3.43 3.43 0 0 1 3 9C1.34 9 .42 7.73.95 6.15L3 0zm5 0h4l.7 6.3c.17 1.5-.91 2.7-2.42 2.7h-.56A2.38 2.38 0 0 1 7.3 6.3L8 0zm5 0h4l2.05 6.15C19.58 7.73 18.65 9 17 9a3.42 3.42 0 0 1-3.33-2.97L13 0z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M29 7h5c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1h-5v5c0 .5522847-.4477153 1-1 1s-1-.4477153-1-1V9h-5c-.5522847 0-1-.44771525-1-1s.4477153-1 1-1h5V2c0-.55228475.4477153-1 1-1s1 .44771525 1 1v5zM4 0h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4V4c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2V4c0-1.1045695-.8954305-2-2-2H4zm20 18h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4h-8c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2h-8zM4 20h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2H4z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายการเก็บเงินปลายทางของสาขา")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                                  ดูรายการเก็บเงินปลายทางของสาขา\n                              "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ใบรับส่งสินค้า")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                              ค้นหา ดู สร้าง แก้ไข ใบรับส่งสินค้าจากสาขา\n                          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "waybills"
-                            }
-                          },
-                          title: _vm.ใบกำกับสินค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "order_headers"
+                          }
+                        },
+                        title: _vm.ใบรับส่งสินค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 40 40"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M29 7h5c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1h-5v5c0 .5522847-.4477153 1-1 1s-1-.4477153-1-1V9h-5c-.5522847 0-1-.44771525-1-1s.4477153-1 1-1h5V2c0-.55228475.4477153-1 1-1s1 .44771525 1 1v5zM4 0h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4V4c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2V4c0-1.1045695-.8954305-2-2-2H4zm20 18h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4h-8c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2h-8zM4 20h8c2.209139 0 4 1.790861 4 4v8c0 2.209139-1.790861 4-4 4H4c-2.209139 0-4-1.790861-4-4v-8c0-2.209139 1.790861-4 4-4zm0 2c-1.1045695 0-2 .8954305-2 2v8c0 1.1.9 2 2 2h8c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2H4z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M7 3H2v14h5V3zm2 0v14h9V3H9zM0 3c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm3 1h3v2H3V4zm0 3h3v2H3V7zm0 3h3v2H3v-2z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ใบรับส่งสินค้า")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              ค้นหา ดู สร้าง แก้ไข ใบรับส่งสินค้าจากสาขา\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ใบกำกับสินค้า")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                              ค้นหา ดู สร้าง แก้ไข ใบกำกับสินค้าจากสาขา\n                          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "productservice_prices"
-                            }
-                          },
-                          title: _vm.ราคาค่าขนส่งสินค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "waybills"
+                          }
+                        },
+                        title: _vm.ใบกำกับสินค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M7 3H2v14h5V3zm2 0v14h9V3H9zM0 3c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm3 1h3v2H3V4zm0 3h3v2H3V7zm0 3h3v2H3v-2z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M1 4h2v2H1V4zm4 0h14v2H5V4zM1 9h2v2H1V9zm4 0h14v2H5V9zm-4 5h2v2H1v-2zm4 0h14v2H5v-2z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ใบกำกับสินค้า")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              ค้นหา ดู สร้าง แก้ไข ใบกำกับสินค้าจากสาขา\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ราคาค่าขนส่งสินค้า")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                              ค้นหา ดูข้อมูลราคาค่าขนส่งสินค้า\n                          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "customers"
-                            }
-                          },
-                          title: _vm.ข้อมูลลูกค้า
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "productservice_prices"
+                          }
+                        },
+                        title: _vm.ราคาค่าขนส่งสินค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M1 4h2v2H1V4zm4 0h14v2H5V4zM1 9h2v2H1V9zm4 0h14v2H5V9zm-4 5h2v2H1v-2zm4 0h14v2H5v-2z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M7 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 1c2.15 0 4.2.4 6.1 1.09L12 16h-1.25L10 20H4l-.75-4H2L.9 10.09A17.93 17.93 0 0 1 7 9zm8.31.17c1.32.18 2.59.48 3.8.92L18 16h-1.25L16 20h-3.96l.37-2h1.25l1.65-8.83zM13 0a4 4 0 1 1-1.33 7.76 5.96 5.96 0 0 0 0-7.52C12.1.1 12.53 0 13 0z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ราคาค่าขนส่งสินค้า")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              ค้นหา ดูข้อมูลราคาค่าขนส่งสินค้า\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ข้อมูลลูกค้า")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                          ค้นหา ดู แก้ไข เพิ่มข้อมูลลูกค้า\n                        "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "users"
-                            }
-                          },
-                          title: _vm.ข้อมูลผู้ใช้
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "customers"
+                          }
+                        },
+                        title: _vm.ข้อมูลลูกค้า
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M7 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 1c2.15 0 4.2.4 6.1 1.09L12 16h-1.25L10 20H4l-.75-4H2L.9 10.09A17.93 17.93 0 0 1 7 9zm8.31.17c1.32.18 2.59.48 3.8.92L18 16h-1.25L16 20h-3.96l.37-2h1.25l1.65-8.83zM13 0a4 4 0 1 1-1.33 7.76 5.96 5.96 0 0 0 0-7.52C12.1.1 12.53 0 13 0z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ข้อมูลลูกค้า")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              ค้นหา ดู แก้ไข เพิ่มข้อมูลลูกค้า\n                          "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ข้อมูลผู้ใช้")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                          แก้ไขรายละเอียดบัญชีผู้ใช้ของตัวเอง\n                        "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "users"
+                          }
+                        },
+                        title: _vm.ข้อมูลผู้ใช้
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ข้อมูลผู้ใช้")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                              แก้ไขรายละเอียดบัญชีผู้ใช้ของตัวเอง\n                          "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
             ]
           )
         ])

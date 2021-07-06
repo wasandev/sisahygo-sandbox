@@ -387,12 +387,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'truck',
@@ -424,311 +418,308 @@ var render = function() {
         _vm._v(" "),
         _c("card", [
           _c(
-            "table",
+            "div",
             {
-              staticClass: "w-full",
+              staticClass: "w-full flex flex-wrap",
               attrs: { cellpadding: "10", cellspacing: "10" }
             },
             [
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "cars"
-                            }
-                          },
-                          title: _vm.ข้อมูลรถ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "cars"
+                          }
+                        },
+                        title: _vm.ข้อมูลรถ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M13 18H7v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1zM4 5v6h5V5H4zm7 0v6h5V5h-5zM5 2v1h10V2H5zm.5 14a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M13 18H7v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1zM4 5v6h5V5H4zm7 0v6h5V5h-5zM5 2v1h10V2H5zm.5 14a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ข้อมูลรถ")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                          ค้นหา ดู จัดการข้อมูลรถ\n                        "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ข้อมูลรถ")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                          ค้นหา ดู จัดการข้อมูลรถ\n                        "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "car_balances"
-                            }
-                          },
-                          title: _vm.บัญชีรถ
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M16 2h4v15a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V0h16v2zm0 2v13a1 1 0 0 0 1 1 1 1 0 0 0 1-1V4h-2zM2 2v15a1 1 0 0 0 1 1h11.17a2.98 2.98 0 0 1-.17-1V2H2zm2 8h8v2H4v-2zm0 4h8v2H4v-2zM4 4h8v4H4V4z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("บัญชีรถ")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                          ค้นหา ดู บัญชีรับ-จ่ายของรถ\n                        "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ]),
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "charter_jobs"
-                            }
-                          },
-                          title: _vm.ใบงานขนส่งเหมาคัน
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "car_balances"
+                          }
+                        },
+                        title: _vm.บัญชีรถ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M16 2h4v15a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V0h16v2zm0 2v13a1 1 0 0 0 1 1 1 1 0 0 0 1-1V4h-2zM2 2v15a1 1 0 0 0 1 1h11.17a2.98 2.98 0 0 1-.17-1V2H2zm2 8h8v2H4v-2zm0 4h8v2H4v-2zM4 4h8v4H4V4z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M9 10V8h2v2h2v2h-2v2H9v-2H7v-2h2zm-5 8h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("บัญชีรถ")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                          ค้นหา ดู บัญชีรับ-จ่ายของรถ\n                        "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ใบงานขนส่งเหมาคัน")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                          จัดการข้อมูลใบงานขนส่งเหมาคัน\n                        "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "align-top w-1/2 border-r border-b border-50"
-                  },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "no-underline dim flex p-6",
-                        attrs: {
-                          to: {
-                            name: "index",
-                            params: {
-                              resourceName: "users"
-                            }
-                          },
-                          title: _vm.ข้อมูลผู้ใช้
-                        }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex justify-center w-11 flex-no-shrink mr-6"
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "charter_jobs"
+                          }
+                        },
+                        title: _vm.ใบงานขนส่งเหมาคัน
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  width: "40",
-                                  height: "40",
-                                  viewBox: "0 0 20 20"
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M9 10V8h2v2h2v2h-2v2H9v-2H7v-2h2zm-5 8h12V6h-4V2H4v16zm-2 1V0h12l4 4v16H2v-1z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    fill: "var(--primary)",
-                                    d:
-                                      "M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z"
-                                  }
-                                })
-                              ]
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ใบงานขนส่งเหมาคัน")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                          จัดการข้อมูลใบงานขนส่งเหมาคัน\n                        "
                             )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c(
-                              "heading",
-                              { staticClass: "mb-3", attrs: { level: 3 } },
-                              [_vm._v("ข้อมูลผู้ใช้")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-90 leading-normal" }, [
-                              _vm._v(
-                                "\n                          แก้ไขรายละเอียดบัญชีผู้ใช้ของตัวเอง\n                        "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "index",
+                          params: {
+                            resourceName: "users"
+                          }
+                        },
+                        title: _vm.ข้อมูลผู้ใช้
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("ข้อมูลผู้ใช้")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-90 leading-normal" }, [
+                            _vm._v(
+                              "\n                          แก้ไขรายละเอียดบัญชีผู้ใช้ของตัวเอง\n                        "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
             ]
           )
         ])
