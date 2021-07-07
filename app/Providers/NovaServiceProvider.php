@@ -35,6 +35,7 @@ use App\Nova\Metrics\ExpressIncomes;
 use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterIncomes;
+use App\Nova\Metrics\OrderByUserPartition;
 use Dniccum\CustomEmailSender\CustomEmailSender;
 use Dniccum\NovaDocumentation\NovaDocumentation;
 use Wasandev\Account\Account;
@@ -156,6 +157,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
                 }),
+            (new OrderByUserPartition())->width('1/2')
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
+                }),
+
 
             (new OrdersByPaymentType())->width('1/2')
                 ->canSee(function ($request) {

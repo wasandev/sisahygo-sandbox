@@ -20,7 +20,22 @@ class OrdersByPaymentType extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->sum($request, Order_header::whereNotIn('order_status', ['checking', 'new', 'cancel']), 'order_amount', 'paymenttype');
+        return $this->sum($request, Order_header::whereNotIn('order_status', ['checking', 'new', 'cancel']), 'order_amount', 'paymenttype')
+            ->label(function ($value) {
+
+                switch ($value) {
+                    case 'H':
+                        return 'เงินสดต้นทาง';
+                    case 'E':
+                        return 'เงินสดปลายทาง';
+                    case 'F':
+                        return 'วางบิลต้นทาง';
+                    case 'L':
+                        return 'วางบิลปลายทาง';
+                    case 'T':
+                        return 'เงินโอน';
+                }
+            });
     }
 
 

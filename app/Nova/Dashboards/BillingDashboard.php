@@ -3,6 +3,7 @@
 namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\OrderbyUser;
+use App\Nova\Metrics\OrderByUserPartition;
 use App\Nova\Metrics\OrderCashbyUser;
 use App\Nova\Metrics\OrderIncomes;
 use App\Nova\Metrics\OrdersByBranchRec;
@@ -23,23 +24,13 @@ class BillingDashboard extends Dashboard
         return [
             (new OrderbyUser())->width('1/2'),
             (new OrderCashbyUser())->width('1/2'),
-            (new OrderIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view order-incomes');
-                }),
-            (new OrdersPerMonth())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-per-day');
-                }),
-            (new OrdersByPaymentType())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
-            (new OrdersByBranchRec())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view orders-by-payment-type');
-                }),
-            (new  Orderstatus())
+            (new OrderIncomes())->width('1/2'),
+            (new OrdersPerMonth())->width('1/2'),
+            (new OrdersByPaymentType())->width('1/3'),
+            (new OrdersByBranchRec())->width('1/3'),
+            (new OrderByUserPartition())->width('1/3'),
+            (new Orderstatus()),
+
 
         ];
     }
