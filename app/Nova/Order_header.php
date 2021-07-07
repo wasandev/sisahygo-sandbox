@@ -140,8 +140,6 @@ class Order_header extends Resource
                 ->withSubtitles()
                 ->onlyOnDetail(),
 
-
-
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
                 ->default(today())
@@ -220,7 +218,7 @@ class Order_header extends Resource
             BelongsTo::make(__('Shipper'), 'shipper', 'App\Nova\User')
                 ->onlyOnDetail(),
             BelongsTo::make('พนักงานออกใบรับส่ง', 'user', 'App\Nova\User')
-                ->onlyOnDetail(),
+                ->exceptOnForms(),
             DateTime::make(__('Created At'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
