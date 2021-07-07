@@ -115,29 +115,34 @@
 
         @endforeach
         <tr style="font-weight: bold;">
-            <td colspan="4">
-                    <strong>
+            <td colspan="2">
+                <strong>
                     รวมทั้งหมด - {{count($order)}} รายการ
-                    </strong>
+                </strong>
             </td>
-
+            <td style="text-align: right;font-weight:bold">
+                รวมจำนวนเงินทั้งหมด
+            </td>
+            <td style="text-align: right;font-weight:bold">
+                 {{ number_format($order->sum('order_amount'),2,'.',',') }}
+            </td>
             <td style="text-align: right">
-                    {{ number_format($order->where('paymenttype','H')->sum('order_amount'),2,'.',',') }}
-                </td>
-                <td style="text-align: right">
-                    {{ number_format($order->where('paymenttype','T')->sum('order_amount'),2,'.',',') }}
-                </td>
-                <td style="text-align: right">
-                   {{ number_format($order->where('paymenttype','F')->sum('order_amount'),2,'.',',') }}
-                </td>
-                <td style="text-align: right">
-                    {{ number_format($order->where('paymenttype','L')->sum('order_amount'),2,'.',',') }}
-                </td>
-                <td style="text-align: right">
-                    {{ number_format($order->where('paymenttype','E')->sum('order_amount'),2,'.',',') }}
-                </td>
-                <td>
-                </td>
+                {{ number_format($order->where('paymenttype','H')->sum('order_amount'),2,'.',',') }}
+            </td>
+            <td style="text-align: right">
+                {{ number_format($order->where('paymenttype','T')->sum('order_amount'),2,'.',',') }}
+            </td>
+            <td style="text-align: right">
+                {{ number_format($order->where('paymenttype','F')->sum('order_amount'),2,'.',',') }}
+            </td>
+            <td style="text-align: right">
+                {{ number_format($order->where('paymenttype','L')->sum('order_amount'),2,'.',',') }}
+            </td>
+            <td style="text-align: right">
+                {{ number_format($order->where('paymenttype','E')->sum('order_amount'),2,'.',',') }}
+            </td>
+            <td>
+            </td>
 
 
         </tr>
