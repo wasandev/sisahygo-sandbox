@@ -26,9 +26,9 @@ class BillingDashboard extends Dashboard
             (new OrderCashbyUser())->width('1/2'),
             (new OrderIncomes())->width('1/2'),
             (new OrdersPerMonth())->width('1/2'),
-            (new OrdersByPaymentType())->width('1/3'),
-            (new OrdersByBranchRec())->width('1/3'),
-            (new OrderByUserPartition())->width('1/3'),
+            (new OrdersByPaymentType())->width('1/2'),
+            (new OrdersByBranchRec())->width('1/2'),
+            (new OrderByUserPartition())->width('1/2'),
             (new Orderstatus()),
 
 
