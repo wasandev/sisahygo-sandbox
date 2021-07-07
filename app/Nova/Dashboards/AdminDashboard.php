@@ -21,6 +21,7 @@ use App\Nova\Metrics\ExpressIncomes;
 use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterIncomes;
+use App\Nova\Metrics\OrderByUserPartition;
 use Wasandev\Orderstatus\Orderstatus;
 
 class AdminDashboard extends Dashboard
@@ -43,6 +44,7 @@ class AdminDashboard extends Dashboard
 
             (new OrdersByPaymentType())->width('1/2'),
             (new OrdersByBranchRec())->width('1/2'),
+            (new OrderByUserPartition())->width('1/2'),
 
             (new WaybillsPerDay())->width('1/2'),
             (new WaybillLoading())->width('1/2'),
