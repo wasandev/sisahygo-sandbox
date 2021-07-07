@@ -53,7 +53,7 @@ class OrderCashbyUser extends Value
 
     public function name()
     {
-        return 'ยอดเก็บสดต้นทาง';
+        return 'ยอดเก็บสดต้นทางของคุณ';
     }
     /**
      * Get the URI key for the metric.

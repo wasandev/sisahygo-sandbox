@@ -51,7 +51,7 @@ class OrderbyUser extends Value
 
     public function name()
     {
-        return 'จำนวนใบรับส่งสินค้า';
+        return 'จำนวนใบรับส่งสินค้าของคุณ';
     }
     /**
      * Get the URI key for the metric.
