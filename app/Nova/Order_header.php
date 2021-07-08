@@ -210,8 +210,8 @@ class Order_header extends Resource
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
-                ->hideFromIndex()
-                ->searchable(),
+                ->hideFromIndex(),
+            //->searchable(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->onlyOnDetail(),
