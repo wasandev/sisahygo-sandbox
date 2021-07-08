@@ -37,7 +37,7 @@ class Productservice_price extends Resource
     public function title()
     {
         if (isset($this->product) && isset($this->unit)) {
-            return $this->product->name . ' (' . number_format($this->product->weight, 2, '.', ',') . ' กก.) ค่าขนส่ง ' . number_format($this->price, 2, '.', ',') . ' บ./' . $this->unit->name;
+            return $this->product->name . "-" . number_format($this->price, 2, '.', ',') . '/' . $this->unit->name;
         } else {
             return $this->id;
         }

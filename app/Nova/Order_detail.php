@@ -88,7 +88,7 @@ class Order_detail extends Resource
                 ->withSubtitles()
                 ->nullable()
                 ->onlyOnForms(),
-            //])->dependsOn('usepricetable', true),
+            // ])->dependsOn('usepricetable', true),
 
             NovaDependencyContainer::make([
                 BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')

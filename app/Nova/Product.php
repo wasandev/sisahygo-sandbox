@@ -43,7 +43,11 @@ class Product extends Resource
     }
     public function subtitle()
     {
-        return 'น้ำหนัก/หน่วย(กก.) ' . $this->weight;
+        if (isset($this->weight)) {
+            return 'น้ำหนัก/หน่วย(กก.) ' . $this->weight;
+        } else {
+            return null;
+        }
     }
     /**
      * The columns that should be searched.
