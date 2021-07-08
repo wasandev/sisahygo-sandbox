@@ -110,16 +110,21 @@ class Order_detail extends Resource
                 }
                 return $this->amount *  $this->price;
             }),
-            number::make('น้ำหนักสินค้ารวม', 'order_weight', function () {
-                return $this->amount * $this->weight;
-            })->onlyOnIndex()
-                ->step('0.01'),
+
             Number::make('น้ำหนักสินค้า/หน่วย(กก.)', 'weight')
                 ->step('0.01')
                 //->rules('required')
                 ->help('สินค้าที่มีหน่วย กิโลกรัม ให้ใส่ 1')
                 ->hideFromIndex()
                 ->default(0.00),
+            number::make('น้ำหนักสินค้ารวม', 'order_weight', function () {
+                if (isset($this->weight)) {
+                    return $this->amount * $this->weight;
+                } else {
+                    return 0;
+                }
+            })->onlyOnIndex()
+                ->step('0.01'),
             Text::make('หมายเหตุ', 'remark')
                 ->nullable(),
         ];

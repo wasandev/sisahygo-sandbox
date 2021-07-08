@@ -23,8 +23,11 @@ class OrderDetailObserver
         } elseif ($order_detail->weight == 0) {
             $product = Product::where('id', $order_detail->product_id)
                 ->where('unit_id', $order_detail->unit_id)->first();
-
-            $order_detail->weight = $product->weight;
+            if (isset($product->weight)) {
+                $order_detail->weight = $product->weight;
+            } else {
+                $order_detail->weight = 0;
+            }
         }
         $order_detail->user_id = auth()->user()->id;
         //update product weight
