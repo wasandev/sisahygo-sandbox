@@ -56,6 +56,15 @@ class User extends Resource
      */
     public static $title = 'name';
 
+    public function subtitle()
+    {
+        if (isset($this->department->name)) {
+            return $this->department->name;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * The columns that should be searched.
      *

@@ -210,8 +210,9 @@ class Order_header extends Resource
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
-                ->hideFromIndex(),
-            //->searchable(),
+                ->hideFromIndex()
+                ->searchable()
+                ->withSubtitles(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->onlyOnDetail(),
@@ -408,5 +409,12 @@ class Order_header extends Resource
         //         return $query->whereIn('district', $to_branch_area);
         //     }
         // }
+    }
+
+    public static function relatableUsers(NovaRequest $request, $query)
+    {
+        //if ($request->route()->parameter('field') === "checker_id") {
+        return $query->where('branch_id', '=', $request->user()->branch_id);
+        //}
     }
 }
