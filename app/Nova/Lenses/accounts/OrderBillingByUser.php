@@ -35,7 +35,7 @@ class OrderBillingByUser extends Lens
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_id')
                 ->join('users', 'users.id', '=', 'order_headers.user_id')
                 ->whereNotIn('order_headers.order_status', ['checking', 'new'])
-                ->orderBy('order_headers.branch_id', 'asc')
+                ->orderBy('ordercount', 'desc')
                 ->orderBy('order_headers.order_header_date', 'asc')
                 ->groupBy('order_headers.branch_id', 'order_headers.user_id', 'order_headers.order_header_date')
         ));
