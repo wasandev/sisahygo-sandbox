@@ -275,6 +275,7 @@ class Order_header extends Resource
     {
         return [
             new Lenses\accounts\OrderBillingCash(),
+            new lenses\accounts\OrderBillingByUser(),
             new lenses\accounts\OrderReportBillByDay(),
             new lenses\accounts\OrderReportByDay(),
             new lenses\accounts\OrderReportByBranchrec(),
