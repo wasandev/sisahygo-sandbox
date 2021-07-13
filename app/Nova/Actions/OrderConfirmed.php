@@ -70,7 +70,11 @@ class OrderConfirmed extends Action
                 $model->bankreference = $fields->refernce;
                 $model->waybill_id = $fields->waybill_branch;
                 $model->loader_id = $fields->loader;
-                $model->order_status = 'confirmed';
+                if (isset($fields->waybill_branch)) {
+                    $model->order_status = 'loaded';
+                } else {
+                    $model->order_status = 'confirmed';
+                }
 
                 $model->save();
 
