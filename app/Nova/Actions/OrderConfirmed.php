@@ -70,11 +70,11 @@ class OrderConfirmed extends Action
                 $model->bankreference = $fields->refernce;
                 $model->waybill_id = $fields->waybill_branch;
                 $model->loader_id = $fields->loader;
-                if (isset($fields->waybill_branch)) {
-                    $model->order_status = 'loaded';
-                } else {
-                    $model->order_status = 'confirmed';
-                }
+                // if (isset($fields->waybill_branch)) {
+                //     $model->order_status = 'loaded';
+                // } else {
+                $model->order_status = 'confirmed';
+                // }
 
                 $model->save();
 
@@ -110,13 +110,14 @@ class OrderConfirmed extends Action
             }
 
             $routeto_branch = Routeto_branch::where('dest_branch_id',  $order_header->branch_rec_id)->first();
-
-            $waybills = Waybill::with('car')
-                ->where('routeto_branch_id', '=', $routeto_branch->id)
-                ->where('waybill_status', '=', 'loading')
-                ->get();
-            if (isset($waybills)) {
-                foreach ($waybills as $waybill) {
+            if (isset($routeto_branch)) {
+                $waybillbranches = Waybill::with('car')
+                    ->where('routeto_branch_id', '=', $routeto_branch->id)
+                    ->where('waybill_status', '=', 'loading')
+                    ->get();
+            }
+            if (isset($waybillbranches)) {
+                foreach ($waybillbranches as $waybill) {
                     $waybillOptions[] = [
                         ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
                     ];

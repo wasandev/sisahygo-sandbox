@@ -66,7 +66,40 @@ class OrderHeaderObserver
     public function updating(Order_header $order_header)
     {
         if ($order_header->order_type <> 'charter') {
+            $order_amount = 0;
+            $branch = \App\Models\Branch::find(auth()->user()->branch_id);
+            if ($branch->dropship_flag) {
+                $order_header->shipto_center  = '0';
+            }
+            $to_customer = Customer::find($order_header->customer_rec_id);
+            $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+            if (is_null($to_branch)) {
+                throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+            }
+            $order_header->branch_rec_id = $to_branch->branch_id;
+            $customer_paymenttype = $order_header->customer->paymenttype;
+            $to_customer_paymenttype = $order_header->to_customer->paymenttype;
 
+            if ($customer_paymenttype == 'H') {
+                $order_header->paymenttype = 'H';
+            } elseif ($to_customer_paymenttype == 'H') {
+                $order_header->paymenttype = 'H';
+            } elseif ($customer_paymenttype == 'E') {
+                $order_header->paymenttype = 'E';
+            } elseif ($customer_paymenttype == 'Y') {
+                $order_header->paymenttype = 'F';
+            } elseif ($to_customer_paymenttype == 'Y') {
+                $order_header->paymenttype = 'L';
+            } else {
+                $order_header->paymenttype = 'H';
+            }
+            $order_items = $order_header->order_details;
+            foreach ($order_items as $order_item) {
+                $sub_total = $order_item->price * $order_item->amount;
+                $order_amount = $order_amount + $sub_total;
+            }
+            $order_header->order_amount = $order_amount;
+            $order_header->payment_status = false;
             if ($order_header->order_status == 'confirmed' && is_null($order_header->order_header_no)) {
                 $order_amount = 0;
                 $total_weight = 0;
@@ -101,11 +134,7 @@ class OrderHeaderObserver
                 $order_header->order_amount = $order_amount;
                 $order_header->total_weight = $total_weight;
 
-                Order_status::create([
-                    'order_header_id' => $order_header->id,
-                    'status' => 'confirmed',
-                    'user_id' => auth()->user()->id,
-                ]);
+
 
                 if ($order_header->paymenttype == "T") {
                     Order_banktransfer::create([
@@ -141,6 +170,20 @@ class OrderHeaderObserver
                         'customer_id' => $order_header->customer_rec_id,
                         'ar_amount' => $order_header->order_amount,
                         'description' => 'ค่าขนส่งสินค้า',
+                        'user_id' => auth()->user()->id,
+                    ]);
+                }
+
+                Order_status::create([
+                    'order_header_id' => $order_header->id,
+                    'status' => 'confirmed',
+                    'user_id' => auth()->user()->id,
+                ]);
+                if (isset($order_header->waybill_id)) {
+                    $order_header->order_status = 'loaded';
+                    Order_status::create([
+                        'order_header_id' => $order_header->id,
+                        'status' => 'loaded',
                         'user_id' => auth()->user()->id,
                     ]);
                 }
