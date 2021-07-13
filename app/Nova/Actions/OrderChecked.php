@@ -49,7 +49,6 @@ class OrderChecked extends Action
                 return Action::danger('ไม่สามารถยืนยันรายการที่ ยืนยันไปแล้วได้');
             } elseif ($hasitem) {
 
-
                 $model->order_status = 'new';
 
                 $model->waybill_id = $fields->waybill_branch;

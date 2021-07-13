@@ -65,7 +65,7 @@ class OrderHeaderObserver
 
     public function updating(Order_header $order_header)
     {
-        if ($order_header->order_type <> 'charter') {
+        if ($order_header->order_type <> 'charter' && $order_header->order_status == 'new') {
             $order_amount = 0;
             $branch = \App\Models\Branch::find(auth()->user()->branch_id);
             if ($branch->dropship_flag) {
@@ -76,7 +76,8 @@ class OrderHeaderObserver
             if (is_null($to_branch)) {
                 throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
             }
-            $order_header->branch_rec_id = $to_branch->branch_id;
+
+
             $customer_paymenttype = $order_header->customer->paymenttype;
             $to_customer_paymenttype = $order_header->to_customer->paymenttype;
 
@@ -115,7 +116,10 @@ class OrderHeaderObserver
                 if (is_null($to_branch)) {
                     throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
                 }
-                $order_header->branch_rec_id = $to_branch->branch_id;
+
+                if ($order_header->branch_rec_id == $to_branch->branch_id) {
+                    $order_header->branch_rec_id = $to_branch->branch_id;
+                }
                 $order_header->order_header_date = today();
                 $order_header->created_at = Carbon::now()->toDateTimeString();
                 $order_header->user_id = auth()->user()->id;

@@ -307,6 +307,18 @@ class Order_header extends Resource
                     return $request instanceof ActionRequest
                         || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'new'));
                 }),
+            (new Actions\SetOrderToBranch($request->resourceId))
+                ->onlyOnDetail()
+                ->confirmText('ต้องการเปลี่ยนสาขาปลายทางของใบรับส่งนี้รายการนี้?')
+                ->confirmButtonText('เปลี่ยน')
+                ->cancelButtonText("ไม่เปลี่ยน")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'confirmed'));
+                }),
             (new Actions\PrintOrder)
                 ->showOnTableRow()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
