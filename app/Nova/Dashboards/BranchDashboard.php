@@ -13,9 +13,7 @@ class BranchDashboard extends Dashboard
      */
     public function cards()
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     /**
