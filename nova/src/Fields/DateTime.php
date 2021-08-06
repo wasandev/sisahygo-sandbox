@@ -97,7 +97,7 @@ class DateTime extends Field
     {
         $increment = intval($increment);
 
-        if ($increment > 0 || $increment < 24) {
+        if ($increment > 0 && $increment < 24) {
             return $this->withMeta(['pickerHourIncrement' => $increment]);
         }
 
@@ -114,7 +114,7 @@ class DateTime extends Field
     {
         $increment = intval($increment);
 
-        if ($increment > 0 || $increment < 60) {
+        if ($increment > 0 && $increment < 60) {
             return $this->withMeta(['pickerMinuteIncrement' => $increment]);
         }
 

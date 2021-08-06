@@ -324,11 +324,13 @@ export default {
     },
 
     openRelationModal() {
+      Nova.$emit('create-relation-modal-opened')
       this.relationModalOpen = true
     },
 
     closeRelationModal() {
       this.relationModalOpen = false
+      Nova.$emit('create-relation-modal-closed')
     },
 
     handleSetResource({ id }) {
@@ -400,6 +402,11 @@ export default {
           viaResource: this.viaResource,
           viaResourceId: this.viaResourceId,
           viaRelationship: this.viaRelationship,
+          editing: true,
+          editMode:
+            _.isNil(this.resourceId) || this.resourceId === ''
+              ? 'create'
+              : 'update',
         },
       }
     },

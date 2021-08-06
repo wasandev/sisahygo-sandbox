@@ -296,6 +296,7 @@
             :via-relationship="viaRelationship"
             :relationship-type="relationshipType"
             :update-selection-status="updateSelectionStatus"
+            :sortable="sortable"
             @order="orderByField"
             @reset-order-by="resetOrderBy"
             @delete="deleteResources"
@@ -417,6 +418,7 @@ export default {
     selectedResources: [],
     selectAllMatchingResources: false,
     allMatchingResourceCount: 0,
+    sortable: true,
 
     deleteModalOpen: false,
 
@@ -601,6 +603,7 @@ export default {
             this.resources = data.resources
             this.softDeletes = data.softDeletes
             this.perPage = data.per_page
+            this.sortable = data.sortable
 
             this.loading = false
 

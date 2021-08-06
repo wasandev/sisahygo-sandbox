@@ -3,7 +3,6 @@
 namespace Laravel\Nova\Query;
 
 use Illuminate\Container\Container;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\LazyCollection;
 use Laravel\Nova\Contracts\QueryBuilder;
@@ -153,10 +152,10 @@ class Builder implements QueryBuilder
      */
     public function limit($limit)
     {
-        if ($this->queryBuilder instanceof EloquentBuilder) {
-            $this->queryBuilder->limit($limit);
-        } else {
+        if ($this->queryBuilder instanceof ScoutBuilder) {
             $this->queryBuilder->take($limit);
+        } else {
+            $this->queryBuilder->limit($limit);
         }
 
         return $this;
@@ -203,10 +202,11 @@ class Builder implements QueryBuilder
     {
         $queryBuilder = $this->applyQueryCallbacks($this->queryBuilder);
 
-        if ($queryBuilder instanceof EloquentBuilder) {
+        if (! $queryBuilder instanceof ScoutBuilder) {
             return [
                 $queryBuilder->simplePaginate($perPage),
                 $this->getCountForPagination(),
+                true,
             ];
         }
 
@@ -224,6 +224,7 @@ class Builder implements QueryBuilder
                 'options' => $scoutPaginated->getOptions(),
             ])->hasMorePagesWhen($hasMorePages),
             $scoutPaginated->total(),
+            false,
         ];
     }
 
