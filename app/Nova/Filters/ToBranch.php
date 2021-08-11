@@ -15,6 +15,13 @@ class ToBranch extends Filter
     public $component = 'select-filter';
     public $name = 'ตามสาขาปลายทาง';
 
+    public function default()
+    {
+        if (auth()->user()->branch->code != '001') {
+            return auth()->user()->branch_id;
+        }
+    }
+
     /**
      * Apply the filter to the given query.
      *

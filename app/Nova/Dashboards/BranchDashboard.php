@@ -2,6 +2,11 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\Branchs\BranchBalance;
+use App\Nova\Metrics\Branchs\BranchBalanceNotpay;
+use App\Nova\Metrics\Branchs\BranchBalancePay;
+use App\Nova\Metrics\Branchs\BranchBalanceWarehouse;
+use App\Nova\Metrics\Branchs\BranchrecWaybill;
 use Laravel\Nova\Dashboard;
 
 class BranchDashboard extends Dashboard
@@ -13,7 +18,14 @@ class BranchDashboard extends Dashboard
      */
     public function cards()
     {
-        return [];
+        return [
+            (new BranchrecWaybill())->width('1/2'),
+            (new BranchBalance())->width('1/2'),
+            (new BranchBalancePay())->width('1/2'),
+            (new BranchBalanceNotpay())->width('1/2'),
+            (new BranchBalanceWarehouse())->width('1/2')->help('รวมทุกประเภทการชำระเงิน'),
+
+        ];
     }
 
     /**

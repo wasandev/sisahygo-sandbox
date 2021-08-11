@@ -219,7 +219,7 @@ class Order_header extends Resource
             BelongsTo::make(__('Shipper'), 'shipper', 'App\Nova\User')
                 ->onlyOnDetail(),
             BelongsTo::make('พนักงานออกใบรับส่ง', 'user', 'App\Nova\User')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),

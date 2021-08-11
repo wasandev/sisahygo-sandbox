@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\DeliveryConfirmed;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -65,7 +66,7 @@ class Delivery_item extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            // ID::make(__('ID'), 'id')->sortable(),
             BelongsTo::make('เลขที่รายการจัดส่ง', 'delivery', 'App\Nova\Delivery'),
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
@@ -180,4 +181,18 @@ class Delivery_item extends Resource
     // {
     //     return '/resources/' . $request->input('viaResource') . '/' . $request->input('viaResourceId');
     // }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $resourceTable = 'delivery_items';
+        $query->select("{$resourceTable}.*");
+        $query->addSelect('c.district as customerDistrict');
+        $query->join('customers as c', "{$resourceTable}.customer_id", '=', 'c.id');
+
+        $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+            $q->getQuery()->orders = null;
+            return $q->orderBy('customerDistrict', 'asc')
+                ->orderBy('delivery_items.id', 'asc');
+        });
+    }
 }
