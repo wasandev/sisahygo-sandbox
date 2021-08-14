@@ -10,10 +10,10 @@ class LoaderShowByOrderStatus extends Filter
 
     public $name = 'ตามสถานะ';
 
-    public function default()
-    {
-        return 'confirmed';
-    }
+    // public function default()
+    // {
+    //     return 'confirmed';
+    // }
     /**
      * Apply the filter to the given query.
      *
