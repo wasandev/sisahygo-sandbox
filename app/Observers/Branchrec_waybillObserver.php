@@ -45,7 +45,7 @@ class Branchrec_waybillObserver
                     'payment_no' => $payment_no,
                     'car_id' => $branchrec_waybill->car_id,
                     'vendor_id' => $branchrec_waybill->car->vendor_id,
-                    'payment_date' => $branchrec_waybill->waybill_date,
+                    'payment_date' => today(),
                     'amount' => $branch_balances->sum('order_amount'),
                     'payment_by' => 'H',
                     'tax_flag' => true,
@@ -59,7 +59,7 @@ class Branchrec_waybillObserver
                 foreach ($bal_custs as $cust => $cust_groups) {
 
                     $branch_balance = Branch_balance_partner::create([
-                        'branchbal_date' => $branchrec_waybill->waybill_date,
+                        'branchbal_date' => today(),
                         'branch_id' => $routeto_branch->dest_branch_id,
                         'bal_amount' => $cust_groups->sum('order_amount'),
                         'discount_amount' => 0.00,
@@ -87,7 +87,7 @@ class Branchrec_waybillObserver
                 foreach ($bal_custs as $cust => $cust_groups) {
 
                     $branch_balance = Branch_balance::create([
-                        'branchbal_date' => $branchrec_waybill->waybill_date,
+                        'branchbal_date' => today(),
                         'branch_id' => $routeto_branch->dest_branch_id,
                         'bal_amount' => $cust_groups->sum('order_amount'),
                         'discount_amount' => 0.00,

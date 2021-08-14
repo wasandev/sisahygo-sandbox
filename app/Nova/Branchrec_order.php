@@ -32,7 +32,7 @@ class Branchrec_order extends Resource
 {
     public static $group = '8.สำหรับสาขา';
     public static $priority = 2;
-    public static $polling = true;
+    public static $polling = false;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
@@ -79,6 +79,13 @@ class Branchrec_order extends Resource
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make('ใบกำกับสินค้า', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
+                ->nullable()
+                ->sortable()
+                ->readonly(),
+            Text::make('อำเภอ', 'districe', function () {
+                return $this->to_customer->district;
+            })->onlyOnIndex(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['in transit'])
                 ->failedWhen(['cancel'])
@@ -98,10 +105,7 @@ class Branchrec_order extends Resource
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable(),
-            BelongsTo::make('ใบกำกับสินค้า', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
-                ->nullable()
-                ->sortable()
-                ->readonly(),
+
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly()
                 ->sortable(),
@@ -113,9 +117,7 @@ class Branchrec_order extends Resource
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms(),
-            Text::make('อำเภอ', 'districe', function () {
-                return $this->to_customer->district;
-            })->onlyOnIndex(),
+
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms()
@@ -220,28 +222,18 @@ class Branchrec_order extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->role != 'admin') {
 
-            $resourceTable = 'order_headers';
-            $query->select("{$resourceTable}.*");
-            $query->addSelect('c.district as customerDistrict');
-            $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
-            $query->whereNotIn("{$resourceTable}.order_status", ['checking', 'new']);
-            $query->where("{$resourceTable}.order_type", '<>', 'charter');
-            $query->where("{$resourceTable}.branch_rec_id", '=', $request->user()->branch_id);
-            $orderBy = $request->get('orderBy');
 
-            if ($orderBy == 'customer_rec_id') {
-                $query->getQuery()->orders = null;
-                $query->orderBy('customerDistrict', $request->get('orderByDirection'));
-            } else {
-                $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
-                    $q->getQuery()->orders = null;
-                    return $q->orderBy('order_headers.id', 'desc');
-                });
-            }
-        } else {
-            return $query;
-        }
+        $resourceTable = 'order_headers';
+        $query->select("{$resourceTable}.*");
+        $query->addSelect('c.district as customerDistrict');
+        $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
+
+        $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+            $q->getQuery()->orders = null;
+            return $q->orderBy('customerDistrict', 'asc')
+                ->orderBy('order_headers.waybill_id', 'desc')
+                ->orderBy('order_headers.id', 'asc');
+        });
     }
 }

@@ -101,7 +101,8 @@ class User extends Resource
                 ->updateRules('unique:users,email,{{resourceId}}')
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
-                }),
+                })
+                ->hideFromIndex(),
 
             Password::make(__('password'), 'password')
                 ->onlyOnForms()
@@ -243,13 +244,13 @@ class User extends Resource
         return $query;
     }
 
-    // public static function redirectAfterCreate(NovaRequest $request, $resource)
-    // {
-    //     return '/resources/' . static::uriKey();
-    // }
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
 
-    // public static function redirectAfterUpdate(NovaRequest $request, $resource)
-    // {
-    //     return '/resources/' . static::uriKey();
-    // }
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
 }
