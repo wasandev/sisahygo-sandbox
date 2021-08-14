@@ -130,7 +130,8 @@ class Waybill extends Resource
             //NovaDependencyContainer::make([
             BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                 ->nullable()
-                ->showCreateRelationButton(),
+                ->showCreateRelationButton()
+                ->hideFromIndex(),
             //])->dependsOnNot('waybill_type', 'charter'),
             //NovaDependencyContainer::make([
 

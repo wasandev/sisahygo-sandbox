@@ -7,6 +7,7 @@ use App\Nova\Metrics\Branchs\BranchBalanceDelivery;
 use App\Nova\Metrics\Branchs\BranchBalanceNotpay;
 use App\Nova\Metrics\Branchs\BranchBalancePay;
 use App\Nova\Metrics\Branchs\BranchBalanceWarehouse;
+use App\Nova\Metrics\Branchs\BranchOrder;
 use App\Nova\Metrics\Branchs\BranchrecWaybill;
 use Laravel\Nova\Dashboard;
 
@@ -20,6 +21,7 @@ class BranchDashboard extends Dashboard
     public function cards()
     {
         return [
+            (new BranchOrder())->width('full'),
             (new BranchrecWaybill())->width('1/2'),
             (new BranchBalance())->width('1/2'),
             (new BranchBalancePay())->width('1/2'),

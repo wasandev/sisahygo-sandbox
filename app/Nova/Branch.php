@@ -7,6 +7,7 @@ use App\Nova\Metrics\Branchtrends\BranchBalanceFrom;
 use App\Nova\Metrics\Branchtrends\BranchBalanceNotpayFrom;
 use App\Nova\Metrics\Branchtrends\BranchBalancePayFrom;
 use App\Nova\Metrics\Branchtrends\BranchBalanceWarehouseFrom;
+use App\Nova\Metrics\Branchtrends\BranchOrderFrom;
 use App\Nova\Metrics\Branchtrends\BranchrecWaybillFrom;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -193,6 +194,8 @@ class Branch extends Resource
     public function cards(Request $request)
     {
         return [
+
+            (new BranchOrderFrom())->width('full')->onlyOnDetail(),
             (new BranchrecWaybillFrom())->width('1/2')->onlyOnDetail(),
             (new BranchBalanceFrom())->width('1/2')->onlyOnDetail(),
             (new BranchBalancePayFrom())->width('1/2')->onlyOnDetail(),
