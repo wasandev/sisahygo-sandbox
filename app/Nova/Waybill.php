@@ -106,6 +106,10 @@ class Waybill extends Resource
                 ->failedWhen(['cancel'])
                 ->exceptOnForms()
                 ->sortable(),
+            BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
+                ->searchable()
+                ->withSubtitles()
+                ->sortable(),
             Text::make(__('Waybill no'), 'waybill_no')
                 ->readonly()
                 ->sortable(),
@@ -130,10 +134,7 @@ class Waybill extends Resource
             //])->dependsOnNot('waybill_type', 'charter'),
             //NovaDependencyContainer::make([
 
-            BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
-                ->searchable()
-                ->withSubtitles()
-                ->sortable(),
+
             Text::make('ยอดค่าขนส่งที่กำหนด', 'fulltruckrate', function () {
                 if ($this->waybill_type == 'general' || $this->waybill_type == 'express') {
                     $hasitem = count($this->routeto_branch->routeto_branch_costs);
