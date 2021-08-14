@@ -123,16 +123,13 @@ class Waybill extends Resource
             //     return $this->routeto_branch->dest_branch->name;
             // })->onlyOnIndex(),
             BelongsTo::make('ไปสาขา', 'to_branch', 'App\Nova\Branch')->onlyOnIndex(),
-            NovaDependencyContainer::make([
-                BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
-                    ->nullable()
-                    ->showCreateRelationButton(),
-            ])->dependsOnNot('waybill_type', 'charter'),
-            NovaDependencyContainer::make([
-                BelongsTo::make(__('Charter route'), 'charter_route', 'App\Nova\Charter_route')
-                    ->nullable()
-                    ->showCreateRelationButton(),
-            ])->dependsOn('waybill_type', 'charter'),
+            //NovaDependencyContainer::make([
+            BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
+                ->nullable()
+                ->showCreateRelationButton(),
+            //])->dependsOnNot('waybill_type', 'charter'),
+            //NovaDependencyContainer::make([
+
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
                 ->searchable()
                 ->withSubtitles()
