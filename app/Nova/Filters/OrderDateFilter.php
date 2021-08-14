@@ -9,6 +9,11 @@ use Laravel\Nova\Filters\DateFilter;
 class OrderDateFilter extends DateFilter
 {
     public $name = 'ตามวันที่ใบรับส่ง';
+
+    public function default()
+    {
+        return date(today());
+    }
     /**
      * Apply the filter to the given query.
      *

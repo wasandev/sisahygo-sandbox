@@ -91,22 +91,22 @@ class Order_loader extends Resource
                 'express' => 'Express',
             ])->onlyOnIndex()
                 ->displayUsingLabels(),
-            BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
-                ->nullable(),
-            // ->searchable()
-            // ->withSubtitles(),
+
+            Text::make('อำเภอ', 'branch_district', function () {
+                return $this->to_customer->district;
+            })->onlyOnIndex(),
 
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly()
                 ->sortable(),
 
+            BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
+                ->nullable(),
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->exceptOnForms()
                 ->hideFromIndex(),
-            Text::make('อำเภอ', 'branch_district', function () {
-                return $this->to_customer->district;
-            })->onlyOnIndex(),
+
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
@@ -157,7 +157,7 @@ class Order_loader extends Resource
     {
         return [
             new LoaderToBranch(),
-            //new LoaderToDistrict(),
+            new LoaderToDistrict(),
             new LoaderShowByOrderStatus(),
         ];
     }
@@ -202,15 +202,26 @@ class Order_loader extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         $branch = \App\Models\Branch::find($request->user()->branch_id);
+        $resourceTable = 'order_headers';
+        $query->select("{$resourceTable}.*");
+        $query->addSelect('c.district as customerDistrict');
+        $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
         if ($branch->code == '001') {
-            return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
-                ->where('shipto_center', '=', '2')
-                ->where('order_type', '<>', 'charter');
+            $query->whereNotIn('order_headers.order_status', ['checking', 'new', 'cancel'])
+                ->where('order_headers.shipto_center', '=', '2')
+                ->where('order_headers.order_type', '<>', 'charter');
         } else {
-            return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
-                ->where('branch_id', '=', $request->user()->branch_id)
-                ->where('order_type', '<>', 'charter');
+            $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+                ->where('order_headers.branch_id', '=', $request->user()->branch_id)
+                ->where('order_headers.order_type', '<>', 'charter');
         }
+        $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+            $q->getQuery()->orders = null;
+
+            return $q->orderBy('customerDistrict', 'asc')
+                ->orderBy('order_headers.id', 'asc')
+                ->orderBy('order_headers.waybill_id', 'asc');
+        });
     }
 
     public static function relatableWaybills(NovaRequest $request, $query)
