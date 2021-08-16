@@ -2,22 +2,23 @@
 
 namespace App\Nova\Metrics;
 
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Metrics\Value;
 use App\Models\Order_header;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Metrics\Trend;
 
-class OrderbyUser extends Value
+class OrderbyUserTrend extends Trend
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return mixed
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Order_header::where('user_id', $request->user()->id)
-            ->whereNotIn('order_status',  ['checking', 'new']));
+        return $this->countByDays($request, Order_header::where('user_id', $request->user()->id)
+            ->whereNotIn('order_status',  ['checking', 'new']))
+            ->showSumValue();
     }
 
     /**
@@ -28,10 +29,7 @@ class OrderbyUser extends Value
     public function ranges()
     {
         return [
-            'TODAY' => 'วันนี้',
-            'MTD' => 'เดือนนี้',
-            'QTD' => 'ไตรมาสนี้',
-            'YTD' => 'ปีนี้',
+            7 => '7 วัน',
             30 => '30 วัน',
             60 => '60 วัน',
             365 => '365 วัน',
@@ -47,11 +45,9 @@ class OrderbyUser extends Value
     {
         // return now()->addMinutes(5);
     }
-
-
     public function name()
     {
-        return 'จำนวนใบรับส่งสินค้าของคุณ';
+        return 'จำนวนใบรับส่งตามวันของคุณ';
     }
     /**
      * Get the URI key for the metric.
@@ -60,6 +56,6 @@ class OrderbyUser extends Value
      */
     public function uriKey()
     {
-        return 'orderby-user';
+        return 'order-by-user-trend';
     }
 }
