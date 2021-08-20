@@ -12,6 +12,7 @@
         "anaseqal/nova-import": "^0.0.6",
         "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-dompdf": "^0.8.7",
+        "coreproc/nova-notification-feed": "^1.4",
         "dniccum/custom-email-sender": "^3.0",
         "dniccum/nova-documentation": "^2.0",
         "doctrine/dbal": "^2.12",

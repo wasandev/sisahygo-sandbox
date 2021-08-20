@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=1280">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @include('nova-echo::meta') <!-- INCLUDE THIS LINE HERE -->
+
     <title>{{ \Laravel\Nova\Nova::name() }}</title>
 
     <!-- Fonts -->
@@ -60,6 +62,7 @@
                     <dropdown class="ml-auto h-9 flex items-center dropdown-right">
                         @include('nova::partials.user')
                     </dropdown>
+                    @include('nova_notification_feed::notification_feed') <!-- AND THIS LINE HERE -->
                 </div>
 
                 <div data-testid="content" class="px-view py-view mx-auto">

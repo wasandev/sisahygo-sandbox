@@ -11,8 +11,10 @@ use App\Models\Delivery_item;
 use App\Models\Order_banktransfer;
 use App\Models\Order_status;
 use App\Models\Receipt;
+use App\Models\User;
 use App\Models\Waybill_status;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use App\Notifications\OrderPaid;
 
 class DeliveryItemObserver
 {
@@ -65,6 +67,15 @@ class DeliveryItemObserver
                     $branchrec_order->receipt_flag = true;
                     $branchrec_order->receipt_id = $receipt->id;
                     $branchrec_order->save();
+                    //test notification
+                    $tousers = User::where('role', 'employee')
+                        ->get();
+
+                    foreach ($tousers as $touser) {
+                        if ($touser->hasPermissionTo('view fndashboards') || $touser->hasPermissionTo('view ardashboards')) {
+                            $touser->notify(new OrderPaid('info', 'ใบรับส่ง -' . $delivery_order->order_header_no . 'ได้รับชำระเงินแล้ว'));
+                        }
+                    }
                 }
             }
         }
