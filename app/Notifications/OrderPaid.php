@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use Coreproc\NovaNotificationFeed\Notifications\NovaBroadcastMessage;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -18,10 +18,9 @@ class OrderPaid extends Notification
      *
      * @return void
      */
-    public function __construct($level, $message)
+    public function __construct($user)
     {
-        $this->level = $level;
-        $this->message = $message;
+        $this->user = $user;
     }
 
     /**
@@ -46,22 +45,10 @@ class OrderPaid extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            'level' => $this->level,
-            'message' => $this->message,
-            'url' => 'https://coreproc.com',
-            'target' => '_self'
-        ];
-    }
-
-    /**
-     * Get the broadcastable representation of the notification.
-     *
-     * @param  mixed $notifiable
-     * @return BroadcastMessage
-     */
-    public function toBroadcast($notifiable)
-    {
-        return new NovaBroadcastMessage($this->toArray($notifiable));
+        return \Mirovit\NovaNotifications\Notification::make()
+            ->info('A new user was created.')
+            ->subtitle('There is a new user in the system - ' . $this->user->name . '!')
+            ->routeDetail('users', $this->user->id)
+            ->toArray();
     }
 }

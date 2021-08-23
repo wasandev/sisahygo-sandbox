@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=1280">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @include('nova-echo::meta') <!-- INCLUDE THIS LINE HERE -->
+
 
     <title>{{ \Laravel\Nova\Nova::name() }}</title>
 
@@ -59,10 +59,13 @@
                         <global-search dusk="global-search-component"></global-search>
                     @endif
 
+                     @include('nova-notifications::dropdown')
                     <dropdown class="ml-auto h-9 flex items-center dropdown-right">
+
+
                         @include('nova::partials.user')
                     </dropdown>
-                    @include('nova_notification_feed::notification_feed') <!-- AND THIS LINE HERE -->
+
                 </div>
 
                 <div data-testid="content" class="px-view py-view mx-auto">
@@ -82,6 +85,7 @@
     <script src="{{ mix('manifest.js', 'vendor/nova') }}"></script>
     <script src="{{ mix('vendor.js', 'vendor/nova') }}"></script>
     <script src="{{ mix('app.js', 'vendor/nova') }}"></script>
+
 
     <!-- Build Nova Instance -->
     <script>

@@ -290,7 +290,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
-            new NovaDocumentation
+            new NovaDocumentation,
+            \Mirovit\NovaNotifications\NovaNotifications::make()
         ];
     }
 
