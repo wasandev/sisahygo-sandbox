@@ -68,14 +68,14 @@ class DeliveryItemObserver
                     $branchrec_order->receipt_id = $receipt->id;
                     $branchrec_order->save();
                     //test notification
-                    // $tousers = User::where('role', 'employee')
-                    //     ->get();
+                    $tousers = User::where('role', 'employee')
+                        ->get();
 
-                    // foreach ($tousers as $touser) {
-                    //     if ($touser->hasPermissionTo('view fndashboards') || $touser->hasPermissionTo('view ardashboards')) {
-                    //         $touser->notify(new OrderPaid('info', 'ใบรับส่ง -' . $delivery_order->order_header_no . 'ได้รับชำระเงินแล้ว'));
-                    //     }
-                    // }
+                    foreach ($tousers as $touser) {
+                        if ($touser->hasPermissionTo('view fndashboards') || $touser->hasPermissionTo('view ardashboards')) {
+                            $touser->notify(new OrderPaid($touser, $branchrec_order));
+                        }
+                    }
                 }
             }
         }

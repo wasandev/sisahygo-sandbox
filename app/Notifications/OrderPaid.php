@@ -2,7 +2,9 @@
 
 namespace App\Notifications;
 
-
+use App\Models\Branchrec_order;
+use App\Models\Delivery_detail;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -11,16 +13,17 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 class OrderPaid extends Notification
 {
     use Queueable;
-    protected $level = 'info';
-    protected $message = '';
+    protected $touser;
+    protected $order;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct(User $touser, Branchrec_order $order)
     {
-        $this->user = $user;
+        $this->touser = $touser;
+        $this->order = $order;
     }
 
     /**
@@ -46,9 +49,9 @@ class OrderPaid extends Notification
     public function toArray($notifiable)
     {
         return \Mirovit\NovaNotifications\Notification::make()
-            ->info('A new user was created.')
-            ->subtitle('There is a new user in the system - ' . $this->user->name . '!')
-            ->routeDetail('users', $this->user->id)
+            ->info('แจ้งการรับชำระเงินปลายทาง')
+            ->subtitle($this->order->order_header_no . ' ยืนยันการจัดส่งและรับชำระค่าขนส่งแล้ว')
+            ->routeDetail('order_headers', $this->order->id)
             ->toArray();
     }
 }
