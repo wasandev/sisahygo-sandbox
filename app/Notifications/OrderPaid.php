@@ -10,9 +10,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class OrderPaid extends Notification
+class OrderPaid extends Notification implements ShouldQueue
 {
-    //use Queueable;
+    use Queueable;
     protected $touser;
     protected $order;
     /**
