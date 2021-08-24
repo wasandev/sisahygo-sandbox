@@ -12,7 +12,7 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class OrderPaid extends Notification
 {
-    use Queueable;
+    //use Queueable;
     protected $touser;
     protected $order;
     /**
