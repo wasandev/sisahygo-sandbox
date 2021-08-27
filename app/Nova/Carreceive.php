@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Bank;
 use App\Models\Bankaccount;
 use App\Nova\Actions\PrintCarreceive;
 use App\Nova\Lenses\accounts\CarreceiveReportByDay;
@@ -127,8 +128,12 @@ class Carreceive extends Resource
                     ->nullable(),
                 Text::make(__('Cheque Date'), 'chequedate')
                     ->nullable(),
-                BelongsTo::make(__('Cheque Bank'), 'chequebank', 'App\Nova\Bank')
-                    ->nullable()
+                // BelongsTo::make(__('Cheque Bank'), 'chequebank', 'App\Nova\Bank')
+                //     ->nullable()
+                Select::make(__('Bank'), 'chequebank')
+                    ->options($bank)
+                    ->displayUsingLabels()
+                    ->nullable(),
             ])->dependsOn('receive_by', 'Q'),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
