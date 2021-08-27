@@ -82,8 +82,7 @@ class Carpayment extends Resource
                 ->default(function () {
                     return auth()->user()->branch_id;
                 })->searchable()
-                ->hideFromIndex()
-                ->readonly(),
+                ->hideFromIndex(),
             Select::make('ประเภทการจ่าย', 'type')
                 ->options([
                     'T' => 'ค่าบรรทุก',

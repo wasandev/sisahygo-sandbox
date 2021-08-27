@@ -6234,14 +6234,13 @@ runtime.setup(pusher_Pusher);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
- // Sample instance with Pusher
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "114f81935997b12315ac",
   cluster: "ap1",
-  encrypted: true
+  forceTLS: true
 });
 
 /***/ }),
