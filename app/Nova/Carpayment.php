@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Models\Bank;
+use App\Models\Bankaccount;
 use App\Nova\Actions\PrintCarpayment;
 use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
@@ -67,6 +69,8 @@ class Carpayment extends Resource
      */
     public function fields(Request $request)
     {
+        $tobankaccount = Bankaccount::where('defaultflag', '=', true)->pluck('account_no', 'id');
+        $bank =  Bank::all()->pluck('name', 'id');
         return [
             ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
             Boolean::make('สถานะ', 'status')
@@ -115,12 +119,22 @@ class Carpayment extends Resource
                 ->sortable()
                 ->hideFromIndex(),
             NovaDependencyContainer::make([
-                BelongsTo::make('โอนจากบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
+                Select::make('โอนจากบัญชี', 'bankaccount')
+                    ->options($tobankaccount)
+                    ->displayUsingLabels()
                     ->nullable(),
+                // BelongsTo::make('โอนจากบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
+                //     ->nullable(),
                 Text::make('ไปยังบัญชีเลขที่', 'tobankaccount')
                     ->nullable(),
+
                 BelongsTo::make(__('Bank'), 'tobank', 'App\Nova\Bank')
                     ->nullable(),
+                Select::make(__('Bank'), 'tobank')
+                    ->options($bank)
+                    ->displayUsingLabels()
+                    ->nullable(),
+
                 Text::make('ชื่อบัญชี', 'tobankaccountname')
                     ->nullable()
 
@@ -131,8 +145,13 @@ class Carpayment extends Resource
                     ->nullable(),
                 Text::make(__('Cheque Date'), 'chequedate')
                     ->nullable(),
-                BelongsTo::make(__('Cheque Bank'), 'chequebank', 'App\Nova\Bank')
-                    ->nullable()
+
+                // BelongsTo::make(__('Cheque Bank'), 'chequebank', 'App\Nova\Bank')
+                //     ->nullable()
+                Select::make(__('Cheque Bank'), 'tobank')
+                    ->options($bank)
+                    ->displayUsingLabels()
+                    ->nullable(),
             ])->dependsOn('payment_by', 'Q'),
             Boolean::make('มีภาษีหัก ณ ที่จ่าย', 'tax_flag')->hideFromIndex(),
             Currency::make('จำนวนภาษี', 'taxamount', function () {
