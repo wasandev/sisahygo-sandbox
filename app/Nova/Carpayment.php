@@ -69,7 +69,7 @@ class Carpayment extends Resource
      */
     public function fields(Request $request)
     {
-        $tobankaccount = Bankaccount::where('defaultflag', '=', true)->pluck('account_no', 'id');
+        $tobankaccount = Bankaccount::all()->pluck('account_no', 'id');
         $bank =  Bank::all()->pluck('name', 'id');
         return [
             ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
@@ -128,8 +128,8 @@ class Carpayment extends Resource
                 Text::make('ไปยังบัญชีเลขที่', 'tobankaccount')
                     ->nullable(),
 
-                BelongsTo::make(__('Bank'), 'tobank', 'App\Nova\Bank')
-                    ->nullable(),
+                // BelongsTo::make(__('Bank'), 'tobank', 'App\Nova\Bank')
+                //     ->nullable(),
                 Select::make(__('Bank'), 'tobank')
                     ->options($bank)
                     ->displayUsingLabels()
