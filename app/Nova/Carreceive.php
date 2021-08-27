@@ -61,6 +61,8 @@ class Carreceive extends Resource
      */
     public function fields(Request $request)
     {
+        $bankaccount = Bankaccount::all()->pluck('account_no', 'id');
+        $bank =  Bank::all()->pluck('name', 'id');
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('สถานะ', 'status')
@@ -100,14 +102,22 @@ class Carreceive extends Resource
                 ->sortable()
                 ->hideFromIndex(),
             NovaDependencyContainer::make([
-                BelongsTo::make('โอนเข้าบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
+                // BelongsTo::make('โอนเข้าบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
+                //     ->nullable(),
+                Select::make('โอนเข้าบัญชี', 'bankaccount')
+                    ->options($bankaccount)
+                    ->displayUsingLabels()
                     ->nullable(),
-                Text::make('จากบัญชีเลขที่', 'frombankaccount')
-                    ->nullable(),
-                BelongsTo::make(__('Bank'), 'frombank', 'App\Nova\Bank')
-                    ->nullable(),
-                Text::make('จากชื่อบัญชี', 'tobankaccountname')
-                    ->nullable()
+                // Text::make('จากบัญชีเลขที่', 'frombankaccount')
+                //     ->nullable(),
+                // BelongsTo::make(__('Bank'), 'frombank', 'App\Nova\Bank')
+                //     ->nullable(),
+                // Select::make(__('Bank'), 'frombank')
+                //     ->options($bank)
+                //     ->displayUsingLabels()
+                //     ->nullable(),
+                // Text::make('จากชื่อบัญชี', 'tobankaccountname')
+                //     ->nullable()
 
             ])->dependsOn('receive_by', 'T'),
 
