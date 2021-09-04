@@ -9,6 +9,7 @@ use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
 use App\Nova\Filters\PaymentType;
 use App\Nova\Lenses\accounts\CarpaymentReportByDay;
+use App\Nova\Lenses\cars\CarpayTax;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -117,6 +118,7 @@ class Carpayment extends Resource
                 'A' => 'รายการปรับปรุงบัญชี'
             ])->displayUsingLabels()
                 ->sortable()
+                ->default('H')
                 ->hideFromIndex(),
             NovaDependencyContainer::make([
                 Select::make('โอนจากบัญชี', 'bankaccount')
@@ -153,11 +155,11 @@ class Carpayment extends Resource
                     ->displayUsingLabels()
                     ->nullable(),
             ])->dependsOn('payment_by', 'Q'),
-            Boolean::make('มีภาษีหัก ณ ที่จ่าย', 'tax_flag')->hideFromIndex(),
-            Currency::make('จำนวนภาษี', 'taxamount', function () {
-                return $this->amount * 0.01;
-            })->exceptOnForms()
-                ->hideFromIndex(),
+            Boolean::make('มีภาษีหัก ณ ที่จ่าย', 'tax_flag')
+                ->hideFromIndex()
+                ->default('true'),
+            Currency::make('ภาษีหัก ณ ที่จ่าย', 'tax_amount')
+                ->exceptOnForms(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -208,6 +210,7 @@ class Carpayment extends Resource
     {
         return [
             new CarpaymentReportByDay(),
+            new CarpayTax()
         ];
     }
 
@@ -231,5 +234,15 @@ class Carpayment extends Resource
                     return $request->user()->hasPermissionTo('view car_payments');
                 }),
         ];
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

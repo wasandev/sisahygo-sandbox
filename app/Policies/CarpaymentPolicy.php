@@ -25,20 +25,20 @@ class CarpaymentPolicy
     }
     public function view(User $user, Carpayment $carpayment)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('view car_payments');
+        return $user->hasPermissionTo('view car_payments');
     }
     public function create(User $user)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('create car_payments');
+        return $user->hasPermissionTo('create car_payments');
     }
     public function update(User $user, Carpayment $car_carpayment)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('edit car_payments');
+        return $user->hasPermissionTo('edit car_payments');
     }
 
 
     public function delete(User $user, Carpayment $car_carpayment)
     {
-        return $user->role == 'admin' || $user->hasPermissionTo('delete car_payments');
+        return $user->hasPermissionTo('delete car_payments');
     }
 }

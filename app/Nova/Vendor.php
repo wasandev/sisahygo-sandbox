@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Lenses\cars\CarpayTax;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -252,7 +253,10 @@ class Vendor extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            (new CarpayTax())
+
+        ];
     }
 
     /**
@@ -267,6 +271,8 @@ class Vendor extends Resource
             // (new Actions\ImportVendors)->canSee(function ($request) {
             //     return $request->user()->role == 'admin';
             // }),
+
+
         ];
     }
 }

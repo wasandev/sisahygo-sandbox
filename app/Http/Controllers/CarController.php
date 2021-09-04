@@ -9,6 +9,9 @@ use App\Models\Carreceive;
 use App\Models\CompanyProfile;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use mikehaertl\pdftk\Pdf;
+
 
 class CarController extends Controller
 {
@@ -146,5 +149,37 @@ class CarController extends Controller
         $balance_groups = $balance_groups->all();
 
         return view('reports.carsummaryreportbyday', compact('company', 'report_title', 'car_balances', 'balance_groups',  'to'));
+    }
+
+    public function printwhtaxform($vendor, $from, $to)
+    {
+        $report_title = 'หนังสือรับรองการหักภาษี ณ ที่จ่าย';
+        $company = CompanyProfile::find(1);
+
+
+        $car_payment = Carpayment::where('vendor_id', $vendor)
+            ->where('payment_date', '>=', $from)
+            ->where('payment_date', '<=', $to)
+            ->orderBy('vendor_id', 'asc')
+            ->get();
+
+
+        $form_wh3path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_form.pdf';
+        $form_wh3saved =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_' . $vendor . $from . $to . '.pdf';
+
+        $form_wh3 = new Pdf($form_wh3path);
+        
+        $result = $form_wh3->fillForm([
+            'name1' => 'test',
+            'id1' => '3800801034652',
+        ])->needAppearances()
+        ->saveAs($form_wh3saved);
+        
+        // Always check for errors
+        if ($result === false) {
+            $error = $form_wh3->getError();
+            echo $error;
+        }
+       
     }
 }

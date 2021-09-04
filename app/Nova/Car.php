@@ -315,6 +315,7 @@ class Car extends Resource
                     return $request->user()->hasPermissionTo('edit cars');
                 }),
 
+
         ];
     }
 
