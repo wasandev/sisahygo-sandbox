@@ -2,12 +2,9 @@
 
 namespace App\Nova;
 
-use App\Models\Car_balance;
 use App\Nova\Filters\CarType;
 use App\Nova\Filters\OwnerType;
 use App\Nova\Lenses\CarMonthSumary;
-use App\Nova\Metrics\CarByType;
-use App\Nova\Metrics\CarOwnerType;
 use Carbon\Carbon;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -15,7 +12,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Number;

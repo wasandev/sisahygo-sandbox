@@ -55,7 +55,7 @@ class ExpressIncomes extends Value
      */
     public function uriKey()
     {
-        return 'charter-incomes';
+        return 'express-incomes';
     }
     public function name()
     {

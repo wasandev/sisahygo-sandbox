@@ -151,35 +151,43 @@ class CarController extends Controller
         return view('reports.carsummaryreportbyday', compact('company', 'report_title', 'car_balances', 'balance_groups',  'to'));
     }
 
-    public function printwhtaxform($vendor, $from, $to)
-    {
-        $report_title = 'หนังสือรับรองการหักภาษี ณ ที่จ่าย';
-        $company = CompanyProfile::find(1);
+    // public function printwhtaxform($vendor, $from, $to)
+    // {
+    //     $report_title = 'หนังสือรับรองการหักภาษี ณ ที่จ่าย';
+    //     $company = CompanyProfile::find(1);
+
+    //     $vendordata = Vendor::find($vendor);
+    //     $car_payment = Carpayment::where('vendor_id', $vendor)
+    //         ->where('payment_date', '>=', $from)
+    //         ->where('payment_date', '<=', $to)
+    //         ->orderBy('vendor_id', 'asc')
+    //         ->get();
 
 
-        $car_payment = Carpayment::where('vendor_id', $vendor)
-            ->where('payment_date', '>=', $from)
-            ->where('payment_date', '<=', $to)
-            ->orderBy('vendor_id', 'asc')
-            ->get();
+    //     $form_wh3path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_form.pdf';
+    //     $form_name = 'wh3_' . $vendor . $from . '.pdf';
+    //     $form_wh3saved =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $form_name;
 
+    //     $form_wh3 = new Pdf($form_wh3path);
 
-        $form_wh3path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_form.pdf';
-        $form_wh3saved =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_' . $vendor . $from . $to . '.pdf';
+    //     $result = $form_wh3->allow('AllFeatures')
+    //         ->fillForm([
 
-        $form_wh3 = new Pdf($form_wh3path);
-        
-        $result = $form_wh3->fillForm([
-            'name1' => 'test',
-            'id1' => '3800801034652',
-        ])->needAppearances()
-        ->saveAs($form_wh3saved);
-        
-        // Always check for errors
-        if ($result === false) {
-            $error = $form_wh3->getError();
-            echo $error;
-        }
-       
-    }
+    //             'name1' => $company->company_name,
+    //             'id1' => substr($company->taxid, 0, 1) . ' ' . substr($company->taxid, 1, 4) . ' ' . substr($company->taxid, 5, 5) . ' ' . substr($company->taxid, 10, 2) . ' ' . substr($company->taxid, 12, 1),
+    //             'add1' => $company->address . ' ' . $company->sub_district . ' ' . $company->district . ' ' . $company->province . ' ' . $company->postal_code,
+    //             'name2' => $vendordata->name,
+    //             'id2' => $vendordata->taxid,
+    //             'add2' => $vendordata->address . ' ' . $vendordata->sub_district . ' ' . $vendordata->district . ' ' . $vendordata->province . ' ' . $vendordata->postal_code,
+    //         ])
+    //         ->needAppearances()
+    //         ->saveAs($form_wh3saved);
+
+    //     // Always check for errors
+    //     if ($result === false) {
+    //         $error = $form_wh3->getError();
+    //         echo $error;
+    //     }
+    //     return view('reports.wh3form', compact('form_name'));
+    // }
 }

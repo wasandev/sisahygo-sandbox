@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
+<fields>
+<field name="name1">
+<value>บริษัท สี่สหายขนส่ง(1988) จำกัด</value>
+</field>
+<field name="id1">
+<value>0 1055 31092 59 7</value>
+</field>
+<field name="add1">
+<value>103/1 ถ.สะแกงาม แสมดำ บางขุนเทียน กรุงเทพมหานคร 10150</value>
+</field>
+<field name="name2">
+<value>นางอรทัย กระสายศรี</value>
+</field>
+<field name="id1_2">
+<value>3 8001 01440 59 3</value>
+</field>
+<field name="add2">
+<value>48/2 ม.3 ต.ท่าซัก อ.เมือง จ.นครศรีธรรมราช    </value>
+</field>
+<field name="chk4">
+<value>Yes</value>
+</field>
+<field name="chk7">
+<value>Off</value>
+</field>
+<field name="date14">
+<field name="O">
+<value>30/09/2021</value>
+</field>
+</field>
+<field name="pay1">
+<field name="13">
+<value>2500.00</value>
+</field>
+<field name="14">
+<value>2500.00</value>
+</field>
+</field>
+<field name="tax1">
+<field name="13">
+<value>25.00</value>
+</field>
+<field name="14">
+<value>25.00</value>
+</field>
+</field>
+<field name="chk8">
+<value>Yes</value>
+</field>
+<field name="total">
+<value>สองพันห้าร้อยบาทถ้วน</value>
+</field>
+</fields>
+</xfdf>
