@@ -181,6 +181,7 @@ use App\Models\Delivery_detail;
 use App\Observers\DeliveryObserver;
 
 use App\Models\Delivery_item;
+use App\Models\Incometype;
 use App\Models\Invoice;
 use App\Models\Order_problem;
 use App\Models\Receipt_ar;
@@ -190,6 +191,7 @@ use App\Observers\CarreceiveObserver;
 use App\Observers\CheckerDetailObserver;
 use App\Observers\DeliveryDetailObserver;
 use App\Observers\DeliveryItemObserver;
+use App\Observers\IncometypeObserver;
 use App\Observers\InvoiceObserver;
 use App\Observers\Order_problemObserver;
 use App\Observers\ReceiptArObserver;
@@ -281,5 +283,6 @@ class AppServiceProvider extends ServiceProvider
         Order_problem::observe(Order_problemObserver::class);
         Checker_detail::observe(CheckerDetailObserver::class);
         Withholdingtax::observe(WithholdingtaxObserver::class);
+        Incometype::observe(IncometypeObserver::class);
     }
 }

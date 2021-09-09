@@ -108,9 +108,10 @@ class Order_header extends Resource
                 ]),
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->hideWhenCreating()
+                //->hideWhenCreating()
                 ->hideFromIndex()
-                ->showOnUpdating(),
+                ->nullable()
+                ->help('***โปรดระบุสาขา ถ้าที่อยู่ลูกค้าปลายทางอยู่นอกพื้นที่บริการของสาขาปลายทาง'),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel', 'problem'])
@@ -213,6 +214,7 @@ class Order_header extends Resource
                 ->hideFromIndex()
                 ->searchable()
                 ->withSubtitles(),
+
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->onlyOnDetail(),
@@ -389,40 +391,40 @@ class Order_header extends Resource
                 ->where('order_type', '<>', 'charter');
         }
     }
-    public static function relatableCustomers(NovaRequest $request, $query)
-    {
-        $from_branch = $request->user()->branch_id;
-        $to_branch =  $request->user()->branch_rec_id;
-        $dropship_flag = \App\Models\Branch::find($from_branch)->dropship_flag;
-        if ($dropship_flag) {
-            $mainbranch = \App\Models\Branch::where('code', '001')->first();
-            $from_branch_area = \App\Models\Branch_area::where('branch_id', $mainbranch->id)
-                ->get('district');
-        } else {
-            $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
-                ->get('district');
-        }
+    // public static function relatableCustomers(NovaRequest $request, $query)
+    // {
+    //     $from_branch = $request->user()->branch_id;
+    //     $to_branch =  $request->user()->branch_rec_id;
+    //     $dropship_flag = \App\Models\Branch::find($from_branch)->dropship_flag;
+    //     if ($dropship_flag) {
+    //         $mainbranch = \App\Models\Branch::where('code', '001')->first();
+    //         $from_branch_area = \App\Models\Branch_area::where('branch_id', $mainbranch->id)
+    //             ->get('district');
+    //     } else {
+    //         $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
+    //             ->get('district');
+    //     }
 
-        // if (!is_null($from_branch)) {
-        //     if ($request->route()->parameter('field') === "customer") {
-        //         // $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
-        //         //     ->get('district');
+    //     // if (!is_null($from_branch)) {
+    //     //     if ($request->route()->parameter('field') === "customer") {
+    //     //         // $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
+    //     //         //     ->get('district');
 
-        //         return $query->whereIn('district', $from_branch_area);
-        //     }
-        // }
-        // if (is_null($to_branch)) {
-        if ($request->route()->parameter('field') === "to_customer") {
-            $to_branch_area = \App\Models\Branch_area::whereNotIn('district', $from_branch_area)->get('district');
-            return $query->whereIn('district', $to_branch_area);
-        }
-        // } else {
-        //     if ($request->route()->parameter('field') === "to_customer") {
-        //         $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-        //         return $query->whereIn('district', $to_branch_area);
-        //     }
-        // }
-    }
+    //     //         return $query->whereIn('district', $from_branch_area);
+    //     //     }
+    //     // }
+    //     // if (is_null($to_branch)) {
+    //     if ($request->route()->parameter('field') === "to_customer") {
+    //         $to_branch_area = \App\Models\Branch_area::whereNotIn('district', $from_branch_area)->get('district');
+    //         return $query->whereIn('district', $to_branch_area);
+    //     }
+    //     // } else {
+    //     //     if ($request->route()->parameter('field') === "to_customer") {
+    //     //         $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+    //     //         return $query->whereIn('district', $to_branch_area);
+    //     //     }
+    //     // }
+    // }
 
     public static function relatableUsers(NovaRequest $request, $query)
     {
