@@ -346,10 +346,7 @@ class Waybill extends Resource
         return $query;
     }
 
-    public static function relatableEmployees(NovaRequest $request, $query)
-    {
-        return $query->whereIn('type', ['พนักงานขับรถบริษัท', 'พนักงานขับรถร่วม']);
-    }
+
 
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {
