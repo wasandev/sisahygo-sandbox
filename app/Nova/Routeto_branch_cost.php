@@ -17,9 +17,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Routeto_branch_cost extends Resource
 {
     use HasDependencies;
-    public static $displayInNavigation = false;
+    //public static $displayInNavigation = false;
     public static $group = "5.งานจัดการการขนส่ง";
-    public static $priority = 2;
+    public static $priority = 3;
     /**
      * The model the resource corresponds to.
      *
