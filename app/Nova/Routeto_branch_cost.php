@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\RouteToBranch;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
@@ -138,7 +139,9 @@ class Routeto_branch_cost extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new RouteToBranch()
+        ];
     }
 
     /**
