@@ -9,11 +9,11 @@ use App\Models\User;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 
-class OrderByUserPartition extends Partition
+class OrderByCheckerPartition extends Partition
 {
     public function name()
     {
-        return 'จำนวนใบรับส่งตามพนักงานออกเอกสาร';
+        return 'จำนวนใบรับส่งตามพนักงานตรวจรับ';
     }
     /**
      * Calculate the value of the metric.
@@ -23,7 +23,7 @@ class OrderByUserPartition extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Order_header::whereNotIn('order_status', ['checking', 'new']),  'user_id')
+        return $this->count($request, Order_header::whereNotIn('order_status', ['checking', 'new']),  'checker_id')
             ->label(function ($value) {
                 $user = User::find($value);
                 return $user->name;
@@ -47,6 +47,6 @@ class OrderByUserPartition extends Partition
      */
     public function uriKey()
     {
-        return 'order-by-user-partition';
+        return 'order-by-checker-partition';
     }
 }
