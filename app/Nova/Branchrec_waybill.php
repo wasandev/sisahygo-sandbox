@@ -5,13 +5,13 @@ namespace App\Nova;
 use App\Nova\Filters\RouteToBranch;
 use App\Nova\Filters\WaybillFromDate;
 use App\Nova\Filters\WaybillToDate;
+//use Epartment\NovaDependencyContainer\HasDependencies;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
-use Epartment\NovaDependencyContainer\HasDependencies;
-use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
@@ -23,7 +23,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Branchrec_waybill extends Resource
 {
-    use HasDependencies;
+    // use HasDependencies;
     public static $group = '8.สำหรับสาขา';
     public static $priority = 1;
     public static $polling = true;
@@ -93,18 +93,11 @@ class Branchrec_waybill extends Resource
                 ->default('general')
                 ->exceptOnForms(),
 
-            // NovaDependencyContainer::make([
+
             BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                 ->nullable()
                 //->showCreateRelationButton()
                 ->onlyOnDetail(),
-            // ])->dependsOnNot('waybill_type', 'charter'),
-            //NovaDependencyContainer::make([
-            // BelongsTo::make(__('Charter route'), 'charter_route', 'App\Nova\Charter_route')
-            //     ->nullable()
-            //     ->showCreateRelationButton()
-            //     ->onlyOnDetail(),
-            // ])->dependsOn('waybill_type', 'charter'),
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
                 ->searchable()
                 ->sortable()

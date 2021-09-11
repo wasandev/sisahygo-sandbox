@@ -10,12 +10,13 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class CreateBranchWarehouseItems extends Action
+class MakeOrderBranchWarehouse extends Action
 {
     use InteractsWithQueue, Queueable;
+
     public function uriKey()
     {
-        return 'create_branch_warehouse_items';
+        return 'make-order-branch-warehouse';
     }
     public function name()
     {
@@ -36,14 +37,14 @@ class CreateBranchWarehouseItems extends Action
         });
 
         $verify_models = $select_orders->all();
+
+
         if (isset($verify_models)) {
 
             foreach ($verify_models as $model) {
 
                 $model->order_status = 'branch warehouse';
                 $model->save();
-
-
                 Order_status::create([
                     'order_header_id' => $model->id,
                     'status' => 'branch warehouse',
@@ -61,6 +62,8 @@ class CreateBranchWarehouseItems extends Action
      * @return array
      */
     public function fields()
+
     {
+        return [];
     }
 }

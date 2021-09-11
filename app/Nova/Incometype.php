@@ -18,6 +18,11 @@ class Incometype extends Resource
     public static $group = '9.3 งานภาษีหัก ณ ที่จ่าย';
     public static $priority = 1;
 
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit incometypes');
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -31,6 +36,8 @@ class Incometype extends Resource
      * @var string
      */
     public static $title = 'code';
+
+
 
     /**
      * The columns that should be searched.

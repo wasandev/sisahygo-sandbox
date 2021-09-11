@@ -23,7 +23,7 @@ class CreateBranchDeliveryItems extends Action
     use InteractsWithQueue, Queueable;
     public function uriKey()
     {
-        return 'create_branch_delivery_items';
+        return 'create-branch-delivery-items';
     }
     public function name()
     {

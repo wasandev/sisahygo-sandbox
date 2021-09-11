@@ -21,8 +21,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
-use Epartment\NovaDependencyContainer\HasDependencies;
-use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Status;
@@ -36,7 +35,7 @@ use Laravel\Nova\Http\Requests\ActionRequest;
 
 class Waybill extends Resource
 {
-    use HasDependencies;
+    //use HasDependencies;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 2;
     public static $polling = true;

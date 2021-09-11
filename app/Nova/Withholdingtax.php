@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\Incometype;
 use App\Models\Vendor;
+use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -19,6 +20,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Withholdingtax extends Resource
 {
+    use HasDependencies;
     public static $group = '9.3 งานภาษีหัก ณ ที่จ่าย';
     public static $priority = 2;
 
@@ -35,7 +37,10 @@ class Withholdingtax extends Resource
      * @var string
      */
     public static $title = 'id';
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit withholdingtaxs');
+    }
     /**
      * The columns that should be searched.
      *

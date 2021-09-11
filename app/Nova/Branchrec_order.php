@@ -3,13 +3,9 @@
 namespace App\Nova;
 
 use App\Nova\Actions\CreateBranchDeliveryItems;
-use App\Nova\Actions\CreateBranchWarehouseItems;
 use App\Nova\Actions\CreateTruckDeliveryItems;
-use App\Nova\Actions\SetDeliverydays;
-use App\Nova\Actions\SetDeliveryOption;
-use App\Nova\Filters\Branch;
+use App\Nova\Actions\MakeOrderBranchWarehouse;
 use App\Nova\Filters\ByWaybill;
-use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\ShowByOrderStatusBranch;
 use App\Nova\Filters\ToBranch;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,15 +14,13 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\Orderstatus\Orderstatus;
-use Laravel\Nova\Http\Requests\ActionRequest;
+
 
 class Branchrec_order extends Resource
 {
@@ -35,13 +29,12 @@ class Branchrec_order extends Resource
     public static $polling = false;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
-    public static $globallySearchable = false;
     public static $perPageOptions = [50, 100, 150];
 
-    public static function availableForNavigation(Request $request)
-    {
-        return $request->user()->hasPermissionTo('manage branchrec_orders');
-    }
+    // public static function availableForNavigation(Request $request)
+    // {
+    //     return $request->user()->hasPermissionTo('manage branchrec_orders');
+    // }
     /**
      * The model the resource corresponds to.
      *
@@ -188,6 +181,16 @@ class Branchrec_order extends Resource
 
 
         return [
+            (new MakeOrderBranchWarehouse())
+                ->confirmText('ต้องการทำ -รายการลงสินค้าไว้สาขา- จากใบรับส่งที่เลือกไว้')
+                ->confirmButtonText('ใช่')
+                ->cancelButtonText("ไม่ใช่")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             (new CreateTruckDeliveryItems($request->resourceId))
                 ->confirmText('ต้องการทำ -รายการจัดส่งโดยรถบรรทุก- จากใบรับส่งที่เลือกไว้')
                 ->confirmButtonText('ใช่')
@@ -198,16 +201,7 @@ class Branchrec_order extends Resource
                 ->canSee(function ($request) {
                     return  $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
-            (new CreateBranchWarehouseItems())
-                ->confirmText('ต้องการทำ -รายการลงสินค้าไว้สาขา- จากใบรับส่งที่เลือกไว้')
-                ->confirmButtonText('ใช่')
-                ->cancelButtonText("ไม่ใช่")
-                ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('manage branchrec_orders');
-                })
-                ->canSee(function ($request) {
-                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
-                }),
+
             (new CreateBranchDeliveryItems())
                 ->confirmText('ต้องการทำ -รายการจัดส่งโดยรถสาขา- จากใบรับส่งที่เลือกไว้')
                 ->confirmButtonText('ใช่')
@@ -220,6 +214,7 @@ class Branchrec_order extends Resource
 
         ];
     }
+
     public static function indexQuery(NovaRequest $request, $query)
     {
 

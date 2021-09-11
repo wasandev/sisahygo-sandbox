@@ -1688,6 +1688,52 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ใบเสร็จรับเงินวางบิล',
         ],
+        //ประเภทเงินได้
+        'view incometypes' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ประเภทเงินได้',
+        ],
+        'create incometypes' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ประเภทเงินได้',
+        ],
+
+        'edit incometypes' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ประเภทเงินได้',
+        ],
+
+        'delete incometypes' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ประเภทเงินได้',
+        ],
+        //ภาษีหัก ณ ที่จ่าย
+        'view withholdingtaxes' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'ภาษีหัก ณ ที่จ่าย',
+        ],
+        'create withholdingtaxes' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'ภาษีหัก ณ ที่จ่าย',
+        ],
+
+        'edit withholdingtaxes' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'ภาษีหัก ณ ที่จ่าย',
+        ],
+
+        'delete withholdingtaxes' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'ภาษีหัก ณ ที่จ่าย',
+        ],
         //dashboards
         'view admindashboards' => [
             'display_name' => 'Admin Dashboard',
