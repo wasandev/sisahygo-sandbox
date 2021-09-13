@@ -185,7 +185,7 @@ class Order_loader extends Resource
     {
         return [
             (new Actions\OrderLoaded())
-                ->onlyOnDetail()
+                //->onlyOnDetail()
                 ->confirmText('ต้องการจัดสินค้าขึ้นรถใบรับส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
