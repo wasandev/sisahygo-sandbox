@@ -50,8 +50,8 @@ class OrderLoaded extends Action
                 $model->waybill_id = $fields->waybill_branch;
                 $model->save();
             }
-            return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
         }
+        return Action::message('ทำรายการจัดสินค้าเรียบร้อยแล้ว');
     }
 
     /**
@@ -61,7 +61,20 @@ class OrderLoaded extends Action
      */
     public function fields()
     {
-        $waybills = Waybill::where('waybill_status', 'loading')->pluck('waybill_no', 'id');
+        $waybills = Waybill::with('car')
+            ->where('waybill_status', '=', 'loading')
+            ->get();
+        $waybillOptions = [];
+
+        foreach ($waybills as $waybill) {
+            $waybillOptions[] = [
+                ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+            ];
+        }
+        $selectOptions = collect($waybillOptions)->flatten(1);
+
+        $waybillOptions = $selectOptions->pluck('branchwaybill.name', 'branchwaybill.id');
+
         if (isset(request()->resourceId)) {
 
             $order_loader =    Order_loader::find(request()->resourceId);
@@ -93,13 +106,17 @@ class OrderLoaded extends Action
                 ];
             }
         }
-        return [
 
-            Select::make(__('Waybill'), 'waybill_branch')
-                ->options($waybills)
-                ->displayUsingLabels()
-                ->rules('required')
-                ->searchable(),
-        ];
+
+        if (isset($waybillOptions)) {
+            return [
+
+                Select::make(__('Waybill'), 'waybill_branch')
+                    ->options($waybillOptions)
+                    ->displayUsingLabels()
+                    ->rules('required')
+                    ->searchable(),
+            ];
+        }
     }
 }
