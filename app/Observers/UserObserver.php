@@ -15,11 +15,11 @@ class UserObserver
      */
     public function creating(User $user)
     {
-        if (Auth::check()) {
-            $user->created_by = auth()->user()->id;
-        } else {
-            $user->created_by = 1;
-        }
+        // if (Auth::check()) {
+        //     $user->created_by = auth()->user()->id;
+        // } else {
+        //     $user->created_by = 1;
+        // }
     }
 
     /**
