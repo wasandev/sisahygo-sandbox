@@ -39,7 +39,7 @@ class Withholdingtax extends Resource
     public static $title = 'id';
     public static function availableForNavigation(Request $request)
     {
-        return $request->user()->hasPermissionTo('edit withholdingtaxs');
+        return $request->user()->hasPermissionTo('edit withholdingtaxes');
     }
     /**
      * The columns that should be searched.
