@@ -192,11 +192,11 @@ class Order_loader extends Resource
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage waybills');
                 })
-                ->canSee(function ($request) {
-                    return $request instanceof ActionRequest
-                        || ($this->resource->exists && $this->resource->order_status == 'confirmed'
-                            && $request->user()->hasPermissionTo('manage waybills'));
-                }),
+            // ->canSee(function ($request) {
+            //     return $request instanceof ActionRequest
+            //         || ($this->resource->exists && $this->resource->order_status == 'confirmed'
+            //             && $request->user()->hasPermissionTo('manage waybills'));
+            // }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
