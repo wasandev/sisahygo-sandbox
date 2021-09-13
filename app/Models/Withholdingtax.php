@@ -17,11 +17,11 @@ class Withholdingtax extends Model
 
     public function vendor()
     {
-        return $this->belongsTo('App\Model\Vendor');
+        return $this->belongsTo('App\Models\Vendor');
     }
     public function incometype()
     {
-        return $this->belongsTo('App\Model\Incometype');
+        return $this->belongsTo('App\Models\Incometype');
     }
     public function user()
     {
