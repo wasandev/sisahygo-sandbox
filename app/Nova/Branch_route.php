@@ -60,7 +60,7 @@ class Branch_route extends Resource
 
 
         return [
-            ID::make()->hideFromIndex(),
+            ID::make(),
             BelongsTo::make('สาขา', 'branch', 'App\Nova\Branch')
                 ->sortable(),
             Text::make('ชื่อเส้นทาง(โซน)', 'name')

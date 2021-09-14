@@ -63,7 +63,7 @@ class Branch_route_district extends Resource
             $branch_area = Branch_area::where('branch_id', $branch_route->branch_id)->pluck('district', 'id');
 
             return [
-                ID::make()->hideFromIndex(),
+                ID::make(),
 
                 Select::make('เส้นทางขนส่งของสาขา', 'branch_route_id')
                     ->options($branch_route)

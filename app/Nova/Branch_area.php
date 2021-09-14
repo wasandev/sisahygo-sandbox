@@ -74,7 +74,7 @@ class Branch_area extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->hideFromIndex(),
+            ID::make(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')->sortable(),
 
             InputDistrict::make(__('District'), 'district')

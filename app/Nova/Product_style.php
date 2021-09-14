@@ -70,7 +70,7 @@ class Product_style extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->hideFromIndex(),
+            ID::make(),
             Text::make(__('Name'), 'name')->sortable(),
             Number::make('จำนวนสินค้าในประเภท', 'product_count', function () {
                 return count($this->products);

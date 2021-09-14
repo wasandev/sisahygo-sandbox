@@ -61,7 +61,7 @@ class Unit extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->hideFromIndex(),
+            ID::make(),
             Text::make(__('Name'), 'name')->sortable(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')

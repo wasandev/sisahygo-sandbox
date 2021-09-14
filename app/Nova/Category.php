@@ -70,7 +70,7 @@ class Category extends Resource
 
 
         return [
-            ID::make()->hideFromIndex(),
+            ID::make(),
             Text::make(__('Name'), 'name')->sortable(),
             Number::make('จำนวนสินค้าในกลุ่ม', 'product_count', function () {
                 return count($this->products);

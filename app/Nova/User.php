@@ -101,8 +101,7 @@ class User extends Resource
                 ->updateRules('unique:users,email,{{resourceId}}')
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
-                })
-                ->hideFromIndex(),
+                }),
 
             Password::make(__('password'), 'password')
                 ->onlyOnForms()
@@ -118,6 +117,7 @@ class User extends Resource
             BelongsTo::make('ฝ่าย/แผนก', 'department', 'App\Nova\Department')
                 ->sortable()
                 ->nullable()
+                ->hideFromIndex()
                 ->showCreateRelationButton(),
 
             BelongsTo::make('รายการสาขาปลายทาง(ที่ทำงานประจำ)', 'branch_rec', 'App\Nova\Branch')
@@ -172,12 +172,22 @@ class User extends Resource
                 ->onlyOnDetail(),
             DateTime::make('Login ล่าสุด', 'logged_in_at')
                 ->format('DD/MM/YYYY HH:mm')
-                ->onlyOnDetail(),
+                ->sortable()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
+
             DateTime::make('Log out ล่าสุด', 'logged_out_at')
                 ->format('DD/MM/YYYY HH:mm')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
             Text::make('IP Address', 'ip_address')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
+                }),
         ];
     }
 
