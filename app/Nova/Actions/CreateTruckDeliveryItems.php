@@ -137,7 +137,6 @@ class CreateTruckDeliveryItems extends Action
     {
         $branch_routes = \App\Models\Branch_route::where('branch_id', auth()->user()->branch_id)->pluck('name', 'id');
         $senders = \App\Models\User::where('branch_id', auth()->user()->branch_id)
-            ->whereIn('role', ['driver', 'employee'])
             ->pluck('name', 'id');
         return [
             Date::make('วันที่จัดส่ง', 'delivery_date')

@@ -113,9 +113,8 @@ class CreateBranchDeliveryItems extends Action
     {
         $branch_routes = \App\Models\Branch_route::where('branch_id', auth()->user()->branch_id)->pluck('name', 'id');
         $branch_car = \App\Models\Car::where('ownertype', 'owner')
-            ->where('branch_id', auth()->user()->branch_id)
             ->get()->pluck('car_regist', 'id');
-        $driver = \App\Models\Employee::whereIn('type', ['พนักงานขับรถบริษัท', 'พนักงานขับรถร่วม'])->get()->pluck('name', 'id');
+        $driver = \App\Models\Employee::where('branch_id', auth()->user()->branch_id)->get()->pluck('name', 'id');
         $sender = \App\Models\User::where('branch_id', auth()->user()->branch_id)->get()->pluck('name', 'id');
         return [
             Date::make('วันที่จัดส่ง', 'delivery_date')
