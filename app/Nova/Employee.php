@@ -77,7 +77,7 @@ class Employee extends Resource
     public function fields(Request $request)
     {
         return [
-            //ID::make()->sortable(),
+            ID::make()->sortable(),
             Image::make(__('Image'), 'imagefile')
                 ->hideFromIndex(),
             Boolean::make(__('Status'), 'active'),

@@ -97,7 +97,7 @@ class Car extends Resource
 
 
         return [
-            //ID::make()->sortable(),
+            ID::make()->sortable(),
             Boolean::make('ใช้งาน', 'status'),
             //->hideWhenCreating(),
 

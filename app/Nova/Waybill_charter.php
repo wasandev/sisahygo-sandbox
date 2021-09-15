@@ -98,7 +98,7 @@ class Waybill_charter extends Resource
     public function fields(Request $request)
     {
         return [
-            //ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             Status::make(__('Status'), 'waybill_status')
                 ->loadingWhen(['loading'])
                 ->failedWhen(['cancel'])

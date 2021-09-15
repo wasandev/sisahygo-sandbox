@@ -76,7 +76,7 @@ class Product extends Resource
 
 
         return [
-            //ID::make()->sortable(),
+            ID::make()->sortable(),
             Boolean::make(__('Status'), 'status')
                 ->sortable()
                 ->hideFromIndex(),

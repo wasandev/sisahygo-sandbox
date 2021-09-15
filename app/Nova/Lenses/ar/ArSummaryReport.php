@@ -60,7 +60,7 @@ class ArSummaryReport extends Lens
     public function fields(Request $request)
     {
         return [
-            //ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             Text::make('ชื่อลูกค้า', 'name'),
             Currency::make('ยอดตั้งหนี้', 'ar_amount'),
             Currency::make('ยอดชำระหนี้', 'rec_amount'),

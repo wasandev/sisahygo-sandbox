@@ -58,6 +58,13 @@ class Branchrec_order extends Resource
     public static $search = [
         'id', 'order_header_no'
     ];
+
+    public static $searchRelations = [
+        'to_customer' => ['name']
+    ];
+    public static $globalSearchRelations = [
+        'to_customer' => ['name']
+    ];
     public static function label()
     {
         return 'รายการใบรับส่งเข้าสาขา';
@@ -98,7 +105,9 @@ class Branchrec_order extends Resource
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable(),
-
+            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
+                ->sortable()
+                ->exceptOnForms(),
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly()
                 ->sortable(),
@@ -107,9 +116,7 @@ class Branchrec_order extends Resource
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->onlyOnDetail(),
 
-            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
-                ->sortable()
-                ->exceptOnForms(),
+
 
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()

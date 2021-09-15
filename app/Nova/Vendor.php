@@ -69,7 +69,7 @@ class Vendor extends Resource
     public function fields(Request $request)
     {
         return [
-            //ID::make()->sortable(),
+            ID::make()->sortable(),
             Boolean::make(__('Status'), 'status'),
             Text::make(__('Owner code'), 'owner_code')
                 ->sortable()
