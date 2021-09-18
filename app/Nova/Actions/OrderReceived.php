@@ -3,7 +3,10 @@
 namespace App\Nova\Actions;
 
 use App\Models\Bankaccount;
+use App\Models\Branch_balance;
 use App\Models\Branchrec_order;
+use App\Models\Order_banktransfer;
+use App\Models\Receipt;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,24 +17,26 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Laravel\Nova\Fields\Boolean;
 
 class OrderReceived extends Action
 {
     use InteractsWithQueue, Queueable;
-    protected $model;
 
-    public function __construct($model = null)
-    {
-        $this->model = $model;
-    }
     public function uriKey()
     {
         return 'order-received';
     }
     public function name()
     {
-        return 'ลูกค้ารับสินค้าที่สาขา';
+        return 'ยืนยันรายการ ลูกค้ารับสินค้าที่สาขา';
+    }
+    protected $model;
+
+    public function __construct($model = null)
+    {
+        $this->model = $model;
     }
     /**
      * Perform the action on the given models.
@@ -43,59 +48,96 @@ class OrderReceived extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
 
-        foreach ($models as $model) {
+        $select_orders = $models->filter(function ($item) {
+            return data_get($item, 'order_status') == 'branch warehouse';
+        });
 
-            if ($model->order_status <> 'branch warehouse') {
-                return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้');
-            }
+        if ($select_orders->isNotEmpty()) {
 
-            $model->order_status = 'completed';
+            $cust_groups = $select_orders->groupBy('customer_rec_id')->all();
+            $rec_custs = $cust_groups;
+            foreach ($rec_custs as $cust => $cust_groups) {
+                $receipt_amount = $cust_groups->where('paymenttype', 'E')->sum('order_amount');
 
-            $model->branchpay_by =  $fields->payment_by;
+                if ($receipt_amount > 0) {
 
-            if ($model->paymenttype == 'E') {
+                    if ($fields->payment_by == 'C') {
+                        $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
+                        if ($fields->tax_status) {
+                            $tax_amount = $receipt_amount * 0.01;
+                        } else {
+                            $tax_amount = 0;
+                        }
+                        $receipt = Receipt::create([
+                            'receipt_no' => $receipt_no,
+                            'receipt_date' => today(),
+                            'branch_id' => auth()->user()->branch_id,
+                            'customer_id' => $cust,
+                            'total_amount' => $receipt_amount,
+                            'discount_amount' => $fields->discount_amount,
+                            'tax_amount' => $tax_amount,
+                            'pay_amount' => $receipt_amount - $fields->discount_amount - $tax_amount,
+                            'receipttype' => 'E',
+                            'branchpay_by' => $fields->payment_by,
+                            'bankaccount_id' => $fields->bankaccount_id,
+                            'bankreference' => $fields->reference,
+                            'description' => $fields->description,
+                            'user_id' => auth()->user()->id,
+                        ]);
+                    }
+                }
 
-                if ($fields->payment_by == 'T') {
-                    $model->bankaccount_id = $fields->bankaccount;
-                    $model->bankreference = $fields->refernce;
-                    $model->payment_status = false;
-                } elseif ($fields->payment_by == 'C') {
+                foreach ($cust_groups as $model) {
 
+                    if ($model->order_status <> 'branch warehouse') {
+                        return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้');
+                    }
 
-                    $model->payment_status = true;
+                    $model->order_status = 'completed';
+                    $model->trantype = '0';
+                    if ($receipt_amount > 0) {
+                        $model->branchpay_by =  $fields->payment_by;
+
+                        if ($model->paymenttype == 'E') {
+
+                            if ($fields->payment_by == 'T') {
+                                $model->bankaccount_id = $fields->bankaccount;
+                                $model->bankreference = $fields->refernce;
+                                $model->payment_status = false;
+
+                                //create bank_transfer
+                                Order_banktransfer::create([
+                                    'customer_id' => $model->customer_rec_id,
+                                    'order_header_id' => $model->id,
+                                    'branch_id' => $model->branch_rec_id,
+                                    'status' => false,
+                                    'transfer_type' => 'E',
+                                    'transfer_amount' => $model->order_amount,
+                                    'bankaccount_id' => $fields->bankaccount,
+                                    'reference' => $fields->reference,
+                                    'user_id' => auth()->user()->id,
+                                ]);
+                            } elseif ($fields->payment_by == 'C') {
+                                $model->payment_status = true;
+                                //update branch_balance
+                                $branch_balance = Branch_balance::where('order_header_id', $model->id)->first();
+                                $branch_balance->pay_amount = $model->order_amount;
+                                $branch_balance->updated_by = auth()->user()->id;
+                                $branch_balance->branchpay_date = today();
+                                $branch_balance->payment_status = true;
+                                $branch_balance->remark = $fields->description;
+                                $branch_balance->receipt_id = $receipt->id;
+                                $branch_balance->save();
+                            }
+                        }
+                    }
+
+                    $model->save();
                 }
             }
-
-            $model->save();
-
-
-            if ($model->payment_amount > 0) {
-
-                $model->discount_amount = $fields->discount_amount;
-                $model->branchpay_by = $fields->payment_by;
-                if ($fields->tax_status) {
-                    $model->tax_amount = $model->payment_amount * 0.01;
-                    $model->pay_amount = $model->payment_amount - $fields->discount_amount - ($model->payment_amount * 0.01);
-                } else {
-                    $model->tax_amount = 0.00;
-                    $model->pay_amount = $model->payment_amount - $fields->discount_amount;
-                }
-                if ($fields->payment_by === 'T') {
-                    $model->payment_status = false;
-                    $model->bankaccount_id = $fields->bankaccount;
-                    $model->bankreference = $fields->reference;
-                } else {
-                    $model->payment_status = true;
-                }
-            } else {
-                $model->payment_status = false;
-            }
-            $model->description = $fields->description;
-            $model->delivery_status = 1;
-            $model->save();
         }
 
-        return Action::message('ทำรายการเรียบร้อยแล้ว');
+        return Action::push('/resources/branchrec_orders/');
     }
 
 
@@ -116,13 +158,11 @@ class OrderReceived extends Action
         }
 
         if ($this->model) {
-            $ฺbranchrec_order = Branchrec_order::find($this->model);
+            $branchrec_order = Branchrec_order::find($this->model);
 
-            if ($ฺbranchrec_order->order_amount > 0) {
-
+            if ($branchrec_order->order_amount > 0 && $branchrec_order->paymenttype == 'E') {
                 return [
-                    Currency::make('ค่าขนส่งที่ต้องจัดเก็บ', 'payment_amount')
-                        ->default($ฺbranchrec_order->order_amount)
+                    Currency::make('ค่าขนส่งที่ต้องจัดเก็บ', 'order_amount')->default($branchrec_order->order_amount)
                         ->readonly(),
                     Select::make('รับชำระด้วย', 'payment_by')->options([
                         'C' => 'เงินสด',
@@ -130,7 +170,7 @@ class OrderReceived extends Action
                     ])->displayUsingLabels()
                         ->default('C'),
                     NovaDependencyContainer::make([
-                        Select::make(__('Account no'), 'bankaccount')
+                        Select::make(__('Bank Account no'), 'bankaccount')
                             ->options($bankaccount)
                             ->displayUsingLabels()
                             ->rules('required'),
@@ -138,17 +178,15 @@ class OrderReceived extends Action
                     ])->dependsOn('payment_by', 'T'),
                     Currency::make('ส่วนลด', 'discount_amount'),
                     Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
-
-                    Text::make('หมายเหตุเพิ่มเติม', 'description')
                 ];
             } else {
                 return [];
             }
         }
-        return [
-            Currency::make('ค่าขนส่งที่ต้องเก็บ', 'payment_amount')
-                ->readonly(),
 
+        return [
+            Currency::make('ค่าขนส่งที่ต้องจัดเก็บ', 'order_amount')
+                ->readonly(),
             Select::make('รับชำระด้วย', 'payment_by')->options([
                 'C' => 'เงินสด',
                 'T' => 'เงินโอน',

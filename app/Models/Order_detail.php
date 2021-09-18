@@ -38,9 +38,9 @@ class Order_detail extends Model
     {
         return $this->belongsTo('App\Models\Delivery_detail', 'order_header_id', 'order_header_id');
     }
-    public function branch_balance_item()
+    public function branch_balance()
     {
-        return $this->belongsTo('App\Models\Branch_balance_item', 'order_header_id', 'order_header_id');
+        return $this->belongsTo('App\Models\Branch_balance', 'order_header_id', 'order_header_id');
     }
     public function productservice_price()
     {

@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\Branch_balance_item;
+use App\Models\Branch_balance;
 use App\Models\Delivery;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
@@ -40,8 +40,6 @@ class CreateBranchDeliveryItems extends Action
     {
 
         $branch = \App\Models\Branch::find(auth()->user()->branch_id);
-        //$paymenttype_e = $models->where('paymenttype', 'E');
-        // $branchrec_amount = $paymenttype_e->sum('order_amount');
         $delivery_no = IdGenerator::generate(['table' => 'deliveries', 'field' => 'delivery_no', 'length' => 15, 'prefix' => $branch->code  . date('Ymd')]);
         $select_orders = $models->filter(function ($item) {
             return data_get($item, 'order_status') == 'branch warehouse';
@@ -79,10 +77,10 @@ class CreateBranchDeliveryItems extends Action
                     $model->order_status = 'delivery';
                     $model->save();
 
-                    $branch_balance_item = Branch_balance_item::where('order_header_id', '=', $model->id)->first();
-                    if (isset($branch_balance_item)) {
-                        $branch_balance_item->delivery_id = $delivery->id;
-                        $branch_balance_item->save();
+                    $branch_balance = Branch_balance::where('order_header_id', '=', $model->id)->first();
+                    if (isset($branch_balance)) {
+                        $branch_balance->delivery_id = $delivery->id;
+                        $branch_balance->save();
                     }
 
                     Delivery_detail::create([

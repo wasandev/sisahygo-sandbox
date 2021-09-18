@@ -3,14 +3,13 @@
 namespace App\Observers;
 
 use App\Models\Branch_balance;
-use App\Models\Branch_balance_item;
 use App\Models\Branchrec_order;
 use App\Models\Delivery;
 use App\Models\Delivery_item;
 use App\Models\Delivery_detail;
 use App\Models\Order_banktransfer;
 use App\Models\Order_status;
-use App\Models\Waybill_status;
+
 
 class DeliveryDetailObserver
 {
@@ -40,7 +39,7 @@ class DeliveryDetailObserver
 
     public function updating(Delivery_detail $delivery_detail)
     {
-        //dd($delivery_detail->delivery_status);
+
         if ($delivery_detail->delivery_status) {
 
             $branchrec_order = Branchrec_order::find($delivery_detail->order_header_id);
@@ -60,15 +59,14 @@ class DeliveryDetailObserver
                 ]);
             }
             if ($branchrec_order->paymenttype == 'E') {
-                $branch_balance_item = Branch_balance_item::where('order_header_id', $delivery_detail->order_header_id)->first();
-                if (isset($branch_balance_item)) {
-                    if ($delivery_detail->payment_status) {
-                        $branch_balance_item->payment_status = true;
-                    } else {
-                        $branch_balance_item->payment_status = false;
-                    }
-                    $branch_balance_item->save();
+                $branch_balance = Branch_balance::where('order_header_id', $delivery_detail->order_header_id)->first();
+
+                if ($delivery_detail->payment_status) {
+                    $branch_balance->payment_status = true;
+                } else {
+                    $branch_balance->payment_status = false;
                 }
+                $branch_balance->save();
             }
 
             Order_status::updateOrCreate([

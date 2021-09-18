@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\Branch_balance_item;
+use App\Models\Branch_balance;
 use App\Models\Delivery;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
@@ -90,10 +90,10 @@ class CreateTruckDeliveryItems extends Action
                     $model->order_status = 'delivery';
                     $model->save();
 
-                    $branch_balance_item = Branch_balance_item::where('order_header_id', '=', $model->id)->first();
-                    if (isset($branch_balance_item)) {
-                        $branch_balance_item->delivery_id = $delivery->id;
-                        $branch_balance_item->save();
+                    $branch_balance = Branch_balance::where('order_header_id', '=', $model->id)->first();
+                    if (isset($branch_balance)) {
+                        $branch_balance->delivery_id = $delivery->id;
+                        $branch_balance->save();
                     }
 
                     Delivery_detail::create([

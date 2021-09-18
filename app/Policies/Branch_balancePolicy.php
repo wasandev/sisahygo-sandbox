@@ -45,10 +45,4 @@ class Branch_balancePolicy
         return false;
         //$user->role == 'admin' || $user->hasPermissionTo('delete branch_balance');
     }
-
-    public function addBranch_balance_item(User $user, Branch_balance $branch_balance)
-    {
-        return false;
-        //$user->role == 'admin' || $user->hasPermissionTo('delete branch_balance');
-    }
 }

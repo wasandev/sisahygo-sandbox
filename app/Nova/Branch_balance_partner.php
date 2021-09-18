@@ -97,7 +97,6 @@ class Branch_balance_partner extends Resource
                 }
             })->hideFromIndex(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
-            HasMany::make('รายการใบรับส่ง', 'branch_balance_items', 'App\Nova\Branch_balance_item')
 
         ];
     }

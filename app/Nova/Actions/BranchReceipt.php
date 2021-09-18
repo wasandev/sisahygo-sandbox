@@ -4,7 +4,6 @@ namespace App\Nova\Actions;
 
 use App\Models\Bankaccount;
 use App\Models\Branch_balance;
-use App\Models\Branch_balance_item;
 use App\Models\Branchrec_order;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
@@ -51,44 +50,41 @@ class BranchReceipt extends Action
             if ($model->payment_status) {
                 return Action::danger('รายการนี้ชำระเงินไปแล้ว');
             }
-            $branch_balance_items = Branch_balance_item::where('branch_balance_id', $model->id)->get();
-            foreach ($branch_balance_items as $branch_balance_item) {
 
-                $branch_order = Branchrec_order::find($branch_balance_item->order_header_id);
-                $delivery_detail = Delivery_detail::where('order_header_id', $branch_balance_item->order_header_id)->first();
-                if (isset($delivery_detail)) {
-                    $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
+            $branch_order = Branchrec_order::find($model->order_header_id);
+            $delivery_detail = Delivery_detail::where('order_header_id', $model->order_header_id)->get();
+            if (isset($delivery_detail)) {
+                $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
 
-                    $branch_order->branchpay_by =  $fields->payment_by;
+                $branch_order->branchpay_by =  $fields->payment_by;
 
-                    if ($fields->payment_by === 'T') {
-                        $branch_order->branchpay_by = 'T';
-                        $branch_order->bankaccount_id = $fields->bankaccount;
-                        $branch_order->bankreference = $fields->refernce;
-                        $branch_order->payment_status = false;
-                        $branch_balance_item->payment_status = false;
-                        $delivery_detail->payment_status = false;
-                        $delivery_item->branchpay_by = 'T';
-                        $delivery_item->bankaccount_id = $fields->bankaccount;
-                        $delivery_item->bankreference = $fields->reference;
-                        $delivery_item->payment_status = false;
-                    } elseif ($fields->payment_by === 'C') {
-                        $branch_order->branchpay_by = 'C';
-                        $branch_order->payment_status = true;
-                        $branch_balance_item->payment_status = true;
-                        $delivery_detail->payment_status = true;
-                        $delivery_item->branchpay_by = 'C';
-                        $delivery_item->payment_status = true;
-                    }
-
-                    $branch_order->save();
-                    $branch_balance_item->save();
-                    $delivery_detail->save();
-                    $delivery_item->save();
-                } else {
-                    return Action::danger('รายการนี้ยังไม่ได้ทำรายการจัดส่ง โปรดตรวจสอบ');
+                if ($fields->payment_by === 'T') {
+                    $model->payment_status = false;
+                    $branch_order->branchpay_by = 'T';
+                    $branch_order->bankaccount_id = $fields->bankaccount;
+                    $branch_order->bankreference = $fields->refernce;
+                    $branch_order->payment_status = false;
+                    $delivery_detail->payment_status = false;
+                    $delivery_item->branchpay_by = 'T';
+                    $delivery_item->bankaccount_id = $fields->bankaccount;
+                    $delivery_item->bankreference = $fields->reference;
+                    $delivery_item->payment_status = false;
+                } elseif ($fields->payment_by === 'C') {
+                    $model->payment_status = true;
+                    $branch_order->branchpay_by = 'C';
+                    $branch_order->payment_status = true;
+                    $delivery_detail->payment_status = true;
+                    $delivery_item->branchpay_by = 'C';
+                    $delivery_item->payment_status = true;
                 }
+
+                $branch_order->save();
+                $delivery_detail->save();
+                $delivery_item->save();
+            } else {
+                return Action::danger('รายการนี้ยังไม่ได้ทำรายการจัดส่ง โปรดตรวจสอบ');
             }
+
 
             $model->discount_amount = $fields->discount_amount;
 

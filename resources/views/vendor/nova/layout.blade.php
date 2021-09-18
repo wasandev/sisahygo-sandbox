@@ -58,9 +58,9 @@
                     @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
                         <global-search dusk="global-search-component"></global-search>
                     @endif
+                    @include('nova-notifications::dropdown')
 
-                     @include('nova-notifications::dropdown')
-                    <dropdown class="ml-2 h-9 mr-3 flex  dropdown-right">
+                     <dropdown class="h-9 ml-2 dropdown-right">
                         @include('nova::partials.user')
                     </dropdown>
 

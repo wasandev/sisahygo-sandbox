@@ -7,7 +7,6 @@ use App\Models\Branchrec_order;
 use App\Models\Delivery;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
-use Brick\Money\CurrencyConverter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -153,7 +152,7 @@ class DeliveryConfirmed extends Action
                                 ->rules('required'),
                             Text::make(__('Bank reference no'), 'reference'),
                         ])->dependsOn('payment_by', 'T'),
-                        //Currency::make('ส่วนลด', 'discount_amount'),
+                        //Currency::make('ส่วนลด', 'discount_amount')->canSee(),
                         Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
                     ])->dependsOn('payment_status', true),
                     Text::make('หมายเหตุเพิ่มเติม', 'description')

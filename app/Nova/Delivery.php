@@ -61,30 +61,57 @@ class Delivery extends Resource
         return [
             ID::make(__('ID'), 'id')
                 ->sortable(),
-            Boolean::make(__('Status'), 'completed'),
+            Boolean::make(__('Status'), 'completed')
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             Text::make('เลขที่จัดส่ง', 'delivery_no')
                 ->readonly(),
-            Date::make('วันที่จัดส่ง', 'delivery_date'),
+            Date::make('วันที่จัดส่ง', 'delivery_date')
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             Select::make('ประเภทการจัดส่ง', 'delivery_type')->options([
                 '0' => 'รถบรรทุกจัดส่ง',
                 '1' => 'สาขาจัดส่ง'
             ])->displayUsingLabels()
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User')
                 ->hideFromIndex()
-                ->rules('required'),
+                ->rules('required')
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             Text::make(__('Description'), 'description')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             Currency::make('จำนวนเงินจัดเก็บ', 'receipt_amount')
                 ->readonly(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             DateTime::make(__('Created At'), 'created_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail()

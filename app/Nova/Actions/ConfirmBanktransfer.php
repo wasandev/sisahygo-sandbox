@@ -92,7 +92,9 @@ class ConfirmBanktransfer extends Action
                         'user_id' => auth()->user()->id,
                     ]);
 
+                    $model->transfer_type = $receipttype;
                     $model->status = true;
+
                     $model->receipt_id = $receipt->id;
                     $model->save();
                 }

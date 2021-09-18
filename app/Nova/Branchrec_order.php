@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\CreateBranchDeliveryItems;
 use App\Nova\Actions\CreateTruckDeliveryItems;
 use App\Nova\Actions\MakeOrderBranchWarehouse;
+use App\Nova\Actions\OrderReceived;
 use App\Nova\Filters\ByWaybill;
 use App\Nova\Filters\ShowByOrderStatusBranch;
 use App\Nova\Filters\ToBranch;
@@ -31,10 +32,10 @@ class Branchrec_order extends Resource
     public static $showPollingToggle = true;
     public static $perPageOptions = [50, 100, 150];
 
-    // public static function availableForNavigation(Request $request)
-    // {
-    //     return $request->user()->hasPermissionTo('manage branchrec_orders');
-    // }
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('manage branchrec_orders');
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -188,16 +189,7 @@ class Branchrec_order extends Resource
 
 
         return [
-            (new MakeOrderBranchWarehouse())
-                ->confirmText('ต้องการทำ -รายการลงสินค้าไว้สาขา- จากใบรับส่งที่เลือกไว้')
-                ->confirmButtonText('ใช่')
-                ->cancelButtonText("ไม่ใช่")
-                ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('manage branchrec_orders');
-                })
-                ->canSee(function ($request) {
-                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
-                }),
+
             (new CreateTruckDeliveryItems($request->resourceId))
                 ->confirmText('ต้องการทำ -รายการจัดส่งโดยรถบรรทุก- จากใบรับส่งที่เลือกไว้')
                 ->confirmButtonText('ใช่')
@@ -208,11 +200,30 @@ class Branchrec_order extends Resource
                 ->canSee(function ($request) {
                     return  $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
-
+            (new MakeOrderBranchWarehouse())
+                ->confirmText('ต้องการทำ -รายการลงสินค้าไว้สาขา- จากใบรับส่งที่เลือกไว้')
+                ->confirmButtonText('ใช่')
+                ->cancelButtonText("ไม่ใช่")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             (new CreateBranchDeliveryItems())
                 ->confirmText('ต้องการทำ -รายการจัดส่งโดยรถสาขา- จากใบรับส่งที่เลือกไว้')
                 ->confirmButtonText('ใช่')
                 ->cancelButtonText("ไม่ใช่")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
+            (new OrderReceived($request->resourceId))
+                ->onlyOnDetail()
+                ->confirmText('ทำรายการยืนยันการรับสินค้า จากใบรับส่งที่เลือกไว้')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
                 })->canSee(function ($request) {

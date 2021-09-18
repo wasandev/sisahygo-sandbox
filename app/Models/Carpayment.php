@@ -12,7 +12,7 @@ class Carpayment extends Model
         'status', 'branch_id', 'type', 'payment_no', 'car_id', 'vendor_id',
         'payment_date', 'amount', 'payment_by', 'bankaccount_id',
         'tobankaccount', 'tobank_id', 'tobankaccountname', 'chequeno',
-        'chequedate', 'chequebank_id', 'tax_flag',
+        'chequedate', 'chequebank_id', 'tax_flag', 'waybill_id',
         'tax_amount', 'description',
         'user_id', 'updated_by',
     ];

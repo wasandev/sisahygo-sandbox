@@ -213,7 +213,7 @@ class OrderHeaderObserver
                         $banktransfer = \App\Models\Order_banktransfer::where('order_header_id', $order_header->id)->delete();
                         break;
                     case 'E':
-                        $branch_balance_item = \App\Models\Branch_balance_item::where('order_header_id', $order_header->id)->delete();
+                        $branch_balance = \App\Models\Branch_balance::where('order_header_id', $order_header->id)->delete();
                         break;
                 }
 

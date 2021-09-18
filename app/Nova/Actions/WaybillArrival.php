@@ -44,7 +44,6 @@ class WaybillArrival extends Action
             }
 
             $model->arrivaled_at =   $fields->arrivaled_at;
-            //$model->arrivaled_at = Carbon::now()->toDateTimeString();
             $model->waybill_status = 'arrival';
             $model->save();
             return Action::push('/resources/branchrec_waybills/');

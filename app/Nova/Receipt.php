@@ -28,6 +28,7 @@ class Receipt extends Resource
      */
     public static $model = \App\Models\Receipt::class;
 
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -47,7 +48,10 @@ class Receipt extends Resource
     {
         return 'ใบเสร็จรับเงินปลายทาง';
     }
-
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->hasPermissionTo('edit receipts');
+    }
 
     /**
      * Get the fields displayed by the resource.

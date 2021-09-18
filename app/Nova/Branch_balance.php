@@ -75,6 +75,8 @@ class Branch_balance extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+            BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
+                ->sortable(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->sortable(),
             Boolean::make('สถานะการชำระ', 'payment_status')
@@ -110,7 +112,6 @@ class Branch_balance extends Resource
                 }
             })->hideFromIndex(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
-            HasMany::make('รายการใบรับส่ง', 'branch_balance_items', 'App\Nova\Branch_balance_item')
 
         ];
     }

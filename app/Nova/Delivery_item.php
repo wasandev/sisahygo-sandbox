@@ -142,7 +142,7 @@ class Delivery_item extends Resource
     public function actions(Request $request)
     {
         return [
-            DeliveryConfirmed::make($request->resourceId)
+            (new DeliveryConfirmed($request->resourceId))
                 ->onlyOnDetail()
                 ->confirmText('ยืนยันการจัดส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
@@ -150,10 +150,10 @@ class Delivery_item extends Resource
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('view delivery_items');
                 })
-            // ->canSee(function ($request) {
-            //     return $request instanceof ActionRequest
-            //         || ($this->resource->exists && $this->resource->delivery_status == false);
-            // }),
+                ->canSee(function ($request) {
+                    return $request instanceof ActionRequest
+                        || ($this->resource->exists && $this->resource->delivery_status == false);
+                }),
         ];
     }
 

@@ -11,7 +11,7 @@ class Branch_balance extends Model
     protected $fillable = [
         'branchbal_date', 'branchpay_date', 'branch_id', 'customer_id',
         'bal_amount', 'discount_amount', 'tax_amount', 'pay_amount', 'user_id', 'payment_status',
-        'updated_by', 'remark', 'receipt_id', 'type'
+        'updated_by', 'remark', 'receipt_id', 'type', 'order_header_id', 'delivery_id'
     ];
 
     protected $casts = [
@@ -43,8 +43,12 @@ class Branch_balance extends Model
     {
         return $this->belongsTo('App\Models\Receipt');
     }
-    public function branch_balance_items()
+    public function branchrec_order()
     {
-        return $this->hasMany('App\Models\Branch_balance_item');
+        return $this->belongsTo('App\Models\Branchrec_order', 'order_header_id');
+    }
+    public function delivery()
+    {
+        return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 }

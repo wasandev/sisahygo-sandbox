@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Branch_balance;
-use App\Models\Branch_balance_item;
 use App\Models\Branchrec_order;
 use App\Models\Delivery;
 use App\Models\Delivery_detail;
@@ -26,11 +25,7 @@ class DeliveryItemObserver
     public function updating(Delivery_item $delivery_item)
     {
         if ($delivery_item->delivery_status  && $delivery_item->payment_amount > 0) {
-            //update branch_balance
-            $delivery_detail = Delivery_detail::where('delivery_item_id', $delivery_item->id)->first();
-            $branch_balance_item = Branch_balance_item::where('order_header_id', $delivery_detail->order_header_id)->first();
-            $branch_balance = Branch_balance::where('id', '=', $branch_balance_item->branch_balance_id)
-                ->where('customer_id', '=', $delivery_item->customer_id)->first();
+
             if ($delivery_item->payment_status && $delivery_item->branchpay_by == 'C') {
                 $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
                 $receipt = Receipt::create([
@@ -49,15 +44,6 @@ class DeliveryItemObserver
                     'description' => $delivery_item->description,
                     'user_id' => auth()->user()->id,
                 ]);
-                $branch_balance->discount_amount = $delivery_item->discount_amount;
-                $branch_balance->tax_amount = $delivery_item->tax_amount;
-                $branch_balance->pay_amount = $delivery_item->pay_amount;
-                $branch_balance->updated_by = auth()->user()->id;
-                $branch_balance->branchpay_date = today();
-                $branch_balance->payment_status = true;
-                $branch_balance->remark = $delivery_item->description;
-                $branch_balance->receipt_id = $receipt->id;
-                $branch_balance->save();
                 if (isset($receipt)) {
                     $delivery_item->receipt_id = $receipt->id;
                 }
@@ -67,6 +53,17 @@ class DeliveryItemObserver
                     $branchrec_order->receipt_flag = true;
                     $branchrec_order->receipt_id = $receipt->id;
                     $branchrec_order->save();
+
+                    //Branch balance
+                    $branch_balance = Branch_balance::where('order_header_id', $delivery_order->order_header_id)->first();
+                    $branch_balance->pay_amount = $delivery_order->branchrec_order->order_amount;
+                    $branch_balance->updated_by = auth()->user()->id;
+                    $branch_balance->branchpay_date = today();
+                    $branch_balance->payment_status = true;
+                    $branch_balance->remark = $delivery_item->description;
+                    $branch_balance->receipt_id = $receipt->id;
+                    $branch_balance->save();
+
                     //test notification
                     $tousers = User::where('role', 'employee')
                         ->get();
