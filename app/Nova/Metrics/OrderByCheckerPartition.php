@@ -23,7 +23,7 @@ class OrderByCheckerPartition extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Order_header::whereNotIn('order_status', ['checking', 'new']),  'checker_id')
+        return $this->count($request, Order_header::where('order_status', '<>', 'new'),  'checker_id')
             ->label(function ($value) {
                 $user = User::find($value);
                 return $user->name;

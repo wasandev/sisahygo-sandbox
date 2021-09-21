@@ -81,22 +81,22 @@ class OrderHeaderObserver
             }
             $order_header->branch_rec_id = $to_branch->branch_id;
 
-            $customer_paymenttype = $order_header->customer->paymenttype;
-            $to_customer_paymenttype = $order_header->to_customer->paymenttype;
+            // $customer_paymenttype = $order_header->customer->paymenttype;
+            // $to_customer_paymenttype = $order_header->to_customer->paymenttype;
 
-            if ($customer_paymenttype == 'H') {
-                $order_header->paymenttype = 'H';
-            } elseif ($to_customer_paymenttype == 'H') {
-                $order_header->paymenttype = 'H';
-            } elseif ($customer_paymenttype == 'E') {
-                $order_header->paymenttype = 'E';
-            } elseif ($customer_paymenttype == 'Y') {
-                $order_header->paymenttype = 'F';
-            } elseif ($to_customer_paymenttype == 'Y') {
-                $order_header->paymenttype = 'L';
-            } else {
-                $order_header->paymenttype = 'H';
-            }
+            // if ($customer_paymenttype == 'H') {
+            //     $order_header->paymenttype = 'H';
+            // } elseif ($to_customer_paymenttype == 'H') {
+            //     $order_header->paymenttype = 'H';
+            // } elseif ($customer_paymenttype == 'E') {
+            //     $order_header->paymenttype = 'E';
+            // } elseif ($customer_paymenttype == 'Y') {
+            //     $order_header->paymenttype = 'F';
+            // } elseif ($to_customer_paymenttype == 'Y') {
+            //     $order_header->paymenttype = 'L';
+            // } else {
+            //     $order_header->paymenttype = 'H';
+            // }
             $order_items = $order_header->order_details;
             foreach ($order_items as $order_item) {
                 $sub_total = $order_item->price * $order_item->amount;
