@@ -128,6 +128,7 @@ class Order_checker extends Resource
                 BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                     ->searchable()
                     ->withSubtitles()
+                    ->showCreateRelationButton()
             ])->dependsOn('useqrcode', false)
                 ->onlyOnForms(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
@@ -137,7 +138,8 @@ class Order_checker extends Resource
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
-                ->withSubtitles(),
+                ->withSubtitles()
+                ->showCreateRelationButton(),
 
             Select::make('การจัดส่ง', 'trantype')->options([
                 '0' => 'รับเอง',

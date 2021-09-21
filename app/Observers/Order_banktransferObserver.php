@@ -23,7 +23,7 @@ class Order_banktransferObserver
 
         foreach ($tousers as $touser) {
 
-            if ($touser->hasPermissionTo('view order_banktransfers')) {
+            if ($touser->hasPermissionTo('edit order_banktransfers')) {
                 $touser->notify(new BankTransfer($touser, $order_banktransfer));
             }
         }

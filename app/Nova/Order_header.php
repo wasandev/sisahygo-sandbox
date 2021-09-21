@@ -183,6 +183,7 @@ class Order_header extends Resource
                 BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                     ->searchable()
                     ->withSubtitles()
+                    ->showCreateRelationButton()
 
             ])->dependsOn('useqrcode', false)
                 ->onlyOnForms(),
