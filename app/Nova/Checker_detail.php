@@ -115,8 +115,8 @@ class Checker_detail extends Resource
                 ->step('0.01'),
             Number::make('น้ำหนักสินค้า/หน่วย(กก.)', 'weight')
                 ->step('0.01')
-                ->rules('required')
-                ->help('ถ้าใช้น้ำหนักสินค้าที่มีอยู่แล้วไม่ต้องใส่,สินค้าที่มีหน่วย กิโลกรัม ให้ใส่ 1')
+                //->rules('required')
+                ->help('สินค้าที่มีหน่วย กิโลกรัม ให้ใส่ 1')
                 ->hideFromIndex()
                 ->default(0.00),
             Text::make('หมายเหตุ', 'remark')
