@@ -18,16 +18,21 @@ class OrderCheckerObserver
         $order_checker->order_status = 'checking';
         $order_checker->order_header_date = today();
         $to_customer = Customer::find($order_checker->customer_rec_id);
-        $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
-        if (is_null($to_branch)) {
-            throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+        if (!isset($order_checker->branch_rec_id)) {
+            $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+            if (is_null($to_branch)) {
+                throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+            }
+
+            $order_checker->branch_rec_id = $to_branch->branch_id;
         }
-        $order_checker->branch_rec_id = $to_branch->branch_id;
+
         $order_checker->checker_id = auth()->user()->id;
         $order_checker->user_id = auth()->user()->id;
         $order_checker->branch_id =  auth()->user()->branch_id;
         $customer_paymenttype = $order_checker->customer->paymenttype;
         $to_customer_paymenttype = $order_checker->to_customer->paymenttype;
+
         if ($customer_paymenttype == 'H') {
             $order_checker->paymenttype = 'H';
         } elseif ($to_customer_paymenttype == 'H') {
@@ -54,13 +59,16 @@ class OrderCheckerObserver
 
             $to_customer = $order_checker->customer_rec_id;
             $to_customer = Customer::find($order_checker->customer_rec_id);
-            $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+            if (!isset($order_checker->branch_rec_id)) {
+                $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+                if (is_null($to_branch)) {
+                    throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+                }
 
-            if (is_null($to_branch)) {
-                throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+                $order_checker->branch_rec_id = $to_branch->branch_id;
             }
 
-            $order_checker->branch_rec_id = $to_branch->branch_id;
+
             $order_checker->user_id = auth()->user()->id;
             $order_checker->updated_by = auth()->user()->id;
             $order_items = $order_checker->checker_details;

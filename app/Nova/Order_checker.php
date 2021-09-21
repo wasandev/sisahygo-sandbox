@@ -99,7 +99,10 @@ class Order_checker extends Resource
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
                 ->exceptOnForms(),
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->exceptOnForms(),
+                //->hideWhenCreating()
+                ->hideFromIndex()
+                ->nullable()
+                ->help('***โปรดระบุสาขา ถ้าที่อยู่ลูกค้าปลายทางอยู่นอกพื้นที่บริการของสาขาปลายทาง'),
             Select::make('ประเภท', 'order_type')->options([
                 'general' => 'ทั่วไป',
                 'express' => 'Express',
@@ -208,7 +211,7 @@ class Order_checker extends Resource
     public function actions(Request $request)
     {
         return [
-            // (new Orderstatus()),
+
             (new Actions\OrderChecked($request->resourceId))
                 ->onlyOnDetail()
                 ->confirmText('ยืนยันรายการตรวจรับสินค้า?')
@@ -221,6 +224,7 @@ class Order_checker extends Resource
                     return $request instanceof ActionRequest
                         || ($this->resource->exists && $this->resource->order_status == 'checking');
                 }),
+
 
         ];
     }

@@ -75,28 +75,16 @@ class OrderHeaderObserver
                 $order_header->shipto_center  = '0';
             }
             $to_customer = Customer::find($order_header->customer_rec_id);
-            $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
-            if (is_null($to_branch)) {
-                throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+            if (!isset($order_header->branch_rec_id)) {
+                $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+                if (is_null($to_branch)) {
+                    throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+                }
+
+                $order_header->branch_rec_id = $to_branch->branch_id;
             }
-            $order_header->branch_rec_id = $to_branch->branch_id;
 
-            // $customer_paymenttype = $order_header->customer->paymenttype;
-            // $to_customer_paymenttype = $order_header->to_customer->paymenttype;
 
-            // if ($customer_paymenttype == 'H') {
-            //     $order_header->paymenttype = 'H';
-            // } elseif ($to_customer_paymenttype == 'H') {
-            //     $order_header->paymenttype = 'H';
-            // } elseif ($customer_paymenttype == 'E') {
-            //     $order_header->paymenttype = 'E';
-            // } elseif ($customer_paymenttype == 'Y') {
-            //     $order_header->paymenttype = 'F';
-            // } elseif ($to_customer_paymenttype == 'Y') {
-            //     $order_header->paymenttype = 'L';
-            // } else {
-            //     $order_header->paymenttype = 'H';
-            // }
             $order_items = $order_header->order_details;
             foreach ($order_items as $order_item) {
                 $sub_total = $order_item->price * $order_item->amount;
@@ -115,12 +103,12 @@ class OrderHeaderObserver
                 $order_header->tracking_no = $tracking_no;
 
                 $to_customer = Customer::find($order_header->customer_rec_id);
-                $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
-                if (is_null($to_branch)) {
-                    throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
-                }
+                if (!isset($order_header->branch_rec_id)) {
+                    $to_branch = Branch_area::where('district', '=', $to_customer->district)->first();
+                    if (is_null($to_branch)) {
+                        throw new MyCustomException('อำเภอปลายทางไม่อยู่ในพื้นที่บริการ โปรดตรวจสอบ');
+                    }
 
-                if ($order_header->branch_rec_id == $to_branch->branch_id) {
                     $order_header->branch_rec_id = $to_branch->branch_id;
                 }
                 $order_header->order_header_date = today();
