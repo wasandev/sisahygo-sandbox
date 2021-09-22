@@ -432,5 +432,7 @@ html[dir="rtl"] .hamburger-menu:before {
 @media (max-width: 975px) {
     .modal > div > div > div {
         width: 90vw !important;
+        max-height: calc(100% - 80px);
+        overflow-y: auto;
     }
 }
