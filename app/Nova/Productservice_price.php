@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
@@ -87,10 +88,7 @@ class Productservice_price extends Resource
             BelongsTo::make(__('From branch'), 'from_branch', 'App\Nova\Branch')
                 ->sortable(),
 
-            // InputSubDistrict::make(__('Sub District'), 'sub_district')
-            //     ->withValues(['district', 'amphoe', 'province', 'zipcode'])
-            //     ->fromValue('district')
-            //     ->rules('required'),
+
             InputDistrict::make(__('To district'), 'district')
                 ->withValues(['amphoe', 'province'])
                 ->fromValue('amphoe')

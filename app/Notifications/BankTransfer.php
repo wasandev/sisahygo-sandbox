@@ -6,11 +6,13 @@ namespace App\Notifications;
 use App\Models\Order_banktransfer;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class BankTransfer extends Notification implements ShouldQueue
+class BankTransfer extends Notification implements ShouldBroadcast
+
 {
     use Queueable;
     protected $touser;

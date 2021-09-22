@@ -88,6 +88,9 @@ class Product extends Resource
                     return false;
                 }
             })->exceptOnForms(),
+            Number::make('จำนวนตารางราคา', function () {
+                return count($this->productservice_price);
+            })->sortable(),
 
             BelongsTo::make(__('Category'), 'category', 'App\Nova\Category')
                 ->sortable()

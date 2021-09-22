@@ -21,6 +21,7 @@ class Product extends Model
         'updated_by'
     ];
 
+
     public function category()
     {
         return $this->belongsTo('App\Models\Category');
@@ -62,5 +63,10 @@ class Product extends Model
     public function customer_product_prices()
     {
         return $this->hasMany('App\Models\Customer_product_price');
+    }
+    public function scopeCharter($query)
+    {
+        return $query->whereNotIn('order_status', ['checking', 'new', 'cancel'])
+            ->where('order_type', 'charter');
     }
 }

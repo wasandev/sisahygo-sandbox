@@ -71,6 +71,7 @@ class Product_style extends Resource
     {
         return [
             ID::make(),
+
             Text::make(__('Name'), 'name')->sortable(),
             Number::make('จำนวนสินค้าในประเภท', 'product_count', function () {
                 return count($this->products);
