@@ -162,6 +162,8 @@ class Product extends Resource
     public function filters(Request $request)
     {
         return [
+            //new Filters\ProductNotinPrice,
+            new Filters\ProductNotCoverPrice,
             new Filters\Category,
             new Filters\ProductStyle,
         ];
