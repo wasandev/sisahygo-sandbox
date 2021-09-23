@@ -101,14 +101,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Department');
     }
-
-    /**
-     * The channels the user receives notification broadcasts on.
-     *
-     * @return string
-     */
-    public function receivesBroadcastNotificationsOn()
-    {
-        return 'users.' . $this->id;
-    }
 }
