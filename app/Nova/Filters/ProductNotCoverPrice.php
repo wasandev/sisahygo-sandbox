@@ -30,7 +30,7 @@ class ProductNotCoverPrice extends  BooleanFilter
         if ($value['notcover']) {
 
             return $query->withCount('productservice_price')
-                ->having('productservice_price_count', '<=', 103);
+                ->having('productservice_price_count', '<', 103);
         }
     }
 
