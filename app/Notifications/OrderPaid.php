@@ -49,6 +49,7 @@ class OrderPaid extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return \Mirovit\NovaNotifications\Notification::make()
+            ->title('แจ้งการรับชำระเงินปลายทาง')
             ->info('แจ้งการรับชำระเงินปลายทาง')
             ->subtitle($this->order->order_header_no . ' ยืนยันการจัดส่งและรับชำระค่าขนส่งแล้ว')
             ->routeDetail('order_headers', $this->order->id)

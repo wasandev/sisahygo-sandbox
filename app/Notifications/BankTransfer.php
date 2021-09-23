@@ -58,14 +58,4 @@ class BankTransfer extends Notification implements ShouldBroadcast
             ->routeDetail('order_banktransfers', $this->banktransfer->id)
             ->toArray();
     }
-
-    public function toBroadcast($notifiable)
-    {
-        return \Mirovit\NovaNotifications\Notification::make()
-            ->title('แจ้งเตือนรายการโอนเงิน')
-            ->success('มีรายการโอนเงินค่าขนส่งมาใหม่')
-            ->subtitle('มีรายการโอนเงินค่าขนส่ง ใบรับส่ง : ' . $this->banktransfer->order_header_id)
-            ->routeDetail('order_banktransfers', $this->banktransfer->id)
-            ->toArray();
-    }
 }

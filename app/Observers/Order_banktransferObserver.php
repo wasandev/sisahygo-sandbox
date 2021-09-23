@@ -54,19 +54,22 @@ class Order_banktransferObserver
                 }
 
                 $branch_balance = \App\Models\Branch_balance::where('order_header_id', $order_banktransfer->order_header_id)->first();
-                $branch_balance->pay_amount = $order_header->order_amount;
-                $branch_balance->updated_by = auth()->user()->id;
-                $branch_balance->branchpay_date = today();
-                $branch_balance->payment_status = true;
-                if ($order_header->trantype == '1') {
-                    $branch_balance->remark = $delivery_item->description;
-                } else {
-                    $branch_balance->remark = 'รับสินค้าที่สาขา';
-                }
-                $branch_balance->receipt_id = $order_banktransfer->receipt_id;
-                $branch_balance->payment_status = true;
-                $branch_balance->save();
+                if (isset($branch_balance)) {
 
+
+                    $branch_balance->pay_amount = $order_header->order_amount;
+                    $branch_balance->updated_by = auth()->user()->id;
+                    $branch_balance->branchpay_date = today();
+                    $branch_balance->payment_status = true;
+                    if ($order_header->trantype == '1') {
+                        $branch_balance->remark = $delivery_item->description;
+                    } else {
+                        $branch_balance->remark = 'รับสินค้าที่สาขา';
+                    }
+                    $branch_balance->receipt_id = $order_banktransfer->receipt_id;
+                    $branch_balance->payment_status = true;
+                    $branch_balance->save();
+                }
                 $branchrec_order = \App\Models\Branchrec_order::find($order_banktransfer->order_header_id);
                 $branchrec_order->payment_status = true;
                 $branchrec_order->save();
