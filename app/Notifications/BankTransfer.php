@@ -52,7 +52,8 @@ class BankTransfer extends Notification implements ShouldBroadcast
     {
 
         return \Mirovit\NovaNotifications\Notification::make()
-            ->info('รายการโอนเงินค่าขนส่ง')
+            ->title('แจ้งเตือนรายการโอนเงิน')
+            ->success('โอนเงินค่าขนส่ง')
             ->subtitle('มีรายการโอนเงินค่าขนส่ง ใบรับส่ง : ' . $this->banktransfer->order_header->order_header_no)
             ->routeDetail('order_banktransfers', $this->banktransfer->id)
             ->toArray();
@@ -61,7 +62,8 @@ class BankTransfer extends Notification implements ShouldBroadcast
     public function toBroadcast($notifiable)
     {
         return \Mirovit\NovaNotifications\Notification::make()
-            ->info('รายการโอนเงินค่าขนส่ง')
+            ->title('แจ้งเตือนรายการโอนเงิน')
+            ->success('โอนเงินค่าขนส่ง')
             ->subtitle('มีรายการโอนเงินค่าขนส่ง ใบรับส่ง : ' . $this->banktransfer->order_header->order_header_no)
             ->routeDetail('order_banktransfers', $this->banktransfer->id)
             ->toArray();
