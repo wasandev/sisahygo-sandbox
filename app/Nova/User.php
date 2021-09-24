@@ -117,12 +117,12 @@ class User extends Resource
             BelongsTo::make('ฝ่าย/แผนก', 'department', 'App\Nova\Department')
                 ->sortable()
                 ->nullable()
-                ->hideFromIndex()
                 ->showCreateRelationButton(),
 
             BelongsTo::make('รายการสาขาปลายทาง(ที่ทำงานประจำ)', 'branch_rec', 'App\Nova\Branch')
                 ->sortable()
                 ->nullable()
+                ->hideFromIndex()
                 ->showCreateRelationButton(),
             Select::make(__('Role'), 'role')->options([
                 'employee' => 'พนักงาน',
@@ -254,13 +254,13 @@ class User extends Resource
         return $query;
     }
 
-    public static function redirectAfterCreate(NovaRequest $request, $resource)
-    {
-        return '/resources/' . static::uriKey();
-    }
+    // public static function redirectAfterCreate(NovaRequest $request, $resource)
+    // {
+    //     return '/resources/' . static::uriKey();
+    // }
 
-    public static function redirectAfterUpdate(NovaRequest $request, $resource)
-    {
-        return '/resources/' . static::uriKey();
-    }
+    // public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    // {
+    //     return '/resources/' . static::uriKey();
+    // }
 }
