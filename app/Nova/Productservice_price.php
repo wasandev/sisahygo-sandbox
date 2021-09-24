@@ -80,7 +80,7 @@ class Productservice_price extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable()->hideFromIndex(),
+            ID::make()->sortable(),
 
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->sortable()
