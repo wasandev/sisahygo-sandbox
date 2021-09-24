@@ -87,7 +87,8 @@ class User extends Resource
 
             //Gravatar::make()->maxWidth(50),
 
-            Avatar::make('รูปโปรไฟล์', 'avatar'),
+            Avatar::make('รูปโปรไฟล์', 'avatar')
+                ->storeOriginalName('avatar'),
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
