@@ -159,6 +159,7 @@ class Car extends Resource
                 ->sortable(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->help('ให้ระบุกรณีเป็นรถกระจายสินค้าของสาขา')
+                ->sortable()
                 ->nullable(),
             BelongsTo::make('เจ้าของรถ/ผู้รับรายได้', 'owner', 'App\Nova\Vendor')
                 ->sortable()
