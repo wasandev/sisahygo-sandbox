@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "algolia/algoliasearch-client-php": "^3.1",
         "anaseqal/nova-import": "^0.0.6",
         "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-dompdf": "^0.8.7",
@@ -26,6 +27,7 @@
         "kristories/nova-qrcode-field": "^0.0.2",
         "laravel/framework": "^8.0",
         "laravel/nova": "~3.0 ",
+        "laravel/scout": "^9.2",
         "laravel/tinker": "^2.0",
         "maatwebsite/laravel-nova-excel": "^1.2",
         "mikehaertl/php-pdftk": "^0.10.3",

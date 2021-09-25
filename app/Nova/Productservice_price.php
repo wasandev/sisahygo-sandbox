@@ -60,9 +60,7 @@ class Productservice_price extends Resource
     public static $searchRelations = [
         'product' => ['name'],
     ];
-    // public static $globalSearchRelations = [
-    //     'product' => ['name'],
-    // ];
+
     public static function label()
     {
         return __('Shipping costs');
@@ -87,8 +85,6 @@ class Productservice_price extends Resource
                 ->searchable(),
             BelongsTo::make(__('From branch'), 'from_branch', 'App\Nova\Branch')
                 ->sortable(),
-
-
             InputDistrict::make(__('To district'), 'district')
                 ->withValues(['amphoe', 'province'])
                 ->fromValue('amphoe')
@@ -129,13 +125,14 @@ class Productservice_price extends Resource
     public function filters(Request $request)
     {
         return [
-            new Filters\ProductGroup,
-            new Filters\ProductPriceStyle,
             new Filters\Product,
-            new Filters\FromBranch,
-            new Filters\Province,
-            new Filters\ToDistrict,
+            new Filters\ProductPriceStyle,
+            new Filters\ProductGroup,
             new Filters\Unit,
+            new Filters\ToDistrict,
+            new Filters\Province,
+            new Filters\FromBranch,
+
 
         ];
     }
