@@ -37,7 +37,8 @@ class Province extends Filter
      */
     public function options(Request $request)
     {
-        $provinces = \App\Models\Province::has('branch_area');
-        return $provinces->pluck('name', 'name')->all();
+        $provinces = \App\Models\Branch_area::where('branch_id', '<>', 1)
+            ->orderByDesc('province');
+        return $provinces->pluck('province', 'province')->all();
     }
 }

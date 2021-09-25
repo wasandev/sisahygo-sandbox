@@ -36,7 +36,9 @@ class ToDistrict extends Filter
      */
     public function options(Request $request)
     {
-        $districts = \App\Models\District::has('branch_area');
-        return $districts->pluck('name', 'name')->all();
+        $districts = \App\Models\Branch_area::where('branch_id', '<>', 1)
+            ->orderByDesc('province')
+            ->orderByDesc('district');
+        return $districts->pluck('district', 'district')->all();
     }
 }

@@ -11,6 +11,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Wasandev\InputThaiAddress\InputDistrict;
 use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
+
 
 
 class Productservice_price extends Resource
@@ -125,14 +127,15 @@ class Productservice_price extends Resource
     public function filters(Request $request)
     {
         return [
-            new Filters\Product,
-            new Filters\ProductPriceStyle,
-            new Filters\ProductGroup,
-            new Filters\Unit,
-            new Filters\ToDistrict,
-            new Filters\Province,
-            new Filters\FromBranch,
-
+            (new NovaSearchableBelongsToFilter('ตามสินค้า'))
+                ->fieldAttribute('product')
+                ->filterBy('product_id'),
+            (new Filters\ToDistrict),
+            (new Filters\Province),
+            //(new Filters\Product),
+            (new Filters\ProductPriceStyle),
+            (new Filters\ProductGroup),
+            (new Filters\Unit),
 
         ];
     }

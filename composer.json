@@ -38,6 +38,7 @@
         "pktharindu/nova-permissions": "^2.1",
         "pusher/pusher-php-server": "^7.0",
         "simplesoftwareio/simple-qrcode": "~4",
+        "suenerds/nova-searchable-belongs-to-filter": "^1.0",
         "titasgailius/search-relations": "^1.0",
         "wasandev/account": "*",
         "wasandev/araccount": "*",
