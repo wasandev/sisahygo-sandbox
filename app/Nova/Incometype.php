@@ -35,7 +35,7 @@ class Incometype extends Resource
      *
      * @var string
      */
-    public static $title = 'code';
+    public static $title = 'name';
 
 
 

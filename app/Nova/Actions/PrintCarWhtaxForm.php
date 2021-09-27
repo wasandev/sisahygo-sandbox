@@ -44,40 +44,130 @@ class PrintCarWhtaxForm extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        $date1 = '';
+        $date2 = '';
+        $date3 = '';
+        $date4 = '';
+        $date5 = '';
+        $date6 = '';
+        $date7 = '';
+        $date8 = '';
+        $date9 = '';
+        $date13 = '';
+        $date140 = '';
+        $date141 = '';
+        $pay10 = '';
+        $pay11 = '';
+        $pay12  = '';
+        $pay13 = '';
+        $pay14 = '';
+        $pay15 = '';
+        $pay16 = '';
+        $pay17 = '';
+        $pay18 = '';
+        $pay1131 = '';
+        $pay1130 = '';
+        $tax10 = '';
+        $tax11 = '';
+        $tax12 = '';
+        $tax13 = '';
+        $tax14 = '';
+        $tax15 = '';
+        $tax16 = '';
+        $tax17 = '';
+        $tax18 = '';
+        $tax1130 = '';
+        $tax1131 = '';
+
+
         foreach ($models as $model) {
-            $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
-            $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CarpaymentFromDate');
-            $from_value = Arr::get($from, 'value');
 
-
-            if ($from_value == '') {
-                return Action::danger('เลือก วันที่เริ่มต้น ที่ต้องการที่เมนูกรองข้อมูลก่อน');
-            }
-            $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CarpaymentToDate');
-            $to_value = Arr::get($to, 'value');
-            if ($to_value == '') {
-                return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
-            }
             $company = CompanyProfile::find(1);
 
-            $vendordata = Vendor::find($model->id);
+            $vendordata = Vendor::find($model->vendor_id);
+
             $chk4 = 'Off';
             $chk7 = 'Off';
-            if ($vendordata->type == 'company') {
-                $chk7 = 'Yes';
-            } else {
+            if ($model->incometype->taxform == '3') {
                 $chk4 = 'Yes';
+            } elseif ($model->incometype->taxform == '53') {
+                $chk7 = 'Yes';
             }
-            $car_payment = Carpayment::where('vendor_id', $model->id)
-                ->where('payment_date', '>=', $from_value)
-                ->where('payment_date', '<=', $to_value)
-                ->orderBy('vendor_id', 'asc')
-                ->get();
+            switch ($model->incometype->code) {
+                case '001':
+                    $date1 = $model->pay_date;
+                    $pay10 = $model->pay_amount;
+                    $tax10 = $model->tax_amount;
+                    break;
+                case '002':
+                    $date2 = $model->pay_date;
+                    $pay11 = $model->pay_amount;
+                    $tax11 = $model->tax_amount;
+                    break;
+                case '003':
+                    $date3 = $model->pay_date;
+                    $pay12 = $model->pay_amount;
+                    $tax12 = $model->tax_amount;
+                    break;
+                case '004':
+                    $date4 = $model->pay_date;
+                    $pay13 = $model->pay_amount;
+                    $tax13 = $model->tax_amount;
+                    break;
+                case '005':
+                    $date5 = $model->pay_date;
+                    $pay14 = $model->pay_amount;
+                    $tax14 = $model->tax_amount;
+                    break;
+                case '006':
+                    $date6 = $model->pay_date;
+                    $pay15 = $model->pay_amount;
+                    $tax15 = $model->tax_amount;
+                    break;
+                case '007':
+                    $rate1 = $model->taxrate;
+                    $date8 = $model->pay_date;
+                    $pay17 = $model->pay_amount;
+                    $tax17 = $model->tax_amount;
+                    break;
+                case '008':
+                    $date7 = $model->pay_date;
+                    $pay16 = $model->pay_amount;
+                    $tax16 = $model->tax_amount;
+                    break;
+                case '009':
+                    $rate1 = $model->taxrate;
+                    $date8 = $model->pay_date;
+                    $pay17 = $model->pay_amount;
+                    $tax17 = $model->tax_amount;
+                    break;
+                case '010':
+                    $rate1 = $model->taxrate;
+                    $date8 = $model->pay_date;
+                    $pay17 = $model->pay_amount;
+                    $tax17 = $model->tax_amount;
+                    break;
+                case '011':
+                    $date9 = $model->pay_date;
+                    $pay18 = $model->pay_amount;
+                    $tax18 = $model->tax_amount;
+                    break;
+                case '098':
+                    $spac3 = $model->description;
+                    $date141 = $model->pay_date;
+                    $pay1131 = $model->pay_amount;
+                    $tax1131 = $model->tax_amount;
+                    break;
+                default:
+                    $date140 = formatDateThai($model->pay_date);
+                    $pay1130 = $model->pay_amount;
+                    $tax1130 = $model->tax_amount;
+                    break;
+            }
 
-
-            $form_wh3path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_form.pdf';
-            $form_name = 'wh3_' . $model->id . $from_value . '.pdf';
-            $xfdf_name = 'wh3_' . $model->id . $from_value . '.xfdf';
+            $form_wh3path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_sisahygo.pdf';
+            $form_name = 'wh3_' . $model->vendor_id . '.pdf';
+            $xfdf_name = 'wh3_' . $model->vendor_id . '.xfdf';
             $form_wh3saved =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $form_name;
             $xfdf_file =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $xfdf_name;
 
@@ -91,13 +181,32 @@ class PrintCarWhtaxForm extends Action
                 'add2' => $vendordata->address . ' ' . $vendordata->sub_district . ' ' . $vendordata->district . ' ' . $vendordata->province . ' ' . $vendordata->postal_code,
                 'chk4' => $chk4,
                 'chk7' => $chk7,
-                'date14.0' => date("d/m/Y", strtotime($to_value)),
-                'pay1.13.0' => '2500.00',
-                'tax1.13.0' => '25.00',
-                'pay1.14' => '2500.00',
-                'tax1.14' => '25.00',
+                'date1' => $date1,
+                'date2' => $date2,
+                'date3' => $date3,
+                'date4' => $date4,
+                'date5' => $date5,
+                'date6' => $date6,
+                'date7' => $date7,
+                'date8' => $date8,
+                'date9' => $date9,
+                'date10' => '',
+                'date11' => '',
+                'date12' => '',
+                'date13' => '',
+                'date140' => $date140,
+                'date141' => $date141,
+                'pay1130' => $pay1130,
+                'pay1131' => $pay1131,
+                'pay1.14' => $model->pay_amount,
+                'tax1130' => $tax1130,
+                'tax1131' => $tax1131,
+                'tax1.14' =>  $model->tax_amount,
+                'total' => baht_text($model->tax_amount),
                 'chk8' => 'Yes',
-                'total' => 'สองพันห้าร้อยบาทถ้วน'
+                'date_pay' => date('d', strtotime($model->pay_date)),
+                'month_pay' => '   ' . date('m', strtotime($model->pay_date)),
+                'year_pay' => date("Y", strtotime($model->pay_date)) + 543
             ];
 
             $xfdf = new XfdfFile($car_taxfill);

@@ -134,7 +134,7 @@ class Product extends Resource
             HasMany::make(__('Shipping costs'), 'productservice_price', 'App\Nova\Productservice_price'),
             // BelongsToMany::make('ลูกค้าที่ใช้สินค้านี้', 'customer', 'App\Nova\Customer'),
             // HasMany::make('ค่าขนส่งสินค้าตามลูกค้า', 'customer_product_prices', 'App\Nova\Customer_product_price')
-
+            HasMany::make('รูปสินค้า', 'product_images', 'App\Nova\Product_image')
         ];
     }
 

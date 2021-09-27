@@ -210,7 +210,7 @@ class Carpayment extends Resource
     {
         return [
             new CarpaymentReportByDay(),
-            new CarpayTax()
+            //new CarpayTax()
         ];
     }
 

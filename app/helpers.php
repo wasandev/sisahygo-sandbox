@@ -56,8 +56,8 @@ if (!function_exists('formatDateThai')) {
         $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
         $strMonthThai = $strMonthCut[$strMonth];
 
-        return "$strDay $strMonthThai $strYear $strHour:$strMinute";
-        //return "$strDay $strMonthThai $strYear";
+        //return "$strDay $strMonthThai $strYear $strHour:$strMinute";
+        return "$strDay $strMonthThai $strYear";
     }
 }
 

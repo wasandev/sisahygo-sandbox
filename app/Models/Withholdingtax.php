@@ -9,7 +9,7 @@ class Withholdingtax extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['pay_date', 'payertype', 'vendor_id', 'incometype_id', 'pay_amount', 'tax_amount', 'user_id', 'updated_by'];
+    protected $fillable = ['pay_date', 'payertype', 'vendor_id', 'incometype_id', 'pay_amount', 'tax_amount', 'user_id', 'updated_by', 'description'];
     protected $casts = [
         'pay_date' => 'date'
     ];

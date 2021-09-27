@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\Incometype;
 use App\Models\Vendor;
+use App\Nova\Actions\PrintCarWhtaxForm;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
@@ -85,6 +87,11 @@ class Withholdingtax extends Resource
                 ])->displayUsingLabels()
                 ->rules('required')
                 ->default('1'),
+            BelongsTo::make('ประเภทเงินได้', 'incometype', 'App\Nova\Incometype')
+                ->onlyOnIndex(),
+            BelongsTo::make('ผู้ถูกหักภาษี', 'vendor', 'App\Nova\Vendor')
+                ->onlyOnIndex(),
+
             NovaDependencyContainer::make([
                 Select::make('จ่ายให้', 'vendor_id')
                     ->options($vendortype1)
@@ -105,8 +112,7 @@ class Withholdingtax extends Resource
                     ->displayUsingLabels()
                     ->searchable(),
             ])->dependsOn('payertype', '2'),
-            //BelongsTo::make('ผู้ถูกหักภาษี', 'vendor', 'App\Nova\Vendor'),
-            //BelongsTo::make('ประเภทเงินได้', 'incometype', 'App\Nova\Incometype'),
+            Text::make('รายละเอียด', 'description')->hideFromIndex(),
             Currency::make('จำนวนเงินจ่าย', 'pay_amount'),
             Number::make('อัตราภาษี', function () {
                 $incometype = Incometype::find($this->incometype_id);
@@ -170,12 +176,18 @@ class Withholdingtax extends Resource
     public function actions(Request $request)
     {
         return [
+
+            (new PrintCarWhtaxForm($request->filters))
+                ->onlyOnTableRow()
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('view withholdingtaxes');
+                }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('edit banks');
+                    return $request->user()->hasPermissionTo('edit withholdingtaxes');
                 })
                 ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('edit banks');
+                    return $request->user()->hasPermissionTo('edit withholdingtaxes');
                 }),
         ];
     }

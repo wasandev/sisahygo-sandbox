@@ -109,10 +109,7 @@ class CarpayTax extends Lens
     public function actions(Request $request)
     {
         return [
-            (new PrintCarWhtaxForm($request->filters))
-                ->canRun(function ($request, $model) {
-                    return true;
-                }),
+
             (new DownloadExcel)->allFields()
                 ->withHeadings()
                 ->canSee(function ($request) {
