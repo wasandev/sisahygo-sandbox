@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Car_balance;
 use App\Models\Order_header;
 use App\Models\Order_status;
 use App\Models\Routeto_branch;
@@ -34,12 +35,22 @@ class WaybillBillAdd extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            if ($model->waybill_status == 'confirmed' || $model->waybill_status == 'in transit') {
+            if ($model->waybill_status != 'completed') {
 
                 $order_add = Order_header::find($fields->order_add);
+                $order_add->waybill_id = $model->id;
+                $order_add->order_status = $model->waybill_status;
+                $order_add->save();
+
+                Order_status::Create([
+                    'order_header_id' => $order_add->id,
+                    'status' => $model->waybill_status,
+                    'user_id' => auth()->user()->id,
+                ]);
+
 
                 //update waybill_amount
-                $updated_waybillamount = $model->waybill_amount + $order_add->order_amount;
+                $updated_waybillamount = $model->order_loaders->sum('order_amount');
                 $model->waybill_amount = $updated_waybillamount;
                 //check option
                 $routeto_branch = Routeto_branch::find($model->routeto_branch_id);
@@ -49,17 +60,17 @@ class WaybillBillAdd extends Action
 
                 if ($routeto_branch->branch->type == 'partner') {
                     $chargerate = $routeto_branch->branch->partner_rate;
-                    $car_payamount = ($updated_waybillamount * $chargerate) / 100;
+                    $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                     $model->waybill_payable = $car_payamount;
                 } elseif ($routeto_branch->dest_branch->type == 'partner') {
                     $chargerate = $routeto_branch->dest_branch->partner_rate;
-                    $car_payamount = ($updated_waybillamount * $chargerate) / 100;
+                    $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                     $model->waybill_payable = $car_payamount;
                 } else {
 
                     if ($routeto_branch_cost->chargeflag) {
                         $chargerate = $routeto_branch_cost->chargerate;
-                        $car_payamount = ($updated_waybillamount * $chargerate) / 100;
+                        $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                         $model->waybill_payable = $car_payamount;
                     } else {
                         $car_payamount = $model->waybill_payable;
@@ -69,30 +80,16 @@ class WaybillBillAdd extends Action
                 $model->waybill_income = $updated_waybillamount - $car_payamount;
                 $model->save();
 
-                $order_add->waybill_id = $model->id;
-
-                if ($model->waybill_status == 'in transit') {
-                    $order_add->order_status = 'in transit';
-                } else {
-                    $order_add->order_status = 'loaded';
+                //update car_balance
+                $car_balance = Car_balance::where('waybill_id', $model->id)->first();
+                if (isset($car_balance)) {
+                    $car_balance->amount = $model->waybill_payable;
+                    $car_balance->save();
                 }
 
-                $order_add->save();
-                if ($model->waybill_status == 'in transit') {
-
-                    Order_status::Create([
-                        'order_header_id' => $order_add->id,
-                        'status' => 'in transit',
-                        'user_id' => auth()->user()->id,
-                    ]);
-                } else {
-                    Order_status::Create([
-                        'order_header_id' => $order_add->id,
-                        'status' => 'loaded',
-                        'user_id' => auth()->user()->id,
-                    ]);
-                }
+                return Action::message('ทำรายการเรียบร้อยแล้ว');
             }
+            return Action::danger('ไม่สามารถรายการนี้ได้ ->เกินกำหนดเวลา');
         }
     }
 

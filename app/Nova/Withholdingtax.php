@@ -4,7 +4,11 @@ namespace App\Nova;
 
 use App\Models\Incometype;
 use App\Models\Vendor;
+use App\Nova\Actions\Accounts\PrintWhtaxReport;
 use App\Nova\Actions\PrintCarWhtaxForm;
+use App\Nova\Filters\WhtaxFromDate;
+use App\Nova\Filters\WhtaxToDate;
+use App\Nova\Filters\WhtaxType;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
@@ -91,7 +95,9 @@ class Withholdingtax extends Resource
                 ->onlyOnIndex(),
             BelongsTo::make('ผู้ถูกหักภาษี', 'vendor', 'App\Nova\Vendor')
                 ->onlyOnIndex(),
-
+            Text::make('ภงด.', function () {
+                return $this->incometype->taxform;
+            }),
             NovaDependencyContainer::make([
                 Select::make('จ่ายให้', 'vendor_id')
                     ->options($vendortype1)
@@ -153,7 +159,12 @@ class Withholdingtax extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new WhtaxFromDate(),
+            new WhtaxToDate(),
+            new WhtaxType()
+
+        ];
     }
 
     /**
@@ -179,8 +190,19 @@ class Withholdingtax extends Resource
 
             (new PrintCarWhtaxForm($request->filters))
                 ->onlyOnTableRow()
-                ->canRun(function ($request, $model) {
-                    return $request->user()->hasPermissionTo('view withholdingtaxes');
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit withholdingtaxes');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit withholdingtaxes');
+                }),
+            (new PrintWhtaxReport($request->filters))
+                ->standalone()
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit withholdingtaxes');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit withholdingtaxes');
                 }),
             (new DownloadExcel)->allFields()->withHeadings()
                 ->canRun(function ($request) {

@@ -100,6 +100,9 @@ class Order_header extends Resource
         return [
             ID::make('ลำดับ', 'id')
                 ->sortable(),
+            Text::make(__('Payment type'), 'paymenttype')
+                ->onlyOnIndex(),
+
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
                 //->hideWhenCreating()
                 ->onlyOnDetail()
@@ -139,7 +142,7 @@ class Order_header extends Resource
                 ->nullable()
                 ->searchable()
                 ->withSubtitles()
-                ->onlyOnDetail(),
+                ->exceptOnForms(),
 
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
@@ -209,6 +212,10 @@ class Order_header extends Resource
                 ->sortable()
                 ->hideFromIndex()
                 ->default(1),
+            BelongsTo::make('เปิดแทนบิลยกเลิกเลขที่', 'ordercancel', 'App\Nova\Order_header')
+                ->nullable()
+                ->onlyOnDetail(),
+
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
@@ -432,5 +439,12 @@ class Order_header extends Resource
         //if ($request->route()->parameter('field') === "checker_id") {
         return $query->where('branch_id', '=', $request->user()->branch_id);
         //}
+    }
+
+    public static function relatableOrdercancels(NovaRequest $request, $query)
+    {
+        return $query->where('order_status', '=', 'cancel')
+            ->whereYear('order_header_date', date('Y'))
+            ->whereMonth('order_header_date', date('m'));
     }
 }

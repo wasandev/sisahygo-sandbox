@@ -9,10 +9,10 @@ use Laravel\Nova\Filters\DateFilter;
 class ArbalanceToDate extends DateFilter
 {
     public $name = 'ถึงวันที่';
-    public function default()
-    {
-        return date(today());
-    }
+    // public function default()
+    // {
+    //     return date(today());
+    // }
     /**
      * Apply the filter to the given query.
      *

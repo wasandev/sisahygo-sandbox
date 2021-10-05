@@ -3,6 +3,8 @@
 namespace App\Nova\Lenses\cars;
 
 use App\Models\Vendor;
+use App\Nova\Actions\Accounts\PrintCarwhtaxReport;
+use App\Nova\Actions\PostWhTax;
 use App\Nova\Actions\PrintCarWhtaxForm;
 use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
@@ -46,7 +48,7 @@ class CarpayTax extends Lens
     protected static function columns()
     {
         return [
-            'vendors.id as id',
+            'vendors.id',
             'vendors.name as name',
             DB::raw('sum(carpayments.amount) as payment_amount'),
             DB::raw('sum(carpayments.tax_amount) as tax_amount'),
@@ -62,13 +64,13 @@ class CarpayTax extends Lens
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            Text::make('เจ้าของรถ', 'name'),
 
-            Currency::make('จำนวนเงินจ่าย', function () {
+            ID::make(),
+            Text::make('เจ้าของรถ', 'name'),
+            Currency::make('จำนวนเงินจ่าย', 'payment_amount', function () {
                 return $this->payment_amount;
             }),
-            Currency::make('จำนวนเงินภาษี', function () {
+            Currency::make('จำนวนเงินภาษี', 'tax_amount', function () {
                 return $this->tax_amount;
             }),
         ];
@@ -109,7 +111,15 @@ class CarpayTax extends Lens
     public function actions(Request $request)
     {
         return [
-
+            (new PrintCarwhtaxReport($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view car_balances');
+                }),
+            (new PostWhTax($request->filters))
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('create withholdingtaxes');
+                }),
             (new DownloadExcel)->allFields()
                 ->withHeadings()
                 ->canSee(function ($request) {

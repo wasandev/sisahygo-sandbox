@@ -1688,6 +1688,29 @@ return [
             'description'  => 'ลบ',
             'group'        => 'ใบเสร็จรับเงินวางบิล',
         ],
+        //เอกสารการวางบิล
+        'view billingnotes' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดู',
+            'group'        => 'เอกสารการวางบิล',
+        ],
+        'create billingnotes' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง',
+            'group'        => 'เอกสารการวางบิล',
+        ],
+
+        'edit billingnotes' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'แก้ไข',
+            'group'        => 'เอกสารการวางบิล',
+        ],
+
+        'delete billingnotes' => [
+            'display_name' => 'ลบ',
+            'description'  => 'ลบ',
+            'group'        => 'เอกสารการวางบิล',
+        ],
         //ประเภทเงินได้
         'view incometypes' => [
             'display_name' => 'ดู',

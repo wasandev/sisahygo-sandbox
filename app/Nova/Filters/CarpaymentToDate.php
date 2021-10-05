@@ -12,7 +12,7 @@ class CarpaymentToDate extends DateFilter
 
     public function default()
     {
-        return date(today());
+        return date('Y-m-d', strtotime('last day of this month'));
     }
     /**
      * Apply the filter to the given query.

@@ -13,7 +13,7 @@ class CarpaymentObserver
 {
     public function creating(Carpayment $carpayment)
     {
-        $carpayment->payment_date = today();
+        //$carpayment->payment_date = today();
         $payment_no = IdGenerator::generate(['table' => 'carpayments', 'field' => 'payment_no', 'length' => 15, 'prefix' => 'P' . date('Ymd')]);
         $carpayment->payment_no = $payment_no;
 
@@ -46,18 +46,18 @@ class CarpaymentObserver
     public function updating(Carpayment $carpayment)
     {
         $carpayment->updated_by = auth()->user()->id;
-    }
-    public function updated(Carpayment $carpayment)
-    {
         $car_balance = Car_balance::where('carpayment_id', '=', $carpayment->id)->first();
         if (isset($car_balance)) {
 
             $car_balance->car_id = $carpayment->car_id;
-            $car_balance->vendor_id = $carpayment->car->vendor_id;
+            $car_balance->vendor_id = $carpayment->vendor_id;
             $car_balance->description = $carpayment->description;
             $car_balance->amount = $carpayment->amount;
             $car_balance->save();
         }
+    }
+    public function updated(Carpayment $carpayment)
+    {
     }
     public function deleted(Carpayment $carpayment)
     {

@@ -145,7 +145,7 @@ class Ar_customer extends Resource
             //HasMany::make('รายการส่งสินค้า', 'order_sends', 'App\Nova\Order_header'),
             //HasMany::make('รายการรับสินค้า', 'order_recs', 'App\Nova\Order_header'),
             HasMany::make('รายการวางบิล', 'ar_balances', 'App\Nova\Ar_balance'),
-
+            HasMany::make('ใบแจ้งหนี้', 'invoices', 'App\Nova\Invoice'),
 
 
         ];

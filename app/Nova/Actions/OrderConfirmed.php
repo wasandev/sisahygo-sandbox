@@ -70,11 +70,12 @@ class OrderConfirmed extends Action
                 $model->bankreference = $fields->refernce;
                 $model->waybill_id = $fields->waybill_branch;
                 $model->loader_id = $fields->loader;
-                // if (isset($fields->waybill_branch)) {
-                //     $model->order_status = 'loaded';
-                // } else {
+
                 $model->order_status = 'confirmed';
-                // }
+
+                if (isset($fields->ordercancel)) {
+                    $model->ordercancel_id = $fields->cancelorder;
+                }
 
                 $model->save();
 
@@ -96,6 +97,10 @@ class OrderConfirmed extends Action
         $bankaccount = Bankaccount::where('defaultflag', '=', true)->pluck('account_no', 'id');
         $waybills = Waybill::where('waybill_status', 'loading')->pluck('waybill_no', 'id');
         $loaders = User::where('branch_id', '=', auth()->user()->branch_id);
+        $ordercancels = Order_header::where('order_status', 'cancel')
+            ->whereYear('order_header_date', date('Y'))
+            ->whereMonth('order_header_date', date('m'))
+            ->pluck('order_header_no', 'id');
         $waybillOptions = [];
 
         if ($this->model) {
@@ -153,6 +158,10 @@ class OrderConfirmed extends Action
                         ->options($loaders)
                         ->displayUsingLabels()
                         ->searchable(),
+                    Select::make('ออกแทนบิลยกเลิกเลขที่', 'ordercancel')
+                        ->options($ordercancels)
+                        ->displayUsingLabels()
+                        ->searchable(),
                 ];
             }
         }
@@ -179,6 +188,10 @@ class OrderConfirmed extends Action
                 ->searchable(),
             Select::make('พนักงานจัดขึ้น', 'loader')
                 ->options($loaders)
+                ->displayUsingLabels()
+                ->searchable(),
+            Select::make('ออกแทนบิลยกเลิกเลขที่', 'ordercancel')
+                ->options($ordercancels)
                 ->displayUsingLabels()
                 ->searchable(),
         ];

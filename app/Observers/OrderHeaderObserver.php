@@ -11,6 +11,7 @@ use App\Models\Customer;
 use App\Models\Branch_area;
 use App\Exceptions\MyCustomException;
 use App\Models\Ar_balance;
+use App\Models\Waybill;
 use App\Nova\Actions\OrderConfirmed;
 use App\Nova\Actions\PrintOrder;
 use Illuminate\Database\Eloquent\Collection;

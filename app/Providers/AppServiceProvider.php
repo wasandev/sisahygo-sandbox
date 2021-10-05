@@ -150,6 +150,8 @@ use App\Models\Bank;
 use App\Observers\BankObserver;
 
 use App\Models\Bankaccount;
+use App\Models\Billingnote;
+use App\Models\Billingnote_item;
 use App\Observers\BankaccountObserver;
 
 use App\Models\Order_banktransfer;
@@ -186,6 +188,8 @@ use App\Models\Invoice;
 use App\Models\Order_problem;
 use App\Models\Receipt_ar;
 use App\Models\Withholdingtax;
+use App\Observers\BillingnoteItemObserver;
+use App\Observers\BillingnoteObserver;
 use App\Observers\CarpaymentObserver;
 use App\Observers\CarreceiveObserver;
 use App\Observers\CheckerDetailObserver;
@@ -284,5 +288,7 @@ class AppServiceProvider extends ServiceProvider
         Checker_detail::observe(CheckerDetailObserver::class);
         Withholdingtax::observe(WithholdingtaxObserver::class);
         Incometype::observe(IncometypeObserver::class);
+        Billingnote::observe(BillingnoteObserver::class);
+        Billingnote_item::observe(BillingnoteItemObserver::class);
     }
 }

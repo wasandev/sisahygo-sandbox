@@ -24,6 +24,7 @@ use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\HasMany;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class Car extends Resource
 {
@@ -255,6 +256,9 @@ class Car extends Resource
     public function filters(Request $request)
     {
         return [
+            (new NovaSearchableBelongsToFilter('ชื่อเจ้าของรถ'))
+                ->fieldAttribute('owner')
+                ->filterBy('vendor_id'),
             new OwnerType,
             new CarType,
         ];

@@ -73,8 +73,8 @@ class Carreceive extends Resource
             Text::make('เลขที่เอกสาร', 'receive_no')
                 ->readonly(),
             Date::make('วันที่เอกสาร', 'receive_date')
-                ->readonly()
                 ->default(today())
+                ->rules('required')
                 ->format('DD/MM/YYYY'),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->default(function () {
@@ -91,9 +91,9 @@ class Carreceive extends Resource
 
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')->searchable(),
             BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
-                ->exceptOnForms()
+                ->exceptOnForms(),
+            Text::make(__('Description'), 'description')
                 ->hideFromIndex(),
-            Text::make(__('Description'), 'description'),
             Currency::make(__('Amount'), 'amount'),
             Select::make('รับด้วย', 'receive_by')->options([
                 'H' => 'เงินสด',
@@ -205,5 +205,15 @@ class Carreceive extends Resource
                     return $request->user()->hasPermissionTo('view car_receives');
                 }),
         ];
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

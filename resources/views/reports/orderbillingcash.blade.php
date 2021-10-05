@@ -31,14 +31,15 @@
 </table>
 
 
-<table style="border-bottom:1px solid black;border-top:1px solid black" >
+<table style="width:100%;border-bottom:1px solid black;border-top:1px solid black" >
     <thead>
         <tr style="border-bottom:1px solid black">
             <th style="width: 5%;">ลำดับ</th>
-            <th style="width: 30%;text-align: left ">ชื่อพนักงาน</th>
-            <th style="width: 15%;">จำนวนบิล</th>
-            <th style="text-align: right;width: 25%;">จำนวนเงิน</th>
-            <th style="text-align: center;width: 25%;">ลงชื่อพนักงาน</th>
+            <th style="width: 20%;text-align: left ">ชื่อพนักงาน</th>
+            <th style="width: 15%;">จำนวนใบรับส่งเงินสด</th>
+            <th style="text-align: right;width: 20%;">จำนวนเงินสด</th>
+            <th style="text-align: right;width: 20%;">จำนวนเงินยกเลิก</th>
+            <th style="text-align: center;width: 15%;">ลงชื่อพนักงาน</th>
         </tr>
 
     </thead>
@@ -57,6 +58,13 @@
                 </td>
                 <td style="text-align: right">
                      {{ number_format($order_groups->sum('order_amount'),2,'.',',')}}
+
+                </td>
+                <td style="text-align: right">
+                        @php
+                            $cancel_amount =  $order_groups->where('order_status','cancel')->sum('order_amount')
+                        @endphp
+                     {{ number_format($cancel_amount,2,'.',',')}}
 
                 </td>
                 <td style="text-align: center">
@@ -78,9 +86,14 @@
             <td style="text-align: right">
                 {{number_format($order->sum('order_amount'),2,'.',',') }}
             </td>
+            <td style="text-align: right">
+                 @php
+                    $sumcancel_amount =  $order->where('order_status','cancel')->sum('order_amount')
+                @endphp
+                {{number_format($sumcancel_amount,2,'.',',') }}
+            </td>
             <td>
-                </td>
-
+            </td>
         </tr>
     </tbody>
 

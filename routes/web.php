@@ -67,8 +67,8 @@ Route::middleware('web', 'auth')
         Route::get('/car/report_13/{car}/{from}/{to}', 'CarController@report_13')->name('report_13');
         Route::get('/car/report_14/{owner}/{from}/{to}', 'CarController@report_14')->name('report_14');
         Route::get('/car/report_15/{to}', 'CarController@report_15')->name('report_15');
-        // Route::get('/car/printwhtaxform/{id}/{from}/{to}', 'CarController@printwhtaxform')->name('printwhtaxform');
-
+        Route::get('/car/report_23/{from}/{to}', 'CarController@report_23')->name('report_23');
+        Route::get('/car/report_24/{from}/{to}/{type}', 'CarController@report_24')->name('report_24');
         //ar
         Route::get('/invoice/preview/{id}', 'InvoiceController@preview')->name('preview');
         Route::get('/receipt/preview/{id}', 'ReceiptController@preview')->name('preview');

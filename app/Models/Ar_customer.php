@@ -63,6 +63,11 @@ class Ar_customer extends Model
         return $this->hasMany('App\Models\Address');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\Invoice', 'customer_id');
+    }
+
     public function product()
     {
         return $this->belongsToMany('App\Models\Product')

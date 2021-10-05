@@ -10,7 +10,7 @@ class Order_header extends Model
         'order_header_no', 'order_header_date', 'order_status', 'branch_id', 'branch_rec_id',
         'customer_id', 'customer_rec_id', 'paymenttype', 'remark', 'waybill_id', 'trantype',
         'checker_id', 'loader_id', 'shipper_id', 'payment_status', 'order_amount', 'user_id', 'updated_by',
-        'bankaccount_id', 'bankreference', 'created_at', 'branchpay_by', 'tracking_no', 'total_weight', 'order_type', 'shipto_center', 'useqrcode'
+        'bankaccount_id', 'bankreference', 'created_at', 'branchpay_by', 'tracking_no', 'total_weight', 'order_type', 'shipto_center', 'useqrcode', 'ordercancel_id'
     ];
     protected $casts = [
         'order_header_date' => 'date',
@@ -24,6 +24,10 @@ class Order_header extends Model
     public function to_customer()
     {
         return $this->belongsTo('App\Models\Customer', 'customer_rec_id');
+    }
+    public function ordercancel()
+    {
+        return $this->belongsTo('App\Models\Order_header', 'ordercancel_id');
     }
     public function user()
     {

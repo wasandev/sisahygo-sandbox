@@ -54,6 +54,8 @@ class OrderBillingCash extends Lens
             'users.name as user_name',
             'order_headers.order_header_date',
             DB::raw('sum(order_headers.order_amount) as cash'),
+            DB::raw("SUM(CASE WHEN order_headers.order_status = 'cancel' THEN order_headers.order_amount ELSE 0 END) as cancelamount"),
+
         ];
     }
 
@@ -73,6 +75,9 @@ class OrderBillingCash extends Lens
             Date::make(__('Order date'), 'order_header_date')
                 ->format('DD/MM/YYYY'),
             Currency::make(__('จำนวนเงิน'), 'cash', function ($value) {
+                return $value;
+            }),
+            Currency::make(__('จำนวนเงินยกเลิก'), 'cancelamount', function ($value) {
                 return $value;
             }),
 

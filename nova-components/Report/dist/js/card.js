@@ -870,6 +870,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Report',
@@ -1769,6 +1805,87 @@ var render = function() {
                 ],
                 1
               )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "w-full flex flex-wrap",
+              attrs: { cellpadding: "10", cellspacing: "10" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "align-top w-1/2 border-r border-b border-50" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "no-underline dim flex p-6",
+                      attrs: {
+                        to: {
+                          name: "lens",
+                          params: {
+                            resourceName: "vendors",
+                            lens: "carpay-tax"
+                          }
+                        },
+                        title: _vm.รายงานภาษีหักณที่จ่ายรถ
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex justify-center w-11 flex-no-shrink mr-6"
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "40",
+                                height: "40",
+                                viewBox: "0 0 20 20"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  fill: "var(--primary)",
+                                  d:
+                                    "M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mt-3" },
+                        [
+                          _c(
+                            "heading",
+                            { staticClass: "mb-3", attrs: { level: 3 } },
+                            [_vm._v("รายงานภาษีหัก ณ ที่จ่ายรถ")]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "align-top w-1/2 border-r border-b border-50"
+              })
             ]
           ),
           _vm._v(" "),

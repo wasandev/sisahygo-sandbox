@@ -8,6 +8,7 @@ use App\Models\Carpayment;
 use App\Models\Carreceive;
 use App\Models\CompanyProfile;
 use App\Models\Vendor;
+use App\Models\Withholdingtax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use mikehaertl\pdftk\Pdf;
@@ -150,44 +151,43 @@ class CarController extends Controller
 
         return view('reports.carsummaryreportbyday', compact('company', 'report_title', 'car_balances', 'balance_groups',  'to'));
     }
-
-    // public function printwhtaxform($vendor, $from, $to)
-    // {
-    //     $report_title = 'หนังสือรับรองการหักภาษี ณ ที่จ่าย';
-    //     $company = CompanyProfile::find(1);
-
-    //     $vendordata = Vendor::find($vendor);
-    //     $car_payment = Carpayment::where('vendor_id', $vendor)
-    //         ->where('payment_date', '>=', $from)
-    //         ->where('payment_date', '<=', $to)
-    //         ->orderBy('vendor_id', 'asc')
-    //         ->get();
+    public function report_23($from, $to)
+    {
+        $report_title = 'รายงานสรุปภาษีหัก ณ ที่จ่าย รถ';
+        $company = CompanyProfile::find(1);
 
 
-    //     $form_wh3path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_form.pdf';
-    //     $form_name = 'wh3_' . $vendor . $from . '.pdf';
-    //     $form_wh3saved =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $form_name;
+        $carpayments = Carpayment::where('payment_date', '>=', $from)
+            ->where('payment_date', '<=', $to)
+            ->where('tax_flag', true)
+            ->orderBy('vendor_id', 'asc')
+            ->orderBy('car_id', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
 
-    //     $form_wh3 = new Pdf($form_wh3path);
+        $carpayment_groups = $carpayments->groupBy(['vendor_id', 'car_id']);
 
-    //     $result = $form_wh3->allow('AllFeatures')
-    //         ->fillForm([
+        $carpayment_groups = $carpayment_groups->all();
 
-    //             'name1' => $company->company_name,
-    //             'id1' => substr($company->taxid, 0, 1) . ' ' . substr($company->taxid, 1, 4) . ' ' . substr($company->taxid, 5, 5) . ' ' . substr($company->taxid, 10, 2) . ' ' . substr($company->taxid, 12, 1),
-    //             'add1' => $company->address . ' ' . $company->sub_district . ' ' . $company->district . ' ' . $company->province . ' ' . $company->postal_code,
-    //             'name2' => $vendordata->name,
-    //             'id2' => $vendordata->taxid,
-    //             'add2' => $vendordata->address . ' ' . $vendordata->sub_district . ' ' . $vendordata->district . ' ' . $vendordata->province . ' ' . $vendordata->postal_code,
-    //         ])
-    //         ->needAppearances()
-    //         ->saveAs($form_wh3saved);
+        return view('reports.carwhtaxreport', compact('company', 'report_title', 'carpayments', 'carpayment_groups', 'from', 'to'));
+    }
 
-    //     // Always check for errors
-    //     if ($result === false) {
-    //         $error = $form_wh3->getError();
-    //         echo $error;
-    //     }
-    //     return view('reports.wh3form', compact('form_name'));
-    // }
+
+    public function report_24($from, $to, $type)
+    {
+        $report_title = 'รายงานสรุปภาษีหัก ณ ที่จ่าย';
+        $company = CompanyProfile::find(1);
+
+
+        $whtaxes = Withholdingtax::join('incometypes', 'incometypes.id', '=', 'withholdingtaxes.incometype_id')
+            ->where('withholdingtaxes.pay_date', '>=', $from)
+            ->where('withholdingtaxes.pay_date', '<=', $to)
+            ->where('incometypes.taxform', $type)
+            ->orderBy('withholdingtaxes.id', 'asc')
+            ->get();
+
+
+
+        return view('reports.whtaxreport', compact('company', 'report_title', 'whtaxes',  'from', 'to', 'type'));
+    }
 }

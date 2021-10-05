@@ -67,6 +67,10 @@ class Car_balance extends Resource
             ID::make(__('ID'), 'id')->sortable(),
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
                 ->sortable(),
+            BelongsTo::make('เจ้าของรถ', 'vendor', 'App\Nova\Vendor')
+                ->sortable()
+                ->exceptOnForms(),
+
             Select::make('ประเภท', 'doctype')
                 ->options([
                     'R' => 'รับ',

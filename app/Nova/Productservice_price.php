@@ -13,8 +13,6 @@ use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
-
-
 class Productservice_price extends Resource
 {
     //public static $displayInNavigation = false;

@@ -152,10 +152,7 @@ class Waybill extends Resource
                 return 0;
             })->exceptOnForms()
                 ->hideFromIndex(),
-            Number::make('น้ำหนักสินค้ารวม', 'waybill_totalweight', function () {
-                $waybill_weight = $this->order_loaders->sum('total_weight');
-                return number_format($waybill_weight, 2, '.', ',');
-            })->exceptOnForms(),
+
             Number::make('ค่าขนส่งรวม', 'total_amount', function () {
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),
@@ -170,7 +167,10 @@ class Waybill extends Resource
                 return 0;
             })->exceptOnForms()
                 ->hideFromIndex(),
-
+            Number::make('น้ำหนักสินค้ารวม', 'waybill_totalweight', function () {
+                $waybill_weight = $this->order_loaders->sum('total_weight');
+                return number_format($waybill_weight, 2, '.', ',');
+            })->exceptOnForms(),
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
                 ->searchable()
                 ->hideFromIndex(),
@@ -296,13 +296,7 @@ class Waybill extends Resource
                 ->canRun(function ($request, $model) {
                     return true;
                 }),
-            // (new Actions\PrintWaybillPdf)->onlyOnDetail()
-            //     ->confirmText('ต้องการบันทึกใบกำกับสินค้ารายการนี้เป็นไฟล์ PDF?')
-            //     ->confirmButtonText('บันทึก')
-            //     ->cancelButtonText("ไม่บันทึก")
-            //     ->canRun(function ($request, $model) {
-            //         return true;
-            //     }),
+
             (new Actions\WaybillBillRemove($request->resourceId))
 
                 ->onlyOnDetail()
@@ -314,8 +308,7 @@ class Waybill extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
-                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status == 'confirmed' ||
-                            $this->resource->waybill_status == 'in transit') && $request->user()->hasPermissionTo('manage waybills'));
+                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status != 'completed') && $request->user()->hasPermissionTo('manage waybills'));
                 }),
             (new Actions\WaybillBillAdd($request->resourceId))
 
@@ -328,7 +321,7 @@ class Waybill extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
-                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status == 'confirmed' || $this->resource->waybill_status == 'in transit') && $request->user()->hasPermissionTo('manage waybills'));
+                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status != 'completed') && $request->user()->hasPermissionTo('manage waybills'));
                 }),
 
         ];

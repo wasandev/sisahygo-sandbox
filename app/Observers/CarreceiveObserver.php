@@ -11,7 +11,7 @@ class CarreceiveObserver
 {
     public function creating(Carreceive $carreceive)
     {
-        $carreceive->receive_date = today();
+        //$carreceive->receive_date = today();
         $receive_no = IdGenerator::generate(['table' => 'carreceives', 'field' => 'receive_no', 'length' => 15, 'prefix' => 'R' . date('Ymd')]);
         $carreceive->receive_no = $receive_no;
         if (is_null($carreceive->car->vendor_id)) {
@@ -41,19 +41,17 @@ class CarreceiveObserver
     public function updating(Carreceive $carreceive)
     {
         $carreceive->updated_by = auth()->user()->id;
-    }
-    public function updated(Carreceive $carreceive)
-    {
         $car_balance = Car_balance::where('carreceive_id', '=', $carreceive->id)->first();
         if (isset($car_balance)) {
 
             $car_balance->car_id = $carreceive->car_id;
-            $car_balance->vendor_id = $carreceive->car->vendor_id;
+            $car_balance->vendor_id = $carreceive->vendor_id;
             $car_balance->description = $carreceive->description;
             $car_balance->amount = $carreceive->amount;
             $car_balance->save();
         }
     }
+
     public function deleted(Carreceive $carreceive)
     {
         $car_balance = Car_balance::where('carreceive_id', '=', $carreceive->id)->first();

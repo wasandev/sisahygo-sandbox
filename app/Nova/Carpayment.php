@@ -80,8 +80,8 @@ class Carpayment extends Resource
             Text::make('เลขที่เอกสาร', 'payment_no')
                 ->readonly(),
             Date::make('วันที่เอกสาร', 'payment_date')
-                ->readonly()
                 ->default(today())
+                ->rules('required')
                 ->format('DD/MM/YYYY'),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->default(function () {
@@ -107,9 +107,9 @@ class Carpayment extends Resource
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
                 ->searchable(),
             BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
-                ->exceptOnForms()
+                ->exceptOnForms(),
+            Text::make(__('Description'), 'description')->default('ค่าบรรทุก(เบิกเดินทาง)')
                 ->hideFromIndex(),
-            Text::make(__('Description'), 'description')->default('ค่าบรรทุก(เบิกเดินทาง)'),
             Currency::make(__('Amount'), 'amount'),
             Select::make('จ่ายด้วย', 'payment_by')->options([
                 'H' => 'เงินสด',

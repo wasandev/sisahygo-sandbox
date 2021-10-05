@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
-    protected $fillable = ['customer_id', 'status', 'invoice_no', 'invoice_date', 'due_date', 'description', 'user_id', 'updated_by'];
+    protected $fillable = ['customer_id', 'status', 'invoice_no', 'invoice_date', 'due_date', 'description', 'user_id', 'updated_by', 'billed'];
     protected $casts = ['invoice_date' => 'date', 'due_date' => 'date'];
 
     public function ar_customer()
@@ -49,5 +49,9 @@ class Invoice extends Model
     public function receipt_ar()
     {
         return $this->belongsTo(Receipt_ar::class, 'receipt_id');
+    }
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'customer_id');
     }
 }
