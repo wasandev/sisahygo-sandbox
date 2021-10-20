@@ -116,7 +116,7 @@
     @endforeach
 
     @if(count($invoice->ar_balances) < 13)
-        @for ($i = 1; $i <= 13 - count($invoice->ar_balances); $i++)
+        @for ($i = 1; $i <= 10 - count($invoice->ar_balances); $i++)
             <tr style="vertical-align:top;height:1cm">
                 <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
 

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\BillingnoteConfirmed;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -61,7 +62,8 @@ class Billingnote extends Resource
             ID::make(__('ID'), 'id')->sortable(),
             Badge::make('สถานะ', 'status')->map([
                 'new' => 'info',
-                'billed' => 'success',
+                'billed' => 'warning',
+                'completed' => 'success'
             ]),
             BelongsTo::make('ชื่อลูกค้า', 'ar_customer', 'App\Nova\Ar_customer')
                 ->sortable(),
@@ -79,6 +81,7 @@ class Billingnote extends Resource
                     '3' => 'พนักงานวางบิล'
                 ]
             )->displayUsingLabels(),
+            DateTime::make('วันนัดชำระ', 'set_payment_date')->nullable(),
             Text::make('รายละเอียด', 'description')->nullable(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -139,7 +142,15 @@ class Billingnote extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new BillingnoteConfirmed)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit billingnotes');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit billingnotes');
+                }),
+        ];
     }
 
     public static function relatableAr_customers(NovaRequest $request, $query)

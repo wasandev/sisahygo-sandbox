@@ -15,4 +15,8 @@ class BillingnoteObserver
     {
         $billingnote->updated_by = auth()->user()->id;
     }
+
+    public function updated(Billingnote $billingnote)
+    {
+    }
 }

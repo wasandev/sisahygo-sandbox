@@ -65,44 +65,44 @@
 <value></value>
 </field>
 <field name="date140">
-<value>30 ก.ย. 2564</value>
+<value>31 ต.ค. 2564</value>
 </field>
 <field name="date141">
 <value></value>
 </field>
 <field name="pay1130">
-<value>23618.36</value>
+<value>6500.00</value>
 </field>
 <field name="pay1131">
 <value></value>
 </field>
 <field name="pay1">
 <field name="14">
-<value>23618.36</value>
+<value>6500.00</value>
 </field>
 </field>
 <field name="tax1130">
-<value>236.18</value>
+<value>65.00</value>
 </field>
 <field name="tax1131">
 <value></value>
 </field>
 <field name="tax1">
 <field name="14">
-<value>236.18</value>
+<value>65.00</value>
 </field>
 </field>
 <field name="total">
-<value>สองร้อยสามสิบหกบาทสิบแปดสตางค์</value>
+<value>หกสิบห้าบาทถ้วน</value>
 </field>
 <field name="chk8">
 <value>Yes</value>
 </field>
 <field name="date_pay">
-<value>30</value>
+<value>31</value>
 </field>
 <field name="month_pay">
-<value>   09</value>
+<value>   10</value>
 </field>
 <field name="year_pay">
 <value>2564</value>

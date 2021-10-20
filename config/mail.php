@@ -85,7 +85,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'postmaster@mail.sisahygo.online'),
-        'name' => env('MAIL_FROM_NAME', 'Sisahygo Admin'),
+        'name' => env('MAIL_FROM_NAME', 'Sisahygo - สี่สหายขนส่ง'),
     ],
 
     /*
