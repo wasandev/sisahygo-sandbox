@@ -530,7 +530,7 @@ class MorphTo extends Field implements RelatableField
     /**
      * Set the default relation resource class to be selected.
      *
-     * @param \Closure|string $resourceClass
+     * @param  \Closure|string  $resourceClass
      * @return $this
      */
     public function defaultResource($resourceClass)

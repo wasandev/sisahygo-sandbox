@@ -127,7 +127,7 @@ class LensRequest extends NovaRequest
     /**
      * Get foreign key name for relation.
      *
-     * @param  \Illuminate\Database\Eloquent\Relations\Relation $relation
+     * @param  \Illuminate\Database\Eloquent\Relations\Relation  $relation
      * @return string
      */
     protected function getRelationForeignKeyName(Relation $relation)
@@ -153,5 +153,15 @@ class LensRequest extends NovaRequest
         }
 
         return (int) in_array($this->perPage, $perPageOptions) ? $this->perPage : $perPageOptions[0];
+    }
+
+    /**
+     * Determine if this request is an action request.
+     *
+     * @return bool
+     */
+    public function isActionRequest()
+    {
+        return $this->segment(5) == 'actions';
     }
 }
