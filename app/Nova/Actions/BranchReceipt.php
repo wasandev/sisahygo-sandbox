@@ -52,7 +52,7 @@ class BranchReceipt extends Action
             }
 
             $branch_order = Branchrec_order::find($model->order_header_id);
-            $delivery_detail = Delivery_detail::where('order_header_id', $model->order_header_id)->get();
+            $delivery_detail = Delivery_detail::where('order_header_id', $model->order_header_id)->first();
             if (isset($delivery_detail)) {
                 $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
 
