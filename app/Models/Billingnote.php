@@ -13,6 +13,7 @@ class Billingnote extends Model
 
     protected $casts = [
         'billingnote_date' => 'datetime',
+        'set_payment_date' => 'datetime',
     ];
     public function ar_customer()
     {
