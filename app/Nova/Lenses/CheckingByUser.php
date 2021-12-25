@@ -96,8 +96,8 @@ class CheckingByUser extends Lens
     {
         return [
             new LensBranchFilter(),
+            new OrderFromDate(),
             new OrderToDate(),
-            new OrderFromDate()
         ];
     }
 
