@@ -3,6 +3,7 @@
 namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\CheckerbyUser;
+use App\Nova\Metrics\CheckerbyUserMetric;
 use App\Nova\Metrics\CheckerCancelbyUser;
 use App\Nova\Metrics\CheckerProblembyUser;
 use Laravel\Nova\Dashboard;
@@ -18,7 +19,7 @@ class CheckerDashboard extends Dashboard
     public function cards()
     {
         return [
-            (new CheckerbyUser())->width('1/3'),
+            (new CheckerbyUserMetric())->width('1/3'),
             (new CheckerCancelbyUser())->width('1/3'),
             (new CheckerProblembyUser())->width('1/3'),
             (new Orderstatus())

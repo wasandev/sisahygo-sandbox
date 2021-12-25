@@ -2,10 +2,15 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\CheckerByUser;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
 use App\Nova\Filters\ShowByOrderStatus;
+use App\Nova\Lensese\CheckingByUser;
+use App\Nova\Metrics\CheckerbyUser as MetricsCheckerbyUser;
+use App\Nova\Metrics\CheckerCancelbyUser;
+use App\Nova\Metrics\CheckerProblembyUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\BelongsTo;
@@ -175,7 +180,29 @@ class Order_checker extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Metrics\CheckerbyUserMetric())
+
+                ->canSee(
+                    function ($request) {
+                        return $request->user()->role == 'admin';
+                    }
+                ),
+            (new Metrics\CheckerCancelbyUser)
+
+                ->canSee(
+                    function ($request) {
+                        return $request->user()->role == 'admin';
+                    }
+                ),
+            (new Metrics\CheckerProblembyUser)
+
+                ->canSee(
+                    function ($request) {
+                        return $request->user()->role == 'admin';
+                    }
+                ),
+        ];
     }
 
     /**
@@ -189,7 +216,9 @@ class Order_checker extends Resource
         return [
             new ShowByOrderStatus(),
             new OrderFromDate(),
-            new OrderToDate()
+            new OrderToDate(),
+            new CheckerByUser()
+
         ];
     }
 
@@ -201,7 +230,9 @@ class Order_checker extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new CheckingByUser()
+        ];
     }
 
     /**
@@ -232,8 +263,7 @@ class Order_checker extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('checker_id', $request->user()->id)
-            ->where('order_type', '<>', 'charter');
+        return $query->where('order_type', '<>', 'charter');
     }
     public static function relatableCustomers(NovaRequest $request, $query)
     {

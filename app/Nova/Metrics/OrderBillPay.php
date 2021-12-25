@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Nova\Metrics;
+namespace App\Nova\Metrics\Branchs;
 
+use App\Models\Receipt;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Metrics\Value;
-use App\Models\Order_checker;
+use Laravel\Nova\Metrics\Trend;
 
-class CheckerbyUser extends Value
+class OrderBillPay extends Trend
 {
     /**
      * Calculate the value of the metric.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return mixed
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Order_checker::where('checker_id', $request->user()->id)
-            ->where('order_status', '=', 'new'));
+        return $this->sumByDays($request, Receipt::where('receipttype', 'B'), 'pay_amount', 'receipt_date')
+            ->format('0,0.00')
+            ->showSumValue();
     }
 
     /**
@@ -28,10 +29,7 @@ class CheckerbyUser extends Value
     public function ranges()
     {
         return [
-            'TODAY' => 'วันนี้',
-            'MTD' => 'เดือนนี้',
-            'QTD' => 'ไตรมาสนี้',
-            'YTD' => 'ปีนี้',
+            7 => '7 วัน',
             30 => '30 วัน',
             60 => '60 วัน',
             365 => '365 วัน',
@@ -45,13 +43,11 @@ class CheckerbyUser extends Value
      */
     public function cacheFor()
     {
-        // return now()->addMinutes(5);
+        return now()->addMinutes(5);
     }
-
-
     public function name()
     {
-        return 'จำนวนรายการตรวจรับสินค้า';
+        return 'ยอดรับชำระหนี้ลูกหนี้การค้า';
     }
     /**
      * Get the URI key for the metric.
@@ -60,6 +56,6 @@ class CheckerbyUser extends Value
      */
     public function uriKey()
     {
-        return 'checkerby-user';
+        return 'order-bill-pay';
     }
 }

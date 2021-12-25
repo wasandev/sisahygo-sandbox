@@ -2,6 +2,8 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\Branchs\OrderBillBalance;
+use App\Nova\Metrics\Branchs\OrderBillPay;
 use App\Nova\Metrics\OrderBillPerDay;
 use Laravel\Nova\Dashboard;
 use Wasandev\Orderstatus\Orderstatus;
@@ -17,6 +19,8 @@ class ArDashboard extends Dashboard
     {
         return [
             (new OrderBillPerDay())->width('1/2'),
+            (new OrderBillPay())->width('1/2'),
+            // (new OrderBillBalance())->width('1/2'),
             (new Orderstatus())
         ];
     }

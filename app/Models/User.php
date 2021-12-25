@@ -101,4 +101,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Department');
     }
+
+    public function order_checkers()
+    {
+        return $this->hasMany(Order_checker::class);
+    }
 }

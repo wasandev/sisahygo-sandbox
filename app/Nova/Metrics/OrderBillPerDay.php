@@ -16,8 +16,9 @@ class OrderBillPerDay extends Trend
      */
     public function calculate(Request $request)
     {
+
         return $this->sumByDays($request, Order_header::bill(), 'order_amount')
-            ->showLatestValue()
+            ->showSumValue()
             ->format('0,0.00');
     }
 
