@@ -3,7 +3,9 @@
 namespace App\Nova\Lensese;
 
 use App\Nova\Filters\LensBranchFilter;
-use App\Nova\Filters\OrderdateFilter;
+
+use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -94,7 +96,8 @@ class CheckingByUser extends Lens
     {
         return [
             new LensBranchFilter(),
-            new OrderdateFilter(),
+            new OrderToDate(),
+            new OrderFromDate()
         ];
     }
 
