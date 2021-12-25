@@ -9,7 +9,7 @@ return [
     'hidden_sidebar_headlines' => [],
 
     // If true, the resource tables actions will be always visible (sticky)
-    'resource_tables_sticky_actions' => true,
+    'resource_tables_sticky_actions' => false,
 
     // If true, the resource tables actions will be always visible (sticky) on mobile
     'resource_tables_sticky_actions_on_mobile' => false,
