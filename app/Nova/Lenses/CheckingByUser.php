@@ -34,8 +34,8 @@ class CheckingByUser extends Lens
                 ->join('users', 'users.id', '=', 'order_headers.checker_id')
                 ->where('order_headers.order_status', '<>', 'checking')
                 ->orderBy('ordercount', 'desc')
-                ->orderBy('order_headers.order_header_date', 'asc')
-                ->groupBy('order_headers.branch_id', 'order_headers.order_header_date', 'order_headers.checker_id')
+                //->orderBy('order_headers.order_header_date', 'asc')
+                ->groupBy('order_headers.branch_id',  'order_headers.checker_id')
         ));
     }
     /**
@@ -65,8 +65,8 @@ class CheckingByUser extends Lens
         return [
 
             Text::make(__('Branch'), 'branch_name'),
-            Date::make(__('Order date'), 'order_header_date')
-                ->format('DD/MM/YYYY'),
+            //Date::make(__('Order date'), 'order_header_date')
+            //    ->format('DD/MM/YYYY'),
             Text::make('ชื่อพนักงานตรวจรับ', 'user_name'),
             Number::make(__('จำนวนการตรวจรับ'), 'ordercount', function ($value) {
                 return $value;
