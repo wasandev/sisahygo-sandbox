@@ -33,9 +33,9 @@ class CheckingByUser extends Lens
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_id')
                 ->join('users', 'users.id', '=', 'order_headers.checker_id')
                 ->where('order_headers.order_status', '<>', 'checking')
-                ->orderBy('order_headers.checker_id', 'asc')
                 ->orderBy('ordercount', 'desc')
-                ->groupBy('order_headers.branch_id',  'order_headers.checker_id')
+                ->orderBy('order_headers.order_header_date', 'asc')
+                ->groupBy('order_headers.branch_id', 'order_headers.order_header_date', 'order_headers.checker_id')
         ));
     }
     /**
