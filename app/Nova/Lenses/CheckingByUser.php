@@ -47,7 +47,7 @@ class CheckingByUser extends Lens
     {
         return [
             'branches.name as branch_name',
-            'order_headers.order_header_date',
+            //'order_headers.order_header_date',
             'users.name as user_name',
             DB::raw('count(order_headers.id) as ordercount'),
         ];
