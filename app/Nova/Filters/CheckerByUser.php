@@ -33,8 +33,7 @@ class CheckerByUser extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('checker_id', $value)
-            ->where('order_status', '<>', 'checking');
+        return $query->where('checker_id', $value);
     }
 
     /**
