@@ -55,7 +55,9 @@
                     วันที่ : {{ date('d/m/Y',strtotime($waybill_date)) }}
                     @foreach ($waybills as $item )
                         @php
-                            $date_count =  $item->where('waybill_date',$waybill_date)->count();
+                            $date_count =  $item->where('waybill_date',$waybill_date)
+                                                ->whereNotIn('waybill_status', ['loading','cancel'])
+                                                ->count();
                         @endphp
 
                     @endforeach
