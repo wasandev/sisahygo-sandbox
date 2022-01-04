@@ -79,8 +79,8 @@ class OrderConfirmed extends Action
 
                 $model->save();
 
-
-                return Action::push('/resources/order_headers/');
+                return Action::openInNewTab('/orderheader/preview/' . $model->id);
+                //return Action::push('/resources/order_headers/');
             } else {
                 return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการสินค้า!');
             }

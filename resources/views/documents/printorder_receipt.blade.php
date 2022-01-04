@@ -153,7 +153,7 @@
             </td>
         </tr>
 </table>
-<table  style="width: 100%;height: 3.0cm;border-top: 0.5px dotted black;">
+<table  style="width: 100%;height: 2.5cm;border-top: 0.5px dotted black;">
 
         @foreach ($order->order_details as $item )
 
