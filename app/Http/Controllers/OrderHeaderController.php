@@ -211,8 +211,8 @@ class OrderHeaderController extends Controller
                 $join->on('order_headers.id', '=', 'order_statuses.order_header_id')
                     ->where('order_statuses.status', '=', 'cancel');
             })
-            ->where('order_statuses.created_at', '>=', $from)
-            ->where('order_statuses.created_at', '<=', $to)
+            ->whereDate('order_statuses.created_at', '>=', $from)
+            ->whereDate('order_statuses.created_at', '<=', $to)
             ->orderBy('order_statuses.created_at', 'asc')
             ->get();
 
