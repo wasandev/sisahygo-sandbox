@@ -69,6 +69,7 @@ class Charter_route extends Resource
                 ->exceptOnForms(),
             //Belongsto::make('สาขาต้นทาง', 'branch', 'App\Nova\Branch'),
             Belongsto::make('อำเภอต้นทาง', 'branch_area', 'App\Nova\Branch_area')
+                ->searchable()
                 ->showCreateRelationButton(),
 
             InputDistrict::make(__('To district'), 'to_district')
