@@ -36,7 +36,7 @@ class WaybillPolicy
     public function delete(User $user, Waybill $waybill)
     {
 
-        return ($user->role == 'admin');
+        return ($user->role == 'admin' && $waybill->waybill_payable == 0);
     }
 
     // public function addOrder_header(User $user, Waybill $waybill)
