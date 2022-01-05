@@ -1,4 +1,6 @@
 <table>
+    <br/>
+    <br/>
     <tr style="vertical-align: top;">
         <td>
             <img src="{{ url('storage/'.$company->logofile) }}" alt="{{$company->company_name}}" width="80" height="80">

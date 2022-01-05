@@ -62,7 +62,7 @@
                 {{ $charterjob->charter_price->pickuppoint }}
             </td>
             <td style="border: 1px solid black;text-align: right;">
-                {{ number_format($charterjob->charter_price->price,2) }}
+                {{-- {{ number_format($charterjob->charter_price->price,2) }} --}}
             </td>
 
 
@@ -177,7 +177,7 @@
             รวมค่าบริการ(บาท)/Sub Total
         </td>
         <td style="width:35%;border: 1px solid black;text-align: right;">
-            {{ number_format($charterjob->sub_total) }}
+            {{-- {{ number_format($charterjob->sub_total) }} --}}
         </td>
     </tr>
     <tr>
@@ -185,7 +185,7 @@
             ส่วนลด(บาท)/Discount(Baht)
         </td>
         <td style="width:35%;border: 1px solid black;text-align: right;">
-            {{ number_format($charterjob->discount ,2) }}
+            {{-- {{ number_format($charterjob->discount ,2) }} --}}
         </td>
     </tr>
     <tr>
@@ -193,7 +193,7 @@
             รวมจำนวนเงิน(บาท)/Total(Baht)
         </td>
         <td style="width:35%;border: 1px solid black;text-align: right;">
-            {{ number_format($charterjob->sub_total  - $charterjob->discount ,2) }}
+            {{-- {{ number_format($charterjob->sub_total  - $charterjob->discount ,2) }} --}}
         </td>
     </tr>
 </table>
