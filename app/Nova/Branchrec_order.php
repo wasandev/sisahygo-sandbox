@@ -9,6 +9,8 @@ use App\Nova\Actions\OrderReceived;
 use App\Nova\Filters\ByWaybill;
 use App\Nova\Filters\ShowByOrderStatusBranch;
 use App\Nova\Filters\ToBranch;
+use App\Nova\Lenses\ValueByBranch;
+use App\Nova\Lenses\ValueByDistrict;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -176,7 +178,10 @@ class Branchrec_order extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new ValueByBranch(),
+            new ValueByDistrict(),
+        ];
     }
 
     /**

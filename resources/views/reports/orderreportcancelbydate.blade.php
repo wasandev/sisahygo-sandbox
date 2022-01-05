@@ -57,7 +57,7 @@
 
 
             </tr>
-            @foreach ($order_groups as $order_cancel )
+            @foreach ($order_groups as $order_cancel)
                 <tr>
                     <td style="text-align: center">{{ $loop->iteration }}
                     </td>

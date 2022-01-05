@@ -8,6 +8,7 @@ use App\Nova\Filters\LoaderToDistrict;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\ShowByOrderStatus;
 use App\Nova\Filters\ToDistrict;
+use App\Nova\Lenses\ValueByBranch;
 use App\Nova\Lenses\ValueByDistrict;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -171,7 +172,9 @@ class Order_loader extends Resource
     public function lenses(Request $request)
     {
         return [
-            new ValueByDistrict()
+            new ValueByBranch(),
+            new ValueByDistrict(),
+
         ];
     }
 

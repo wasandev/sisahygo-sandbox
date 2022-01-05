@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 
-class ValueByDistrict extends Lens
+class ValueByBranch extends Lens
 {
     /**
      * Get the query builder / paginator for the lens.
@@ -26,13 +26,12 @@ class ValueByDistrict extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('customers', 'customers.id', '=', 'order_headers.customer_rec_id')
+                //->join('customers', 'customers.id', '=', 'order_headers.customer_rec_id')
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
                 ->where('order_headers.order_status', '=', 'confirmed')
                 ->where('order_headers.order_type', '<>', 'charter')
-                ->orderBy('order_headers.branch_rec_id', 'desc')
                 ->orderBy('amount', 'desc')
-                ->groupBy('order_headers.branch_rec_id', 'customers.district')
+                ->groupBy('order_headers.branch_rec_id')
         ));
     }
     /**
@@ -44,7 +43,6 @@ class ValueByDistrict extends Lens
     {
         return [
             'branches.name',
-            'customers.district',
             DB::raw('sum(order_headers.order_amount) as amount'),
         ];
     }
@@ -59,7 +57,6 @@ class ValueByDistrict extends Lens
         return [
             // ID::make(__('ID'), 'id')->sortable(),
             Text::make(__('Branch'), 'name'),
-            Text::make(__('District'), 'district'),
             Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
                 return $value;
             }),
@@ -108,10 +105,10 @@ class ValueByDistrict extends Lens
      */
     public function uriKey()
     {
-        return 'value-district-amount';
+        return 'value-branch-amount';
     }
     public function name()
     {
-        return 'ยอดค่าขนส่งตามอำเภอที่ยังไม่จัดขึ้น';
+        return 'ยอดค่าขนส่งตามสาขาที่ยังไม่จัดขึ้น';
     }
 }
