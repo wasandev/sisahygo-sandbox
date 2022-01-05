@@ -177,7 +177,7 @@
             รวมค่าบริการ(บาท)/Sub Total
         </td>
         <td style="width:35%;border: 1px solid black;text-align: right;">
-            {{ number_format($charterjob->sub_total + $charterjob->service_charges()->sum('amount'),2) }}
+            {{ number_format($charterjob->sub_total }}
         </td>
     </tr>
     <tr>
