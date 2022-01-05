@@ -1,8 +1,7 @@
 <table>
-    <br/>
-    <br/>
-    <tr style="vertical-align: top;">
-        <td>
+
+    <tr style="vertical-align: top;margin-top: 25px;">
+        <td style="width: 20%">
             <img src="{{ url('storage/'.$company->logofile) }}" alt="{{$company->company_name}}" width="80" height="80">
         </td>
         <td>
