@@ -218,7 +218,8 @@ class OrderHeaderController extends Controller
 
 
         $order_groups = $order->groupBy(function ($item) {
-            return $item->created_at->format('Y-m-d');
+
+            return $item->paymenttype;
         });
         $order_groups = $order_groups->all();
         $order_date = $order_groups;

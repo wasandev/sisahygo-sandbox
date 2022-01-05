@@ -42,10 +42,22 @@
     </thead>
 
     <tbody>
-       @foreach ($order_date as $date_group => $order_groups)
-            <tr>
+       @foreach ($order_date as $type_group => $order_groups)
+            <tr style="vertical-align: top;font-weight: bold">
                 <td colspan="6">
-                    วันที่ {{ $date_group }} -  {{count($order_groups) }} รายการ
+                     @if($type_group == 'H')
+                            เงินสดต้นทาง  -  {{count($order_groups) }} รายการ
+                        @elseif($type_group == 'T')
+                            เงินโอนต้นทาง - {{count($order_groups) }} รายการ
+                        @elseif($type_group == 'E')
+                            เงินสดปลายทาง - {{count($order_groups) }} รายการ
+                        @elseif($type_group == 'F' )
+                            วางบิลต้นทาง   - {{count($order_groups) }} รายการ
+                        @elseif($type_group == 'L' )
+                            วางบิลปลายทาง  - {{count($order_groups) }} รายการ
+
+                        @endif
+
                 </td>
 
                 <td style="text-align: right">
@@ -57,33 +69,36 @@
 
 
             </tr>
-            @foreach ($order_groups as $order_cancel)
-                <tr>
-                    <td style="text-align: center">{{ $loop->iteration }}
-                    </td>
-                    <td style="text-align: left">
-                        {{$order_cancel->order_header_date->format('d/m/Y')}}
-                    </td>
-                    <td style="text-align: left">
-                        {{$order_cancel->order_header_no}}
-                    </td>
-                    <td style="text-align: left">
-                        {{$order_cancel->customer->name}}
-                    </td>
-                    <td style="text-align: left">
-                        {{$order_cancel->to_customer->name}}
-                    </td>
-                    <td style="text-align: left">
-                        {{$order_cancel->user->name}}
-                    </td>
-                    <td style="text-align: left">
-                        {{$order_cancel->created_at}}
-                    </td>
-                    <td style="text-align: right">
-                        {{ number_format($order_cancel->order_amount,2,'.',',') }}
-                    </td>
-                </tr>
-            @endforeach
+
+                @foreach ($order_groups as $order_cancel)
+
+                    <tr>
+                        <td style="text-align: center">{{ $loop->iteration }}
+                        </td>
+                        <td style="text-align: left">
+                            {{$order_cancel->order_header_date->format('d/m/Y')}}
+                        </td>
+                        <td style="text-align: left">
+                            {{$order_cancel->order_header_no}}
+                        </td>
+                        <td style="text-align: left">
+                            {{$order_cancel->customer->name}}
+                        </td>
+                        <td style="text-align: left">
+                            {{$order_cancel->to_customer->name}}
+                        </td>
+                        <td style="text-align: left">
+                            {{$order_cancel->user->name}}
+                        </td>
+                        <td style="text-align: left">
+                            {{$order_cancel->created_at}}
+                        </td>
+                        <td style="text-align: right">
+                            {{ number_format($order_cancel->order_amount,2,'.',',') }}
+                        </td>
+                    </tr>
+                @endforeach
+
 
 
         @endforeach

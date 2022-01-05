@@ -8,7 +8,7 @@ use Laravel\Nova\Filters\DateFilter;
 
 class CancelToDate extends DateFilter
 {
-    public $name = 'จากวันที่';
+    public $name = 'ถึงวันที่';
 
     /**
      * Apply the filter to the given query.
