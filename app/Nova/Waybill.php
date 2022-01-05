@@ -157,7 +157,9 @@ class Waybill extends Resource
                 return number_format($this->order_loaders->sum('order_amount'), 2, '.', ',');
             })->exceptOnForms(),
             Currency::make('ค่าบรรทุก', 'waybill_payable')
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->showOnUpdating(),
+
             Currency::make('รายได้บริษัท', 'waybill_income')
                 ->onlyOnDetail(),
             Number::make('%รายได้', 'income', function () {

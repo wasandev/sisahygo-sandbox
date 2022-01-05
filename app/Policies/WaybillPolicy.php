@@ -29,19 +29,14 @@ class WaybillPolicy
 
     public function update(User $user, Waybill $waybill)
     {
-        if ($user->hasPermissionTo('manage own waybills')) {
-            return ($user->id === $waybill->user_id);
-        }
-        return ($user->role == 'admin' || ($user->hasPermissionTo('manage waybills') && ($waybill->waybill_status == "loading")));
+
+        return ($user->role == 'admin' || ($user->hasPermissionTo('manage waybills')));
     }
 
     public function delete(User $user, Waybill $waybill)
     {
-        return false;
-        // if ($user->hasPermissionTo('manage own waybills')) {
-        //     return ($user->id === $waybill->user_id) && ($waybill->waybill_status == "loading");
-        // }
-        // return ($user->role == 'admin' || $user->hasPermissionTo('manage waybills')) && ($waybill->waybill_status == "loading");
+
+        return ($user->role == 'admin');
     }
 
     // public function addOrder_header(User $user, Waybill $waybill)
