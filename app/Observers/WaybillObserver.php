@@ -94,7 +94,7 @@ class WaybillObserver
     {
         if ($waybill->waybill_payable == 0) {
             $car_balance = Car_balance::where('docno',  $waybill->waybill_no)->delete();
-            $car_balance->save();
+            //$car_balance->save();
         }
     }
 }
