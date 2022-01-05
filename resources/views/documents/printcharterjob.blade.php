@@ -193,7 +193,7 @@
             รวมจำนวนเงิน(บาท)/Total(Baht)
         </td>
         <td style="width:35%;border: 1px solid black;text-align: right;">
-            {{ number_format($charterjob->sub_total +$charterjob->service_charges()->sum('amount') - $charterjob->discount ,2) }}
+            {{ number_format($charterjob->sub_total +$charterjob->service_charges()->sum('pivot.amount') - $charterjob->discount ,2) }}
         </td>
     </tr>
 </table>
@@ -236,7 +236,5 @@
     </tbody>
 
 </table>
-
-
 
 @endsection

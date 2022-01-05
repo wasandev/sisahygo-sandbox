@@ -20,14 +20,8 @@ class CharterJobController extends Controller
 
     public function preview($charterjob)
     {
-
         $company = CompanyProfile::find(1);
         $charterjob = Charter_job::find($charterjob);
-
-
-
-
-
         return view('documents.printcharterjob', compact('charterjob', 'company'));
     }
 
@@ -37,9 +31,7 @@ class CharterJobController extends Controller
     {
         $company = CompanyProfile::find(1);
         $charterjob = Charter_job::find($charterjob);
-
         $pdf = PDF::loadView('documents.printcharterjob', compact('charterjob', 'company'));
-
         $path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $charterjob->job_no . '.pdf';
         $pdf->save($path);
 
