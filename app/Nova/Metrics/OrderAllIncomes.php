@@ -56,7 +56,7 @@ class OrderAllIncomes extends Value
      */
     public function uriKey()
     {
-        return 'order-incomes';
+        return 'order-all-incomes';
     }
     public function name()
     {
