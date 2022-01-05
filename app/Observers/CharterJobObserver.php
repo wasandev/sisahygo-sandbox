@@ -129,7 +129,12 @@ class CharterJobObserver
                 'customer_id' => $order_header->customer_id,
                 'ar_amount' => $order_header->order_amount,
                 'description' => 'ค่าขนส่งสินค้าเหมาคัน',
+                'checker_id' => auth()->user()->id,
                 'user_id' => auth()->user()->id,
+                'doctype' => 'P',
+                'docno' => $order_header->order_header_no,
+                'docdate' => $order_header->order_header_date,
+
             ]);
             //Order status
             Order_status::create([

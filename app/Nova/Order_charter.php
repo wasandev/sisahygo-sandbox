@@ -215,27 +215,27 @@ class Order_charter extends Resource
             //         return $request instanceof ActionRequest
             //             || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'new'));
             //     }),
-            // (new Actions\PrintOrder)
-            //     ->onlyOnDetail()
-            //     ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
-            //     ->confirmButtonText('พิมพ์')
-            //     ->cancelButtonText("ไม่พิมพ์")
-            //     ->canRun(function ($request, $model) {
-            //         return $request->user()->hasPermissionTo('manage order_headers');
-            //     })
-            //     ->canSee(function ($request) {
-            //         return $request->user()->hasPermissionTo('manage order_headers');
-            //     }),
-            // (new Actions\CancelOrder())
-            //     ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
-            //     ->confirmButtonText('ยกเลิก')
-            //     ->cancelButtonText("ไม่ยกเลิก")
-            //     ->canRun(function ($request, $model) {
-            //         return $request->user()->hasPermissionTo('manage order_headers');
-            //     })
-            //     ->canSee(function ($request) {
-            //         return $request->user()->hasPermissionTo('manage order_headers');
-            //     }),
+            (new Actions\PrintOrder)
+                ->onlyOnDetail()
+                ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                }),
+            (new Actions\CancelOrder())
+                ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
+                ->confirmButtonText('ยกเลิก')
+                ->cancelButtonText("ไม่ยกเลิก")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                }),
             // (new Actions\OrderProblem())
             //     ->onlyOnDetail()
             //     ->confirmText('แจ้งปัญหาใบรับส่งรายการนี้?')

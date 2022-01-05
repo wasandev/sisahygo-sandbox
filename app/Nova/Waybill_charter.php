@@ -217,13 +217,13 @@ class Waybill_charter extends Resource
             //                 && $request->user()->hasPermissionTo('manage waybills'));
             //     }),
 
-            // (new Actions\PrintWaybill)->onlyOnDetail()
-            //     ->confirmText('ต้องการพิมพ์ใบกำกับสินค้ารายการนี้?')
-            //     ->confirmButtonText('พิมพ์')
-            //     ->cancelButtonText("ไม่พิมพ์")
-            //     ->canRun(function ($request, $model) {
-            //         return true;
-            //     }),
+            (new Actions\PrintWaybill)->onlyOnDetail()
+                ->confirmText('ต้องการพิมพ์ใบกำกับสินค้ารายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return true;
+                }),
 
 
         ];
