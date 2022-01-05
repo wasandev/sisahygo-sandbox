@@ -78,6 +78,7 @@ class Charter_job_item extends Resource
 
             BelongsTo::make('สินค้า', 'product', 'App\Nova\Product')
                 ->rules('required')
+                ->searchable()
                 ->showCreateRelationButton(),
             Number::make('จำนวนสินค้า', 'amount')
                 ->step('0.01')
