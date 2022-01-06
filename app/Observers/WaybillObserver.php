@@ -76,25 +76,25 @@ class WaybillObserver
             $waybill->waybill_income = $waybill->waybill_amount - $waybill->waybill_payable;
             $waybill->branch_id = $waybill->routeto_branch->branch_id;
             $waybill->branch_rec_id = $waybill->routeto_branch->dest_branch_id;
-            if ($waybill->waybill_amount == 0) {
-                $car_balance = Car_balance::where('docno', $waybill->waybill_no)->get();
-                $car_balance->amount = 0;
-                $car_balance->save();
-            }
+            // if ($waybill->waybill_amount == 0) {
+            //     $car_balance = Car_balance::where('docno', $waybill->waybill_no)->get();
+            //     $car_balance->amount = 0;
+            //     $car_balance->save();
+            // }
         }
     }
 
-    public function updated(Waybill $waybill)
-    {
-        $car_balance = Car_balance::where('docno', $waybill->waybill_no)->get();
-        $car_balance->amount = $waybill->waybill_payable;
-        $car_balance->save();
-    }
-    public function deleted(Waybill $waybill)
-    {
-        if ($waybill->waybill_payable == 0) {
-            $car_balance = Car_balance::where('docno',  $waybill->waybill_no)->delete();
-            //$car_balance->save();
-        }
-    }
+    // public function updated(Waybill $waybill)
+    // {
+    //     $car_balance = Car_balance::where('docno', $waybill->waybill_no)->get();
+    //     $car_balance->amount = $waybill->waybill_payable;
+    //     //$car_balance->save();
+    // }
+    // public function deleted(Waybill $waybill)
+    // {
+    //     if ($waybill->waybill_payable == 0) {
+    //         $car_balance = Car_balance::where('docno',  $waybill->waybill_no)->delete();
+    //         //$car_balance->save();
+    //     }
+    // }
 }
