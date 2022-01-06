@@ -162,7 +162,13 @@ class Receipt_ar extends Resource
     public function actions(Request $request)
     {
         return [
-            new PrintReceipt(),
+            (new PrintReceipt())
+                ->canRun(function ($request) {
+                    return  $request->user()->hasPermissionTo('view receipt_ar');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('view receipt_ar');
+                }),
             (new CancelReceipt())
                 ->onlyOnDetail()
                 ->confirmText('ต้องการยกเลิกใบเสร็จรับเงินรายการนี้?')

@@ -56,8 +56,8 @@ class WaybillController extends Controller
         $company = CompanyProfile::find(1);
 
 
-        $waybills = Waybill::where('waybill_date', '>=', $from)
-            ->where('waybill_date', '<=', $to)
+        $waybills = Waybill::whereDate('departure_at', '>=', $from)
+            ->whereDate('departure_at', '<=', $to)
             ->whereNotIn('waybill_status', ['loading', 'cancel'])
             ->orderBy('waybill_date', 'asc')
             ->orderBy('branch_rec_id', 'asc')
@@ -66,7 +66,7 @@ class WaybillController extends Controller
 
 
         $waybill_groups = $waybills->groupBy([function ($item) {
-            return $item->waybill_date->format('Y-m-d');
+            return $item->departure_at->format('Y-m-d');
         },  'branch_rec_id', 'waybill_type']);
 
 

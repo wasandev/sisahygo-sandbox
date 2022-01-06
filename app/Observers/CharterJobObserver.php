@@ -77,6 +77,7 @@ class CharterJobObserver
                 'branch_id' => $charter_job->branch_id,
                 'branch_rec_id' => $charter_job->branch_id,
                 'waybill_status' => 'confirmed',
+                'departure_at' => today(),
                 'user_id' => auth()->user()->id,
 
             ]);

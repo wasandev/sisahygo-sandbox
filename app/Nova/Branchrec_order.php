@@ -195,6 +195,17 @@ class Branchrec_order extends Resource
 
 
         return [
+            (new Actions\PrintOrder)
+                ->showOnTableRow()
+                ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
 
             (new CreateTruckDeliveryItems($request->resourceId))
                 ->confirmText('ต้องการทำ -รายการจัดส่งโดยรถบรรทุก- จากใบรับส่งที่เลือกไว้')
