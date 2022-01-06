@@ -55,7 +55,7 @@
                     วันที่ : {{ date('d/m/Y',strtotime($waybill_date)) }}
                     @foreach ($waybills as $item )
                         @php
-                            $date_count =  $item->where('departure_at',$waybill_date)
+                            $date_count =  $item->whereDate('departure_at',$waybill_date)
                                                 ->whereNotIn('waybill_status', ['loading','cancel'])
                                                 ->count();
                         @endphp
@@ -67,7 +67,7 @@
 
                     @foreach ($waybills as $item )
                         @php
-                            $sumdate_amount =  $item->where('departure_at',$waybill_date)->sum('waybill_amount');
+                            $sumdate_amount =  $item->whereDate('departure_at',$waybill_date)->sum('waybill_amount');
                         @endphp
 
                     @endforeach
@@ -79,7 +79,7 @@
                 <td style="text-align: right;">
                     @foreach ($waybills as $item )
                         @php
-                            $sumdate_payable =  $item->where('departure_at',$waybill_date)->sum('waybill_payable');
+                            $sumdate_payable =  $item->whereDate('departure_at',$waybill_date)->sum('waybill_payable');
                         @endphp
 
                     @endforeach
@@ -92,7 +92,7 @@
 
                     @foreach ($waybills as $item )
                         @php
-                            $sumdate_income =  $item->where('departure_at',$waybill_date)->sum('waybill_income');
+                            $sumdate_income =  $item->whereDate('departure_at',$waybill_date)->sum('waybill_income');
                         @endphp
 
                     @endforeach
@@ -166,7 +166,7 @@
                         {{$branchdata->name}}
                         @foreach ($waybills as $item )
                             @php
-                                $branch_count =  $item->where('departure_at',$waybill_date)
+                                $branch_count =  $item->whereDate('departure_at',$waybill_date)
                                                     ->where('branch_rec_id',$branch)
                                                     ->count();
                             @endphp
@@ -177,7 +177,7 @@
                     <td  style="text-align: right;">
                     @foreach ($waybills as $item )
                         @php
-                            $sumbranch_amount =  $item->where('departure_at',$waybill_date)
+                            $sumbranch_amount =  $item->whereDate('departure_at',$waybill_date)
                                                       ->where('branch_rec_id',$branch)
                                                       ->sum('waybill_amount');
                         @endphp
@@ -191,7 +191,7 @@
 
                         @foreach ($waybills as $item )
                             @php
-                                $sumbranch_payable =  $item->where('departure_at',$waybill_date)
+                                $sumbranch_payable =  $item->whereDate('departure_at',$waybill_date)
                                                         ->where('branch_rec_id',$branch)
                                                         ->sum('waybill_payable');
                             @endphp
@@ -204,7 +204,7 @@
                     <td style="text-align: right;">
                         @foreach ($waybills as $item )
                             @php
-                                $sumbranch_income =  $item->where('departure_at',$waybill_date)
+                                $sumbranch_income =  $item->whereDate('departure_at',$waybill_date)
                                                         ->where('branch_rec_id',$branch)
                                                         ->sum('waybill_income');
                             @endphp
@@ -279,7 +279,7 @@
                         @endif
                         @foreach ($waybills as $item )
                             @php
-                                $type_count =  $item->where('departure_at',$waybill_date)
+                                $type_count =  $item->whereDate('departure_at',$waybill_date)
                                                     ->where('branch_rec_id',$branch)
                                                     ->where('waybill_type',$type)
                                                     ->count();
@@ -291,7 +291,7 @@
                     <td style="text-align: right;">
                         @foreach ($waybills as $item )
                             @php
-                                $sumtype_amount =  $item->where('departure_at',$waybill_date)
+                                $sumtype_amount =  $item->whereDate('departure_at',$waybill_date)
                                                         ->where('branch_rec_id',$branch)
                                                         ->where('waybill_type',$type)
                                                         ->sum('waybill_amount');
@@ -302,7 +302,7 @@
                     <td style="text-align: right;">
                         @foreach ($waybills as $item )
                             @php
-                                $sumtype_payable =  $item->where('departure_at',$waybill_date)
+                                $sumtype_payable =  $item->whereDate('departure_at',$waybill_date)
                                                         ->where('branch_rec_id',$branch)
                                                         ->where('waybill_type',$type)
                                                         ->sum('waybill_payable');
@@ -313,7 +313,7 @@
                     <td style="text-align: right;">
                         @foreach ($waybills as $item )
                             @php
-                                $sumtype_income =  $item->where('departure_at',$waybill_date)
+                                $sumtype_income =  $item->whereDate('departure_at',$waybill_date)
                                                         ->where('branch_rec_id',$branch)
                                                         ->where('waybill_type',$type)
                                                         ->sum('waybill_income');
