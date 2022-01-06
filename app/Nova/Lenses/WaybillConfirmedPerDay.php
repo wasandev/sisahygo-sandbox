@@ -37,7 +37,7 @@ class WaybillConfirmedPerDay extends Lens
                 ->orderBy('waybills.departure_at', 'asc')
                 ->orderBy('waybills.waybill_type', 'asc')
                 ->orderBy('waybills.branch_rec_id', 'asc')
-                ->groupBy('waybills.departure_at', 'waybills.waybill_type', 'waybills.branch_rec_id', 'waybills.car_id', 'cars.cartype_id')
+                ->groupBy('waybills.departure_at', 'waybills.waybill_date', 'waybills.waybill_type', 'waybills.branch_rec_id', 'waybills.car_id', 'cars.cartype_id')
         ));
     }
     /**
@@ -49,6 +49,7 @@ class WaybillConfirmedPerDay extends Lens
     {
         return [
             'waybills.departure_at',
+            'waybills.waybill_date',
             'waybills.waybill_type',
             'branches.name as branch_rec',
             'waybills.car_id',
