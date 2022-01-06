@@ -70,6 +70,8 @@ class WaybillConfirmedPerDay extends Lens
             // ID::make(__('ID'), 'id')->sortable(),
             Date::make('วันที่รถออก', 'departure_at')
                 ->format('DD/MM/YYYY'),
+            Date::make('วันที่ใบกำกับ', 'waybill_date')
+                ->format('DD/MM/YYYY'),
             Text::make('ประเภท', 'waybill_type', function () {
                 if ($this->waybill_type === 'general') {
                     return 'เบ็ดเตล็ด';

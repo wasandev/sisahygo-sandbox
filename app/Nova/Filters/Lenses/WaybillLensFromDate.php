@@ -19,6 +19,6 @@ class WaybillLensFromDate extends DateFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return  $query->whereDate('waybills.waybill_date', '>=', $value);
+        return  $query->whereDate('waybills.departure_at', '>=', $value);
     }
 }
