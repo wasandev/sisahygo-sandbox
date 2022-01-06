@@ -82,7 +82,7 @@ class Invoice extends Resource
             Text::make('เลขที่ใบแจ้งหนี้', 'invoice_no')
                 ->sortable()
                 ->readonly(),
-            BelongsTo::make(__('Customer'), 'ar_customer', 'App\Nova\Customer')
+            BelongsTo::make(__('Customer'), 'ar_customer', 'App\Nova\Ar_customer')
                 ->sortable()
                 ->searchable()
                 ->readonly(),
