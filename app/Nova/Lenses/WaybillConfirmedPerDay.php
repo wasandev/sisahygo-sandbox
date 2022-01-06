@@ -34,10 +34,10 @@ class WaybillConfirmedPerDay extends Lens
                 ->join('cars', 'cars.id', '=', 'waybills.car_id')
                 ->join('branches', 'branches.id', '=', 'waybills.branch_rec_id')
                 ->whereNotIn('waybills.waybill_status', ['loading', 'cancel'])
-                ->orderBy('waybills.waybill_date', 'asc')
+                ->orderBy('waybills.departure_at', 'asc')
                 ->orderBy('waybills.waybill_type', 'asc')
                 ->orderBy('waybills.branch_rec_id', 'asc')
-                ->groupBy('waybills.waybill_date', 'waybills.waybill_type', 'waybills.branch_rec_id', 'waybills.car_id', 'cars.cartype_id')
+                ->groupBy('waybills.departure_at', 'waybills.waybill_type', 'waybills.branch_rec_id', 'waybills.car_id', 'cars.cartype_id')
         ));
     }
     /**
@@ -48,7 +48,7 @@ class WaybillConfirmedPerDay extends Lens
     protected static function columns()
     {
         return [
-            'waybills.waybill_date',
+            'waybills.departure_at',
             'waybills.waybill_type',
             'branches.name as branch_rec',
             'waybills.car_id',
@@ -68,7 +68,7 @@ class WaybillConfirmedPerDay extends Lens
     {
         return [
             // ID::make(__('ID'), 'id')->sortable(),
-            Date::make('วันที่', 'waybill_date')
+            Date::make('วันที่รถออก', 'departure_at')
                 ->format('DD/MM/YYYY'),
             Text::make('ประเภท', 'waybill_type', function () {
                 if ($this->waybill_type === 'general') {

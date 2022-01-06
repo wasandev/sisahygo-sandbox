@@ -78,8 +78,7 @@ class Invoice extends Resource
             Date::make('วันที่แจ้งหนี้', 'invoice_date')
                 ->sortable()
                 ->readonly(),
-            Date::make('วันที่ครบกำหนด', 'due_date')
-                ->hideFromIndex(),
+            Date::make('วันที่ครบกำหนด', 'due_date'),
             Text::make('เลขที่ใบแจ้งหนี้', 'invoice_no')
                 ->sortable()
                 ->readonly(),
