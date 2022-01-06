@@ -115,7 +115,6 @@ class Ar_customer extends Resource
                 ->withMeta(['value' => 'Y'])
                 ->displayUsingLabels(),
             Number::make(__('Credit term'), 'creditterm')
-                ->withMeta(['value' => 0])
                 ->hideFromIndex(),
             BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
                 ->hideFromIndex()

@@ -138,7 +138,7 @@ class Customer extends Resource
                     return $request->user()->hasPermissionTo('manage order_headers');
                 }),
             Number::make(__('Credit term'), 'creditterm')
-                ->withMeta(['value' => 0])
+
                 ->hideFromIndex()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
