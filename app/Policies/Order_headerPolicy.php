@@ -38,10 +38,10 @@ class Order_headerPolicy
 
     public function delete(User $user, Order_header $Order_header)
     {
-        // if ($user->hasPermissionTo('manage own order_headers')) {
-        //     return ($user->id === $Order_header->user_id) && ($Order_header->order_status == "new");
-        // }
-        return ($user->role == 'admin');
+        if ($user->hasPermissionTo('manage order_headers')) {
+            return $Order_header->order_status == "new";
+        }
+        //return ($user->role == 'admin');
     }
 
     public function addOrder_detail(User $user, Order_header $Order_header)
