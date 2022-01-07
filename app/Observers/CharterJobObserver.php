@@ -95,6 +95,7 @@ class CharterJobObserver
                 'remark' => $charter_job->terms,
                 'waybill_id' => $waybill->id,
                 'order_amount' => $charter_job->total + $service_charge,
+                'checker_id' =>  auth()->user()->id,
                 'user_id' => auth()->user()->id,
                 'order_status' => 'confirmed',
 

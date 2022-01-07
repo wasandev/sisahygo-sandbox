@@ -196,13 +196,20 @@ class Order_header extends Resource
                 ->withSubtitles()
                 ->exceptOnForms(),
 
+            Text::make('ที่อยู่', function () {
+                return $this->customer->address . ' ' . $this->customer->sub_district . ' ' . $this->customer->district
+                    . ' ' . $this->customer->province . ' ' . $this->customer->phoneno;
+            })->onlyOnDetail(),
 
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton()
                 ->sortable(),
-
+            Text::make('ที่อยู่', function () {
+                return $this->to_customer->address . ' ' . $this->to_customer->sub_district . ' ' . $this->to_customer->district
+                    . ' ' . $this->to_customer->province . ' ' . $this->to_customer->phoneno;
+            })->onlyOnDetail(),
             Currency::make('จำนวนเงิน', 'order_amount')
                 ->exceptOnForms(),
             Select::make(__('Tran type'), 'trantype')->options([

@@ -68,7 +68,7 @@ class OrderLoaded extends Action
 
         foreach ($waybills as $waybill) {
             $waybillOptions[] = [
-                ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+                ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist . '-' . $waybill->to_branch->name]],
             ];
         }
         $selectOptions = collect($waybillOptions)->flatten(1);
@@ -102,7 +102,7 @@ class OrderLoaded extends Action
                         ->options($waybillOptions)
                         ->displayUsingLabels()
                         ->rules('required')
-                        ->searchable(),
+                    //->searchable(),
                 ];
             }
         }
@@ -115,7 +115,7 @@ class OrderLoaded extends Action
                     ->options($waybillOptions)
                     ->displayUsingLabels()
                     ->rules('required')
-                    ->searchable(),
+                //->searchable(),
             ];
         }
     }
