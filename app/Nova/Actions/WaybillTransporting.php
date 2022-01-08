@@ -49,7 +49,7 @@ class WaybillTransporting extends Action
                         'user_id' => auth()->user()->id,
                     ]);
                 }
-                $model->departure_at = Carbon::now()->toDateTimeString();
+                //$model->departure_at = Carbon::now()->toDateTimeString();
                 $model->waybill_status = 'in transit';
                 $model->save();
                 //return Action::message('กำหนดรถออกเดินทางแล้ว');

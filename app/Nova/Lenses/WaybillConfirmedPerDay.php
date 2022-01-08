@@ -83,10 +83,7 @@ class WaybillConfirmedPerDay extends Lens
                 }
             }),
             Text::make(__('To branch'), 'branch_rec'),
-            Text::make(__('Car type'), function () {
-                $cartype = Cartype::find($this->cartype_id);
-                return $cartype->name;
-            }),
+
             Text::make(__('Car regist'), function () {
 
                 return $this->car->car_regist;
@@ -99,6 +96,10 @@ class WaybillConfirmedPerDay extends Lens
             }),
             Currency::make(__('รายได้บริษัท'), 'income', function ($value) {
                 return $value;
+            }),
+            Text::make(__('Car type'), function () {
+                $cartype = Cartype::find($this->cartype_id);
+                return $cartype->name;
             }),
             Number::make('สัดส่วนรายได้%', 'rate', function () {
                 return number_format(($this->income / $this->amount) * 100, 2, '.', ',');
