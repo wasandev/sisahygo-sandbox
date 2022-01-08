@@ -93,7 +93,9 @@ class Receipt_ar extends Resource
                 'R' => 'บัตรเครดิต'
             ])->displayUsingLabels(),
             BelongsTo::make('โอนเข้าบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->searchable()
+                ->withSubtitles(),
             Text::make('เลขที่รายการโอน', 'bankreference')
                 ->hideFromIndex(),
             Text::make('เช็คเลขที่', 'chequeno')

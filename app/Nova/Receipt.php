@@ -83,6 +83,13 @@ class Receipt extends Resource
                 'R' => 'บัตรเครดิต'
             ])->displayUsingLabels()
                 ->hideFromIndex(),
+            BelongsTo::make('โอนเข้าบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
+                ->hideFromIndex()
+                ->searchable()
+                ->withSubtitles(),
+            Text::make('เลขที่รายการโอน', 'bankreference')
+                ->hideFromIndex(),
+
             Currency::make('ส่วนลด', 'discount_amount')
                 ->hideFromIndex(),
             Currency::make('ภาษี', 'tax_amount')
