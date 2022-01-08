@@ -74,7 +74,10 @@ class Receipt extends Resource
                 ->readonly(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
 
-            BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer'),
+            BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
+                ->searchable()
+                ->withSubtitles()
+                ->nullable(),
             Currency::make('จำนวนเงิน', 'total_amount'),
             Select::make('ชำระโดย', 'branchpay_by')->options([
                 'C' => 'เงินสด',
@@ -86,7 +89,8 @@ class Receipt extends Resource
             BelongsTo::make('โอนเข้าบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
                 ->hideFromIndex()
                 ->searchable()
-                ->withSubtitles(),
+                ->withSubtitles()
+                ->nullable(),
             Text::make('เลขที่รายการโอน', 'bankreference')
                 ->hideFromIndex(),
 

@@ -96,13 +96,15 @@ class Receipt_ar extends Resource
             BelongsTo::make('โอนเข้าบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
                 ->hideFromIndex()
                 ->searchable()
-                ->withSubtitles(),
+                ->withSubtitles()
+                ->nullable(),
             Text::make('เลขที่รายการโอน', 'bankreference')
                 ->hideFromIndex(),
             Text::make('เช็คเลขที่', 'chequeno')
                 ->hideFromIndex(),
             BelongsTo::make('เช็คของธนาคาร', 'chequebank', 'App\Nova\Bank')
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->nullable(),
             Text::make('รายละเอียดอื่นๆ/หมายเหตุ', 'description')
                 ->hideFromIndex(),
             Currency::make('ส่วนลด', 'discount_amount')
