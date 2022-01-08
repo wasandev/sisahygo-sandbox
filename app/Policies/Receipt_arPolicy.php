@@ -36,7 +36,7 @@ class Receipt_arPolicy
 
     public function update(User $user, Receipt_ar $receipt_ar)
     {
-        return  false;
+        return  $user->hasPermissionTo('edit receipt');
     }
 
     public function delete(User $user, Receipt_ar $receipt)
