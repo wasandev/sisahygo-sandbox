@@ -228,45 +228,45 @@ class Ar_customer extends Resource
         ];
     }
 
-    public static function relatableQuery(NovaRequest $request, $query)
-    {
+    // public static function relatableQuery(NovaRequest $request, $query)
+    // {
 
-        // if ($request->resourceId && $request->resource == 'order_headers' && $request->editMode === 'update') {
+    //     // if ($request->resourceId && $request->resource == 'order_headers' && $request->editMode === 'update') {
 
-        //     $order = \App\Models\Order_header::find($request->resourceId);
-        //     $from_branch = $order->branch_id;
-        //     $to_branch =  $order->branch_rec_id;
+    //     //     $order = \App\Models\Order_header::find($request->resourceId);
+    //     //     $from_branch = $order->branch_id;
+    //     //     $to_branch =  $order->branch_rec_id;
 
-        //     if ($request->route()->parameter('field') === "customer") {
-        //         $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
-        //         return $query->whereIn('district', $branch_area);
-        //     }
-        //     if ($request->route()->parameter('field') === "to_customer") {
-        //         $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-        //         return $query->whereIn('district', $to_branch_area);
-        //     }
-        // }
-        $from_branch = $request->user()->branch_id;
-        $to_branch =  $request->user()->branch_rec_id;
+    //     //     if ($request->route()->parameter('field') === "customer") {
+    //     //         $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
+    //     //         return $query->whereIn('district', $branch_area);
+    //     //     }
+    //     //     if ($request->route()->parameter('field') === "to_customer") {
+    //     //         $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+    //     //         return $query->whereIn('district', $to_branch_area);
+    //     //     }
+    //     // }
+    //     $from_branch = $request->user()->branch_id;
+    //     $to_branch =  $request->user()->branch_rec_id;
 
-        if (!is_null($from_branch)) {
-            if ($request->route()->parameter('field') === "customer") {
-                $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
-                return $query->whereIn('district', $branch_area);
-            }
-        }
-        if (!is_null($to_branch)) {
-            if ($request->route()->parameter('field') === "to_customer") {
-                $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-                return $query->whereIn('district', $to_branch_area);
-            }
-        } else {
-            if ($request->route()->parameter('field') === "to_customer") {
-                $to_branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get('district');
-                return $query->whereIn('district', $to_branch_area);
-            }
-        }
-    }
+    //     if (!is_null($from_branch)) {
+    //         if ($request->route()->parameter('field') === "customer") {
+    //             $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get();
+    //             return $query->whereIn('district', $branch_area);
+    //         }
+    //     }
+    //     if (!is_null($to_branch)) {
+    //         if ($request->route()->parameter('field') === "to_customer") {
+    //             $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+    //             return $query->whereIn('district', $to_branch_area);
+    //         }
+    //     } else {
+    //         if ($request->route()->parameter('field') === "to_customer") {
+    //             $to_branch_area = \App\Models\Branch_area::where('branch_id', '<>', $from_branch)->get('district');
+    //             return $query->whereIn('district', $to_branch_area);
+    //         }
+    //     }
+    // }
     /**
      * Get the cards available for the request.
      *
