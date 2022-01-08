@@ -5,6 +5,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\WaybillConfirmed;
 use App\Nova\Filters\RouteToBranch;
+use App\Nova\Filters\ShowByWaybillStatus;
 use App\Nova\Filters\ToBranch;
 use App\Nova\Filters\WaybillDateFilter;
 use App\Nova\Filters\WaybillFromDate;
@@ -179,9 +180,8 @@ class Waybill extends Resource
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->hideFromIndex()
                 ->searchable(),
-            DateTime::make(__('วันเวลาออกจากสาขาต้นทาง'), 'departure_at')
-                ->format('DD/MM/YYYY HH:mm')
-                ->onlyOnDetail(),
+            DateTime::make(__('วันที่รถออก'), 'departure_at')
+                ->format('DD/MM/YYYY HH:mm'),
             DateTime::make(__('กำหนดถึงสาขาปลายทาง'), 'arrival_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
@@ -226,6 +226,7 @@ class Waybill extends Resource
             (new RouteToBranch()),
             (new WaybillFromDate()),
             (new WaybillToDate()),
+            (new ShowByWaybillStatus())
 
         ];
     }
