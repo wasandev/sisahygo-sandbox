@@ -53,6 +53,6 @@ class TruckDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'ฝ่ายรถบรรทุก';
+        return 'ข้อมูลสรุปรถบรรทุก';
     }
 }

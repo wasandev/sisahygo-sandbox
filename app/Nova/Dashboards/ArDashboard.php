@@ -36,6 +36,6 @@ class ArDashboard extends Dashboard
     }
     public static function label()
     {
-        return 'ฝ่ายเร่งรัดฯ';
+        return 'ข้อมูลสรุปฝ่ายเร่งรัดฯ';
     }
 }
