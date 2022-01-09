@@ -4,6 +4,9 @@ namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\CarByType;
 use App\Nova\Metrics\CarOwnerType;
+use App\Nova\Metrics\CarPaymentPerDay;
+use App\Nova\Metrics\CarReceiptPerDay;
+use App\Nova\Metrics\CarReceivePerDay;
 use App\Nova\Metrics\WaybillAmount;
 use App\Nova\Metrics\WaybillAmountPerDay;
 use App\Nova\Metrics\WaybillIncome;
@@ -36,6 +39,8 @@ class TruckDashboard extends Dashboard
 
             //(new WaybillIncome())->width('1/2'),
             (new WaybillIncomePerDay())->width('1/2'),
+            (new CarPaymentPerDay())->width('1/2'),
+            (new CarReceivePerDay())->width('1/2')
         ];
     }
 

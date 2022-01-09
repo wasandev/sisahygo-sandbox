@@ -2,6 +2,9 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\CarPaymentPerDay;
+use App\Nova\Metrics\CarReceiptPerDay;
+use App\Nova\Metrics\CarReceivePerDay;
 use App\Nova\Metrics\OrderBranchNotPayPerDay;
 use App\Nova\Metrics\OrderBranchPayPerDay;
 use App\Nova\Metrics\OrderBranchPerDay;
@@ -25,6 +28,8 @@ class FnDashboard extends Dashboard
             (new OrderBranchNotPayPerDay())->width('1/3'),
             (new OrderCashPerDay())->width('1/2'),
             (new OrderTransferPerDay())->width('1/2'),
+            (new CarPaymentPerDay())->width('1/2'),
+            (new CarReceivePerDay())->width('1/2')
 
         ];
     }

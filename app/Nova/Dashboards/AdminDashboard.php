@@ -2,6 +2,8 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\CarPaymentPerDay;
+use App\Nova\Metrics\CarReceivePerDay;
 use Laravel\Nova\Dashboard;
 use App\Nova\Metrics\WaybillIncome;
 use App\Nova\Metrics\WaybillIncomePerDay;
@@ -56,8 +58,8 @@ class AdminDashboard extends Dashboard
 
             //(new WaybillIncome())->width('1/2'),
             (new WaybillIncomePerDay())->width('1/2'),
-
-            (new CustomersPerDay)->width('1/2'),
+            (new CarPaymentPerDay())->width('1/2'),
+            (new CarReceivePerDay())->width('1/2')(new CustomersPerDay)->width('1/2'),
             (new NewCustomers)->width('1/2'),
             (new CustomersByProvince())->width('1/2'),
 
