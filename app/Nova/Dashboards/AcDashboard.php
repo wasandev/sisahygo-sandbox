@@ -22,6 +22,8 @@ use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterIncomes;
 use App\Nova\Metrics\OrderBranchPerDay;
+use App\Nova\Metrics\WaybillAmountPerDay;
+use App\Nova\Metrics\WaybillPayablePerDay;
 use Wasandev\Orderstatus\Orderstatus;
 
 class AcDashboard extends Dashboard
@@ -49,10 +51,10 @@ class AcDashboard extends Dashboard
             (new WaybillsPerDay())->width('1/2'),
             (new WaybillLoading())->width('1/2'),
 
-            (new WaybillAmount())->width('1/2'),
-            (new WaybillPayable())->width('1/2'),
+            (new WaybillAmountPerDay())->width('1/2'),
+            (new WaybillPayablePerDay())->width('1/2'),
 
-            (new WaybillIncome())->width('1/2'),
+            //(new WaybillIncome())->width('1/2'),
             (new WaybillIncomePerDay())->width('1/2'),
 
             (new Orderstatus())
