@@ -8,6 +8,7 @@ use App\Nova\Filters\LensBranchFilter;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
+use App\Nova\Metrics\OrderCashPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -35,6 +36,7 @@ class OrderBillingCash extends Lens
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_id')
                 ->join('users', 'users.id', '=', 'order_headers.user_id')
                 ->whereNotIn('order_headers.order_status', ['checking', 'new'])
+                ->whereNotNull('order_header_no')
                 ->where('order_headers.paymenttype', '=', 'H')
                 ->orderBy('order_headers.branch_id', 'asc')
                 ->orderBy('order_headers.order_header_date', 'asc')
@@ -80,6 +82,9 @@ class OrderBillingCash extends Lens
             Currency::make(__('จำนวนเงินยกเลิก'), 'cancelamount', function ($value) {
                 return $value;
             }),
+            Number::make('จำนวนเงินสดรับ', function () {
+                return number_format($this->cash - $this->cancelamount, 2, '.', ',');
+            }),
 
         ];
     }
@@ -92,7 +97,9 @@ class OrderBillingCash extends Lens
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new OrderCashPerDay()
+        ];
     }
 
     /**

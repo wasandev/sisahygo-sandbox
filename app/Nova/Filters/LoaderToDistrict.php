@@ -40,9 +40,14 @@ class LoaderToDistrict extends Filter
      */
     public function options(Request $request)
     {
-        $districts = \App\Models\District::whereHas('branch_area', function ($q) {
-            $q->where('branch_id', auth()->user()->branch_rec_id);
-        });
+        if (isset(auth()->user()->branch_rec_id)) {
+            $districts = \App\Models\District::whereHas('branch_area', function ($q) {
+                $q->where('branch_id', auth()->user()->branch_rec_id);
+            });
+        } else {
+            $districts = \App\Models\District::whereHas('branch_area');
+        }
+
 
         return $districts->pluck('name', 'name')->all();
     }

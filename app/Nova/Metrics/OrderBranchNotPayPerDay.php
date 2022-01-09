@@ -2,12 +2,13 @@
 
 namespace App\Nova\Metrics;
 
+use App\Models\Branch_balance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
-use App\Models\Order_header;
 
-class OrderTransferPerDay extends Trend
+class OrderBranchNotPayPerDay extends Trend
 {
+    public $refreshWhenActionRuns = true;
     /**
      * Calculate the value of the metric.
      *
@@ -16,7 +17,7 @@ class OrderTransferPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->sumByDays($request, Order_header::transfer(), 'order_amount')
+        return $this->sumByDays($request, Branch_balance::where('payment_status', 'false'), 'bal_amount')
             ->showSumValue()
             ->format('0,0.00');
     }
@@ -43,7 +44,7 @@ class OrderTransferPerDay extends Trend
      */
     public function cacheFor()
     {
-        // return now()->addMinutes(5);
+        return now()->addMinutes(5);
     }
 
     /**
@@ -53,10 +54,10 @@ class OrderTransferPerDay extends Trend
      */
     public function uriKey()
     {
-        return 'order-transfer';
+        return 'order-branch-not-pay-per-day';
     }
     public function name()
     {
-        return 'ยอดโอนค่าขนส่งตามวัน-ทุกสาขา';
+        return 'ยอดค่าขนส่งเก็บปลายทางค้างชำระตามวัน ทุกสาขา';
     }
 }

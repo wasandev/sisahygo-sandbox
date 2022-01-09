@@ -17,7 +17,7 @@ class WaybillsPerDay extends Trend
     public function calculate(Request $request)
     {
         return $this->countByDays($request, Waybill::confirmed())
-            ->showLatestValue();
+            ->showSumValue();
     }
 
     /**

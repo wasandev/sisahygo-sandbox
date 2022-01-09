@@ -253,7 +253,7 @@ class Order_cash extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->whereNotIn('order_status', ['checking', 'new'])
-            ->where('paymenttype', '=', 'H')
+            ->whereIn('paymenttype', ['H', 'T'])
             ->where('order_type', '<>', 'charter');
     }
 }

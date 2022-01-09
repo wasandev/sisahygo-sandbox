@@ -84,6 +84,7 @@ class OrderHeaderController extends Controller
         $company = CompanyProfile::find(1);
         $branchdata = Branch::find($branch);
         $order = Order_header::whereNotIn('order_headers.order_status', ['checking', 'new'])
+            ->whereNotNull('order_header_no')
             ->where('paymenttype', 'H')
             ->where('branch_id', $branch)
             ->where('order_header_date', '=', $orderdate)

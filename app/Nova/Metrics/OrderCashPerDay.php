@@ -8,6 +8,7 @@ use App\Models\Order_header;
 
 class OrderCashPerDay extends Trend
 {
+    public $refreshWhenActionRuns = true;
     /**
      * Calculate the value of the metric.
      *
@@ -17,7 +18,7 @@ class OrderCashPerDay extends Trend
     public function calculate(Request $request)
     {
         return $this->sumByDays($request, Order_header::cash(), 'order_amount')
-            ->showLatestValue()
+            ->showSumValue()
             ->format('0,0.00');
     }
 
@@ -43,7 +44,7 @@ class OrderCashPerDay extends Trend
      */
     public function cacheFor()
     {
-        // return now()->addMinutes(5);
+        return now()->addMinutes(5);
     }
 
     /**
@@ -57,6 +58,6 @@ class OrderCashPerDay extends Trend
     }
     public function name()
     {
-        return 'เก็บสดต้นทาง/วัน';
+        return 'เก็บสดต้นทางตามวัน-ทุกสาขา';
     }
 }

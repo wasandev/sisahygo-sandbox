@@ -81,6 +81,6 @@ class AdminDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'Executive dashboard';
+        return 'Admin';
     }
 }

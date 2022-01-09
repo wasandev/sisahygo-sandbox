@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Order_header;
 use App\Models\Receipt;
+use App\Models\Receipt_ar;
 use App\Models\Receipt_item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -61,13 +62,15 @@ class ConfirmBanktransfer extends Action
 
                 $tranitem = $cust_groups->firstWhere('customer_id', $rec_cust);
 
-                if ($tranitem->order_header->paymenttype === 'H') {
+                if ($tranitem->order_header->paymenttype === 'T') {
                     $receipttype = 'H';
                 } elseif ($tranitem->order_header->paymenttype === 'E') {
                     $receipttype = 'E';
                 } else {
                     $receipttype = 'B';
                 }
+
+
 
                 $receipt = Receipt::create([
                     'receipt_no' => $receipt_no,
@@ -91,13 +94,12 @@ class ConfirmBanktransfer extends Action
                         'order_header_id' => $model->order_header_id,
                         'user_id' => auth()->user()->id,
                     ]);
-
-                    $model->transfer_type = $receipttype;
-                    $model->status = true;
-
-                    $model->receipt_id = $receipt->id;
-                    $model->save();
                 }
+                //$model->transfer_type = $receipttype;
+                $model->status = true;
+
+                $model->receipt_id = $receipt->id;
+                $model->save();
             }
             return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
         }

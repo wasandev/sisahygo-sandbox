@@ -2,6 +2,11 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\OrderBranchNotPayPerDay;
+use App\Nova\Metrics\OrderBranchPayPerDay;
+use App\Nova\Metrics\OrderBranchPerDay;
+use App\Nova\Metrics\OrderCashPerDay;
+use App\Nova\Metrics\OrderTransferPerDay;
 use Laravel\Nova\Dashboard;
 use Wasandev\Orderstatus\Orderstatus;
 
@@ -15,7 +20,12 @@ class FnDashboard extends Dashboard
     public function cards()
     {
         return [
-            (new Orderstatus())
+            (new OrderBranchPerDay())->width('1/3')->help('แสดงรายการใบรับส่งเก็บเงินปลายทางที่สาขากำหนดรถถึงสาขาแล้ว'),
+            (new OrderBranchPayPerDay())->width('1/3'),
+            (new OrderBranchNotPayPerDay())->width('1/3'),
+            (new OrderCashPerDay())->width('1/2'),
+            (new OrderTransferPerDay())->width('1/2'),
+
         ];
     }
 
@@ -30,6 +40,6 @@ class FnDashboard extends Dashboard
     }
     public static function label()
     {
-        return 'Financial dashboard';
+        return 'การเงิน';
     }
 }

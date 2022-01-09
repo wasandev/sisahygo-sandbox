@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\BankTransferDateFilter;
 use App\Nova\Filters\BankTransferStatus;
 use App\Nova\Filters\Transfertype;
 use App\Nova\Metrics\OrderTransferPerDay;
@@ -21,7 +22,7 @@ class Order_banktransfers extends Resource
     public static $group = '9.2 งานการเงิน/บัญชี';
     public static $priority = 5;
     public static $polling = true;
-    public static $pollingInterval = 90;
+    public static $pollingInterval = 120;
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
     /**
@@ -53,7 +54,11 @@ class Order_banktransfers extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'account_no'
+        'id', 'order_header_id'
+    ];
+    public static $searchRelations = [
+        'customer' => ['name'],
+        'order_header' => ['order_header_no']
     ];
     public static function label()
     {
@@ -75,6 +80,8 @@ class Order_banktransfers extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make(__('Status'), 'status'),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm'),
             Select::make('ประเภทรายการ', 'transfer_type')->options([
                 'H' => 'ต้นทาง',
                 'B' => 'รับชำระหนี้',
@@ -127,6 +134,7 @@ class Order_banktransfers extends Resource
     {
         return [
             new Transfertype,
+            new BankTransferDateFilter
         ];
     }
 

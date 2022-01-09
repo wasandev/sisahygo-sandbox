@@ -12,16 +12,14 @@ use Laravel\Nova\Fields\Select;
 use App\Models\Waybill;
 use App\Models\Order_loader;
 use App\Models\Routeto_branch;
+use Illuminate\Support\Arr;
 
 class OrderLoaded extends Action
 {
     use InteractsWithQueue, Queueable;
-    protected $model;
 
-    // public function __construct($model = null)
-    // {
-    //     $this->model = $model;
-    // }
+
+
     public function uriKey()
     {
         return 'order_loaded';
@@ -39,9 +37,13 @@ class OrderLoaded extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+
+
         foreach ($models as $model) {
 
-
+            if ($model->branch_rec_id != $fields->wayllbill_branch) {
+                return Action::danger('ใบรับส่งที่เลือกไม่ได้ไปสาขาปลายทางเดียวกันกับใบกำกับที่ต้องการจัดขึ้นสินค้า');
+            }
             if ($model->order_status == 'loaded') {
                 return Action::danger('รายการนี้จัดขึ้นแล้ว');
             } else {
@@ -61,6 +63,9 @@ class OrderLoaded extends Action
      */
     public function fields()
     {
+
+
+
         $waybills = Waybill::with('car')
             ->where('waybill_status', '=', 'loading')
             ->get();
@@ -89,7 +94,7 @@ class OrderLoaded extends Action
 
             foreach ($waybills as $waybill) {
                 $waybillOptions[] = [
-                    ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist]],
+                    ['branchwaybill' => ['id' => $waybill->id, 'name' => $waybill->waybill_no . '-' . $waybill->car->car_regist . '-' . $waybill->to_branch->name]],
                 ];
             }
             $selectOptions = collect($waybillOptions)->flatten(1);

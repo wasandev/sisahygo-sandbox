@@ -125,7 +125,7 @@ class Branch_balance extends Resource
     public function cards(Request $request)
     {
         return [
-            new OrderBranchPerDay(),
+            //new OrderBranchPerDay(),
         ];
     }
 

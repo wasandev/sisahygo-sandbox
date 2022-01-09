@@ -2,12 +2,14 @@
 
 namespace App\Nova\Metrics;
 
+use App\Models\Branch_balance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Trend;
 use App\Models\Order_header;
 
 class OrderBranchPerDay extends Trend
 {
+    public $refreshWhenActionRuns = true;
     /**
      * Calculate the value of the metric.
      *
@@ -16,8 +18,8 @@ class OrderBranchPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->sumByDays($request, Order_header::branchcash(), 'order_amount')
-            ->showLatestValue()
+        return $this->sumByDays($request, Branch_balance::class, 'bal_amount')
+            ->showSumValue()
             ->format('0,0.00');
     }
 
@@ -57,6 +59,6 @@ class OrderBranchPerDay extends Trend
     }
     public function name()
     {
-        return 'ยอดเก็บปลายทาง/วัน';
+        return 'ค่าขนส่งเก็บปลายทางตามวัน(เฉพาะรายการตั้งหนี้แล้ว) ทุกสาขา';
     }
 }

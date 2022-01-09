@@ -55,7 +55,7 @@ class Order_loader extends Resource
      * @var array
      */
     public static $search = [
-        'order_header_no'
+        'order_header_no', 'id'
     ];
 
     public static $searchRelations = [

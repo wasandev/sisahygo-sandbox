@@ -53,6 +53,6 @@ class BillingDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'Billing dashboard';
+        return 'พนักงานออกเอกสาร';
     }
 }

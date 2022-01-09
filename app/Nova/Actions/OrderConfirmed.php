@@ -107,6 +107,7 @@ class OrderConfirmed extends Action
             $order_amount = 0;
             $order_header = Order_header::find($this->model);
             $paymenttype = $order_header->paymenttype;
+            $checker_waybill = $order_header->waybill_id;
 
             $order_items = $order_header->order_details;
             foreach ($order_items as $order_item) {
@@ -150,10 +151,16 @@ class OrderConfirmed extends Action
                             ->displayUsingLabels(),
                         Text::make(__('Bank reference no'), 'reference'),
                     ])->dependsOn('paymenttype', 'T'),
+
                     Select::make('สินค้าขึ้นรถแล้ว เลือกใบกำกับ', 'waybill_branch')
                         ->options($waybillOptions)
+                        ->resolveUsing(function () {
+                            return $this->model->waybill_id;
+                        })
                         ->displayUsingLabels()
-                        ->searchable(),
+                        ->searchable()
+                        ->default($checker_waybill),
+
                     Select::make('พนักงานจัดขึ้น', 'loader')
                         ->options($loaders)
                         ->displayUsingLabels()

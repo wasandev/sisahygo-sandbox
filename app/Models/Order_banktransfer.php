@@ -13,6 +13,9 @@ class Order_banktransfer extends Model
         'bankaccount_id', 'reference', 'transferslip', 'user_id', 'updated_by', 'receipt_id', 'invoice_id'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
     public function bankaccount()
     {
         return $this->belongsTo('App\Models\Bankaccount');

@@ -33,11 +33,7 @@ class MkDashboard extends Dashboard
     public function cards()
     {
         return [
-            (new CustomersPerDay())->width('1/2'),
-            (new NewCustomers())->width('1/2'),
-            (new CustomersByProvince())->width('1/2'),
 
-            (new CustomersByDistrict())->width('1/2'),
             (new OrderAllIncomes())->width('1/2'),
             (new OrderIncomes())->width('1/2'),
             (new ExpressIncomes())->width('1/2'),
@@ -57,6 +53,11 @@ class MkDashboard extends Dashboard
 
             (new WaybillIncome())->width('1/2'),
             (new WaybillIncomePerDay())->width('1/2'),
+            (new CustomersPerDay())->width('1/2'),
+            (new NewCustomers())->width('1/2'),
+            (new CustomersByProvince())->width('1/2'),
+            (new CustomersByDistrict())->width('1/2'),
+
 
 
             (new Orderstatus())
@@ -74,6 +75,6 @@ class MkDashboard extends Dashboard
     }
     public static function label()
     {
-        return 'Marketing dashboard';
+        return 'ข้อมูลสรุปการตลาด';
     }
 }

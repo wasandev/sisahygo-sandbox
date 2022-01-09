@@ -40,6 +40,6 @@ class LoaderDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'Loading dashboard';
+        return 'งานจัดขึ้นสินค้า';
     }
 }

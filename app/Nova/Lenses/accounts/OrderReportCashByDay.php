@@ -6,6 +6,7 @@ namespace App\Nova\Lenses\accounts;
 use App\Nova\Actions\Accounts\PrintOrderReportCashByDay;
 use App\Nova\Filters\Branch;
 use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderPayType;
 use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -97,7 +98,9 @@ class OrderReportCashByDay extends Lens
         return [
             new Branch(),
             new OrderFromDate(),
-            new OrderToDate()
+            new OrderToDate(),
+            new OrderPayType()
+
         ];
     }
 

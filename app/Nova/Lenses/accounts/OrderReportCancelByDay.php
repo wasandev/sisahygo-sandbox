@@ -40,6 +40,7 @@ class OrderReportCancelByDay extends Lens
                         ->where('order_statuses.status', '=', 'cancel');
                 })
                 ->where('order_headers.order_status', 'cancel')
+                ->whereNotNull('order_header_no')
                 ->orderBy('order_headers.branch_id', 'asc')
                 ->orderBy('order_headers.order_header_date', 'asc')
 
