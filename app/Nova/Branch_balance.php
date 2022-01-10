@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\BranchReceipt;
 use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
+use App\Nova\Filters\BranchBalanceStatus;
 use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Lenses\Branch\BranchBalanceBydate;
 use App\Nova\Lenses\Branch\BranchBalanceReceipt;
@@ -138,9 +139,11 @@ class Branch_balance extends Resource
     public function filters(Request $request)
     {
         return [
+            new BranchBalanceStatus(),
             new BranchBalanceFilter(),
             new BranchbalanceFromDate(),
-            new BranchbalanceToDate()
+            new BranchbalanceToDate(),
+
         ];
     }
 

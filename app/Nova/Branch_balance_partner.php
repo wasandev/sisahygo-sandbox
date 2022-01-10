@@ -4,6 +4,9 @@ namespace App\Nova;
 
 use App\Nova\Actions\BranchReceipt;
 use App\Nova\Filters\BranchBalanceFilter;
+use App\Nova\Filters\BranchbalanceFromDate;
+use App\Nova\Filters\BranchBalanceStatus;
+use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Metrics\OrderBranchPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -129,7 +132,10 @@ class Branch_balance_partner extends Resource
     public function filters(Request $request)
     {
         return [
+            new BranchBalanceStatus(),
             new BranchBalanceFilter(),
+            new BranchbalanceFromDate(),
+            new BranchbalanceToDate()
 
         ];
     }
