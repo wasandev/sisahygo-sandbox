@@ -35,61 +35,61 @@ class WaybillBillAdd extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            if ($model->waybill_status != 'completed') {
+            //if ($model->waybill_status != 'completed') {
 
-                $order_add = Order_header::find($fields->order_add);
-                $order_add->waybill_id = $model->id;
-                $order_add->order_status = $model->waybill_status;
-                $order_add->save();
+            $order_add = Order_header::find($fields->order_add);
+            $order_add->waybill_id = $model->id;
+            $order_add->order_status = $model->waybill_status;
+            $order_add->save();
 
-                Order_status::Create([
-                    'order_header_id' => $order_add->id,
-                    'status' => $model->waybill_status,
-                    'user_id' => auth()->user()->id,
-                ]);
+            Order_status::Create([
+                'order_header_id' => $order_add->id,
+                'status' => $model->waybill_status,
+                'user_id' => auth()->user()->id,
+            ]);
 
 
-                //update waybill_amount
-                $updated_waybillamount = $model->order_loaders->sum('order_amount');
-                $model->waybill_amount = $updated_waybillamount;
-                //check option
-                $routeto_branch = Routeto_branch::find($model->routeto_branch_id);
-                $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $model->routeto_branch_id)
-                    ->where('cartype_id', '=', $model->car->cartype_id)
-                    ->first();
+            //update waybill_amount
+            $updated_waybillamount = $model->order_loaders->sum('order_amount');
+            $model->waybill_amount = $updated_waybillamount;
+            //check option
+            $routeto_branch = Routeto_branch::find($model->routeto_branch_id);
+            $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $model->routeto_branch_id)
+                ->where('cartype_id', '=', $model->car->cartype_id)
+                ->first();
 
-                if ($routeto_branch->branch->type == 'partner') {
-                    $chargerate = $routeto_branch->branch->partner_rate;
-                    $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
-                    $model->waybill_payable = $car_payamount;
-                } elseif ($routeto_branch->dest_branch->type == 'partner') {
-                    $chargerate = $routeto_branch->dest_branch->partner_rate;
+            if ($routeto_branch->branch->type == 'partner') {
+                $chargerate = $routeto_branch->branch->partner_rate;
+                $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
+                $model->waybill_payable = $car_payamount;
+            } elseif ($routeto_branch->dest_branch->type == 'partner') {
+                $chargerate = $routeto_branch->dest_branch->partner_rate;
+                $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
+                $model->waybill_payable = $car_payamount;
+            } else {
+
+                if ($routeto_branch_cost->chargeflag) {
+                    $chargerate = $routeto_branch_cost->chargerate;
                     $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                     $model->waybill_payable = $car_payamount;
                 } else {
-
-                    if ($routeto_branch_cost->chargeflag) {
-                        $chargerate = $routeto_branch_cost->chargerate;
-                        $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
-                        $model->waybill_payable = $car_payamount;
-                    } else {
-                        $car_payamount = $model->waybill_payable;
-                    }
+                    $car_payamount = $model->waybill_payable;
                 }
-
-                $model->waybill_income = $updated_waybillamount - $car_payamount;
-                $model->save();
-
-                //update car_balance
-                $car_balance = Car_balance::where('waybill_id', $model->id)->first();
-                if (isset($car_balance)) {
-                    $car_balance->amount = $model->waybill_payable;
-                    $car_balance->save();
-                }
-
-                return Action::message('ทำรายการเรียบร้อยแล้ว');
             }
-            return Action::danger('ไม่สามารถรายการนี้ได้ ->เกินกำหนดเวลา');
+
+            $model->waybill_income = $updated_waybillamount - $car_payamount;
+            $model->save();
+
+            //update car_balance
+            $car_balance = Car_balance::where('waybill_id', $model->id)->first();
+            if (isset($car_balance)) {
+                $car_balance->amount = $model->waybill_payable;
+                $car_balance->save();
+            }
+
+            return Action::message('ทำรายการเรียบร้อยแล้ว');
+            //}
+            //return Action::danger('ไม่สามารถรายการนี้ได้ ->เกินกำหนดเวลา');
         }
     }
 
