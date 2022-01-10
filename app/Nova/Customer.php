@@ -98,7 +98,6 @@ class Customer extends Resource
                 ->onlyOnDetail(),
 
             Boolean::make(__('Status'), 'status')
-                ->hideFromIndex()
                 ->default(true)
                 ->hideWhenCreating(),
             Text::make(__('Customer code'), 'customer_code')

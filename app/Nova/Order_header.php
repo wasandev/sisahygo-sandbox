@@ -407,40 +407,16 @@ class Order_header extends Resource
                 ->where('order_type', '<>', 'charter');
         }
     }
-    // public static function relatableCustomers(NovaRequest $request, $query)
-    // {
-    //     $from_branch = $request->user()->branch_id;
-    //     $to_branch =  $request->user()->branch_rec_id;
-    //     $dropship_flag = \App\Models\Branch::find($from_branch)->dropship_flag;
-    //     if ($dropship_flag) {
-    //         $mainbranch = \App\Models\Branch::where('code', '001')->first();
-    //         $from_branch_area = \App\Models\Branch_area::where('branch_id', $mainbranch->id)
-    //             ->get('district');
-    //     } else {
-    //         $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
-    //             ->get('district');
-    //     }
+    public static function relatableCustomers(NovaRequest $request, $query)
+    {
 
-    //     // if (!is_null($from_branch)) {
-    //     //     if ($request->route()->parameter('field') === "customer") {
-    //     //         // $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
-    //     //         //     ->get('district');
-
-    //     //         return $query->whereIn('district', $from_branch_area);
-    //     //     }
-    //     // }
-    //     // if (is_null($to_branch)) {
-    //     if ($request->route()->parameter('field') === "to_customer") {
-    //         $to_branch_area = \App\Models\Branch_area::whereNotIn('district', $from_branch_area)->get('district');
-    //         return $query->whereIn('district', $to_branch_area);
-    //     }
-    //     // } else {
-    //     //     if ($request->route()->parameter('field') === "to_customer") {
-    //     //         $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-    //     //         return $query->whereIn('district', $to_branch_area);
-    //     //     }
-    //     // }
-    // }
+        if ($request->route()->parameter('field') === "customer") {
+            return $query->where('status', true);
+        }
+        if ($request->route()->parameter('field') === "to_customer") {
+            return $query->where('status', true);
+        }
+    }
 
     public static function relatableUsers(NovaRequest $request, $query)
     {

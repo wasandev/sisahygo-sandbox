@@ -267,25 +267,14 @@ class Order_checker extends Resource
     }
     public static function relatableCustomers(NovaRequest $request, $query)
     {
-        $from_branch = $request->user()->branch_id;
-        $to_branch =  $request->user()->branch_rec_id;
-        $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)
-            ->get('district');
-        // if (!is_null($from_branch)) {
-        //     if ($request->route()->parameter('field') === "customer") {
-        //         $branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
-        //         return $query->whereIn('district', $branch_area);
-        //     }
-        // }
-        if ($request->route()->parameter('field') === "to_customer") {
-            if (is_null($to_branch)) {
 
-                $to_branch_area = \App\Models\Branch_area::whereNotIn('district', $from_branch_area)->get('district');
-                return $query->whereIn('district', $to_branch_area);
-            } else {
-                $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-                return $query->whereIn('district', $to_branch_area);
-            }
+
+        if ($request->route()->parameter('field') === "customer") {
+            return $query->where('status', true);
+        }
+
+        if ($request->route()->parameter('field') === "to_customer") {
+            return $query->where('status', true);
         }
     }
 }
