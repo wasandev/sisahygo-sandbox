@@ -103,7 +103,7 @@ class Checker_detail extends Resource
                 ->step('0.01')
                 ->rules('required'),
 
-            Currency::make('จำนวนเงิน', function () {
+            Number::make('จำนวนเงิน', function () {
                 if ($this->usepricetable) {
                     return number_format($this->amount *  $this->productservice_price->price, 2, '.', ',');
                 }
