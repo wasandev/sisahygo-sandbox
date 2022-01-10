@@ -104,11 +104,11 @@ class Order_detail extends Resource
                 ->step('0.01')
                 ->rules('required'),
 
-            Currency::make('จำนวนเงิน', function () {
+            Number::make('จำนวนเงิน', function () {
                 if ($this->usepricetable) {
-                    return $this->amount *  $this->productservice_price->price;
+                    return number_format($this->amount *  $this->productservice_price->price, 2, '.', ',');
                 }
-                return $this->amount *  $this->price;
+                return number_format($this->amount *  $this->price, 2, '.', ',');
             }),
 
             Number::make('น้ำหนักสินค้า/หน่วย(กก.)', 'weight')
@@ -117,7 +117,7 @@ class Order_detail extends Resource
                 ->help('สินค้าที่มีหน่วย กิโลกรัม ให้ใส่ 1')
                 ->hideFromIndex()
                 ->default(0.00),
-            number::make('น้ำหนักสินค้ารวม', 'order_weight', function () {
+            Number::make('น้ำหนักสินค้ารวม', 'order_weight', function () {
                 if (isset($this->weight)) {
                     return $this->amount * $this->weight;
                 } else {
