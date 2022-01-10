@@ -175,7 +175,8 @@ class Car extends Resource
                 ->showCreateRelationButton()
                 ->sortable()
                 ->searchable()
-                ->nullable(),
+                ->nullable()
+                ->hideFromIndex(),
             Number::make('ค่าบรรทุกเดือนนี้', 'carmonth_amount', function () {
                 $carmonth_amount = DB::table('waybills')
                     ->whereYear('waybill_date', Carbon::now()->year)

@@ -149,7 +149,8 @@ class Customer extends Resource
                 ->nullable()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
-                }),
+                })
+                ->hideFromIndex(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),

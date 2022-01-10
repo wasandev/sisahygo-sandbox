@@ -51,7 +51,9 @@ class Delivery_item extends Resource
     public static $search = [
         'id',
     ];
-
+    public static $searchRelations = [
+        'customer' => ['name'],
+    ];
     public static function label()
     {
         return 'รายการจัดส่งตามผู้รับ';

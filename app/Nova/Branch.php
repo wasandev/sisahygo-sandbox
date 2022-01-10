@@ -97,7 +97,8 @@ class Branch extends Resource
                 ->rules('required'),
 
             Text::make(__('Phone'), 'phoneno')
-                ->rules('required'),
+                ->rules('required')
+                ->hideFromIndex(),
 
             new Panel(__('Address'), $this->addressFields()),
             Select::make(__('Branch Type'), 'type')->options([

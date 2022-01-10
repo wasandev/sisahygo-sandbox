@@ -98,24 +98,26 @@ class Order_charter extends Resource
                 ->failedWhen(['cancel', 'problem'])
                 ->exceptOnForms()
                 ->sortable(),
-            Text::make(__('Order header no'), 'order_header_no')
-                ->readonly()
-                ->sortable(),
-            BelongsTo::make('ใบกำกับสินค้า', 'waybill_charter', 'App\Nova\Waybill_charter')
-                ->nullable(),
-            //->onlyOnDetail(),
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
                 ->default(today())
                 ->format('DD/MM/YYYY')
                 ->exceptOnForms()
                 ->sortable(),
+            Text::make(__('Order header no'), 'order_header_no')
+                ->readonly()
+                ->sortable(),
+            BelongsTo::make('ใบกำกับสินค้า', 'waybill_charter', 'App\Nova\Waybill_charter')
+                ->nullable(),
+            //->onlyOnDetail(),
+
 
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'T' => 'เงินโอนต',
                 'F' => 'วางบิล',
-            ])->displayUsingLabels(),
+            ])->displayUsingLabels()
+                ->hideFromIndex(),
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')

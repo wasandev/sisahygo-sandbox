@@ -37,6 +37,8 @@ use App\Nova\Metrics\NewCustomers;
 use App\Nova\Metrics\CharterIncomes;
 use App\Nova\Metrics\OrderByCheckerPartition;
 use App\Nova\Metrics\OrderByUserPartition;
+use App\Nova\Metrics\WaybillAmountPerDay;
+use App\Nova\Metrics\WaybillPayablePerDay;
 use Dniccum\CustomEmailSender\CustomEmailSender;
 use Dniccum\NovaDocumentation\NovaDocumentation;
 use Wasandev\Account\Account;
@@ -47,6 +49,7 @@ use Wasandev\Checkers\Checkers;
 use Wasandev\Financial\Financial;
 use Wasandev\Loading\Loading;
 use Wasandev\Marketing\Marketing;
+use Wasandev\Orderstatus\Orderstatus;
 use Wasandev\Report\Report;
 use Wasandev\Sender\Sender;
 use Wasandev\Truck\Truck;
@@ -133,93 +136,34 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }),
 
             //admin
-            (new OrderAllIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new OrderIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new ExpressIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new CharterIncomes())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+            (new OrderAllIncomes())->width('1/2'),
+            (new OrderIncomes())->width('1/2'),
+            (new ExpressIncomes())->width('1/2'),
+            (new CharterIncomes())->width('1/2'),
 
-            (new OrdersPerMonth())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new OrdersPerDay())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new OrderByUserPartition())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+            (new OrdersPerMonth())->width('1/2'),
+            (new OrdersPerDay())->width('1/2'),
 
-            (new OrderByCheckerPartition())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new OrdersByPaymentType())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new OrdersByBranchRec())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+            (new OrdersByPaymentType())->width('1/2'),
+            (new OrdersByBranchRec())->width('1/2'),
 
-            (new WaybillsPerDay())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new WaybillLoading())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+            (new WaybillsPerDay())->width('1/2'),
+            (new WaybillLoading())->width('1/2'),
 
-            (new WaybillAmount())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new WaybillPayable())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+            (new WaybillAmountPerDay())->width('1/2'),
+            (new WaybillPayablePerDay())->width('1/2'),
 
-            (new WaybillIncome())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new WaybillIncomePerDay())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+            //(new WaybillIncome())->width('1/2'),
+            (new WaybillIncomePerDay())->width('1/2'),
 
-            (new CustomersPerDay)->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new NewCustomers)->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
-            (new CustomersByProvince())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+            (new CustomersPerDay())->width('1/2'),
+            (new NewCustomers())->width('1/2'),
+            (new CustomersByProvince())->width('1/2'),
+            (new CustomersByDistrict())->width('1/2'),
 
-            (new CustomersByDistrict())->width('1/2')
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('view admindashboards');
-                }),
+
+
+            (new Orderstatus())
         ];
     }
 

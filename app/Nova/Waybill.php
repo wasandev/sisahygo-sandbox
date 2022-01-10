@@ -173,7 +173,8 @@ class Waybill extends Resource
             Number::make('น้ำหนักสินค้ารวม', 'waybill_totalweight', function () {
                 $waybill_weight = $this->order_loaders->sum('total_weight');
                 return number_format($waybill_weight, 2, '.', ',');
-            })->exceptOnForms(),
+            })->exceptOnForms()
+                ->hideFromIndex(),
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
                 ->searchable()
                 ->hideFromIndex(),

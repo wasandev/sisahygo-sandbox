@@ -46,6 +46,9 @@ class Delivery extends Resource
     public static $search = [
         'delivery_no',
     ];
+    public static $searchRelations = [
+        'car' => ['car_regist'],
+    ];
     public static function label()
     {
         return 'รายการจัดส่งสินค้า';

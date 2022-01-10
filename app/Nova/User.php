@@ -99,7 +99,8 @@ class User extends Resource
                 ->updateRules('unique:users,email,{{resourceId}}')
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
-                }),
+                })
+                ->hideFromIndex(),
 
             Password::make(__('password'), 'password')
                 ->onlyOnForms()

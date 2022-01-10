@@ -48,7 +48,7 @@ class Charter_route extends Resource
 
     public static function label()
     {
-        return 'เส้นทางขนส่งแบบเหมาคัน';
+        return 'เส้นทางขนส่งเหมาคัน';
     }
     /**
      * Get the fields displayed by the resource.
@@ -86,7 +86,8 @@ class Charter_route extends Resource
             Number::make(__('Distance'), 'distance')
                 ->step('0.01')
                 ->sortable()
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')

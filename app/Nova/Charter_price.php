@@ -51,7 +51,7 @@ class Charter_price extends Resource
     ];
     public static function label()
     {
-        return 'ราคาขนส่งแบบเหมาคัน';
+        return 'ราคาขนส่งเหมาคัน';
     }
     /**
      * Get the fields displayed by the resource.

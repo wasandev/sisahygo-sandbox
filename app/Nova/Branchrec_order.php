@@ -84,16 +84,38 @@ class Branchrec_order extends Resource
     {
         return [
             ID::make()->sortable(),
+            Status::make(__('Order status'), 'order_status')
+                ->loadingWhen(['in transit'])
+                ->failedWhen(['cancel'])
+                ->exceptOnForms(),
             BelongsTo::make('ใบกำกับสินค้า', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
                 ->nullable()
                 ->sortable()
                 ->readonly(),
+            Text::make(__('Order header no'), 'order_header_no')
+                ->readonly()
+                ->sortable(),
+
+
+
+
+            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
+                ->sortable()
+                ->exceptOnForms(),
+            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
+                ->sortable()
+                ->exceptOnForms(),
+
+
+            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
+                ->onlyOnDetail(),
+
+
             Text::make('อำเภอ', 'districe', function () {
                 return $this->to_customer->district;
             })->onlyOnIndex(),
-            Status::make(__('Order status'), 'order_status')
-                ->loadingWhen(['in transit'])
-                ->failedWhen(['cancel'])
+
+            Currency::make('จำนวนเงิน', 'order_amount')
                 ->exceptOnForms(),
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
@@ -110,25 +132,6 @@ class Branchrec_order extends Resource
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable(),
-            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
-                ->sortable()
-                ->exceptOnForms(),
-            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
-                ->sortable()
-                ->exceptOnForms(),
-            Text::make(__('Order header no'), 'order_header_no')
-                ->readonly()
-                ->sortable(),
-
-
-            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->onlyOnDetail(),
-
-
-
-
-            Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->searchable()

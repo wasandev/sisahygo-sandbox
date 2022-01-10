@@ -39,7 +39,9 @@ class Delivery_detail extends Resource
     public static $search = [
         'id',
     ];
-
+    public static $searchRelations = [
+        'branchrec_order' => ['order_header_no'],
+    ];
     public static function label()
     {
         return 'รายการใบรับส่งสินค้า';

@@ -102,7 +102,11 @@ class Order_header extends Resource
                 ->sortable(),
             Text::make(__('Payment type'), 'paymenttype')
                 ->onlyOnIndex(),
-
+            Status::make(__('Order status'), 'order_status')
+                ->loadingWhen(['new'])
+                ->failedWhen(['cancel', 'problem'])
+                ->exceptOnForms()
+                ->sortable(),
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
                 //->hideWhenCreating()
                 ->onlyOnDetail()
@@ -110,16 +114,7 @@ class Order_header extends Resource
                     'belongsToId' => $this->branch_id ?? $request->user()->branch_id
                 ]),
 
-            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                //->hideWhenCreating()
-                ->hideFromIndex()
-                ->nullable()
-                ->help('***โปรดระบุสาขา ถ้าที่อยู่ลูกค้าปลายทางอยู่นอกพื้นที่บริการของสาขาปลายทาง'),
-            Status::make(__('Order status'), 'order_status')
-                ->loadingWhen(['new'])
-                ->failedWhen(['cancel', 'problem'])
-                ->exceptOnForms()
-                ->sortable(),
+
 
             Select::make('สถานะสินค้า', 'shipto_center')->options([
                 '0' => 'อยู่จุดรับสินค้า',
@@ -138,11 +133,7 @@ class Order_header extends Resource
                 ->default('general')
                 ->displayUsingLabels()
                 ->hideFromIndex(),
-            BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
-                ->nullable()
-                ->searchable()
-                ->withSubtitles()
-                ->exceptOnForms(),
+
 
             Date::make(__('Order date'), 'order_header_date')
                 ->readonly()
@@ -153,6 +144,11 @@ class Order_header extends Resource
             Text::make(__('Order header no'), 'order_header_no')
                 ->exceptOnForms()
                 ->sortable(),
+            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
+                ->nullable()
+                ->help('***โปรดระบุสาขา ถ้าที่อยู่ลูกค้าปลายทางอยู่นอกพื้นที่บริการของสาขาปลายทาง'),
+
+
             Text::make(__('Tracking no'), 'tracking_no')
                 ->onlyOnDetail(),
 
@@ -206,6 +202,11 @@ class Order_header extends Resource
                 ->withSubtitles()
                 ->showCreateRelationButton()
                 ->sortable(),
+            BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
+                ->nullable()
+                ->searchable()
+                ->withSubtitles()
+                ->exceptOnForms(),
             Text::make('ที่อยู่', function () {
                 return $this->to_customer->address . ' ' . $this->to_customer->sub_district . ' ' . $this->to_customer->district
                     . ' ' . $this->to_customer->province . ' ' . $this->to_customer->phoneno;
@@ -337,7 +338,7 @@ class Order_header extends Resource
                         || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'confirmed'));
                 }),
             (new Actions\PrintOrder)
-                ->showOnTableRow()
+                // ->showOnTableRow()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")

@@ -75,11 +75,12 @@ class Branch_balance extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
+            Boolean::make('สถานะการชำระ', 'payment_status')
                 ->sortable(),
+
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->sortable(),
-            Boolean::make('สถานะการชำระ', 'payment_status')
+            BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
                 ->sortable(),
 
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
@@ -91,8 +92,7 @@ class Branch_balance extends Resource
             Currency::make('จำนวนเงิน', 'bal_amount')
                 ->sortable(),
             Currency::make('ส่วนลด', 'discount_amount')
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
 

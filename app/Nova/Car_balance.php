@@ -78,9 +78,10 @@ class Car_balance extends Resource
                 ])
                 ->sortable()
                 ->displayUsingLabels(),
-            Text::make('เลขที่เอกสาร', 'docno'),
-            Text::make('รายละเอียด', 'description'),
             Date::make('วันที่', 'cardoc_date')->sortable(),
+            Text::make('เลขที่เอกสาร', 'docno'),
+
+
             BelongsTo::make('ใบกำกับ', 'waybill', 'App\Nova\Waybill')
                 ->sortable()->hideFromIndex(),
             BelongsTo::make('ใบจ่ายเงิน', 'carpayment', 'App\Nova\Carpayment')
@@ -88,6 +89,7 @@ class Car_balance extends Resource
             BelongsTo::make('ใบรับเงิน', 'carreceive', 'App\Nova\Carreceive')
                 ->sortable()->hideFromIndex(),
             Currency::make('จำนวนเงิน', 'amount'),
+            Text::make('รายละเอียด', 'description'),
 
         ];
     }

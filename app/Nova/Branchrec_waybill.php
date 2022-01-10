@@ -137,6 +137,7 @@ class Branchrec_waybill extends Resource
             DateTime::make(__('วันเวลาออกจากสาขาต้นทาง'), 'departure_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->exceptOnForms()
+                ->hideFromIndex()
                 ->readonly(),
             DateTime::make(__('กำหนดถึงสาขาปลายทาง'), 'arrival_at')
                 ->format('DD/MM/YYYY HH:mm')

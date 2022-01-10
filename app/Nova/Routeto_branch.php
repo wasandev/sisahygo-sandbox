@@ -57,10 +57,13 @@ class Routeto_branch extends Resource
     {
         return [
             ID::make()->sortable(),
-            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch'),
-            BelongsTo::make(__('To branch'), 'dest_branch', 'App\Nova\Branch'),
+            BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
+                ->sortable(),
+            BelongsTo::make(__('To branch'), 'dest_branch', 'App\Nova\Branch')
+                ->sortable(),
             Text::make(__('Name'), 'name')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
             Number::make(__('Collect days'), 'collectdays')
                 ->step('0.01')
                 ->default(2),
