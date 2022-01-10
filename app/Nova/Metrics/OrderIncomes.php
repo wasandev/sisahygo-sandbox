@@ -45,10 +45,10 @@ class OrderIncomes extends Value
      *
      * @return  \DateTimeInterface|\DateInterval|float|int
      */
-    public function cacheFor()
-    {
-        return now()->addMinutes(5);
-    }
+    // public function cacheFor()
+    // {
+    //     return now()->addMinutes(5);
+    // }
 
     /**
      * Get the URI key for the metric.
