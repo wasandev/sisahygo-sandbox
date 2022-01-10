@@ -31,6 +31,11 @@ class Order_problem extends Model
     {
         return $this->belongsTo(Order_header::class);
     }
+
+    public function branchrec_order()
+    {
+        return $this->belongsTo('App\Models\Branchrec_order', 'order_header_id');
+    }
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer');

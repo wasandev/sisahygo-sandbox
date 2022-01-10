@@ -69,27 +69,67 @@ class Order_problem extends Resource
      */
     public function fields(Request $request)
     {
-        return [
-            ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
-            Status::make('สถานะ', 'status')
-                ->loadingWhen(['checking'])
-                ->failedWhen(['new'])
-                ->readonly()
-                ->sortable(),
-            Text::make('เลขที่เอกสาร', 'problem_no')
-                ->readonly()
-                ->sortable(),
-            Date::make('วันที่', 'problem_date')
-                ->readonly()
-                ->sortable(),
-            new Panel('1.การรับเรื่อง', $this->problemFields()),
-            new Panel('2.การตรวจสอบ', $this->checkFields()),
-            new Panel('3.การพิจารณาและอนุมัติ', $this->discussFields()),
-            new Panel('4.พนักงานที่เกี่ยวของ', $this->employeeFields()),
-            new Panel('5.การชำระเงิน', $this->paymentFields()),
+        if ($request->user()->branch_id == 1) {
 
-            HasMany::make('เอกสารประกอบ', 'order_problem_images', 'App\Nova\Order_problem_image')
-        ];
+
+            return [
+                ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
+                Status::make('สถานะ', 'status')
+                    ->loadingWhen(['checking'])
+                    ->failedWhen(['new'])
+                    ->readonly()
+                    ->sortable(),
+                Text::make('เลขที่เอกสาร', 'problem_no')
+                    ->readonly()
+                    ->sortable(),
+                Date::make('วันที่', 'problem_date')
+                    ->readonly()
+                    ->sortable(),
+
+                BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
+                    ->sortable()
+                    ->searchable()
+                    ->showOnCreating(),
+
+
+
+
+                new Panel('1.การรับเรื่อง', $this->problemFields()),
+                new Panel('2.การตรวจสอบ', $this->checkFields()),
+                new Panel('3.การพิจารณาและอนุมัติ', $this->discussFields()),
+                new Panel('4.พนักงานที่เกี่ยวของ', $this->employeeFields()),
+                new Panel('5.การชำระเงิน', $this->paymentFields()),
+
+                HasMany::make('เอกสารประกอบ', 'order_problem_images', 'App\Nova\Order_problem_image')
+            ];
+        } else {
+            return [
+                ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
+                Status::make('สถานะ', 'status')
+                    ->loadingWhen(['checking'])
+                    ->failedWhen(['new'])
+                    ->readonly()
+                    ->sortable(),
+                Text::make('เลขที่เอกสาร', 'problem_no')
+                    ->readonly()
+                    ->sortable(),
+                Date::make('วันที่', 'problem_date')
+                    ->readonly()
+                    ->sortable(),
+                BelongsTo::make('เลขที่ใบรับส่ง', 'branchrec_order', 'App\Nova\Branchrec_order')
+                    ->sortable()
+                    ->searchable()
+                    ->showOnCreating(),
+
+                new Panel('1.การรับเรื่อง', $this->problemFields()),
+                new Panel('2.การตรวจสอบ', $this->checkFields()),
+                new Panel('3.การพิจารณาและอนุมัติ', $this->discussFields()),
+                new Panel('4.พนักงานที่เกี่ยวของ', $this->employeeFields()),
+                new Panel('5.การชำระเงิน', $this->paymentFields()),
+
+                HasMany::make('เอกสารประกอบ', 'order_problem_images', 'App\Nova\Order_problem_image')
+            ];
+        }
     }
 
     /**
@@ -99,11 +139,9 @@ class Order_problem extends Resource
      */
     protected function problemFields()
     {
+
         return [
-            BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
-                ->sortable()
-                ->searchable()
-                ->showOnCreating(),
+
             Text::make('จุดรับสินค้า', 'branchpoint', function () {
                 return $this->order_header->branch->name . '-' . $this->order_header->to_branch->name;
             })->onlyOnDetail(),
@@ -136,7 +174,8 @@ class Order_problem extends Resource
                 '3' => 'สูญหายทั้งหมด',
                 '4' => 'สูญหายทั้งหมด',
                 '0' => 'อื่นๆ'
-            ])->displayUsingLabels(),
+            ])->displayUsingLabels()
+                ->rules('required'),
             Text::make('ระบุรายละเอียดปัญหา', 'problem_detail')
                 ->nullable()
                 ->hideFromIndex(),

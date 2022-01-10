@@ -246,6 +246,17 @@ class Branchrec_order extends Resource
                 })->canSee(function ($request) {
                     return  $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
+            (new Actions\OrderProblem())
+                ->onlyOnDetail()
+                ->confirmText('แจ้งปัญหาใบรับส่งรายการนี้?')
+                ->confirmButtonText('ตกลง')
+                ->cancelButtonText('ยกเลิก')
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
 
         ];
     }
