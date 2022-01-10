@@ -105,9 +105,9 @@ class Checker_detail extends Resource
 
             Currency::make('จำนวนเงิน', function () {
                 if ($this->usepricetable) {
-                    return $this->amount *  $this->productservice_price->price;
+                    return number_format($this->amount *  $this->productservice_price->price, 2, '.', ',');
                 }
-                return $this->amount *  $this->price;
+                return  number_format($this->amount *  $this->price, 2, '.', ',');
             }),
             number::make('น้ำหนักสินค้ารวม', 'order_weight', function () {
                 return $this->amount * $this->weight;
