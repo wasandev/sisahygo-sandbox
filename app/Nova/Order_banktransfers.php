@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Filters\BankTransferDateFilter;
 use App\Nova\Filters\BankTransferStatus;
 use App\Nova\Filters\Transfertype;
+use App\Nova\Lenses\accounts\OrderBankTransfer;
 use App\Nova\Metrics\OrderTransferPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -146,7 +147,9 @@ class Order_banktransfers extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new OrderBankTransfer()
+        ];
     }
 
     /**

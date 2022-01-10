@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\CompanyProfile;
+use App\Models\Order_banktransfer;
 use App\Models\Order_header;
 use App\Models\Order_detail;
 use Illuminate\Support\Facades\DB;
@@ -336,5 +337,23 @@ class OrderHeaderController extends Controller
         $order_groups = $order_groups->all();
         $order_date = $order_groups;
         return view('reports.orderreportcrdetailbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
+    }
+    public function report_t1($from)
+    {
+        $report_title = 'รายงานรายการโอนเงินค่าขนส่ง';
+        $company = CompanyProfile::find(1);
+
+
+
+        $ordertransfer = Order_banktransfer::where('created_at', '=', $from)
+            ->orderBy('order_header_id', 'asc')
+            ->get();
+
+        $transfer_groups = $ordertransfer->groupBy(function ($item) {
+            return $item->transfer_type;
+        });
+        $transfer_groups = $transfer_groups->all();
+        $transfer_type = $transfer_groups;
+        return view('reports.orderbanktransferbydate', compact('company', 'report_title', 'ordertransfer', 'transfer_type', 'from'));
     }
 }
