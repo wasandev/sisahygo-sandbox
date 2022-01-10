@@ -73,6 +73,9 @@ class Branch_balance_partner extends Resource
                 ->sortable(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->sortable(),
+            BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
+                ->sortable(),
+
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
                 ->sortable()
                 ->format('DD-MM-YYYY'),
@@ -82,8 +85,7 @@ class Branch_balance_partner extends Resource
             Currency::make('จำนวนเงิน', 'bal_amount')
                 ->sortable(),
             Currency::make('ส่วนลด', 'discount_amount')
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
             Currency::make('ยอดรับชำระ', 'pay_amount')
