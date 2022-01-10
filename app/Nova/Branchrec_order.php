@@ -64,6 +64,7 @@ class Branchrec_order extends Resource
     ];
 
     public static $searchRelations = [
+        'customer' => ['name'],
         'to_customer' => ['name']
     ];
     public static $globalSearchRelations = [
@@ -109,6 +110,9 @@ class Branchrec_order extends Resource
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable(),
+            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
+                ->sortable()
+                ->exceptOnForms(),
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms(),
@@ -122,10 +126,7 @@ class Branchrec_order extends Resource
 
 
 
-            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
-                ->sortable()
-                ->exceptOnForms()
-                ->hideFromIndex(),
+
             Currency::make('จำนวนเงิน', 'order_amount')
                 ->exceptOnForms(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
