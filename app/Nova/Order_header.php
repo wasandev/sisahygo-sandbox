@@ -386,10 +386,10 @@ class Order_header extends Resource
                 ->confirmButtonText('ตกลง')
                 ->cancelButtonText('ยกเลิก')
                 ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
+                    return $request->user()->hasPermissionTo('view order_headers');
                 })
                 ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
+                    return $request->user()->hasPermissionTo('view order_headers');
                 }),
         ];
     }
