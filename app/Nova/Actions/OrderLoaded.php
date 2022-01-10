@@ -41,7 +41,9 @@ class OrderLoaded extends Action
 
         foreach ($models as $model) {
 
-            if ($model->branch_rec_id <> $fields->wayllbill_branch) {
+            $waybill = Waybill::find($fields->waybill_branch);
+
+            if ($model->branch_rec_id !== $waybill->branch_rec_id) {
                 return Action::danger('ใบรับส่งที่เลือกไม่ได้ไปสาขาปลายทางเดียวกันกับใบกำกับที่ต้องการจัดขึ้นสินค้า');
             }
             if ($model->order_status == 'loaded') {
