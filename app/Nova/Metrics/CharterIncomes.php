@@ -8,6 +8,7 @@ use Laravel\Nova\Metrics\Value;
 
 class CharterIncomes extends Value
 {
+    public $refreshWhenActionRuns = true;
     /**
      * Calculate the value of the metric.
      *
@@ -45,7 +46,7 @@ class CharterIncomes extends Value
      */
     public function cacheFor()
     {
-        // return now()->addMinutes(5);
+        return now()->addMinutes(5);
     }
 
     /**

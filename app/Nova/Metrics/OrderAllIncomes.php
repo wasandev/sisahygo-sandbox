@@ -8,6 +8,7 @@ use Laravel\Nova\Metrics\Value;
 
 class OrderAllIncomes extends Value
 {
+    public $refreshWhenActionRuns = true;
     /**
      * Calculate the value of the metric.
      *
@@ -46,7 +47,7 @@ class OrderAllIncomes extends Value
      */
     public function cacheFor()
     {
-        // return now()->addMinutes(5);
+        return now()->addMinutes(5);
     }
 
     /**
