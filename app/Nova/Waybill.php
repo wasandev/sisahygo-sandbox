@@ -311,7 +311,7 @@ class Waybill extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
-                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status != 'completed') && $request->user()->hasPermissionTo('manage waybills'));
+                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter'  && $request->user()->hasPermissionTo('manage waybills'));
                 }),
             (new Actions\WaybillBillAdd($request->resourceId))
 
@@ -324,9 +324,9 @@ class Waybill extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request instanceof ActionRequest
-                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter' && ($this->resource->waybill_status != 'completed') && $request->user()->hasPermissionTo('manage waybills'));
+                        || ($this->resource->exists && $this->resource->waybill_type <> 'charter'  && $request->user()->hasPermissionTo('manage waybills'));
                 }),
-
+            // && ($this->resource->waybill_status != 'completed')
         ];
     }
 
