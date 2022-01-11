@@ -34,7 +34,7 @@ class BranchBalanceReceipt extends Lens
                 ->orderBy('branch_balances.branchbal_date', 'asc')
                 ->groupBy(
                     'branch_balances.branch_id',
-                    'branch_balances.branchbal_date'
+                    'branch_balances.branchpay_date'
                 )
         ));
     }
@@ -69,7 +69,7 @@ class BranchBalanceReceipt extends Lens
             }),
             Date::make('วันที่', 'branchbal_date'),
             Currency::make('ยอดรับชำระ', function () {
-                return  $this->pay_amount + $this->tax_amount + $this->discount_amount;
+                return  $this->pay_amount;
             }),
         ];
     }
