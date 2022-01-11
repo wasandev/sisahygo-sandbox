@@ -338,7 +338,7 @@ class Order_header extends Resource
                         || ($request->user()->hasPermissionTo('manage order_headers') && ($this->resource->exists && $this->resource->order_status == 'confirmed'));
                 }),
             (new Actions\PrintOrder)
-                // ->showOnTableRow()
+                ->showOnTableRow()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")

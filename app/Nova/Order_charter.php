@@ -223,10 +223,10 @@ class Order_charter extends Resource
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")
                 ->canRun(function ($request, $model) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
+                    return $request->user()->hasPermissionTo('view order_headers');
                 })
                 ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
+                    return $request->user()->hasPermissionTo('view order_headers');
                 }),
             (new Actions\CancelOrder())
                 ->confirmText('ต้องการยกเลิกใบรับส่งรายการนี้?')
