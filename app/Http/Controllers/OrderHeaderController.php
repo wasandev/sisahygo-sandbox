@@ -228,9 +228,13 @@ class OrderHeaderController extends Controller
         return view('reports.orderreportcancelbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
     }
 
-    public function report_6($branch, $from, $to)
+    public function report_6($branch, $type, $from, $to)
     {
-        $report_title = 'รายงานขายสดประจำวันแบบสรุป';
+        if ($type == 'H') {
+            $report_title = 'รายงานขายสดประจำวันแบบสรุป (เงินสด)';
+        } else {
+            $report_title = 'รายงานขายสดประจำวันแบบสรุป (เงินโอน)';
+        }
         $company = CompanyProfile::find(1);
 
         $branchdata = Branch::find($branch);
@@ -238,7 +242,7 @@ class OrderHeaderController extends Controller
             ->where('order_header_date', '>=', $from)
             ->where('order_header_date', '<=', $to)
             ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-            ->whereIn('paymenttype', ['H', 'T'])
+            ->where('paymenttype', $type)
             ->orderBy('branch_id', 'asc')
             ->orderBy('order_header_no', 'asc')
             ->get();
@@ -250,9 +254,14 @@ class OrderHeaderController extends Controller
         $order_date = $order_groups;
         return view('reports.orderreportcashsumbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
     }
-    public function report_7($branch, $from, $to)
+    public function report_7($branch, $type, $from, $to)
     {
-        $report_title = 'รายงานขายสดประจำวันแบบแสดงรายการ';
+        if ($type == 'H') {
+            $report_title = 'รายงานขายสดประจำวันแบบแสดงรายการ (เงินสด)';
+        } else {
+            $report_title = 'รายงานขายสดประจำวันแบบแสดงรายการ (เงินโอน)';
+        }
+
         $company = CompanyProfile::find(1);
 
         $branchdata = Branch::find($branch);
@@ -260,7 +269,7 @@ class OrderHeaderController extends Controller
             ->where('order_header_date', '>=', $from)
             ->where('order_header_date', '<=', $to)
             ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-            ->whereIn('paymenttype', ['H', 'T'])
+            ->where('paymenttype', $type)
             ->orderBy('branch_id', 'asc')
             ->orderBy('order_header_no', 'asc')
             ->get();
