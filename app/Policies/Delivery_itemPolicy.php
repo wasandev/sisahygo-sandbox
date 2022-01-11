@@ -44,7 +44,7 @@ class Delivery_itemPolicy
 
     public function delete(User $user, Delivery_item $delivery_item)
     {
-        if ($delivery_item->payment_status || $delivery_item->delivery_status) {
+        if ($delivery_item->delivery_status) {
             return false;
         }
         return $user->role == 'admin' || $user->hasPermissionTo('delete delivery_items');

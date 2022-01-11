@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddOrderToDelivery;
 use App\Nova\Actions\CreateBranchDeliveryItems;
 use App\Nova\Actions\CreateTruckDeliveryItems;
 use App\Nova\Actions\MakeOrderBranchWarehouse;
@@ -65,7 +66,7 @@ class Branchrec_order extends Resource
 
     public static $searchRelations = [
         'customer' => ['name'],
-        'to_customer' => ['name']
+        'to_customer' => ['name', 'district', 'sub_district']
     ];
     public static $globalSearchRelations = [
         'to_customer' => ['name']
@@ -88,17 +89,11 @@ class Branchrec_order extends Resource
                 ->loadingWhen(['in transit'])
                 ->failedWhen(['cancel'])
                 ->exceptOnForms(),
-            BelongsTo::make('ใบกำกับสินค้า', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
-                ->nullable()
-                ->sortable()
-                ->readonly(),
+            Boolean::make(__('Payment status'), 'payment_status')
+                ->exceptOnForms(),
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly()
                 ->sortable(),
-
-
-
-
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms(),
@@ -125,13 +120,16 @@ class Branchrec_order extends Resource
                 'L' => 'วางบิลปลายทาง'
             ])->onlyOnIndex(),
 
-            Boolean::make(__('Payment status'), 'payment_status')
-                ->exceptOnForms(),
+
             Select::make(__('Tran type'), 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable(),
+            BelongsTo::make('ใบกำกับสินค้า', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
+                ->nullable()
+                ->sortable()
+                ->readonly(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->searchable()
@@ -243,9 +241,18 @@ class Branchrec_order extends Resource
                 })->canSee(function ($request) {
                     return  $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
+            (new AddOrderToDelivery())
+                ->confirmText('ต้องการนำใบรับส่งที่เลือกไว้ เข้าใบจัดส่งสินค้า ใช่หรือไม่')
+                ->confirmButtonText('ใช่')
+                ->cancelButtonText("ไม่ใช่")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             (new OrderReceived($request->resourceId))
                 ->onlyOnDetail()
-                ->confirmText('ทำรายการยืนยันการรับสินค้า จากใบรับส่งที่เลือกไว้')
+                ->confirmText('ยืนยันรายการลูกค้ารับสินค้าเองที่สาขา จากใบรับส่งที่เลือกไว้')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request) {
