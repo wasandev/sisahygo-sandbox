@@ -56,6 +56,7 @@ class BranchController extends Controller
             $branch_balances = Branch_balance::where('branchpay_date', '>=', $from)
                 ->where('branchpay_date', '<=', $to)
                 ->where('pay_amount', '>', 0)
+                ->where('payment_status', '=', true)
                 ->orderBy('branchpay_date', 'asc')
                 ->orderBy('id', 'asc')
                 ->get();
@@ -64,6 +65,7 @@ class BranchController extends Controller
                 ->where('branchpay_date', '>=', $from)
                 ->where('branchpay_date', '<=', $to)
                 ->where('pay_amount', '>', 0)
+                ->where('payment_status', '=', true)
                 ->orderBy('branchpay_date', 'asc')
                 ->orderBy('id', 'asc')
                 ->get();

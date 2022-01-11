@@ -6,6 +6,8 @@ use App\Nova\Actions\Accounts\PrintBranchBalanceReceipt;
 use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchbalanceToDate;
+use App\Nova\Filters\BranchPayFromDate;
+use App\Nova\Filters\BranchPayToDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -30,6 +32,7 @@ class BranchBalanceReceipt extends Lens
             $query->select(self::columns())
                 ->join('branches', 'branch_balances.branch_id', '=', 'branches.id')
                 ->join('customers', 'branch_balances.customer_id', '=', 'customers.id')
+                ->where('branch_balances.payment_status', '=', true)
                 ->orderBy('branch_balances.branch_id', 'asc')
                 ->orderBy('branch_balances.branchpay_date', 'asc')
                 ->groupBy(
@@ -95,8 +98,8 @@ class BranchBalanceReceipt extends Lens
     {
         return [
             new BranchBalanceFilter(),
-            new BranchbalanceFromDate(),
-            new BranchbalanceToDate(),
+            new BranchPayFromDate(),
+            new BranchPayToDate(),
         ];
     }
 
