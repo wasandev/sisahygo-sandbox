@@ -31,7 +31,7 @@ class BranchBalanceReceipt extends Lens
                 ->join('branches', 'branch_balances.branch_id', '=', 'branches.id')
                 ->join('customers', 'branch_balances.customer_id', '=', 'customers.id')
                 ->orderBy('branch_balances.branch_id', 'asc')
-                ->orderBy('branch_balances.branchbal_date', 'asc')
+                ->orderBy('branch_balances.branchpay_date', 'asc')
                 ->groupBy(
                     'branch_balances.branch_id',
                     'branch_balances.branchpay_date'
