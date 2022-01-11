@@ -80,29 +80,42 @@ class Branch_balance extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('สถานะการชำระ', 'payment_status')
-                ->sortable(),
+                ->sortable()
+                ->exceptOnForms(),
+
 
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->sortable(),
+                ->sortable()
+                ->exceptOnForms(),
             BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
-                ->sortable(),
+                ->sortable()
+                ->exceptOnForms(),
 
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
                 ->sortable()
-                ->format('DD-MM-YYYY'),
+                ->format('DD-MM-YYYY')
+                ->exceptOnForms(),
             BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
-                ->sortable(),
+                ->sortable()->exceptOnForms(),
 
             Currency::make('จำนวนเงิน', 'bal_amount')
-                ->sortable(),
+                ->sortable()
+                ->exceptOnForms(),
             Currency::make('ส่วนลด', 'discount_amount')
                 ->sortable(),
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
+            Currency::make('ยอดรับชำระ', 'pay_amount')
+                ->hideFromIndex()
+                ->hideWhenCreating()
+                ->showOnUpdate(),
+
+
 
             Currency::make('ยอดรับชำระ', function () {
                 return $this->pay_amount + $this->discount_amount + $this->tax_amount;
-            })->sortable(),
+            })->sortable()
+                ->exceptOnForms(),
 
             Text::make('ชำระโดย',  function () {
                 if (isset($this->receipt_id)) {
