@@ -236,7 +236,8 @@ class Order_problem extends Resource
         return [
             Date::make('วันที่จ่าย', 'payment_date')
                 ->hideWhenCreating()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->nullable(),
 
             Select::make('จ่ายด้วย', 'payment_by')->options([
                 'H' => 'เงินสด',
