@@ -136,11 +136,11 @@
                             {{ $item->customer->name}}
                         </td>
                         <td style="text-align: right">
-
+                            {{ $item->order_header->order_header_no}}
                         </td>
 
                         <td style="text-align: right">
-
+                            {{ $item->order_header->order_header_date}}
                         </td>
                         <td style="text-align: right">
                             {{ number_format($item->pay_amount,2,'.',',') }}
@@ -158,7 +158,7 @@
 
 
                     </tr>
-                    @foreach ($item->branch_balance_items as $balance_item)
+                    {{-- @foreach ($item->branch_balance_items as $balance_item)
                         <tr style="vertical-align: top;">
 
                             <td>
@@ -185,7 +185,7 @@
                             <td>
                             </td>
                         </tr>
-                    @endforeach
+                    @endforeach --}}
                 @endforeach
             @endforeach
         @endforeach
