@@ -71,6 +71,8 @@ class Ar_balance extends Resource
      */
     public function fields(Request $request)
     {
+
+
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('การชำระเงิน', 'status', function () {

@@ -27,6 +27,10 @@ class Ar_balance extends Model
     {
         return $this->belongsTo('App\Models\Order_header');
     }
+    public function order_charter()
+    {
+        return $this->belongsTo('App\Models\Order_charter', 'order_header_id');
+    }
     public function receipt_ar()
     {
         return $this->belongsTo('App\Models\Receipt_ar', 'receipt_id');
