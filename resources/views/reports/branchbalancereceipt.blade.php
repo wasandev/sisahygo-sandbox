@@ -34,10 +34,10 @@
             <th style="width: 15%;text-align: center;">ลูกค้า</th>
             <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: center;">วันที่ใบรับส่ง</th>
-            <th style="width: 10%;text-align: right;">ยอดรับชำระ</th>
-            <th style="width: 10%;text-align: right;">ภาษีหัก ณ ที่จ่าย</th>
+            <th style="width: 10%;text-align: right;">ค่าขนส่ง</th>
             <th style="width: 10%;text-align: right;">ส่วนลด</th>
-            <th style="width: 10%;text-align: right;">รวมจำนวนเงิน</th>
+            <th style="width: 10%;text-align: right;">ภาษีหัก ณ ที่จ่าย</th>
+            <th style="width: 10%;text-align: right;">ยอดรับชำระ</th>
 
         </tr>
 
@@ -68,7 +68,8 @@
                     @endphp
                     @foreach ($bal_amounts as $bal_item )
                         @php
-                            $total_amount +=  $bal_item->sum('pay_amount');
+                            $total_amount +=  $bal_item->sum('bal_amount');
+                            $total_payamount +=  $bal_item->sum('pay_amount');
                             $total_tax +=  $bal_item->sum('tax_amount');
                             $total_discount +=  $bal_item->sum('discount_amount');
 
@@ -79,13 +80,14 @@
                     {{ number_format($total_amount,2,'.',',') }}
                 </td>
                 <td style="text-align: right">
-                    {{ number_format($total_tax,2,'.',',') }}
-                </td>
-                <td style="text-align: right">
                     {{ number_format($total_discount,2,'.',',') }}
                 </td>
                 <td style="text-align: right">
-                    {{ number_format($total_amount + $total_tax + $total_discount,2,'.',',') }}
+                    {{ number_format($total_tax,2,'.',',') }}
+                </td>
+
+                <td style="text-align: right">
+                    {{ number_format($total_payamount ,2,'.',',') }}
                 </td>
 
             </tr>
@@ -106,16 +108,17 @@
                         รวมตามวัน
                     </td>
                     <td style="text-align: right">
-                        {{ number_format($date_items->sum('pay_amount'),2,'.',',') }}
-                    </td>
-                    <td style="text-align: right">
-                        {{ number_format($date_items->sum('tax_amount'),2,'.',',') }}
+                        {{ number_format($date_items->sum('bal_amount'),2,'.',',') }}
                     </td>
                     <td style="text-align: right">
                         {{ number_format($date_items->sum('discount_amount'),2,'.',',') }}
                     </td>
                     <td style="text-align: right">
-                        {{ number_format($date_items->sum('pay_amount') + $date_items->sum('tax_amount') + $date_items->sum('discount_amount') ,2,'.',',') }}
+                        {{ number_format($date_items->sum('tax_amount'),2,'.',',') }}
+                    </td>
+
+                    <td style="text-align: right">
+                        {{ number_format($date_items->sum('pay_amount') ,2,'.',',') }}
                     </td>
 
                 </tr>
@@ -141,18 +144,20 @@
 
                         <td style="text-align: right">
 
+                            {{ date("d-m-Y", strtotime($item->branchrec_order->order_header_date)) }}
                         </td>
                         <td style="text-align: right">
-                            {{ number_format($item->pay_amount,2,'.',',') }}
+                            {{ number_format($item->bal_amount,2,'.',',') }}
+                        </td>
+
+                        <td style="text-align: right">
+                            {{ number_format($item->discount_amount,2,'.',',') }}
                         </td>
                         <td style="text-align: right">
                             {{ number_format($item->tax_amount,2,'.',',') }}
                         </td>
                         <td style="text-align: right">
-                            {{ number_format($item->discount_amount,2,'.',',') }}
-                        </td>
-                        <td style="text-align: right">
-                            {{ number_format($item->pay_amount+ $item->tax_amount+ $item->discount_amount,2,'.',',') }}
+                            {{ number_format($item->pay_amount,2,'.',',') }}
                         </td>
 
 
