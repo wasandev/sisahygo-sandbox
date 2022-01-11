@@ -60,6 +60,9 @@ class Branchrec_waybill extends Resource
     public static $search = [
         'id', 'waybill_no'
     ];
+    public static $searchRelations = [
+        'car' => ['car_regist'],
+    ];
     public static function label()
     {
         return 'รายการรถเข้าสาขา';
