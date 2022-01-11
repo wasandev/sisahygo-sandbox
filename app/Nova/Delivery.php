@@ -108,7 +108,7 @@ class Delivery extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
-            Currency::make('จำนวนเงินจัดเก็บ', 'receipt_amount')
+            Currency::make('จำนวนเงินที่ต้องจัดเก็บ', 'receipt_amount')
                 ->readonly(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail()
