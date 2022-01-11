@@ -162,8 +162,8 @@ class Order_problem extends Resource
                 ])->showOnCreating()
                 ->hideFromIndex(),
             BelongsTo::make('ลูกค้าผู้เรียกร้อง', 'customer', 'App\Nova\Customer')
-                ->searchable()
-                ->onlyOnDetail(),
+                ->searchable(),
+            //->onlyOnDetail(),
             Text::make('ผู้แจ้งเรื่อง', 'contact_person')->nullable()
                 ->hideFromIndex(),
             Text::make('โทรศัพท์', 'contact_phoneno')->nullable()
