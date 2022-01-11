@@ -36,7 +36,7 @@ class OrderPayType extends Filter
     public function options(Request $request)
     {
         return [
-            'เงินสด' => 'C',
+            'เงินสด' => 'H',
             'เงินโอน' => 'T',
         ];
     }
