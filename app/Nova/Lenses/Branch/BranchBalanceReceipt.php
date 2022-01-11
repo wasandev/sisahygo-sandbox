@@ -67,7 +67,7 @@ class BranchBalanceReceipt extends Lens
             Text::make('สาขา', function () {
                 return $this->branch->name;
             }),
-            Date::make('วันที่', 'branchbal_date'),
+            Date::make('วันที่', 'branchpay_date'),
             Currency::make('ยอดรับชำระ', function () {
                 return  $this->pay_amount;
             }),
