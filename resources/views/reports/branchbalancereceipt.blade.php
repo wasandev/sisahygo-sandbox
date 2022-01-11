@@ -65,6 +65,7 @@
                         $total_amount  = 0;
                         $total_tax = 0;
                         $total_discount = 0;
+                        $total_payamount = 0 ;
                     @endphp
                     @foreach ($bal_amounts as $bal_item )
                         @php
