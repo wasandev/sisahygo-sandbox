@@ -29,7 +29,7 @@ class Order_problem extends Model
      */
     public function order_header()
     {
-        return $this->belongsTo(Order_header::class);
+        return $this->belongsTo('App\Models\Order_header', 'order_header_id');
     }
 
     public function branchrec_order()
