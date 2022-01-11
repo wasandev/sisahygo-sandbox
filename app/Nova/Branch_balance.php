@@ -106,7 +106,7 @@ class Branch_balance extends Resource
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
             Currency::make('ยอดรับชำระ', 'pay_amount')
-                ->hideFromIndex()
+
                 ->hideWhenCreating(),
 
 
