@@ -47,7 +47,7 @@ class BranchBalanceReceipt extends Lens
     {
         return [
             'branch_balances.branch_id',
-            'branch_balances.branchbal_date',
+            'branch_balances.branchpay_date',
             DB::raw('sum(branch_balances.bal_amount) as branch_amount'),
             DB::raw('sum(branch_balances.discount_amount) as discount_amount'),
             DB::raw('sum(branch_balances.tax_amount) as tax_amount'),
