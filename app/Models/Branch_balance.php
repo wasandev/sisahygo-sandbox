@@ -47,6 +47,11 @@ class Branch_balance extends Model
     {
         return $this->belongsTo('App\Models\Branchrec_order', 'order_header_id');
     }
+
+    public function order_header()
+    {
+        return $this->belongsTo('App\Models\Order_header', 'order_header_id');
+    }
     public function delivery()
     {
         return $this->belongsTo(Delivery::class, 'delivery_id');
