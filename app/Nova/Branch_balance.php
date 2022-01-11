@@ -111,10 +111,10 @@ class Branch_balance extends Resource
 
 
 
-            Currency::make('ยอดรับชำระ', function () {
-                return $this->pay_amount + $this->discount_amount + $this->tax_amount;
-            })->sortable()
-                ->exceptOnForms(),
+            // Currency::make('ยอดรับชำระ', function () {
+            //     return $this->pay_amount + $this->discount_amount + $this->tax_amount;
+            // })->sortable()
+            //     ->exceptOnForms(),
 
             Text::make('ชำระโดย',  function () {
                 if (isset($this->receipt_id)) {
