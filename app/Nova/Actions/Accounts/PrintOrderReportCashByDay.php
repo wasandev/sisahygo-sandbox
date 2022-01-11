@@ -48,7 +48,7 @@ class PrintOrderReportCashByDay extends Action
 
         $type_value = Arr::get($type, 'value');
 
-        if ($branch_value == '') {
+        if ($type_value == '') {
             return Action::danger('เลือกประเภทการชำระเงินที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
         $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderFromDate');
