@@ -83,7 +83,11 @@ class Order_status extends Resource
                 } elseif ($this->status == 'delivery') {
                     $status = 'สินค้าอยู่ระหว่างการจัดส่ง';
                 } elseif ($this->status == 'completed') {
-                    $status = 'สินค้าจัดส่งถึงผู้รับปลายทางแล้ว';
+                    if ($this->order_header->trantype) {
+                        $status = 'สินค้าจัดส่งถึงผู้รับปลายทางแล้ว';
+                    } else {
+                        $status = 'ผู้รับปลายทางรับสินค้าเองที่สาขา';
+                    }
                 } elseif ($this->status == 'problem') {
                     $status = 'มีปัญหาการขนส่ง';
                 } elseif ($this->status == 'cancel') {

@@ -6,6 +6,7 @@ use App\Models\Bankaccount;
 use App\Models\Branch_balance;
 use App\Models\Branchrec_order;
 use App\Models\Order_banktransfer;
+use App\Models\Order_status;
 use App\Models\Receipt;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -95,6 +96,8 @@ class OrderReceived extends Action
 
                     $model->order_status = 'completed';
                     $model->trantype = '0';
+                    $model->order_recname = $fields->order_recname;
+                    $model->idcardno = $fields->idcardno;
                     if ($receipt_amount > 0) {
                         $model->branchpay_by =  $fields->payment_by;
 
@@ -127,12 +130,18 @@ class OrderReceived extends Action
                                 $branch_balance->payment_status = true;
                                 $branch_balance->remark = $fields->description;
                                 $branch_balance->receipt_id = $receipt->id;
+
                                 $branch_balance->save();
                             }
                         }
                     }
 
                     $model->save();
+                    Order_status::create([
+                        'order_header_id' => $branch_balance->order_header_id,
+                        'status' => 'completed',
+                        'user_id' => auth()->user()->id,
+                    ]);
                 }
             }
         }
@@ -178,6 +187,8 @@ class OrderReceived extends Action
                     ])->dependsOn('payment_by', 'T'),
                     Currency::make('ส่วนลด', 'discount_amount'),
                     Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
+                    Text::make('ชื่อผู้รับสินค้า', 'order_recname'),
+                    Text::make('เลขบัตรประชาชน', 'idcardno'),
                 ];
             } else {
                 return [];
@@ -201,6 +212,8 @@ class OrderReceived extends Action
             ])->dependsOn('payment_by', 'T'),
             Currency::make('ส่วนลด', 'discount_amount'),
             Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
+            Text::make('ชื่อผู้รับสินค้า', 'order_recname'),
+            Text::make('เลขบัตรประชาชน', 'idcardno'),
         ];
     }
 }

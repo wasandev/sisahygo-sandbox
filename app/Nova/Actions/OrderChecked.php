@@ -55,6 +55,7 @@ class OrderChecked extends Action
                 $model->loader_id = $fields->loader;
 
                 $model->save();
+
                 //return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
                 return Action::push('/resources/order_checkers');
             }
