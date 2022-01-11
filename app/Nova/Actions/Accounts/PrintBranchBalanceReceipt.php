@@ -46,12 +46,12 @@ class PrintBranchBalanceReceipt extends Action
         }
 
 
-        $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchbalanceFromDate');
+        $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchPayFromDate');
         $from_value = Arr::get($from, 'value');
         if ($from_value == '') {
             return Action::danger('เลือก วันที่เริ่มต้น ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
-        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchbalanceToDate');
+        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchPayToDate');
         $to_value = Arr::get($to, 'value');
         if ($to_value == '') {
             return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');

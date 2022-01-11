@@ -140,7 +140,7 @@
                         </td>
 
                         <td style="text-align: right">
-                            {{ $item->branchrec_order->order_header_date}}
+
                         </td>
                         <td style="text-align: right">
                             {{ number_format($item->pay_amount,2,'.',',') }}
