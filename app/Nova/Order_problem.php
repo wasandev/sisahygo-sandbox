@@ -89,7 +89,8 @@ class Order_problem extends Resource
                 BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
                     ->sortable()
                     ->searchable()
-                    ->showOnCreating(),
+                    ->showOnCreating()
+                    ->hideWhenUpdating(),
 
 
 
@@ -119,7 +120,8 @@ class Order_problem extends Resource
                 BelongsTo::make('เลขที่ใบรับส่ง', 'branchrec_order', 'App\Nova\Branchrec_order')
                     ->sortable()
                     ->searchable()
-                    ->showOnCreating(),
+                    ->showOnCreating()
+                    ->hideWhenUpdating(),
 
                 new Panel('1.การรับเรื่อง', $this->problemFields()),
                 new Panel('2.การตรวจสอบ', $this->checkFields()),
@@ -201,7 +203,8 @@ class Order_problem extends Resource
                 '6' => 'การจัดส่ง'
             ])->displayUsingLabels()
                 ->hideFromIndex()
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->nullable(),
             Text::make('รายละเอียดการตรวจสอบ', 'check_detail')
                 ->nullable()
                 ->hideFromIndex()
