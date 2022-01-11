@@ -74,91 +74,49 @@ class Branch_balance extends Resource
      */
     public function fields(Request $request)
     {
-        if ($request->user()->branch_id == 1) {
 
-            return [
-                ID::make(__('ID'), 'id')->sortable(),
-                Boolean::make('สถานะการชำระ', 'payment_status')
-                    ->sortable(),
 
-                BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                    ->sortable(),
-                BelongsTo::make('ใบรับส่งสินค้า', 'order_header', 'App\Nova\Order_header')
-                    ->sortable(),
 
-                Date::make('วันที่ตั้งหนี้', 'branchbal_date')
-                    ->sortable()
-                    ->format('DD-MM-YYYY'),
-                BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
-                    ->sortable(),
+        return [
+            ID::make(__('ID'), 'id')->sortable(),
+            Boolean::make('สถานะการชำระ', 'payment_status')
+                ->sortable(),
 
-                Currency::make('จำนวนเงิน', 'bal_amount')
-                    ->sortable(),
-                Currency::make('ส่วนลด', 'discount_amount')
-                    ->sortable(),
-                Currency::make('ภาษี', 'tax_amount')
-                    ->hideFromIndex(),
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
+                ->sortable(),
+            BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
+                ->sortable(),
 
-                Currency::make('ยอดรับชำระ', function () {
-                    return $this->pay_amount + $this->discount_amount + $this->tax_amount;
-                })->sortable(),
+            Date::make('วันที่ตั้งหนี้', 'branchbal_date')
+                ->sortable()
+                ->format('DD-MM-YYYY'),
+            BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
+                ->sortable(),
 
-                Text::make('ชำระโดย',  function () {
-                    if (isset($this->receipt_id)) {
-                        if ($this->receipt->branchpay_by === 'T') {
-                            return 'โอน';
-                        } else {
-                            return 'เงินสด';
-                        }
+            Currency::make('จำนวนเงิน', 'bal_amount')
+                ->sortable(),
+            Currency::make('ส่วนลด', 'discount_amount')
+                ->sortable(),
+            Currency::make('ภาษี', 'tax_amount')
+                ->hideFromIndex(),
+
+            Currency::make('ยอดรับชำระ', function () {
+                return $this->pay_amount + $this->discount_amount + $this->tax_amount;
+            })->sortable(),
+
+            Text::make('ชำระโดย',  function () {
+                if (isset($this->receipt_id)) {
+                    if ($this->receipt->branchpay_by === 'T') {
+                        return 'โอน';
                     } else {
-                        return '-';
+                        return 'เงินสด';
                     }
-                })->hideFromIndex(),
-                BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
-
-            ];
-        } else {
-            return [
-                ID::make(__('ID'), 'id')->sortable(),
-                Boolean::make('สถานะการชำระ', 'payment_status')
-                    ->sortable(),
-
-                BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                    ->sortable(),
-                BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
-                    ->sortable(),
-
-                Date::make('วันที่ตั้งหนี้', 'branchbal_date')
-                    ->sortable()
-                    ->format('DD-MM-YYYY'),
-                BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
-                    ->sortable(),
-
-                Currency::make('จำนวนเงิน', 'bal_amount')
-                    ->sortable(),
-                Currency::make('ส่วนลด', 'discount_amount')
-                    ->sortable(),
-                Currency::make('ภาษี', 'tax_amount')
-                    ->hideFromIndex(),
-
-                Currency::make('ยอดรับชำระ', function () {
-                    return $this->pay_amount + $this->discount_amount + $this->tax_amount;
-                })->sortable(),
-
-                Text::make('ชำระโดย',  function () {
-                    if (isset($this->receipt_id)) {
-                        if ($this->receipt->branchpay_by === 'T') {
-                            return 'โอน';
-                        } else {
-                            return 'เงินสด';
-                        }
-                    } else {
-                        return '-';
-                    }
-                })->hideFromIndex(),
-                BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
-            ];
-        }
+                } else {
+                    return '-';
+                }
+            })->hideFromIndex(),
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
+        ];
     }
 
     /**
