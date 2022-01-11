@@ -36,7 +36,7 @@ class Branch_balance extends Model
 
     public function customer()
     {
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Customer', 'customer_id');
     }
 
     public function receipt()

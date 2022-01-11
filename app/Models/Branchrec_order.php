@@ -18,7 +18,7 @@ class Branchrec_order extends Model
 
     public function customer()
     {
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Customer', 'customer_id');
     }
     public function to_customer()
     {
