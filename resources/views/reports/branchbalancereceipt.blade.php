@@ -136,11 +136,11 @@
                             {{ $item->customer->name}}
                         </td>
                         <td style="text-align: right">
-                            {{ $item->order_header->order_header_no}}
+                            {{ $item->branchrec_order->order_header_no}}
                         </td>
 
                         <td style="text-align: right">
-                            {{ $item->order_header->order_header_date}}
+                            {{ $item->branchrec_order->order_header_date}}
                         </td>
                         <td style="text-align: right">
                             {{ number_format($item->pay_amount,2,'.',',') }}
