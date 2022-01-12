@@ -37,7 +37,7 @@ class PrintOrderBanktransfer extends Action
         $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
 
 
-        $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BankTransferDateFilter');
+        $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\LensBankTransferDateFilter');
         $from_value = Arr::get($from, 'value');
         if ($from_value == '') {
             return Action::danger('เลือกวันที่ที่ต้องการที่เมนูกรองข้อมูลก่อน');

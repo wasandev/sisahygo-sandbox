@@ -31,10 +31,10 @@
         <tr>
             <th style="width: 5%;">ลำดับ</th>
             <th style="width: 10%;">ประเภทรายการ</th>
-            <th style="width: 10%;">วันที่โอน</th>
-            <th style="width: 15%;text-align: right;">เลขที่ใบรับส่ง</th>
-            <th style="width: 20%;text-align: right;">ลูกค้า</th>
-            <th style="width: 15%;text-align: right;">โอนเข้าบัญชี</th>
+            <th style="width: 10%;">วันที่-เวลาโอน</th>
+            <th style="width: 15%;">เลขที่ใบรับส่ง/ใบแจ้งหนี้</th>
+            <th style="width: 20%;">ลูกค้า</th>
+            <th style="width: 15%">บัญชีธนาคาร</th>
             <th style="width: 15%;text-align: right;">จำนวนเงิน</th>
         </tr>
 
@@ -43,9 +43,8 @@
     <tbody>
        @foreach ($transfer_type as $type_group => $order_groups)
             <tr>
-                <td style="text-align: center">{{ $loop->iteration }}
-                </td>
-                <td style="text-align: left">
+
+                <td colspan="2" style="text-align: left">
                     @php
                         if($type_group == 'H') {
                             $transfertype = 'ค่าขนส่งต้นทาง' ;
@@ -59,19 +58,29 @@
                 </td>
 
                 <td colspan="5" style="text-align: right;">
-                    {{ number_format($type_groups->sum('transfer_amount'),2,'.',',') }}
+                    {{ number_format($order_groups->sum('transfer_amount'),2,'.',',') }}
                 </td>
 
 
             </tr>
+
+
+
             @foreach ($order_groups as $item_transfer )
                 <tr>
                     <td style="text-align: center">{{ $loop->iteration }}
                     </td>
-
+                    <td></td>
                     <td style="text-align: left">
-                        {{$item_transfer->order_header->order_header_no}}
+                        {{$item_transfer->created_at}}
+                        {{-- {{date("d-m-Y", strtotime($item_transfer->created_at))}} --}}
                     </td>
+                    <td style="text-align: left">
+                        @if ($item_transfer->transfer_type <> 'B')
+                            {{$item_transfer->order_header->order_header_no}}
+
+                        @endif
+                                            </td>
                     <td style="text-align: left">
                         {{$item_transfer->customer->name}}
                     </td>

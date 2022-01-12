@@ -36,8 +36,8 @@ class Transfertype extends Filter
     public function options(Request $request)
     {
         return [
-            'เงินสดต้นทาง' => 'H',
-            'เงินสดปลายทาง' => 'E',
+            'เงินโอนต้นทาง' => 'H',
+            'เงินโอนปลายทาง' => 'E',
             'รับชำระหนี้' => 'B'
         ];
     }

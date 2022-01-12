@@ -354,7 +354,7 @@ class OrderHeaderController extends Controller
 
 
 
-        $ordertransfer = Order_banktransfer::where('created_at', '=', $from)
+        $ordertransfer = Order_banktransfer::whereDate('created_at', '=', $from)
             ->orderBy('order_header_id', 'asc')
             ->get();
 

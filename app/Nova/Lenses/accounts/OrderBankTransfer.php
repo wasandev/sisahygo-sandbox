@@ -3,23 +3,14 @@
 namespace App\Nova\Lenses\accounts;
 
 use App\Nova\Actions\Accounts\PrintOrderBanktransfer;
-use App\Nova\Actions\Accounts\PrintOrderBillingCash;
-use App\Nova\Filters\BankTransferDateFilter;
-use App\Nova\Filters\Branch;
-use App\Nova\Filters\LensBranchFilter;
-use App\Nova\Filters\OrderdateFilter;
-use App\Nova\Filters\OrderFromDate;
-use App\Nova\Filters\OrderToDate;
-use App\Nova\Metrics\OrderCashPerDay;
+use App\Nova\Filters\LensBankTransferDateFilter;
+use App\Nova\Filters\Transfertype;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Fields\Date;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class OrderBankTransfer extends Lens
@@ -36,10 +27,9 @@ class OrderBankTransfer extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('branches', 'branches.id', '=', 'order_banktransfers.branch_id')
-                ->join('users', 'users.id', '=', 'order_banktransfers.user_id')
                 ->join('order_headers', 'order_headers.id', '=', 'order_banktransfers.order_header_id')
-                ->orderBy('order_banktransfers.id', 'asc')
-                ->groupBy('order_banktransfers.transfer_type')
+                ->orderBy('order_banktransfers.branch_id', 'asc')
+                ->groupBy('branches.id', 'order_banktransfers.transfer_type')
         ));
     }
     /**
@@ -68,7 +58,15 @@ class OrderBankTransfer extends Lens
         return [
 
             Text::make(__('Branch'), 'branch_name'),
-            Text::make('ประเภทรายการ', 'transfer_type'),
+            Text::make('ประเภทรายการ', 'transfertype', function () {
+                if ($this->transfer_type == 'H') {
+                    return 'ต้นทาง';
+                } elseif ($this->transfer_type == 'E') {
+                    return 'ปลายทาง';
+                } else {
+                    return 'รับชำระหนี้';
+                }
+            }),
             Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
                 return $value;
             }),
@@ -97,7 +95,8 @@ class OrderBankTransfer extends Lens
     {
         return [
 
-            new BankTransferDateFilter()
+            new LensBankTransferDateFilter(),
+            new Transfertype()
         ];
     }
 
