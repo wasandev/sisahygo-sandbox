@@ -77,7 +77,8 @@ class Receipt extends Resource
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
                 ->searchable()
                 ->withSubtitles()
-                ->nullable(),
+                ->nullable()
+                ->hideWhenUpdating(),
             Currency::make('จำนวนเงิน', 'total_amount'),
             Select::make('ชำระโดย', 'branchpay_by')->options([
                 'C' => 'เงินสด',

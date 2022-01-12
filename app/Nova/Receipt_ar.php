@@ -85,7 +85,8 @@ class Receipt_ar extends Resource
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
 
             BelongsTo::make('ลูกค้า', 'ar_customer', 'App\Nova\Ar_customer')
-                ->searchable(),
+                ->searchable()
+                ->hideWhenUpdating(),
             Currency::make('จำนวนเงิน', 'total_amount'),
             Select::make('ชำระโดย', 'branchpay_by')->options([
                 'C' => 'เงินสด',

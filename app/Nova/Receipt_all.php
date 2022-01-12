@@ -76,7 +76,8 @@ class Receipt_all extends Resource
             ])->displayUsingLabels(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
 
-            BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer'),
+            BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
+                ->hideWhenUpdating(),
             Currency::make('จำนวนเงิน', 'total_amount'),
             Select::make('ชำระโดย', 'branchpay_by')->options([
                 'C' => 'เงินสด',
