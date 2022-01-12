@@ -67,9 +67,9 @@ class PrintOrderReportCashByDay extends Action
             return Action::danger('เลือกประเภทการชำระเงินที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
         if ($fields->report_type) {
-            return Action::openInNewTab('/orderheader/report_6/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $paytype_value);
+            return Action::openInNewTab('/orderheader/report_6/' . $branch_value . '/' . $paytype_value . '/' . $from_value . '/' . $to_value);
         } else {
-            return Action::openInNewTab('/orderheader/report_7/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $paytype_value);
+            return Action::openInNewTab('/orderheader/report_7/' . $branch_value . '/' . $paytype_value . '/' . $from_value . '/' . $to_value);
         }
     }
 

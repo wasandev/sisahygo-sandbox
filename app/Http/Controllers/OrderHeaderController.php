@@ -228,7 +228,7 @@ class OrderHeaderController extends Controller
         return view('reports.orderreportcancelbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
     }
 
-    public function report_6($branch,  $from, $to, $paytype)
+    public function report_6($branch, $paytype, $from, $to)
     {
         if ($paytype == 'H') {
             $report_title = 'รายงานขายสดประจำวันแบบสรุป (เงินสด)';
@@ -252,9 +252,9 @@ class OrderHeaderController extends Controller
         });
         $order_groups = $order_groups->all();
         $order_date = $order_groups;
-        return view('reports.orderreportcashsumbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
+        return view('reports.orderreportcashsumbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'paytype'));
     }
-    public function report_7($branch, $from, $to, $paytype)
+    public function report_7($branch, $paytype, $from, $to)
     {
         if ($paytype == 'H') {
             $report_title = 'รายงานขายสดประจำวันแบบแสดงรายการ (เงินสด)';
@@ -279,7 +279,7 @@ class OrderHeaderController extends Controller
         });
         $order_groups = $order_groups->all();
         $order_date = $order_groups;
-        return view('reports.orderreportcashdetailbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
+        return view('reports.orderreportcashdetailbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'paytype'));
     }
 
     public function report_8($branch, $from, $to, $artype)
