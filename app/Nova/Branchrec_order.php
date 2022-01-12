@@ -138,9 +138,11 @@ class Branchrec_order extends Resource
             Text::make(__('Remark'), 'remark')->nullable()
                 ->onlyOnDetail(),
             Text::make('ชื่อผู้รับสินค้า', 'order_recname')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->nullable(),
             Text::make('เลขบัตรประชาชน', 'idcardno')
-                ->onlyOnDetail(),
+                ->onlyOnDetail()
+                ->nullable(),
 
             HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
             HasMany::make(__('Order status'), 'order_statuses', 'App\Nova\Order_status'),

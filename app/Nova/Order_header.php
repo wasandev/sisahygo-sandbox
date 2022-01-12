@@ -246,6 +246,19 @@ class Order_header extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            Text::make('ชื่อผู้รับสินค้า', 'order_recname')
+                ->onlyOnDetail()
+                ->nullable(),
+            Text::make('เลขบัตรประชาชน', 'idcardno')
+                ->onlyOnDetail()
+                ->nullable(),
+            Text::make('ชื่อผู้รับสินค้า', 'order_recname')
+                ->onlyOnDetail()
+                ->nullable(),
+            Text::make('เลขบัตรประชาชน', 'idcardno')
+                ->onlyOnDetail()
+                ->nullable(),
+
             HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
             HasMany::make(__('Order status'), 'order_statuses', 'App\Nova\Order_status'),
         ];

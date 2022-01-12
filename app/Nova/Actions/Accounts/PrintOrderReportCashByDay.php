@@ -37,6 +37,8 @@ class PrintOrderReportCashByDay extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
+
+
         $branch = $decodedFilters->firstWhere('class', 'App\Nova\Filters\Branch');
 
         $branch_value = Arr::get($branch, 'value');
@@ -44,27 +46,30 @@ class PrintOrderReportCashByDay extends Action
         if ($branch_value == '') {
             return Action::danger('เลือกสาขาที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
-        $type = $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderPaytype');
 
-        $type_value = Arr::get($type, 'value');
 
-        if ($type_value == '') {
-            return Action::danger('เลือกประเภทการชำระเงินที่ต้องการที่เมนูกรองข้อมูลก่อน');
-        }
         $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderFromDate');
         $from_value = Arr::get($from, 'value');
         if ($from_value == '') {
             return Action::danger('เลือก วันที่เริ่มต้น ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
+
         $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderToDate');
         $to_value = Arr::get($to, 'value');
         if ($to_value == '') {
             return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
+
+        $paytype = $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderPayType');
+        $paytype_value = Arr::get($paytype, 'value');
+
+        if ($paytype_value == '') {
+            return Action::danger('เลือกประเภทการชำระเงินที่ต้องการที่เมนูกรองข้อมูลก่อน');
+        }
         if ($fields->report_type) {
-            return Action::openInNewTab('/orderheader/report_6/' . $branch_value . '/' . $type . '/' . $from_value . '/' . $to_value);
+            return Action::openInNewTab('/orderheader/report_6/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $paytype_value);
         } else {
-            return Action::openInNewTab('/orderheader/report_7/' . $branch_value . '/' . $type . '/' . $from_value . '/' . $to_value);
+            return Action::openInNewTab('/orderheader/report_7/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $paytype_value);
         }
     }
 
