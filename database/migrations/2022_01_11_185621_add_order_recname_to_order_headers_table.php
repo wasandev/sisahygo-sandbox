@@ -15,7 +15,7 @@ class AddOrderRecnameToOrderHeadersTable extends Migration
     {
         Schema::table('order_headers', function (Blueprint $table) {
             $table->string('order_recname')->nullable();
-            $table->string('idcardno')->null();
+            $table->string('idcardno')->nullable();
         });
     }
 
