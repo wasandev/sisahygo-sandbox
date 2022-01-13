@@ -138,15 +138,14 @@ class OrderReceived extends Action
 
                     $model->save();
                     Order_status::create([
-                        'order_header_id' => $branch_balance->order_header_id,
+                        'order_header_id' => $model->id,
                         'status' => 'completed',
                         'user_id' => auth()->user()->id,
                     ]);
                 }
             }
         }
-
-        return Action::push('/resources/branchrec_orders/');
+        return Action::message('ยืนยันรายการลูกค้ารับสินค้าเอง เรียบร้อยแล้ว');
     }
 
 
@@ -191,7 +190,10 @@ class OrderReceived extends Action
                     Text::make('เลขบัตรประชาชน', 'idcardno'),
                 ];
             } else {
-                return [];
+                return [
+                    Text::make('ชื่อผู้รับสินค้า', 'order_recname'),
+                    Text::make('เลขบัตรประชาชน', 'idcardno'),
+                ];
             }
         }
 
