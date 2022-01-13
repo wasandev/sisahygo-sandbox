@@ -55,6 +55,10 @@ class CarpaymentObserver
             $car_balance->amount = $carpayment->amount;
             $car_balance->save();
         }
+
+        if ($carpayment->tax_flag) {
+            $carpayment->tax_amount = $carpayment->amount * 0.01;
+        }
     }
     public function updated(Carpayment $carpayment)
     {
