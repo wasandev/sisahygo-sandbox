@@ -30,6 +30,40 @@
         </td>
     </tr>
 
+    <tr>
+     <td colspan="2"  style="width: 100%;text-align: left;border:0px">
+        @php
+            if($cardata->owner->account_type == 'saving'){
+                $accounttype = 'ออมทรัพย์' ;
+            }elseif($cardata->owner->account_type == 'current'){
+                $accounttype = 'กระแสรายวัน' ;
+            }elseif($cardata->owner->account_type == 'fixed'){
+                $accounttype = 'ฝากประจำ' ;
+            }
+        @endphp
+        <strong>ข้อมูลบัญชีธนาคาร</strong><br>
+        @isset($cardata->owner->bankaccountno)
+        เลขที่บัญชี {{ $cardata->owner->bankaccountno }}
+        @endisset
+
+        @isset($cardata->owner->bankaccountname)
+          ชื่อบัญชี {{ $cardata->owner->bankaccountname }}
+        @endisset
+
+
+        @isset($cardata->owner->bankaccountno)
+          ประเภทบัญชี {{$accounttype}}
+        @endisset
+        @isset($cardata->owner->bank->name)
+          ธนาคาร {{$cardata->owner->bank->name}}
+        @endisset
+
+
+
+
+    </td>
+    </tr>
+
 </table>
 <br/>
 
