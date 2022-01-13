@@ -102,7 +102,7 @@ class InvoiceReceipt extends Action
 
                 ]);
                 if ($fields->payment_by == "T") {
-                    Order_banktransfer::create([
+                    $Order_banktransfer = Order_banktransfer::create([
                         'customer_id' => $invoice_cust,
                         'receipt_id' => $receipt->id,
                         'branch_id' => auth()->user()->branch_id,
