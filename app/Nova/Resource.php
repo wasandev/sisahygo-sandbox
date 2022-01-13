@@ -11,8 +11,8 @@ abstract class Resource extends NovaResource
     use SearchesRelations;
     public static $showColumnBorders = true;
     public static $tableStyle = 'tight';
-    public static $perPageViaRelationship = 50;
-    public static $relatableSearchResults = 300;
+    public static $perPageViaRelationship = 25;
+    public static $relatableSearchResults = 50;
 
 
     /**
@@ -67,6 +67,6 @@ abstract class Resource extends NovaResource
 
     public static function perPageOptions()
     {
-        return [50, 100, 200, 250, 400];
+        return [25, 50, 100, 200, 250, 400];
     }
 }

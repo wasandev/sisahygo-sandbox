@@ -136,30 +136,64 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }),
 
             // //admin
-            // (new OrderAllIncomes())->width('1/2'),
-            // (new OrderIncomes())->width('1/2'),
-            // (new ExpressIncomes())->width('1/2'),
-            // (new CharterIncomes())->width('1/2'),
+            (new OrderAllIncomes())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new OrderIncomes())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new ExpressIncomes())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new CharterIncomes())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
-            // (new OrdersPerMonth())->width('1/2'),
-            // (new OrdersPerDay())->width('1/2'),
+            (new OrdersPerMonth())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new OrdersPerDay())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
-            // (new OrdersByPaymentType())->width('1/2'),
-            // (new OrdersByBranchRec())->width('1/2'),
+            (new OrdersByPaymentType())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new OrdersByBranchRec())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
-            // (new WaybillsPerDay())->width('1/2'),
-            // (new WaybillLoading())->width('1/2'),
+            (new WaybillsPerDay())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new WaybillLoading())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
-            // (new WaybillAmountPerDay())->width('1/2'),
-            // (new WaybillPayablePerDay())->width('1/2'),
+            (new WaybillAmountPerDay())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new WaybillPayablePerDay())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
-            // //(new WaybillIncome())->width('1/2'),
-            // (new WaybillIncomePerDay())->width('1/2'),
+            //(new WaybillIncome())->width('1/2'),
+            (new WaybillIncomePerDay())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
-            // (new CustomersPerDay())->width('1/2'),
-            // (new NewCustomers())->width('1/2'),
-            // (new CustomersByProvince())->width('1/2'),
-            // (new CustomersByDistrict())->width('1/2'),
+            (new CustomersPerDay())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new NewCustomers())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new CustomersByProvince())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new CustomersByDistrict())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
 
 
