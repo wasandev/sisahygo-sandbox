@@ -51,7 +51,7 @@
         @endisset
 
 
-        @isset($cardata->owner->bankaccountno)
+        @isset($cardata->owner->account_type)
           ประเภทบัญชี {{$accounttype}}
         @endisset
         @isset($cardata->owner->bank->name)
