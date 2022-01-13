@@ -54,7 +54,7 @@
                     @break
 
                 @case('T')
-                    จ่ายโดย : เงินโอน เข้าบัญชี {{$carpayment->tobank->name }} เลขที่ {{$carpayment->tobankaccount }} ชื่อบัญชี {{tobankaccountname}}
+                    จ่ายโดย : เงินโอน เข้าบัญชี {{$carpayment->tobank->name }} เลขที่ {{$carpayment->tobankaccount }} ชื่อบัญชี {{$tobankaccountname}}
                     <br/>
 
                     @break
