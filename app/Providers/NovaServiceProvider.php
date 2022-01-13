@@ -135,31 +135,31 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return  $request->user()->hasPermissionTo('view sendercards');
             }),
 
-            //admin
-            (new OrderAllIncomes())->width('1/2'),
-            (new OrderIncomes())->width('1/2'),
-            (new ExpressIncomes())->width('1/2'),
-            (new CharterIncomes())->width('1/2'),
+            // //admin
+            // (new OrderAllIncomes())->width('1/2'),
+            // (new OrderIncomes())->width('1/2'),
+            // (new ExpressIncomes())->width('1/2'),
+            // (new CharterIncomes())->width('1/2'),
 
-            (new OrdersPerMonth())->width('1/2'),
-            (new OrdersPerDay())->width('1/2'),
+            // (new OrdersPerMonth())->width('1/2'),
+            // (new OrdersPerDay())->width('1/2'),
 
-            (new OrdersByPaymentType())->width('1/2'),
-            (new OrdersByBranchRec())->width('1/2'),
+            // (new OrdersByPaymentType())->width('1/2'),
+            // (new OrdersByBranchRec())->width('1/2'),
 
-            (new WaybillsPerDay())->width('1/2'),
-            (new WaybillLoading())->width('1/2'),
+            // (new WaybillsPerDay())->width('1/2'),
+            // (new WaybillLoading())->width('1/2'),
 
-            (new WaybillAmountPerDay())->width('1/2'),
-            (new WaybillPayablePerDay())->width('1/2'),
+            // (new WaybillAmountPerDay())->width('1/2'),
+            // (new WaybillPayablePerDay())->width('1/2'),
 
-            //(new WaybillIncome())->width('1/2'),
-            (new WaybillIncomePerDay())->width('1/2'),
+            // //(new WaybillIncome())->width('1/2'),
+            // (new WaybillIncomePerDay())->width('1/2'),
 
-            (new CustomersPerDay())->width('1/2'),
-            (new NewCustomers())->width('1/2'),
-            (new CustomersByProvince())->width('1/2'),
-            (new CustomersByDistrict())->width('1/2'),
+            // (new CustomersPerDay())->width('1/2'),
+            // (new NewCustomers())->width('1/2'),
+            // (new CustomersByProvince())->width('1/2'),
+            // (new CustomersByDistrict())->width('1/2'),
 
 
 
