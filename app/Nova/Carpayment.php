@@ -121,7 +121,7 @@ class Carpayment extends Resource
                 ->default('H')
                 ->hideFromIndex(),
             NovaDependencyContainer::make([
-                Select::make('โอนจากบัญชี', 'bankaccount')
+                Select::make('โอนจากบัญชี', 'bankaccount_id')
                     ->options($tobankaccount)
                     ->displayUsingLabels()
                     ->nullable(),
@@ -132,7 +132,7 @@ class Carpayment extends Resource
 
                 // BelongsTo::make(__('Bank'), 'tobank', 'App\Nova\Bank')
                 //     ->nullable(),
-                Select::make(__('Bank'), 'tobank')
+                Select::make(__('Bank'), 'tobank_id')
                     ->options($bank)
                     ->displayUsingLabels()
                     ->nullable(),

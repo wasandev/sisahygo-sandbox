@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Order_banktransfer;
 use App\Models\Order_header;
+use App\Models\Receipt;
 use App\Models\User;
 use App\Notifications\BankTransfer;
 
@@ -74,6 +75,7 @@ class Order_banktransferObserver
                 $branchrec_order->payment_status = true;
                 $branchrec_order->save();
             }
+        } else {
         }
 
         $order_banktransfer->updated_by = auth()->user()->id;
