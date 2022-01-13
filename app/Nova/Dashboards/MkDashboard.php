@@ -78,6 +78,6 @@ class MkDashboard extends Dashboard
     }
     public static function label()
     {
-        return 'ข้อมูลสรุปการตลาด';
+        return 'ข้อมูลสรุปฝ่ายบริการ';
     }
 }

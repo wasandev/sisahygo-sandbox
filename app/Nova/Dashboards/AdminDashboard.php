@@ -86,6 +86,6 @@ class AdminDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'Admin';
+        return 'สำหรับผู้บริการ';
     }
 }
