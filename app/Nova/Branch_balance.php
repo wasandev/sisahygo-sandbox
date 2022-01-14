@@ -45,7 +45,7 @@ class Branch_balance extends Resource
      */
     public function title()
     {
-        return $this->branchrec_order->order_header_no;
+        return $this->id;
     }
 
 
