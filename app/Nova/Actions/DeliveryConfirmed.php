@@ -18,6 +18,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Number;
 
 class DeliveryConfirmed extends Action
@@ -104,6 +105,8 @@ class DeliveryConfirmed extends Action
                 $model->payment_status = false;
             }
             $model->description = $fields->description;
+            $model->paydate = $fields->paydate;
+
             $model->delivery_status = 1;
             $model->save();
 
@@ -140,6 +143,9 @@ class DeliveryConfirmed extends Action
                         ->readonly(),
                     Boolean::make('จัดเก็บค่าขนส่งแล้ว', 'payment_status')->rules('required'),
                     NovaDependencyContainer::make([
+
+                        Date::make('วันที่รับชำระ', 'paydate')
+                            ->default(today()->toDateString()),
                         Select::make('รับชำระด้วย', 'payment_by')->options([
                             'C' => 'เงินสด',
                             'T' => 'เงินโอน',
@@ -152,7 +158,7 @@ class DeliveryConfirmed extends Action
                                 ->rules('required'),
                             Text::make(__('Bank reference no'), 'reference'),
                         ])->dependsOn('payment_by', 'T'),
-                        //Currency::make('ส่วนลด', 'discount_amount')->canSee(),
+                        Currency::make('ส่วนลด', 'discount_amount'),
                         Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
                     ])->dependsOn('payment_status', true),
                     Text::make('หมายเหตุเพิ่มเติม', 'description')
@@ -162,6 +168,8 @@ class DeliveryConfirmed extends Action
             }
         }
         return [
+            Date::make('วันที่รับชำระ', 'paydate')
+                ->default(today()->toDateString()),
             Currency::make('ค่าขนส่งที่ต้องเก็บ', 'payment_amount')
                 ->readonly(),
             Boolean::make('จัดเก็บค่าขนส่งแล้ว', 'payment_status'),
@@ -177,7 +185,7 @@ class DeliveryConfirmed extends Action
                     ->rules('required'),
                 Text::make(__('Bank reference no'), 'reference'),
             ])->dependsOn('payment_by', 'T'),
-            //Currency::make('ส่วนลด', 'discount_amount'),
+            Currency::make('ส่วนลด', 'discount_amount'),
             Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
         ];
     }

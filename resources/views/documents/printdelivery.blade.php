@@ -57,13 +57,14 @@
 <table  style="width: 100%;border: 0.5px soild black;">
     <tr style="vertical-align:middle;font-weight: bold;height:1cm">
         <td style="width: 5%;text-align:center;">ลำดับ</td>
-        <td style="width: 20%;text-align: center;">อำเภอ</td>
+        <td style="width: 15%;text-align: center;">อำเภอ</td>
         <td style="width: 25%;text-align: center;">ผู้รับสินค้า</td>
         <td style="width: 10%;text-align: center">จำนวนรายการ</td>
         <td style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</td>
-        <td style="width: 10%;text-align: center;">ยอดจัดเก็บปลายทาง</td>
-        <td style="width: 10%;text-align: center;">การจัดส่ง</td>
-        <td style="width: 10%;text-align: center;">การเก็บเงิน</td>
+        <td style="width: 10%;text-align: center;">ค่าขนส่ง</td>
+        <td style="width: 15%;text-align: center;">ยอดจัดเก็บ</td>
+        <td style="width: 5%;text-align: center;">การจัดส่ง</td>
+        <td style="width: 5%;text-align: center;">การเก็บเงิน</td>
     </tr>
 
     @foreach ($delivery_district as $district => $item_groups)
@@ -80,6 +81,7 @@
             <td  style="text-align: right;">
                 {{ number_format($item_groups->sum('payment_amount'),2,'.',',')}}
             </td>
+             <td></td>
             <td></td>
             <td></td>
 
@@ -108,6 +110,10 @@
                 -
                 @endif
             </td>
+
+             <td>
+
+             </td>
             <td style="text-align: center">
 
                 @if($item->delivery_status)
@@ -150,6 +156,10 @@
                         </td>
                     <td>
 
+
+                    </td>
+                    <td>
+
                     </td>
                     <td>
 
@@ -163,6 +173,7 @@
         <td colspan="5" style="text-align: center">รวมรายการจัดส่งทั้งหมด {{count($delivery->delivery_items) }} รายการ  ยอดเก็บปลายทาง รวม</td>
 
         <td style="text-align: right">{{ number_format($delivery->receipt_amount,2,'.',',') }}</td>
+        <td></td>
         <td></td>
         <td></td>
 

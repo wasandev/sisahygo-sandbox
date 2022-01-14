@@ -12,7 +12,7 @@ class Delivery_item extends Model
         'delivery_id', 'customer_id', 'delivery_status', 'payment_status', 'user_id',
         'updated_by', 'receipt_id', 'payment_amount', 'discount_amount',
         'tax_amount', 'pay_amount', 'receipt_type', 'branchpay_by', 'bankaccount_id', 'bankreference',
-        'chequeno', 'chequedate', 'chequebank_id', 'description'
+        'chequeno', 'chequedate', 'chequebank_id', 'description', 'paydate'
     ];
 
     public function delivery()

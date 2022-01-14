@@ -409,6 +409,7 @@ class Order_header extends Resource
     }
     public static function indexQuery(NovaRequest $request, $query)
     {
+
         $branch = \App\Models\Branch::find($request->user()->branch_id);
         if ($branch->code == '001') {
             return $query->where('order_status', '<>', 'checking')
@@ -420,6 +421,7 @@ class Order_header extends Resource
                 ->where('order_type', '<>', 'charter');
         }
     }
+
     public static function relatableCustomers(NovaRequest $request, $query)
     {
 

@@ -19,7 +19,7 @@ class Order_problem extends Model
 
     protected $casts = [
         'problem_date' => 'date',
-        'paymnet_date' => 'date'
+        'payment_date' => 'date'
     ];
 
     /**

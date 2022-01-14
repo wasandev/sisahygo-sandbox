@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -73,6 +74,8 @@ class Delivery_item extends Resource
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
                 ->viewable(false),
+            Date::make('วันที่รับชำระ', 'paydate')
+                ->default(today()),
             Currency::make('ยอดจัดเก็บ', 'payment_amount')
                 ->exceptOnForms(),
             Boolean::make('สถานะการจัดส่ง', 'delivery_status')
