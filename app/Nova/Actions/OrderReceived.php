@@ -49,102 +49,87 @@ class OrderReceived extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
 
-        $select_orders = $models->filter(function ($item) {
-            return data_get($item, 'order_status') == 'branch warehouse';
-        });
+        foreach ($models as $model) {
 
-        if ($select_orders->isNotEmpty()) {
-
-            $cust_groups = $select_orders->groupBy('customer_rec_id')->all();
-            $rec_custs = $cust_groups;
-            foreach ($rec_custs as $cust => $cust_groups) {
-                $receipt_amount = $cust_groups->where('paymenttype', 'E')->sum('order_amount');
-
-                if ($receipt_amount > 0) {
-
-                    if ($fields->payment_by == 'C') {
-                        $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
-                        if ($fields->tax_status) {
-                            $tax_amount = $receipt_amount * 0.01;
-                        } else {
-                            $tax_amount = 0;
-                        }
-                        $receipt = Receipt::create([
-                            'receipt_no' => $receipt_no,
-                            'receipt_date' => today(),
-                            'branch_id' => auth()->user()->branch_id,
-                            'customer_id' => $cust,
-                            'total_amount' => $receipt_amount,
-                            'discount_amount' => $fields->discount_amount,
-                            'tax_amount' => $tax_amount,
-                            'pay_amount' => $receipt_amount - $fields->discount_amount - $tax_amount,
-                            'receipttype' => 'E',
-                            'branchpay_by' => $fields->payment_by,
-                            'bankaccount_id' => $fields->bankaccount_id,
-                            'bankreference' => $fields->reference,
-                            'description' => $fields->description,
-                            'user_id' => auth()->user()->id,
-                        ]);
-                    }
+            if ($model->paymenttype == 'E') {
+                if ($model->order_status <> 'branch warehouse') {
+                    return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้');
                 }
-
-                foreach ($cust_groups as $model) {
-
-                    if ($model->order_status <> 'branch warehouse') {
-                        return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้');
+                if ($fields->payment_by == 'C') {
+                    $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
+                    if ($fields->tax_status) {
+                        $tax_amount = $model->order_amount * 0.01;
+                    } else {
+                        $tax_amount = 0;
                     }
-
-                    $model->order_status = 'completed';
-                    $model->trantype = '0';
-                    $model->order_recname = $fields->order_recname;
-                    $model->idcardno = $fields->idcardno;
-                    if ($receipt_amount > 0) {
-                        $model->branchpay_by =  $fields->payment_by;
-
-                        if ($model->paymenttype == 'E') {
-
-                            if ($fields->payment_by == 'T') {
-                                $model->bankaccount_id = $fields->bankaccount;
-                                $model->bankreference = $fields->refernce;
-                                $model->payment_status = false;
-
-                                //create bank_transfer
-                                Order_banktransfer::create([
-                                    'customer_id' => $model->customer_rec_id,
-                                    'order_header_id' => $model->id,
-                                    'branch_id' => $model->branch_rec_id,
-                                    'status' => false,
-                                    'transfer_type' => 'E',
-                                    'transfer_amount' => $model->order_amount,
-                                    'bankaccount_id' => $fields->bankaccount,
-                                    'reference' => $fields->reference,
-                                    'user_id' => auth()->user()->id,
-                                ]);
-                            } elseif ($fields->payment_by == 'C') {
-                                $model->payment_status = true;
-                                //update branch_balance
-                                $branch_balance = Branch_balance::where('order_header_id', $model->id)->first();
-                                $branch_balance->pay_amount = $model->order_amount;
-                                $branch_balance->updated_by = auth()->user()->id;
-                                $branch_balance->branchpay_date = today();
-                                $branch_balance->payment_status = true;
-                                $branch_balance->remark = $fields->description;
-                                $branch_balance->receipt_id = $receipt->id;
-
-                                $branch_balance->save();
-                            }
-                        }
-                    }
-
-                    $model->save();
-                    Order_status::create([
-                        'order_header_id' => $model->id,
-                        'status' => 'completed',
+                    $receipt = Receipt::create([
+                        'receipt_no' => $receipt_no,
+                        'receipt_date' => today(),
+                        'branch_id' => auth()->user()->branch_id,
+                        'customer_id' => $model->customer_id,
+                        'total_amount' => $model->order_amount,
+                        'discount_amount' => $fields->discount_amount,
+                        'tax_amount' => $tax_amount,
+                        'pay_amount' => $model->order_amount - $fields->discount_amount - $tax_amount,
+                        'receipttype' => 'E',
+                        'branchpay_by' => $fields->payment_by,
+                        'bankaccount_id' => $fields->bankaccount_id,
+                        'bankreference' => $fields->reference,
+                        'description' => $fields->description,
                         'user_id' => auth()->user()->id,
                     ]);
                 }
             }
+            $model->order_status = 'completed';
+            $model->trantype = '0';
+            $model->order_recname = $fields->order_recname;
+            $model->idcardno = $fields->idcardno;
+            if ($model->order_amount > 0 && $model->paymenttype == 'E') {
+                $model->branchpay_by =  $fields->payment_by;
+
+
+
+                if ($fields->payment_by == 'T') {
+                    $model->bankaccount_id = $fields->bankaccount;
+                    $model->bankreference = $fields->refernce;
+                    $model->payment_status = false;
+
+                    //create bank_transfer
+                    Order_banktransfer::create([
+                        'customer_id' => $model->customer_rec_id,
+                        'order_header_id' => $model->id,
+                        'branch_id' => $model->branch_rec_id,
+                        'status' => false,
+                        'transfer_type' => 'E',
+                        'transfer_amount' => $model->order_amount,
+                        'bankaccount_id' => $fields->bankaccount,
+                        'reference' => $fields->reference,
+                        'user_id' => auth()->user()->id,
+                    ]);
+                } elseif ($fields->payment_by == 'C') {
+                    $model->payment_status = true;
+                    //update branch_balance
+                    $branch_balance = Branch_balance::where('order_header_id', $model->id)->first();
+                    $branch_balance->pay_amount = $model->order_amount;
+                    $branch_balance->updated_by = auth()->user()->id;
+                    $branch_balance->branchpay_date = today();
+                    $branch_balance->payment_status = true;
+                    $branch_balance->remark = $fields->description;
+                    $branch_balance->receipt_id = $receipt->id;
+
+                    $branch_balance->save();
+                }
+            }
+
+            $model->save();
+            Order_status::create([
+                'order_header_id' => $model->id,
+                'status' => 'completed',
+                'user_id' => auth()->user()->id,
+            ]);
         }
+
+
         return Action::message('ยืนยันรายการลูกค้ารับสินค้าเอง เรียบร้อยแล้ว');
     }
 
