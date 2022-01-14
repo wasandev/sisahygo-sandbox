@@ -53,7 +53,7 @@ class OrderReceived extends Action
 
             if ($model->paymenttype == 'E') {
                 if ($model->order_status <> 'branch warehouse') {
-                    return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้ ยังไม่ได้กำหนดรถถึงสาขาปลายทาง');
+                    return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้ ไม่ได้มีสถานะลงไว้คลังสาขา');
                 }
                 if ($fields->payment_by == 'C') {
                     $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);

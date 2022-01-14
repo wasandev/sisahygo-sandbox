@@ -108,9 +108,7 @@ class Branch_balance extends Resource
                 ->sortable(),
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
-            Currency::make('ยอดรับชำระ', 'pay_amount')
-
-                ->hideWhenCreating(),
+            Currency::make('ยอดรับชำระ', 'pay_amount'),
 
 
 

@@ -165,6 +165,11 @@
 
         </td>
     </tr>
+    <tr>
+        <td colspan="4" style="width: 100">
+        เวลาพิมพ์ใบกำกับ : {{date('d-m-Y H:i:s')}}
+        </td>
+    </tr>
 
 </table>
 
