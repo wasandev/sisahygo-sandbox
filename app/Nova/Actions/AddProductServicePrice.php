@@ -55,14 +55,18 @@ class AddProductServicePrice extends Action
 
             foreach ($branch_areas as $branch_area) {
 
-                Productservice_price::updateOrCreate([
-                    'product_id' => $model->id,
-                    'from_branch_id' => $fields->from_branch_id,
-                    'district' => $branch_area->district,
-                    'province' => $branch_area->province,
-                    'price' => $fields->item_price,
-                    'unit_id' => $uses_unit,
-                ]);
+                Productservice_price::updateOrCreate(
+                    [
+                        'product_id' => $model->id,
+                        'from_branch_id' => $fields->from_branch_id,
+                        'district' => $branch_area->district,
+                        'province' => $branch_area->province
+                    ],
+                    [
+                        'price' => $fields->item_price,
+                        'unit_id' => $uses_unit
+                    ]
+                );
             }
         }
     }

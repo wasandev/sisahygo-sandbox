@@ -59,14 +59,18 @@ class AddProductServicePriceZone extends Action
             foreach ($districts as $districtinzone) {
 
                 $district = District::find($districtinzone->district_id);
-                Productservice_price::updateOrCreate([
-                    'product_id' => $model->id,
-                    'from_branch_id' => $fields->from_branch_id,
-                    'district' => $district->name,
-                    'province' => $district->province->name,
-                    'price' => $fields->item_price,
-                    'unit_id' => $uses_unit,
-                ]);
+                Productservice_price::updateOrCreate(
+                    [
+                        'product_id' => $model->id,
+                        'from_branch_id' => $fields->from_branch_id,
+                        'district' => $district->name,
+                        'province' => $district->province->name
+                    ],
+                    [
+                        'price' => $fields->item_price,
+                        'unit_id' => $uses_unit
+                    ]
+                );
             }
         }
     }

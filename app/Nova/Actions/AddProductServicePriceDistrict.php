@@ -57,14 +57,18 @@ class AddProductServicePriceDistrict extends Action
                 if ($value) {
                     $area = Branch_area::find($branch_area);
 
-                    Productservice_price::updateOrCreate([
-                        'product_id' => $model->id,
-                        'from_branch_id' => $fields->from_branch_id,
-                        'district' => $area->district,
-                        'province' => $area->province,
-                        'price' => $fields->item_price,
-                        'unit_id' => $uses_unit,
-                    ]);
+                    Productservice_price::updateOrCreate(
+                        [
+                            'product_id' => $model->id,
+                            'from_branch_id' => $fields->from_branch_id,
+                            'district' => $area->district,
+                            'province' => $area->province
+                        ],
+                        [
+                            'price' => $fields->item_price,
+                            'unit_id' => $uses_unit
+                        ]
+                    );
                 }
             }
         }
