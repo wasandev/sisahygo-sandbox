@@ -92,14 +92,17 @@ class Order_banktransfers extends Resource
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->hideFromIndex(),
             BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
             BelongsTo::make(__('Order header no'), 'order_header', 'App\Nova\Order_header')
-                ->sortable(),
+                ->sortable()
+                ->readonly(),
             BelongsTo::make(__('Bank Account no'), 'bankaccount', 'App\Nova\Bankaccount'),
             Currency::make(__('Amount'), 'transfer_amount'),
             Text::make(__('Bank reference no'), 'reference')
                 ->hideFromIndex(),
-            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_all', 'App\Nova\Receipt_all'),
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_all', 'App\Nova\Receipt_all')
+                ->readonly(),
             Image::make('สลิปโอนเงิน', 'transferslip')
                 ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
@@ -177,10 +180,10 @@ class Order_banktransfers extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->branch->type == 'partner') {
+        // if ($request->user()->branch->type == 'partner') {
 
-            return   $query->where('branch_id', $request->user()->branch_id);
-        }
+        //     return   $query->where('branch_id', $request->user()->branch_id);
+        // }
         return $query;
     }
 }

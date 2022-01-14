@@ -10,10 +10,10 @@ class BankTransferDateFilter extends DateFilter
 {
     public $name = 'ตามวันที่โอนเงิน';
 
-    public function default()
-    {
-        return date(today());
-    }
+    // public function default()
+    // {
+    //     return date(today());
+    // }
     /**
      * Apply the filter to the given query.
      *

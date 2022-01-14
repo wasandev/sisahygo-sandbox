@@ -45,7 +45,7 @@ class Branch_balance extends Resource
      */
     public function title()
     {
-        return $this->id;
+        return $this->branchrec_order->order_header_no;
     }
 
 
@@ -97,10 +97,13 @@ class Branch_balance extends Resource
                 ->exceptOnForms(),
             BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
                 ->sortable()->exceptOnForms(),
-
             Currency::make('จำนวนเงิน', 'bal_amount')
                 ->sortable()
-                ->exceptOnForms(),
+                ->readonly(),
+            Date::make('วันที่รับชำระ', 'branchpay_date')
+                ->sortable()
+                ->format('DD-MM-YYYY'),
+
             Currency::make('ส่วนลด', 'discount_amount')
                 ->sortable(),
             Currency::make('ภาษี', 'tax_amount')
@@ -127,7 +130,7 @@ class Branch_balance extends Resource
                     return '-';
                 }
             })->hideFromIndex(),
-            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
         ];
     }
 
