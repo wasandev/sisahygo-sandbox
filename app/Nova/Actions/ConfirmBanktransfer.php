@@ -94,12 +94,13 @@ class ConfirmBanktransfer extends Action
                         'order_header_id' => $model->order_header_id,
                         'user_id' => auth()->user()->id,
                     ]);
-                }
-                //$model->transfer_type = $receipttype;
-                $model->status = true;
 
-                $model->receipt_id = $receipt->id;
-                $model->save();
+                    //$model->transfer_type = $receipttype;
+                    $model->status = true;
+
+                    $model->receipt_id = $receipt->id;
+                    $model->save();
+                }
             }
             return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
         }
