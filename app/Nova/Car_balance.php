@@ -50,6 +50,7 @@ class Car_balance extends Resource
     }
     public static $searchRelations = [
         'car' => ['car_regist'],
+        'vendor' => ['name']
     ];
     public static $globalSearchRelations = [
         'car' => ['car_regist'],

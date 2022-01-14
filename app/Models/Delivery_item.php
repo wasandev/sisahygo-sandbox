@@ -14,6 +14,9 @@ class Delivery_item extends Model
         'tax_amount', 'pay_amount', 'receipt_type', 'branchpay_by', 'bankaccount_id', 'bankreference',
         'chequeno', 'chequedate', 'chequebank_id', 'description', 'paydate'
     ];
+    protected $casts = [
+        'paydate' => 'date',
+    ];
 
     public function delivery()
     {
