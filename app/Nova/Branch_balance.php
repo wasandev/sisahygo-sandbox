@@ -29,6 +29,7 @@ class Branch_balance extends Resource
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
+    public static $with = ['customer', 'branchrec_order', 'receipt', 'user', 'branch'];
 
     /**
 
