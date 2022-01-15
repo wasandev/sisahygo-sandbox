@@ -1,4 +1,4 @@
- <table class="footer" style="border: .1px solid black; border-collapse: collapse;">
+ <table class="footer" style="width:100%;border: .1px solid black; border-collapse: collapse;">
         <tr style="vertical-align: buttom;height: 100px;border: 1px solid black;">
             <td style="width=35%;text-align: left;border: 1px solid black;">
                 <br/>

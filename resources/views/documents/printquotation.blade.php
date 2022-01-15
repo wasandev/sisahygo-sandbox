@@ -51,28 +51,28 @@
         @foreach ($quotation->charter_prices as $item )
         <tr>
 
-            <td style="border: 1px solid black;text-align: center;">
+            <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
                 {{ $loop->iteration }}
             </td>
-            <td style="border: 1px solid black;">
+            <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
                 {{ $item->charter_route->branch_area->district .'/'.$item->charter_route->branch_area->province .' - '.$item->charter_route->to_district .'/'.$item->charter_route->to_province   }}
             </td>
-            <td style="border: 1px solid black;">
+           <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
                 {{ $item->cartype->name }}
             </td>
-            <td style="border: 1px solid black;">
+            <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
                 {{ $item->carstyle->name }}
             </td>
-            <td style="border: 1px solid black;text-align: right;">
+            <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
                 {{ number_format($item->price,2) }}
             </td>
-            <td style="border: 1px solid black;text-align: center;">
+            <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
                 {{ $item->pickuppoint }}
             </td>
 
         </tr>
         @endforeach
-        @if(count($quotation->charter_prices) < 10)
+        @if(count($quotation->charter_prices) < 15)
         @for ($i = 1; $i <= 10 - count($quotation->charter_prices); $i++)
             <tr style="vertical-align:top;height:1cm">
                 <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
@@ -100,6 +100,7 @@
 
     </tbody>
 </table>
+<br/><br/><br/>
 @section('footer')
 @include('partials.docfooter')
 @endsection
