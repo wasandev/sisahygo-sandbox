@@ -32,6 +32,7 @@ class Branchrec_waybill extends Resource
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
     public static $perPageOptions = [50, 100, 150];
+    public static $with = ['car', 'branch', 'user'];
     /**
      * The model the resource corresponds to.
      *

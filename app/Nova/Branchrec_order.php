@@ -35,6 +35,7 @@ class Branchrec_order extends Resource
     public static $showPollingToggle = true;
     public static $perPageOptions = [50, 100, 150];
     public static $perPageViaRelationship = 200;
+    public static $with = ['customer', 'to_customer', 'user'];
 
     public static function availableForNavigation(Request $request)
     {
