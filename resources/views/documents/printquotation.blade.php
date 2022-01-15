@@ -1,5 +1,5 @@
-@extends('layouts.doc')
-
+<title>{{$quotation->quotation_no}}</title>
+@extends('layouts.forma4')
 @section('header')
     @include('partials.docheader')
 
