@@ -38,8 +38,8 @@
 <table style="width:100%;border: .5px solid black; border-collapse: collapse;">
     <thead>
         <tr style="vertical-align: middle;height: 50px;border: 1px solid black;text-align: center;">
-            <th style="width: 10%;border: 1px solid black;">ลำดับ</th>
-            <th style="width: 30%;border: 1px solid black;">ต้นทาง - ปลายทาง</th>
+            <th style="width: 5%;border: 1px solid black;">ลำดับ</th>
+            <th style="width: 35%;border: 1px solid black;">ต้นทาง - ปลายทาง</th>
             <th style="width: 15%;border: 1px solid black;">ประเภทรถ</th>
             <th style="width: 15%;border: 1px solid black;">ลักษณะรถ</th>
             <th style="width: 10%;border: 1px solid black;">ค่าขนส่ง</th>
