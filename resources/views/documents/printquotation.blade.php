@@ -2,7 +2,7 @@
 
 
 @section('header')
-@include('partials.jobheader')
+    @include('partials.docheader')
 @endsection
 
 @section('content')
@@ -40,11 +40,11 @@
         <tr style="vertical-align: middle;height: 50px;border: 1px solid black;text-align: center;">
             <th style="width: 10%;border: 1px solid black;">ลำดับ<br />
                 No.</th>
-            <th style="width: 40%;border: 1px solid black;">เส้นทางขนส่ง ต้นทาง-ปลายทาง<br />Route</th>
+            <th style="width: 40%;border: 1px solid black;">ต้นทาง - ปลายทาง<br />Route</th>
             <th style="width: 20%;border: 1px solid black;">ประเภทรถ<br />Vehicle Type</th>
             <th style="width: 10%;border: 1px solid black;">ลักษณะรถ<br />Vehicle Category</th>
             <th style="width: 10%;border: 1px solid black;">ค่าขนส่ง<br />Price/Vehicle(Baht)</th>
-            <th style="width: 10%;border: 1px solid black;">จำนวนจุดขึ้นลงสินค้า<br />Maximum Point</th>
+            <th style="width: 10%;border: 1px solid black;">จุดขึ้นลงสินค้า<br />Maximum Point</th>
         </tr>
     </thead>
     <tbody>
