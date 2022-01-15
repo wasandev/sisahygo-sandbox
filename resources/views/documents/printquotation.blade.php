@@ -1,4 +1,5 @@
-@extends('layouts.form')
+@extends('layouts.pdfdoc')
+
 
 @section('header')
 @include('partials.docheader')
