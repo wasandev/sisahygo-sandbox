@@ -104,6 +104,9 @@ class Branchrec_order extends Resource
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->onlyOnDetail(),
+            Text::make('โทรศัพท์สาขา', function () {
+                return $this->to_branch->phoneno;
+            })->onlyOnDetail(),
 
 
             Text::make('อำเภอ', 'districe', function () {

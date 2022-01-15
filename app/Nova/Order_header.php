@@ -115,7 +115,6 @@ class Order_header extends Resource
                 ]),
 
 
-
             Select::make('สถานะสินค้า', 'shipto_center')->options([
                 '0' => 'อยู่จุดรับสินค้า',
                 '1' => 'ออกจากจุดรับสินค้าแล้ว',
@@ -147,6 +146,9 @@ class Order_header extends Resource
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
                 ->nullable()
                 ->help('***โปรดระบุสาขา ถ้าที่อยู่ลูกค้าปลายทางอยู่นอกพื้นที่บริการของสาขาปลายทาง'),
+            Text::make('โทรศัพท์สาขา', function () {
+                return $this->to_branch->phoneno;
+            })->onlyOnDetail(),
 
 
             Text::make(__('Tracking no'), 'tracking_no')
