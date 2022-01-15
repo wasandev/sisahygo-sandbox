@@ -33,7 +33,7 @@ class Order_loader extends Resource
     public static $priority = 3;
     public static $globallySearchable = false;
     public static $perPageOptions = [50, 100, 150];
-    public static $with = ['customer', 'to_customer', 'user'];
+    public static $with = ['customer', 'to_customer', 'user', 'branch', 'to_branch'];
 
     /**
      * The model the resource corresponds to.
@@ -88,6 +88,8 @@ class Order_loader extends Resource
                 ->loadingWhen(['confirmed'])
                 ->failedWhen(['cancel'])
                 ->exceptOnForms(),
+            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
+                ->exceptOnForms(),
             Select::make('ประเภท', 'order_type')->options([
                 'general' => 'ทั่วไป',
                 'express' => 'Express',
@@ -105,9 +107,7 @@ class Order_loader extends Resource
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable(),
 
-            BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                ->exceptOnForms()
-                ->hideFromIndex(),
+
 
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
