@@ -18,7 +18,7 @@
 
     <tr>
         <td style="width: 50%;text-align: left;border:0px">
-            เลขที่ใบกำกับสินค้า: {{ $waybill->waybill_no }}<br />
+            เลขที่ใบกำกับสินค้า: {{ $waybill->waybill_no }}  สาขาปลายทาง: {{$waybill->to_branch->name}} <br />
             ทะเบียนรถ: {{ $waybill->car->car_regist }}<br />
             เจ้าของรถ:
             @isset($waybill->car->owner->name)
