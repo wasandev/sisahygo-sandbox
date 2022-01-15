@@ -40,10 +40,7 @@ class Branchrec_waybill extends Model
         return $this->belongsTo('App\Models\Employee', 'driver_id');
     }
 
-    // public function branch_car()
-    // {
-    //     return $this->belongsTo('App\Models\Car', 'branchcar_id');
-    // }
+
 
     public function loader()
     {
@@ -62,10 +59,17 @@ class Branchrec_waybill extends Model
     public function branchrec_orders()
     {
         return $this->hasMany('App\Models\Branchrec_order', 'waybill_id');
-        //->whereNotIn('order_status', ['checking', 'new', 'confirmed', 'cancel']);
     }
     public function waybill_statuses()
     {
         return $this->hasMany('App\Models\Waybill_status', 'waybill_id');
+    }
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch');
+    }
+    public function to_branch()
+    {
+        return $this->belongsTo('App\Models\Branch', 'branch_rec_id');
     }
 }
