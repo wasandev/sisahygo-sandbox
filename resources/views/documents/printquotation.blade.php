@@ -72,6 +72,31 @@
 
         </tr>
         @endforeach
+        @if(count($quotation->charter_prices) < 10)
+        @for ($i = 1; $i <= 10 - count($quotation->charter_prices); $i++)
+            <tr style="vertical-align:top;height:1cm">
+                <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
+
+                </td>
+                <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
+
+                </td>
+                <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
+
+                </td>
+                <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
+
+                </td>
+                <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
+
+                </td>
+                <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
+
+                </td>
+            </tr>
+
+        @endfor
+    @endif
 
     </tbody>
 </table>
