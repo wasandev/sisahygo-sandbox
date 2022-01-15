@@ -8,12 +8,9 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
-//use Laravel\Nova\Fields\BelongsToMany;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 
 class Checker_detail extends Resource
@@ -24,7 +21,8 @@ class Checker_detail extends Resource
     public static $priority = 2;
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
-    public static $with = ['productservice_price'];
+    public static $with = ['productservice_price', 'product', 'unit'];
+
 
     /**
      * The model the resource corresponds to.
