@@ -98,6 +98,9 @@ class Branch_balance extends Resource
                 ->exceptOnForms(),
             BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
                 ->sortable()->exceptOnForms(),
+            BelongsTo::make('ใบจัดส่ง', 'delivery', 'App\Nova\Delivery')
+                ->sortable()->exceptOnForms()->nullable(),
+
             Currency::make('ค่าขนส่ง', 'bal_amount')
                 ->sortable()
                 ->readonly(),
