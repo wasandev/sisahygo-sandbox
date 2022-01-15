@@ -33,6 +33,7 @@ class Order_loader extends Resource
     public static $priority = 3;
     public static $globallySearchable = false;
     public static $perPageOptions = [50, 100, 150];
+    public static $with = ['customer', 'to_customer', 'user'];
 
     /**
      * The model the resource corresponds to.
@@ -108,14 +109,13 @@ class Order_loader extends Resource
                 ->exceptOnForms()
                 ->hideFromIndex(),
 
-
+            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
+                ->sortable()
+                ->exceptOnForms(),
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms(),
-            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
-                ->sortable()
-                ->exceptOnForms()
-                ->hideFromIndex(),
+
             Currency::make('จำนวนเงิน', 'order_amount')
                 ->exceptOnForms(),
             Select::make(__('Tran type'), 'trantype')->options([
