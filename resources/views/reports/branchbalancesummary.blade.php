@@ -29,9 +29,9 @@
     <thead>
         <tr>
             <th style="width: 20%;text-align: left;">สาขา</th>
-            <th style="width: 10%;text-align: center;">วันที่ตั้งหนี้</th>
+            <th style="width: 15%;text-align: center;">วันที่ตั้งหนี้</th>
             <th style="width: 5%;">ลำดับ</th>
-            <th style="width: 30%;text-align: center;">ลูกค้า</th>
+            <th style="width: 25%;text-align: center;">ลูกค้า</th>
             <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: center;">วันที่ใบรับส่ง</th>
             <th style="width: 15%;text-align: right;">จำนวนเงิน</th>
@@ -107,40 +107,18 @@
                         <td>
                             {{ $item->customer->name}}
                         </td>
-                        <td style="text-align: right">
-
-                        </td>
-
-                        <td style="text-align: right">
-
-                        </td>
-                        <td style="text-align: right">
-                            {{ number_format($item->bal_amount,2,'.',',') }}
-                        </td>
-
-                    </tr>
-                    @foreach ($item->branch_balance_items as $balance_item)
-                        <tr style="vertical-align: top;">
-
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
+                        <td style="text-align: center">
+                                {{$item->branchrec_order->order_header_no}}
                             </td>
                             <td style="text-align: center">
-                                {{$balance_item->branchrec_order->order_header_no}}
-                            </td>
-                            <td style="text-align: center">
-                                {{$balance_item->branchrec_order->order_header_date->format('d/m/Y')}}
+                                {{$item->branchrec_order->order_header_date->format('d/m/Y')}}
                             </td>
                             <td style="text-align: right">
-                                {{number_format($balance_item->branchrec_order->order_amount,2,'.',',')}}
+                                {{number_format($item->branchrec_order->order_amount,2,'.',',')}}
                             </td>
-                        </tr>
-                    @endforeach
+
+                    </tr>
+
                 @endforeach
             @endforeach
         @endforeach

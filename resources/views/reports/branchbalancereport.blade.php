@@ -94,32 +94,7 @@
 
                 @foreach ($date_items as $item )
 
-                     <tr style="font-weight:bold">
 
-                        <td>
-                        </td>
-
-                        <td style="text-align: center">
-                        </td>
-                        <td style="text-align: center">
-                            {{ $loop->iteration }}
-                        </td>
-                        <td>
-                            {{ $item->customer->name}}
-                        </td>
-                        <td style="text-align: right">
-
-                        </td>
-
-                        <td style="text-align: right">
-
-                        </td>
-                        <td style="text-align: right">
-                            {{ number_format($item->bal_amount,2,'.',',') }}
-                        </td>
-
-                    </tr>
-                    @foreach ($item->branch_balance_items as $balance_item)
                         <tr style="vertical-align: top;">
 
                             <td>
@@ -127,21 +102,23 @@
                             <td>
                             </td>
                             <td>
+                                 {{ $loop->iteration }}
                             </td>
                             <td>
+                                {{$item->branchrec_order->customer->name}}
                             </td>
                             <td style="text-align: center">
-                                {{$balance_item->branchrec_order->order_header_no}}
+                                {{$item->branchrec_order->order_header_no}}
                             </td>
                             <td style="text-align: center">
-                                {{$balance_item->branchrec_order->order_header_date->format('d/m/Y')}}
+                                {{$item->branchrec_order->order_header_date->format('d/m/Y')}}
                             </td>
                             <td style="text-align: right">
-                                {{number_format($balance_item->branchrec_order->order_amount,2,'.',',')}}
+                                {{number_format($item->branchrec_order->order_amount,2,'.',',')}}
                             </td>
                         </tr>
                     @endforeach
-                @endforeach
+
             @endforeach
         @endforeach
 
