@@ -2,7 +2,7 @@
 
 
 @section('header')
-@include('partials.docheader')
+@include('partials.jobheader')
 @endsection
 
 @section('content')
