@@ -20,7 +20,7 @@ class Productservice_price extends Resource
     public static $priority = 8;
     public static $perPageOptions = [50, 100, 150];
 
-    public static $with = ['product', 'unit'];
+    public static $with = ['product', 'unit', 'branch_area'];
     /**
      * The model the resource corresponds to.
      *
