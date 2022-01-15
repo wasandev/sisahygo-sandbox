@@ -84,6 +84,8 @@ class Branchrec_waybill extends Resource
                 ->loadingWhen(['in transit'])
                 ->failedWhen(['cancel'])
                 ->exceptOnForms(),
+            BelongsTo::make('สาขาต้นทาง', 'branch', 'App\Nova\Branch')
+                ->onlyOnIndex(),
             Text::make(__('Waybill no'), 'waybill_no')->readonly(),
             Date::make(__('Waybill date'), 'waybill_date')
                 ->readonly()
