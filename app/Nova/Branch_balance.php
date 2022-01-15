@@ -97,7 +97,7 @@ class Branch_balance extends Resource
                 ->exceptOnForms(),
             BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
                 ->sortable()->exceptOnForms(),
-            Currency::make('จำนวนเงิน', 'bal_amount')
+            Currency::make('ค่าขนส่ง', 'bal_amount')
                 ->sortable()
                 ->readonly(),
             Date::make('วันที่รับชำระ', 'branchpay_date')
