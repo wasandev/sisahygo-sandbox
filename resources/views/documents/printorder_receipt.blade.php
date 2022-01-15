@@ -7,11 +7,21 @@
 
 <table style="width: 100%;magin-top: -4px">
     <tr >
-        <td style="width: 100%;text-align: center;vertical-align:top">
-            @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
+        <td style="width: 60%;text-align: right;vertical-align:top;">
+            @if ($order->paymenttype == 'H' || $order->paymenttype == 'E' )
                 <h3>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h3>
             @else
                 <h3>ใบรับส่งสินค้า</h3>
+            @endif
+        </td>
+        <td style="width: 40%;text-align: right;vertical-align:top">
+            @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
+                <h2>จ่ายเงินแล้ว</h2>
+            @elseif($order->paymenttype == 'E')
+                <h2>เก็บเงินปลายทาง</h2>
+            @else
+                 <h2>วางบิล</h2>
+
             @endif
         </td>
     </tr>
@@ -19,9 +29,9 @@
 <table style="width: 100%;">
     <tr>
         <td style="width: 40%;text-align: left;vertical-align:top">
-            เลขที่ : {{ $order->order_header_no }}  <br/>
-            วันที่ : {{ $order->created_at }}<br/>
-
+            เลขที่ : <strong> {{ $order->order_header_no }}</strong>  <br/>
+            วันที่ : <strong> {{ $order->created_at }}</strong><br/>
+            <strong>
             @switch($order->paymenttype)
                 @case('H')
                     เงื่อนไขการชำระเงิน : เงินสดต้นทาง<br/>
@@ -40,13 +50,14 @@
                     เงื่อนไขการชำระเงิน : วางบิลปลายทาง
                     @break
             @endswitch
+            </strong>
         </td>
         <td style="width: 60%;text-align: right;vertical-align:top">
 
             @if($order->waybill_id == '')
                 ใบกำกับสินค้า: .............................. ทะเบียนรถ:  .....................
             @else
-                ใบกำกับสินค้า: {{ $order->waybill->waybill_no}} ทะเบียนรถ:  {{ $order->waybill->car->car_regist }}
+                ใบกำกับสินค้า: <strong> {{ $order->waybill->waybill_no}}</strong> ทะเบียนรถ:  <strong>{{ $order->waybill->car->car_regist }}</strong>
 
             @endif
 
@@ -61,7 +72,7 @@
                     ประเภท : เหมาคัน<br/>
                     @break
             @endswitch
-            สาขาปลายทาง : {{$order->to_branch->name}} <strong>Tel : {{ $order->to_branch->phoneno }}</strong>            <br/>
+           <strong> สาขาปลายทาง : {{$order->to_branch->name}} Tel : {{ $order->to_branch->phoneno }}         <br/>
             @switch($order->trantype)
                 @case(1)
                     การจัดส่งปลายทาง : จัดส่ง<br/>
@@ -71,7 +82,7 @@
                     การจัดส่งปลายทาง : รับเอง<br/>
                 @break
             @endswitch
-
+            </strong>
 
 
         </td>
@@ -136,10 +147,10 @@
 </table>
 <table  style="width: 100%;border-top: 0.5px dotted black;">
     <tr style="vertical-align:top;">
-            <td  style="width: 47%;text-align: left">
+            <td  style="width: 45%;text-align: left">
                 รายการ
             </td>
-            <td style="width: 9%;text-align: right">
+            <td style="width: 11%;text-align: right">
                 จำนวน
             </td>
             <td style="width: 9%;text-align: center">
@@ -158,20 +169,20 @@
         @foreach ($order->order_details as $item )
 
             <tr style="vertical-align:top;height:14px">
-                <td  style="width: 47%;text-align: left">
+                <td  style="width: 45%;text-align: left">
                     {{ $loop->iteration }}.{{$item->product->name }}
                     @isset($item->remark)
                     ( {{ $item->remark }} )
                     @endisset
                 </td>
-                <td style="width: 9%;text-align: right">
+                <td style="width: 11%;text-align: right">
                     {{number_format($item->amount,2)}}
                 </td>
                 <td style="width: 9%;text-align: center">
                     {{$item->unit->name}}
                 </td>
                 <td style="width: 15%;text-align: right">
-                    {{number_format($item->price,2)}} บ./{{$item->unit->name}}
+                    {{number_format($item->price,2)}}
                 </td>
                 <td style="width: 20%;text-align: right">
                     {{number_format($item->price*$item->amount,2)}}
@@ -184,10 +195,10 @@
         @if(count($order->order_details) < 5)
          @for ($i = 1; $i <= 5 - count($order->order_details); $i++)
             <tr style="vertical-align:top;height:14px">
-                <td  style="width: 47%;text-align: left">
+                <td  style="width: 45%;text-align: left">
 
                 </td>
-                <td style="width: 9%;text-align: right">
+                <td style="width: 11%;text-align: right">
 
                 </td>
                 <td style="width: 9%;text-align: center">
@@ -204,10 +215,29 @@
 
             @endfor
         @endif
-
-
-
 </table>
+<table  style="width: 100%;border-top: 0.5px dotted black;">
+        <tr style="vertical-align:top;height:14px;">
+                <td  style="width: 45%;text-align: left">
+                    หมายเหตุ : {{$order->remark}}
+                </td>
+                <td style="width: 11%;text-align: right">
+                    <strong>รวมสินค้า {{$order->order_details->where('unit_id','<>',10)->sum('amount') + $order->order_details->where('unit_id','=',10)->count('amount') }}</strong>
+                </td>
+                <td style="width: 9%;text-align: center">
+                    ชิ้น
+                </td>
+                <td style="width: 15%;text-align: right">
+                    รวมจำนวนเงิน
+                </td>
+                <td style="width: 20%;text-align: right">
+                     <strong>{{number_format($order->order_amount,2)}}</strong>
+                </td>
+
+            </tr>
+</table>
+
+
 <table  style="width: 100%;border-top: 0.5px dotted black;">
     <tr style="vertical-align:top">
         <td style="width: 50%;">
@@ -219,10 +249,10 @@
             @endisset
 
         </td>
-        <td style="width: 50%;">
-            รวมจำนวนเงิน : {{number_format($order->order_amount,2)}} บาท  ( {{ baht_text($order->order_amount)}} )<br>
-            หมายเหตุ : {{$order->remark}}<br/>
-            เลขที่ตรวจสอบสถานะ : {{$order->tracking_no}} Ref ID: {{$order->id}} <br/>
+        <td style="width: 50%;text-align: right">
+            <strong> ( {{ baht_text($order->order_amount)}} ) </strong><br>
+
+            เลขที่ตรวจสอบสถานะ : <strong>{{$order->tracking_no}} Ref ID: {{$order->id}} </strong><br/>
 
 
 
