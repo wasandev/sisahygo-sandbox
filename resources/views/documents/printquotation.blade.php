@@ -43,7 +43,7 @@
             <th style="width: 40%;border: 1px solid black;">ต้นทาง - ปลายทาง<br />Route</th>
             <th style="width: 20%;border: 1px solid black;">ประเภทรถ<br />Vehicle Type</th>
             <th style="width: 10%;border: 1px solid black;">ลักษณะรถ<br />Vehicle Category</th>
-            <th style="width: 10%;border: 1px solid black;">ค่าขนส่ง<br />Price/Vehicle(Baht)</th>
+            <th style="width: 10%;border: 1px solid black;">ค่าขนส่ง<br />Price (Baht)</th>
             <th style="width: 10%;border: 1px solid black;">จุดขึ้นลงสินค้า<br />Maximum Point</th>
         </tr>
     </thead>
