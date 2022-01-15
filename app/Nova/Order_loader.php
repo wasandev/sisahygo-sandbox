@@ -24,6 +24,7 @@ use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Wasandev\Orderstatus\Orderstatus;
 
 class Order_loader extends Resource
@@ -194,12 +195,12 @@ class Order_loader extends Resource
                 ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('manage waybills');
+                }),
+
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
                 })
-            // ->canSee(function ($request) {
-            //     return $request instanceof ActionRequest
-            //         || ($this->resource->exists && $this->resource->order_status == 'confirmed'
-            //             && $request->user()->hasPermissionTo('manage waybills'));
-            // }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
