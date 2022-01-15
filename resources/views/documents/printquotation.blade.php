@@ -73,7 +73,7 @@
         </tr>
         @endforeach
         @if(count($quotation->charter_prices) < 15)
-        @for ($i = 1; $i <= 10 - count($quotation->charter_prices); $i++)
+        @for ($i = 1; $i <= 15 - count($quotation->charter_prices); $i++)
             <tr style="vertical-align:top;height:1cm">
                 <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
 
