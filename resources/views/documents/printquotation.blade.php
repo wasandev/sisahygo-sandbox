@@ -23,8 +23,8 @@
                     '.$quotation->customer->postal_code }}<br />
             โทร./Phone No.: {{ $quotation->customer->phoneno }} อีเมล์/Email: {{ $quotation->customer->email }}
         </td>
-        <td style="vertical-align: top;">
-            เลขที่ใบเสนอราคา/Quotation No:{{ date_format($quotation->quotation_no,'d/m/Y' }}<br />
+        <td style="vertical-align: top;" >
+            เลขที่ใบเสนอราคา/Quotation No: {{ date_format($quotation->quotation_no,'d/m/Y') }}<br />
             วันที่ออกใบเสนอราคา/Date Of Issue :{{ date_format($quotation->quotation_date,'d/m/Y') }}<br />
             ใช้ได้ถึงวันที่/Expireation Date :{{ $quotation->expiration_date }}
 
