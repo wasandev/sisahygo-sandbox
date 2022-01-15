@@ -96,10 +96,10 @@ class ValueByBranch extends Lens
      */
     public function actions(Request $request)
     {
-        (new DownloadExcel)->allFields()->withHeadings()
-            ->canSee(function ($request) {
-                return $request->user()->role == 'admin';
-            });
+        // (new DownloadExcel)->allFields()->withHeadings()
+        //     ->canSee(function ($request) {
+        //         return $request->user()->role == 'admin';
+        //     });
     }
 
     /**
