@@ -1,8 +1,8 @@
-@extends('layouts.pdfdoc')
-
+@extends('layouts.doc')
 
 @section('header')
     @include('partials.docheader')
+
 @endsection
 
 @section('content')
@@ -38,13 +38,12 @@
 <table style="width:100%;border: .5px solid black; border-collapse: collapse;">
     <thead>
         <tr style="vertical-align: middle;height: 50px;border: 1px solid black;text-align: center;">
-            <th style="width: 10%;border: 1px solid black;">ลำดับ<br />
-                No.</th>
-            <th style="width: 40%;border: 1px solid black;">ต้นทาง - ปลายทาง<br />Route</th>
-            <th style="width: 20%;border: 1px solid black;">ประเภทรถ<br />Vehicle Type</th>
-            <th style="width: 10%;border: 1px solid black;">ลักษณะรถ<br />Vehicle Category</th>
-            <th style="width: 10%;border: 1px solid black;">ค่าขนส่ง<br />Price (Baht)</th>
-            <th style="width: 10%;border: 1px solid black;">จุดขึ้นลงสินค้า<br />Maximum Point</th>
+            <th style="width: 10%;border: 1px solid black;">ลำดับ</th>
+            <th style="width: 30%;border: 1px solid black;">ต้นทาง - ปลายทาง</th>
+            <th style="width: 15%;border: 1px solid black;">ประเภทรถ</th>
+            <th style="width: 15%;border: 1px solid black;">ลักษณะรถ</th>
+            <th style="width: 10%;border: 1px solid black;">ค่าขนส่ง</th>
+            <th style="width: 10%;border: 1px solid black;">จุดขึ้นลงสินค้า</th>
         </tr>
     </thead>
     <tbody>
