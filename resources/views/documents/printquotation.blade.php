@@ -1,5 +1,5 @@
-<title>{{$quotation->quotation_no}}</title>
 @extends('layouts.forma4')
+
 @section('header')
     @include('partials.docheader')
 
@@ -24,9 +24,9 @@
             โทร./Phone No.: {{ $quotation->customer->phoneno }} อีเมล์/Email: {{ $quotation->customer->email }}
         </td>
         <td style="vertical-align: top;" >
-            เลขที่ใบเสนอราคา/Quotation No: {{ $quotation->quotation_no }}<br />
-            วันที่ออกใบเสนอราคา/Date Of Issue :{{ date("d-m-Y", strtotime($quotation->quotation_date)) }}<br />
-            ใช้ได้ถึงวันที่/Expireation Date :{{ date("d-m-Y", strtotime($quotation->expiration_date)) }}
+            เลขที่/Quotation No: {{ $quotation->quotation_no }}<br />
+            วันที่/Date Of Issue :{{ date("d-m-Y", strtotime($quotation->quotation_date)) }}<br />
+
 
 
         </td>
@@ -49,7 +49,7 @@
     <tbody>
 
         @foreach ($quotation->charter_prices as $item )
-        <tr>
+         <tr style="vertical-align:top;">
 
             <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
                 {{ $loop->iteration }}
@@ -73,7 +73,7 @@
         </tr>
         @endforeach
         @if(count($quotation->charter_prices) < 15)
-        @for ($i = 1; $i <= 15 - count($quotation->charter_prices); $i++)
+        @for ($i = 1; $i <= 10 - count($quotation->charter_prices); $i++)
             <tr style="vertical-align:top;height:1cm">
                 <td  style="text-align: center;border-top:0px;border-bottom: 0px;">
 
