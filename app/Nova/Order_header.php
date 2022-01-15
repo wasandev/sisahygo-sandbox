@@ -53,7 +53,7 @@ class Order_header extends Resource
      * @var string
      */
     public static $model = \App\Models\Order_header::class;
-
+    public static $with = ['customer', 'to_customer', 'user'];
 
     /**
      * The single value that should be used to represent the resource when being displayed.

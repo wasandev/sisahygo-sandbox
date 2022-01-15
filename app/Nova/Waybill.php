@@ -2,28 +2,16 @@
 
 namespace App\Nova;
 
-
-use App\Nova\Actions\WaybillConfirmed;
 use App\Nova\Filters\RouteToBranch;
 use App\Nova\Filters\ShowByWaybillStatus;
-use App\Nova\Filters\ToBranch;
-use App\Nova\Filters\WaybillDateFilter;
 use App\Nova\Filters\WaybillFromDate;
 use App\Nova\Filters\WaybillToDate;
 use App\Nova\Lenses\WaybillConfirmedPerDay;
-use App\Nova\Metrics\WaybillAmount;
-use App\Nova\Metrics\WaybillIncome;
-use App\Nova\Metrics\WaybillIncomePerDay;
-use App\Nova\Metrics\WaybillLoading;
-use App\Nova\Metrics\WaybillPayable;
-use App\Nova\Metrics\WaybillsPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
-
-use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
@@ -43,6 +31,8 @@ class Waybill extends Resource
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $trafficCop = false;
+
+    public static $with = ['car', 'branch', 'user'];
     /**
      * The model the resource corresponds to.
      *
@@ -123,17 +113,12 @@ class Waybill extends Resource
                 'express' => 'Express',
             ])->displayUsingLabels()
                 ->default('general'),
-            // Text::make('ไปสาขา', 'dest_branch', function () {
-            //     return $this->routeto_branch->dest_branch->name;
-            // })->onlyOnIndex(),
+
             BelongsTo::make('ไปสาขา', 'to_branch', 'App\Nova\Branch')->onlyOnIndex(),
-            //NovaDependencyContainer::make([
             BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                 ->nullable()
                 ->showCreateRelationButton()
                 ->hideFromIndex(),
-            //])->dependsOnNot('waybill_type', 'charter'),
-            //NovaDependencyContainer::make([
 
 
             Text::make('ยอดค่าขนส่งที่กำหนด', 'fulltruckrate', function () {
@@ -340,7 +325,7 @@ class Waybill extends Resource
                     ->where('waybill_type', '<>', 'charter');
             }
         }
-        return $query;
+        return $query->where('waybill_type', '<>', 'charter');
     }
 
 
