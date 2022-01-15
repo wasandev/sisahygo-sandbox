@@ -25,8 +25,8 @@
         </td>
         <td style="vertical-align: top;" >
             เลขที่ใบเสนอราคา/Quotation No: {{ $quotation->quotation_no }}<br />
-            วันที่ออกใบเสนอราคา/Date Of Issue :{{ date_format($quotation->quotation_date,'d/m/Y') }}<br />
-            ใช้ได้ถึงวันที่/Expireation Date :{{ date_format($quotation->expiration_date,'d/m/Y') }}
+            วันที่ออกใบเสนอราคา/Date Of Issue :{{ date("d-m-Y", strtotime($quotation->quotation_date)) }}<br />
+            ใช้ได้ถึงวันที่/Expireation Date :{{ date("d-m-Y", strtotime($quotation->expiration_date)) }}
 
 
         </td>
