@@ -84,4 +84,6 @@ Route::middleware('web', 'auth')
 
         //banktransfer
         Route::get('/orderheader/report_t1/{from}', 'OrderHeaderController@report_t1')->name('report_t1');
+        //สินค้าค้างส่ง
+        Route::get('/orderheader/report_s1/{branch}/{to}', 'OrderHeaderController@report_s1')->name('report_s1');
     });

@@ -81,8 +81,7 @@ class Branch_balance extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('สถานะการชำระ', 'payment_status')
-                ->sortable()
-                ->exceptOnForms(),
+                ->sortable(),
 
 
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')

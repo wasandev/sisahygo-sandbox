@@ -365,4 +365,28 @@ class OrderHeaderController extends Controller
         $transfer_type = $transfer_groups;
         return view('reports.orderbanktransferbydate', compact('company', 'report_title', 'ordertransfer', 'transfer_type', 'from'));
     }
+
+    public function report_s1($branch, $to)
+    {
+        $report_title = 'รายงานสินค้าค้างส่งต้นทาง';
+        $company = CompanyProfile::find(1);
+
+
+
+        $order = Order_header::join('customers as b', 'b.id', '=', 'order_headers.customer_rec_id')
+            ->where('order_headers.branch_id', $branch)
+            ->whereDate('order_headers.order_header_date', '<=', $to)
+            ->where('order_headers.order_status', 'confirmed')
+            ->orderBy('order_headers.branch_rec_id', 'asc')
+            ->orderBy('order_headers.id', 'asc')
+            ->get();
+
+        $order_groups = $order->groupBy([function ($item) {
+            return $item->branch_rec_id;
+        }, 'customers.district']);
+
+        $order_groups = $order_groups->all();
+        dd($order_groups);
+        return view('reports.orderbranchnotload', compact('company', 'report_title', 'order', 'order_groups', 'branch', 'to'));
+    }
 }
