@@ -34,6 +34,8 @@ class Ar_balance extends Resource
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
+
+    public static $with = ['ar_customer',  'user', 'order_header'];
     /**
      * The model the resource corresponds to.
      *
@@ -58,6 +60,7 @@ class Ar_balance extends Resource
     ];
     public static $searchRelations = [
         'ar_customer' => ['name'],
+        'order_header' => ['order_header_no']
     ];
     public static function label()
     {
