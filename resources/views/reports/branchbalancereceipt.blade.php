@@ -1,4 +1,4 @@
-@extends('layouts.doc')
+@extends('layouts.doclandscape')
 
 @section('header')
     @include('partials.reportheader')
@@ -28,15 +28,16 @@
 <table style="width: 100%;" >
     <thead>
         <tr>
-            <th style="width: 7%;text-align: left;">สาขา</th>
-            <th style="width: 10%;text-align: center;">วันที่รับเงิน</th>
+            <th style="width: 5%;text-align: left;">สาขา</th>
+            <th style="width: 5%;text-align: center;">วันที่รับเงิน</th>
             <th style="width: 5%;">ลำดับ</th>
-            <th style="width: 13%;text-align: center;">ลูกค้า</th>
+            <th style="width: 15%;text-align: center;">ลูกค้า</th>
             <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: center;">วันที่ใบรับส่ง</th>
+            <th style="width: 10%;text-align: center;">ใบเสร็จรับเงิน</th>
             <th style="width: 10%;text-align: right;">ค่าขนส่ง</th>
-            <th style="width: 7%;text-align: right;">ส่วนลด</th>
-            <th style="width: 8%;text-align: right;">ภาษีหัก ณ ที่จ่าย</th>
+            <th style="width: 5%;text-align: right;">ส่วนลด</th>
+            <th style="width: 5%;text-align: right;">ภาษีหัก ณ ที่จ่าย</th>
             <th style="width: 10%;text-align: right;">ยอดรับชำระ</th>
             <th style="width: 10%;text-align: center;">การจัดส่ง</th>
 
@@ -58,9 +59,10 @@
                 </td>
 
 
-                <td colspan="4" style="text-align: right">
+                <td colspan="5" style="text-align: right">
                     รวมตามสาขา
                 </td>
+
                 <td style="text-align: right">
                     @php
                         $total_amount  = 0;
@@ -106,9 +108,10 @@
 
                     </td>
 
-                    <td colspan="4" style="text-align: right">
+                    <td colspan="5" style="text-align: right">
                         รวมตามวัน
                     </td>
+
                     <td style="text-align: right">
                         {{ number_format($date_items->sum('bal_amount'),2,'.',',') }}
                     </td>
@@ -148,6 +151,12 @@
                             {{ date("d-m-Y", strtotime($item->branchrec_order->order_header_date)) }}
                         </td>
                         <td style="text-align: right">
+                            @isset($item->receipt_id)
+                                {{ $item->receipt->receipt_no}}
+                            @endisset
+
+                        </td>
+                        <td style="text-align: right">
                             {{ number_format($item->bal_amount,2,'.',',') }}
                         </td>
 
@@ -180,7 +189,8 @@
             <td colspan="6" style="text-align: center">
                 รวมทั้งหมด
             </td>
-
+            <td>
+            </td>
             <td style="text-align: right">
                 {{ number_format($branch_balances->sum('bal_amount'),2,'.',',') }}
             </td>

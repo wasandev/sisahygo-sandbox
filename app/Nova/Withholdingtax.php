@@ -103,6 +103,7 @@ class Withholdingtax extends Resource
                     ->options($vendortype1)
                     ->displayUsingLabels()
                     ->searchable(),
+
                 Select::make('ประเภทเงินได้', 'incometype_id')
                     ->options($payertype1)
                     ->displayUsingLabels()
