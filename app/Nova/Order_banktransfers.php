@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Filters\BankTransferDateFilter;
 use App\Nova\Filters\BankTransferStatus;
+use App\Nova\Filters\Branch;
 use App\Nova\Filters\Transfertype;
 use App\Nova\Lenses\accounts\OrderBankTransfer;
 use App\Nova\Metrics\OrderTransferPerDay;
@@ -90,7 +91,7 @@ class Order_banktransfers extends Resource
             ])->displayUsingLabels()
                 ->exceptOnForms(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->hideFromIndex(),
+                ->sortable(),
             BelongsTo::make(__('Customer name'), 'customer', 'App\Nova\Customer')
                 ->sortable()
                 ->readonly(),
@@ -138,7 +139,8 @@ class Order_banktransfers extends Resource
     {
         return [
             new Transfertype,
-            new BankTransferDateFilter
+            new BankTransferDateFilter,
+            new Branch
         ];
     }
 
