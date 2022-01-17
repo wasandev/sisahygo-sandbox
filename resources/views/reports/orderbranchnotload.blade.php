@@ -30,16 +30,13 @@
     <thead>
         <tr>
             <th style="width: 5%;text-align: center">ลำดับ</th>
-            <th style="width: 5%;text-align: center">เลขที่ใบกำกับ</th>
-            <th style="width: 10%;text-align: center">ทะเบียนรถ</th>
-            <th style="width: 10%;text-align: center">ประเภทรถ</th>
-            <th style="width: 10%;text-align: center">ค่าระวาง</th>
-            <th style="width: 10%;text-align: center">ค่าบรรทุก</th>
-            <th style="width: 10%;text-align: center">รายได้</th>
-            <th style="width: 10%;text-align: center">%รายได้</th>
-            <th style="width: 10%;text-align: center">ต้นทาง</th>
-            <th style="width: 10%;text-align: center">วางบิล</th>
-            <th style="width: 10%;text-align: center">ปลายทาง</th>
+            <th style="width: 15%;text-align: center">สาขาปลายทาง</th>
+            <th style="width: 15%;text-align: center">อำเภอปลายทาง</th>
+            <th style="width: 10%;text-align: center">วันที่ใบรับส่ง</th>
+            <th style="width: 10%;text-align: center">เลขที่ใบรับส่ง</th>
+            <th style="width: 15%;text-align: center">ผู้ส่ง</th>
+            <th style="width: 15%;text-align: center">ผูรับ</th>
+            <th style="width: 15%;text-align: center">ค่าขนส่ง</th>
 
         </tr>
 

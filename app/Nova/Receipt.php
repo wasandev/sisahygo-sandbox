@@ -9,6 +9,7 @@ use App\Nova\Filters\ReceiptToDate;
 use Laravel\Nova\Fields\Date;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
@@ -63,6 +64,7 @@ class Receipt extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+            Boolean::make('สถานะ', 'status')->readonly(),
             Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no'),
             Date::make('วันที่', 'receipt_date'),
 

@@ -158,6 +158,7 @@ use App\Models\Order_banktransfer;
 use App\Observers\Order_banktransferObserver;
 
 use App\Models\Blog;
+use App\Models\Branch_balance;
 use App\Observers\BlogsObserver;
 
 use App\Models\Page;
@@ -190,6 +191,7 @@ use App\Models\Receipt_ar;
 use App\Models\Withholdingtax;
 use App\Observers\BillingnoteItemObserver;
 use App\Observers\BillingnoteObserver;
+use App\Observers\Branch_balanceObserver;
 use App\Observers\CarpaymentObserver;
 use App\Observers\CarreceiveObserver;
 use App\Observers\CheckerDetailObserver;
@@ -290,5 +292,6 @@ class AppServiceProvider extends ServiceProvider
         Incometype::observe(IncometypeObserver::class);
         Billingnote::observe(BillingnoteObserver::class);
         Billingnote_item::observe(BillingnoteItemObserver::class);
+        Branch_balance::observe(Branch_balanceObserver::class);
     }
 }
