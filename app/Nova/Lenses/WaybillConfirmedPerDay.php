@@ -102,7 +102,9 @@ class WaybillConfirmedPerDay extends Lens
                 return $cartype->name;
             }),
             Number::make('สัดส่วนรายได้%', 'rate', function () {
-                return number_format(($this->income / $this->amount) * 100, 2, '.', ',');
+                if (isset($this->income) && isset($this->amount)) {
+                    return number_format(($this->income / $this->amount) * 100, 2, '.', ',');
+                }
             })
         ];
     }
