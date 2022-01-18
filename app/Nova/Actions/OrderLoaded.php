@@ -46,8 +46,8 @@ class OrderLoaded extends Action
             if ($model->branch_rec_id !== $waybill->branch_rec_id) {
                 return Action::danger('ใบรับส่งที่เลือกไม่ได้ไปสาขาปลายทางเดียวกันกับใบกำกับที่ต้องการจัดขึ้นสินค้า');
             }
-            if ($model->order_status == 'loaded') {
-                return Action::danger('รายการนี้จัดขึ้นแล้ว');
+            if ($model->order_status <> 'confirmed') {
+                return Action::danger('รายการนี้จัดขึ้นไม่ได้ เนื่องจากจัดขึ้นแล้วหรือยังไม่ยืนยันใบรับส่ง');
             } else {
 
                 $model->order_status = 'loaded';
