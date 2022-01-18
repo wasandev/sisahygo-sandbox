@@ -80,7 +80,7 @@ class Car_balance extends Resource
                 ->sortable()
                 ->displayUsingLabels(),
             Date::make('วันที่', 'cardoc_date')->sortable(),
-            Text::make('เลขที่เอกสาร', 'docno'),
+            Text::make('เลขที่เอกสาร', 'docno')->sortable(),
 
 
             BelongsTo::make('ใบกำกับ', 'waybill', 'App\Nova\Waybill')

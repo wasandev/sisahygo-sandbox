@@ -34,12 +34,12 @@ class Car_balancePolicy
     public function update(User $user, Car_balance $car_balance)
     {
 
-        return false;
+        return $user->role == 'admin';
     }
 
 
     public function delete(User $user, Car_balance $car_balance)
     {
-        return false;
+        return $user->role == 'admin';
     }
 }
