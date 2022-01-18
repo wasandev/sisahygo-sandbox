@@ -7,6 +7,9 @@ use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchBalanceStatus;
 use App\Nova\Filters\BranchbalanceToDate;
+use App\Nova\Lenses\Branch\BranchBalanceBydate;
+use App\Nova\Lenses\Branch\BranchBalanceReceipt;
+use App\Nova\Lenses\Branch\BranchBalanceReport;
 use App\Nova\Metrics\OrderBranchPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -26,8 +29,10 @@ class Branch_balance_partner extends Resource
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
+    public static $with = ['customer', 'branchrec_order', 'receipt', 'user', 'branch'];
 
     /**
+
      * The model the resource corresponds to.
      *
      * @var string
@@ -41,7 +46,7 @@ class Branch_balance_partner extends Resource
      */
     public function title()
     {
-        return $this->customer->name;
+        return $this->id;
     }
 
 
@@ -71,28 +76,42 @@ class Branch_balance_partner extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-
             Boolean::make('สถานะการชำระ', 'payment_status')
                 ->sortable(),
+
+
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->sortable(),
+                ->sortable()
+                ->exceptOnForms(),
             BelongsTo::make('ใบรับส่งสินค้า', 'branchrec_order', 'App\Nova\Branchrec_order')
-                ->sortable(),
+                ->sortable()
+                ->exceptOnForms(),
 
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
                 ->sortable()
-                ->format('DD-MM-YYYY'),
+                ->format('DD-MM-YYYY')
+                ->exceptOnForms(),
             BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
-                ->sortable(),
+                ->sortable()->exceptOnForms(),
+            BelongsTo::make('ใบจัดส่ง', 'delivery', 'App\Nova\Delivery')
+                ->sortable()->exceptOnForms()->nullable(),
 
-            Currency::make('จำนวนเงิน', 'bal_amount')
-                ->sortable(),
+            Currency::make('ค่าขนส่ง', 'bal_amount')
+                ->sortable()
+                ->readonly(),
+            Date::make('วันที่รับชำระ', 'branchpay_date')
+                ->sortable()
+                ->format('DD-MM-YYYY'),
+
             Currency::make('ส่วนลด', 'discount_amount')
                 ->sortable(),
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
-            Currency::make('ยอดรับชำระ', 'pay_amount')
-                ->sortable(),
+            Currency::make('ยอดรับชำระ', 'pay_amount'),
+
+
+
+
 
             Text::make('ชำระโดย',  function () {
                 if (isset($this->receipt_id)) {
@@ -105,7 +124,7 @@ class Branch_balance_partner extends Resource
                     return '-';
                 }
             })->hideFromIndex(),
-            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable(),
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
 
         ];
     }
@@ -148,7 +167,11 @@ class Branch_balance_partner extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new BranchBalanceBydate(),
+            new BranchBalanceReceipt(),
+            new BranchBalanceReport(),
+        ];
     }
 
     /**

@@ -23,7 +23,7 @@ class FnDashboard extends Dashboard
     public function cards()
     {
         return [
-            (new OrderBranchPerDay())->width('1/2')->help('แสดงรายการใบรับส่งเก็บเงินปลายทางที่สาขากำหนดรถถึงสาขาแล้ว'),
+            (new OrderBranchPerDay())->help('แสดงรายการใบรับส่งเก็บเงินปลายทางที่สาขากำหนดรถถึงสาขาแล้ว'),
             (new OrderBranchPayPerDay())->width('1/2'),
             (new OrderBranchNotPayPerDay())->width('1/2'),
             (new OrderCashPerDay())->width('1/2'),
