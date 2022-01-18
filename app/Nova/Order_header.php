@@ -269,7 +269,9 @@ class Order_header extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Orderstatus())->width('full')
+        ];
     }
 
     /**

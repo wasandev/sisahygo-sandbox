@@ -2,7 +2,7 @@
     <card class="flex flex-col  justify-center">
         <div class="px-3 py-3">
             <h1 class="text-left text-2xl text-80 font-light">
-                ความหมายของสถานะ
+                สถานะใบรับส่ง
             </h1>
 
             <table class="w-full" cellpadding="0" cellspacing="0">

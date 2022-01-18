@@ -21,6 +21,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Wasandev\Waybillstatus\Waybillstatus;
 
 class Branchrec_waybill extends Resource
 {
@@ -179,7 +180,9 @@ class Branchrec_waybill extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Waybillstatus())->width('full')
+        ];
     }
 
     /**

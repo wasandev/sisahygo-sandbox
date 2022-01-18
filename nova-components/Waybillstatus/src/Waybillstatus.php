@@ -1,17 +1,17 @@
 <?php
 
-namespace Wasandev\Orderstatus;
+namespace Wasandev\Waybillstatus;
 
 use Laravel\Nova\Card;
 
-class Orderstatus extends Card
+class Waybillstatus extends Card
 {
     /**
      * The width of the card (1/3, 1/2, or full).
      *
      * @var string
      */
-    public $width = 'full';
+    public $width = '1/3';
 
     /**
      * Get the component name for the element.
@@ -20,9 +20,8 @@ class Orderstatus extends Card
      */
     public function component()
     {
-        return 'orderstatus';
+        return 'waybillstatus';
     }
-
     /**
      * Get the URI key for the metric.
      *
@@ -30,10 +29,10 @@ class Orderstatus extends Card
      */
     public function uriKey()
     {
-        return 'orderstatus';
+        return 'waybillstatus';
     }
     public function name()
     {
-        return 'สถานะใบรับส่ง';
+        return 'สถานะใบกำกับ';
     }
 }

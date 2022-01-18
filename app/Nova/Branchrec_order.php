@@ -162,7 +162,7 @@ class Branchrec_order extends Resource
     public function cards(Request $request)
     {
         return [
-            (new Orderstatus()),
+            (new Orderstatus())->width('full'),
         ];
     }
 

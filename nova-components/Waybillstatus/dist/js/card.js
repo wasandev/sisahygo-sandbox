@@ -76,7 +76,7 @@ module.exports = __webpack_require__(6);
 /***/ (function(module, exports, __webpack_require__) {
 
 Nova.booting(function (Vue, router, store) {
-  Vue.component('orderstatus', __webpack_require__(2));
+  Vue.component('waybillstatus', __webpack_require__(2));
 });
 
 /***/ }),
@@ -288,27 +288,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["card"
-
-    // The following props are only available on resource detail cards...
-    // 'resource',
-    // 'resourceId',
-    // 'resourceName',
-    ],
+    props: ["card"],
 
     mounted: function mounted() {
         //
@@ -326,7 +308,7 @@ var render = function() {
   return _c("card", { staticClass: "flex flex-col  justify-center" }, [
     _c("div", { staticClass: "px-3 py-3" }, [
       _c("h1", { staticClass: "text-left text-2xl text-80 font-light" }, [
-        _vm._v("\n            สถานะใบรับส่ง\n        ")
+        _vm._v("\n            สถานะใบกำกับ\n        ")
       ]),
       _vm._v(" "),
       _c(
@@ -339,13 +321,13 @@ var render = function() {
           _c("tr", [
             _c("td", [
               _vm._v(
-                "\n                    1.Checking = กำลังตรวจรับสินค้า\n                "
+                "\n                    1.Loading = กำลังจัดขึ้นสินค้า\n                "
               )
             ]),
             _vm._v(" "),
             _c("td", [
               _vm._v(
-                "\n                    2.New = ยืนยันการตรวจรับสินค้าแล้ว\n                "
+                "\n                    2.Confirmed = ยืนยัน/ออกใบกำกับแล้ว\n                "
               )
             ])
           ]),
@@ -353,13 +335,13 @@ var render = function() {
           _c("tr", [
             _c("td", [
               _vm._v(
-                "\n                    3.Confirmed = สาขาต้นทางรับสินค้าไว้แล้ว\n                "
+                "\n                    3.In transit = รถออกจากสาขาต้นทางแล้ว\n                "
               )
             ]),
             _vm._v(" "),
             _c("td", [
               _vm._v(
-                "\n                    4.Loaded = จัดสินค้าขึ้นรถแล้ว\n                "
+                "\n                    4.Arrival = รถถึงสาขาปลายทางแล้ว\n                "
               )
             ])
           ]),
@@ -367,13 +349,13 @@ var render = function() {
           _c("tr", [
             _c("td", [
               _vm._v(
-                "\n                    5.In transit = สินค้าอยู่ระหว่างขนส่งไปสาขา\n                "
+                "\n                    5.Delivery = อยู่ระหว่างการจัดส่งสินค้าปลายทาง\n                "
               )
             ]),
             _vm._v(" "),
             _c("td", [
               _vm._v(
-                "\n                    6.Arrival = สินค้าอยู่สาขาปลายทาง\n                "
+                "\n                    6.Completed = จัดส่งสินค้าเรียบร้อยแล้ว\n                "
               )
             ])
           ]),
@@ -381,39 +363,15 @@ var render = function() {
           _c("tr", [
             _c("td", [
               _vm._v(
-                "\n                    7.Branch warehouse = สินค้าอยู่คลังสาขารอการจัดส่ง\n                "
+                "\n                    7.Cancel = ยกเลิกรายการแล้ว\n                "
               )
             ]),
             _vm._v(" "),
             _c("td", [
               _vm._v(
-                "\n                    8.Delivery = สินค้าอยู่ระหว่างการจัดส่ง\n                "
+                "\n                    8.Problem = มีปัญหาการขนส่ง\n                "
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", [
-              _vm._v(
-                "\n                    9.Completed = สินค้าจัดส่งถึงผู้รับปลายทางแล้ว\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _vm._v(
-                "\n                    10.Cancel = ยกเลิกรายการแล้ว\n                "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", [
-              _vm._v(
-                "\n                    11.Problem = มีปัญหาการขนส่ง\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("td")
           ])
         ]
       )

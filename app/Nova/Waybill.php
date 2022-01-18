@@ -20,7 +20,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ActionRequest;
-
+use Wasandev\Waybillstatus\Waybillstatus;
 
 class Waybill extends Resource
 {
@@ -197,7 +197,9 @@ class Waybill extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Waybillstatus())->width('full'),
+        ];
     }
 
     /**
