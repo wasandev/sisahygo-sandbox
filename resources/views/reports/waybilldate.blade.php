@@ -101,8 +101,10 @@
 
                 </td>
                 <td style="text-align: right;">
+                    @if ($sumdate_amount > 0)
+                        {{ number_format( ($sumdate_income / $sumdate_amount)  * 100 ,2,'.',',')}}
+                    @endif
 
-                    {{ number_format( ($sumdate_income / $sumdate_amount)  * 100 ,2,'.',',')}}
 
                 </td>
                 <td style="text-align: right;">
@@ -214,8 +216,10 @@
                         {{ number_format($sumbranch_income,2,'.',',') }}
                     </td>
                     <td style="text-align: right;">
+                        @if ($sumbranch_amount > 0)
+                            {{ number_format( ($sumbranch_income / $sumbranch_amount)  * 100 ,2,'.',',')}}
 
-                        {{ number_format( ($sumbranch_income / $sumbranch_amount)  * 100 ,2,'.',',')}}
+                        @endif
 
                     </td>
                     <td style="text-align: right;">
@@ -322,8 +326,9 @@
                         {{ number_format($sumtype_income,2,'.',',') }}
                     </td>
                     <td style="text-align: right;">
+                        @if($sumtype_amount > 0)
                         {{ number_format( ($sumtype_income / $sumtype_amount)  * 100 ,2,'.',',')}}
-
+                        @endif
                     </td>
                     <td style="text-align: right;">
                         @php
@@ -411,8 +416,9 @@
                             {{number_format($item->waybill_income,2,'.',',')}}
                         </td>
                         <td style="text-align: right">
-                            {{number_format(($item->waybill_income/$item->waybill_amount)*100,2,'.',',')}}
-
+                            @if($item->waybill_amount > 0 )
+                                {{number_format(($item->waybill_income/$item->waybill_amount)*100,2,'.',',')}}
+                            @endif
                         </td>
 
                         <td style="text-align: right;">

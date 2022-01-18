@@ -126,6 +126,7 @@ class Order_loader extends Resource
                 ->sortable(),
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
+                ->searchable()
                 ->hideFromIndex(),
 
             Text::make(__('Remark'), 'remark')->nullable()

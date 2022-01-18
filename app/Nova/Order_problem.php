@@ -85,7 +85,10 @@ class Order_problem extends Resource
                 Date::make('วันที่', 'problem_date')
                     ->readonly()
                     ->sortable(),
-
+                BelongsTo::make('รายงานโดย', 'user', 'App\Nova\User')->readonly(),
+                Text::make('เส้นทางขนส่ง', 'branchpoint', function () {
+                    return $this->order_header->branch->name . '-' . $this->order_header->to_branch->name;
+                }),
                 BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
                     ->sortable()
                     ->searchable()
@@ -144,9 +147,7 @@ class Order_problem extends Resource
 
         return [
 
-            Text::make('จุดรับสินค้า', 'branchpoint', function () {
-                return $this->order_header->branch->name . '-' . $this->order_header->to_branch->name;
-            })->onlyOnDetail(),
+
             Boolean::make('การชำระค่าขนส่ง', 'payment_status', function () {
                 return $this->order_header->payment_status;
             })->onlyOnDetail(),
@@ -302,8 +303,7 @@ class Order_problem extends Resource
                     return null;
                 }
             })->onlyOnDetail(),
-            BelongsTo::make('พนักงานผู้แจ้งเรื่อง', 'user', 'App\Nova\User')
-                ->onlyOnDetail(),
+
             BelongsTo::make('ผู้รับเรื่อง', 'checker', 'App\Nova\User')
                 ->onlyOnDetail(),
 

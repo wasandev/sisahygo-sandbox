@@ -12,7 +12,7 @@ abstract class Resource extends NovaResource
     public static $showColumnBorders = true;
     public static $tableStyle = 'tight';
     public static $perPageViaRelationship = 200;
-    public static $relatableSearchResults = 50;
+    public static $relatableSearchResults = 200;
 
 
     /**
