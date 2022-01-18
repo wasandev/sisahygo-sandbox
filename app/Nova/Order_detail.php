@@ -21,7 +21,7 @@ class Order_detail extends Resource
     public static $priority = 2;
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
-    public static $with = ['productservice_price', 'product', 'unit'];
+    public static $with = ['product', 'unit'];
 
     /**
      * The model the resource corresponds to.
@@ -102,9 +102,9 @@ class Order_detail extends Resource
                 ->rules('required'),
 
             Number::make('จำนวนเงิน', function () {
-                if ($this->usepricetable) {
-                    return number_format($this->amount *  $this->productservice_price->price, 2, '.', ',');
-                }
+                // if ($this->usepricetable) {
+                //     return number_format($this->amount *  $this->productservice_price->price, 2, '.', ',');
+                // }
                 return number_format($this->amount *  $this->price, 2, '.', ',');
             }),
 
