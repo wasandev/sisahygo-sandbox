@@ -68,7 +68,7 @@ class Order_header extends Resource
      * @var array
      */
     public static $search = [
-        'order_header_no', 'tracking_no'
+        'order_header_no', 'tracking_no', 'id'
     ];
 
     public static $searchRelations = [
