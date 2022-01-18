@@ -125,7 +125,7 @@ class Order_banktransfers extends Resource
     public function cards(Request $request)
     {
         return [
-            new OrderTransferPerDay(),
+            (new OrderTransferPerDay())->width('full'),
         ];
     }
 
