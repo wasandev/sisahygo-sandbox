@@ -16,6 +16,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
@@ -102,6 +103,7 @@ class BranchReceipt extends Action
             }
 
             $model->remark = $fields->description;
+            $model->branchpay_date = $fields->paydate;
             $model->save();
         }
 
@@ -125,6 +127,8 @@ class BranchReceipt extends Action
             return [
                 Currency::make('ค่าขนส่งที่ต้องจัดเก็บ', 'bal_amount')->default($branch_balance->bal_amount)
                     ->readonly(),
+                Date::make('วันที่รับชำระ', 'paydate')
+                    ->default(today()->toDateString()),
 
                 Select::make('รับชำระด้วย', 'payment_by')->options([
                     'C' => 'เงินสด',
@@ -147,7 +151,8 @@ class BranchReceipt extends Action
         return [
             Currency::make('ค่าขนส่งที่ต้องจัดเก็บ', 'bal_amount')
                 ->readonly(),
-
+            Date::make('วันที่รับชำระ', 'paydate')
+                ->default(today()->toDateString()),
             Select::make('รับชำระด้วย', 'payment_by')->options([
                 'C' => 'เงินสด',
                 'T' => 'เงินโอน',
