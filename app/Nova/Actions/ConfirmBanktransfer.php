@@ -62,9 +62,9 @@ class ConfirmBanktransfer extends Action
 
                 $tranitem = $cust_groups->firstWhere('customer_id', $rec_cust);
 
-                if ($tranitem->order_header->paymenttype === 'T') {
+                if ($tranitem->order_header->paymenttype == 'T') {
                     $receipttype = 'H';
-                } elseif ($tranitem->order_header->paymenttype === 'E') {
+                } elseif ($tranitem->order_header->paymenttype == 'E') {
                     $receipttype = 'E';
                 } else {
                     $receipttype = 'B';

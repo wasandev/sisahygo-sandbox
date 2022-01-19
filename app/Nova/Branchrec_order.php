@@ -89,7 +89,7 @@ class Branchrec_order extends Resource
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['in transit'])
                 ->failedWhen(['cancel'])
-                ->exceptOnForms(),
+                ->hideWhenCreating(),
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
             Text::make(__('Order header no'), 'order_header_no')

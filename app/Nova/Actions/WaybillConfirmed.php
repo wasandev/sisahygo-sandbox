@@ -58,7 +58,6 @@ class WaybillConfirmed extends Action
                 $model->waybill_status = 'confirmed';
                 $model->save();
                 return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
-                //return Action::push('/resources/waybills/');
             }
 
             return Action::danger('ไม่สามารถยืนยันรายการได้ ->ไม่มีรายการใบรับส่ง!');

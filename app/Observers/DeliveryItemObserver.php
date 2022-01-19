@@ -7,7 +7,6 @@ use App\Models\Branchrec_order;
 use App\Models\Delivery;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
-use App\Models\Order_banktransfer;
 use App\Models\Order_status;
 use App\Models\Receipt;
 use App\Models\User;
@@ -123,6 +122,18 @@ class DeliveryItemObserver
                 'status' => 'branch warehouse',
                 'user_id' => auth()->user()->id,
             ]);
+        }
+        $delivery = Delivery::find($delivery_item->delivery_id);
+        $ordernotconfirmed = Delivery_item::where('delivery_id', $delivery->id)
+            ->where('delivery_status', '=', false)
+            ->count();
+
+        if ($ordernotconfirmed == 0) {
+            $delivery->completed = true;
+            $delivery->save();
+        } else {
+            $delivery->completed = false;
+            $delivery->save();
         }
     }
 }

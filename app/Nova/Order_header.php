@@ -105,7 +105,8 @@ class Order_header extends Resource
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['new'])
                 ->failedWhen(['cancel', 'problem'])
-                ->exceptOnForms()
+                ->hideWhenCreating()
+                ->showOnUpdating()
                 ->sortable(),
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
                 //->hideWhenCreating()
