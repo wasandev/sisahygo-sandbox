@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Filters\RouteToBranch;
 use App\Nova\Filters\ShowByWaybillStatus;
+use App\Nova\Filters\ToBranch;
 use App\Nova\Filters\WaybillFromDate;
 use App\Nova\Filters\WaybillToDate;
 //use Epartment\NovaDependencyContainer\HasDependencies;
@@ -195,7 +196,7 @@ class Branchrec_waybill extends Resource
     {
         return [
             (new ShowByWaybillStatus()),
-            (new RouteToBranch()),
+            (new ToBranch()),
             (new WaybillFromDate()),
             (new WaybillToDate())
         ];
