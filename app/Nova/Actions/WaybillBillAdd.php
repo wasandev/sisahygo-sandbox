@@ -44,7 +44,7 @@ class WaybillBillAdd extends Action
 
             Order_status::Create([
                 'order_header_id' => $order_add->id,
-                'status' => $model->waybill_status,
+                'status' => 'loaded',
                 'user_id' => auth()->user()->id,
             ]);
 
