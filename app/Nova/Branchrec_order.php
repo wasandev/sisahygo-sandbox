@@ -217,7 +217,17 @@ class Branchrec_order extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
                 }),
-
+            (new Actions\PrintPdfOrder)
+                ->onlyOnDetail()
+                ->confirmText('ต้องการบันทึกใบรับส่งรายการนี้เป็นไฟล์ PDF?')
+                ->confirmButtonText('บันทึก')
+                ->cancelButtonText("ไม่บันทึก")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                }),
             (new CreateTruckDeliveryItems($request->resourceId))
                 ->confirmText('ต้องการทำ -รายการจัดส่งโดยรถบรรทุก- จากใบรับส่งที่เลือกไว้')
                 ->confirmButtonText('ใช่')
@@ -285,16 +295,20 @@ class Branchrec_order extends Resource
     {
 
 
-        $resourceTable = 'order_headers';
-        $query->select("{$resourceTable}.*");
-        $query->addSelect('c.district as customerDistrict');
-        $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
+        // $resourceTable = 'order_headers';
+        // $query->select("{$resourceTable}.*");
+        // $query->addSelect('c.district as customerDistrict');
+        // $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
 
-        $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
-            $q->getQuery()->orders = null;
-            return $q->orderBy('customerDistrict', 'asc')
-                ->orderBy('order_headers.waybill_id', 'desc')
-                ->orderBy('order_headers.id', 'asc');
-        });
+        // $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+        //     $q->getQuery()->orders = null;
+        //     return $q->orderBy('customerDistrict', 'asc')
+        //         ->orderBy('order_headers.waybill_id', 'desc')
+        //         ->orderBy('order_headers.id', 'asc');
+        // });
+
+        return $query->whereInNotIn('order_status', ['checking', 'new'])
+            ->where('branch_id', '=', $request->user()->branch_id)
+            ->where('order_type', '<>', 'charter');
     }
 }
