@@ -295,20 +295,16 @@ class Branchrec_order extends Resource
     {
 
 
-        // $resourceTable = 'order_headers';
-        // $query->select("{$resourceTable}.*");
-        // $query->addSelect('c.district as customerDistrict');
-        // $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
+        $resourceTable = 'order_headers';
+        $query->select("{$resourceTable}.*");
+        $query->addSelect('c.district as customerDistrict');
+        $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
 
-        // $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
-        //     $q->getQuery()->orders = null;
-        //     return $q->orderBy('customerDistrict', 'asc')
-        //         ->orderBy('order_headers.waybill_id', 'desc')
-        //         ->orderBy('order_headers.id', 'asc');
-        // });
-
-        return $query->whereInNotIn('order_status', ['checking', 'new'])
-            ->where('branch_id', '=', $request->user()->branch_id)
-            ->where('order_type', '<>', 'charter');
+        $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+            $q->getQuery()->orders = null;
+            return $q->orderBy('customerDistrict', 'asc')
+                ->orderBy('order_headers.waybill_id', 'desc')
+                ->orderBy('order_headers.id', 'asc');
+        });
     }
 }
