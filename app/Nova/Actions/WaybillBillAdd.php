@@ -39,7 +39,7 @@ class WaybillBillAdd extends Action
 
             $order_add = Order_header::find($fields->order_add);
             $order_add->waybill_id = $model->id;
-            $order_add->order_status = $model->waybill_status;
+            $order_add->order_status = 'loaded';
             $order_add->save();
 
             Order_status::Create([
