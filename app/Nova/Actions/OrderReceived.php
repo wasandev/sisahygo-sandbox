@@ -50,11 +50,11 @@ class OrderReceived extends Action
     {
 
         foreach ($models as $model) {
-
+            if ($model->order_status <> 'branch warehouse') {
+                return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้ ไม่ได้มีสถานะลงไว้คลังสาขา');
+            }
             if ($model->paymenttype == 'E') {
-                if ($model->order_status <> 'branch warehouse') {
-                    return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้ ไม่ได้มีสถานะลงไว้คลังสาขา');
-                }
+
                 if ($fields->payment_by == 'C') {
                     $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
                     if ($fields->tax_status) {
@@ -80,10 +80,7 @@ class OrderReceived extends Action
                     ]);
                 }
             }
-            $model->order_status = 'completed';
-            $model->trantype = '0';
-            $model->order_recname = $fields->order_recname;
-            $model->idcardno = $fields->idcardno;
+
             if ($model->order_amount > 0 && $model->paymenttype == 'E') {
                 $model->branchpay_by =  $fields->payment_by;
 
@@ -120,7 +117,10 @@ class OrderReceived extends Action
                     $branch_balance->save();
                 }
             }
-
+            $model->order_status = 'completed';
+            $model->trantype = '0';
+            $model->order_recname = $fields->order_recname;
+            $model->idcardno = $fields->idcardno;
             $model->save();
             Order_status::create([
                 'order_header_id' => $model->id,
