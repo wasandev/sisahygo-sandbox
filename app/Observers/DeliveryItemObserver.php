@@ -65,14 +65,14 @@ class DeliveryItemObserver
                         $branch_balance->save();
                     }
                     //test notification
-                    $tousers = User::where('role', 'employee')
-                        ->get();
+                    // $tousers = User::where('role', 'employee')
+                    //     ->get();
 
-                    foreach ($tousers as $touser) {
-                        if ($touser->hasPermissionTo('view fndashboards') || $touser->hasPermissionTo('view ardashboards')) {
-                            $touser->notify(new OrderPaid($touser, $branchrec_order));
-                        }
-                    }
+                    // foreach ($tousers as $touser) {
+                    //     if ($touser->hasPermissionTo('view fndashboards') || $touser->hasPermissionTo('view ardashboards')) {
+                    //         $touser->notify(new OrderPaid($touser, $branchrec_order));
+                    //     }
+                    // }
                 }
             }
         }

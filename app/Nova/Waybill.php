@@ -145,7 +145,14 @@ class Waybill extends Resource
             Currency::make('ค่าบรรทุก', 'waybill_payable')
                 ->hideWhenCreating()
                 ->showOnUpdating(),
-
+            Number::make('ยอดเก็บปลายทาง', 'branchpay', function () {
+                return number_format(
+                    $this->order_loaders->where('paymenttype', '=', 'E')->sum('order_amount'),
+                    2,
+                    '.',
+                    ','
+                );
+            })->exceptOnForms(),
             Currency::make('รายได้บริษัท', 'waybill_income')
                 ->onlyOnDetail(),
             Number::make('%รายได้', 'income', function () {

@@ -36,13 +36,11 @@ class Branch_balance_partnerPolicy
 
     public function update(User $user, Branch_balance_partner $branch_balance_partner)
     {
-        return false;
-        //$user->role == 'admin' || $user->hasPermissionTo('edit branch_balance_partner');
+        return $user->role == 'admin' || $user->hasPermissionTo('edit branch_balance_partner');
     }
 
     public function delete(User $user, Branch_balance_partner $branch_balance_partner)
     {
-        return  false;
-        $user->role == 'admin' || $user->hasPermissionTo('delete branch_balance_partner');
+        return   $user->role == 'admin';
     }
 }

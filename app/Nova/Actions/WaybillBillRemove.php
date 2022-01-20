@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Branch_balance;
 use App\Models\Car_balance;
+use App\Models\Carpayment;
 use App\Models\Delivery_detail;
 use App\Models\Order_loader;
 use App\Models\Order_status;
@@ -46,6 +47,9 @@ class WaybillBillRemove extends Action
             //if ($model->waybill_status != 'completed') {
 
             $order_remove = Order_loader::find($fields->order_remove);
+            if ($order_remove->order_status == 'completed') {
+                return Action::message('ไม่สามารถนำใบรับส่งรายการนี้ออกได้ เนื่องจากทำการจัดส่งแล้ว');
+            }
 
             $order_remove->waybill_id = null;
             $order_remove->order_status = 'confirmed';
@@ -75,6 +79,16 @@ class WaybillBillRemove extends Action
 
                 $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                 $model->waybill_payable = $car_payamount;
+                //update carpayment amount and tax
+                $branchpayment = Carpayment::where('waybill_id', '=', $model->id)
+                    ->where('type', 'B')->first();
+
+                if (isset($branchpayment)) {
+                    $current_payamount = $branchpayment->amount;
+                    $branchpayment->amount = $current_payamount - $order_remove->order_amount;
+                    $branchpayment->tax_amount =  ($current_payamount - $order_remove->order_amount) * 0.01;
+                    $branchpayment->save();
+                }
             } else {
 
                 if ($routeto_branch_cost->chargeflag) {

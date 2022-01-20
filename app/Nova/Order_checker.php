@@ -101,10 +101,10 @@ class Order_checker extends Resource
                 ->exceptOnForms(),
 
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->hideFromIndex(),
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-                //->hideWhenCreating()
-                ->hideFromIndex()
+
                 ->nullable()
                 ->help('***โปรดระบุสาขา ถ้าที่อยู่ลูกค้าปลายทางอยู่นอกพื้นที่บริการของสาขาปลายทาง'),
             Select::make('ประเภท', 'order_type')->options([

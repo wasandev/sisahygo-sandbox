@@ -88,7 +88,7 @@ class Order_problem extends Resource
                 BelongsTo::make('รายงานโดย', 'user', 'App\Nova\User')->readonly(),
                 Text::make('เส้นทางขนส่ง', 'branchpoint', function () {
                     return $this->order_header->branch->name . '-' . $this->order_header->to_branch->name;
-                }),
+                })->exceptOnForms(),
                 BelongsTo::make('เลขที่ใบรับส่ง', 'order_header', 'App\Nova\Order_header')
                     ->sortable()
                     ->searchable()

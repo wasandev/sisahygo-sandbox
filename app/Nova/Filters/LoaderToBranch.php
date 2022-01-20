@@ -21,7 +21,6 @@ class LoaderToBranch extends Filter
         if (isset(auth()->user()->branch_rec_id)) {
             return  auth()->user()->branch_rec_id;
         }
-        return null;
     }
 
     /**
