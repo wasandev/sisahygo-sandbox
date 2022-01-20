@@ -94,7 +94,7 @@ class Order_loader extends Resource
             Select::make('ประเภท', 'order_type')->options([
                 'general' => 'ทั่วไป',
                 'express' => 'Express',
-            ])->onlyOnIndex()
+            ])->onlyOnDetail()
                 ->displayUsingLabels(),
 
             Text::make('อำเภอ', 'branch_district', function () {
@@ -109,21 +109,23 @@ class Order_loader extends Resource
                 ->nullable(),
 
 
-
+            Text::make(__('Payment type'), 'paymenttype')
+                ->onlyOnIndex(),
+            Currency::make('จำนวนเงิน', 'order_amount')
+                ->exceptOnForms(),
             BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms(),
             BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
                 ->sortable()
                 ->exceptOnForms(),
-
-            Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
             Select::make(__('Tran type'), 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
             ])->displayUsingLabels()
                 ->sortable(),
+
+
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->searchable()

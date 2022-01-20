@@ -2,7 +2,9 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Branch_balance;
 use App\Models\Car_balance;
+use App\Models\Carpayment;
 use App\Models\Order_header;
 use App\Models\Order_status;
 use App\Models\Routeto_branch;
@@ -35,16 +37,65 @@ class WaybillBillAdd extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            //if ($model->waybill_status != 'completed') {
+
 
             $order_add = Order_header::find($fields->order_add);
+            if ($order_add->order_status  <> 'confirmed') {
+                return Action::message('เพิ่มใบรับส่งได้เฉพาะรายการที่มีสถานะ -Confirmed- เท่านั้น');
+            }
             $order_add->waybill_id = $model->id;
-            $order_add->order_status = 'loaded';
+            if ($model->waybill_status == 'loading') {
+                $order_add->order_status = 'loaded';
+            } elseif ($model->waybill_status == 'in transit') {
+                $order_add->order_status = 'in transit';
+            } elseif ($model->waybill_status == 'arrival' || $model->waybill_status == 'delivery' || $model->waybill_status == 'completed') {
+                $order_add->order_status = 'branch warehouse';
+                //add to branch_balance
+                if ($order_add->paymenttype == 'E') {
+                    $branch_balance = Branch_balance::where('order_header_id', '=', $order_add->id)->first();
+                    if (empty($branch_balance)) {
+                        if ($model->to_branch->type == 'partner') {
+                            //check in branch_balance
+
+
+                            Branch_balance::create([
+                                'branchbal_date' => today(),
+                                'branch_id' => $model->branch_rec_id,
+                                'order_header_id' => $order_add->id,
+                                'bal_amount' => $order_add->order_amount,
+                                'discount_amount' => 0.00,
+                                'tax_amount' => 0.00,
+                                'pay_amount' => 0.00,
+                                'customer_id' => $order_add->customer_rec_id,
+                                'payment_status' => false,
+                                'type' => 'partner',
+                                'user_id' => auth()->user()->id,
+                            ]);
+                        } else {
+                            Branch_balance::create([
+                                'branchbal_date' => today(),
+                                'branch_id' => $model->branch_rec_id,
+                                'order_header_id' => $order_add->id,
+                                'bal_amount' => $order_add->order_amount,
+                                'discount_amount' => 0.00,
+                                'tax_amount' => 0.00,
+                                'pay_amount' => 0.00,
+                                'customer_id' => $order_add->customer_rec_id,
+                                'payment_status' => false,
+                                'type' => 'owner',
+                                'user_id' => auth()->user()->id,
+                            ]);
+                        }
+                    }
+                }
+            }
+
+
             $order_add->save();
 
             Order_status::Create([
                 'order_header_id' => $order_add->id,
-                'status' => 'loaded',
+                'status' => $order_add->order_status,
                 'user_id' => auth()->user()->id,
             ]);
 
@@ -57,6 +108,8 @@ class WaybillBillAdd extends Action
             $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $model->routeto_branch_id)
                 ->where('cartype_id', '=', $model->car->cartype_id)
                 ->first();
+            //addto branch_balance
+
 
             if ($routeto_branch->branch->type == 'partner') {
                 $chargerate = $routeto_branch->branch->partner_rate;
@@ -66,6 +119,19 @@ class WaybillBillAdd extends Action
                 $chargerate = $routeto_branch->dest_branch->partner_rate;
                 $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                 $model->waybill_payable = $car_payamount;
+                //update carpayment amount and tax
+                if ($order_add->paymenttype == 'E') {
+                    //ยอดเก็บปลายทาง
+                    $branch_balance_pay = $model->order_loaders->where('paymenttype', '=', 'E')->sum('order_amount');
+                    $branchpayment = Carpayment::where('waybill_id', '=', $model->id)
+                        ->where('type', 'B')->first();
+
+                    if (isset($branchpayment)) {
+                        $branchpayment->amount = $branch_balance_pay;
+                        $branchpayment->tax_amount =  $branch_balance_pay * 0.01;
+                        $branchpayment->save();
+                    }
+                }
             } else {
 
                 if ($routeto_branch_cost->chargeflag) {

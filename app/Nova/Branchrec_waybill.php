@@ -132,6 +132,14 @@ class Branchrec_waybill extends Resource
             })->exceptOnForms(),
             Currency::make('ค่าบรรทุก', 'waybill_payable')
                 ->onlyOnDetail(),
+            Number::make('ยอดเก็บปลายทาง', 'branchpay', function () {
+                return number_format(
+                    $this->branchrec_orders->where('paymenttype', '=', 'E')->sum('order_amount'),
+                    2,
+                    '.',
+                    ','
+                );
+            })->exceptOnForms(),
             Currency::make('รายได้บริษัท', 'waybill_income')
                 ->onlyOnDetail(),
 

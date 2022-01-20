@@ -118,7 +118,10 @@ class Car extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make(__('Car Balance'), 'car_balances', 'App\Nova\Car_balance')
+            HasMany::make(__('Car Balance'), 'car_balances', 'App\Nova\Car_balance'),
+            HasMany::make('รายการใบกำกับ', 'waybills', 'App\Nova\Waybill'),
+            HasMany::make('รายการจ่ายรถ', 'carpayments', 'App\Nova\Carpayment')
+
 
         ];
     }

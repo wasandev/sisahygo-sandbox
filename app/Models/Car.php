@@ -121,4 +121,14 @@ class Car extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    /**
+     * Get all of the carpayments for the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carpayments()
+    {
+        return $this->hasMany(Carpayment::class);
+    }
 }

@@ -63,6 +63,8 @@ class WaybillBillRemove extends Action
             //update waybill_amount
             $updated_waybillamount =   $model->order_loaders->sum('order_amount');
             $model->waybill_amount = $updated_waybillamount;
+
+
             //check option
             $routeto_branch = Routeto_branch::find($model->routeto_branch_id);
             $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $model->routeto_branch_id)
@@ -81,13 +83,14 @@ class WaybillBillRemove extends Action
                 $model->waybill_payable = $car_payamount;
                 //update carpayment amount and tax
                 if ($order_remove->paymenttype == 'E') {
+                    //ยอดเก็บปลายทาง
+                    $branch_balance_pay = $model->order_loaders->where('paymenttype', '=', 'E')->sum('order_amount');
                     $branchpayment = Carpayment::where('waybill_id', '=', $model->id)
                         ->where('type', 'B')->first();
 
                     if (isset($branchpayment)) {
-                        $current_payamount = $branchpayment->amount;
-                        $branchpayment->amount = $current_payamount - $order_remove->order_amount;
-                        $branchpayment->tax_amount =  ($current_payamount - $order_remove->order_amount) * 0.01;
+                        $branchpayment->amount = $branch_balance_pay;
+                        $branchpayment->tax_amount =  $branch_balance_pay * 0.01;
                         $branchpayment->save();
                     }
                 }

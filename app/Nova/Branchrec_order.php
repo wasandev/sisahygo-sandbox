@@ -296,26 +296,26 @@ class Branchrec_order extends Resource
     {
 
 
-        // $resourceTable = 'order_headers';
-        // $query->select("{$resourceTable}.*");
-        // $query->addSelect('c.district as customerDistrict');
-        // $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
+        $resourceTable = 'order_headers';
+        $query->select("{$resourceTable}.*");
+        $query->addSelect('c.district as customerDistrict');
+        $query->join('customers as c', "{$resourceTable}.customer_rec_id", '=', 'c.id');
 
-        // $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
-        //     $q->getQuery()->orders = null;
-        //     return $q->orderBy('customerDistrict', 'asc')
-        //         ->orderBy('order_headers.waybill_id', 'desc')
-        //         ->orderBy('order_headers.id', 'asc');
-        // });
+        $query->when(empty($request->get('orderBy')), function (Builder $q) use ($resourceTable) {
+            $q->getQuery()->orders = null;
+            return $q->orderBy('customerDistrict', 'asc')
+                ->orderBy('order_headers.waybill_id', 'desc')
+                ->orderBy('order_headers.id', 'asc');
+        });
 
-        $branch = \App\Models\Branch::find($request->user()->branch_id);
-        if ($branch->code == '001') {
-            return $query->whereNotIn('order_status', ['checking', 'new'])
-                ->where('order_type', '<>', 'charter');
-        } else {
-            return $query->whereNotIn('order_status', ['checking', 'new'])
-                ->where('branch_rec_id', '=', $request->user()->branch_id)
-                ->where('order_type', '<>', 'charter');
-        }
+        // $branch = \App\Models\Branch::find($request->user()->branch_id);
+        // if ($branch->code == '001') {
+        //     return $query->whereNotIn('order_status', ['checking', 'new'])
+        //         ->where('order_type', '<>', 'charter');
+        // } else {
+        //     return $query->whereNotIn('order_status', ['checking', 'new'])
+        //         ->where('branch_rec_id', '=', $request->user()->branch_id)
+        //         ->where('order_type', '<>', 'charter');
+        // }
     }
 }
