@@ -80,14 +80,16 @@ class WaybillBillRemove extends Action
                 $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                 $model->waybill_payable = $car_payamount;
                 //update carpayment amount and tax
-                $branchpayment = Carpayment::where('waybill_id', '=', $model->id)
-                    ->where('type', 'B')->first();
+                if ($order_remove->paymenttype == 'E') {
+                    $branchpayment = Carpayment::where('waybill_id', '=', $model->id)
+                        ->where('type', 'B')->first();
 
-                if (isset($branchpayment)) {
-                    $current_payamount = $branchpayment->amount;
-                    $branchpayment->amount = $current_payamount - $order_remove->order_amount;
-                    $branchpayment->tax_amount =  ($current_payamount - $order_remove->order_amount) * 0.01;
-                    $branchpayment->save();
+                    if (isset($branchpayment)) {
+                        $current_payamount = $branchpayment->amount;
+                        $branchpayment->amount = $current_payamount - $order_remove->order_amount;
+                        $branchpayment->tax_amount =  ($current_payamount - $order_remove->order_amount) * 0.01;
+                        $branchpayment->save();
+                    }
                 }
             } else {
 
