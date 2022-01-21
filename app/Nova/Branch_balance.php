@@ -113,8 +113,8 @@ class Branch_balance extends Resource
 
             Currency::make('ส่วนลด', 'discount_amount')
                 ->sortable(),
-            Currency::make('ภาษี', 'tax_amount')
-                ->hideFromIndex(),
+            Currency::make('ภาษี', 'tax_amount'),
+
             Currency::make('ยอดรับชำระ', 'pay_amount'),
 
 
@@ -131,7 +131,7 @@ class Branch_balance extends Resource
                 } else {
                     return '-';
                 }
-            })->hideFromIndex(),
+            }),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
         ];
     }
