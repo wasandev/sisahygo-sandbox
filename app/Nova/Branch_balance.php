@@ -7,6 +7,8 @@ use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchBalanceStatus;
 use App\Nova\Filters\BranchbalanceToDate;
+use App\Nova\Filters\BranchPayFromDate;
+use App\Nova\Filters\BranchPayToDate;
 use App\Nova\Lenses\Branch\BranchBalanceBydate;
 use App\Nova\Lenses\Branch\BranchBalanceReceipt;
 use App\Nova\Lenses\Branch\BranchBalanceReport;
@@ -160,6 +162,9 @@ class Branch_balance extends Resource
             new BranchBalanceFilter(),
             new BranchbalanceFromDate(),
             new BranchbalanceToDate(),
+            new BranchPayFromDate(),
+            new BranchPayToDate(),
+
 
         ];
     }

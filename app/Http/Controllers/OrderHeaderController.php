@@ -373,20 +373,21 @@ class OrderHeaderController extends Controller
 
 
 
-        $order = Order_header::join('customers as b', 'b.id', '=', 'order_headers.customer_rec_id')
+        $orders = Order_header::join('customers as b', 'b.id', '=', 'order_headers.customer_rec_id')
             ->where('order_headers.branch_id', $branch)
             ->whereDate('order_headers.order_header_date', '<=', $to)
             ->where('order_headers.order_status', 'confirmed')
             ->orderBy('order_headers.branch_rec_id', 'asc')
+            ->orderBy('b.district', 'asc')
             ->orderBy('order_headers.id', 'asc')
             ->get();
 
-        $order_groups = $order->groupBy([function ($item) {
+        $order_groups = $orders->groupBy([function ($item) {
             return $item->branch_rec_id;
-        }, 'customers.district']);
+        }, 'b.district']);
 
         $order_groups = $order_groups->all();
-        dd($order_groups);
-        return view('reports.orderbranchnotload', compact('company', 'report_title', 'order', 'order_groups', 'branch', 'to'));
+
+        return view('reports.orderbranchnotload', compact('company', 'report_title', 'orders', 'order_groups', 'branch', 'to'));
     }
 }

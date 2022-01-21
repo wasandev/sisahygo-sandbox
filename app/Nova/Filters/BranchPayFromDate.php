@@ -8,7 +8,7 @@ use Laravel\Nova\Filters\DateFilter;
 
 class BranchPayFromDate extends DateFilter
 {
-    public $name = 'จากวันที่';
+    public $name = 'วันที่รับชำระ - จากวันที่';
     /**
      * The filter's component.
      *

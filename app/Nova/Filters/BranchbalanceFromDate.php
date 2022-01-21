@@ -8,7 +8,7 @@ use Laravel\Nova\Filters\DateFilter;
 
 class BranchbalanceFromDate extends DateFilter
 {
-    public $name = 'จากวันที่';
+    public $name = 'วันที่ตั้งหนี้ - จากวันที่';
     /**
      * The filter's component.
      *
