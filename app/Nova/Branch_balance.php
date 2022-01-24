@@ -21,6 +21,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 
 class Branch_balance extends Resource
@@ -86,8 +87,9 @@ class Branch_balance extends Resource
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('สถานะการชำระ', 'payment_status')
                 ->sortable(),
-
-
+            Text::make('สถานะใบรับส่ง', function () {
+                return $this->branchrec_order->order_status;
+            }),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->sortable()
                 ->exceptOnForms(),
@@ -98,7 +100,7 @@ class Branch_balance extends Resource
             Date::make('วันที่ตั้งหนี้', 'branchbal_date')
                 ->sortable()
                 ->format('DD-MM-YYYY')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
             BelongsTo::make(__('Customer'), 'customer', 'App\Nova\Customer')
                 ->sortable()->exceptOnForms(),
             BelongsTo::make('ใบจัดส่ง', 'delivery', 'App\Nova\Delivery')
@@ -116,10 +118,6 @@ class Branch_balance extends Resource
             Currency::make('ภาษี', 'tax_amount'),
 
             Currency::make('ยอดรับชำระ', 'pay_amount'),
-
-
-
-
 
             Text::make('ชำระโดย',  function () {
                 if (isset($this->receipt_id)) {
@@ -160,10 +158,11 @@ class Branch_balance extends Resource
         return [
             new BranchBalanceStatus(),
             new BranchBalanceFilter(),
-            new BranchbalanceFromDate(),
-            new BranchbalanceToDate(),
             new BranchPayFromDate(),
             new BranchPayToDate(),
+            new BranchbalanceFromDate(),
+            new BranchbalanceToDate(),
+
 
 
         ];

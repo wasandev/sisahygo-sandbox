@@ -20,6 +20,7 @@ use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
 
 class OrderReceived extends Action
 {
@@ -53,18 +54,19 @@ class OrderReceived extends Action
             if ($model->order_status <> 'branch warehouse') {
                 return Action::danger('ไม่สามารถยืนยันการรับสินค้ารายการนี้ได้ ไม่ได้มีสถานะลงไว้คลังสาขา');
             }
+            if ($fields->tax_status) {
+                $tax_amount = $model->order_amount * 0.01;
+            } else {
+                $tax_amount = 0;
+            }
             if ($model->paymenttype == 'E') {
 
                 if ($fields->payment_by == 'C') {
                     $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
-                    if ($fields->tax_status) {
-                        $tax_amount = $model->order_amount * 0.01;
-                    } else {
-                        $tax_amount = 0;
-                    }
+
                     $receipt = Receipt::create([
                         'receipt_no' => $receipt_no,
-                        'receipt_date' => today(),
+                        'receipt_date' => $fields->paydate,
                         'branch_id' => auth()->user()->branch_id,
                         'customer_id' => $model->customer_id,
                         'total_amount' => $model->order_amount,
@@ -98,7 +100,7 @@ class OrderReceived extends Action
                         'branch_id' => $model->branch_rec_id,
                         'status' => false,
                         'transfer_type' => 'E',
-                        'transfer_amount' => $model->order_amount,
+                        'transfer_amount' => $model->order_amount - $fields->discount_amount - $tax_amount,
                         'bankaccount_id' => $fields->bankaccount,
                         'reference' => $fields->reference,
                         'user_id' => auth()->user()->id,
@@ -107,9 +109,11 @@ class OrderReceived extends Action
                     $model->payment_status = true;
                     //update branch_balance
                     $branch_balance = Branch_balance::where('order_header_id', $model->id)->first();
-                    $branch_balance->pay_amount = $model->order_amount;
+                    $branch_balance->pay_amount = $model->order_amount - $fields->discount_amount - $tax_amount;
+                    $branch_balance->discount_amount = $fields->discount_amount;
+                    $branch_balance->tax_amount = $tax_amount;
                     $branch_balance->updated_by = auth()->user()->id;
-                    $branch_balance->branchpay_date = today();
+                    $branch_balance->branchpay_date = $fields->paydate;
                     $branch_balance->payment_status = true;
                     $branch_balance->remark = $fields->description;
                     $branch_balance->receipt_id = $receipt->id;
@@ -157,6 +161,8 @@ class OrderReceived extends Action
                 return [
                     Currency::make('ค่าขนส่งที่ต้องจัดเก็บ', 'order_amount')->default($branchrec_order->order_amount)
                         ->readonly(),
+                    Date::make('วันที่รับชำระ', 'paydate')
+                        ->default(today()->toDateString()),
                     Select::make('รับชำระด้วย', 'payment_by')->options([
                         'C' => 'เงินสด',
                         'T' => 'เงินโอน',
@@ -185,6 +191,8 @@ class OrderReceived extends Action
         return [
             Currency::make('ค่าขนส่งที่ต้องจัดเก็บ', 'order_amount')
                 ->readonly(),
+            Date::make('วันที่รับชำระ', 'paydate')
+                ->default(today()->toDateString()),
             Select::make('รับชำระด้วย', 'payment_by')->options([
                 'C' => 'เงินสด',
                 'T' => 'เงินโอน',

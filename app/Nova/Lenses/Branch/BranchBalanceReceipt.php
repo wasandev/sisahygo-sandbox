@@ -8,6 +8,7 @@ use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Filters\BranchPayFromDate;
 use App\Nova\Filters\BranchPayToDate;
+use App\Nova\Filters\BranchReceiptLenseFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -32,12 +33,14 @@ class BranchBalanceReceipt extends Lens
             $query->select(self::columns())
                 ->join('branches', 'branch_balances.branch_id', '=', 'branches.id')
                 ->join('customers', 'branch_balances.customer_id', '=', 'customers.id')
+                ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                 ->where('branch_balances.payment_status', '=', true)
                 ->orderBy('branch_balances.branch_id', 'asc')
                 ->orderBy('branch_balances.branchpay_date', 'asc')
                 ->groupBy(
                     'branch_balances.branch_id',
-                    'branch_balances.branchpay_date'
+                    'branch_balances.branchpay_date',
+                    'receipts.branchpay_by'
                 )
         ));
     }
@@ -51,6 +54,7 @@ class BranchBalanceReceipt extends Lens
         return [
             'branch_balances.branch_id',
             'branch_balances.branchpay_date',
+            'receipts.branchpay_by as payby',
             DB::raw('sum(branch_balances.bal_amount) as branch_amount'),
             DB::raw('sum(branch_balances.discount_amount) as discount_amount'),
             DB::raw('sum(branch_balances.tax_amount) as tax_amount'),
@@ -71,6 +75,16 @@ class BranchBalanceReceipt extends Lens
                 return $this->branch->name;
             }),
             Date::make('วันที่', 'branchpay_date'),
+            Text::make('ชำระด้วย', function () {
+                if (isset($this->payby)) {
+                    if ($this->payby == 'C') {
+                        return 'เงินสด';
+                    } else {
+                        return 'เงินโอน';
+                    }
+                }
+                return '';
+            }),
             Currency::make('ยอดรับชำระ', function () {
                 return  $this->pay_amount;
             }),
@@ -97,7 +111,7 @@ class BranchBalanceReceipt extends Lens
     public function filters(Request $request)
     {
         return [
-            new BranchBalanceFilter(),
+            new BranchReceiptLenseFilter(),
             new BranchPayFromDate(),
             new BranchPayToDate(),
         ];

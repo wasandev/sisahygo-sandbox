@@ -18,6 +18,7 @@ use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
 
 class ConfirmBanktransfer extends Action
 {
@@ -74,7 +75,7 @@ class ConfirmBanktransfer extends Action
 
                 $receipt = Receipt::create([
                     'receipt_no' => $receipt_no,
-                    'receipt_date' => today(),
+                    'receipt_date' => $fields->transferdate,
                     'branch_id' => auth()->user()->branch_id,
                     'customer_id' => $rec_cust,
                     'total_amount' => $cust_groups->sum('transfer_amount'),
@@ -114,7 +115,9 @@ class ConfirmBanktransfer extends Action
     public function fields()
     {
         return [
+            Date::make('วันที่โอน', 'transferdate')->default(today()->toDateString()),
             Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
+
         ];
     }
 }

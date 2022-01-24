@@ -66,8 +66,10 @@ class Delivery_detail extends Resource
             }),
             Boolean::make('สถานะการเก็บเงิน', 'payment_status', function ($request) {
                 $order = \App\Models\Branchrec_order::find($this->order_header_id);
-                if ($order->paymenttype === 'H' || $order->payment_status) {
+                if ($order->paymenttype == 'H' || $this->payment_status) {
                     return true;
+                } else {
+                    return false;
                 }
             })->exceptOnForms(),
             // ->canSee(function ($request) {

@@ -92,6 +92,16 @@ class Branchrec_order extends Resource
                 ->hideWhenCreating(),
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
+
+            Select::make(__('Payment type'), 'paymenttype')->options([
+                'H' => 'เงินสดต้นทาง',
+                'T' => 'เงินโอนต้นทาง',
+                'E' => 'เงินสดปลายทาง',
+                'F' => 'วางบิลต้นทาง',
+                'L' => 'วางบิลปลายทาง'
+            ])->onlyOnIndex(),
+            Currency::make('ค่าขนส่ง', 'order_amount')
+                ->exceptOnForms(),
             Text::make(__('Order header no'), 'order_header_no')
                 ->readonly()
                 ->sortable(),
@@ -114,15 +124,8 @@ class Branchrec_order extends Resource
                 return $this->to_customer->district;
             })->onlyOnIndex(),
 
-            Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
-            Select::make(__('Payment type'), 'paymenttype')->options([
-                'H' => 'เงินสดต้นทาง',
-                'T' => 'เงินโอนต้นทาง',
-                'E' => 'เงินสดปลายทาง',
-                'F' => 'วางบิลต้นทาง',
-                'L' => 'วางบิลปลายทาง'
-            ])->onlyOnIndex(),
+
+
 
 
             Select::make(__('Tran type'), 'trantype')->options([

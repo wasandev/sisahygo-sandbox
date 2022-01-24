@@ -46,27 +46,34 @@ class DeliveryDetailObserver
 
 
             if ($branchrec_order->branchpay_by == "T" && $delivery_detail->payment_status  == false) {
+                $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
+
                 Order_banktransfer::create([
                     'customer_id' => $branchrec_order->customer_rec_id,
                     'order_header_id' => $branchrec_order->id,
                     'branch_id' => $branchrec_order->branch_rec_id,
                     'status' => false,
                     'transfer_type' => 'E',
-                    'transfer_amount' => $branchrec_order->order_amount,
+                    'transfer_amount' => $delivery_item->pay_amount,
                     'bankaccount_id' => $branchrec_order->bankaccount_id,
                     'reference' => $branchrec_order->bankreference,
                     'user_id' => auth()->user()->id,
                 ]);
             }
             if ($branchrec_order->paymenttype == 'E') {
+
                 $branch_balance = Branch_balance::where('order_header_id', $delivery_detail->order_header_id)->first();
 
                 if ($delivery_detail->payment_status) {
                     $branch_balance->payment_status = true;
+                    $branchrec_order->payment_status = true;
+                    $delivery_detail->payment_status = true;
                 } else {
                     $branch_balance->payment_status = false;
+                    $delivery_detail->payment_status = false;
                 }
                 $branch_balance->save();
+                $branchrec_order->save();
             }
 
             Order_status::updateOrCreate([
@@ -76,8 +83,27 @@ class DeliveryDetailObserver
             ]);
         }
     }
+
     public function updated(Delivery_detail $delivery_detail)
     {
+
+        if ($delivery_detail->payment_status) {
+
+            $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
+
+
+            $delivery_detail_notpay = Delivery_detail::where('delivery_item_id', $delivery_item->id)
+                ->where('payment_status', '=', false)
+                ->count();
+            // dd($delivery_detail_notpay);
+            if ($delivery_detail_notpay == 0) {
+                $delivery_item->payment_status = true;
+            } else {
+                $delivery_item->payment_status = false;
+            }
+
+            $delivery_item->save();
+        }
     }
 
     public function deleting(Delivery_detail $delivery_detail)

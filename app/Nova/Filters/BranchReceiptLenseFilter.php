@@ -2,20 +2,27 @@
 
 namespace App\Nova\Filters;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class BranchPayBy extends Filter
+class BranchReceiptLenseFilter extends Filter
 {
-    public $name = 'รับชำระด้วย';
     /**
      * The filter's component.
      *
      * @var string
      */
-
     public $component = 'select-filter';
+    public $name = 'ตามสาขา';
+
+    public function default()
+    {
+        if (auth()->user()->branch->code != '001') {
+            return auth()->user()->branch_id;
+        }
+    }
+
     /**
      * Apply the filter to the given query.
      *
@@ -26,8 +33,7 @@ class BranchPayBy extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        // return $query->with('receipt')
-        //     ->where('paymenttype', $value);
+        return $query->where('branch_balances.branch_id', $value);
     }
 
     /**
@@ -38,9 +44,7 @@ class BranchPayBy extends Filter
      */
     public function options(Request $request)
     {
-        return [
-            'เงินสด' => 'C',
-            'เงินโอน' => 'T'
-        ];
+        $branches = \App\Models\Branch::all();
+        return $branches->pluck('id', 'name')->all();
     }
 }

@@ -76,6 +76,8 @@ class CreateTruckDeliveryItems extends Action
 
             foreach ($bal_custs as $cust => $cust_groups) {
 
+
+
                 $delivery_item = Delivery_item::create([
                     'delivery_id' => $delivery->id,
                     'customer_id' => $cust,
@@ -95,12 +97,16 @@ class CreateTruckDeliveryItems extends Action
                         $branch_balance->delivery_id = $delivery->id;
                         $branch_balance->save();
                     }
-
+                    if ($model->paymenttype == 'H') {
+                        $payment_status = true;
+                    } else {
+                        $payment_status = false;
+                    }
                     Delivery_detail::create([
                         'delivery_item_id' =>  $delivery_item->id,
                         'order_header_id' => $model->id,
                         'delivery_status' => false,
-                        'payment_status' => false,
+                        'payment_status' => $payment_status
                     ]);
 
                     Order_status::create([
@@ -108,6 +114,13 @@ class CreateTruckDeliveryItems extends Action
                         'status' => 'delivery',
                         'user_id' => auth()->user()->id,
                     ]);
+                }
+                $delivery_detail_notpay = Delivery_detail::where('delivery_item_id', $delivery_item->id)
+                    ->where('payment_status', '=', false)
+                    ->count();
+                if ($delivery_detail_notpay == 0) {
+                    $delivery_item->payment_status = true;
+                    $delivery_item->save();
                 }
             }
 

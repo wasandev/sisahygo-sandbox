@@ -48,4 +48,8 @@ class Delivery_item extends Model
     {
         return $this->belongsTo('App\Models\Receipt');
     }
+    // public function branch_balances()
+    // {
+    //     return $this->hasMany('App\Models\Branch_balance', 'delivery_id');
+    // }
 }

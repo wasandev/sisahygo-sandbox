@@ -102,6 +102,8 @@ class Delivery_item extends Resource
             Text::make('หมายเหตุ', 'description'),
 
             HasMany::make('รายการใบรับส่ง', 'delivery_details', 'App\Nova\Delivery_detail'),
+            // HasMany::make('รายการเก็บเงินปลายทาง', 'branch_balances', 'App\Nova\Branch_balance'),
+
         ];
     }
 

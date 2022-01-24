@@ -65,6 +65,7 @@ class BranchBalanceBydate extends Lens
                 return $this->branch->name;
             }),
             Date::make('วันที่', 'branchbal_date'),
+
             Currency::make('จำนวนเงิน', 'branch_amount'),
         ];
     }

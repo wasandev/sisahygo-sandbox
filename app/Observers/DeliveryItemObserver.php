@@ -23,59 +23,8 @@ class DeliveryItemObserver
 
     public function updating(Delivery_item $delivery_item)
     {
-        if ($delivery_item->delivery_status  && $delivery_item->payment_amount > 0) {
 
-            if ($delivery_item->payment_status && $delivery_item->branchpay_by == 'C') {
-                $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
-                $receipt = Receipt::create([
-                    'receipt_no' => $receipt_no,
-                    'receipt_date' => today(),
-                    'branch_id' => auth()->user()->branch_id,
-                    'customer_id' => $delivery_item->customer_id,
-                    'total_amount' => $delivery_item->payment_amount,
-                    'discount_amount' => $delivery_item->discount_amount,
-                    'tax_amount' => $delivery_item->tax_amount,
-                    'pay_amount' => $delivery_item->pay_amount,
-                    'receipttype' => 'E',
-                    'branchpay_by' => $delivery_item->branchpay_by,
-                    'bankaccount_id' => $delivery_item->bankaccount_id,
-                    'bankreference' => $delivery_item->bankreference,
-                    'description' => $delivery_item->description,
-                    'user_id' => auth()->user()->id,
-                ]);
-                if (isset($receipt)) {
-                    $delivery_item->receipt_id = $receipt->id;
-                }
-                $delivery_orders = Delivery_detail::where('delivery_item_id', $delivery_item->id)->get();
-                foreach ($delivery_orders as $delivery_order) {
-                    $branchrec_order = Branchrec_order::find($delivery_order->order_header_id);
-                    $branchrec_order->receipt_flag = true;
-                    $branchrec_order->receipt_id = $receipt->id;
-                    $branchrec_order->save();
 
-                    //Branch balance
-                    if ($delivery_order->branchrec_order->paymenttype == 'E') {
-                        $branch_balance = Branch_balance::where('order_header_id', $delivery_order->order_header_id)->first();
-                        $branch_balance->pay_amount = $delivery_order->branchrec_order->order_amount;
-                        $branch_balance->updated_by = auth()->user()->id;
-                        $branch_balance->branchpay_date = $delivery_item->paydate; //แก้ไข
-                        $branch_balance->payment_status = true;
-                        $branch_balance->remark = $delivery_item->description;
-                        $branch_balance->receipt_id = $receipt->id;
-                        $branch_balance->save();
-                    }
-                    //test notification
-                    // $tousers = User::where('role', 'employee')
-                    //     ->get();
-
-                    // foreach ($tousers as $touser) {
-                    //     if ($touser->hasPermissionTo('view fndashboards') || $touser->hasPermissionTo('view ardashboards')) {
-                    //         $touser->notify(new OrderPaid($touser, $branchrec_order));
-                    //     }
-                    // }
-                }
-            }
-        }
         $delivery_item->updated_by =  auth()->user()->id;
     }
     public function updated(Delivery_item $delivery_item)

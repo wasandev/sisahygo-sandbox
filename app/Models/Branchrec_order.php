@@ -10,7 +10,7 @@ class Branchrec_order extends Model
     use HasFactory;
     protected $fillable = [
         'order_status',  'sender_id', 'branchpay_by', 'bankaccount_id', 'bankreference', 'receipt_flag', 'receipt_id',
-        'order_recname', 'idcardno'
+        'order_recname', 'idcardno', 'payment_status'
     ];
     protected $table = 'order_headers';
     protected $casts = [
