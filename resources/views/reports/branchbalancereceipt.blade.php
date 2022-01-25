@@ -198,7 +198,7 @@
                             {{ $loop->iteration }}
                         </td>
                         <td>
-                            {{ $item->branchrec_order->to_customer->name}}
+                            {{ $item->customer->name}}
                         </td>
                         <td style="text-align: right">
                             {{ $item->branchrec_order->order_header_no}}

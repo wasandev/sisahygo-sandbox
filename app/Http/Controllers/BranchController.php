@@ -53,18 +53,18 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::join('order_headers', 'branch_balances.order_header_id', '=', 'order_headers.id')
+            $branch_balances = Branch_balance::join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                 ->where('branch_balances.branchpay_date', '>=', $from)
                 ->where('branch_balances.branchpay_date', '<=', $to)
                 ->where('branch_balances.pay_amount', '>', 0)
                 ->where('branch_balances.payment_status', '=', true)
                 ->orderBy('branch_balances.branch_id', 'asc')
                 ->orderBy('branch_balances.branchpay_date', 'asc')
-                ->orderBy('order_headers.branchpay_by', 'asc')
+                ->orderBy('receipts.branchpay_by', 'asc')
                 ->orderBy('branch_balances.order_header_id', 'asc')
                 ->get();
         } else {
-            $branch_balances = Branch_balance::join('order_headers', 'branch_balances.order_header_id', '=', 'order_headers.id')
+            $branch_balances = Branch_balance::join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                 ->where('branch_balances.branch_id', $branch)
                 ->where('branch_balances.branchpay_date', '>=', $from)
                 ->where('branch_balances.branchpay_date', '<=', $to)
@@ -72,13 +72,13 @@ class BranchController extends Controller
                 ->where('branch_balances.payment_status', '=', true)
                 ->orderBy('branch_balances.branch_id', 'asc')
                 ->orderBy('branch_balances.branchpay_date', 'asc')
-                ->orderBy('order_headers.branchpay_by', 'asc')
+                ->orderBy('receipts.branchpay_by', 'asc')
                 ->orderBy('branch_balances.order_header_id', 'asc')
                 ->get();
         }
 
         $branch_groups = $branch_balances->groupBy([
-            'branch_rec_id',
+            'branch_id',
             function ($item) {
                 return $item->branchpay_date->format('Y-m-d');
             },
