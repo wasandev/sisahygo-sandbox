@@ -37,11 +37,11 @@ class PrintBranchBalanceReceipt extends Action
     {
         $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
 
-        $branch  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchBalanceFilter');
+        $branch  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchReceiptLenseFilter');
         $branch_value = Arr::get($branch, 'value');
 
 
-        if ($branch_value == '') {
+        if (is_null($branch_value)) {
             $branch_value = 'all';
         }
 

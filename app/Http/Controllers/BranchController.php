@@ -53,36 +53,45 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::where('branchpay_date', '>=', $from)
-                ->where('branchpay_date', '<=', $to)
-                ->where('pay_amount', '>', 0)
-                ->where('payment_status', '=', true)
-                ->orderBy('branchpay_date', 'asc')
-                ->orderBy('id', 'asc')
+            $branch_balances = Branch_balance::join('order_headers', 'branch_balances.order_header_id', '=', 'order_headers.id')
+                ->where('branch_balances.branchpay_date', '>=', $from)
+                ->where('branch_balances.branchpay_date', '<=', $to)
+                ->where('branch_balances.pay_amount', '>', 0)
+                ->where('branch_balances.payment_status', '=', true)
+                ->orderBy('branch_balances.branch_id', 'asc')
+                ->orderBy('branch_balances.branchpay_date', 'asc')
+                ->orderBy('order_headers.branchpay_by', 'asc')
+                ->orderBy('branch_balances.order_header_id', 'asc')
                 ->get();
         } else {
-            $branch_balances = Branch_balance::where('branch_id', $branch)
-                ->where('branchpay_date', '>=', $from)
-                ->where('branchpay_date', '<=', $to)
-                ->where('pay_amount', '>', 0)
-                ->where('payment_status', '=', true)
-                ->orderBy('branchpay_date', 'asc')
-                ->orderBy('id', 'asc')
+            $branch_balances = Branch_balance::join('order_headers', 'branch_balances.order_header_id', '=', 'order_headers.id')
+                ->where('branch_balances.branch_id', $branch)
+                ->where('branch_balances.branchpay_date', '>=', $from)
+                ->where('branch_balances.branchpay_date', '<=', $to)
+                ->where('branch_balances.pay_amount', '>', 0)
+                ->where('branch_balances.payment_status', '=', true)
+                ->orderBy('branch_balances.branch_id', 'asc')
+                ->orderBy('branch_balances.branchpay_date', 'asc')
+                ->orderBy('order_headers.branchpay_by', 'asc')
+                ->orderBy('branch_balances.order_header_id', 'asc')
                 ->get();
         }
 
         $branch_groups = $branch_balances->groupBy([
-            'branch_id', function ($item) {
+            'branch_rec_id',
+            function ($item) {
                 return $item->branchpay_date->format('Y-m-d');
-            }
+            },
+            'branchpay_by'
         ]);
+
         $branch_groups = $branch_groups->all();
 
         return view('reports.branchbalancereceipt', compact('company', 'report_title', 'branch_balances', 'branch_groups',  'branch', 'from', 'to'));
     }
     public function report_22($branch, $to)
     {
-        $report_title = 'รายงานรับลูกหนี้สาขาค้างชำระ';
+        $report_title = 'รายงานลูกหนี้สาขาค้างชำระ';
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {

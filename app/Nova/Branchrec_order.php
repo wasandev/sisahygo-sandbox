@@ -85,14 +85,31 @@ class Branchrec_order extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
             Status::make(__('Order status'), 'order_status')
                 ->loadingWhen(['in transit'])
                 ->failedWhen(['cancel'])
                 ->hideWhenCreating(),
+            ID::make()->sortable(),
+            Text::make(__('Order header no'), 'order_header_no')
+                ->readonly()
+                ->sortable(),
+
+            // Text::make('ผู้ส่ง', 'cust_send', function () {
+            //     return $this->customer->name;
+            // })->onlyOnIndex(),
+            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
+                ->sortable()
+                ->exceptOnForms(),
+            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
+                ->sortable()
+                ->exceptOnForms(),
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
-
+            Text::make('อำเภอ', 'districe', function () {
+                return $this->to_customer->district;
+            })->onlyOnIndex(),
+            Currency::make('ค่าขนส่ง', 'order_amount')
+                ->exceptOnForms(),
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'T' => 'เงินโอนต้นทาง',
@@ -100,17 +117,7 @@ class Branchrec_order extends Resource
                 'F' => 'วางบิลต้นทาง',
                 'L' => 'วางบิลปลายทาง'
             ])->onlyOnIndex(),
-            Currency::make('ค่าขนส่ง', 'order_amount')
-                ->exceptOnForms(),
-            Text::make(__('Order header no'), 'order_header_no')
-                ->readonly()
-                ->sortable(),
-            BelongsTo::make('ผู้ส่งสินค้า', 'customer', 'App\Nova\Customer')
-                ->sortable()
-                ->exceptOnForms(),
-            BelongsTo::make('ผู้รับสินค้า', 'to_customer', 'App\Nova\Customer')
-                ->sortable()
-                ->exceptOnForms(),
+
 
 
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
@@ -119,10 +126,6 @@ class Branchrec_order extends Resource
                 return $this->to_branch->phoneno;
             })->onlyOnDetail(),
 
-
-            Text::make('อำเภอ', 'districe', function () {
-                return $this->to_customer->district;
-            })->onlyOnIndex(),
 
 
 
@@ -211,7 +214,7 @@ class Branchrec_order extends Resource
 
         return [
             (new Actions\PrintOrder)
-                ->showOnTableRow()
+                //->showOnTableRow()
                 ->confirmText('ต้องการพิมพ์ใบรับส่งรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")

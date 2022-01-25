@@ -56,6 +56,7 @@
                         $branch = \App\Models\Branch::find($branch_bal);
                     @endphp
                     {{$branch->name}}
+
                 </td>
 
 
@@ -64,34 +65,39 @@
                 </td>
 
                 <td style="text-align: right">
-                    @php
-                        $total_amount  = 0;
-                        $total_tax = 0;
-                        $total_discount = 0;
-                        $total_payamount = 0 ;
-                    @endphp
-                    @foreach ($bal_amounts as $bal_item )
+
+                    @foreach ($branch_balances as $item )
                         @php
-                            $total_amount +=  $bal_item->sum('bal_amount');
-                            $total_payamount +=  $bal_item->sum('pay_amount');
-                            $total_tax +=  $bal_item->sum('tax_amount');
-                            $total_discount +=  $bal_item->sum('discount_amount');
-
-
+                            $sumbranch_amount =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','>=',$from)
+                                                      ->where('branch_balances.branchpay_date','<=',$to)
+                                                      ->sum('bal_amount');
+                            $sumbranch_discount =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','>=',$from)
+                                                      ->where('branch_balances.branchpay_date','<=',$to)
+                                                      ->sum('discount_amount');
+                            $sumbranch_tax =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','>=',$from)
+                                                      ->where('branch_balances.branchpay_date','<=',$to)
+                                                      ->sum('tax_amount');
+                            $sumbranch_pay =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','>=',$from)
+                                                      ->where('branch_balances.branchpay_date','<=',$to)
+                                                      ->sum('pay_amount');
                         @endphp
 
                     @endforeach
-                    {{ number_format($total_amount,2,'.',',') }}
+                    {{ number_format($sumbranch_amount,2,'.',',') }}
                 </td>
                 <td style="text-align: right">
-                    {{ number_format($total_discount,2,'.',',') }}
+                    {{ number_format($sumbranch_discount,2,'.',',') }}
                 </td>
                 <td style="text-align: right">
-                    {{ number_format($total_tax,2,'.',',') }}
+                    {{ number_format($sumbranch_tax,2,'.',',') }}
                 </td>
 
                 <td style="text-align: right">
-                    {{ number_format($total_payamount ,2,'.',',') }}
+                    {{ number_format($sumbranch_pay ,2,'.',',') }}
                 </td>
                 <td>
                 </td>
@@ -103,7 +109,7 @@
                 <tr style="font-weight:bold">
 
 
-                    <td colspan="2" style="text-align: center">
+                    <td colspan="2" style="text-align: right">
                         {{ date("d-m-Y", strtotime($bal_item))}}
 
                     </td>
@@ -113,25 +119,77 @@
                     </td>
 
                     <td style="text-align: right">
-                        {{ number_format($date_items->sum('bal_amount'),2,'.',',') }}
+                         @foreach ($branch_balances as $item )
+                        @php
+                            $sumdate_amount =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','=',$bal_item)
+                                                      ->sum('bal_amount');
+                            $sumdate_discount =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','=',$bal_item)
+                                                      ->sum('discount_amount');
+                            $sumdate_tax =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','=',$bal_item)
+                                                      ->sum('tax_amount');
+                            $sumdate_pay =  $item->where('branch_balances.branch_id',$branch_bal)
+                                                      ->where('branch_balances.branchpay_date','=',$bal_item)
+                                                      ->sum('pay_amount');
+
+
+
+                        @endphp
+
+                    @endforeach
+                        {{ number_format($sumdate_amount,2,'.',',') }}
                     </td>
                     <td style="text-align: right">
-                        {{ number_format($date_items->sum('discount_amount'),2,'.',',') }}
+                        {{ number_format($sumdate_discount,2,'.',',') }}
                     </td>
                     <td style="text-align: right">
-                        {{ number_format($date_items->sum('tax_amount'),2,'.',',') }}
+                        {{ number_format($sumdate_tax,2,'.',',') }}
                     </td>
 
                     <td style="text-align: right">
-                        {{ number_format($date_items->sum('pay_amount') ,2,'.',',') }}
+                        {{ number_format($sumdate_pay ,2,'.',',') }}
                     </td>
                     <td>
                     </td>
                 </tr>
 
-                @foreach ($date_items as $item )
+                @foreach ($date_items as $item_type => $receipt_type)
+                    <tr style="font-weight:bold">
+                        <td colspan="2" style="text-align: right">
+                           @if($item_type == 'C')
+                                เงินสด
 
-                     <tr style="font-weight:bold">
+                            @else
+                                เงินโอน
+                            @endif
+                       </td>
+                         <td colspan="5" style="text-align: right">
+                        รวมตามประเภท
+                        </td>
+
+                    <td style="text-align: right">
+                        {{ number_format($receipt_type->sum('bal_amount'),2,'.',',') }}
+                    </td>
+                    <td style="text-align: right">
+                        {{ number_format($receipt_type->sum('discount_amount'),2,'.',',') }}
+                    </td>
+                    <td style="text-align: right">
+                        {{ number_format($receipt_type->sum('tax_amount'),2,'.',',') }}
+                    </td>
+
+                    <td style="text-align: right">
+                        {{ number_format($receipt_type->sum('pay_amount') ,2,'.',',') }}
+                    </td>
+                    <td>
+                    </td>
+                    </tr>
+
+                    @foreach ($receipt_type  as $item )
+
+
+                     <tr style="font-weight:normal">
 
 
                         <td colspan="2" style="text-align: center">
@@ -180,6 +238,7 @@
 
 
                     </tr>
+                    @endforeach
 
                 @endforeach
             @endforeach
