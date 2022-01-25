@@ -85,6 +85,15 @@ class BranchBalanceReceipt extends Lens
                 }
                 return '';
             }),
+            Currency::make('ค่าขนส่ง', function () {
+                return  $this->branch_amount;
+            }),
+            Currency::make('ส่วนลด', function () {
+                return  $this->discount_amount;
+            }),
+            Currency::make('ภาษี', function () {
+                return  $this->tax_amount;
+            }),
             Currency::make('ยอดรับชำระ', function () {
                 return  $this->pay_amount;
             }),
