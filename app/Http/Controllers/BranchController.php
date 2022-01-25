@@ -53,7 +53,8 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
+            $branch_balances = Branch_balance::select('branch_balances.*')
+                ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                 ->where('branch_balances.branchpay_date', '>=', $from)
                 ->where('branch_balances.branchpay_date', '<=', $to)
                 ->where('branch_balances.pay_amount', '>', 0)
@@ -64,7 +65,8 @@ class BranchController extends Controller
                 ->orderBy('branch_balances.order_header_id', 'asc')
                 ->get();
         } else {
-            $branch_balances = Branch_balance::join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
+            $branch_balances = Branch_balance::select('branch_balances.*')
+                ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                 ->where('branch_balances.branch_id', $branch)
                 ->where('branch_balances.branchpay_date', '>=', $from)
                 ->where('branch_balances.branchpay_date', '<=', $to)
@@ -78,11 +80,17 @@ class BranchController extends Controller
         }
 
         $branch_groups = $branch_balances->groupBy([
-            'branch_id',
+
+            function ($item) {
+                return $item->branch_id;
+            },
             function ($item) {
                 return $item->branchpay_date->format('Y-m-d');
             },
-            'branchpay_by'
+            function ($item) {
+                return $item->branchpay_by;
+            },
+
         ]);
 
         $branch_groups = $branch_groups->all();
