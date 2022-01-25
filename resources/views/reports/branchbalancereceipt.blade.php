@@ -228,7 +228,7 @@
                             {{ number_format($item->pay_amount,2,'.',',') }}
                         </td>
                         <td>
-                            @isset($item->delivery_id)
+                            @isset($item->delivery->delivery_no)
                                 {{$item->delivery->delivery_no}}
                             @endisset
                             @empty($item->delivery_id)

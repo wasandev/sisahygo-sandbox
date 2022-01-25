@@ -120,15 +120,15 @@ class Branch_balance extends Resource
             Currency::make('ยอดรับชำระ', 'pay_amount'),
 
             Text::make('ชำระโดย',  function () {
-                if (isset($this->receipt_id)) {
-                    if ($this->receipt->branchpay_by === 'T') {
-                        return 'โอน';
-                    } else {
-                        return 'เงินสด';
-                    }
+                //if (isset($this->receipt_id)) {
+                if ($this->branchrec_order->branchpay_by === 'T') {
+                    return 'โอน';
                 } else {
-                    return '-';
+                    return 'เงินสด';
                 }
+                // } else {
+                //     return '-';
+                // }
             }),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
         ];
