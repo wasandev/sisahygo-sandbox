@@ -200,15 +200,15 @@
                         <td>
                             {{ $item->customer->name}}
                         </td>
-                        <td style="text-align: right">
+                        <td style="text-align: center">
                             {{ $item->branchrec_order->order_header_no}}
                         </td>
 
-                        <td style="text-align: right">
+                        <td style="text-align: center">
 
                             {{ date("d-m-Y", strtotime($item->branchrec_order->order_header_date)) }}
                         </td>
-                        <td style="text-align: right">
+                        <td style="text-align: center">
                             @isset($item->receipt_id)
                                 {{ $item->receipt->receipt_no}}
                             @endisset
