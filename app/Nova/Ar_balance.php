@@ -24,6 +24,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Database\Eloquent\Model;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class Ar_balance extends Resource
 {
@@ -128,7 +129,10 @@ class Ar_balance extends Resource
     public function filters(Request $request)
     {
         return [
-            //new ArbalanceByCustomer,
+            new ArbalanceByCustomer,
+            // (new NovaSearchableBelongsToFilter('ตามชื่อลูกค้า'))
+            //     ->fieldAttribute('ar_customer')
+            //     ->filterBy('customer_id'),
             new ArbalanceNotInvoice,
             new ArbalanceNotReceipt,
             new ArbalanceFromDate,
