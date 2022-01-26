@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-use App\Nova\Lenses\ar\ArcardReport;
+
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
@@ -21,9 +21,6 @@ use Wasandev\InputThaiAddress\InputProvince;
 use Wasandev\InputThaiAddress\InputPostalCode;
 use Jfeid\NovaGoogleMaps\NovaGoogleMaps;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
-use App\Nova\Metrics\CustomersByProvince;
-use App\Nova\Metrics\CustomersByDistrict;
-use Illuminate\Support\Str;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Ar_customer extends Resource
@@ -31,6 +28,7 @@ class Ar_customer extends Resource
     public static $group = '9.1 งานลูกหนี้การค้า';
     public static $priority = 1;
     public static $preventFormAbandonment = true;
+
 
     /**
      * The model the resource corresponds to.
