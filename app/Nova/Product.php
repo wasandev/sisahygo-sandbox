@@ -79,7 +79,8 @@ class Product extends Resource
             ID::make()->sortable(),
             Boolean::make(__('Status'), 'status')
                 ->sortable()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->default(true),
             Boolean::make('มีตารางราคา', 'price', function () {
                 $hasitem = count($this->productservice_price);
                 if ($hasitem) {
@@ -102,7 +103,7 @@ class Product extends Resource
                 ->showCreateRelationButton(),
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required', 'unique:products,name'),
             Text::make('ขนาด(ก+ย+ส)', 'size', function () {
                 return $this->width + $this->length + $this->weight;
             })->exceptOnForms(),

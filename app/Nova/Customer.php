@@ -104,27 +104,6 @@ class Customer extends Resource
                 ->readonly()
                 ->hideFromIndex()
                 ->hideWhenCreating(),
-
-            Text::make(__('Name'), 'name')
-                ->sortable()
-                ->rules('required', 'max:250'),
-
-            Text::make(__('Tax ID'), 'taxid')
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
-            //->rules('digits:13', 'numeric'),
-            Select::make(__('Type'), 'type')->options([
-                'company' => 'นิติบุคคล',
-                'person' => 'บุคคลธรรมดา'
-            ])
-                ->displayUsingLabels()
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
-
             Select::make(__('Payment type'), 'paymenttype')->options([
                 'H' => 'เงินสดต้นทาง',
                 'E' => 'เงินสดปลายทาง',
@@ -136,62 +115,9 @@ class Customer extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
                 }),
-            Number::make(__('Credit term'), 'creditterm')
-
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
-            BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
-                ->showCreateRelationButton()
+            Text::make(__('Name'), 'name')
                 ->sortable()
-                ->nullable()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                })
-                ->hideFromIndex(),
-
-            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
-                ->onlyOnDetail(),
-            DateTime::make(__('Created At'), 'created_at')
-                ->format('DD/MM/YYYY HH:mm')
-                ->onlyOnDetail(),
-            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
-                ->onlyOnDetail(),
-            DateTime::make(__('Updated At'), 'updated_at')
-                ->format('DD/MM/YYYY HH:mm')
-                ->onlyOnDetail(),
-
-            //new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
-            Text::make(__('Contact name'), 'contactname')
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
-            Text::make(__('Email'), 'email')
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
-            Text::make(__('Phone'), 'phoneno')
-                ->rules('required')
-                ->sortable()
-                ->hideFromIndex(),
-            Text::make(__('Website Url'), 'weburl')
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
-            Text::make(__('Facebook'), 'facebook')
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
-            Text::make(__('Line'), 'line')
-                ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage order_headers');
-                }),
+                ->rules('required', 'unique:customers,name', 'max:250'),
             //new Panel('ที่อยู่ในการออกเอกสาร', $this->addressFields()),
             Text::make(__('Address'), 'address')
                 ->rules('required')
@@ -217,27 +143,106 @@ class Customer extends Resource
                 ->fromValue('zipcode')
                 ->rules('required')
                 ->hideFromIndex(),
-            NovaGoogleMaps::make(__('Google Map Address'), 'location')->setValue($this->location_lat, $this->location_lng)
+            Text::make(__('Phone'), 'phoneno')
+                ->rules('required')
+                ->sortable()
+                ->hideFromIndex(),
+
+            Text::make(__('Tax ID'), 'taxid')
                 ->hideFromIndex()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
                 }),
+
+            //->rules('digits:13', 'numeric'),
+            Select::make(__('Type'), 'type')->options([
+                'company' => 'นิติบุคคล',
+                'person' => 'บุคคลธรรมดา'
+            ])
+                ->displayUsingLabels()
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->hideWhenCreating(),
+
+
+            Number::make(__('Credit term'), 'creditterm')
+
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })->hideWhenCreating(),
+            BelongsTo::make(__('Business type'), 'businesstype', 'App\Nova\Businesstype')
+                ->showCreateRelationButton()
+                ->sortable()
+                ->nullable()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })
+                ->hideFromIndex()
+                ->hideWhenCreating(),
+
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+
+            //new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
+            Text::make(__('Contact name'), 'contactname')
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })->hideWhenCreating(),
+            Text::make(__('Email'), 'email')
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })->hideWhenCreating(),
+
+            Text::make(__('Website Url'), 'weburl')
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })->hideWhenCreating(),
+            Text::make(__('Facebook'), 'facebook')
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })->hideWhenCreating(),
+            Text::make(__('Line'), 'line')
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })->hideWhenCreating(),
+
+            NovaGoogleMaps::make(__('Google Map Address'), 'location')->setValue($this->location_lat, $this->location_lng)
+                ->hideFromIndex()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage order_headers');
+                })->hideWhenCreating(),
             //new Panel('อื่นๆ', $this->otherFields()),
             Image::make(__('Logo'), 'logofile')
                 ->hideFromIndex()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
-                }),
+                })->hideWhenCreating(),
             Image::make(__('Image'), 'imagefile')
                 ->hideFromIndex()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
-                }),
+                })->hideWhenCreating(),
             Textarea::make(__('Other'), 'description')
                 ->hideFromIndex()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
-                }),
+                })->hideWhenCreating(),
             HasMany::make(__('Customer addresses'), 'addresses', 'App\Nova\Address'),
             //BelongsToMany::make(__('Customer products'), 'product', 'App\Nova\Product'),
             //HasMany::make(__('Customer shipping cost'), 'customer_product_prices', 'App\Nova\Customer_product_price'),

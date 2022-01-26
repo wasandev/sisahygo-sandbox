@@ -94,7 +94,7 @@ class Ar_customer extends Resource
 
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required', 'max:250'),
+                ->rules('required', 'max:250', 'unique:customers,name'),
 
             Text::make(__('Tax ID'), 'taxid')
                 ->hideFromIndex(),

@@ -109,7 +109,7 @@ return [
     ],
     'string' => 'ข้อมูล :attribute ต้องเป็นอักขระ',
     'timezone' => 'ข้อมูล :attribute ต้องเป็นข้อมูลเขตเวลาที่ถูกต้อง',
-    'unique' => 'ข้อมูล :attribute ไม่สามารถใช้ได้',
+    'unique' => 'ข้อมูล :attribute นี้ มีอยู่แล้ว ไม่สามารถใช้ได้',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'ข้อมูล :attribute ไม่ถูกต้อง',
     'uuid' => 'The :attribute must be a valid UUID.',

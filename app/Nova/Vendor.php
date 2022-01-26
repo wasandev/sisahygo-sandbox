@@ -21,6 +21,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Vendor extends Resource
 {
@@ -70,7 +71,8 @@ class Vendor extends Resource
     {
         return [
             ID::make()->sortable(),
-            Boolean::make(__('Status'), 'status'),
+            Boolean::make(__('Status'), 'status')
+                ->default(true),
             Text::make(__('Owner code'), 'owner_code')
                 ->sortable()
                 ->onlyOnDetail(),
@@ -128,7 +130,7 @@ class Vendor extends Resource
         return [
             Text::make(__('Contact name'), 'contractname')
                 ->hideFromIndex(),
-            Text::make(__('Phone'), 'phoneno'),
+            Text::make(__('Phone'), 'phoneno')->sortable(),
             Text::make(__('Web url'), 'weburl')
                 ->hideFromIndex(),
             Text::make(__('Facebook'), 'facebook')
@@ -274,5 +276,15 @@ class Vendor extends Resource
 
 
         ];
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

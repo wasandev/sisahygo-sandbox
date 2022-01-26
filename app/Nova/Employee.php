@@ -80,7 +80,8 @@ class Employee extends Resource
             ID::make()->sortable(),
             Image::make(__('Image'), 'imagefile')
                 ->hideFromIndex(),
-            Boolean::make(__('Status'), 'active'),
+            Boolean::make(__('Status'), 'active')
+                ->default(true),
             new Panel('ข้อมูลพนักงาน', $this->empdetailFields()),
             new Panel('ข้อมูลการติดต่อ', $this->contactFields()),
             new Panel('ที่อยู่', $this->addressFields()),
@@ -127,7 +128,7 @@ class Employee extends Resource
                 ->sortable(),
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required', 'unique:employees,name'),
             Text::make(__('ID card number'), 'taxid')
                 ->sortable()
                 ->hideFromIndex()

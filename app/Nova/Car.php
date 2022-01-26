@@ -22,6 +22,7 @@ use Laravel\Nova\Fields\DateTime;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Unique;
 use Laravel\Nova\Fields\HasMany;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
@@ -65,8 +66,7 @@ class Car extends Resource
      * @var array
      */
     public static $search = [
-        'car_regist',
-        'car_province'
+        'car_regist'
     ];
 
     /**
@@ -99,7 +99,8 @@ class Car extends Resource
 
         return [
             ID::make()->sortable(),
-            Boolean::make('ใช้งาน', 'status'),
+            Boolean::make('ใช้งาน', 'status')
+                ->default(true),
             //->hideWhenCreating(),
 
             Image::make('รูปรถ', 'carimage')
@@ -134,7 +135,7 @@ class Car extends Resource
     {
         return [
             Text::make('ทะเบียนรถ', 'car_regist')
-                ->rules('required')
+                ->rules('required', 'unique:cars,car_regist')
                 ->sortable(),
             BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype')
                 ->showCreateRelationButton()

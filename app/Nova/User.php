@@ -121,7 +121,6 @@ class User extends Resource
             BelongsTo::make('รายการสาขาปลายทาง(ที่ทำงานประจำ)', 'branch_rec', 'App\Nova\Branch')
                 ->sortable()
                 ->nullable()
-                ->hideFromIndex()
                 ->showCreateRelationButton(),
             Select::make(__('Role'), 'role')->options([
                 'employee' => 'พนักงาน',

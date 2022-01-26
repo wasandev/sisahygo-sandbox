@@ -104,7 +104,6 @@ class Order_checker extends Resource
                 ->exceptOnForms()
                 ->hideFromIndex(),
             BelongsTo::make(__('To branch'), 'to_branch', 'App\Nova\Branch')
-
                 ->nullable()
                 ->help('***โปรดระบุสาขา ถ้าที่อยู่ลูกค้าปลายทางอยู่นอกพื้นที่บริการของสาขาปลายทาง'),
             Select::make('ประเภท', 'order_type')->options([
@@ -265,14 +264,20 @@ class Order_checker extends Resource
     }
     public static function relatableCustomers(NovaRequest $request, $query)
     {
-
+        //$to_branch =  $request->user()->branch_rec_id;
 
         if ($request->route()->parameter('field') === "customer") {
             return $query->where('status', true);
         }
 
         if ($request->route()->parameter('field') === "to_customer") {
+            //if (is_null($to_branch)) {
             return $query->where('status', true);
+            // } else {
+            //     $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+            //     return $query->whereIn('district', $to_branch_area)
+            //         ->where('status', true);
+            // }
         }
     }
 }
