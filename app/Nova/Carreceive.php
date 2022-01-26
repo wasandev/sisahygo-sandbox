@@ -22,6 +22,7 @@ class Carreceive extends Resource
 {
     public static $group = '9.2 งานการเงิน/บัญชี';
     public static $priority = 8;
+    public static $with = ['car', 'vendor', 'branch', 'user'];
     /**
      * The model the resource corresponds to.
      *

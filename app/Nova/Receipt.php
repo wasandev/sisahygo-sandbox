@@ -21,7 +21,8 @@ class Receipt extends Resource
 {
     public static $group = '8.สำหรับสาขา';
     public static $priority = 6;
-
+    public static $trafficCop = false;
+    public static $with = ['customer', 'branch', 'user'];
     /**
      * The model the resource corresponds to.
      *
@@ -44,6 +45,10 @@ class Receipt extends Resource
      */
     public static $search = [
         'receipt_no',
+    ];
+    public static $searchRelations = [
+        'customer' => ['name'],
+
     ];
     public static function label()
     {

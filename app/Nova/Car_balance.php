@@ -21,6 +21,8 @@ class Car_balance extends Resource
 {
     public static $group = "3.งานด้านรถบรรทุก";
     public static $priority = 7;
+    public static $trafficCop = false;
+    public static $with = ['car',  'vendor', 'user'];
     /**
      * The model the resource corresponds to.
      *

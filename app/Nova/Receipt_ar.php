@@ -31,6 +31,8 @@ class Receipt_ar extends Resource
     public static $pollingInterval = 90;
     public static $showPollingToggle = false;
     public static $globallySearchable = false;
+    public static $trafficCop = false;
+    public static $with = ['ar_customer',   'user'];
 
     /**
      * The model the resource corresponds to.
@@ -53,6 +55,10 @@ class Receipt_ar extends Resource
      */
     public static $search = [
         'receipt_no',
+    ];
+    public static $searchRelations = [
+        'ar_customer' => ['name'],
+
     ];
     public static function label()
     {

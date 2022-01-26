@@ -23,6 +23,8 @@ class Invoice extends Resource
 {
     public static $group = '9.1 งานลูกหนี้การค้า';
     public static $priority = 3;
+    public static $trafficCop = false;
+    public static $with = ['ar_customer',  'receipt_ar', 'user'];
     /**
      * The model the resource corresponds to.
      *

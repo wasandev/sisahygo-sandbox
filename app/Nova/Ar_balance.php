@@ -34,8 +34,9 @@ class Ar_balance extends Resource
     public static $showPollingToggle = true;
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
+    public static $trafficCop = false;
 
-    public static $with = ['ar_customer',  'user', 'order_header'];
+    public static $with = ['ar_customer',  'user', 'order_header', 'invoice', 'receipt_ar'];
     /**
      * The model the resource corresponds to.
      *

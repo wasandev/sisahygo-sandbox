@@ -29,6 +29,8 @@ class Carpayment extends Resource
     use HasDependencies;
     public static $group = '9.2 งานการเงิน/บัญชี';
     public static $priority = 7;
+    public static $trafficCop = false;
+    public static $with = ['car', 'vendor', 'branch', 'user'];
     /**
      * The model the resource corresponds to.
      *
@@ -57,6 +59,7 @@ class Carpayment extends Resource
     }
     public static $searchRelations = [
         'car' => ['car_regist'],
+        'vendor' => ['name']
     ];
     public static $globalSearchRelations = [
         'car' => ['car_regist'],
