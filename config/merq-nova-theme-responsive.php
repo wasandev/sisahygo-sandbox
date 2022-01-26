@@ -3,7 +3,7 @@
 return [
 
     // If true, hide all sidebar headlines
-    'hide_all_sidebar_headlines' => false,
+    'hide_all_sidebar_headlines' => true,
 
     // List of sidebar headlines to hide (Ex.: ["Other"])
     'hidden_sidebar_headlines' => [],

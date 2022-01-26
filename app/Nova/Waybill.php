@@ -108,13 +108,8 @@ class Waybill extends Resource
                 ->default(today())
                 ->format('DD/MM/YYYY')
                 ->sortable(),
-            Select::make(__('Waybill type'), 'waybill_type')->options([
-                'general' => 'ทั่วไป',
-                'express' => 'Express',
-            ])->displayUsingLabels()
-                ->default('general'),
-
             BelongsTo::make('ไปสาขา', 'to_branch', 'App\Nova\Branch')->onlyOnIndex(),
+
             BelongsTo::make(__('Route to branch'), 'routeto_branch', 'App\Nova\Routeto_branch')
                 ->nullable()
                 ->showCreateRelationButton()
@@ -162,6 +157,13 @@ class Waybill extends Resource
                 return 0;
             })->exceptOnForms()
                 ->hideFromIndex(),
+            DateTime::make(__('วันที่รถออก'), 'departure_at')
+                ->format('DD/MM/YYYY HH:mm'),
+            Select::make(__('Waybill type'), 'waybill_type')->options([
+                'general' => 'ทั่วไป',
+                'express' => 'Express',
+            ])->displayUsingLabels()
+                ->default('general'),
             Number::make('น้ำหนักสินค้ารวม', 'waybill_totalweight', function () {
                 $waybill_weight = $this->order_loaders->sum('total_weight');
                 return number_format($waybill_weight, 2, '.', ',');
@@ -173,8 +175,7 @@ class Waybill extends Resource
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->hideFromIndex()
                 ->searchable(),
-            DateTime::make(__('วันที่รถออก'), 'departure_at')
-                ->format('DD/MM/YYYY HH:mm'),
+
             DateTime::make(__('กำหนดถึงสาขาปลายทาง'), 'arrival_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),

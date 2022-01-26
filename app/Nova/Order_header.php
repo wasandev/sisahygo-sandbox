@@ -140,7 +140,12 @@ class Order_header extends Resource
                 ->default(today())
                 ->format('DD/MM/YYYY')
                 ->exceptOnForms()
+                ->hideFromIndex()
                 ->sortable(),
+            DateTime::make('วันที่-เวลาส่ง', 'order_time', function () {
+                return $this->created_at;
+            })->onlyonIndex()
+                ->format('DD/MM/YY HH:mm'),
             Text::make(__('Order header no'), 'order_header_no')
                 ->exceptOnForms()
                 ->sortable(),
@@ -205,6 +210,8 @@ class Order_header extends Resource
                 ->withSubtitles()
                 ->showCreateRelationButton()
                 ->sortable(),
+            Currency::make('จำนวนเงิน', 'order_amount')
+                ->exceptOnForms(),
             BelongsTo::make('ใบกำกับสินค้า', 'waybill', 'App\Nova\Waybill')
                 ->nullable()
                 ->searchable()
@@ -214,8 +221,7 @@ class Order_header extends Resource
                 return $this->to_customer->address . ' ' . $this->to_customer->sub_district . ' ' . $this->to_customer->district
                     . ' ' . $this->to_customer->province . ' ' . $this->to_customer->phoneno;
             })->onlyOnDetail(),
-            Currency::make('จำนวนเงิน', 'order_amount')
-                ->exceptOnForms(),
+
             Select::make(__('Tran type'), 'trantype')->options([
                 '0' => 'รับเอง',
                 '1' => 'จัดส่ง',
