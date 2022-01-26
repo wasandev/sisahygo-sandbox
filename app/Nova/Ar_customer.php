@@ -299,9 +299,8 @@ class Ar_customer extends Resource
     public function lenses(Request $request)
     {
         return [
-            // new Lenses\MostValueableSenders(),
-            // new Lenses\MostValueableReceivers()
-            //new ArcardReport()
+            new Lenses\MostValueableAr(),
+
         ];
     }
 
