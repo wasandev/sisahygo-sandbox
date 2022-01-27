@@ -191,10 +191,12 @@ class Productservice_price extends Resource
             $order = \App\Models\Order_checker::find($resourceId);
             if ($order->branch->code === '001' || $order->branch->dropship_flag) {
                 $district = $order->to_customer->district;
-                return $query->where('district', '=', $district);
+                return $query->where('district', '=', $district)
+                    ->where('price', '>', 0);
             } else {
                 $district = $order->customer->district;
-                return $query->where('district', '=', $district);
+                return $query->where('district', '=', $district)
+                    ->where('price', '>', 0);
             }
         }
     }
