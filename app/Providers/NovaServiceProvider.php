@@ -17,6 +17,8 @@ use App\Nova\Dashboards\LoaderDashboard;
 use App\Nova\Dashboards\MkDashboard;
 use App\Nova\Dashboards\ReportDashboard;
 use App\Nova\Dashboards\TruckDashboard;
+use App\Nova\Metrics\Branchs\FromBranchWarehouse;
+use App\Nova\Metrics\Branchs\ToBranchWarehouse;
 use App\Nova\Metrics\WaybillIncome;
 use App\Nova\Metrics\WaybillIncomePerDay;
 use App\Nova\Metrics\WaybillLoading;
@@ -176,6 +178,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
 
+            (new FromBranchWarehouse())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new ToBranchWarehouse())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
             (new CustomersPerDay())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),

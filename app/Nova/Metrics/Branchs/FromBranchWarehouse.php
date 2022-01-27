@@ -18,8 +18,12 @@ class FromBranchWarehouse extends Trend
     {
 
         //return $this->count($request, Book::join(‘categories’, ’books . category_id’, ’ = ’, ’categories . id’), ‘categories . name’);
-        return $this->sumByDays($request, Order_header::where('order_status', 'branch warehouse')
-            ->where('branch_id', $request->user()->branch_id), 'order_amount', 'updated_at')
+        return $this->sumByDays(
+            $request,
+            Order_header::where('order_status', 'confirmed'),
+            'order_amount',
+            'updated_at'
+        )
             ->format('0,0.00')
             ->showSumValue();
     }
@@ -49,7 +53,7 @@ class FromBranchWarehouse extends Trend
     }
     public function name()
     {
-        return 'ยอดสินค้าค้างส่งสาขาต้นทาง';
+        return 'ยอดสินค้าค้างส่งสาขาต้นทาง(ทุกสาขา)';
     }
     /**
      * Get the URI key for the metric.

@@ -2,6 +2,8 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\Branchs\FromBranchWarehouse;
+use App\Nova\Metrics\Branchs\ToBranchWarehouse;
 use App\Nova\Metrics\CharterIncomes;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersByProvince;
@@ -52,6 +54,8 @@ class MkDashboard extends Dashboard
             (new WaybillPayablePerDay())->width('1/2'),
 
             (new WaybillIncomePerDay())->width('1/2'),
+            (new FromBranchWarehouse())->width('1/2'),
+            (new ToBranchWarehouse())->width('1/2'),
             (new CustomersPerDay())->width('1/2'),
 
             (new OrdersByPaymentType())->width('1/2'),

@@ -2,12 +2,11 @@
 
 namespace App\Nova\Metrics\Branchs;
 
-use App\Models\Branchrec_order;
 use App\Models\Order_header;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Trend;
 
-class BranchBalanceWarehouse extends Trend
+class ToBranchWarehouse extends Trend
 {
     /**
      * Calculate the value of the metric.
@@ -19,8 +18,12 @@ class BranchBalanceWarehouse extends Trend
     {
 
         //return $this->count($request, Book::join(‘categories’, ’books . category_id’, ’ = ’, ’categories . id’), ‘categories . name’);
-        return $this->sumByDays($request, Branchrec_order::where('order_status', 'branch warehouse')
-            ->where('branch_rec_id', $request->user()->branch_id), 'order_amount', 'updated_at')
+        return $this->sumByDays(
+            $request,
+            Order_header::where('order_status', 'branch warehouse'),
+            'order_amount',
+            'updated_at'
+        )
             ->format('0,0.00')
             ->showSumValue();
     }
@@ -33,7 +36,6 @@ class BranchBalanceWarehouse extends Trend
     public function ranges()
     {
         return [
-
             30 => '30 วัน',
             60 => '60 วัน',
             365 => '365 วัน',
@@ -51,7 +53,7 @@ class BranchBalanceWarehouse extends Trend
     }
     public function name()
     {
-        return 'ยอดค่าขนส่งสินค้าค้างส่งปลายทางของสาขา';
+        return 'ยอดสินค้าค้างส่งของสาขาปลาย(ทุกสาขา)';
     }
     /**
      * Get the URI key for the metric.
@@ -60,6 +62,6 @@ class BranchBalanceWarehouse extends Trend
      */
     public function uriKey()
     {
-        return 'branchs-branch-balance-warehouse';
+        return 'to-branch-warehouse';
     }
 }
