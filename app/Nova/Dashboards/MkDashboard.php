@@ -48,7 +48,6 @@ class MkDashboard extends Dashboard
             (new WaybillLoading())->width('1/2'),
             (new WaybillsPerDay())->width('1/2'),
 
-
             (new WaybillAmountPerDay())->width('1/2'),
             (new WaybillPayablePerDay())->width('1/2'),
 

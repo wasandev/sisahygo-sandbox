@@ -45,18 +45,14 @@ class AcDashboard extends Dashboard
             (new OrdersPerMonth())->width('1/2'),
             (new OrdersPerDay())->width('1/2'),
 
-            (new OrdersByPaymentType())->width('1/2'),
-            (new OrdersByBranchRec())->width('1/2'),
-            (new OrderBranchPerDay())->width('full'),
-            (new WaybillsPerDay())->width('1/2'),
             (new WaybillLoading())->width('1/2'),
+            (new WaybillsPerDay())->width('1/2'),
 
             (new WaybillAmountPerDay())->width('1/2'),
             (new WaybillPayablePerDay())->width('1/2'),
 
-            //(new WaybillIncome())->width('1/2'),
             (new WaybillIncomePerDay())->width('1/2'),
-
+            (new CustomersPerDay())->width('1/2'),
             (new Orderstatus())
 
 
