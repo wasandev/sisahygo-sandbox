@@ -78,7 +78,8 @@ class AdminDashboard extends Dashboard
             (new CarPaymentPerDay())->width('1/2'),
 
             (new CarReceivePerDay())->width('1/2'),
-            (new TaxPaymentPerDay())->width('1/2')(new Orderstatus())
+            (new TaxPaymentPerDay())->width('1/2'),
+            (new Orderstatus())
 
         ];
     }
