@@ -117,7 +117,8 @@ class Customer extends Resource
                 }),
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required', 'unique:customers,name', 'max:250'),
+                ->rules('required', 'max:250')
+                ->creationRules('unique:customers,name'),
             //new Panel('ที่อยู่ในการออกเอกสาร', $this->addressFields()),
             Text::make(__('Address'), 'address')
                 ->rules('required')
