@@ -30,7 +30,7 @@ class BranchBalanceNotpayFrom extends Trend
     public function ranges()
     {
         return [
-            7 => '7 วัน',
+
             30 => '30 วัน',
             60 => '60 วัน',
             365 => '365 วัน',
