@@ -135,7 +135,8 @@ class Car extends Resource
     {
         return [
             Text::make('ทะเบียนรถ', 'car_regist')
-                ->rules('required', 'unique:cars,car_regist')
+                ->rules('required')
+                ->creationRules('unique:cars,car_regist')
                 ->sortable(),
             BelongsTo::make('ประเภทรถ', 'cartype', 'App\Nova\Cartype')
                 ->showCreateRelationButton()

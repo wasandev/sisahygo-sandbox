@@ -103,7 +103,9 @@ class Product extends Resource
                 ->showCreateRelationButton(),
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required', 'unique:products,name'),
+                ->rules('required')
+                ->creationRules('unique:products,name'),
+
             Text::make('ขนาด(ก+ย+ส)', 'size', function () {
                 return $this->width + $this->length + $this->weight;
             })->exceptOnForms(),

@@ -78,7 +78,8 @@ class Vendor extends Resource
                 ->onlyOnDetail(),
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->creationRules('unique:vendors,name'),
             Text::make(__('Tax ID'), 'taxid')
                 ->hideFromIndex(),
             Select::make(__('Type'), 'type')

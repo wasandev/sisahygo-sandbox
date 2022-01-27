@@ -62,7 +62,9 @@ class Unit extends Resource
     {
         return [
             ID::make(),
-            Text::make(__('Name'), 'name')->sortable()->rules('required', 'unique:units,name'),
+            Text::make(__('Name'), 'name')->sortable()
+                ->rules('required')
+                ->creationRules('unique:units,name'),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
