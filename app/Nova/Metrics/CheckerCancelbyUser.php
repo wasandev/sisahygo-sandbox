@@ -17,7 +17,8 @@ class CheckerCancelbyUser extends Value
     public function calculate(NovaRequest $request)
     {
         return $this->count($request, Order_checker::where('checker_id', $request->user()->id)
-            ->where('order_status', '=', 'cancel'));
+            ->where('order_status', '=', 'cancel'))
+            ->format('0,0');
     }
 
     /**

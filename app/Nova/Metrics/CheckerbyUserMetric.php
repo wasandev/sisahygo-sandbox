@@ -17,9 +17,11 @@ class CheckerbyUserMetric extends Value
     public function calculate(NovaRequest $request)
     {
         if ($request->user()->role == 'admin') {
-            return $this->count($request, Order_checker::where('order_status', '<>', 'checking'));
+            return $this->count($request, Order_checker::where('order_status', '<>', 'checking'))
+                ->format('0,0');
         } else {
-            return $this->count($request, Order_checker::where('checker_id', $request->user()->id));
+            return $this->count($request, Order_checker::where('checker_id', $request->user()->id))
+                ->format('0,0');;
         }
     }
 

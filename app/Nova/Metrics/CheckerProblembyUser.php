@@ -17,7 +17,8 @@ class CheckerProblembyUser extends Value
     public function calculate(NovaRequest $request)
     {
         return $this->count($request, Order_checker::where('checker_id', $request->user()->id)
-            ->where('order_status', '=', 'problem'));
+            ->where('order_status', '=', 'problem'))
+            ->format('0,0');
     }
 
     /**
