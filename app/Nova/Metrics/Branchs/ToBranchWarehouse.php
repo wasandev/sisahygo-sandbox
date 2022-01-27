@@ -20,9 +20,9 @@ class ToBranchWarehouse extends Trend
         //return $this->count($request, Book::join(‘categories’, ’books . category_id’, ’ = ’, ’categories . id’), ‘categories . name’);
         return $this->sumByDays(
             $request,
-            Order_header::where('order_status', 'branch warehouse'),
-            'order_amount',
-            'updated_at'
+            Order_header::where('order_status', 'branch warehouse')
+                ->where('order_type', '<>', 'charter'),
+            'order_amount'
         )
             ->format('0,0.00')
             ->showSumValue();
