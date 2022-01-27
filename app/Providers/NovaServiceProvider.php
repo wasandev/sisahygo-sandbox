@@ -155,20 +155,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new OrdersPerDay())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
-
-            (new OrdersByPaymentType())->width('1/2')->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('view mkdashboards');
-            }),
-            (new OrdersByBranchRec())->width('1/2')->canSee(function ($request) {
+            (new WaybillLoading())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
 
             (new WaybillsPerDay())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
-            (new WaybillLoading())->width('1/2')->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('view mkdashboards');
-            }),
+
 
             (new WaybillAmountPerDay())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
@@ -177,7 +171,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
 
-            //(new WaybillIncome())->width('1/2'),
+
             (new WaybillIncomePerDay())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
@@ -185,9 +179,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new CustomersPerDay())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
-            (new NewCustomers())->width('1/2')->canSee(function ($request) {
-                return  $request->user()->hasPermissionTo('view mkdashboards');
-            }),
+
             (new CustomersByProvince())->width('1/2')->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
@@ -195,6 +187,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return  $request->user()->hasPermissionTo('view mkdashboards');
             }),
 
+            (new OrdersByPaymentType())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
+            (new OrdersByBranchRec())->width('1/2')->canSee(function ($request) {
+                return  $request->user()->hasPermissionTo('view mkdashboards');
+            }),
 
 
             (new Orderstatus())

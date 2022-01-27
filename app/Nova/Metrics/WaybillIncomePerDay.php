@@ -33,7 +33,7 @@ class WaybillIncomePerDay extends Trend
     {
         return [
 
-            7 => '7 วัน',
+
             30 => '30 วัน',
             60 => '60 วัน',
             365 => '365 วัน',
