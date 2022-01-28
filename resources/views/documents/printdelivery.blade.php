@@ -39,7 +39,7 @@
 
         </td>
         <td style="width: 50%;vertical-align:top;padding: 10px;" >
-            เลขที่ใบจัดส่ง: {{ $delivery->delivery_no }}<br />
+            เลขที่ใบจัดส่ง: {{ $delivery->delivery_no }} - {{$delivery->id}}<br />
             วันที่: {{ $delivery->delivery_date->format('d/y/Y') }}<br />
             เส้นทางจัดส่ง: {{ $delivery->branch_route->name}}<br/>
             รายละเอียด/หมายเหตุ: {{$delivery->remark}}<br/>
@@ -55,6 +55,7 @@
 <br/>
 
 <table  style="width: 100%;border: 0.5px soild black;">
+    <thead>
     <tr style="vertical-align:middle;font-weight: bold;height:1cm">
         <td style="width: 5%;text-align:center;">ลำดับ</td>
         <td style="width: 15%;text-align: center;">อำเภอ</td>
@@ -66,7 +67,7 @@
         <td style="width: 5%;text-align: center;">การจัดส่ง</td>
         <td style="width: 5%;text-align: center;">การเก็บเงิน</td>
     </tr>
-
+    </thead>
     @foreach ($delivery_district as $district => $item_groups)
         <tr style="vertical-align:top;font-weight:bold">
             <td></td>

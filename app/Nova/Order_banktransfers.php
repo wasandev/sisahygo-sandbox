@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Filters\BankTransferDateFilter;
 use App\Nova\Filters\BankTransferStatus;
 use App\Nova\Filters\Branch;
+use App\Nova\Filters\ByStatus;
 use App\Nova\Filters\Transfertype;
 use App\Nova\Lenses\accounts\OrderBankTransfer;
 use App\Nova\Metrics\OrderTransferPerDay;
@@ -81,9 +82,9 @@ class Order_banktransfers extends Resource
 
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Boolean::make(__('Status'), 'status'),
+            Boolean::make(__('Status'), 'status')->sortable(),
             DateTime::make(__('Created At'), 'created_at')
-                ->format('DD/MM/YYYY HH:mm'),
+                ->format('DD/MM/YYYY HH:mm')->sortable(),
             Select::make('ประเภทรายการ', 'transfer_type')->options([
                 'H' => 'ต้นทาง',
                 'B' => 'รับชำระหนี้',
@@ -138,9 +139,11 @@ class Order_banktransfers extends Resource
     public function filters(Request $request)
     {
         return [
+            new ByStatus,
             new Transfertype,
             new BankTransferDateFilter,
-            new Branch
+            new Branch,
+
         ];
     }
 

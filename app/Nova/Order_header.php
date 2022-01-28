@@ -292,13 +292,13 @@ class Order_header extends Resource
     public function filters(Request $request)
     {
         return [
-            new ShowOwnOrder(),
+            new PaymentStatus(),
+            new ShowByOrderStatus(),
             new OrderFromDate(),
             new OrderToDate(),
-            new ShowByOrderStatus(),
-            new PaymentStatus(),
             new OrderFromBranch(),
             new OrderToBranch(),
+            new ShowOwnOrder(),
             new BillingUser(),
             new CheckerUser(),
 

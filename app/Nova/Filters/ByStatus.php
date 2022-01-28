@@ -5,9 +5,9 @@ namespace App\Nova\Filters;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
 
-class PaymentStatus extends BooleanFilter
+class ByStatus extends BooleanFilter
 {
-    public $name = 'การชำระเงิน';
+    public $name = 'ตามสถานะ';
     /**
      * Apply the filter to the given query.
      *
@@ -18,11 +18,8 @@ class PaymentStatus extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        if ($value['payed']) {
-            return $query->where('payment_status', "=", true);
-        }
-        if ($value['notpay']) {
-            return $query->where('payment_status', "=", false);
+        if ($value['notactive']) {
+            return $query->where('status', "=", false);
         }
     }
 
@@ -35,8 +32,8 @@ class PaymentStatus extends BooleanFilter
     public function options(Request $request)
     {
         return [
-            'ชำระแล้ว' => 'payed',
-            'ค้างชำระ' => 'notpay'
+            'ยังไม่ยืนยัน' => 'notactive',
+
 
         ];
     }

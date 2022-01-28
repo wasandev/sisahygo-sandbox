@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Filters\Branch;
+use App\Nova\Filters\DeliveryDateFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -36,7 +37,7 @@ class Delivery extends Resource
      *
      * @var string
      */
-    public static $title = 'delivery_no';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -44,7 +45,7 @@ class Delivery extends Resource
      * @var array
      */
     public static $search = [
-        'delivery_no',
+        'id',
     ];
     public static $searchRelations = [
         'car' => ['car_regist'],
@@ -68,12 +69,23 @@ class Delivery extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
-            Text::make('เลขที่จัดส่ง', 'delivery_no')
-                ->readonly(),
-            Date::make('วันที่จัดส่ง', 'delivery_date')
+            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
+                ->exceptOnForms()
+                ->sortable()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
+            Date::make('วันที่จัดส่ง', 'delivery_date')
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                })
+                ->sortable(),
+            Text::make('เลขที่จัดส่ง', function () {
+                return $this->delivery_no . '-' . $this->id;
+            })
+
+                ->onlyOnDetail(),
+
             Select::make('ประเภทการจัดส่ง', 'delivery_type')->options([
                 '0' => 'รถบรรทุกจัดส่ง',
                 '1' => 'สาขาจัดส่ง'
@@ -82,22 +94,14 @@ class Delivery extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
                 }),
-            BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User')
-                ->hideFromIndex()
-                ->rules('required')
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage branchrec_orders');
-                }),
-            BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
-                ->onlyOnDetail()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage branchrec_orders');
-                }),
+
+
             BelongsTo::make(__('Car regist'), 'car', 'App\Nova\Car')
-                ->exceptOnForms()
+
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage branchrec_orders');
-                }),
+                })
+                ->sortable(),
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
                 ->hideFromIndex()
                 ->canSee(function ($request) {
@@ -110,6 +114,13 @@ class Delivery extends Resource
                 }),
             Currency::make('จำนวนเงินที่ต้องจัดเก็บ', 'receipt_amount')
                 ->readonly(),
+            BelongsTo::make('เส้นทาง', 'branch_route', 'App\Nova\Branch_route'),
+            BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User')
+
+                ->rules('required')
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('manage branchrec_orders');
+                }),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail()
                 ->canSee(function ($request) {
@@ -157,7 +168,8 @@ class Delivery extends Resource
     public function filters(Request $request)
     {
         return [
-            new Branch()
+            new Branch(),
+            new DeliveryDateFilter()
         ];
     }
 
