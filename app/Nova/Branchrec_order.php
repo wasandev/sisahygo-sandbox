@@ -206,6 +206,9 @@ class Branchrec_order extends Resource
 
             new ValueByBranch(),
             new ValueByDistrict(),
+            new lenses\ValueByOrderConfirmed(),
+            new lenses\ValueByOrderBranchWarehouse(),
+            new lenses\ValueByOrderBranchCompletedNotPay()
         ];
     }
 

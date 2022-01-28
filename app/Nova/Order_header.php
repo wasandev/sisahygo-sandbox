@@ -319,6 +319,9 @@ class Order_header extends Resource
             new lenses\accounts\OrderReportCancelByDay(),
             new Lenses\accounts\OrderReportCashByDay(),
             new Lenses\accounts\OrderReportCrByDay(),
+            new lenses\ValueByOrderConfirmed(),
+            new lenses\ValueByOrderBranchWarehouse(),
+            new lenses\ValueByOrderBranchCompletedNotPay()
         ];
     }
 
