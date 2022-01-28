@@ -18,7 +18,8 @@ class OrderBranchPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->sumByDays($request, Branch_balance::class, 'bal_amount')
+        return $this->sumByDays($request, Branch_balance::join('branches', 'branch_balances.branch_id', 'branches.id')
+            ->where('branches.type', '=', 'owner'), 'bal_amount')
             ->showSumValue()
             ->format('0,0.00');
     }
@@ -59,6 +60,6 @@ class OrderBranchPerDay extends Trend
     }
     public function name()
     {
-        return 'ค่าขนส่งเก็บปลายทางตามวัน(เฉพาะรายการตั้งหนี้แล้ว) ทุกสาขา';
+        return 'ค่าขนส่งเก็บปลายทางตามวัน(เฉพาะรายการตั้งหนี้แล้ว) (เฉพาะสาขาบริษัท)';
     }
 }

@@ -17,7 +17,8 @@ class OrderBranchPayPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->sumByDays($request, Branch_balance::class, 'pay_amount', 'branchpay_date')
+        return $this->sumByDays($request, Branch_balance::join('branches', 'branch_balances.branch_id', 'branches.id')
+            ->where('branches.type', '=', 'owner'), 'branch_balances.pay_amount', 'branch_balances.branchpay_date')
             ->showSumValue()
             ->format('0,0.00');
     }
@@ -58,6 +59,6 @@ class OrderBranchPayPerDay extends Trend
     }
     public function name()
     {
-        return 'ยอดจัดเก็บเงินปลายทางตามวัน ทุกสาขา';
+        return 'ยอดจัดเก็บเงินปลายทางตามวัน (เฉพาะสาขาบริษัท)';
     }
 }

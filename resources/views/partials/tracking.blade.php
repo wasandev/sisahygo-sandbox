@@ -1,5 +1,5 @@
 
-<div  class="max-w-full mx-auto bg-blue-700 pt-16 pb-2">
+<div  class="max-w-full mx-auto bg-blue-500 m-4 pt-16 pb-2">
     <form action="/tracking" method="POST" role="search">
         @csrf
         <div class="max-w-lg mx-auto ">

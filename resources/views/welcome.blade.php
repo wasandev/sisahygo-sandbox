@@ -7,9 +7,9 @@
     @include('partials.tracking')
 @endsection
 
-@section('sghome')
+{{-- @section('sghome')
     @include('partials.sghome')
-@endsection
+@endsection --}}
 
 @section('content')
 <div id="app" class="max-w-full " >
@@ -22,6 +22,11 @@
                 <div>
                     @include('services.card')
 
+                </div>
+                <div>
+                     @include('pages.cardsidebar',[
+                'showimage' => 0
+            ])
                 </div>
 
         </div>

@@ -17,7 +17,9 @@ class OrderBranchNotPayPerDay extends Trend
      */
     public function calculate(Request $request)
     {
-        return $this->sumByDays($request, Branch_balance::where('payment_status', 'false'), 'bal_amount')
+        return $this->sumByDays($request, Branch_balance::join('branches', 'branch_balances.branch_id', 'branches.id')
+            ->where('branch_balances.payment_status', 'false')
+            ->where('branches.type', '=', 'owner'), 'branch_balances.bal_amount')
             ->showSumValue()
             ->format('0,0.00');
     }
@@ -58,6 +60,6 @@ class OrderBranchNotPayPerDay extends Trend
     }
     public function name()
     {
-        return 'ยอดค่าขนส่งเก็บปลายทางค้างชำระตามวัน ทุกสาขา';
+        return 'ยอดค่าขนส่งเก็บปลายทางค้างชำระตามวัน(เฉพาะสาขาบริษัท)';
     }
 }
