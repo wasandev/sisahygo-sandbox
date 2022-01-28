@@ -10,6 +10,7 @@ use App\Nova\Filters\OrderFromBranch;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\OrderToDate;
+use App\Nova\Filters\PaymentStatus;
 use App\Nova\Filters\ShowOwnOrder;
 use App\Nova\Filters\ShowByOrderStatus;
 use Illuminate\Http\Request;
@@ -100,6 +101,8 @@ class Order_header extends Resource
         return [
             ID::make('ลำดับ', 'id')
                 ->sortable(),
+            Boolean::make(__('Payment status'), 'payment_status')
+                ->exceptOnForms(),
             Text::make(__('Payment type'), 'paymenttype')
                 ->onlyOnIndex(),
             Status::make(__('Order status'), 'order_status')
@@ -168,8 +171,7 @@ class Order_header extends Resource
                 'L' => 'วางบิลปลายทาง'
             ])->displayUsingLabels()
                 ->onlyOnDetail(),
-            Boolean::make(__('Payment status'), 'payment_status')
-                ->onlyOnDetail(),
+
 
             Boolean::make('สแกน Qr Code ผู้ส่ง', 'useqrcode')
                 ->onlyOnForms(),
@@ -294,6 +296,7 @@ class Order_header extends Resource
             new OrderFromDate(),
             new OrderToDate(),
             new ShowByOrderStatus(),
+            new PaymentStatus(),
             new OrderFromBranch(),
             new OrderToBranch(),
             new BillingUser(),

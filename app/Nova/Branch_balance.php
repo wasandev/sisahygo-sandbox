@@ -9,6 +9,7 @@ use App\Nova\Filters\BranchBalanceStatus;
 use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Filters\BranchPayFromDate;
 use App\Nova\Filters\BranchPayToDate;
+use App\Nova\Filters\PaymentStatus;
 use App\Nova\Lenses\Branch\BranchBalanceBydate;
 use App\Nova\Lenses\Branch\BranchBalanceReceipt;
 use App\Nova\Lenses\Branch\BranchBalanceReport;
@@ -156,7 +157,7 @@ class Branch_balance extends Resource
     public function filters(Request $request)
     {
         return [
-            new BranchBalanceStatus(),
+            new PaymentStatus(),
             new BranchBalanceFilter(),
             new BranchPayFromDate(),
             new BranchPayToDate(),

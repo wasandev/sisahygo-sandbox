@@ -10,6 +10,7 @@ use App\Nova\Actions\OrderReceived;
 use App\Nova\Filters\ByWaybill;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
+use App\Nova\Filters\PaymentStatus;
 use App\Nova\Filters\ShowByOrderStatusBranch;
 use App\Nova\Filters\ToBranch;
 use App\Nova\Lenses\ValueByBranch;
@@ -185,7 +186,7 @@ class Branchrec_order extends Resource
     {
         return [
             new ToBranch(),
-
+            new PaymentStatus(),
             new ShowByOrderStatusBranch(),
             new OrderFromDate(),
             new OrderToDate(),
