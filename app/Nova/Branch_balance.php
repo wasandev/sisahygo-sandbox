@@ -22,13 +22,14 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 
 class Branch_balance extends Resource
 {
     public static $group = '8.สำหรับสาขา';
-    public static $priority = 4;
+    public static $priority = 5;
     public static $polling = false;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
@@ -131,6 +132,16 @@ class Branch_balance extends Resource
                 //     return '-';
                 // }
             }),
+            BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Created At'), 'created_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
+            BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
+                ->onlyOnDetail(),
+            DateTime::make(__('Updated At'), 'updated_at')
+                ->format('DD/MM/YYYY HH:mm')
+                ->onlyOnDetail(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
         ];
     }

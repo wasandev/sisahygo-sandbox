@@ -48,7 +48,7 @@ class Delivery extends Resource
         'id',
     ];
     public static $searchRelations = [
-        'car' => ['car_regist'],
+        'car' => ['car_regist']
     ];
     public static function label()
     {

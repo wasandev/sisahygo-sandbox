@@ -20,10 +20,6 @@ class Delivery_item extends Resource
 {
     public static $displayInNavigation = false;
     public static $group = '8.สำหรับสาขา';
-    //public static $priority = 3;
-    // public static $polling = true;
-    // public static $pollingInterval = 90;
-    // public static $showPollingToggle = true;
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
     /**
@@ -69,7 +65,7 @@ class Delivery_item extends Resource
     public function fields(Request $request)
     {
         return [
-            // ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             BelongsTo::make('เลขที่รายการจัดส่ง', 'delivery', 'App\Nova\Delivery'),
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
                 ->sortable()
@@ -88,21 +84,11 @@ class Delivery_item extends Resource
             Currency::make('จำนวนเงินรับชำระ', 'pay_amount')
                 ->onlyOnDetail(),
 
-            // BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
-            //     ->onlyOnDetail(),
-            // DateTime::make(__('Created At'), 'created_at')
-            //     ->format('DD/MM/YYYY HH:mm')
-            //     ->onlyOnDetail(),
-            // BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
-            //     ->onlyOnDetail(),
-            // DateTime::make(__('Updated At'), 'updated_at')
-            //     ->format('DD/MM/YYYY HH:mm')
-            //     ->onlyOnDetail()
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt'),
             Text::make('หมายเหตุ', 'description'),
 
             HasMany::make('รายการใบรับส่ง', 'delivery_details', 'App\Nova\Delivery_detail'),
-            // HasMany::make('รายการเก็บเงินปลายทาง', 'branch_balances', 'App\Nova\Branch_balance'),
+
 
         ];
     }

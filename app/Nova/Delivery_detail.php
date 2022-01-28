@@ -15,6 +15,7 @@ class Delivery_detail extends Resource
 {
     public static $displayInNavigation = false;
     public static $group = '8.สำหรับสาขา';
+    public static $priority = 4;
 
     public static $globallySearchable = false;
     /**
@@ -40,11 +41,11 @@ class Delivery_detail extends Resource
         'id',
     ];
     public static $searchRelations = [
-        'branchrec_order' => ['order_header_no'],
+        'branchrec_order' => ['order_header_no', 'order_header_id'],
     ];
     public static function label()
     {
-        return 'รายการใบรับส่งสินค้า';
+        return 'รายการใบรับส่งในใบจัดส่ง';
     }
 
     /**
@@ -72,17 +73,10 @@ class Delivery_detail extends Resource
                     return false;
                 }
             })->exceptOnForms(),
-            // ->canSee(function ($request) {
-            //     $order = \App\Models\Branchrec_order::find($this->order_header_id);
-            //     return $order->paymenttype == 'E';
-            // })
-            // ->onlyOnIndex(),
+
             Number::make('จำนวนเงิน', 'payamount', function () {
                 $order = \App\Models\Branchrec_order::find($this->order_header_id);
-                //if ($order->paymenttype === 'E') {
                 return $order->order_amount;
-                //   }
-                // return '0.00';
             })->step('0.01'),
             HasMany::make('รายการสินค้า', 'order_details', 'App\Nova\Order_detail'),
 
