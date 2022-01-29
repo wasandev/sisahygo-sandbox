@@ -25,9 +25,8 @@ class ValueByOrderBranchWarehouse extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
-                ->where('order_headers.order_status', '=', 'confirmed')
+                ->where('order_headers.order_status', '=', 'branch warehouse')
                 ->where('order_headers.order_type', '<>', 'charter')
                 ->orderBy('amount', 'desc')
                 ->groupBy('order_headers.branch_rec_id')
