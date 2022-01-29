@@ -7,6 +7,7 @@ use App\Nova\Actions\CreateBranchDeliveryItems;
 use App\Nova\Actions\CreateTruckDeliveryItems;
 use App\Nova\Actions\MakeOrderBranchWarehouse;
 use App\Nova\Actions\OrderReceived;
+use App\Nova\Filters\ByBranchPaymentType;
 use App\Nova\Filters\ByPaymentType;
 use App\Nova\Filters\ByWaybill;
 use App\Nova\Filters\OrderFromDate;
@@ -190,7 +191,7 @@ class Branchrec_order extends Resource
         return [
             new ToBranch(),
             new PaymentStatus(),
-            new ByPaymentType(),
+            new ByBranchPaymentType(),
             new ShowByOrderStatusBranch(),
             new OrderFromDate(),
             new OrderToDate(),
