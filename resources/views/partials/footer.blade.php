@@ -1,15 +1,12 @@
 <footer class="bg-blue-500 lg:flex lg:justify-between lg:items-center lg:px-4 lg:py-2 ">
 
     <div class="flex items-center justify-between px-4 py-3 lg:p-0">
-        <div class="px-2 pt-2 pb-4 lg:flex lg:p-0 lg:items-left lg:w-auto text-gray-300 text-sm font-thin">
-            <a href="https://app.sisahygo.online" class="text-gray-300 text-sm  hover:text-yellow-500">Sisahy Transport(1988) Co.,ltd.</a>
+        <div class="px-2 pt-2 pb-4 lg:flex lg:p-0 lg:items-left lg:w-auto text-gray-300 text-base font-normal">
+            <a href="https://app.sisahygo.online" class="text-gray-300 text-base  hover:text-red-500">Sisahy Transport(1988) Co.,ltd.</a>
             <span class="px-1 ">&middot;</span>
             &copy; {{ date('Y') }}
 
         </div>
-        {{-- <div class="px-2 pt-2 pb-4 text-gray-300 text-sm font-thin text-right lg:hidden ">
-            เกี่ยวกับเรา
-        </div> --}}
         <div class="block lg:hidden">
 
             <div class="footer-sign block  text-blue-500 hover:text-white focus:text-white focus:outline-none">

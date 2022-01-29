@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\PrintOrder;
 use App\Nova\Filters\BillingUser;
+use App\Nova\Filters\ByPaymentType;
 use App\Nova\Filters\CheckerUser;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\OrderFromBranch;
@@ -11,6 +12,7 @@ use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\OrderToDate;
 use App\Nova\Filters\PaymentStatus;
+use App\Nova\Filters\PaymentType;
 use App\Nova\Filters\ShowOwnOrder;
 use App\Nova\Filters\ShowByOrderStatus;
 use Illuminate\Http\Request;
@@ -294,6 +296,7 @@ class Order_header extends Resource
     {
         return [
             new PaymentStatus(),
+            new ByPaymentType(),
             new ShowByOrderStatus(),
             new OrderFromDate(),
             new OrderToDate(),
