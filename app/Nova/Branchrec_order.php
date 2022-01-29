@@ -26,6 +26,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Wasandev\Orderstatus\Orderstatus;
 
 
@@ -304,6 +305,10 @@ class Branchrec_order extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
                 }),
 
         ];

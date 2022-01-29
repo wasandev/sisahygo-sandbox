@@ -33,6 +33,7 @@ use App\Nova\Metrics\OrdersPerMonth;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Http\Requests\ActionRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Wasandev\Orderstatus\Orderstatus;
 use Wasandev\QrCodeScan\QrCodeScan;
 
@@ -416,6 +417,10 @@ class Order_header extends Resource
                 })
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
+                }),
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->role == 'admin';
                 }),
         ];
     }
