@@ -306,10 +306,10 @@ class Branchrec_order extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
                 }),
-            (new DownloadExcel)->allFields()->withHeadings()
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin';
-                }),
+            // (new DownloadExcel)->allFields()->withHeadings()
+            //     ->canSee(function ($request) {
+            //         return $request->user()->role == 'admin';
+            //     }),
 
         ];
     }

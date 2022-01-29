@@ -418,10 +418,10 @@ class Order_header extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
                 }),
-            (new DownloadExcel)->allFields()->withHeadings()
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin';
-                }),
+            // (new DownloadExcel)->allFields()->withHeadings()
+            //     ->canSee(function ($request) {
+            //         return $request->user()->role == 'admin';
+            //     }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
