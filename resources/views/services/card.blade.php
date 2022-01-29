@@ -3,7 +3,7 @@
         <div>
                <a href="/tracking" class="flex flex-col flex-1 border border-gray-200  hover:shadow-xl hover:bg-blue-300 translateY-2px m-2 p-2 lg:m-4 lg:p-4 no-underline transition">
                 <div class="aspect-16x9"
-                   style="background:url('{{  Storage::url('tracking1.png') }}') no-repeat center center/cover">
+                   style="background:url('{{  Storage::url('web/tracking1.png') }}') no-repeat center center/cover">
                 </div>
 
                 <p class="text-base font-semibold text-center text-gray-800 p-2 ">ติดตามสถานะการขนส่งสินค้า</p>
