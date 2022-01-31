@@ -38,7 +38,7 @@
                         </h1>
 
                 </div>
-                <div>
+                <div class="py-16">
                     @include('services.card')
 
                 </div>
@@ -57,3 +57,4 @@
     @include('partials.footer')
 
 @endsection
+
