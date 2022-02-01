@@ -35,7 +35,7 @@ class ArbalanceByCustomer extends Filter
      */
     public function options(Request $request)
     {
-        $customers = \App\Models\Ar_customer::has('ar_balances');
+        $customers = \App\Models\Ar_customer::all();
         return $customers->pluck('id', 'name')->all();
     }
 }
