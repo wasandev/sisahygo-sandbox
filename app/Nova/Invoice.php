@@ -138,7 +138,7 @@ class Invoice extends Resource
     public function filters(Request $request)
     {
         return [
-            new ArbalanceByCustomer,
+            //new ArbalanceByCustomer,
             new InvoiceNotReceipt,
             new InvoiceFromDate,
             new InvoiceToDate,
