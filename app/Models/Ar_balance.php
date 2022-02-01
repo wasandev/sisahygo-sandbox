@@ -11,7 +11,7 @@ class Ar_balance extends Model
     protected $fillable = [
         'customer_id', 'doctype', 'docno',
         'docdate', 'order_header_id', 'receipt_id', 'invoice_id',
-        'description', 'ar_amount', 'user_id', 'updated_by'
+        'description', 'ar_amount', 'user_id', 'updated_by', 'branch_id'
     ];
 
     protected $casts = [
@@ -47,5 +47,9 @@ class Ar_balance extends Model
     public function invoice()
     {
         return $this->belongsTo('App\Models\Invoice');
+    }
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch');
     }
 }

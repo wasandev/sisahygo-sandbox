@@ -24,16 +24,7 @@ class ArbalanceByBranch extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        $branch = \App\Models\Branch::find($value);
-        if ($branch->id <> 1) {
-            return $query->join('order_headers', 'order_headers.id', '=', 'ar_balances.order_header_id')
-                ->where('order_headers.branch_rec_id', $branch->id)
-                ->where('order_headers.paymenttype', '=', 'L');
-        } else {
-            return $query->join('order_headers', 'order_headers.id', '=', 'ar_balances.order_header_id')
-                ->where('order_headers.branch_id', $branch->id)
-                ->where('order_headers.paymenttype', '=', 'F');
-        }
+        return $query->where('branch_id', $value);
     }
 
 

@@ -33,10 +33,10 @@
             @else
                 อ.{{ $receipt->customer->district}}
             @endif
-             @if($order->customer->province === "กรุงเทพมหานคร")
-               {{$order->customer->province}}.' '.
+           @if($receipt->customer->province === "กรุงเทพมหานคร")
+               {{$receipt->customer->province}}.' '.
             @else
-                จ.{{$order->customer->province}}.' '.
+                จ.{{$receipt->customer->province}}.' '.
             @endif
 
             {{$receipt->customer->postal_code }}<br/>

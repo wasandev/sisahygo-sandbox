@@ -62,11 +62,12 @@ class Ar_balance extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'order_header_id'
     ];
     public static $searchRelations = [
         'ar_customer' => ['name'],
-        'order_header' => ['order_header_no']
+        'order_header' => ['order_header_no'],
+        'branch' => ['name']
     ];
     public static function label()
     {
@@ -84,6 +85,7 @@ class Ar_balance extends Resource
 
         return [
             ID::make(__('ID'), 'id')->sortable(),
+            BelongsTo::make('สาขา', 'branch', 'App\Nova\Branch')->sortable(),
             Boolean::make('การชำระเงิน', 'status', function () {
                 if (isset($this->order_header)) {
                     return $this->order_header->payment_status;
@@ -134,7 +136,7 @@ class Ar_balance extends Resource
     {
         return [
             //new ArbalanceByCustomer,
-            // new ArbalanceByBranch,
+            new ArbalanceByBranch,
             new ArbalanceNotInvoice,
             new ArbalanceNotReceipt,
             new ArbalanceFromDate,

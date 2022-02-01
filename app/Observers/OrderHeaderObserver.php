@@ -155,6 +155,7 @@ class OrderHeaderObserver
                         'ar_amount' => $order_header->order_amount,
                         'description' => 'ค่าขนส่งสินค้า',
                         'user_id' => auth()->user()->id,
+                        'branch_id' => $order_header->branch_id,
                     ]);
                 }
                 if ($order_header->paymenttype == "L") {
@@ -167,6 +168,7 @@ class OrderHeaderObserver
                         'ar_amount' => $order_header->order_amount,
                         'description' => 'ค่าขนส่งสินค้า',
                         'user_id' => auth()->user()->id,
+                        'branch_id' => $order_header->branch_rec_id,
                     ]);
                 }
 
