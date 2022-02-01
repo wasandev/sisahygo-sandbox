@@ -34,7 +34,7 @@
                 อ.{{ $receipt->customer->district}}
             @endif
 
-            จ.{{$receipt->customer->province.' '.
+             {{.' '.$receipt->customer->province.' '.
             $receipt->customer->postal_code }}<br/>
            <strong>โทรศัพท์: {{ $receipt->customer->phoneno }}</strong>
 
