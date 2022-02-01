@@ -139,9 +139,9 @@
                 อ.{{ $order->to_customer->district}}
             @endif
             @if($order->to_customer->province === "กรุงเทพมหานคร")
-            {{$order->to_customer->province}} .' '.
+            {{$order->to_customer->province}}
             @else
-            จ.{{$order->to_customer->province}} .' '.
+            จ.{{$order->to_customer->province}}
             @endif
             {{$order->to_customer->postal_code}}<br/>
             <strong>Tel: {{ $order->to_customer->phoneno }}</strong>
