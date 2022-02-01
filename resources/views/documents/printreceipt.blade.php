@@ -34,12 +34,12 @@
                 อ.{{ $receipt->customer->district}}
             @endif
            @if($receipt->customer->province === "กรุงเทพมหานคร")
-               {{$receipt->customer->province}}.' '.
+               {{$receipt->customer->province}}
             @else
-                จ.{{$receipt->customer->province}}.' '.
+                จ.{{$receipt->customer->province}}
             @endif
 
-            {{$receipt->customer->postal_code }}<br/>
+              {{$receipt->customer->postal_code }}<br/>
            <strong>โทรศัพท์: {{ $receipt->customer->phoneno }}</strong>
 
         </td>
