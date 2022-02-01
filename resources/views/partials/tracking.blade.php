@@ -1,5 +1,5 @@
 
-<div  class="max-w-full mx-auto bg-blue-400 ">
+<div  class="w-full bg-gray-800 items-center">
     <form action="/tracking" method="POST" role="search">
         @csrf
         <div class="mx-auto flex">
