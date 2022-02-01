@@ -13,7 +13,7 @@ class ArbalanceByBranch extends Filter
      * @var string
      */
     public $component = 'select-filter';
-    public $name = 'เลือกสาขาวางบิล';
+    public $name = 'ตามสาขาวางบิล';
     /**
      * Apply the filter to the given query.
      *
@@ -29,6 +29,10 @@ class ArbalanceByBranch extends Filter
             return $query->join('order_headers', 'order_headers.id', '=', 'ar_balances.order_header_id')
                 ->where('order_headers.branch_rec_id', $branch->id)
                 ->where('order_headers.paymenttype', '=', 'L');
+        } else {
+            return $query->join('order_headers', 'order_headers.id', '=', 'ar_balances.order_header_id')
+                ->where('order_headers.branch_id', $branch->id)
+                ->where('order_headers.paymenttype', '=', 'F');
         }
     }
 

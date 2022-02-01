@@ -134,12 +134,12 @@ class Ar_balance extends Resource
     {
         return [
             new ArbalanceByCustomer,
+            new ArbalanceByBranch,
             new ArbalanceNotInvoice,
             new ArbalanceNotReceipt,
             new ArbalanceFromDate,
             new ArbalanceToDate,
-            new ArbalanceByBranch,
-            new ArbalanceByType
+
 
         ];
     }

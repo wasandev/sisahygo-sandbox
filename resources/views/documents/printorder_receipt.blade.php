@@ -109,9 +109,12 @@
             @else
                 อ.{{ $order->customer->district}}
             @endif
-
-               {{$order->customer->province.' '.
-            $order->customer->postal_code }}<br/>
+            @if($order->customer->province === "กรุงเทพมหานคร")
+               {{$order->customer->province}}.' '.
+            @else
+                จ.{{$order->customer->province}}.' '.
+            @endif
+            {{$order->customer->postal_code }}<br/>
            <strong>Tel: {{ $order->customer->phoneno }}</strong>
 
         </td>
@@ -135,9 +138,12 @@
             @else
                 อ.{{ $order->to_customer->district}}
             @endif
-
-            จ.{{$order->to_customer->province.' '.
-            $order->to_customer->postal_code}}<br/>
+            @if($order->to_customer->province === "กรุงเทพมหานคร")
+            {{$order->to_customer->province}} .' '.
+            @else
+            จ.{{$order->to_customer->province}} .' '.
+            @endif
+            {{$order->to_customer->postal_code}}<br/>
             <strong>Tel: {{ $order->to_customer->phoneno }}</strong>
 
         </td>
