@@ -133,7 +133,7 @@ class Ar_balance extends Resource
     public function filters(Request $request)
     {
         return [
-            new ArbalanceByCustomer,
+            //new ArbalanceByCustomer,
             new ArbalanceByBranch,
             new ArbalanceNotInvoice,
             new ArbalanceNotReceipt,
