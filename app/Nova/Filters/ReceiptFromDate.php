@@ -20,10 +20,10 @@ class ReceiptFromDate extends DateFilter
      * @return \Illuminate\Database\Eloquent\Builder
      */
 
-    public function default()
-    {
-        return date('Y-m-01');
-    }
+    // public function default()
+    // {
+    //     return date('Y-m-01');
+    // }
     public function apply(Request $request, $query, $value)
     {
         return $query->whereDate('receipt_date', '>=', $value);

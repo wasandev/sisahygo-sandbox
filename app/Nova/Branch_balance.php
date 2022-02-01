@@ -205,7 +205,7 @@ class Branch_balance extends Resource
     {
         return [
             BranchReceipt::make($request->resourceId)
-                ->onlyOnDetail()
+                //->onlyOnDetail()
                 ->confirmText('ยืนยันการรับชำระค่าขนส่งรายการนี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
