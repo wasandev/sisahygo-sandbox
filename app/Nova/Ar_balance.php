@@ -5,11 +5,15 @@ namespace App\Nova;
 use App\Nova\Actions\AddOrderToInvoice;
 use App\Nova\Actions\CreateInvoice;
 use App\Nova\Actions\RemoveOrderFromInvoice;
+use App\Nova\Filters\ArbalanceByBranch;
 use App\Nova\Filters\ArbalanceByCustomer;
+use App\Nova\Filters\ArbalanceByType;
 use App\Nova\Filters\ArbalanceFromDate;
 use App\Nova\Filters\ArbalanceNotInvoice;
 use App\Nova\Filters\ArbalanceNotReceipt;
 use App\Nova\Filters\ArbalanceToDate;
+use App\Nova\Filters\OrderToBranch;
+use App\Nova\Filters\ToBranch;
 use App\Nova\Lenses\ar\ArcardReport;
 use App\Nova\Lenses\ar\ArOutstandingReport;
 use App\Nova\Lenses\ar\ArSummaryReport;
@@ -130,13 +134,13 @@ class Ar_balance extends Resource
     {
         return [
             new ArbalanceByCustomer,
-            // (new NovaSearchableBelongsToFilter('ตามชื่อลูกค้า'))
-            //     ->fieldAttribute('ar_customer')
-            //     ->filterBy('customer_id'),
             new ArbalanceNotInvoice,
             new ArbalanceNotReceipt,
             new ArbalanceFromDate,
-            new ArbalanceToDate
+            new ArbalanceToDate,
+            new ArbalanceByBranch,
+            new ArbalanceByType
+
         ];
     }
 

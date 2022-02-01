@@ -110,7 +110,7 @@
                 อ.{{ $order->customer->district}}
             @endif
 
-            จ.{{$order->customer->province.' '.
+               {{$order->customer->province.' '.
             $order->customer->postal_code }}<br/>
            <strong>Tel: {{ $order->customer->phoneno }}</strong>
 
