@@ -186,7 +186,7 @@
                     </td>
                     </tr>
 
-                    @foreach($receipt_type->chunk(10) as $chunk)
+                    @foreach($receipt_type->chunk(5) as $chunk)
                     @foreach ($chunk  as $item )
 
 
