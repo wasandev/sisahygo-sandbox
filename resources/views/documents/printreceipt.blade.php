@@ -93,16 +93,24 @@
         </tr>
 
     @endfor
+    <tr style="font-weight: bold">
+        <td  colspan="2" style="text-align: right">
+                ส่วนลด
+        </td>
 
+        <td style="text-align: right">
+            {{ number_format($receipt->discount_amount,2,'.',',')}}
+        </td>
+    </tr>
     <tr style="font-weight: bold">
         <td  style="text-align: center">
                 รวมเงิน
         </td>
         <td style="text-align: center">
-            ( {{ baht_text($receipt->total_amount) }} )
+            ( {{ baht_text($receipt->total_amount - $receipt->discount_amount ) }} )
         </td>
         <td style="text-align: right">
-            {{ number_format($receipt->total_amount,2,'.',',')}}
+            {{ number_format($receipt->total_amount - $receipt->discount_amount,2,'.',',')}}
         </td>
     </tr>
 </table>

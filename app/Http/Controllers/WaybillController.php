@@ -7,6 +7,7 @@ use App\Models\CompanyProfile;
 use App\Models\Order_header;
 use App\Models\Waybill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
@@ -50,27 +51,41 @@ class WaybillController extends Controller
         return $pdf->stream($path);
     }
 
-    public function report_10($from, $to)
+    public function report_10($routetobranch, $from, $to)
     {
         $report_title = 'รายงานรถออกประจำวัน';
         $company = CompanyProfile::find(1);
+        if ($routetobranch == 'all') {
+
+            $waybills = Waybill::whereDate('departure_at', '>=', $from)
+                ->whereDate('departure_at', '<=', $to)
+                ->whereNotIn('waybill_status', ['loading', 'cancel'])
+                ->orderBy('waybill_date', 'asc')
+                ->orderBy('branch_rec_id', 'asc')
+                ->orderBy('waybill_type', 'asc')
+                ->get();
+        } else {
+            $waybills = Waybill::whereDate('departure_at', '>=', $from)
+                ->whereDate('departure_at', '<=', $to)
+                ->where('routeto_branch_id', '=', $routetobranch)
+                ->whereNotIn('waybill_status', ['loading', 'cancel'])
+                ->orderBy('waybill_date', 'asc')
+                ->orderBy('branch_rec_id', 'asc')
+                ->orderBy('waybill_type', 'asc')
+                ->get();
+        }
+
+        $waybill_groups = $waybills->all();
+
+        $waybill_groups = $waybills->groupBy([
+            function ($item) {
+                return $item->departure_at->format('Y-m-d');
+            },
+            'branch_rec_id', 'waybill_type'
+        ]);
 
 
-        $waybills = Waybill::whereDate('departure_at', '>=', $from)
-            ->whereDate('departure_at', '<=', $to)
-            ->whereNotIn('waybill_status', ['loading', 'cancel'])
-            ->orderBy('waybill_date', 'asc')
-            ->orderBy('branch_rec_id', 'asc')
-            ->orderBy('waybill_type', 'asc')
-            ->get();
 
-
-        $waybill_groups = $waybills->groupBy([function ($item) {
-            return $item->departure_at->format('Y-m-d');
-        },  'branch_rec_id', 'waybill_type']);
-
-
-        // dd($waybill_groups);
         $waybill_groups = $waybill_groups->all();
 
         return view('reports.waybilldate', compact('company', 'report_title', 'waybills', 'waybill_groups', 'from', 'to'));

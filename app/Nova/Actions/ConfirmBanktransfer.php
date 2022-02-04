@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Order_banktransfer_item;
 use App\Models\Order_header;
 use App\Models\Receipt;
 use App\Models\Receipt_ar;
@@ -12,9 +13,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Laravel\Nova\Fields\Boolean;
@@ -55,12 +53,21 @@ class ConfirmBanktransfer extends Action
             foreach ($rec_custs as $rec_cust => $cust_groups) {
 
                 $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
-                if ($fields->tax_status) {
-                    $tax_amount = $cust_groups->sum('transfer_amount') * 0.01;
-                } else {
-                    $tax_amount = 0;
+                $tax_amount = 0;
+                $discount_amount = $cust_groups->sum('discount_amount');
+                $tax_before = $cust_groups->sum('tax_amount');
+
+
+
+
+
+                if ($tax_before > 0) {
+                    $tax_amount = $tax_before;
+                } elseif ($fields->tax_status) {
+                    $tax_amount = ($cust_groups->sum('transfer_amount') - $discount_amount) * 0.01;
                 }
 
+                //dd($tax_amount);
                 $tranitem = $cust_groups->firstWhere('customer_id', $rec_cust);
 
                 if ($tranitem->order_header->paymenttype == 'T') {
@@ -78,8 +85,8 @@ class ConfirmBanktransfer extends Action
                     'receipt_date' => $fields->transferdate,
                     'branch_id' => auth()->user()->branch_id,
                     'customer_id' => $rec_cust,
-                    'total_amount' => $cust_groups->sum('transfer_amount'),
-                    'discount_amount' => 0,
+                    'total_amount' => $cust_groups->sum('transfer_amount') + $discount_amount + $tax_amount,
+                    'discount_amount' => $discount_amount,
                     'tax_amount' => $tax_amount,
                     'pay_amount' => $cust_groups->sum('transfer_amount'),
                     'receipttype' => $receipttype,
@@ -90,15 +97,19 @@ class ConfirmBanktransfer extends Action
                     'user_id' => auth()->user()->id,
                 ]);
                 foreach ($cust_groups as $model) {
-                    Receipt_item::create([
-                        'receipt_id' => $receipt->id,
-                        'order_header_id' => $model->order_header_id,
-                        'user_id' => auth()->user()->id,
-                    ]);
+                    $transfer_orderitems = Order_banktransfer_item::where('order_banktransfer_id', '=', $model->id)->get();
 
-                    //$model->transfer_type = $receipttype;
+                    foreach ($transfer_orderitems as $order_item) {
+
+                        Receipt_item::create([
+                            'receipt_id' => $receipt->id,
+                            'order_header_id' => $order_item->order_header_id,
+                            'user_id' => auth()->user()->id,
+                        ]);
+                    }
+
+                    $model->tax_amount = $tax_amount;
                     $model->status = true;
-
                     $model->receipt_id = $receipt->id;
                     $model->save();
                 }

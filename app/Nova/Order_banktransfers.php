@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
@@ -101,6 +102,9 @@ class Order_banktransfers extends Resource
                 ->readonly(),
             BelongsTo::make(__('Bank Account no'), 'bankaccount', 'App\Nova\Bankaccount'),
             Currency::make(__('Amount'), 'transfer_amount'),
+            Currency::make('ภาษีหัก ณ ที่จ่าย', 'tax_amount'),
+            Currency::make('ส่วนลด', 'discount_amount'),
+
             Text::make(__('Bank reference no'), 'reference')
                 ->hideFromIndex(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_all', 'App\Nova\Receipt_all')
@@ -114,6 +118,7 @@ class Order_banktransfers extends Resource
                 ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->onlyOnDetail(),
+            HasMany::make('รายการใบรับส่ง', 'order_banktransfer_items', 'App\Nova\Order_banktransfer_item')
         ];
     }
 

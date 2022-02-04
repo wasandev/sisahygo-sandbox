@@ -7,6 +7,7 @@ use App\Models\Cartype;
 use App\Nova\Actions\Accounts\PrintWaybillConfirmPerDay;
 use App\Nova\Filters\Lenses\WaybillLensFromDate;
 use App\Nova\Filters\Lenses\WaybillLensToDate;
+use App\Nova\Filters\RouteToBranch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -129,6 +130,7 @@ class WaybillConfirmedPerDay extends Lens
     public function filters(Request $request)
     {
         return [
+            new RouteToBranch(),
             new WaybillLensFromDate(),
             new WaybillLensToDate()
         ];

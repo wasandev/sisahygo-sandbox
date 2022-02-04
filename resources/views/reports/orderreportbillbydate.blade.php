@@ -1,4 +1,4 @@
-@extends('layouts.doclandscape')
+@extends('layouts.doclandscapenojs')
 
 @section('header')
     @include('partials.reportheader')
@@ -49,7 +49,7 @@
 
     <tbody>
        @foreach ($order_date as $date_group => $order_groups)
-            <tr style="font-weight: bold;">
+            <tr style="font-weight: bold;background-color:#c0c0c0">
                 <td colspan="4" style="text-align: left">
                     วันที่ : {{ $date_group }} จำนวน: {{count($order_groups)}} รายการ รวมจำนเงิน
                 </td>
@@ -72,12 +72,19 @@
                 </td>
 
             </tr>
-            @foreach ($order_groups as $item )
+            @foreach($order_groups->chunk(10) as $chunk)
+            @foreach ($chunk as $item )
             <tr style="vertical-align: top">
                 <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>{{ $item->order_header_no}}</td>
                 <td>{{ $item->customer->name }}</td>
-                <td>{{ $item->to_customer->name }}</td>
+
+                <td>
+                    @isset($item->to_customer->name)
+                        {{ $item->to_customer->name }}
+                    @endisset
+
+                </td>
                 <td style="text-align: right">
                     @if($item->paymenttype == 'H')
                     {{ number_format($item->order_amount,2,'.',',') }}
@@ -112,9 +119,9 @@
 
             </tr>
             @endforeach
-
+            @endforeach
         @endforeach
-        <tr style="font-weight: bold;">
+        <tr style="font-weight: bold;background-color:#c0c0c0">
             <td colspan="2">
                 <strong>
                     รวมทั้งหมด - {{count($order)}} รายการ

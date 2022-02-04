@@ -107,7 +107,7 @@ class Receipt extends Resource
                 ->hideFromIndex(),
             Currency::make('ยอดรับชำระ', 'pay_amount')
                 ->hideFromIndex(),
-            HasOne::make('รายการจัดส่ง', 'delivery_item', 'App\Nova\Delivery_item')
+            //HasOne::make('รายการจัดส่ง', 'delivery_item', 'App\Nova\Delivery_item')
 
         ];
     }

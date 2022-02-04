@@ -39,7 +39,13 @@ class PrintWaybillConfirmPerDay extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
+        $routetobranch = $decodedFilters->firstWhere('class', 'App\Nova\Filters\RouteToBranch');
 
+        $routetobranch_value = Arr::get($routetobranch, 'value');
+
+        if ($routetobranch_value == '') {
+            $routetobranch_value = 'all';
+        }
 
         $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\Lenses\WaybillLensFromDate');
         $from_value = Arr::get($from, 'value');
@@ -52,7 +58,7 @@ class PrintWaybillConfirmPerDay extends Action
             return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
 
-        return Action::openInNewTab('/waybill/report_10/' . $from_value . '/' . $to_value);
+        return Action::openInNewTab('/waybill/report_10/' . $routetobranch_value . '/' . $from_value . '/' . $to_value);
     }
 
     /**

@@ -51,7 +51,7 @@ Route::middleware('web', 'auth')
         Route::get('/waybill/makepdf/{id}', 'WaybillController@makePDF')->name('makepdf');
         Route::get('/waybill/preview/{id}', 'WaybillController@preview')->name('preview');
         //waybill report
-        Route::get('/waybill/report_10/{from}/{to}', 'WaybillController@report_10')->name('waybillbydate');
+        Route::get('/waybill/report_10/{routetobranch}/{from}/{to}', 'WaybillController@report_10')->name('waybillbydate');
 
         Route::get('/dropship/makepdf/{id}', 'DropshipController@makePDF')->name('makepdf');
         Route::get('/dropship/preview/{id}', 'DropshipController@preview')->name('preview');

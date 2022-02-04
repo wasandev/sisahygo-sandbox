@@ -7,6 +7,8 @@ use App\Models\Branch_balance;
 use App\Models\Branchrec_order;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
+use App\Models\Order_banktransfer;
+use App\Models\Order_banktransfer_item;
 use App\Models\Receipt;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -60,8 +62,8 @@ class BranchReceipt extends Action
             $model->discount_amount = $fields->discount_amount;
 
             if ($fields->tax_status) {
-                $model->tax_amount = $model->bal_amount * 0.01;
-                $model->pay_amount = $model->bal_amount - $fields->discount_amount - ($model->bal_amount * 0.01);
+                $model->tax_amount = ($model->bal_amount - $fields->discount_amount) * 0.01;
+                $model->pay_amount = ($model->bal_amount - $fields->discount_amount) - (($model->bal_amount - $fields->discount_amount) * 0.01);
             } else {
                 $model->tax_amount = 0.00;
                 $model->pay_amount = $model->bal_amount - $fields->discount_amount;
@@ -95,12 +97,33 @@ class BranchReceipt extends Action
                     $delivery_item->bankreference = $fields->reference;
                     $delivery_item->discount_amount = $fields->discount_amount;
                     if ($fields->tax_status) {
-                        $delivery_item->tax_amount = $delivery_item->payment_amount * 0.01;
-                        $delivery_item->pay_amount = $delivery_item->payment_amount - $fields->discount_amount - ($delivery_item->payment_amount * 0.01);
+                        $delivery_item->tax_amount = ($delivery_item->payment_amount - $fields->discount_amount)  * 0.01;
+                        $delivery_item->pay_amount = ($delivery_item->payment_amount - $fields->discount_amount) - (($delivery_item->payment_amount - $fields->discount_amount)  * 0.01);
                     } else {
                         $delivery_item->tax_amount = 0.00;
                         $delivery_item->pay_amount = $delivery_item->payment_amount - $fields->discount_amount;
                     }
+                    //Create Bank_transfer
+
+                    $order_banktransfer = Order_banktransfer::create([
+                        'order_header_id' => $model->order_header_id,
+                        'transfer_date' => $fields->paydate,
+                        'customer_id' => $model->customer_id,
+                        'branch_id' => $model->branch_id,
+                        'status' => false,
+                        'transfer_type' => 'E',
+                        'transfer_amount' => $model->pay_amount,
+                        'tax_amount' => $model->tax_amount,
+                        'discount_amount' => $model->discount_amount,
+                        'bankaccount_id' => $fields->bankaccount,
+                        'reference' => $fields->bankreference,
+                        'user_id' => auth()->user()->id
+                    ]);
+                    Order_banktransfer_item::create([
+                        'order_banktransfer_id' => $order_banktransfer->id,
+                        'order_header_id' => $model->order_header_id,
+                        'user_id' => auth()->user()->id,
+                    ]);
                 } elseif ($fields->payment_by == 'C') {
 
                     $model->payment_status = true;

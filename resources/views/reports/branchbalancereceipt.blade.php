@@ -1,4 +1,4 @@
-@extends('layouts.doclandscape')
+@extends('layouts.doclandscapenojs')
 
 @section('header')
     @include('partials.reportheader')
@@ -49,7 +49,7 @@
 
         @foreach ($branch_groups as $branch_bal => $bal_amounts)
 
-            <tr style="font-weight:bold">
+            <tr style="font-weight: bold;background-color:#c0c0c0">
 
                 <td colspan="2" style="text-align: left">
                     @php
@@ -106,7 +106,7 @@
 
             @foreach ($bal_amounts as $bal_item => $date_items )
 
-                <tr style="font-weight:bold">
+                <tr style="font-weight: bold;background-color:#aaaaaa">
 
 
                     <td colspan="2" style="text-align: right">
@@ -156,7 +156,7 @@
                 </tr>
 
                 @foreach ($date_items as $item_type => $receipt_type)
-                    <tr style="font-weight:bold">
+                    <tr style="font-weight: bold;background-color:#d4d4d4">
                         <td colspan="2" style="text-align: right">
                            @if($item_type == 'C')
                                 เงินสด
@@ -186,7 +186,8 @@
                     </td>
                     </tr>
 
-                    @foreach ($receipt_type  as $item )
+                    @foreach($receipt_type->chunk(10) as $chunk)
+                    @foreach ($chunk  as $item )
 
 
                      <tr style="font-weight:normal">
@@ -239,12 +240,13 @@
 
                     </tr>
                     @endforeach
+                    @endforeach
 
                 @endforeach
             @endforeach
         @endforeach
 
-        <tr style="font-weight:bold">
+        <tr style="font-weight: bold;background-color:#c0c0c0">
             <td colspan="6" style="text-align: center">
                 รวมทั้งหมด
             </td>

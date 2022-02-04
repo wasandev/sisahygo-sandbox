@@ -60,9 +60,14 @@ class Branchrec_waybillObserver
 
                 foreach ($branch_balances as $branch_balance) {
 
+                    if ($branchrec_waybill->waybill_type == 'express') {
+                        $branch_balancerec = 1;
+                    } else {
+                        $branch_balancerec = $routeto_branch->dest_branch_id;
+                    }
                     $branch_balance = Branch_balance_partner::create([
                         'branchbal_date' => today(),
-                        'branch_id' => $routeto_branch->dest_branch_id,
+                        'branch_id' => $branch_balancerec,
                         'order_header_id' => $branch_balance->id,
                         'bal_amount' => $branch_balance->order_amount,
                         'discount_amount' => 0.00,
@@ -78,11 +83,15 @@ class Branchrec_waybillObserver
                 //สร้างรายการเก็บเงินปลายทางสำหรับ สาขา
 
                 foreach ($branch_balances as $branch_balance) {
-
+                    if ($branchrec_waybill->waybill_type == 'express') {
+                        $branch_balancerec = 1;
+                    } else {
+                        $branch_balancerec = $routeto_branch->dest_branch_id;
+                    }
 
                     $branch_balance = Branch_balance::create([
                         'branchbal_date' => today(),
-                        'branch_id' => $routeto_branch->dest_branch_id,
+                        'branch_id' => $branch_balancerec,
                         'order_header_id' => $branch_balance->id,
                         'bal_amount' => $branch_balance->order_amount,
                         'discount_amount' => 0.00,

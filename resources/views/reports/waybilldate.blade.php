@@ -1,4 +1,4 @@
-@extends('layouts.doclandscape')
+@extends('layouts.doclandscapenojs')
 
 @section('header')
     @include('partials.reportheader')
@@ -49,19 +49,12 @@
 
         @foreach ($waybill_groups as $waybill_date => $branches)
 
-            <tr style="font-weight: bold">
+            <tr style="font-weight: bold;background-color:#c0c0c0">
 
                 <td colspan="4" >
                     วันที่ : {{ date('d/m/Y',strtotime($waybill_date)) }}
-                    @foreach ($waybills as $item )
-                        @php
-                            $date_count =  $item->whereDate('departure_at',$waybill_date)
-                                                ->whereNotIn('waybill_status', ['loading','cancel'])
-                                                ->count();
-                        @endphp
 
-                    @endforeach
-                    - {{ $date_count}} เที่ยว
+                    - {{ $branches->count('id')}} เที่ยว
                 </td>
                 <td  style="text-align: right;">
 
@@ -101,9 +94,9 @@
 
                 </td>
                 <td style="text-align: right;">
-                    @if ($sumdate_amount > 0)
-                        {{ number_format( ($sumdate_income / $sumdate_amount)  * 100 ,2,'.',',')}}
-                    @endif
+
+                        {{ number_format( $sumdate_income / $sumdate_amount  * 100 ,2,'.',',')}}
+
 
 
                 </td>
@@ -159,6 +152,7 @@
 
             </tr>
             @foreach ($branches as $branch => $types)
+
                 <tr style="font-weight: bold">
                     <td colspan="4">
                         @php
@@ -385,63 +379,67 @@
                     </td>
 
                 </tr>
+                    @foreach($waybill_items->chunk(10) as $chunk)
 
-                    @foreach ($waybill_items as $item )
-
-                    <tr style="vertical-align: top;">
-                        <td style="text-align: center">
-                            {{ $loop->iteration }}
-                        </td>
-                        <td>
-                            {{$item->waybill_no}}
-                        </td>
-
-                        <td>
-                            {{$item->car->car_regist}}
-                        </td>
-                        <td>
-                            {{$item->car->cartype->name}}
-                        </td>
-
-                        <td style="text-align: right">
-                            {{number_format($item->waybill_amount,2,'.',',')}}
-
-                        </td>
-                        <td style="text-align: right">
-                            {{number_format($item->waybill_payable,2,'.',',')}}
-
-                        </td>
-
-                        <td style="text-align: right">
-                            {{number_format($item->waybill_income,2,'.',',')}}
-                        </td>
-                        <td style="text-align: right">
-                            @if($item->waybill_amount > 0 )
-                                {{number_format(($item->waybill_income/$item->waybill_amount)*100,2,'.',',')}}
-                            @endif
-                        </td>
-
-                        <td style="text-align: right;">
-                            {{ number_format($item->order_loaders->whereIn('paymenttype',['H','T'])->sum('order_amount'),2,'.',',') }}
-
-                        </td>
-                        <td style="text-align: right;">
-                            {{ number_format($item->order_loaders->whereIn('paymenttype',['F','L'])->sum('order_amount'),2,'.',',') }}
-
-                        </td>
-                        <td style="text-align: right;">
-                            {{ number_format($item->order_loaders->where('paymenttype','E')->sum('order_amount'),2,'.',',') }}
+                        @foreach($chunk as $item)
 
 
-                        </td>
-                    </tr>
+
+                            <tr style="vertical-align: top;">
+                                <td style="text-align: center">
+                                    {{ $loop->iteration }}
+                                </td>
+                                <td>
+                                    {{$item->waybill_no}}
+                                </td>
+
+                                <td>
+                                    {{$item->car->car_regist}}
+                                </td>
+                                <td>
+                                    {{$item->car->cartype->name}}
+                                </td>
+
+                                <td style="text-align: right">
+                                    {{number_format($item->waybill_amount,2,'.',',')}}
+
+                                </td>
+                                <td style="text-align: right">
+                                    {{number_format($item->waybill_payable,2,'.',',')}}
+
+                                </td>
+
+                                <td style="text-align: right">
+                                    {{number_format($item->waybill_income,2,'.',',')}}
+                                </td>
+                                <td style="text-align: right">
+                                    @if($item->waybill_amount > 0 )
+                                        {{number_format(($item->waybill_income/$item->waybill_amount)*100,2,'.',',')}}
+                                    @endif
+                                </td>
+
+                                <td style="text-align: right;">
+                                    {{ number_format($item->order_loaders->whereIn('paymenttype',['H','T'])->sum('order_amount'),2,'.',',') }}
+
+                                </td>
+                                <td style="text-align: right;">
+                                    {{ number_format($item->order_loaders->whereIn('paymenttype',['F','L'])->sum('order_amount'),2,'.',',') }}
+
+                                </td>
+                                <td style="text-align: right;">
+                                    {{ number_format($item->order_loaders->where('paymenttype','E')->sum('order_amount'),2,'.',',') }}
+
+
+                                </td>
+                            </tr>
+                            @endforeach
                     @endforeach
                 @endforeach
             @endforeach
         @endforeach
 
     </tbody>
-    <tr style="font-weight: bold">
+    <tr style="font-weight: bold;background-color:#c0c0c0">
 
                 <td colspan="4">
 
@@ -518,4 +516,9 @@
             </tr>
 </table>
 
+@endsection
+@section('footer')
+{{-- <div class="d-flex justify-content-center">
+    {!! $waybills->links() !!}
+</div> --}}
 @endsection

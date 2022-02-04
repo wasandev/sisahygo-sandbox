@@ -40,7 +40,7 @@
         </td>
         <td style="width: 50%;vertical-align:top;padding: 10px;" >
             เลขที่ใบจัดส่ง: {{ $delivery->delivery_no }} - {{$delivery->id}}<br />
-            วันที่: {{ $delivery->delivery_date->format('d/y/Y') }}<br />
+            วันที่: {{ $delivery->delivery_date->format('d/m/Y') }}<br />
             เส้นทางจัดส่ง: {{ $delivery->branch_route->name}}<br/>
             รายละเอียด/หมายเหตุ: {{$delivery->remark}}<br/>
             <strong>ยอดเก็บเงินปลายทาง: {{ number_format($delivery->receipt_amount,2,'.',',') }}</strong><br />

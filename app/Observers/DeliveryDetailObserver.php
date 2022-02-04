@@ -45,21 +45,21 @@ class DeliveryDetailObserver
             $branchrec_order = Branchrec_order::find($delivery_detail->order_header_id);
 
 
-            if ($branchrec_order->branchpay_by == "T" && $delivery_detail->payment_status  == false) {
-                $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
+            // if ($branchrec_order->branchpay_by == "T" && $delivery_detail->payment_status  == false) {
+            //     $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
 
-                Order_banktransfer::create([
-                    'customer_id' => $branchrec_order->customer_rec_id,
-                    'order_header_id' => $branchrec_order->id,
-                    'branch_id' => $branchrec_order->branch_rec_id,
-                    'status' => false,
-                    'transfer_type' => 'E',
-                    'transfer_amount' => $delivery_item->pay_amount,
-                    'bankaccount_id' => $branchrec_order->bankaccount_id,
-                    'reference' => $branchrec_order->bankreference,
-                    'user_id' => auth()->user()->id,
-                ]);
-            }
+            //     Order_banktransfer::create([
+            //         'customer_id' => $branchrec_order->customer_rec_id,
+            //         'order_header_id' => $branchrec_order->id,
+            //         'branch_id' => $branchrec_order->branch_rec_id,
+            //         'status' => false,
+            //         'transfer_type' => 'E',
+            //         'transfer_amount' => $delivery_item->pay_amount,
+            //         'bankaccount_id' => $branchrec_order->bankaccount_id,
+            //         'reference' => $branchrec_order->bankreference,
+            //         'user_id' => auth()->user()->id,
+            //     ]);
+            // }
             if ($branchrec_order->paymenttype == 'E') {
 
                 $branch_balance = Branch_balance::where('order_header_id', $delivery_detail->order_header_id)->first();
@@ -78,8 +78,8 @@ class DeliveryDetailObserver
 
             Order_status::updateOrCreate([
                 'order_header_id' => $delivery_detail->order_header_id,
-                'status' => 'completed',
                 'user_id' => auth()->user()->id,
+                'status' => 'completed',
             ]);
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\BranchReceipt;
+use App\Nova\Actions\BranchReceiptGroup;
 use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchBalanceStatus;
@@ -123,14 +124,19 @@ class Branch_balance extends Resource
 
             Text::make('ชำระโดย',  function () {
                 //if (isset($this->receipt_id)) {
-                if ($this->branchrec_order->branchpay_by === 'T') {
+                if ($this->branchrec_order->branchpay_by == 'T' && $this->pay_amount > 0) {
                     return 'โอน';
-                } else {
+                } elseif ($this->branchrec_order->branchpay_by == 'C' && $this->pay_amount > 0) {
                     return 'เงินสด';
+                } else {
+                    return '-';
                 }
-                // } else {
-                //     return '-';
-                // }
+            }),
+            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
+
+            Text::make('ใบกำกับ-รถ',  function () {
+
+                return $this->branchrec_order->branchrec_waybill->waybill_no . '-' . $this->branchrec_order->branchrec_waybill->car->car_regist;
             }),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
@@ -142,7 +148,6 @@ class Branch_balance extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
         ];
     }
 
@@ -205,8 +210,16 @@ class Branch_balance extends Resource
     {
         return [
             BranchReceipt::make($request->resourceId)
-                //->onlyOnDetail()
+                ->onlyOnDetail()
                 ->confirmText('ยืนยันการรับชำระค่าขนส่งรายการนี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('view branch_balance');
+                }),
+            BranchReceiptGroup::make($request->resourceId)
+                ->onlyOnIndex()
+                ->confirmText('ต้องการยืนยันการรับชำระค่าขนส่งตามรายการที่เลือกไว้นี้?')
                 ->confirmButtonText('ยืนยัน')
                 ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request) {

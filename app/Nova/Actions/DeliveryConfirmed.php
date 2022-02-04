@@ -8,6 +8,9 @@ use App\Models\Branchrec_order;
 use App\Models\Delivery;
 use App\Models\Delivery_detail;
 use App\Models\Delivery_item;
+use App\Models\Order_banktransfer;
+use App\Models\Order_banktransfer_item;
+use App\Models\order_banktransfer_items;
 use App\Models\Receipt;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -62,12 +65,34 @@ class DeliveryConfirmed extends Action
             if ($model->payment_amount > 0 && $fields->payment_status) {
 
                 $model->branchpay_by = $fields->payment_by;
-                $model->pay_amount = $model->payment_amount;
+
+                if ($fields->tax_status) {
+                    $tax_amount = $model->payment_amount * 0.01;
+                    $model->tax_amount = $tax_amount;
+                } else {
+                    $tax_amount = 0;
+                    $model->tax_amount = 0;
+                }
+                $model->pay_amount = $model->payment_amount - $tax_amount;
 
                 if ($fields->payment_by === 'T') {
                     $model->payment_status = false;
                     $model->bankaccount_id = $fields->bankaccount;
                     $model->bankreference = $fields->reference;
+                    $firstorder = Delivery_detail::where('delivery_item_id', $model->id)->first();
+                    $order_banktransfer = Order_banktransfer::create([
+                        'order_header_id' => $firstorder->order_header_id,
+                        'transfer_date' => $fields->paydate,
+                        'customer_id' => $model->customer_id,
+                        'branch_id' => $delivery->branch_id,
+                        'status' => false,
+                        'transfer_type' => 'E',
+                        'transfer_amount' => $fields->payment_amount - $tax_amount,
+                        'tax_amount' => $tax_amount,
+                        'bankaccount_id' => $fields->bankaccount,
+                        'reference' => $fields->bankreference,
+                        'user_id' => auth()->user()->id
+                    ]);
                 } else {
                     $model->payment_status = true;
                     $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
@@ -79,7 +104,7 @@ class DeliveryConfirmed extends Action
                         'total_amount' => $model->payment_amount,
                         'discount_amount' => 0,
                         'tax_amount' => 0,
-                        'pay_amount' => $model->payment_amount,
+                        'pay_amount' => $model->payment_amount - $tax_amount,
                         'receipttype' => 'E',
                         'branchpay_by' => 'C',
                         'description' => $fields->description,
@@ -108,20 +133,31 @@ class DeliveryConfirmed extends Action
                         $branch_order->bankaccount_id = $fields->bankaccount;
                         $branch_order->bankreference = $fields->refernce;
                         $branch_order->payment_status = false;
-
                         $delivery_detail->payment_status = false;
+
+                        Order_banktransfer_item::create([
+                            'order_banktransfer_id' => $order_banktransfer->id,
+                            'order_header_id' => $delivery_detail->order_header_id,
+                            'user_id' => auth()->user()->id,
+                        ]);
                     } elseif ($fields->payment_by === 'C') {
                         $branch_order->payment_status = true;
                         $branch_order->receipt_flag = true;
                         $branch_order->receipt_id = $receipt->id;
                         $branch_order->payment_status = true;
-
-
                         $delivery_detail->payment_status = true;
 
                         //Branch balance
+
                         $branch_balance = Branch_balance::where('order_header_id', $branch_order->id)->first();
-                        $branch_balance->pay_amount = $branch_order->order_amount;
+                        if ($fields->tax_status) {
+                            $branch_balance->tax_amount = $branch_order * 0.01;
+                            $branch_balance->pay_amount = $branch_order->order_amount - ($branch_order->order_amount * 0.01);
+                        } else {
+                            $branch_balance->tax_amount = 0;
+                            $branch_balance->pay_amount = $branch_order->order_amount;
+                        }
+
                         $branch_balance->updated_by = auth()->user()->id;
                         $branch_balance->branchpay_date = $fields->paydate; //แก้ไข
                         $branch_balance->payment_status = true;
@@ -134,7 +170,7 @@ class DeliveryConfirmed extends Action
                 $delivery_detail->save();
             }
 
-            //return Action::message('ยืนยันการจัดส่งเรียบร้อยแล้ว');
+
             return Action::push('/resources/deliveries/' . $model->delivery_id);
         }
     }
@@ -181,7 +217,7 @@ class DeliveryConfirmed extends Action
                             Text::make(__('Bank reference no'), 'reference'),
                         ])->dependsOn('payment_by', 'T'),
                         //Currency::make('ส่วนลด', 'discount_amount'),
-                        //Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
+                        Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
                     ])->dependsOn('payment_status', true),
                     Text::make('หมายเหตุเพิ่มเติม', 'description')
                 ];
@@ -208,7 +244,7 @@ class DeliveryConfirmed extends Action
                 Text::make(__('Bank reference no'), 'reference'),
             ])->dependsOn('payment_by', 'T'),
             //Currency::make('ส่วนลด', 'discount_amount'),
-            //Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
+            Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
         ];
     }
 }

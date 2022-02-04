@@ -53,14 +53,20 @@ class WaybillBillAdd extends Action
                 //add to branch_balance
                 if ($order_add->paymenttype == 'E') {
                     $branch_balance = Branch_balance::where('order_header_id', '=', $order_add->id)->first();
+
                     if (empty($branch_balance)) {
+                        if ($model->waybill_type == 'express') {
+                            $branch_balance_rec = 1;
+                        } else {
+                            $branch_balance_rec = $model->branch_rec_id;
+                        }
                         if ($model->to_branch->type == 'partner') {
                             //check in branch_balance
 
 
                             Branch_balance::create([
                                 'branchbal_date' => today(),
-                                'branch_id' => $model->branch_rec_id,
+                                'branch_id' => $branch_balance_rec,
                                 'order_header_id' => $order_add->id,
                                 'bal_amount' => $order_add->order_amount,
                                 'discount_amount' => 0.00,
@@ -74,7 +80,7 @@ class WaybillBillAdd extends Action
                         } else {
                             Branch_balance::create([
                                 'branchbal_date' => today(),
-                                'branch_id' => $model->branch_rec_id,
+                                'branch_id' => $branch_balance_rec,
                                 'order_header_id' => $order_add->id,
                                 'bal_amount' => $order_add->order_amount,
                                 'discount_amount' => 0.00,

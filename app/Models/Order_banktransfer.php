@@ -10,7 +10,8 @@ class Order_banktransfer extends Model
     use HasFactory;
     protected $fillable = [
         'customer_id', 'order_header_id', 'status', 'transfer_type', 'branch_id', 'transfer_amount',
-        'bankaccount_id', 'reference', 'transferslip', 'user_id', 'updated_by', 'receipt_id', 'invoice_id'
+        'bankaccount_id', 'reference', 'transferslip', 'user_id', 'updated_by', 'receipt_id', 'invoice_id',
+        'tax_amount', 'discount_amount', 'transfer_date'
     ];
 
     protected $casts = [
@@ -45,5 +46,15 @@ class Order_banktransfer extends Model
     public function receipt_all()
     {
         return $this->belongsTo('App\Models\Receipt_all', 'receipt_id');
+    }
+
+    /**
+     * Get all of thn Order_banktransfers for the Order_banktransfer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function order_banktransfer_items()
+    {
+        return $this->hasMany('App\Models\Order_banktransfer_item');
     }
 }

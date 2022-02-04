@@ -40,8 +40,8 @@ class Receipt extends Model
     {
         return $this->belongsTo('App\Models\Branch');
     }
-    public function delivery_item()
-    {
-        return $this->hasOne('App\Models\Delivery_item');
-    }
+    // public function delivery_item()
+    // {
+    //     return $this->hasOne('App\Models\Delivery_item');
+    // }
 }
