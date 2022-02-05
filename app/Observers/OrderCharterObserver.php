@@ -21,5 +21,9 @@ class OrderCharterObserver
 
     public function updating(Order_charter $order_charter)
     {
+
+        if ($order_charter->order_status == 'cancel') {
+            $ar_balance  = \App\Models\Ar_balance::where('order_header_id', $order_charter->id)->delete();
+        }
     }
 }
