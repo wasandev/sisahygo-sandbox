@@ -3,7 +3,6 @@
 namespace App\Nova\Lenses\ar;
 
 use App\Nova\Actions\Accounts\PrintArReceiptReport;
-use App\Nova\Filters\Customer;
 use App\Nova\Filters\ReceiptByCustomer;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
@@ -89,9 +88,10 @@ class ArReceiptReport extends Lens
     public function filters(Request $request)
     {
         return [
-            (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
-                ->fieldAttribute('ar_customer')
-                ->filterBy('customer_id'),
+            // (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
+            //     ->fieldAttribute('ar_customer')
+            //     ->filterBy('customer_id'),
+            new ReceiptByCustomer,
             new ReceiptFromDate,
             new ReceiptToDate,
         ];

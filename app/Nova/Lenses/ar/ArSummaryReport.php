@@ -2,14 +2,12 @@
 
 namespace App\Nova\Lenses\ar;
 
-use App\Nova\Actions\Accounts\PrintArCardReport;
+
 use App\Nova\Actions\Accounts\PrintArSummaryReport;
-use App\Nova\Filters\ArbalanceByCustomer;
 use App\Nova\Filters\ArbalanceFromDate;
 use App\Nova\Filters\ArbalanceToDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
