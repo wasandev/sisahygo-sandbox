@@ -35,7 +35,7 @@ class ReceiptByCustomer extends Filter
      */
     public function options(Request $request)
     {
-        $customers = \App\Models\Ar_customer::has('receipt_ars');
+        $customers = \App\Models\Ar_customer::all();
         return $customers->pluck('id', 'name')->all();
     }
 }
