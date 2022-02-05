@@ -6,6 +6,7 @@ use App\Models\Bankaccount;
 use App\Models\Branch_balance;
 use App\Models\Branchrec_order;
 use App\Models\Order_banktransfer;
+use App\Models\Order_banktransfer_item;
 use App\Models\Order_status;
 use App\Models\Receipt;
 use Illuminate\Bus\Queueable;
@@ -94,7 +95,7 @@ class OrderReceived extends Action
                     $model->payment_status = false;
 
                     //create bank_transfer
-                    Order_banktransfer::create([
+                    $order_banktransfer = Order_banktransfer::create([
                         'customer_id' => $model->customer_rec_id,
                         'order_header_id' => $model->id,
                         'branch_id' => $model->branch_rec_id,
@@ -103,6 +104,11 @@ class OrderReceived extends Action
                         'transfer_amount' => $model->order_amount - $fields->discount_amount - $tax_amount,
                         'bankaccount_id' => $fields->bankaccount,
                         'reference' => $fields->reference,
+                        'user_id' => auth()->user()->id,
+                    ]);
+                    Order_banktransfer_item::create([
+                        'order_banktransfer_id' => $order_banktransfer->id,
+                        'order_header_id' => $model->id,
                         'user_id' => auth()->user()->id,
                     ]);
                 } elseif ($fields->payment_by == 'C') {

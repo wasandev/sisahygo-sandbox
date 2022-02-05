@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class ArReceiptReport extends Lens
 {
@@ -88,7 +89,9 @@ class ArReceiptReport extends Lens
     public function filters(Request $request)
     {
         return [
-            new ReceiptByCustomer,
+            (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
+                ->fieldAttribute('ar_customer')
+                ->filterBy('customer_id'),
             new ReceiptFromDate,
             new ReceiptToDate,
         ];

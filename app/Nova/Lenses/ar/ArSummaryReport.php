@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class ArSummaryReport extends Lens
 {
@@ -91,7 +92,9 @@ class ArSummaryReport extends Lens
     public function filters(Request $request)
     {
         return [
-
+            (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
+                ->fieldAttribute('ar_customer')
+                ->filterBy('customer_id'),
             new ArbalanceFromDate,
             new ArbalanceToDate
         ];
