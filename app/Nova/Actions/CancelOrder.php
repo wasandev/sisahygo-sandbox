@@ -63,26 +63,30 @@ class CancelOrder extends Action
                     $routeto_branch_cost = Routeto_branch_cost::where('routeto_branch_id', '=', $waybill->routeto_branch_id)
                         ->where('cartype_id', '=', $waybill->car->cartype_id)
                         ->first();
+                    if ($waybill->waybill_type <> 'charter') {
 
-                    if ($routeto_branch->branch->type == 'partner') {
-                        $chargerate = $routeto_branch->branch->partner_rate;
+                        if ($routeto_branch->branch->type == 'partner') {
+                            $chargerate = $routeto_branch->branch->partner_rate;
 
-                        $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
-                        $waybill->waybill_payable = $car_payamount;
-                    } elseif ($routeto_branch->dest_branch->type == 'partner') {
-                        $chargerate = $routeto_branch->dest_branch->partner_rate;
+                            $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
+                            $waybill->waybill_payable = $car_payamount;
+                        } elseif ($routeto_branch->dest_branch->type == 'partner') {
+                            $chargerate = $routeto_branch->dest_branch->partner_rate;
 
-                        $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
-                        $waybill->waybill_payable = $car_payamount;
-                    } else {
-
-                        if ($routeto_branch_cost->chargeflag) {
-                            $chargerate = $routeto_branch_cost->chargerate;
                             $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
                             $waybill->waybill_payable = $car_payamount;
                         } else {
-                            $car_payamount = $waybill->waybill_payable;
+
+                            if ($routeto_branch_cost->chargeflag) {
+                                $chargerate = $routeto_branch_cost->chargerate;
+                                $car_payamount = ($updated_waybillamount * (100 - $chargerate)) / 100;
+                                $waybill->waybill_payable = $car_payamount;
+                            } else {
+                                $car_payamount = $waybill->waybill_payable;
+                            }
                         }
+                    } else {
+                        $car_payamount = $waybill->waybill_payable;
                     }
 
                     $waybill->waybill_income = $updated_waybillamount - $car_payamount;
