@@ -109,7 +109,7 @@ class ArOutstandingReport extends Lens
     public function filters(Request $request)
     {
         return [
-            new ArbalanceByCustomer,
+            // new ArbalanceByCustomer,
             new ArbalanceToDate
         ];
     }

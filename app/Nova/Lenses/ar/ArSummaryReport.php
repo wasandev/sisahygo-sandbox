@@ -92,7 +92,7 @@ class ArSummaryReport extends Lens
     {
         return [
 
-            new ArbalanceFromDate,
+            //new ArbalanceFromDate,
             new ArbalanceToDate
         ];
     }

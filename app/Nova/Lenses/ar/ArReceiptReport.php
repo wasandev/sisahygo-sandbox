@@ -88,7 +88,7 @@ class ArReceiptReport extends Lens
     public function filters(Request $request)
     {
         return [
-            new ReceiptByCustomer,
+            //new ReceiptByCustomer,
             new ReceiptFromDate,
             new ReceiptToDate,
         ];

@@ -91,7 +91,7 @@ class ArcardReport extends Lens
     public function filters(Request $request)
     {
         return [
-            new ArbalanceByCustomer,
+            //new ArbalanceByCustomer,
             new ArbalanceFromDate,
             new ArbalanceToDate
         ];
