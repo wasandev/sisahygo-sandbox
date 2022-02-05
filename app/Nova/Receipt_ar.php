@@ -146,7 +146,7 @@ class Receipt_ar extends Resource
     public function filters(Request $request)
     {
         return [
-            //new ReceiptByCustomer,
+            new ReceiptByCustomer,
             new ReceiptFromDate,
             new ReceiptToDate,
         ];
