@@ -59,7 +59,7 @@ class BranchController extends Controller
                 ->where('branch_balances.branchpay_date', '<=', $to)
                 ->where('branch_balances.pay_amount', '>', 0)
                 ->where('branch_balances.payment_status', '=', true)
-                ->lazyById(200, $column = 'branch_balances.id');
+                ->lazyById(100, $column = 'id');
             // ->orderBy('branch_balances.branch_id', 'asc')
             // ->orderBy('branch_balances.branchpay_date', 'asc')
             // ->orderBy('receipts.branchpay_by', 'asc')
@@ -73,7 +73,7 @@ class BranchController extends Controller
                 ->where('branch_balances.branchpay_date', '<=', $to)
                 ->where('branch_balances.pay_amount', '>', 0)
                 ->where('branch_balances.payment_status', '=', true)
-                ->lazyById(200, $column = 'branch_balances.id');
+                ->lazyById(100, $column = 'id');
             // ->orderBy('branch_balances.branch_id', 'asc')
             // ->orderBy('branch_balances.branchpay_date', 'asc')
             // ->orderBy('receipts.branchpay_by', 'asc')
