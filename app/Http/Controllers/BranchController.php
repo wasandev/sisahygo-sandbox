@@ -53,7 +53,7 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::select('branch_balances.*')
+            $branch_balances = Branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
                 ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                 ->where('branch_balances.branchpay_date', '>=', $from)
                 ->where('branch_balances.branchpay_date', '<=', $to)
