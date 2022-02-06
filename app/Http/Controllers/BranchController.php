@@ -53,32 +53,34 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
-                ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
-                ->where('branch_balances.branchpay_date', '>=', $from)
-                ->where('branch_balances.branchpay_date', '<=', $to)
-                ->where('branch_balances.pay_amount', '>', 0)
-                ->where('branch_balances.payment_status', '=', true)
-                ->lazyById(100, $column = 'id');
-            // ->orderBy('branch_balances.branch_id', 'asc')
-            // ->orderBy('branch_balances.branchpay_date', 'asc')
-            // ->orderBy('receipts.branchpay_by', 'asc')
-            // ->orderBy('branch_balances.order_header_id', 'asc')
-            //->get();
+            foreach (Branch_balance::lazy() as $branch_balance) {
+                $branch_balances = $branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
+                    ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
+                    ->where('branch_balances.branchpay_date', '>=', $from)
+                    ->where('branch_balances.branchpay_date', '<=', $to)
+                    ->where('branch_balances.pay_amount', '>', 0)
+                    ->where('branch_balances.payment_status', '=', true)
+                    ->orderBy('branch_balances.branch_id', 'asc')
+                    ->orderBy('branch_balances.branchpay_date', 'asc')
+                    ->orderBy('receipts.branchpay_by', 'asc')
+                    ->orderBy('branch_balances.order_header_id', 'asc')
+                    ->get();
+            }
         } else {
-            $branch_balances = Branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
-                ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
-                ->where('branch_balances.branch_id', $branch)
-                ->where('branch_balances.branchpay_date', '>=', $from)
-                ->where('branch_balances.branchpay_date', '<=', $to)
-                ->where('branch_balances.pay_amount', '>', 0)
-                ->where('branch_balances.payment_status', '=', true)
-                ->lazyById(100, $column = 'id');
-            // ->orderBy('branch_balances.branch_id', 'asc')
-            // ->orderBy('branch_balances.branchpay_date', 'asc')
-            // ->orderBy('receipts.branchpay_by', 'asc')
-            // ->orderBy('branch_balances.order_header_id', 'asc')
-            //->get();
+            foreach (Branch_balance::lazy() as $branch_balance) {
+                $branch_balances = $branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
+                    ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
+                    ->where('branch_balances.branch_id', $branch)
+                    ->where('branch_balances.branchpay_date', '>=', $from)
+                    ->where('branch_balances.branchpay_date', '<=', $to)
+                    ->where('branch_balances.pay_amount', '>', 0)
+                    ->where('branch_balances.payment_status', '=', true)
+                    ->orderBy('branch_balances.branch_id', 'asc')
+                    ->orderBy('branch_balances.branchpay_date', 'asc')
+                    ->orderBy('receipts.branchpay_by', 'asc')
+                    ->orderBy('branch_balances.order_header_id', 'asc')
+                    ->get();
+            }
         }
 
         $branch_groups = $branch_balances->groupBy([
