@@ -3,12 +3,11 @@
 namespace App\Nova\Actions\Accounts;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Select;
 
 use function PHPUnit\Framework\isNull;
@@ -37,20 +36,14 @@ class PrintArOutstandingReport extends Action
 
     public function handle(ActionFields $fields, Collection $models)
     {
-        $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
+        $customer_value = $fields->ar_customer;
 
-        $customer  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\ArbalanceByCustomer');
-        $customer_value = Arr::get($customer, 'value');
+        $to_value = $fields->to;
         if ($customer_value == '') {
             $customer_value = 'all';
         }
-
-
-
-        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\ArbalanceToDate');
-        $to_value = Arr::get($to, 'value');
         if ($to_value == '') {
-            return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
+            return Action::danger('เลือกวันที่ ที่ต้องการก่อน');
         }
 
         return Action::openInNewTab('/ar/report_17/' . $customer_value . '/'  . $to_value);
@@ -64,6 +57,16 @@ class PrintArOutstandingReport extends Action
      */
     public function fields()
     {
-        return [];
+        $customers = \App\Models\Ar_customer::whereHas('ar_balances')->pluck('name', 'id');
+        return [
+            Select::make('เลือกลูกค้า', 'ar_customer')
+                ->options($customers)
+                ->searchable()
+                ->help('เลือกชื่อลูกค้าที่ต้องการออกรายงาน ถ้าต้องการออกรายงานทั้งหมดไม่ต้องเลือก'),
+
+            Date::make('วันที่สิ้นสุด', 'to')
+                ->rules('required')
+
+        ];
     }
 }

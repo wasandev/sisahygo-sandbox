@@ -2,10 +2,7 @@
 
 namespace App\Nova\Lenses\ar;
 
-use App\Nova\Actions\Accounts\PrintArCardReport;
 use App\Nova\Actions\Accounts\PrintArOutstandingReport;
-use App\Nova\Filters\ArbalanceByCustomer;
-use App\Nova\Filters\ArbalanceFromDate;
 use App\Nova\Filters\ArbalanceToDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,22 +28,14 @@ class ArOutstandingReport extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('customers', 'ar_balances.customer_id', '=', 'customers.id')
+                ->join('ar_balances', 'ar_balances.customer_id', '=', 'customers.id')
                 ->join('order_headers', 'ar_balances.order_header_id', '=', 'order_headers.id')
-                ->leftJoin('invoices', 'ar_balances.invoice_id', '=', 'invoices.id')
                 ->where('order_headers.payment_status', '=', false)
                 ->where('ar_balances.doctype', '=', 'P')
-                ->orderBy('customers.id', 'asc')
+                ->orderBy('ar_amount', 'desc')
                 ->groupBy(
-                    'ar_balances.id',
-                    'ar_balances.customer_id',
+                    'customers.id',
                     'customers.name',
-                    'ar_balances.docno',
-                    'ar_balances.docdate',
-                    'invoices.invoice_no',
-                    'invoices.invoice_date',
-                    'invoices.due_date',
-                    'ar_balances.ar_amount'
                 )
 
         ));
@@ -59,15 +48,9 @@ class ArOutstandingReport extends Lens
     protected static function columns()
     {
         return [
-            'ar_balances.id',
-            'ar_balances.customer_id',
+            'customers.id',
             'customers.name',
-            'ar_balances.docno',
-            'ar_balances.docdate',
-            'invoices.invoice_no',
-            'invoices.invoice_date',
-            'invoices.due_date',
-            'ar_balances.ar_amount'
+            DB::raw('sum(ar_balances.ar_amount) as ar_amount'),
         ];
     }
     /**
@@ -81,10 +64,7 @@ class ArOutstandingReport extends Lens
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Text::make('ชื่อลูกค้า', 'name'),
-            Text::make('เอกสารตั้งหนี้', 'docno'),
-            Date::make('วันที่ตั้งหนี้', 'docdate'),
-            Text::make('เลขที่ใบแจ้งหนี้', 'invoice_no'),
-            Text::make('วันครบกำหนด', 'due_date'),
+
             Currency::make('จำนวนเงิน', 'ar_amount'),
 
         ];
@@ -110,9 +90,7 @@ class ArOutstandingReport extends Lens
     public function filters(Request $request)
     {
         return [
-            (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
-                ->fieldAttribute('ar_customer')
-                ->filterBy('customer_id'),
+
             new ArbalanceToDate
         ];
     }

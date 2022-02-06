@@ -40,7 +40,7 @@
     @endif
 
 
-    <link href="{{ mix('/css/doc.css') }}" rel="stylesheet" media="print">
+    <link href="{{ mix('/css/doc.css') }}" rel="stylesheet" >
     @stack('scripts')
     <script>
 var is_chrome = function () { return Boolean(window.chrome); }

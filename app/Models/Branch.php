@@ -74,7 +74,10 @@ class Branch extends Model
     }
 
 
-
+    public function branch_balances()
+    {
+        return $this->hasMany('App\Models\Branch_balance', 'branch_id');
+    }
 
     /*
 	Transform the returned value from the Nova field

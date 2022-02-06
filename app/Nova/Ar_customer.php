@@ -2,7 +2,10 @@
 
 namespace App\Nova;
 
-
+use App\Nova\Lenses\ar\ArcardReport;
+use App\Nova\Lenses\ar\ArOutstandingReport;
+use App\Nova\Lenses\ar\ArReceiptReport;
+use App\Nova\Lenses\ar\ArSummaryReport;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
@@ -300,6 +303,10 @@ class Ar_customer extends Resource
     {
         return [
             new Lenses\MostValueableAr(),
+            new ArReceiptReport(),
+            new ArOutstandingReport(),
+            new ArcardReport(),
+            new ArSummaryReport()
 
         ];
     }

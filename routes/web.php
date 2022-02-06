@@ -60,7 +60,8 @@ Route::middleware('web', 'auth')
         Route::get('/delivery/preview/{id}', 'DeliveryController@preview')->name('preview');
 
         //car
-        Route::get('/car/carpaymentprint/{id}', 'CarController@carpaymentprint')->name('carpaymentprint');
+        Route::get('/car/carpaymentprint/{item}', 'CarController@carpaymentprint')->name('carpaymentprint');
+        //Route::post('/car/carpaymentprint/{items}', 'CarController@carpaymentprint')->name('carpaymentprint');
         Route::get('/car/carreceiveprint/{id}', 'CarController@carreceiveprint')->name('carreceivetprint');
         Route::get('/car/report_11/{from}/{to}/{type}', 'CarController@report_11')->name('report_11');
         Route::get('/car/report_12/{from}/{to}', 'CarController@report_12')->name('report_12');

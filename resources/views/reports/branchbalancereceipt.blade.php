@@ -186,8 +186,8 @@
                     </td>
                     </tr>
 
-                    @foreach($receipt_type->chunk(100) as $chunk)
-                    @foreach ($chunk  as $item )
+
+                    @foreach ($receipt_type  as $item )
 
 
                      <tr style="font-weight:normal">
@@ -239,7 +239,7 @@
 
 
                     </tr>
-                    @endforeach
+
                     @endforeach
 
                 @endforeach

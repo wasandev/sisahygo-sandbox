@@ -29,7 +29,7 @@ class ArSummaryReport extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('customers', 'ar_balances.customer_id', '=', 'customers.id')
+                ->join('ar_balances', 'ar_balances.customer_id', '=', 'customers.id')
                 ->orderBy('customers.id', 'asc')
                 ->groupBy('customers.id', 'customers.name')
 
@@ -90,9 +90,9 @@ class ArSummaryReport extends Lens
     public function filters(Request $request)
     {
         return [
-            (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
-                ->fieldAttribute('ar_customer')
-                ->filterBy('customer_id'),
+            // (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
+            //     ->fieldAttribute('ar_customer')
+            //     ->filterBy('customer_id'),
             new ArbalanceFromDate,
             new ArbalanceToDate
         ];

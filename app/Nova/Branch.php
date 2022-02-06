@@ -145,7 +145,8 @@ class Branch extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make('เส้นทางขนส่งของสาขา', 'branch_routes', 'App\Nova\Branch_route')
+            HasMany::make('เส้นทางขนส่งของสาขา', 'branch_routes', 'App\Nova\Branch_route'),
+            HasMany::make('รายการเก็บเงินปลายทาง', 'branch_balances', 'App\Nova\Branch_balance')
         ];
     }
     /**

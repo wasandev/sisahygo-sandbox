@@ -1908,7 +1908,7 @@ var render = function() {
                         to: {
                           name: "lens",
                           params: {
-                            resourceName: "ar_balances",
+                            resourceName: "ar_customers",
                             lens: "ar-outstanding-report"
                           }
                         },
@@ -1976,7 +1976,7 @@ var render = function() {
                         to: {
                           name: "lens",
                           params: {
-                            resourceName: "receipt_ars",
+                            resourceName: "ar_customers",
                             lens: "ar-receipt-report"
                           }
                         },
@@ -2053,7 +2053,7 @@ var render = function() {
                         to: {
                           name: "lens",
                           params: {
-                            resourceName: "ar_balances",
+                            resourceName: "ar_customers",
                             lens: "ar-card-report"
                           }
                         },
@@ -2121,7 +2121,7 @@ var render = function() {
                         to: {
                           name: "lens",
                           params: {
-                            resourceName: "ar_balances",
+                            resourceName: "ar_customers",
                             lens: "ar-summary-report"
                           }
                         },

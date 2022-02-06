@@ -51,7 +51,7 @@ class Carpayment extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'payment_no'
+        'id', 'payment_no', 'description'
     ];
     public static function label()
     {
@@ -76,16 +76,18 @@ class Carpayment extends Resource
         $tobankaccount = Bankaccount::all()->pluck('account_no', 'id');
         $bank =  Bank::all()->pluck('name', 'id');
         return [
-            ID::make(__('ID'), 'id')->sortable()->hideFromIndex(),
+            ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('สถานะ', 'status')
                 ->default(true)
                 ->readonly(),
             Text::make('เลขที่เอกสาร', 'payment_no')
-                ->readonly(),
+                ->readonly()
+                ->sortable(),
             Date::make('วันที่เอกสาร', 'payment_date')
                 ->default(today())
                 ->rules('required')
-                ->format('DD/MM/YYYY'),
+                ->format('DD/MM/YYYY')
+                ->sortable(),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->default(function () {
                     return auth()->user()->branch_id;
@@ -98,7 +100,8 @@ class Carpayment extends Resource
                     'B' => 'ค่าบรรทุกเก็บปลายทาง'
                 ])->default('T')
                 ->displayUsingLabels()
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
             Select::make('ประเภทการจ่าย', 'type')
                 ->options([
                     'T' => 'ค่าบรรทุก',
@@ -108,7 +111,8 @@ class Carpayment extends Resource
                 ->onlyOnForms(),
 
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
-                ->searchable(),
+                ->searchable()
+                ->sortable(),
             BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
                 ->exceptOnForms(),
             Text::make(__('Description'), 'description')->default('ค่าบรรทุก(เบิกเดินทาง)')
@@ -226,7 +230,8 @@ class Carpayment extends Resource
     public function actions(Request $request)
     {
         return [
-            (new PrintCarpayment)->onlyOnDetail()
+            (new PrintCarpayment)
+                //->onlyOnDetail()
                 ->confirmText('ต้องการพิมพ์ใบสำคัญจ่ายรายการนี้?')
                 ->confirmButtonText('พิมพ์')
                 ->cancelButtonText("ไม่พิมพ์")

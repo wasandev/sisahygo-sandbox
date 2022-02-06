@@ -437,7 +437,7 @@
                     :to="{
                         name: 'lens',
                         params:{
-                        resourceName: 'ar_balances',
+                        resourceName: 'ar_customers',
                         lens: 'ar-outstanding-report'
                         },
                         }"
@@ -468,7 +468,7 @@
                     :to="{
                         name: 'lens',
                         params:{
-                        resourceName: 'receipt_ars',
+                        resourceName: 'ar_customers',
                         lens: 'ar-receipt-report'
                         },
                         }"
@@ -501,7 +501,7 @@
                         :to="{
                             name: 'lens',
                             params:{
-                            resourceName: 'ar_balances',
+                            resourceName: 'ar_customers',
                             lens: 'ar-card-report'
                             },
                             }"
@@ -532,7 +532,7 @@
                         :to="{
                             name: 'lens',
                             params:{
-                            resourceName: 'ar_balances',
+                            resourceName: 'ar_customers',
                             lens: 'ar-summary-report'
                             },
                             }"

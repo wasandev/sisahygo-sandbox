@@ -22,14 +22,15 @@ class CarController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function carpaymentprint($carpayment)
+    public function carpaymentprint($items)
     {
         $doc_title = "ใบสำคัญจ่าย";
+        $selectitem = explode(',', $items);
         $company = CompanyProfile::find(1);
-        $carpayment = Carpayment::find($carpayment);
 
+        $carpayments = Carpayment::whereIn('id', $selectitem)->get();
 
-        return view('documents.printcarpayment', compact('carpayment', 'company', 'doc_title'));
+        return view('documents.printcarpayment', compact('carpayments', 'company', 'doc_title'));
     }
     public function carreceiveprint($carreceive)
     {

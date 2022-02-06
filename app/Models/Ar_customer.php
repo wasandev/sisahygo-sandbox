@@ -40,6 +40,7 @@ class Ar_customer extends Model
         'updated_by'
     ];
     protected $table = 'customers';
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

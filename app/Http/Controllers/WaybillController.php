@@ -60,19 +60,22 @@ class WaybillController extends Controller
             $waybills = Waybill::whereDate('departure_at', '>=', $from)
                 ->whereDate('departure_at', '<=', $to)
                 ->whereNotIn('waybill_status', ['loading', 'cancel'])
-                ->orderBy('waybill_date', 'asc')
-                ->orderBy('branch_rec_id', 'asc')
-                ->orderBy('waybill_type', 'asc')
-                ->get();
+                ->lazyById(200, $column = 'id');
+            // ->orderBy('waybill_date', 'asc')
+            // ->orderBy('branch_rec_id', 'asc')
+            // ->orderBy('waybill_type', 'asc')
+            // ->get();
         } else {
             $waybills = Waybill::whereDate('departure_at', '>=', $from)
                 ->whereDate('departure_at', '<=', $to)
                 ->where('routeto_branch_id', '=', $routetobranch)
                 ->whereNotIn('waybill_status', ['loading', 'cancel'])
-                ->orderBy('waybill_date', 'asc')
-                ->orderBy('branch_rec_id', 'asc')
-                ->orderBy('waybill_type', 'asc')
-                ->get();
+                ->lazyById(200, $column = 'id');
+            // ->orderBy('id', 'asc')
+            // ->orderBy('waybill_date', 'asc')
+            // ->orderBy('branch_rec_id', 'asc')
+            // ->orderBy('waybill_type', 'asc')
+            //->get();
         }
 
         $waybill_groups = $waybills->all();

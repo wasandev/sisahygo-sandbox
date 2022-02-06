@@ -5,6 +5,7 @@ namespace App\Nova\Actions;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
@@ -33,13 +34,20 @@ class PrintCarpayment extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        $selectitems = array();
         foreach ($models as $model) {
 
-
-            return Action::openInNewTab('/car/carpaymentprint/' . $model->id);
+            $selectitems[] =  $model->id;
         }
-        return Action::push('/resources/carpayments');
+
+        $items = implode(",", $selectitems);
+        return Action::openInNewTab('/car/carpaymentprint/' . $items);
+
+        //return Action::push('/resources/carpayments');
     }
+
+
+
     /**
      * Get the fields available on the action.
      *

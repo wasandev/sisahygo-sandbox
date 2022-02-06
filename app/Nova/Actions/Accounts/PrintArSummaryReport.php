@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Select;
 
 use function PHPUnit\Framework\isNull;
@@ -37,20 +38,10 @@ class PrintArSummaryReport extends Action
 
     public function handle(ActionFields $fields, Collection $models)
     {
-        $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
 
+        $from_value = $fields->from;
+        $to_value = $fields->to;
 
-
-        $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\ArbalanceFromDate');
-        $from_value = Arr::get($from, 'value');
-        if ($from_value == '') {
-            return Action::danger('เลือก วันที่เริ่มต้น ที่ต้องการที่เมนูกรองข้อมูลก่อน');
-        }
-        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\ArbalanceToDate');
-        $to_value = Arr::get($to, 'value');
-        if ($to_value == '') {
-            return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
-        }
 
         return Action::openInNewTab('/ar/report_18/' . $from_value . '/' . $to_value);
     }
@@ -63,6 +54,11 @@ class PrintArSummaryReport extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            Date::make('วันที่เริ่มต้น', 'from')
+                ->rules('required'),
+            Date::make('วันที่สิ้นสุด', 'to')
+                ->rules('required')
+        ];
     }
 }

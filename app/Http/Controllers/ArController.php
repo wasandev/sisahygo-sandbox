@@ -91,25 +91,24 @@ class ArController extends Controller
         $report_title = 'รายงานรับชำระหนี้ลูกหนี้การค้า';
         $company = CompanyProfile::find(1);
         if ($customer == 'all') {
-            $ar_receipts = Receipt_ar::where('receipt_date', '>=', $from)
-                ->where('receipt_date', '<=', $to)
-                ->where('status', '=', true)
-                ->orderBy('receipt_date', 'asc')
-                ->orderBy('customer_id', 'asc')
-                ->orderBy('id', 'asc')
+            $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
+                ->where('ar_balances.doctype', '=', 'R')
+                ->where('ar_balances.docdate', '>=', $from)
+                ->where('ar_balances.docdate', '<=', $to)
+                ->orderBy('ar_balances.customer_id', 'asc')
                 ->get();
         } else {
-            $ar_receipts = Receipt_ar::where('customer_id', '=', $customer)
-                ->where('receipt_date', '>=', $from)
-                ->where('status', '=', true)
-                ->orderBy('receipt_date', 'asc')
-                ->orderBy('customer_id', 'asc')
-                ->orderBy('id', 'asc')
+            $ar_receipts = Ar_customer::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
+                ->where('ar_balances.customer_id', '=', $customer)
+                ->where('ar_balances.doctype', '=', 'R')
+                ->where('ar_balances.docdate', '>=', $from)
+                ->where('ar_balances.docdate', '<=', $to)
+                ->orderBy('ar_balances.customer_id', 'asc')
                 ->get();
         }
 
         $receipt_groups = $ar_receipts->groupBy([function ($item) {
-            return $item->receipt_date->format('d-m-Y');
+            return $item->docdate->format('Y-m-d');
         }, 'customer_id']);
         $receipts_date = $receipt_groups->all();
 

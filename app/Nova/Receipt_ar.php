@@ -146,7 +146,7 @@ class Receipt_ar extends Resource
     public function filters(Request $request)
     {
         return [
-            new ReceiptByCustomer,
+
             new ReceiptFromDate,
             new ReceiptToDate,
         ];
@@ -160,9 +160,7 @@ class Receipt_ar extends Resource
      */
     public function lenses(Request $request)
     {
-        return [
-            new ArReceiptReport(),
-        ];
+        return [];
     }
 
     /**

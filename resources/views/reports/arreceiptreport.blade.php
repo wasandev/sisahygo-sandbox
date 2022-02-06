@@ -45,7 +45,8 @@
 
         @foreach ($receipts_date as $ar_date => $cust_receipts)
 
-            <tr style="font-weight:bold">
+
+            <tr style="font-weight: bold;background-color:#c0c0c0">
 
                 <td style="text-align: center">
                     {{$ar_date}}
@@ -108,6 +109,7 @@
             </tr>
 
             @foreach ($cust_receipts as $ar_item => $receipt_items )
+
 
                 <tr style="font-weight:bold">
                     <td></td>

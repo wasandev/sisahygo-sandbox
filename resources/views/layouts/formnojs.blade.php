@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#F7D90B" />
-    <title>SISAHYGO</title>
+    <title>SISAHYGO : Transportaion Application Service</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i"
@@ -40,25 +40,24 @@
     @endif
 
 
-    <link href="{{ mix('/css/doc.css') }}" rel="stylesheet" >
+    <link href="{{ mix('/css/print.css') }}" rel="stylesheet" media="print">
 
 
 
 </head>
 
 
-    <body onLoad="loadHandler();">
-        <div class="container mt-5">
+    <body>
 
             <div id="app">
-                @yield('header')
+
 
                 @yield('content')
 
-                @yield('footer')
+
             </div>
 
-        </div>
+
     </body>
 
 
