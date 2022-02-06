@@ -87,6 +87,7 @@
                         @endphp
 
                     @endforeach
+
                     {{ number_format($sumbranch_amount,2,'.',',') }}
                 </td>
                 <td style="text-align: right">
