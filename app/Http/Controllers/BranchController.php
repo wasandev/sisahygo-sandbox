@@ -53,6 +53,8 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
+
+
             foreach (Branch_balance::lazy() as $branch_balance) {
                 $branch_balances = $branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
                     ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')

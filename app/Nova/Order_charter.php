@@ -76,7 +76,7 @@ class Order_charter extends Resource
     public static function label()
     {
 
-        return "รายการใบรับส่งเหมาคัน";
+        return "ใบรับส่งเหมาคัน";
     }
     public static function singularLabel()
     {

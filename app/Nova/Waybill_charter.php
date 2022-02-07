@@ -3,19 +3,7 @@
 namespace App\Nova;
 
 
-use App\Nova\Actions\WaybillConfirmed;
-use App\Nova\Filters\RouteToBranch;
-use App\Nova\Filters\ToBranch;
-use App\Nova\Filters\WaybillDateFilter;
-use App\Nova\Filters\WaybillFromDate;
-use App\Nova\Filters\WaybillToDate;
-use App\Nova\Lenses\WaybillConfirmedPerDay;
-use App\Nova\Metrics\WaybillAmount;
-use App\Nova\Metrics\WaybillIncome;
-use App\Nova\Metrics\WaybillIncomePerDay;
-use App\Nova\Metrics\WaybillLoading;
-use App\Nova\Metrics\WaybillPayable;
-use App\Nova\Metrics\WaybillsPerDay;
+
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -71,7 +59,7 @@ class Waybill_charter extends Resource
      * @var array
      */
     public static $search = [
-        'waybill_no',
+        'waybill_no', 'id'
     ];
 
     public static $searchRelations = [
@@ -125,10 +113,8 @@ class Waybill_charter extends Resource
 
             Currency::make('ค่าขนส่งรวม', 'waybill_amount'),
             Currency::make('ค่าบรรทุก', 'waybill_payable')
-                ->hideWhenCreating()
-                ->hideFromIndex(),
-            Currency::make('รายได้บริษัท', 'waybill_income')
-                ->onlyOnDetail(),
+                ->hideWhenCreating(),
+            Currency::make('รายได้บริษัท', 'waybill_income'),
 
 
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')

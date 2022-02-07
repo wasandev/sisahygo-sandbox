@@ -38,7 +38,7 @@ class Waybill_charterPolicy
 
     public function update(User $user, Waybill_charter $waybill_charter)
     {
-        return false;
+        return  $user->role == 'admin';
     }
 
 

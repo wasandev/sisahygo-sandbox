@@ -9,7 +9,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 
 class CharterJobsActive extends Action
 {
@@ -44,6 +46,9 @@ class CharterJobsActive extends Action
                 $model->status = 'Confirmed';
                 $model->car_id = $fields->car_id;
                 $model->driver_id = $fields->driver_id;
+                $model->waybill_amount = $fields->waybill_amount;
+                $model->waybill_payable = $fields->waybill_payable;
+                $model->terms = $fields->remark;
                 $model->save();
                 return Action::message('ยืนยันรายการเรียบร้อยแล้ว');
             }
@@ -69,6 +74,9 @@ class CharterJobsActive extends Action
                 Select::make(__('Driver'), 'driver_id')->options(\App\Models\Employee::whereIn('type', ['พนักงานขับรถบริษัท', 'พนักงานขับรถร่วม'])->get()->pluck('name', 'id')->toArray())->displayUsingLabels()
                     ->searchable()
                     ->rules('required'),
+                Currency::make('ค่าขนส่ง', 'waybill_amount')->default($charter_job->total)->rules('required'),
+                Currency::make('ค่าจ้างรถ', 'waybill_payable')->rules('required'),
+                Text::make('หมายเหตุ/เงื่อนไขอื่น', 'remark'),
 
             ];
         }
@@ -77,6 +85,9 @@ class CharterJobsActive extends Action
                 ->searchable(),
             Select::make(__('Driver'), 'driver_id')->options(\App\Models\Employee::pluck('name', 'id')->toArray())->displayUsingLabels()
                 ->searchable(),
+            Currency::make('ค่าขนส่ง', 'waybill_amount')->rules('required'),
+            Currency::make('ค่าจ้างรถ', 'waybill_payable')->rules('required'),
+            Text::make('หมายเหตุ/เงื่อนไขอื่น', 'remark'),
 
         ];
     }

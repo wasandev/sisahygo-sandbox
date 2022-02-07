@@ -37,7 +37,11 @@ class OrderHeaderController extends Controller
                 return view('documents.printorder', compact('order', 'order_detail'));
                 break;
             case 'form2':
-                return view('documents.printorder_receipt', compact('order', 'order_detail', 'company'));
+                if ($order->order_type == 'charter') {
+                    return view('documents.printorder_charter', compact('order', 'order_detail', 'company'));
+                } else {
+                    return view('documents.printorder_receipt', compact('order', 'order_detail', 'company'));
+                }
                 break;
             case 'form3':
                 return view('documents.printorder_thermal', compact('order', 'order_detail', 'company'));

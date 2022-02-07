@@ -71,9 +71,9 @@ class CharterJobObserver
                 'car_id' => $charter_job->car_id,
                 'driver_id' => $charter_job->driver_id,
                 'loader_id' => auth()->user()->id,
-                'waybill_amount' => $charter_job->total + $service_charge,
-                'waybill_payable' => $charter_price->car_charge,
-                'waybill_income' => $charter_job->total - $charter_price->car_charge,
+                'waybill_amount' => $charter_job->waybill_amount + $service_charge,
+                'waybill_payable' => $charter_job->waybill_payable,
+                'waybill_income' => $charter_job->waybill_amount + $service_charge - $charter_job->waybill_payable,
                 'branch_id' => $charter_job->branch_id,
                 'branch_rec_id' => $charter_job->branch_id,
                 'waybill_status' => 'confirmed',
@@ -97,7 +97,7 @@ class CharterJobObserver
                 'order_amount' => $charter_job->total + $service_charge,
                 'checker_id' =>  auth()->user()->id,
                 'user_id' => auth()->user()->id,
-                'order_status' => 'confirmed',
+                'order_status' => 'confirmed'
 
             ]);
 
@@ -112,7 +112,7 @@ class CharterJobObserver
                     'usepricetable' => false,
                     'product_id' => $charter_job_item->product_id,
                     'unit_id' => $unit->id,
-                    'price' => $charter_job->total + $service_charge,
+                    'price' => $charter_job->waybill_amount + $service_charge,
                     'amount' => 1,
                     'weight' => $charter_job_item->total_weight,
                     'remark' =>  $charter_job_item->amount . ' ' . $item_unit->name,

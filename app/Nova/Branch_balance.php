@@ -6,7 +6,6 @@ use App\Nova\Actions\BranchReceipt;
 use App\Nova\Actions\BranchReceiptGroup;
 use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
-use App\Nova\Filters\BranchBalanceStatus;
 use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Filters\BranchPayFromDate;
 use App\Nova\Filters\BranchPayToDate;
@@ -21,7 +20,6 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Status;
@@ -233,7 +231,7 @@ class Branch_balance extends Resource
         if ($request->user()->branch->code <> '001') {
             return  $query->where('branch_id', $request->user()->branch_id);
         } else {
-            return $query->where('type', 'owner');
+            return $query;
         }
     }
 }

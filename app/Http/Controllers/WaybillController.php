@@ -94,6 +94,6 @@ class WaybillController extends Controller
 
         $waybill_groups = $waybill_groups->all();
 
-        return view('reports.waybilldate', compact('company', 'report_title', 'waybills', 'waybill_groups', 'from', 'to'));
+        return view('reports.waybilldate', compact('company', 'report_title', 'waybills', 'waybill_groups', 'routetobranch', 'from', 'to'));
     }
 }

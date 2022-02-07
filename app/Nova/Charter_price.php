@@ -96,8 +96,7 @@ class Charter_price extends Resource
                 ->withMeta(['value' => 500]),
             Currency::make('ค่าจ้างรถ(กรณีรถร่วม)', 'car_charge')
                 ->sortable()
-                ->rules('required')
-                ->hideFromIndex(),
+                ->rules('required'),
             Currency::make('ค่าเที่ยวคนขับ(กรณีรถบริษัท)', 'driver_charge')
                 ->sortable()
                 ->rules('required')

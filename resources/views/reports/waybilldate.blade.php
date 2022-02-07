@@ -60,7 +60,15 @@
 
                     @foreach ($waybills as $item )
                         @php
-                            $sumdate_amount =  $item->whereDate('departure_at',$waybill_date)->sum('waybill_amount');
+                            if($routetobranch == 'all'){
+                                $sumdate_amount =  $item->whereDate('departure_at',$waybill_date)->sum('waybill_amount');
+
+                            }else{
+                                $sumdate_amount =  $item->whereDate('departure_at',$waybill_date)
+                                                        ->where('routeto_branch_id',$routetobranch)
+                                                        ->sum('waybill_amount');
+
+                            }
                         @endphp
 
                     @endforeach
@@ -72,7 +80,14 @@
                 <td style="text-align: right;">
                     @foreach ($waybills as $item )
                         @php
+                        if($routetobranch == 'all'){
                             $sumdate_payable =  $item->whereDate('departure_at',$waybill_date)->sum('waybill_payable');
+                        }else{
+                            $sumdate_payable =  $item->whereDate('departure_at',$waybill_date)
+                            ->where('routeto_branch_id',$routetobranch)
+                            ->sum('waybill_payable');
+
+                        }
                         @endphp
 
                     @endforeach
@@ -85,8 +100,16 @@
 
                     @foreach ($waybills as $item )
                         @php
-                            $sumdate_income =  $item->whereDate('departure_at',$waybill_date)->sum('waybill_income');
-                        @endphp
+                        if($routetobranch == 'all'){
+                            $sumdate_income =  $item->whereDate('departure_at',$waybill_date)
+                                ->sum('waybill_income');
+                        }else{
+                            $sumdate_income =  $item->whereDate('departure_at',$waybill_date)
+                            ->where('routeto_branch_id',$routetobranch)
+                            ->sum('waybill_income');
+
+                        }
+                            @endphp
 
                     @endforeach
 
@@ -108,11 +131,13 @@
 
                     @foreach ($waybills as $item)
                         @php
-                            if($item->departure_at->format('Y-m-d') == $waybill_date){
-                                $orderdate_h +=  $item->order_loaders
-                                            ->whereIn('paymenttype',['H','T'])
-                                            ->sum('order_amount');
-                            }
+
+                                if($item->departure_at->format('Y-m-d') == $waybill_date){
+                                    $orderdate_h +=  $item->order_loaders
+                                                ->whereIn('paymenttype',['H','T'])
+                                                ->sum('order_amount');
+                                }
+
                         @endphp
                     @endforeach
                     {{ number_format($orderdate_h,2,'.',',') }}
@@ -124,11 +149,13 @@
 
                     @foreach ($waybills as $item)
                         @php
-                            if($item->departure_at->format('Y-m-d') == $waybill_date){
-                                $orderdate_f +=  $item->order_loaders
-                                            ->whereIn('paymenttype',['F','L'])
-                                            ->sum('order_amount');
-                            }
+
+                                if($item->departure_at->format('Y-m-d') == $waybill_date){
+                                    $orderdate_f +=  $item->order_loaders
+                                                ->whereIn('paymenttype',['F','L'])
+                                                ->sum('order_amount');
+                                }
+
                         @endphp
                     @endforeach
                     {{ number_format($orderdate_f,2,'.',',') }}
@@ -140,11 +167,13 @@
 
                     @foreach ($waybills as $item)
                         @php
-                            if($item->departure_at->format('Y-m-d') == $waybill_date){
-                                $orderdate_e +=  $item->order_loaders
-                                            ->where('paymenttype','E')
-                                            ->sum('order_amount');
-                            }
+
+                                if($item->departure_at->format('Y-m-d') == $waybill_date){
+                                    $orderdate_e +=  $item->order_loaders
+                                                ->where('paymenttype','E')
+                                                ->sum('order_amount');
+                                }
+
                         @endphp
                     @endforeach
                     {{ number_format($orderdate_e,2,'.',',') }}

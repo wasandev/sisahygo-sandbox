@@ -11,7 +11,8 @@ class Charter_job extends Model
         'status', 'job_no', 'job_date', 'branch_id', 'customer_id', 'reference',
         'quotation_id', 'paymenttype', 'paymentpoint', 'charter_price_id', 'terms',
         'sub_total', 'discount', 'tax_amount',
-        'total', 'employee_id', 'user_id', 'updated_by', 'order_header_id', 'car_id', 'driver_id'
+        'total', 'employee_id', 'user_id', 'updated_by', 'order_header_id', 'car_id', 'driver_id',
+        'waybill_payable', 'waybill_amount'
 
     ];
 
