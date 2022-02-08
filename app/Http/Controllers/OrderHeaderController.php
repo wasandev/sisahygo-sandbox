@@ -34,7 +34,11 @@ class OrderHeaderController extends Controller
 
         switch ($company->orderprint_option) {
             case 'form1':
-                return view('documents.printorder', compact('order', 'order_detail'));
+                if ($order->order_type == 'charter') {
+                    return view('documents.printorder_charter_head', compact('order', 'order_detail', 'company'));
+                } else {
+                    return view('documents.printorder_receipt_head', compact('order', 'order_detail', 'company'));
+                }
                 break;
             case 'form2':
                 if ($order->order_type == 'charter') {
@@ -61,7 +65,7 @@ class OrderHeaderController extends Controller
 
         switch ($company->orderprint_option) {
             case 'form1':
-                $pdf = PDF::loadView('documents.printorder', compact('order', 'order_detail', 'company'))
+                $pdf = PDF::loadView('documents.printorderpdf_receipt', compact('order', 'order_detail', 'company'))
                     ->setPaper('a4');
                 break;
             case 'form2':
@@ -72,7 +76,7 @@ class OrderHeaderController extends Controller
                 $pdf = PDF::loadView('documents.printorder', compact('order', 'order_detail', 'company'));
                 break;
             default:
-                $pdf = PDF::loadView('documents.printorderpdf_receipt', compact('order', 'order_detail', 'company'))
+                $pdf = PDF::loadView('documents.printorder_receipt', compact('order', 'order_detail', 'company'))
                     ->setPaper('a4');
         }
 

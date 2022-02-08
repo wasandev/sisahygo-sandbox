@@ -185,6 +185,15 @@ class Car extends Resource
                 ->searchable()
                 ->nullable()
                 ->hideFromIndex(),
+            Number::make('ค่าบรรทุกก่อนหน้า', 'carpmonth_amount', function () {
+                $carpmonth_amount = DB::table('waybills')
+                    ->whereYear('waybill_date', Carbon::now()->year)
+                    ->whereMonth('waybill_date', Carbon::now()->month - 1)
+                    ->where('car_id', $this->id)
+                    ->sum('waybill_payable');
+                return $carpmonth_amount;
+            })->exceptOnForms()
+                ->step('0.01'),
             Number::make('ค่าบรรทุกเดือนนี้', 'carmonth_amount', function () {
                 $carmonth_amount = DB::table('waybills')
                     ->whereYear('waybill_date', Carbon::now()->year)
@@ -326,7 +335,13 @@ class Car extends Resource
                     return $request->user()->hasPermissionTo('edit cars');
                 }),
 
-
+            (new Actions\ChangCarOwner)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit cars');
+                }),
         ];
     }
 
