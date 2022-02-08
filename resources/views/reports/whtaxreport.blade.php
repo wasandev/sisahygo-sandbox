@@ -76,15 +76,15 @@
 
                 <td  colspan="5" style="text-align: center">
                     <strong>
-                        รวมทั้งหมด - {{$whtax->count()}} - รายการ
+                        รวมทั้งหมด - {{$whtaxes->count()}} - รายการ
                     </strong>
                 </td>
 
                 <td style="text-align: right">
-                    {{ number_format($whtax->sum('pay_amount'),2,'.',',') }}
+                    {{ number_format($whtaxes->sum('pay_amount'),2,'.',',') }}
                 </td>
                 <td style="text-align: right">
-                    {{ number_format($whtax->sum('tax_amount'),2,'.',',') }}
+                    {{ number_format($whtaxes->sum('tax_amount'),2,'.',',') }}
                 </td>
 
             </tr>
