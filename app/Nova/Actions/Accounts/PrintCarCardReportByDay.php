@@ -45,7 +45,7 @@ class PrintCarCardReportByDay extends Action
                 return Action::danger('เลือก ทะเบียนรถ ที่ต้องการที่เมนูกรองข้อมูลก่อน');
             }
         } else {
-            $owner  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CarCardByOwner');
+            $owner  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CarcardByOwner');
             $owner_value = Arr::get($owner, 'value');
             if ($owner_value == '') {
                 return Action::danger('เลือก เจ้าของรถ ที่ต้องการที่เมนูกรองข้อมูลก่อน');
