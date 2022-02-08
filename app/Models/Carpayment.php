@@ -83,4 +83,8 @@ class Carpayment extends Model
     {
         return $this->belongsTo(Bank::class, 'chequebank_id');
     }
+    public function waybill()
+    {
+        return $this->belongsTo(Waybill::class, 'waybill_id');
+    }
 }

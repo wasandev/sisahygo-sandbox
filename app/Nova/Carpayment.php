@@ -109,7 +109,10 @@ class Carpayment extends Resource
                 ])->default('T')
                 ->displayUsingLabels()
                 ->onlyOnForms(),
-
+            BelongsTo::make('ใบกำกับ', 'waybill', 'App\Nova\Waybill')
+                ->sortable()
+                ->nullable()
+                ->hideWhenCreating(),
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
                 ->searchable()
                 ->sortable(),
