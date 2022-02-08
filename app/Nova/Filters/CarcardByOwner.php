@@ -5,7 +5,7 @@ namespace App\Nova\Filters;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class CarbalanceByOwner extends Filter
+class CarcardByOwner extends Filter
 {
     /**
      * The filter's component.
@@ -25,7 +25,7 @@ class CarbalanceByOwner extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('car_balances.vendor_id', $value);
+        return $query->where('cars.vendor_id', $value);
     }
 
     /**

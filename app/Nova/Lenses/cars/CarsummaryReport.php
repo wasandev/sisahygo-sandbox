@@ -28,7 +28,6 @@ class CarsummaryReport extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('car_balances', 'car_balances.car_id', '=', 'cars.id')
-                ->join('vendors', 'vendors.id', '=', 'car_balances.vendor_id')
                 ->orderBy('car_balances.vendor_id', 'asc')
                 ->orderBy('cars.id', 'asc')
                 ->groupBy('car_balances.vendor_id', 'cars.id')
@@ -44,7 +43,7 @@ class CarsummaryReport extends Lens
         return [
             'cars.id',
             'cars.car_regist',
-            'car_balances.vendor_id',
+            'cars.vendor_id',
             DB::raw("SUM(CASE WHEN doctype = 'R' THEN car_balances.amount ELSE 0 END) as recamount"),
             DB::raw("SUM(CASE WHEN doctype = 'P' THEN car_balances.amount ELSE 0 END) as payamount"),
         ];

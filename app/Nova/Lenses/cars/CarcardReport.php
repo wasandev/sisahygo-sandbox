@@ -7,6 +7,7 @@ use App\Nova\Filters\CarbalanceByCar;
 use App\Nova\Filters\CarbalanceByOwner;
 use App\Nova\Filters\CarbalanceFromDate;
 use App\Nova\Filters\CarbalanceToDate;
+use App\Nova\Filters\CarcardByOwner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
@@ -30,10 +31,10 @@ class CarcardReport extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('car_balances', 'car_balances.id', '=', 'cars.id')
-                ->join('vendors', 'vendors.id', '=', 'cars.vendor_id')
+                ->join('car_balances', 'car_balances.car_id', '=', 'cars.id')
+                ->orderBy('cars.vendor_id', 'asc')
                 ->orderBy('cars.id', 'asc')
-                ->groupBy('vendors.id', 'cars.id')
+                ->groupBy('cars.vendor_id', 'cars.id')
 
 
         ));
@@ -47,7 +48,7 @@ class CarcardReport extends Lens
     {
         return [
             'cars.id',
-            'vendors.name',
+            'cars.vendor_id',
             'cars.car_regist',
             DB::raw("SUM(CASE WHEN doctype = 'R' THEN car_balances.amount ELSE 0 END) as recamount"),
             DB::raw("SUM(CASE WHEN doctype = 'P' THEN car_balances.amount ELSE 0 END) as payamount"),
@@ -64,7 +65,7 @@ class CarcardReport extends Lens
     {
         return [
             ID::make('id'),
-            Text::make('เจ้าของรถ', 'name'),
+            BelongsTo::make('เจ้าของรถ', 'owner', 'App\Nova\Vendor'),
             Text::make('ทะเบียนรถ', 'car_regist'),
             Currency::make('ยอดรับ', 'recamount'),
             Currency::make('ยอดจ่าย', 'payamount'),
@@ -95,7 +96,7 @@ class CarcardReport extends Lens
     public function filters(Request $request)
     {
         return [
-            new CarbalanceByOwner,
+            new CarcardByOwner(),
             new CarbalanceByCar(),
             new CarbalanceFromDate(),
             new CarbalanceToDate()
