@@ -115,17 +115,19 @@ class OrderHeaderController extends Controller
                 ->where('order_header_date', '>=', $from)
                 ->where('order_header_date', '<=', $to)
                 ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('order_header_no', 'asc')
-                ->get();
+                ->lazyById(100, $column = 'id');
+            // ->orderBy('branch_id', 'asc')
+            // ->orderBy('order_header_no', 'asc')
+            // ->get();
         } else {
             $order = Order_header::where('branch_id', $branch)
                 ->where('order_header_date', '>=', $from)
                 ->where('order_header_date', '<=', $to)
                 ->whereNotIn('order_status', ['new', 'checking'])
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('order_header_no', 'asc')
-                ->get();
+                ->lazyById(100, $column = 'id');
+            // ->orderBy('branch_id', 'asc')
+            // ->orderBy('order_header_no', 'asc')
+            // ->get();
         }
 
 

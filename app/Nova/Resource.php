@@ -70,4 +70,40 @@ abstract class Resource extends NovaResource
     {
         return [25, 50, 100, 200, 250, 400];
     }
+
+    /**
+     * Prepare the resource for JSON serialization.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Support\Collection  $fields
+     * @return array
+     */
+    public function serializeForIndex(NovaRequest $request, $fields = null)
+    {
+        // Get proper response
+        $serialized = parent::serializeForIndex($request, $fields);
+
+        if ($request->lens && $request->lens == 'branch-branch-balance-receipt') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
+        if ($request->lens && $request->lens == 'order-billing-cash') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
+
+        return $serialized;
+    }
 }

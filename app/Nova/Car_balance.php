@@ -132,10 +132,7 @@ class Car_balance extends Resource
      */
     public function lenses(Request $request)
     {
-        return [
-            new CarcardReport(),
-            new CarsummaryReport(),
-        ];
+        return [];
     }
 
     /**

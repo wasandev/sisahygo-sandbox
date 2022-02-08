@@ -8,6 +8,8 @@ use App\Nova\Actions\PostWhTax;
 use App\Nova\Actions\PrintCarWhtaxForm;
 use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
+use App\Nova\Filters\LensePaymentType;
+use App\Nova\Filters\PaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
@@ -52,6 +54,12 @@ class CarpayTax extends Lens
             'vendors.name as name',
             DB::raw('sum(carpayments.amount) as payment_amount'),
             DB::raw('sum(carpayments.tax_amount) as tax_amount'),
+            DB::raw("SUM(CASE WHEN carpayments.type <> 'B' THEN carpayments.amount ELSE 0 END) as pay1_amount"),
+            DB::raw("SUM(CASE WHEN carpayments.type <> 'B' THEN carpayments.tax_amount ELSE 0 END) as tax1_amount"),
+            DB::raw("SUM(CASE WHEN carpayments.type = 'B' THEN carpayments.amount ELSE 0 END) as pay2_amount"),
+            DB::raw("SUM(CASE WHEN carpayments.type = 'B' THEN carpayments.tax_amount ELSE 0 END) as tax2_amount"),
+
+
 
         ];
     }
@@ -67,11 +75,23 @@ class CarpayTax extends Lens
 
             ID::make(),
             Text::make('เจ้าของรถ', 'name'),
-            Currency::make('จำนวนเงินจ่าย', 'payment_amount', function () {
+            Currency::make('จำนวนเงินจ่ายรวม', 'payment_amount', function () {
                 return $this->payment_amount;
             }),
-            Currency::make('จำนวนเงินภาษี', 'tax_amount', function () {
+            Currency::make('จำนวนเงินภาษีรวม', 'tax_amount', function () {
                 return $this->tax_amount;
+            }),
+            Currency::make('จำนวนเงินจ่ายต้นทาง', 'pay1_amount', function () {
+                return $this->pay1_amount;
+            }),
+            Currency::make('จำนวนเงินภาษีต้นทาง', 'tax1_amount', function () {
+                return $this->tax1_amount;
+            }),
+            Currency::make('จำนวนเงินจ่ายปลายทาง', 'pay2_amount', function () {
+                return $this->pay2_amount;
+            }),
+            Currency::make('จำนวนเงินภาษีปลายทาง', 'tax2_amount', function () {
+                return $this->tax2_amount;
             }),
         ];
     }
@@ -96,7 +116,7 @@ class CarpayTax extends Lens
     public function filters(Request $request)
     {
         return [
-
+            new LensePaymentType(),
             new CarpaymentFromDate(),
             new CarpaymentToDate()
         ];

@@ -337,7 +337,7 @@
                     :to="{
                         name: 'lens',
                         params:{
-                        resourceName: 'car_balances',
+                        resourceName: 'cars',
                         lens: 'cars-carcard-report'
                         },
                         }"
@@ -368,7 +368,7 @@
                     :to="{
                         name: 'lens',
                         params:{
-                        resourceName: 'car_balances',
+                        resourceName: 'cars',
                         lens: 'cars-summary-report'
                         },
                         }"

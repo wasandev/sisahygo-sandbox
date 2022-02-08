@@ -30,10 +30,10 @@ class CarcardReport extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('cars', 'cars.id', '=', 'car_balances.car_id')
-                ->join('vendors', 'vendors.id', '=', 'car_balances.vendor_id')
-                ->orderBy('car_balances.car_id', 'asc')
-                ->groupBy('car_balances.vendor_id', 'car_balances.car_id')
+                ->join('car_balances', 'car_balances.id', '=', 'cars.id')
+                ->join('vendors', 'vendors.id', '=', 'cars.vendor_id')
+                ->orderBy('cars.id', 'asc')
+                ->groupBy('vendors.id', 'cars.id')
 
 
         ));
@@ -46,8 +46,9 @@ class CarcardReport extends Lens
     protected static function columns()
     {
         return [
-            'car_balances.vendor_id',
-            'car_balances.car_id',
+            'cars.id',
+            'vendors.name',
+            'cars.car_regist',
             DB::raw("SUM(CASE WHEN doctype = 'R' THEN car_balances.amount ELSE 0 END) as recamount"),
             DB::raw("SUM(CASE WHEN doctype = 'P' THEN car_balances.amount ELSE 0 END) as payamount"),
 
@@ -62,8 +63,9 @@ class CarcardReport extends Lens
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('เจ้าของรถ', 'vendor', 'App\Nova\Vendor'),
-            BelongsTo::make('ทะเบียนรถ', 'car', 'App\Nova\Car'),
+            ID::make('id'),
+            Text::make('เจ้าของรถ', 'name'),
+            Text::make('ทะเบียนรถ', 'car_regist'),
             Currency::make('ยอดรับ', 'recamount'),
             Currency::make('ยอดจ่าย', 'payamount'),
             Currency::make('คงเหลือ', function () {

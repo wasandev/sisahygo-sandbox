@@ -42,6 +42,7 @@ class CarMonthSumary extends Lens
     protected static function columns()
     {
         return [
+            'cars.id',
             'cars.car_regist',
             DB::raw('sum(waybills.waybill_payable) as payment_amount'),
         ];
@@ -55,7 +56,7 @@ class CarMonthSumary extends Lens
     public function fields(Request $request)
     {
         return [
-
+            ID::make('ID'),
             Text::make(__('Car regist'), 'car_regist'),
             Currency::make(__('ค่าบรรทุก'), 'payment_amount', function ($value) {
                 return $value;

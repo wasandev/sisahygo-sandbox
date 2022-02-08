@@ -5,6 +5,8 @@ namespace App\Nova;
 use App\Nova\Filters\CarType;
 use App\Nova\Filters\OwnerType;
 use App\Nova\Lenses\CarMonthSumary;
+use App\Nova\Lenses\cars\CarcardReport;
+use App\Nova\Lenses\cars\CarsummaryReport;
 use Carbon\Carbon;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -119,9 +121,10 @@ class Car extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make(__('Car Balance'), 'car_balances', 'App\Nova\Car_balance'),
+
             HasMany::make('รายการใบกำกับ', 'waybills', 'App\Nova\Waybill'),
-            HasMany::make('รายการจ่ายรถ', 'carpayments', 'App\Nova\Carpayment')
+            HasMany::make('รายการจ่ายรถ', 'carpayments', 'App\Nova\Carpayment'),
+            HasMany::make(__('Car Balance'), 'car_balances', 'App\Nova\Car_balance')
 
 
         ];
@@ -280,6 +283,8 @@ class Car extends Resource
     {
         return [
             new CarMonthSumary(),
+            new CarcardReport(),
+            new CarsummaryReport(),
         ];
     }
 
