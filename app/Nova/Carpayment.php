@@ -51,7 +51,7 @@ class Carpayment extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'payment_no', 'description'
+        'id', 'payment_no', 'description', 'waybill_id'
     ];
     public static function label()
     {
@@ -59,7 +59,8 @@ class Carpayment extends Resource
     }
     public static $searchRelations = [
         'car' => ['car_regist'],
-        'vendor' => ['name']
+        'vendor' => ['name'],
+        'waybill' => ['waybill_no']
     ];
     public static $globalSearchRelations = [
         'car' => ['car_regist'],

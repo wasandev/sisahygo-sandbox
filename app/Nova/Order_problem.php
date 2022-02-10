@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\CancelProblem;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
@@ -357,7 +358,14 @@ class Order_problem extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new CancelProblem())->confirmText('ต้องการยกเลิกรายการแจ้งปัญหาใบรับส่งรายการนี้?')
+                ->confirmButtonText('ยกเลิก')
+                ->cancelButtonText("ไม่ยกเลิก")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit order_problems');
+                }),
+        ];
     }
 
     public static function relatableOrder_headers(NovaRequest $request, $query)

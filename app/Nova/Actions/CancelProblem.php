@@ -7,6 +7,8 @@ use App\Models\Branch;
 use App\Models\Unit;
 use App\Models\Customer;
 use App\Models\Customer_product_price;
+use App\Models\Order_header;
+use App\Models\Order_status;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
@@ -40,8 +42,23 @@ class CancelProblem extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            // $order = Order
-
+            $order = Order_header::find($model->order_header_id);
+            $order->order_status = $fields->order_status;
+            $order->save();
+            if ($fields->order_status == 'confirmed') {
+                Order_status::create([
+                    'order_header_id' => $order->id,
+                    'status' => 'confirmed',
+                    'user_id' => auth()->user()->id,
+                ]);
+            } else {
+                Order_status::create([
+                    'order_header_id' => $order->id,
+                    'status' => 'branch warehouse',
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+            $model->delete();
         }
     }
 
@@ -56,8 +73,9 @@ class CancelProblem extends Action
         return [
             Select::make('สถานะใบรับส่ง', 'order_status')
                 ->options([
-                    'สินค้าอยู่คลังสำนักงานใหญ่' => 'confiremd',
-                    'สินค้าอยู่คลังสาขาปลายทาง' => 'branch warehouse'
+                    'branch warehouse' => 'สินค้าอยู่คลังสาขาปลายทาง',
+                    'confirmed' => 'สินค้าอยู่คลังสำนักงานใหญ่'
+
                 ])->displayUsingLabels()
                 ->rules('required')
         ];
