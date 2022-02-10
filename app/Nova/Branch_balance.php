@@ -62,7 +62,7 @@ class Branch_balance extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'order_header_id'
+        'id', 'order_header_id', 'bal_amount', 'pay_amount'
     ];
 
     public static $searchRelations = [
@@ -118,7 +118,8 @@ class Branch_balance extends Resource
                 ->sortable(),
             Currency::make('ภาษี', 'tax_amount'),
 
-            Currency::make('ยอดรับชำระ', 'pay_amount'),
+            Currency::make('ยอดรับชำระ', 'pay_amount')
+                ->sortable(),
 
             Text::make('ชำระโดย',  function () {
                 //if (isset($this->receipt_id)) {
