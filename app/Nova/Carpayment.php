@@ -101,19 +101,12 @@ class Carpayment extends Resource
                     'B' => 'ค่าบรรทุกเก็บปลายทาง'
                 ])->default('T')
                 ->displayUsingLabels()
-                ->exceptOnForms()
                 ->sortable(),
-            Select::make('ประเภทการจ่าย', 'type')
-                ->options([
-                    'T' => 'ค่าบรรทุก',
-                    'O' => 'อื่นๆ',
-                ])->default('T')
-                ->displayUsingLabels()
-                ->onlyOnForms(),
+
             BelongsTo::make('ใบกำกับ', 'waybill', 'App\Nova\Waybill')
                 ->sortable()
                 ->nullable()
-                ->hideWhenCreating(),
+                ->help('**กรณีจ่ายจากยอดเก็บปลายทางสาขาร่วม'),
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
                 ->searchable()
                 ->sortable(),
