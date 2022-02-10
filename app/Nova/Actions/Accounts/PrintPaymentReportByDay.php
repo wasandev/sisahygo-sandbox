@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions\Accounts;
 
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -44,10 +45,13 @@ class PrintPaymentReportByDay extends Action
         $from_value = $fields->from;
         $to_value = $fields->to;
 
-        if ($fields->type_value) {
-            $type_str = 'B';
+        if ($fields->type == '1') {
+
             $branch_value = $fields->branch;
             return Action::openInNewTab('/car/report_c25/' . $branch_value . '/' . $from_value . '/' . $to_value);
+        } elseif ($fields->type == '2') {
+            $type_str = 'B';
+            return Action::openInNewTab('/car/report_11/' . $from_value . '/' . $to_value . '/' . $type_str);
         } else {
             $type_str = 'all';
             return Action::openInNewTab('/car/report_11/' . $from_value . '/' . $to_value . '/' . $type_str);
@@ -64,14 +68,26 @@ class PrintPaymentReportByDay extends Action
     {
         $branches = \App\Models\Branch::where('type', 'partner')->pluck('name', 'id');
         return [
-            Boolean::make('เฉพาะรายการจ่ายจากยอดเก็บปลายทางสาขา Partner', 'type_value'),
-            Select::make('เลือกสาขา', 'branch')
-                ->options($branches)
-                ->searchable()
-                ->help('เว้นว่างไว้ หากต้องการพิมพ์รายการใบสำคัญจ่าย ที่ไม่ใช่รายการเก็บปลายทาง'),
-            Date::make('วันที่เริ่มต้น', 'from')
+            Select::make('เลือกประเภทรายงาน', 'type')
+                ->options([
+                    '1' => 'รายงานจ่ายเงินรถจากรายการเก็บปลายทางตามสาขา',
+                    '2' => 'รายงานจ่ายเงินรถจากรายการเก็บปลายทางรวมทั้งหมด',
+                    '3' => 'รายงานจ่ายเงินรถทั้งหมด',
+                ])->displayUsingLabels()
                 ->rules('required'),
-            Date::make('วันที่สิ้นสุด', 'to')
+
+            NovaDependencyContainer::make(
+                [
+                    Select::make('เลือกสาขา', 'branch')
+                        ->options($branches)
+                        ->searchable()
+                        ->help('เว้นว่างไว้ หากต้องการพิมพ์รายการใบสำคัญจ่าย ที่ไม่ใช่รายการเก็บปลายทาง'),
+                ]
+            )->dependsOn('type', '1'),
+
+            Date::make('จากวันที่', 'from')
+                ->rules('required'),
+            Date::make('ถึงวันที่', 'to')
                 ->rules('required')
 
         ];
