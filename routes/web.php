@@ -70,6 +70,8 @@ Route::middleware('web', 'auth')
         Route::get('/car/report_15/{to}', 'CarController@report_15')->name('report_15');
         Route::get('/car/report_23/{from}/{to}', 'CarController@report_23')->name('report_23');
         Route::get('/car/report_24/{from}/{to}/{type}', 'CarController@report_24')->name('report_24');
+        Route::get('/car/report_c25/{from}/{to}/{branch}', 'CarController@report_c25')->name('report_c25');
+
         //ar
         Route::get('/invoice/preview/{id}', 'InvoiceController@preview')->name('preview');
         Route::get('/receipt/preview/{id}', 'ReceiptController@preview')->name('preview');

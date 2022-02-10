@@ -80,7 +80,7 @@ class Order_detail extends Resource
                 ->onlyOnForms(),
 
             // NovaDependencyContainer::make([
-            BelongsTo::make(__('เลือกตารางราคา'), 'productservice_price', 'App\Nova\Productservice_price')
+            BelongsTo::make(__('เลือกจากตารางราคา'), 'productservice_price', 'App\Nova\Productservice_price')
                 ->searchable()
                 ->withSubtitles()
                 ->nullable()

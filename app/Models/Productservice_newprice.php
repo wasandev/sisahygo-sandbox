@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 //use Laravel\Scout\Searchable;
 
-class Productservice_price extends Model
+class Productservice_newprice extends Model
 {
     //use Searchable;
     protected $fillable = [
         'product_id', 'from_branch_id', 'unit_id', 'price',  'district', 'province', 'user_id', 'updated_by', 'branch_area_id'
     ];
 
-    protected $table = 'productservice_price';
+    protected $table = 'productservice_newprice';
 
     public function product()
     {
@@ -54,6 +54,6 @@ class Productservice_price extends Model
      */
     public function searchableAs()
     {
-        return 'productservice_prices';
+        return 'productservice_newprices';
     }
 }

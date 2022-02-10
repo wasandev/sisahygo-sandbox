@@ -187,7 +187,9 @@ use App\Models\Delivery_item;
 use App\Models\Incometype;
 use App\Models\Invoice;
 use App\Models\Order_problem;
+use App\Models\Productservice_newprice;
 use App\Models\Receipt_ar;
+use App\Models\tableprice;
 use App\Models\Withholdingtax;
 use App\Observers\BillingnoteItemObserver;
 use App\Observers\BillingnoteObserver;
@@ -200,7 +202,9 @@ use App\Observers\DeliveryItemObserver;
 use App\Observers\IncometypeObserver;
 use App\Observers\InvoiceObserver;
 use App\Observers\Order_problemObserver;
+use App\Observers\ProductService_newpriceObserver;
 use App\Observers\ReceiptArObserver;
+use App\Observers\TablepriceObserver;
 use App\Observers\WithholdingtaxObserver;
 
 class AppServiceProvider extends ServiceProvider
@@ -293,5 +297,7 @@ class AppServiceProvider extends ServiceProvider
         Billingnote::observe(BillingnoteObserver::class);
         Billingnote_item::observe(BillingnoteItemObserver::class);
         Branch_balance::observe(Branch_balanceObserver::class);
+        //Tableprice::observe(TablepriceObserver::class);
+        Productservice_newprice::observe(ProductService_newpriceObserver::class);
     }
 }

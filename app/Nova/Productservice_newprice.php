@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -15,11 +14,11 @@ use Wasandev\InputThaiAddress\InputProvince;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
-class Productservice_price extends Resource
+class Productservice_newprice extends Resource
 {
     //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
-    public static $priority = 8;
+    public static $priority = 8.1;
     public static $perPageOptions = [50, 100, 150];
     public static $perPageViaRelationship = 50;
     public static $relatableSearchResults = 200;
@@ -30,7 +29,7 @@ class Productservice_price extends Resource
      *
      * @var string
      */
-    public static $model = 'App\Models\Productservice_price';
+    public static $model = 'App\Models\Productservice_newprice';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -67,11 +66,11 @@ class Productservice_price extends Resource
 
     public static function label()
     {
-        return __('Shipping costs');
+        return 'ปรับราคาค่าขนส่ง';
     }
     public static function singularLabel()
     {
-        return __('Shipping cost');
+        return 'ปรับราคาค่าขนส่ง';
     }
     /**
      * Get the fields displayed by the resource.
@@ -83,12 +82,12 @@ class Productservice_price extends Resource
     {
         return [
             //ID::make()->sortable(),
-            // BelongsTo::make('ตารางราคา', 'tableprice', 'App\Nova\Tableprice')
-            //     ->sortable()
-            //     ->searchable(),
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->exceptOnForms(),
+            // BelongsTo::make('ตารางราคา', 'tableprice', 'App\Nova\Tableprice')
+            //     ->sortable()
+            //     ->searchable(),
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->sortable()
                 ->searchable(),
@@ -118,9 +117,6 @@ class Productservice_price extends Resource
                 ->onlyOnDetail(),
             BelongsTo::make(__('Updated by'), 'user_update', 'App\Nova\User')
                 ->OnlyOnDetail(),
-            DateTime::make(__('Updated At'), 'updated_at')
-                ->format('DD/MM/YYYY HH:mm')
-                ->onlyOnDetail(),
 
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddProductServiceNewPriceStyle;
 use App\Nova\Actions\AddProductServicePriceStyle;
 use App\Nova\Metrics\ProductByStyle;
 use Laravel\Nova\Fields\ID;
@@ -146,6 +147,9 @@ class Product_style extends Resource
             //     return $request->user()->role == 'admin';
             // }),
             (new AddProductServicePriceStyle)->canSee(function ($request) {
+                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('manage productservice_prices');
+            }),
+            (new AddProductServiceNewPriceStyle)->canSee(function ($request) {
                 return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('manage productservice_prices');
             }),
         ];

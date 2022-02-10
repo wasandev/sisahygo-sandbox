@@ -59,7 +59,10 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\Productservice_price', 'product_id');
     }
-
+    public function productservice_newprice()
+    {
+        return $this->hasMany('App\Models\Productservice_newprice', 'product_id');
+    }
     public function customer_product_prices()
     {
         return $this->hasMany('App\Models\Customer_product_price');

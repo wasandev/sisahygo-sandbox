@@ -83,18 +83,20 @@ class Withholdingtax extends Resource
 
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Date::make('วันที่จ่าย', 'pay_date'),
+            Date::make('วันที่จ่าย', 'pay_date')->sortable(),
             Select::make('ประเภทผู้ถูกหักภาษี', 'payertype')
                 ->options([
                     '1' => 'บุคคลธรรมดา',
                     '2' => 'นิติบุคคล'
                 ])->displayUsingLabels()
                 ->rules('required')
-                ->default('1'),
+                ->default('1')
+                ->sortable(),
             BelongsTo::make('ประเภทเงินได้', 'incometype', 'App\Nova\Incometype')
                 ->onlyOnIndex(),
             BelongsTo::make('ผู้ถูกหักภาษี', 'vendor', 'App\Nova\Vendor')
-                ->onlyOnIndex(),
+                ->onlyOnIndex()
+                ->sortable(),
             Text::make('ภงด.', function () {
                 return $this->incometype->taxform;
             }),

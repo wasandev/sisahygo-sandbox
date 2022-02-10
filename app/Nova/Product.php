@@ -134,10 +134,12 @@ class Product extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
-            HasMany::make(__('Shipping costs'), 'productservice_price', 'App\Nova\Productservice_price'),
+            HasMany::make('ราคาเดิม', 'productservice_price', 'App\Nova\Productservice_price'),
             // BelongsToMany::make('ลูกค้าที่ใช้สินค้านี้', 'customer', 'App\Nova\Customer'),
             // HasMany::make('ค่าขนส่งสินค้าตามลูกค้า', 'customer_product_prices', 'App\Nova\Customer_product_price')
-            HasMany::make('รูปสินค้า', 'product_images', 'App\Nova\Product_image')
+            //HasMany::make('รูปสินค้า', 'product_images', 'App\Nova\Product_image')
+            HasMany::make('ราคาใหม่', 'productservice_newprice', 'App\Nova\Productservice_newprice'),
+
         ];
     }
 
@@ -207,6 +209,27 @@ class Product extends Resource
                     return $request->user()->hasPermissionTo('edit productservice_prices');
                 }),
             (new Actions\AddProductServicePriceDistrict)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new Actions\AddProductServiceNewPriceZone)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new Actions\AddProductServiceNewPrice)
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('edit productservice_prices');
+                }),
+            (new Actions\AddProductServiceNewPriceDistrict)
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('edit productservice_prices');
                 })

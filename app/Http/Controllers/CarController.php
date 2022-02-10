@@ -191,4 +191,25 @@ class CarController extends Controller
 
         return view('reports.whtaxreport', compact('company', 'report_title', 'whtaxes',  'from', 'to', 'type'));
     }
+
+    public function report_c25($branch, $from, $to)
+    {
+        $report_title = 'รายงานสรุปจ่ายเงินรถกรณี เก็บปลายทาง';
+        $company = CompanyProfile::find(1);
+        $carpayments = Carpayment::join('waybills', 'car_payments.waybill_id', 'waybills.id')
+            ->where('car_payments.payment_date', '>=', $from)
+            ->where('car_payments.payment_date', '<=', $to)
+            ->where('waybills.branch_rec_id', '=', $branch)
+            ->where('car_payments.type', '=', 'B')
+            ->where('car_payments.status', true)
+            ->orderBy('car_payments.payment_date', 'asc')
+            ->orderBy('car_payments.id', 'asc')
+            ->get();
+
+        $payment_groups = $carpayments->groupBy(function ($item) {
+            return $item->payment_date->format('Y-m-d');
+        });
+        $payment_date = $payment_groups->all();
+        return view('reports.carpaymentbranchreport', compact('company', 'report_title', 'carpayments', 'payment_date', 'from', 'to', 'branch'));
+    }
 }
