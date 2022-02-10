@@ -105,7 +105,7 @@ class Carpayment extends Resource
 
             BelongsTo::make('ใบกำกับ', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
                 ->sortable()
-                ->hideWhenCreating()
+                ->exceptOnForms()
                 ->help('**กรณีจ่ายจากยอดเก็บปลายทางสาขาร่วม'),
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
                 ->searchable()
