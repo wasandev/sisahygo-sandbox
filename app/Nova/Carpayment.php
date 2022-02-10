@@ -60,7 +60,7 @@ class Carpayment extends Resource
     public static $searchRelations = [
         'car' => ['car_regist'],
         'vendor' => ['name'],
-        'waybill' => ['waybill_no']
+        'branchrec_waybill' => ['waybill_no']
     ];
     public static $globalSearchRelations = [
         'car' => ['car_regist'],
