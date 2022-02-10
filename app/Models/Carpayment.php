@@ -87,4 +87,8 @@ class Carpayment extends Model
     {
         return $this->belongsTo(Waybill::class, 'waybill_id');
     }
+    public function branchrec_waybill()
+    {
+        return $this->belongsTo(Branchrec_waybill::class, 'waybill_id');
+    }
 }
