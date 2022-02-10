@@ -22,7 +22,8 @@ class Product extends Resource
     //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 7;
-
+    public static $perPageViaRelationship = 50;
+    public static $relatableSearchResults = 100;
     //public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.

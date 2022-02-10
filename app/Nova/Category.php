@@ -18,7 +18,8 @@ class Category extends Resource
     //public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 4;
-
+    public static $perPageViaRelationship = 50;
+    public static $relatableSearchResults = 100;
     /**
      * The model the resource corresponds to.
      *
