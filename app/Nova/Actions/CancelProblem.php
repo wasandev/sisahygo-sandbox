@@ -57,7 +57,7 @@ class CancelProblem extends Action
             Select::make('สถานะใบรับส่ง', 'order_status')
                 ->options([
                     'สินค้าอยู่คลังสำนักงานใหญ่' => 'confiremd',
-                    'สินค้าอยู่คลังสาขาปลายทาง' => 'branch warehousr'
+                    'สินค้าอยู่คลังสาขาปลายทาง' => 'branch warehouse'
                 ])->displayUsingLabels()
                 ->rules('required')
         ];
