@@ -103,7 +103,7 @@ class Carpayment extends Resource
                 ->displayUsingLabels()
                 ->sortable(),
 
-            BelongsTo::make('ใบกำกับ', 'waybill', 'App\Nova\Waybill')
+            BelongsTo::make('ใบกำกับ', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
                 ->sortable()
                 ->hideWhenCreating()
                 ->help('**กรณีจ่ายจากยอดเก็บปลายทางสาขาร่วม'),
