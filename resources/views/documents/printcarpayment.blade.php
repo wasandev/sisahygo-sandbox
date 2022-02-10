@@ -140,10 +140,11 @@
                 </td>
                 <td style="width: 33%;text-align: center">
                     ผู้จ่าย............................................
+                         {{ $carpayment->user->name}}
                 </td>
                 <td style="width: 34%;text-align: center">
                     ผู้รับเงิน..........................................<br/>
-                    {{ $carpayment->user->name}}
+
                 </td>
             </tr>
         </table>
