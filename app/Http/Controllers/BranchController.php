@@ -57,7 +57,7 @@ class BranchController extends Controller
 
             foreach (Branch_balance::lazy() as $branch_balance) {
                 $branch_balances = $branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
-                    ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
+                    ->leftjoin('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                     ->where('branch_balances.branchpay_date', '>=', $from)
                     ->where('branch_balances.branchpay_date', '<=', $to)
                     ->where('branch_balances.pay_amount', '>', 0)
@@ -71,7 +71,7 @@ class BranchController extends Controller
         } else {
             foreach (Branch_balance::lazy() as $branch_balance) {
                 $branch_balances = $branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
-                    ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
+                    ->leftjoin('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
                     ->where('branch_balances.branch_id', $branch)
                     ->where('branch_balances.branchpay_date', '>=', $from)
                     ->where('branch_balances.branchpay_date', '<=', $to)

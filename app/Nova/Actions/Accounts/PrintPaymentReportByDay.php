@@ -9,6 +9,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Select;
 
 use function PHPUnit\Framework\isNull;
 
@@ -36,29 +39,19 @@ class PrintPaymentReportByDay extends Action
 
     public function handle(ActionFields $fields, Collection $models)
     {
-        $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
 
-        $paymenttype  = $decodedFilters->firstWhere('class', 'App\Nova\Filters\Lenses\LensesPaymentType');
 
-        $type_value = Arr::get($paymenttype, 'value.typeb');
+        $from_value = $fields->from;
+        $to_value = $fields->to;
 
-        if ($type_value) {
+        if ($fields->type_value) {
             $type_str = 'B';
+            $branch_value = $fields->branch;
+            return Action::openInNewTab('/car/report_c25/' . $branch_value . '/' . $from_value . '/' . $to_value);
         } else {
             $type_str = 'all';
+            return Action::openInNewTab('/car/report_11/' . $from_value . '/' . $to_value . '/' . $type_str);
         }
-
-        $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\Lenses\PaymentLensFromDate');
-        $from_value = Arr::get($from, 'value');
-        if ($from_value == '') {
-            return Action::danger('เลือก วันที่เริ่มต้น ที่ต้องการที่เมนูกรองข้อมูลก่อน');
-        }
-        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\Lenses\PaymentLensToDate');
-        $to_value = Arr::get($to, 'value');
-        if ($to_value == '') {
-            return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
-        }
-        return Action::openInNewTab('/car/report_11/' . $from_value . '/' . $to_value . '/' . $type_str);
     }
 
 
@@ -69,6 +62,18 @@ class PrintPaymentReportByDay extends Action
      */
     public function fields()
     {
-        return [];
+        $branches = \App\Models\Branch::where('type', 'partner')->pluck('name', 'id');
+        return [
+            Boolean::make('เฉพาะรายการจ่ายจากยอดเก็บปลายทางสาขา Partner', 'type_value'),
+            Select::make('เลือกสาขา', 'branch')
+                ->options($branches)
+                ->searchable()
+                ->help('เว้นว่างไว้ หากต้องการพิมพ์รายการใบสำคัญจ่าย ที่ไม่ใช่รายการเก็บปลายทาง'),
+            Date::make('วันที่เริ่มต้น', 'from')
+                ->rules('required'),
+            Date::make('วันที่สิ้นสุด', 'to')
+                ->rules('required')
+
+        ];
     }
 }

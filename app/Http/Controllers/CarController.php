@@ -196,14 +196,14 @@ class CarController extends Controller
     {
         $report_title = 'รายงานสรุปจ่ายเงินรถกรณี เก็บปลายทาง';
         $company = CompanyProfile::find(1);
-        $carpayments = Carpayment::join('waybills', 'car_payments.waybill_id', 'waybills.id')
-            ->where('car_payments.payment_date', '>=', $from)
-            ->where('car_payments.payment_date', '<=', $to)
+        $carpayments = Carpayment::join('waybills', 'carpayments.waybill_id', 'waybills.id')
+            ->where('carpayments.payment_date', '>=', $from)
+            ->where('carpayments.payment_date', '<=', $to)
             ->where('waybills.branch_rec_id', '=', $branch)
-            ->where('car_payments.type', '=', 'B')
-            ->where('car_payments.status', true)
-            ->orderBy('car_payments.payment_date', 'asc')
-            ->orderBy('car_payments.id', 'asc')
+            ->where('carpayments.type', '=', 'B')
+            ->where('carpayments.status', true)
+            ->orderBy('carpayments.payment_date', 'asc')
+            ->orderBy('carpayments.id', 'asc')
             ->get();
 
         $payment_groups = $carpayments->groupBy(function ($item) {
