@@ -154,9 +154,9 @@ class PrintCarWhtaxForm extends Action
                     break;
                 case '098':
                     $spac3 = $model->description;
-                    $date141 = $model->pay_date;
-                    $pay1131 = $model->pay_amount;
-                    $tax1131 = $model->tax_amount;
+                    $date141 = formatDateThai($model->pay_date, 2, '.', ',');
+                    $pay1131 = number_format($model->pay_amount, 2, '.', ',');
+                    $tax1131 = number_format($model->tax_amount, 2, '.', ',');
                     break;
                 default:
                     $date140 = formatDateThai($model->pay_date);
@@ -197,7 +197,7 @@ class PrintCarWhtaxForm extends Action
                 'date140' => $date140,
                 'date141' => $date141,
                 'pay1130' => $pay1130,
-                'pay1131' => number_format($pay1131, 2, '.', ','),
+                'pay1131' => $pay1131,
                 'pay1.14' => number_format($model->pay_amount, 2, '.', ','),
                 'tax1130' => $tax1130,
                 'tax1131' => number_format($tax1131, 2, '.', ','),
