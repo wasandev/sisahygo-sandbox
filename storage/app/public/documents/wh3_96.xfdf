@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
+<fields>
+<field name="name1">
+<value>บริษัท สี่สหายขนส่ง(1988) จำกัด</value>
+</field>
+<field name="id1">
+<value>0 1055 31092 59 7</value>
+</field>
+<field name="add1">
+<value>103/1 ถ.สะแกงาม แสมดำ บางขุนเทียน กรุงเทพมหานคร 10150</value>
+</field>
+<field name="name2">
+<value>นายโกมล ชนะวรรณ</value>
+</field>
+<field name="id1_2">
+<value>3 8099 00012 67 1</value>
+</field>
+<field name="add2">
+<value>24/1 ถ.สระเรียง ในเมือง เมืองนครศรีธรรมราช นครศรีธรรมราช 80000</value>
+</field>
+<field name="chk4">
+<value>Yes</value>
+</field>
+<field name="chk7">
+<value>Off</value>
+</field>
+<field name="date1">
+<value></value>
+</field>
+<field name="date2">
+<value></value>
+</field>
+<field name="date3">
+<value></value>
+</field>
+<field name="date4">
+<value></value>
+</field>
+<field name="date5">
+<value></value>
+</field>
+<field name="date6">
+<value></value>
+</field>
+<field name="date7">
+<value></value>
+</field>
+<field name="date8">
+<value></value>
+</field>
+<field name="date9">
+<value></value>
+</field>
+<field name="date10">
+<value></value>
+</field>
+<field name="date11">
+<value></value>
+</field>
+<field name="date12">
+<value></value>
+</field>
+<field name="date13">
+<value></value>
+</field>
+<field name="date140">
+<value></value>
+</field>
+<field name="date141">
+<value>2022-01-04 00:00:00</value>
+</field>
+<field name="pay1130">
+<value></value>
+</field>
+<field name="pay1131">
+<value>1,200.00</value>
+</field>
+<field name="pay1">
+<field name="14">
+<value>1,200.00</value>
+</field>
+</field>
+<field name="tax1130">
+<value></value>
+</field>
+<field name="tax1131">
+<value>36.00</value>
+</field>
+<field name="tax1">
+<field name="14">
+<value>36.00</value>
+</field>
+</field>
+<field name="total">
+<value>สามสิบหกบาทถ้วน</value>
+</field>
+<field name="chk8">
+<value>Yes</value>
+</field>
+<field name="date_pay">
+<value>04</value>
+</field>
+<field name="month_pay">
+<value>   01</value>
+</field>
+<field name="year_pay">
+<value>2565</value>
+</field>
+</fields>
+</xfdf>
