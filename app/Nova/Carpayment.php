@@ -111,10 +111,12 @@ class Carpayment extends Resource
                 ->searchable()
                 ->sortable(),
             BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
             Text::make(__('Description'), 'description')->default('ค่าบรรทุก(เบิกเดินทาง)')
                 ->hideFromIndex(),
-            Currency::make(__('Amount'), 'amount'),
+            Currency::make(__('Amount'), 'amount')
+                ->sortable(),
             Select::make('จ่ายด้วย', 'payment_by')->options([
                 'H' => 'เงินสด',
                 'T' => 'เงินโอน',
@@ -163,7 +165,8 @@ class Carpayment extends Resource
                 ->hideFromIndex()
                 ->default('true'),
             Currency::make('ภาษีหัก ณ ที่จ่าย', 'tax_amount')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),

@@ -88,7 +88,8 @@ class Productservice_newprice extends Resource
             // }),
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
             // BelongsTo::make('ตารางราคา', 'tableprice', 'App\Nova\Tableprice')
             //     ->sortable()
             //     ->searchable(),
