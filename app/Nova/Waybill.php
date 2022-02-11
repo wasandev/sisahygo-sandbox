@@ -6,6 +6,7 @@ use App\Nova\Filters\RouteToBranch;
 use App\Nova\Filters\ShowByWaybillStatus;
 use App\Nova\Filters\WaybillFromDate;
 use App\Nova\Filters\WaybillToDate;
+use App\Nova\Lenses\cars\CarCheck;
 use App\Nova\Lenses\WaybillConfirmedPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -237,6 +238,7 @@ class Waybill extends Resource
     {
         return [
             new  WaybillConfirmedPerDay(),
+            new  CarCheck()
 
         ];
     }
