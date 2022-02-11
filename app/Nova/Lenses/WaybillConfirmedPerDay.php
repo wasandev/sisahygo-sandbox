@@ -150,7 +150,7 @@ class WaybillConfirmedPerDay extends Lens
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view waybills');
                 }),
-            (new DownloadExcel)->allFields()->withHeadings()
+            (new DownloadExcel)->withHeadings()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view waybills');
                 }),

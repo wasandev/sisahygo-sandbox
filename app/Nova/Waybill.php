@@ -238,7 +238,7 @@ class Waybill extends Resource
     {
         return [
             new  WaybillConfirmedPerDay(),
-            new  CarCheck()
+            //new  CarCheck()
 
         ];
     }

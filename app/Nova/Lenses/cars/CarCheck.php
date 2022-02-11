@@ -32,7 +32,6 @@ class CarCheck extends Lens
                 ->leftjoin('carpayments', 'carpayments.waybill_id', '=', 'waybills.id')
                 ->join('car_balances', 'car_balances.docno', 'waybills.waybill_no')
                 ->join('order_headers', 'order_headers.waybill_id', '=', 'waybills.id')
-                ->join('cars', 'waybills.car_id', '=', 'cars.id')
                 ->orderBy('waybills.id', 'asc')
                 ->groupBy('waybills.id', 'carpayments.id', 'car_balances.id')
 
@@ -51,7 +50,6 @@ class CarCheck extends Lens
             'waybills.waybill_no as waybill_no',
             'waybills.waybill_date',
             'waybills.waybill_payable as payable',
-            'cars.car_regist',
             'carpayments.id',
             'carpayments.payment_no as payno',
             'carpayments.amount as carpayamount',
