@@ -199,7 +199,7 @@ class PrintCarWhtaxForm extends Action
                 'pay1130' => $pay1130,
                 'pay1131' => $pay1131,
                 'pay1.14' => number_format($model->pay_amount, 2, '.', ','),
-                'tax1130' => number_format($tax1130, 2, '.', ','),
+                'tax1130' => $tax1130,
                 'tax1131' => $tax1131,
                 'tax1.14' =>  number_format($model->tax_amount, 2, '.', ','),
                 'total' => baht_text($model->tax_amount),
