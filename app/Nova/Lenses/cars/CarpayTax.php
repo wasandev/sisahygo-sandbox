@@ -2,19 +2,17 @@
 
 namespace App\Nova\Lenses\cars;
 
-use App\Models\Vendor;
+
 use App\Nova\Actions\Accounts\PrintCarwhtaxReport;
 use App\Nova\Actions\PostWhTax;
-use App\Nova\Actions\PrintCarWhtaxForm;
 use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
 use App\Nova\Filters\LensePaymentType;
-use App\Nova\Filters\PaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
@@ -90,8 +88,8 @@ class CarpayTax extends Lens
             Currency::make('จำนวนเงินจ่ายปลายทาง', 'pay2_amount', function () {
                 return $this->pay2_amount;
             }),
-            Currency::make('จำนวนเงินภาษีปลายทาง', 'tax2_amount', function () {
-                return $this->tax2_amount;
+            Number::make('จำนวนเงินภาษีปลายทาง', 'tax2_amount', function () {
+                return number_format($this->tax2_amount, 2, '.', ',');
             }),
         ];
     }

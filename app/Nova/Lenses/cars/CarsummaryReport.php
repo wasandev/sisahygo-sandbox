@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
@@ -63,8 +64,8 @@ class CarsummaryReport extends Lens
             Text::make('ทะเบียนรถ', 'car_regist'),
             Currency::make('ยอดรับ', 'recamount'),
             Currency::make('ยอดจ่าย', 'payamount'),
-            Currency::make('คงเหลือ', function () {
-                return $this->recamount - $this->payamount;
+            Number::make('คงเหลือ', function () {
+                return number_format($this->recamount - $this->payamount, 2, '.', ',');
             }),
         ];
     }
