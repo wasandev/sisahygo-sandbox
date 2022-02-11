@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Carbon\Carbon;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -83,16 +84,14 @@ class Productservice_newprice extends Resource
     {
         return [
             //ID::make()->sortable(),
-            // Boolean::make('สถานะ',function(){
-            //     return   Carbon::now()->year
-            // }),
+            Boolean::make('สถานะการปรับ', function () {
+                return ($this->updated_at->month == 2);
+            }),
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->exceptOnForms()
                 ->sortable(),
-            // BelongsTo::make('ตารางราคา', 'tableprice', 'App\Nova\Tableprice')
-            //     ->sortable()
-            //     ->searchable(),
+
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->sortable()
                 ->searchable(),
