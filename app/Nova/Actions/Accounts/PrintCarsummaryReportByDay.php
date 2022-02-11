@@ -36,7 +36,7 @@ class PrintCarsummaryReportByDay extends Action
     {
         $decodedFilters = collect(json_decode(base64_decode($this->filter), true));
 
-        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CarbalanceToDate');
+        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CarbalanceToDateLen');
         $to_value = Arr::get($to, 'value');
         if ($to_value == '') {
             return Action::danger('เลือก วันที่ที่ต้องการที่เมนูกรองข้อมูลก่อน');

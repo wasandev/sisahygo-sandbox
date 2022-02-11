@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Car;
 use App\Models\Carpayment;
 use App\Models\Incometype;
 use App\Models\Vendor;
@@ -67,6 +68,22 @@ class PostWhTax extends Action
                 ->where('carpayments.status', '=', true)
                 ->where('carpayments.tax_flag', '=', true)
                 ->sum('tax_amount');
+            $car = Car::join('branches', 'branches.vendor_id', 'cars.vendor_id')
+                ->where('branches.type', '=', 'partner')
+                ->where('vendor_id', '=', $model->id)
+                ->whereHas('carpayments');
+            dd($car);
+
+            $branch_paytax = Carpayment::where('vendor_id', $model->id)
+                ->whereMonth('payment_date', date('m', strtotime($to_value)))
+                ->whereYear('payment_date', date('Y', strtotime($to_value)))
+                ->where('type', '=', 'B')
+                ->where('carpayments.status', '=', true)
+                ->where('carpayments.tax_flag', '=', true)
+                ->sum('tax_amount');
+
+            if ($branch_paytax > 0) {
+            }
 
             $vendor = Vendor::find($model->id);
             if ($vendor->type == 'company') {

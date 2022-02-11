@@ -5,6 +5,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
@@ -58,7 +59,7 @@ class Productservice_newprice extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'district', 'province'
+        'id', 'district', 'province', 'price'
     ];
     public static $searchRelations = [
         'product' => ['name'],
@@ -82,6 +83,9 @@ class Productservice_newprice extends Resource
     {
         return [
             //ID::make()->sortable(),
+            // Boolean::make('สถานะ',function(){
+            //     return   Carbon::now()->year
+            // }),
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->exceptOnForms(),

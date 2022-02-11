@@ -4,6 +4,7 @@ namespace App\Nova\Lenses\cars;
 
 use App\Nova\Actions\Accounts\PrintCarsummaryReportByDay;
 use App\Nova\Filters\CarbalanceToDate;
+use App\Nova\Filters\CarbalanceToDateLen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
@@ -89,7 +90,7 @@ class CarsummaryReport extends Lens
     {
         return [
 
-            new CarbalanceToDate()
+            new CarbalanceToDateLen()
         ];
     }
 
