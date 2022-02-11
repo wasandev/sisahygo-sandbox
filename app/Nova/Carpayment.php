@@ -51,7 +51,7 @@ class Carpayment extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'payment_no', 'description', 'waybill_id'
+        'id', 'payment_no', 'description', 'waybill_id', 'amount'
     ];
     public static function label()
     {
