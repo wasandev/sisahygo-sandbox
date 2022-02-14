@@ -96,4 +96,22 @@ class WaybillController extends Controller
 
         return view('reports.waybilldate', compact('company', 'report_title', 'waybills', 'waybill_groups', 'routetobranch', 'from', 'to'));
     }
+    public function report_w1($routetobranch, $from, $to)
+    {
+
+        $report_title = 'รายงานรถออกประจำวัน(ปรับปรุง)';
+        $company = CompanyProfile::find(1);
+
+
+        foreach (DB::table('waybills')->whereDate('departure_at', '>=', $from)
+            ->whereDate('departure_at', '<=', $to)
+            ->whereNotIn('waybill_status', ['loading', 'cancel'])
+            ->orderBy('waybill_date', 'asc')
+            ->orderBy('branch_rec_id', 'asc')
+            ->orderBy('waybill_type', 'asc')
+            ->cursor() as $waybill) {
+        }
+        dd($waybill);
+        return view('reports.waybilldate2', compact('waybill'));
+    }
 }

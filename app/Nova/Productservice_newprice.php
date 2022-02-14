@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\ServicePriceUpdate;
 use Carbon\Carbon;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -133,7 +134,9 @@ class Productservice_newprice extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            //new ServicePriceUpdate()
+        ];
     }
 
     /**
