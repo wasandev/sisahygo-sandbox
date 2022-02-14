@@ -10,10 +10,10 @@ class WhtaxFromDate extends DateFilter
 {
     public $name = 'จากวันที่';
 
-    public function default()
-    {
-        return date('Y-m-01');
-    }
+    // public function default()
+    // {
+    //     return date('Y-m-01');
+    // }
     /**
      * Apply the filter to the given query.
      *

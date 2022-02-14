@@ -10,10 +10,10 @@ class WhtaxToDate extends DateFilter
 {
     public $name = 'ถึงวันที่';
 
-    public function default()
-    {
-        return date('Y-m-d', strtotime('last day of this month'));
-    }
+    // public function default()
+    // {
+    //     return date('Y-m-d', strtotime('last day of this month'));
+    // }
     /**
      * Apply the filter to the given query.
      *
