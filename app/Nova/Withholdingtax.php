@@ -122,13 +122,15 @@ class Withholdingtax extends Resource
                     ->searchable(),
             ])->dependsOn('payertype', '2'),
             Text::make('รายละเอียด', 'description')->hideFromIndex(),
-            Currency::make('จำนวนเงินจ่าย', 'pay_amount'),
+            Currency::make('จำนวนเงินจ่าย', 'pay_amount')
+                ->sortable(),
             Number::make('อัตราภาษี', function () {
                 $incometype = Incometype::find($this->incometype_id);
                 return $incometype->taxrate . '%';
             })->onlyOnDetail(),
 
-            Currency::make('ภาษีที่หักไว้', 'tax_amount')->hideWhenCreating(),
+            Currency::make('ภาษีที่หักไว้', 'tax_amount')->hideWhenCreating()
+                ->sortable(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
