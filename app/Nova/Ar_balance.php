@@ -129,7 +129,7 @@ class Ar_balance extends Resource
                 ->filterBy('customer_id'),
             new ArbalanceByBranch,
             new ArbalanceNotInvoice,
-            //new ArbalanceNotReceipt,
+            new ArbalanceNotReceipt,
             new ArbalanceFromDate,
             new ArbalanceToDate,
 

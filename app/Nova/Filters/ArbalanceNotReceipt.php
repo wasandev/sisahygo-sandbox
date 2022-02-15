@@ -18,13 +18,8 @@ class ArbalanceNotReceipt extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        if ($value['notpay']) {
-            return $query->where('receipt_id', '=', null);
-        } elseif ($value['payed']) {
-            return $query->where('receipt_id', '<>', null);
-        } else {
-            return $query;
-        }
+        return $query->whereNull('receipt_id', $value['notpay'])
+            ->whereNotNull('receipt_id', $value['payed']);
     }
 
     /**
