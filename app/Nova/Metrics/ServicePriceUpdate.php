@@ -6,6 +6,8 @@ use App\Models\Productservice_newprice;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 use App\Models\Productservice_newprice3;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ServicePriceUpdate extends Partition
@@ -22,7 +24,12 @@ class ServicePriceUpdate extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Productservice_newprice::whereMonth('updated_at', 2), 'id', 'updated_at');
+        return $this->count($request, Productservice_newprice::whereYear('updated_at', Carbon::now()->year)
+            ->whereMonth('updated_at', Carbon::now()->month), 'updated_by');
+        // ->label(function ($value) {
+        //     $user = User::find($value);
+        //     return $user->name;
+        // });
     }
 
     /**

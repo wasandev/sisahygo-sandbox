@@ -16,6 +16,6 @@ class ProductService_newpriceObserver
 
 
     {
-        $productservice_newprice->user_id = auth()->user()->id;
+        $productservice_newprice->updated_by = auth()->user()->id;
     }
 }

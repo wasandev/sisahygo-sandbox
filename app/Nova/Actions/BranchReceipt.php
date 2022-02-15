@@ -78,7 +78,7 @@ class BranchReceipt extends Action
             $model->branchpay_date = $fields->paydate;
             $model->save();
 
-            if ($branch_order->order_status == 'completed') {
+            if ($branch_order->order_status == 'completed' || $branch_order->order_status == 'problem') {
                 $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
 
                 $branch_order->branchpay_by =  $fields->payment_by;
