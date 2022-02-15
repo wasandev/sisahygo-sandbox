@@ -5,6 +5,7 @@ namespace App\Nova\Lenses\accounts;
 
 use App\Nova\Actions\Accounts\PrintOrderReportCashByDay;
 use App\Nova\Filters\Branch;
+use App\Nova\Filters\CancelFlag;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderPayType;
 use App\Nova\Filters\OrderToDate;
@@ -34,7 +35,7 @@ class OrderReportCashByDay extends Lens
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_id')
                 ->join('customers', 'customers.id', '=', 'order_headers.customer_id')
                 ->whereIn('order_headers.paymenttype', ['H', 'T'])
-                ->whereNotIn('order_headers.order_status', ['checking', 'new', 'cancel'])
+                ->whereNotIn('order_headers.order_status', ['checking', 'new'])
                 ->orderBy('order_headers.branch_id', 'asc')
                 ->orderBy('order_headers.order_header_no', 'asc')
 
@@ -50,6 +51,7 @@ class OrderReportCashByDay extends Lens
         return [
             'branches.name',
             'order_headers.id',
+            'order_headers.order_status',
             'order_headers.order_header_date',
             'order_headers.order_header_no',
             'customers.name as from_customer',
@@ -72,7 +74,14 @@ class OrderReportCashByDay extends Lens
             Text::make('เลขที่ใบรับส่ง', 'order_header_no'),
             Text::make('ชื่อลูกค้า', 'from_customer'),
             Text::make('ชำระโดย', 'paymenttype'),
-            Currency::make(__('จำนวนเงิน'), 'order_amount')
+            Currency::make(__('จำนวนเงิน'), 'order_amount'),
+            Text::make('หมายเหตุ', 'cancel', function () {
+                if ($this->order_status == 'cancel') {
+                    return 'ยกเลิก';
+                } else {
+                    return '';
+                }
+            })
         ];
     }
 
@@ -99,7 +108,8 @@ class OrderReportCashByDay extends Lens
             new Branch(),
             new OrderFromDate(),
             new OrderToDate(),
-            new OrderPayType()
+            new OrderPayType(),
+            new CancelFlag()
 
         ];
     }

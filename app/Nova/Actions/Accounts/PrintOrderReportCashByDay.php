@@ -66,10 +66,19 @@ class PrintOrderReportCashByDay extends Action
         if ($paytype_value == '') {
             return Action::danger('เลือกประเภทการชำระเงินที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
-        if ($fields->report_type) {
-            return Action::openInNewTab('/orderheader/report_6/' . $branch_value . '/' . $paytype_value . '/' . $from_value . '/' . $to_value);
+        $cancelflag  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CancelFlag');
+
+        $cancelflag_value = Arr::get($cancelflag, 'value.cancelflag');
+
+        if ($cancelflag_value) {
+            $cancelflag_str = 'true';
         } else {
-            return Action::openInNewTab('/orderheader/report_7/' . $branch_value . '/' . $paytype_value . '/' . $from_value . '/' . $to_value);
+            $cancelflag_str = 'false';
+        }
+        if ($fields->report_type) {
+            return Action::openInNewTab('/orderheader/report_6/' . $branch_value . '/' . $paytype_value . '/' . $from_value . '/' . $to_value . '/' . $cancelflag_str);
+        } else {
+            return Action::openInNewTab('/orderheader/report_7/' . $branch_value . '/' . $paytype_value . '/' . $from_value . '/' . $to_value . '/' . $cancelflag_str);
         }
     }
 

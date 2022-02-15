@@ -12,7 +12,12 @@
     <tr>
         <td style="width: 50%;text-align: left;border:0px">
             <strong>
-            สาขา {{ $branchdata->name }}
+            สาขา {{ $branchdata->name }}<br/>
+            @if($cancelflag == 'true')
+                **ไม่รวมรายการยกเลิก**
+            @else
+                **รวมรายการยกเลิก**
+            @endif
             </strong>
         </td>
         <td style="width:50%;text-align: right;border:0px">

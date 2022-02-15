@@ -238,33 +238,47 @@ class OrderHeaderController extends Controller
         return view('reports.orderreportcancelbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
     }
 
-    public function report_6($branch, $paytype, $from, $to)
+    public function report_6($branch, $paytype, $from, $to, $cancelflag)
     {
         if ($paytype == 'H') {
-            $report_title = 'รายงานขายสดประจำวันแบบสรุป (เงินสด)';
+            $report_title = 'รายงานขายสดประจำวันแบบสรุป (เงินสด) ';
         } else {
-            $report_title = 'รายงานขายสดประจำวันแบบสรุป (เงินโอน)';
+            $report_title = 'รายงานขายสดประจำวันแบบสรุป (เงินโอน) ';
         }
         $company = CompanyProfile::find(1);
 
         $branchdata = Branch::find($branch);
-        $order = Order_header::where('branch_id', $branch)
-            ->where('order_header_date', '>=', $from)
-            ->where('order_header_date', '<=', $to)
-            ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-            ->where('paymenttype', $paytype)
-            ->orderBy('branch_id', 'asc')
-            ->orderBy('order_header_no', 'asc')
-            ->get();
+        if ($cancelflag == 'true') {
+
+
+            $order = Order_header::where('branch_id', $branch)
+                ->where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                ->where('paymenttype', $paytype)
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
+        } else {
+
+            $order = Order_header::where('branch_id', $branch)
+                ->where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking'])
+                ->where('paymenttype', $paytype)
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
+        }
 
         $order_groups = $order->groupBy(function ($item) {
             return $item->order_header_date->format('Y-m-d');
         });
         $order_groups = $order_groups->all();
         $order_date = $order_groups;
-        return view('reports.orderreportcashsumbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'paytype'));
+        return view('reports.orderreportcashsumbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'paytype', 'cancelflag'));
     }
-    public function report_7($branch, $paytype, $from, $to)
+    public function report_7($branch, $paytype, $from, $to, $cancelflag)
     {
         if ($paytype == 'H') {
             $report_title = 'รายงานขายสดประจำวันแบบแสดงรายการ (เงินสด)';
@@ -275,21 +289,31 @@ class OrderHeaderController extends Controller
         $company = CompanyProfile::find(1);
 
         $branchdata = Branch::find($branch);
-        $order = Order_header::where('branch_id', $branch)
-            ->where('order_header_date', '>=', $from)
-            ->where('order_header_date', '<=', $to)
-            ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-            ->where('paymenttype', $paytype)
-            ->orderBy('branch_id', 'asc')
-            ->orderBy('order_header_no', 'asc')
-            ->get();
-
+        if ($cancelflag == 'true') {
+            $order = Order_header::where('branch_id', $branch)
+                ->where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                ->where('paymenttype', $paytype)
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
+        } else {
+            $order = Order_header::where('branch_id', $branch)
+                ->where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking'])
+                ->where('paymenttype', $paytype)
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
+        }
         $order_groups = $order->groupBy(function ($item) {
             return $item->order_header_date->format('Y-m-d');
         });
         $order_groups = $order_groups->all();
         $order_date = $order_groups;
-        return view('reports.orderreportcashdetailbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'paytype'));
+        return view('reports.orderreportcashdetailbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'paytype', 'cancelflag'));
     }
 
     public function report_8($branch, $from, $to, $artype)

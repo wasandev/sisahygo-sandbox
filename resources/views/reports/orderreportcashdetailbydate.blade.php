@@ -12,7 +12,12 @@
     <tr>
         <td style="width: 50%;text-align: left;border:0px">
             <strong>
-            สาขา {{ $branchdata->name }}
+            สาขา {{ $branchdata->name }}<br/>
+            @if($cancelflag == 'true')
+                **ไม่รวมรายการยกเลิก**
+            @else
+                **รวมรายการยกเลิก**
+            @endif
             </strong>
         </td>
         <td style="width:50%;text-align: right;border:0px">
@@ -34,7 +39,8 @@
             <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
             <th style="width: 35%;text-align: center;">ชื่อลูกค้า</th>
             <th style="width: 15%;text-align: center;">ชำระโดย</th>
-            <th style="width: 25%;text-align: right;">จำนวนเงิน</th>
+            <th style="width: 15%;text-align: right;">จำนวนเงิน</th>
+            <th style="width: 15%;text-align: right;">หมายเหตุ</th>
         </tr>
 
     </thead>
@@ -56,6 +62,8 @@
                 </td>
                 <td style="text-align: right">
                    {{ number_format($order_groups->sum('order_amount'),2,'.',',') }}
+                </td>
+                <td>
                 </td>
 
 
@@ -86,6 +94,13 @@
                     <td style="text-align: right">
                         {{ number_format($item_cash->order_amount,2,'.',',') }}
                     </td>
+                    <td>
+                        @if ($item_cash->order_status == 'cancel')
+                            ยกเลิก
+
+
+                        @endif
+                    </td>
                 </tr>
             @endforeach
 
@@ -101,6 +116,7 @@
             <td style="text-align: right">
                 {{ number_format($order->sum('order_amount'),2,'.',',') }}
             </td>
+            <td></td>
 
 
 
