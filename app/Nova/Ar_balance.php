@@ -90,7 +90,7 @@ class Ar_balance extends Resource
                 if (isset($this->order_header)) {
                     return $this->order_header->payment_status;
                 }
-            }),
+            })->exceptOnForms(),
             Date::make('วันที่ตั้งหนี้', 'docdate')
                 ->format('DD/MM/YYYY')
                 ->sortable(),
@@ -107,8 +107,7 @@ class Ar_balance extends Resource
             BelongsTo::make('ใบแจ้งหนี้', 'invoice', 'App\Nova\Invoice')
                 ->sortable(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_ar', 'App\Nova\Receipt_ar')
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
 
 
         ];
