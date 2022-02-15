@@ -7,7 +7,7 @@ use Laravel\Nova\Filters\BooleanFilter;
 
 class ArbalanceNotInvoice extends BooleanFilter
 {
-    public $name = 'ยังไม่ออกใบแจ้งหนี้';
+    public $name = 'การออกใบแจ้งหนี้';
     /**
      * Apply the filter to the given query.
      *
@@ -18,8 +18,10 @@ class ArbalanceNotInvoice extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        if ($value['invoice']) {
+        if ($value['noinvoice']) {
             return $query->where('invoice_id', '=', null);
+        } else {
+            return $query->where('invoice_id', '<>', null);
         }
     }
 
@@ -32,7 +34,8 @@ class ArbalanceNotInvoice extends BooleanFilter
     public function options(Request $request)
     {
         return [
-            'ยังไม่ออกใบแจ้งหนี้' => 'invoice'
+            'ยังไม่ออกใบแจ้งหนี้' => 'noinvoice',
+            'ออกใบแจ้งหนี้แล้ว' => 'invoiced'
         ];
     }
 }
