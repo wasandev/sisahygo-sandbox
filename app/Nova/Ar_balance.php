@@ -124,14 +124,14 @@ class Ar_balance extends Resource
     public function filters(Request $request)
     {
         return [
-            (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
-                ->fieldAttribute('ar_customer')
-                ->filterBy('customer_id'),
-            new ArbalanceByBranch,
-            new ArbalanceNotInvoice,
-            new ArbalanceNotReceipt,
-            new ArbalanceFromDate,
-            new ArbalanceToDate,
+            // (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
+            //     ->fieldAttribute('ar_customer')
+            //     ->filterBy('customer_id'),
+            // new ArbalanceByBranch,
+            // new ArbalanceNotInvoice,
+            // new ArbalanceNotReceipt,
+            // new ArbalanceFromDate,
+            // new ArbalanceToDate,
 
 
         ];
