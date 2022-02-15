@@ -100,7 +100,7 @@ class Order_banktransferObserver
 
                 $order_header = Order_header::find($order_banktransfer->order_header_id);
                 $order_header->payment_status = true;
-                $order_header->save();
+                $order_header->saveQuietly();
             }
         }
 
