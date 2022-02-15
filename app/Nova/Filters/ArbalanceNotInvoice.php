@@ -20,8 +20,10 @@ class ArbalanceNotInvoice extends BooleanFilter
     {
         if ($value['noinvoice']) {
             return $query->where('invoice_id', '=', null);
-        } else {
+        } elseif (['invoiced']) {
             return $query->where('invoice_id', '<>', null);
+        } else {
+            return $query;
         }
     }
 
