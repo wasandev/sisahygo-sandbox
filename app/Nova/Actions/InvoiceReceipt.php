@@ -19,6 +19,8 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
@@ -72,7 +74,7 @@ class InvoiceReceipt extends Action
                 $receipt = Receipt::create([
                     'receipt_no' => $receipt_no,
                     'status' => true,
-                    'receipt_date' => today(),
+                    'receipt_date' => $fields->receipt_date,
                     'branch_id' => auth()->user()->branch_id,
                     'customer_id' => $invoice_cust,
                     'total_amount' => $pay_amount,
@@ -94,7 +96,7 @@ class InvoiceReceipt extends Action
                     'customer_id' => $invoice_cust,
                     'doctype' => 'R',
                     'docno' => $receipt_no,
-                    'docdate' => today(),
+                    'docdate' => $fields->receipt_date,
                     'description' => 'รับชำระหนี้',
                     'ar_amount' => $pay_amount,
                     'user_id' => auth()->user()->id,
@@ -112,6 +114,7 @@ class InvoiceReceipt extends Action
                         'reference' => $fields->reference,
                         'transfer_type' => 'B',
                         'user_id' => auth()->user()->id,
+                        'transfer_date' => $fields->receipt_date,
                     ]);
                 }
                 foreach ($cust_groups as $model) {
@@ -149,6 +152,7 @@ class InvoiceReceipt extends Action
 
         return [
             Currency::make('จำนวนเงินรับชำระ', 'pay_amount'),
+            Date::make('วันที่รับชำระ', 'receipt_date'),
             Select::make('รับชำระด้วย', 'payment_by')->options([
                 'C' => 'เงินสด',
                 'T' => 'เงินโอน',

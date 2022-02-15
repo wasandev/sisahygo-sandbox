@@ -39,6 +39,12 @@ class ReceiptArObserver
             if (isset($ar_balance_rec)) {
                 $ar_balance_rec->delete();
             }
+        } else {
+            $ar_balance_rec = Ar_balance::where('receipt_id', '=', $receipt_ar->id)
+                ->where('doctype', '=', 'R')
+                ->first();
+            $ar_balance_rec->docdate = $receipt_ar->receipt_date;
+            $ar_balance_rec->saveQuietly();
         }
 
         $receipt_ar->updated_by = auth()->user()->id;
