@@ -89,9 +89,17 @@ class Invoice extends Resource
                 ->searchable()
                 ->readonly(),
 
-            Number::make('จำนวนเงิน', 'invoice_amount', function () {
+            Number::make('ยอดวางบิล', 'invoice_amount', function () {
                 if (isset($this->ar_balances)) {
                     return number_format($this->ar_balances->sum('ar_amount'), 2, '.', ',');
+                } else {
+                    return
+                        number_format(0, 2, '.', ',');
+                }
+            })->exceptOnForms(),
+            Number::make('ยอดรับชำระ', 'receipt_amount', function () {
+                if (isset($this->receipt_ar)) {
+                    return number_format($this->receipt_ar->pay_amount, 2, '.', ',');
                 } else {
                     return
                         number_format(0, 2, '.', ',');
@@ -100,6 +108,8 @@ class Invoice extends Resource
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_ar', 'App\Nova\Receipt_ar')
                 ->exceptOnForms()
                 ->nullable(),
+
+
             Text::make('รายละเอียด/หมายเหตุอื่นๆ', 'description')
                 ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
