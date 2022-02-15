@@ -125,11 +125,11 @@ class Ar_balance extends Resource
     {
         return [
             (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
-                ->fieldAttribute('ar_customer')
+                ->fieldAttribute('customer')
                 ->filterBy('customer_id'),
-            // new ArbalanceByBranch,
-            new ArbalanceNotInvoice,
-            new ArbalanceNotReceipt,
+            new ArbalanceByBranch,
+            //new ArbalanceNotInvoice,
+            //new ArbalanceNotReceipt,
             new ArbalanceFromDate,
             new ArbalanceToDate,
 
