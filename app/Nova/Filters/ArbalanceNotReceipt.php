@@ -18,8 +18,10 @@ class ArbalanceNotReceipt extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        if ($value['receipt']) {
+        if ($value['notpay']) {
             return $query->where('receipt_id', '=', null);
+        } else {
+            return $query->where('receipt_id', '<>', null);
         }
     }
 
@@ -32,7 +34,8 @@ class ArbalanceNotReceipt extends BooleanFilter
     public function options(Request $request)
     {
         return [
-            'ค้างชำระ' => 'receipt'
+            'ค้างชำระ' => 'notpay',
+            'ชำระแล้ว' => 'payed'
         ];
     }
 }

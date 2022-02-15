@@ -129,7 +129,7 @@ class InvoiceReceipt extends Action
                         $order_header = Order_header::find($ar_balance->order_header_id);
                         $order_header->payment_status = true;
                         $order_header->updated_by = auth()->user()->id;
-                        $order_header->save();
+                        $order_header->saveQuietly();
                     }
                 }
             }
