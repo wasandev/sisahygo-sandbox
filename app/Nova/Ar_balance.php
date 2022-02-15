@@ -90,7 +90,6 @@ class Ar_balance extends Resource
                 if (isset($this->order_header)) {
                     return $this->order_header->payment_status;
                 }
-                return false;
             }),
             Date::make('วันที่ตั้งหนี้', 'docdate')
                 ->format('DD/MM/YYYY')
