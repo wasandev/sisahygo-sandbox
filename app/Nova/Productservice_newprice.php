@@ -137,7 +137,7 @@ class Productservice_newprice extends Resource
     public function cards(Request $request)
     {
         return [
-            (new ServicePriceUpdate())->help('**เริ่มนับรายการจากวันที่ 15/2/2020')->width('full'),
+            (new ServicePriceUpdate())->help('**เริ่มนับรายการจากวันที่ 15/2/2022')->width('full'),
             //new UpdatePricePerDay()
         ];
     }
