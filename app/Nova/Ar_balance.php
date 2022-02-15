@@ -128,7 +128,7 @@ class Ar_balance extends Resource
                 ->fieldAttribute('customer')
                 ->filterBy('customer_id'),
             new ArbalanceByBranch,
-            //new ArbalanceNotInvoice,
+            new ArbalanceNotInvoice,
             //new ArbalanceNotReceipt,
             new ArbalanceFromDate,
             new ArbalanceToDate,
