@@ -37,6 +37,7 @@ class UpdateProductServicePrice extends Action
     {
         foreach ($models as $model) {
             $model->price = $fields->item_price;
+            $model->updated_by = auth()->user()->id;
             $model->save();
         }
     }

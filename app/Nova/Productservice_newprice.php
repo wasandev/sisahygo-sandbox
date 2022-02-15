@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Metrics\ServicePriceUpdate;
+use App\Nova\Metrics\UpdatePricePerDay;
 use Carbon\Carbon;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class Productservice_newprice extends Resource
     public static $perPageOptions = [50, 100, 150];
     public static $perPageViaRelationship = 50;
     public static $relatableSearchResults = 200;
+    public $refreshWhenActionRuns = true;
 
     public static $with = ['product', 'unit', 'branch_area'];
     /**
@@ -135,7 +137,8 @@ class Productservice_newprice extends Resource
     public function cards(Request $request)
     {
         return [
-            //new ServicePriceUpdate()
+            (new ServicePriceUpdate())->help('**เริ่มนับรายการจากวันที่ 15/2/2020')->width('full'),
+            //new UpdatePricePerDay()
         ];
     }
 

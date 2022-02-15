@@ -66,7 +66,7 @@ class BranchReceiptGroup extends Action
                         return Action::danger('รายการนี้ชำระเงินไปแล้ว');
                     }
                     $branch_order = Branchrec_order::find($model->order_header_id);
-                    if ($branch_order->order_status <> 'completed') {
+                    if ($branch_order->order_status <> 'completed' || $branch_order->order_status <> 'problem') {
                         return Action::danger('รายการที่เลือกบางรายการ ยังไม่ทำรายการจัดส่งหรือลูกยังไม่ได้รับสินค้า โปรดตรวจสอบ');
                     }
                 }
