@@ -122,7 +122,8 @@ class Car extends Resource
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
 
-            HasMany::make('รายการใบกำกับ', 'waybills', 'App\Nova\Waybill'),
+            HasMany::make('รายการใบกำกับทั่วไป', 'waybills', 'App\Nova\Waybill'),
+            HasMany::make('รายการใบกำกับเหมาคัน', 'waybill_charters', 'App\Nova\Waybill_charter'),
             HasMany::make('รายการจ่ายรถ', 'carpayments', 'App\Nova\Carpayment'),
             HasMany::make(__('Car Balance'), 'car_balances', 'App\Nova\Car_balance')
 

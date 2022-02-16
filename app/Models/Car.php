@@ -98,6 +98,10 @@ class Car extends Model
     {
         return $this->hasMany('App\Models\Waybill');
     }
+    public function waybill_charters()
+    {
+        return $this->hasMany('App\Models\Waybill_charter');
+    }
     public function driver()
     {
         return $this->belongsTo('App\Models\Employee', 'driver_id');
