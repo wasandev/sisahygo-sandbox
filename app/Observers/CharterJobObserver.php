@@ -146,7 +146,7 @@ class CharterJobObserver
             ]);
 
             //create car_balance
-            Car_balance::updateOrCreate([
+            $car_balance = Car_balance::updateOrCreate([
                 'car_id' => $waybill->car_id,
                 'vendor_id' => $waybill->car->vendor_id,
                 'doctype' => 'R',
@@ -158,7 +158,7 @@ class CharterJobObserver
                 'user_id' => auth()->user()->id,
 
             ]);
-
+            dd($car_balance->amount);
             Waybill_status::updateOrCreate([
                 'waybill_id' => $waybill->id,
                 'status' => 'confirmed',
