@@ -12,13 +12,27 @@
     <tr>
         <td style="width: 50%;text-align: left;border:0px">
             <strong>
-            สาขา {{ $branchdata->name }}
+            สาขา {{ $branchdata->name }}<br/>
+            @if($cancelflag == 'true')
+                **ไม่รวมรายการยกเลิก**
+            @else
+                **รวมรายการยกเลิก**
+            @endif
+            <br/>
+
             </strong>
         </td>
         <td style="width:50%;text-align: right;border:0px">
             <strong>
             ระหว่างวันที่: {{date("d-m-Y", strtotime($from))}}<br/> ถึงวันที่: {{date("d-m-Y", strtotime($to))}}
-
+            <br/>
+            @if ($artype == 'F')
+                วางบิลต้นทาง
+            @elseif ($artype =='L')
+                วางบิลปลายทาง
+            @else
+                เก็บเงินปลายทาง
+            @endif
             </strong>
         </td>
     </tr>
@@ -59,7 +73,7 @@
 
 
         @endforeach
-        <tr style="font-weight: bold;">
+        <tr style="font-weight: bold;background-color:#c0c0c0">
             <td colspan="2">
                 รวมทั้งหมด {{count($order)}} รายการ
             </td>

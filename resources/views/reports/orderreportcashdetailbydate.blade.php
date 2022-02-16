@@ -47,7 +47,7 @@
 
     <tbody>
        @foreach ($order_date as $date_group => $order_groups)
-            <tr style="font-weight:bold;">
+            <tr style="font-weight: bold;background-color:#c0c0c0">
 
                 <td style="text-align: center;">
                     {{ date('d/m/Y',strtotime($date_group)) }}
@@ -106,7 +106,7 @@
 
 
         @endforeach
-        <tr style="font-weight: bold;">
+        <tr style="font-weight: bold;background-color:#c0c0c0">
             <td colspan="4">
                 รวมทั้งหมด {{count($order)}} รายการ
             </td>

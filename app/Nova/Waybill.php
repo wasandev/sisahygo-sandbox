@@ -330,7 +330,7 @@ class Waybill extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->role != 'admin') {
+        if ($request->user()->branch->code <> '001') {
             $routeto_branch = \App\Models\Routeto_branch::where('branch_id', $request->user()->branch_id)->get('id');
             if (isset($routeto_branch)) {
                 return $query->whereIn('routeto_branch_id', $routeto_branch)

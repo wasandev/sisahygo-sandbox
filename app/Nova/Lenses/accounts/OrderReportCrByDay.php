@@ -6,6 +6,7 @@ namespace App\Nova\Lenses\accounts;
 use App\Nova\Actions\Accounts\PrintOrderReportCrByDay;
 use App\Nova\Filters\ArType;
 use App\Nova\Filters\Branch;
+use App\Nova\Filters\CancelFlag;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
@@ -111,9 +112,10 @@ class OrderReportCrByDay extends Lens
     {
         return [
             new Branch(),
-            new ArType(),
             new OrderFromDate(),
-            new OrderToDate()
+            new OrderToDate(),
+            new ArType(),
+            new CancelFlag()
         ];
     }
 

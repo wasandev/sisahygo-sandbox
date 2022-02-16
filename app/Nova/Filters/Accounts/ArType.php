@@ -3,11 +3,11 @@
 namespace App\Nova\Filters;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Filters\BooleanFilter;
+use Laravel\Nova\Filters\Filter;
 
-class ArType extends BooleanFilter
+class ArType extends Filter
 {
-    public $name = 'เฉพาะรายการวางบิล';
+    public $name = 'ประเภทขายเชื่อ';
     /**
      * Apply the filter to the given query.
      *
@@ -18,9 +18,8 @@ class ArType extends BooleanFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        if ($value['artype']) {
-            return $query->whereIn('order_headers.paymenttype', ['F', 'L']);
-        }
+
+        return $query->where('order_headers.paymenttype', $value);
     }
 
     /**
@@ -32,7 +31,9 @@ class ArType extends BooleanFilter
     public function options(Request $request)
     {
         return [
-            'เฉพาะรายการวางบิล' => 'artype',
+            'วางบิลต้นทาง' => 'F',
+            'วางบิลปลายทาง' => 'L',
+            'เก็บเงินปลายทาง' => 'E',
         ];
     }
 }
