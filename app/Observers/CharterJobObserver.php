@@ -158,7 +158,7 @@ class CharterJobObserver
                 'user_id' => auth()->user()->id,
 
             ]);
-            dd($car_balance->amount);
+
             Waybill_status::updateOrCreate([
                 'waybill_id' => $waybill->id,
                 'status' => 'confirmed',
