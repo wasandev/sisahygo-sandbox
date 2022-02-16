@@ -31,6 +31,7 @@ class ArType extends Filter
     public function options(Request $request)
     {
         return [
+
             'วางบิลต้นทาง' => 'F',
             'วางบิลปลายทาง' => 'L',
             'เก็บเงินปลายทาง' => 'E',

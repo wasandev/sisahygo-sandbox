@@ -350,6 +350,15 @@ class OrderHeaderController extends Controller
                     ->orderBy('branch_id', 'asc')
                     ->orderBy('order_header_no', 'asc')
                     ->get();
+            } elseif ($artype == 'A') {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                    ->whereIn('paymenttype', ['F', 'L', 'E'])
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
             }
         } else {
             if ($artype == 'F') {
@@ -376,6 +385,15 @@ class OrderHeaderController extends Controller
                     ->where('order_header_date', '<=', $to)
                     ->whereNotIn('order_status', ['new', 'checking'])
                     ->where('paymenttype', '=', 'E')
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            } elseif ($artype == 'A') {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking'])
+                    ->whereIn('paymenttype', ['F', 'L', 'E'])
                     ->orderBy('branch_id', 'asc')
                     ->orderBy('order_header_no', 'asc')
                     ->get();
@@ -424,6 +442,15 @@ class OrderHeaderController extends Controller
                     ->orderBy('branch_id', 'asc')
                     ->orderBy('order_header_no', 'asc')
                     ->get();
+            } elseif ($artype == 'A') {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                    ->whereIn('paymenttype', ['F', 'L', 'E'])
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
             }
         } else {
             if ($artype == 'F') {
@@ -450,6 +477,15 @@ class OrderHeaderController extends Controller
                     ->where('order_header_date', '<=', $to)
                     ->whereNotIn('order_status', ['new', 'checking'])
                     ->where('paymenttype', '=', 'L')
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            } elseif ($artype == 'A') {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking'])
+                    ->whereIn('paymenttype', ['F', 'L', 'E'])
                     ->orderBy('branch_id', 'asc')
                     ->orderBy('order_header_no', 'asc')
                     ->get();

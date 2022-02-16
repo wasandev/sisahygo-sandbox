@@ -59,7 +59,7 @@ class PrintOrderReportCrByDay extends Action
         $artype_value = Arr::get($artype, 'value');
 
         if ($artype_value == '') {
-            return Action::danger('เลือก ประเภทขายเชื่อ ที่ต้องการที่เมนูกรองข้อมูลก่อน');
+            $artype_value = 'A';
         }
         $cancelflag  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CancelFlag');
 
