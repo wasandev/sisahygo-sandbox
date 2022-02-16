@@ -26,12 +26,14 @@
             <strong>
             ระหว่างวันที่: {{date("d-m-Y", strtotime($from))}}<br/> ถึงวันที่: {{date("d-m-Y", strtotime($to))}}
             <br/>
-            @if ($artype == 'F')
+           @if ($artype == 'F')
                 วางบิลต้นทาง
             @elseif ($artype =='L')
                 วางบิลปลายทาง
-            @else
+            @elseif ($artype =='E')
                 เก็บเงินปลายทาง
+            @else
+                ทุกประเภท
             @endif
             </strong>
         </td>

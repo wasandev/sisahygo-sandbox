@@ -28,8 +28,10 @@
                 วางบิลต้นทาง
             @elseif ($artype =='L')
                 วางบิลปลายทาง
-            @else
+            @elseif ($artype =='E')
                 เก็บเงินปลายทาง
+            @else
+                ทุกประเภท
             @endif
             </strong>
         </td>
