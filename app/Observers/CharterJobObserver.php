@@ -55,7 +55,7 @@ class CharterJobObserver
         $charter_job->sub_total = $charter_price->price;
         $charter_job->total = $charter_price->price - $charter_job->discount;
         $charter_job->updated_by = auth()->user()->id;
-        dd($charter_job->waybill_payable);
+
         if ($charter_job->status == 'Confirmed') {
 
             $waybill_no = IdGenerator::generate(['table' => 'waybills', 'field' => 'waybill_no', 'length' => 15, 'prefix' => 'W' . date('Ymd')]);
@@ -154,7 +154,7 @@ class CharterJobObserver
                 'cardoc_date' => $waybill->waybill_date,
                 'waybill_id' => $waybill->id,
                 'description' => 'ค่าขนส่งสินค้าเหมาคัน',
-                'amount' => $waybill->waybill_payable,
+                'amount' => $charter_job->waybill_payable,
                 'user_id' => auth()->user()->id,
 
             ]);
