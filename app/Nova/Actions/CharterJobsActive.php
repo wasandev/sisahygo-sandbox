@@ -46,6 +46,8 @@ class CharterJobsActive extends Action
                 $model->status = 'Confirmed';
                 $model->car_id = $fields->car_id;
                 $model->driver_id = $fields->driver_id;
+                $model->sub_total = $fields->waybill_amount;
+                $model->total =   $fields->waybill_amount;
                 $model->waybill_amount = $fields->waybill_amount;
                 $model->waybill_payable = $fields->waybill_payable;
                 $model->terms = $fields->remark;

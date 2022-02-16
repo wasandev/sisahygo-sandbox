@@ -52,8 +52,7 @@ class CharterJobObserver
         $charter_price = Charter_price::find($charter_job->charter_price_id);
 
 
-        $charter_job->sub_total = $charter_price->price;
-        $charter_job->total = $charter_price->price - $charter_job->discount;
+
         $charter_job->updated_by = auth()->user()->id;
 
         if ($charter_job->status == 'Confirmed') {
