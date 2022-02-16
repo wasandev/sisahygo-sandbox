@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\AddOrderToInvoice;
 use App\Nova\Actions\CreateInvoice;
+use App\Nova\Actions\InvoiceBillReceipt;
 use App\Nova\Actions\RemoveOrderFromInvoice;
 use App\Nova\Filters\ArbalanceByBranch;
 use App\Nova\Filters\ArbalanceFromDate;
@@ -190,6 +191,19 @@ class Ar_balance extends Resource
             (new AddOrderToInvoice($request->resourceId))
                 ->onlyOnDetail()
                 ->confirmText('ต้องการนำใบรับส่งที่เลือกไว้เข้าใบแจ้งหนี้?')
+                ->confirmButtonText('ใช่')
+                ->cancelButtonText("ไม่ใช่")
+                ->canRun(function ($request) {
+                    return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('edit invoices');
+                })
+                ->canSee(function ($request) {
+                    if ($request instanceof ActionRequest) {
+                        return true;
+                    }
+                    return $this->resource instanceof Model && $this->resource->invoice_id === null;
+                }),
+            (new InvoiceBillReceipt)
+                ->confirmText('ต้องการรับชำระหนี้จากใบรับส่งที่เลือก')
                 ->confirmButtonText('ใช่')
                 ->cancelButtonText("ไม่ใช่")
                 ->canRun(function ($request) {

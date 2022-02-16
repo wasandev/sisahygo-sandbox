@@ -54,7 +54,7 @@ class Receipt_ar extends Resource
      * @var array
      */
     public static $search = [
-        'receipt_no',
+        'receipt_no', 'id'
     ];
     public static $searchRelations = [
         'ar_customer' => ['name'],
@@ -78,8 +78,8 @@ class Receipt_ar extends Resource
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('สถานะ', 'status')
                 ->readonly(),
-            Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no'),
-            Date::make('วันที่', 'receipt_date'),
+            Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no')->sortable(),
+            Date::make('วันที่', 'receipt_date')->sortable(),
 
             Select::make('ประเภทใบเสร็จ', 'receipttype')->options([
                 'H' => 'ต้นทาง',
@@ -91,9 +91,10 @@ class Receipt_ar extends Resource
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
 
             BelongsTo::make('ลูกค้า', 'ar_customer', 'App\Nova\Ar_customer')
+                ->sortable()
                 ->searchable()
                 ->hideWhenUpdating(),
-            Currency::make('จำนวนเงิน', 'total_amount'),
+            Currency::make('จำนวนเงิน', 'total_amount')->sortable(),
             Select::make('ชำระโดย', 'branchpay_by')->options([
                 'C' => 'เงินสด',
                 'T' => 'เงินโอน',
@@ -112,13 +113,14 @@ class Receipt_ar extends Resource
             BelongsTo::make('เช็คของธนาคาร', 'chequebank', 'App\Nova\Bank')
                 ->hideFromIndex()
                 ->nullable(),
-            Text::make('รายละเอียดอื่นๆ/หมายเหตุ', 'description')
-                ->hideFromIndex(),
+
             Currency::make('ส่วนลด', 'discount_amount')
                 ->hideFromIndex(),
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
             Currency::make('ยอดรับชำระ', 'pay_amount')
+                ->sortable(),
+            Text::make('รายละเอียดอื่นๆ/หมายเหตุ', 'description')
                 ->hideFromIndex(),
             HasMany::make('รายการใบแจ้งหนี้', 'invoices', 'App\Nova\Invoice'),
 

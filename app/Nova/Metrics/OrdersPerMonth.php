@@ -17,8 +17,8 @@ class OrdersPerMonth extends Trend
     public function calculate(Request $request)
     {
 
-        return $this->sumByMonths($request, Order_header::whereNotIn('order_status',['checking','new','cancel']), 'order_amount')
-            ->showSumValue()
+        return $this->sumByMonths($request, Order_header::whereNotIn('order_status', ['checking', 'new', 'cancel']), 'order_amount')
+            ->showLatestValue()
             ->format('0,0.00');
     }
 

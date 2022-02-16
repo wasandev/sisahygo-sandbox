@@ -50,6 +50,7 @@ class Invoice extends Resource
 
     public static $searchRelations = [
         'ar_customer' => ['name'],
+        'receipt_ar' => ['receipt_no']
     ];
     public static $globalSearchRelations = [
         'ar_customer' => ['name'],
@@ -98,11 +99,18 @@ class Invoice extends Resource
                 }
             })->exceptOnForms(),
             Number::make('ยอดรับชำระ', 'receipt_amount', function () {
-                if (isset($this->receipt_ar)) {
-                    return number_format($this->receipt_ar->pay_amount, 2, '.', ',');
+
+                if (isset($this->ar_balances)) {
+                    $payed_amount = 0;
+                    foreach ($this->ar_balances as $arbalance_item) {
+                        if (isset($arbalance_item->receipt_ar)) {
+
+                            $payed_amount = $payed_amount + $arbalance_item->receipt_ar->pay_amount;
+                        }
+                    }
+                    return number_format($payed_amount, 2, '.', ',');
                 } else {
-                    return
-                        number_format(0, 2, '.', ',');
+                    return number_format(0, 2, '.', ',');
                 }
             })->exceptOnForms(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_ar', 'App\Nova\Receipt_ar')

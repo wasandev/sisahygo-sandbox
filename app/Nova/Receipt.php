@@ -70,8 +70,10 @@ class Receipt extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Boolean::make('สถานะ', 'status')->readonly(),
-            Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no'),
-            Date::make('วันที่', 'receipt_date'),
+            Text::make('เลขที่ใบเสร็จรับเงิน', 'receipt_no')
+                ->sortable(),
+            Date::make('วันที่', 'receipt_date')
+                ->sortable(),
 
             Select::make('ประเภทใบเสร็จ', 'receipttype')->options([
                 'H' => 'ต้นทาง',
@@ -82,6 +84,7 @@ class Receipt extends Resource
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch'),
 
             BelongsTo::make('ลูกค้า', 'customer', 'App\Nova\Customer')
+                ->sortable()
                 ->searchable()
                 ->withSubtitles()
                 ->nullable(),
@@ -106,7 +109,7 @@ class Receipt extends Resource
             Currency::make('ภาษี', 'tax_amount')
                 ->hideFromIndex(),
             Currency::make('ยอดรับชำระ', 'pay_amount')
-                ->hideFromIndex(),
+                ->sortable(),
             //HasOne::make('รายการจัดส่ง', 'delivery_item', 'App\Nova\Delivery_item')
 
         ];

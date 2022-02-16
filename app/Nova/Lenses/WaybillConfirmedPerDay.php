@@ -10,6 +10,7 @@ use App\Nova\Filters\Lenses\WaybillLensToDate;
 use App\Nova\Filters\RouteToBranch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -38,7 +39,7 @@ class WaybillConfirmedPerDay extends Lens
                 ->orderBy('waybills.departure_at', 'asc')
                 ->orderBy('waybills.waybill_type', 'asc')
                 ->orderBy('waybills.branch_rec_id', 'asc')
-                ->groupBy('waybills.departure_at', 'waybills.waybill_date', 'waybills.waybill_type', 'waybills.branch_rec_id', 'waybills.car_id', 'cars.cartype_id')
+                ->groupBy('waybills.departure_at', 'waybills.waybill_date', 'waybills.waybill_type', 'waybills.branch_rec_id', 'waybills.car_id', 'cars.cartype_id', 'waybills.waybill_no', 'waybills.id')
         ));
     }
     /**
@@ -49,6 +50,8 @@ class WaybillConfirmedPerDay extends Lens
     protected static function columns()
     {
         return [
+            'waybills.id',
+            'waybills.waybill_no',
             'waybills.departure_at',
             'waybills.waybill_date',
             'waybills.waybill_type',
@@ -69,11 +72,12 @@ class WaybillConfirmedPerDay extends Lens
     public function fields(Request $request)
     {
         return [
-            // ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
             Date::make('วันที่รถออก', 'departure_at')
                 ->format('DD/MM/YYYY'),
             Date::make('วันที่ใบกำกับ', 'waybill_date')
                 ->format('DD/MM/YYYY'),
+            Text::make('ใบกำกับ', 'waybill_no'),
             Text::make('ประเภท', 'waybill_type', function () {
                 if ($this->waybill_type === 'general') {
                     return 'เบ็ดเตล็ด';

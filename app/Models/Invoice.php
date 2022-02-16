@@ -50,8 +50,8 @@ class Invoice extends Model
     {
         return $this->belongsTo(Receipt_ar::class, 'receipt_id');
     }
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class, 'customer_id');
-    }
+    // public function invoices()
+    // {
+    //     return $this->hasMany(Invoice::class, 'customer_id');
+    // }
 }
