@@ -98,21 +98,21 @@ class Invoice extends Resource
                         number_format(0, 2, '.', ',');
                 }
             })->exceptOnForms(),
-            Number::make('ยอดรับชำระ', 'receipt_amount', function () {
+            // Number::make('ยอดรับชำระ', 'receipt_amount', function () {
 
-                if (isset($this->ar_balances)) {
-                    $payed_amount = 0;
-                    foreach ($this->ar_balances as $arbalance_item) {
-                        if (isset($arbalance_item->receipt_ar)) {
+            //     if (isset($this->ar_balances)) {
+            //         $payed_amount = 0;
+            //         foreach ($this->ar_balances as $arbalance_item) {
+            //             if (isset($arbalance_item->receipt_ar)) {
 
-                            $payed_amount = $payed_amount + $arbalance_item->receipt_ar->pay_amount;
-                        }
-                    }
-                    return number_format($payed_amount, 2, '.', ',');
-                } else {
-                    return number_format(0, 2, '.', ',');
-                }
-            })->exceptOnForms(),
+            //                 $payed_amount = $payed_amount +$arbalance_item->receipt_ar->pay_amount;
+            //             }
+            //         }
+            //         return number_format($payed_amount, 2, '.', ',');
+            //     } else {
+            //         return number_format(0, 2, '.', ',');
+            //     }
+            // })->exceptOnForms(),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_ar', 'App\Nova\Receipt_ar')
                 ->exceptOnForms()
                 ->nullable(),
