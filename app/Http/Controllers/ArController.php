@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ar_customer;
 use App\Models\Ar_balance;
+use App\Models\Branch;
 use App\Models\CompanyProfile;
 use App\Models\Receipt_ar;
 use App\Models\Vendor;
@@ -86,17 +87,29 @@ class ArController extends Controller
         return view('reports.arsummaryreport', compact('company', 'report_title', 'ar_balances', 'ar_groups', 'from', 'to'));
     }
 
-    public function report_19($customer, $from, $to)
+    public function report_19($branch, $customer, $from, $to)
     {
         $report_title = 'รายงานรับชำระหนี้ลูกหนี้การค้า';
         $company = CompanyProfile::find(1);
         if ($customer == 'all') {
-            $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
-                ->where('ar_balances.doctype', '=', 'R')
-                ->where('ar_balances.docdate', '>=', $from)
-                ->where('ar_balances.docdate', '<=', $to)
-                ->orderBy('ar_balances.customer_id', 'asc')
-                ->get();
+            if ($branch == 'all') {
+                $branchdata = null;
+                $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
+                    ->where('ar_balances.doctype', '=', 'R')
+                    ->where('ar_balances.docdate', '>=', $from)
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->orderBy('ar_balances.customer_id', 'asc')
+                    ->get();
+            } else {
+                $branchdata = Branch::find($branch);
+                $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
+                    ->where('ar_balances.doctype', '=', 'R')
+                    ->where('ar_balances.branch_id', '=', $branch)
+                    ->where('ar_balances.docdate', '>=', $from)
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->orderBy('ar_balances.customer_id', 'asc')
+                    ->get();
+            }
         } else {
             $ar_receipts = Ar_customer::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
                 ->where('ar_balances.customer_id', '=', $customer)
@@ -112,6 +125,6 @@ class ArController extends Controller
         }, 'customer_id']);
         $receipts_date = $receipt_groups->all();
 
-        return view('reports.arreceiptreport', compact('company', 'report_title', 'ar_receipts', 'receipts_date', 'customer', 'from', 'to'));
+        return view('reports.arreceiptreport', compact('company', 'report_title', 'ar_receipts', 'receipts_date', 'branchdata', 'customer', 'from', 'to'));
     }
 }

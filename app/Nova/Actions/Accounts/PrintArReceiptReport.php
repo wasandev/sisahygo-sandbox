@@ -39,6 +39,11 @@ class PrintArReceiptReport extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $customer_value = $fields->ar_customer;
+        $branch_value = $fields->ar_branch;
+
+        if ($branch_value == '') {
+            $branch_value = 'all';
+        }
         if ($customer_value == '') {
             $customer_value = 'all';
         }
@@ -46,7 +51,8 @@ class PrintArReceiptReport extends Action
         $to_value = $fields->to;
 
 
-        return Action::openInNewTab('/ar/report_19/' . $customer_value . '/' . $from_value . '/' . $to_value);
+
+        return Action::openInNewTab('/ar/report_19/' . $branch_value . '/' . $customer_value . '/' . $from_value . '/' . $to_value);
     }
 
 
@@ -58,7 +64,13 @@ class PrintArReceiptReport extends Action
     public function fields()
     {
         $customers = \App\Models\Ar_customer::whereHas('ar_balances')->pluck('name', 'id');
+        $branchs = \App\Models\Branch::pluck('name', 'id');
         return [
+            Select::make('เลือกสาขา', 'ar_branch')
+                ->options($branchs)
+                ->searchable()
+                ->help('เลือกสาขาปลายทางที่ต้องการออกรายงาน ถ้าต้องการออกรายงานทั้งหมดไม่ต้องเลือก'),
+
             Select::make('เลือกลูกค้า', 'ar_customer')
                 ->options($customers)
                 ->searchable()

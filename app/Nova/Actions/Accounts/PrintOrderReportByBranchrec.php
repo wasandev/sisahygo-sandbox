@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions\Accounts;
 
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -9,6 +10,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Number;
 
 class PrintOrderReportByBranchrec extends Action
 {
@@ -42,19 +45,22 @@ class PrintOrderReportByBranchrec extends Action
         if ($branch_value == '') {
             $branch_value = 'all';
         }
-
-        $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderFromDate');
-        $from_value = Arr::get($from, 'value');
-        if ($from_value == '') {
-            return Action::danger('เลือก วันที่เริ่มต้น ที่ต้องการที่เมนูกรองข้อมูลก่อน');
+        if ($fields->report_type == false) {
+            $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderFromDate');
+            $from_value = Arr::get($from, 'value');
+            if ($from_value == '') {
+                return Action::danger('เลือก วันที่เริ่มต้น ที่ต้องการที่เมนูกรองข้อมูลก่อน');
+            }
+            $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderToDate');
+            $to_value = Arr::get($to, 'value');
+            if ($to_value == '') {
+                return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
+            }
+            return Action::openInNewTab('/orderheader/report_4/' . $branch_value . '/' . $from_value . '/' . $to_value);
+        } else {
+            $year_value = $fields->report_year;
+            return Action::openInNewTab('/orderheader/report_4m/' . $branch_value . '/' . $year_value);
         }
-        $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderToDate');
-        $to_value = Arr::get($to, 'value');
-        if ($to_value == '') {
-            return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
-        }
-
-        return Action::openInNewTab('/orderheader/report_4/' . $branch_value . '/' . $from_value . '/' . $to_value);
     }
 
 
@@ -65,6 +71,15 @@ class PrintOrderReportByBranchrec extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            Boolean::make('ออกรายงานแบบสรุปรายเดือน', 'report_type'),
+            NovaDependencyContainer::make([
+                Number::make('ระบุปีที่ต้องการออกรายงาน', 'report_year')
+                    ->step('0.01')
+                    ->default(function () {
+                        return date("Y", strtotime(today()));
+                    }),
+            ])->dependsOn('report_type', true),
+        ];
     }
 }

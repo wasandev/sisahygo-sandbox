@@ -206,7 +206,7 @@ class OrderHeaderController extends Controller
 
     public function report_4($branch, $from, $to)
     {
-        $report_title = 'รายงานยอดค่าขนส่งตามสาขาปลายทาง';
+        $report_title = 'รายงานยอดค่าขนส่งตามสาขาปลายทาง ตามวัน';
         $company = CompanyProfile::find(1);
 
         if ($branch != 'all') {
@@ -245,7 +245,45 @@ class OrderHeaderController extends Controller
 
         return view('reports.orderreportbybranchrec', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
     }
+    public function report_4m($branch, $year)
+    {
+        $report_title = 'รายงานยอดค่าขนส่งตามสาขาปลายทาง ตามเดือน';
+        $company = CompanyProfile::find(1);
 
+        if ($branch != 'all') {
+            $branchdata = Branch::find($branch);
+
+            $order = Order_header::where('branch_rec_id', $branch)
+                ->whereYear('order_header_date', '=', $year)
+                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                ->orderBy('order_header_date', 'asc')
+                ->orderBy('branch_rec_id', 'asc')
+                ->get();
+        } else {
+            $branchdata = null;
+            $order = Order_header::whereYear('order_header_date', '=', $year)
+                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                ->orderBy('order_header_date', 'asc')
+                ->orderBy('branch_rec_id', 'asc')
+                ->get();
+        }
+
+        $order_groups = $order->groupBy(function ($item) {
+            return $item->order_header_date->format('m-Y');
+        });
+        $order_groups = $order_groups->map(function ($branchrec) {
+            return $branchrec->groupBy(function ($branch) {
+                return $branch->branch_rec_id;
+            });
+        });
+
+        $order_groups = $order_groups->all();
+
+        $order_date = $order_groups;
+
+
+        return view('reports.orderreportbybranchrecyear', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'year'));
+    }
     public function report_5($branch, $from, $to)
     {
         $report_title = 'รายงานรายการยกเลิกใบรับส่ง';

@@ -43,6 +43,8 @@ Route::middleware('web', 'auth')
 
         Route::get('/orderheader/report_3/{branch}/{from}/{to}', 'OrderHeaderController@report_3')->name('report_3');
         Route::get('/orderheader/report_4/{branch}/{from}/{to}', 'OrderHeaderController@report_4')->name('report_4');
+        Route::get('/orderheader/report_4m/{branch}/{year}', 'OrderHeaderController@report_4m')->name('report_4m');
+
         Route::get('/orderheader/report_5/{branch}/{from}/{to}', 'OrderHeaderController@report_5')->name('report_5');
         Route::get('/orderheader/report_6/{branch}/{paytype}/{from}/{to}/{cancelflag}', 'OrderHeaderController@report_6')->name('report_6');
         Route::get('/orderheader/report_7/{branch}/{paytype}/{from}/{to}/{cancelflag}', 'OrderHeaderController@report_7')->name('report_7');
@@ -81,7 +83,7 @@ Route::middleware('web', 'auth')
         Route::get('/ar/report_16/{customer}/{from}/{to}', 'ArController@report_16')->name('report_16');
         Route::get('/ar/report_17/{from}/{to}', 'ArController@report_17')->name('report_17');
         Route::get('/ar/report_18/{from}/{to}', 'ArController@report_18')->name('report_18');
-        Route::get('/ar/report_19/{cutomer}/{from}/{to}', 'ArController@report_19')->name('report_19');
+        Route::get('/ar/report_19/{branch}/{cutomer}/{from}/{to}', 'ArController@report_19')->name('report_19');
 
         //Branch
         Route::get('/ar/report_20/{branch}/{from}/{to}', 'BranchController@report_20')->name('report_20');

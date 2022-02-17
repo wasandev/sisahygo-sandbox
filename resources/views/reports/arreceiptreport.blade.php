@@ -11,6 +11,13 @@
 
     <tr>
         <td style="width: 50%;text-align: left;border:0px">
+            <strong>
+            @if($branchdata <> null)
+            สาขา {{ $branchdata->name }}
+            @else
+            ทุกสาขา
+            @endif
+            </strong>
 
             <br/>
         </td>
