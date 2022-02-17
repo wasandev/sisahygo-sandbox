@@ -95,7 +95,7 @@ class ArController extends Controller
             if ($branch == 'all') {
                 $branchdata = null;
                 $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
-                    //->where('ar_balances.doctype', '=', 'R')
+                    ->where('ar_balances.doctype', '=', 'R')
                     ->where('ar_balances.docdate', '>=', $from)
                     ->where('ar_balances.docdate', '<=', $to)
                     ->orderBy('ar_balances.id', 'asc')
@@ -103,7 +103,7 @@ class ArController extends Controller
             } else {
                 $branchdata = Branch::find($branch);
                 $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
-                    //->where('ar_balances.doctype', '=', 'R')
+                    ->where('ar_balances.doctype', '=', 'R')
                     ->where('ar_balances.branch_id', '=', $branch)
                     ->where('ar_balances.docdate', '>=', $from)
                     ->where('ar_balances.docdate', '<=', $to)
@@ -113,7 +113,7 @@ class ArController extends Controller
         } else {
             $ar_receipts = Ar_customer::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
                 ->where('ar_balances.customer_id', '=', $customer)
-                //->where('ar_balances.doctype', '=', 'R')
+                ->where('ar_balances.doctype', '=', 'R')
                 ->where('ar_balances.docdate', '>=', $from)
                 ->where('ar_balances.docdate', '<=', $to)
                 ->orderBy('ar_balances.id', 'asc')
