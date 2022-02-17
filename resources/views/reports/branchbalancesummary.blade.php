@@ -108,7 +108,10 @@
                             {{ $item->customer->name}}
                         </td>
                         <td style="text-align: center">
-                                {{$item->branchrec_order->order_header_no}}
+                                @isset($item->branchrec_order->order_header_no)
+                                    {{$item->branchrec_order->order_header_no}}
+                                @endisset
+
                             </td>
                             <td style="text-align: center">
                                 {{$item->branchrec_order->order_header_date->format('d/m/Y')}}
