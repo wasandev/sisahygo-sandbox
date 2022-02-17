@@ -50,7 +50,7 @@ class WaybillObserver
                         'vendor_id' => $waybill->car->vendor_id,
                         'doctype' => 'R',
                         'docno' => $waybill->waybill_no,
-                        'cardoc_date' => $waybill->waybill_date,
+                        'cardoc_date' => $waybill->departure_at,
                         'waybill_id' => $waybill->id,
                         'description' => 'ค่าขนส่งสินค้า',
                         'amount' => $waybill->waybill_payable,
