@@ -57,10 +57,6 @@ class ConfirmBanktransfer extends Action
                 $discount_amount = $cust_groups->sum('discount_amount');
                 $tax_before = $cust_groups->sum('tax_amount');
 
-
-
-
-
                 if ($tax_before > 0) {
                     $tax_amount = $tax_before;
                 } elseif ($fields->tax_status) {
@@ -109,6 +105,7 @@ class ConfirmBanktransfer extends Action
                     }
 
                     $model->tax_amount = $tax_amount;
+                    $model->transfer_date = $fields->transferdate;
                     $model->status = true;
                     $model->receipt_id = $receipt->id;
                     $model->save();

@@ -102,9 +102,12 @@ class OrderReceived extends Action
                         'status' => false,
                         'transfer_type' => 'E',
                         'transfer_amount' => $model->order_amount - $fields->discount_amount - $tax_amount,
+                        'tax_amount' => $tax_amount,
+                        'discount_amount' => $fields->discount_amount,
                         'bankaccount_id' => $fields->bankaccount,
                         'reference' => $fields->reference,
                         'user_id' => auth()->user()->id,
+                        'transfer_date' => $fields->paydate,
                     ]);
                     Order_banktransfer_item::create([
                         'order_banktransfer_id' => $order_banktransfer->id,
