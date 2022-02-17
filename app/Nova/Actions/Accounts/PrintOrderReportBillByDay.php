@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Boolean;
 
 class PrintOrderReportBillByDay extends Action
 {
@@ -62,7 +63,11 @@ class PrintOrderReportBillByDay extends Action
         } else {
             $cancelflag_str = 'false';
         }
-        return Action::openInNewTab('/orderheader/report_2/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $cancelflag_str);
+        if ($fields->report_type) {
+            return Action::openInNewTab('/orderheader/report_2s/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $cancelflag_str);
+        } else {
+            return Action::openInNewTab('/orderheader/report_2/' . $branch_value . '/' . $from_value . '/' . $to_value . '/' . $cancelflag_str);
+        }
     }
 
 
@@ -73,6 +78,8 @@ class PrintOrderReportBillByDay extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            Boolean::make('ออกรายงานแบบสรุป', 'report_type'),
+        ];
     }
 }

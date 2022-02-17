@@ -119,19 +119,19 @@ class OrderHeaderController extends Controller
                 ->where('order_header_date', '>=', $from)
                 ->where('order_header_date', '<=', $to)
                 ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-                ->lazyById(100, $column = 'id');
-            // ->orderBy('branch_id', 'asc')
-            // ->orderBy('order_header_no', 'asc')
-            // ->get();
+                //->lazyById(100, $column = 'id');
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
         } else {
             $order = Order_header::where('branch_id', $branch)
                 ->where('order_header_date', '>=', $from)
                 ->where('order_header_date', '<=', $to)
                 ->whereNotIn('order_status', ['new', 'checking'])
-                ->lazyById(100, $column = 'id');
-            // ->orderBy('branch_id', 'asc')
-            // ->orderBy('order_header_no', 'asc')
-            // ->get();
+                //->lazyById(100, $column = 'id');
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
         }
 
 
@@ -141,6 +141,42 @@ class OrderHeaderController extends Controller
         $order_groups = $order_groups->all();
         $order_date = $order_groups;
         return view('reports.orderreportbillbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'cancelflag'));
+    }
+    public function report_2s($branch, $from, $to, $cancelflag)
+    {
+        $report_title = 'รายงานรายการขนส่งประจำวันแบบสรุป';
+        $company = CompanyProfile::find(1);
+
+        $branchdata = Branch::find($branch);
+
+
+        if ($cancelflag == 'true') {
+            $order = Order_header::where('branch_id', $branch)
+                ->where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                //->lazyById(100, $column = 'id');
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
+        } else {
+            $order = Order_header::where('branch_id', $branch)
+                ->where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking'])
+                //->lazyById(100, $column = 'id');
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('order_header_no', 'asc')
+                ->get();
+        }
+
+
+        $order_groups = $order->groupBy(function ($item) {
+            return $item->order_header_date->format('Y-m-d');
+        });
+        $order_groups = $order_groups->all();
+        $order_date = $order_groups;
+        return view('reports.orderreportbillsumbydate', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to', 'cancelflag'));
     }
     public function report_3($branch, $from, $to)
     {

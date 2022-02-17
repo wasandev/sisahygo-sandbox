@@ -13,16 +13,17 @@
         <td style="width: 50%;text-align: left;border:0px">
             <strong>
             สาขา {{ $branchdata->name }}
-            </strong>
-        </td>
-        <td style="width:50%;text-align: right;border:0px">
-            <strong>
-            ระหว่างวันที่: {{date("d-m-Y", strtotime($from))}}<br/> ถึงวันที่: {{date("d-m-Y", strtotime($to))}}<br/>
             @if($cancelflag == 'true')
                 **ไม่รวมรายการยกเลิก**
             @else
                 **รวมรายการยกเลิก**
             @endif
+            </strong>
+        </td>
+        <td style="width:50%;text-align: right;border:0px">
+            <strong>
+            ระหว่างวันที่: {{date("d-m-Y", strtotime($from))}}<br/> ถึงวันที่: {{date("d-m-Y", strtotime($to))}}<br/>
+
             </strong>
         </td>
     </tr>
