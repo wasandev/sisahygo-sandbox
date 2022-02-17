@@ -321,7 +321,8 @@ class OrderHeaderController extends Controller
         $report_title = 'รายงานขายเชื่อประจำวันแบบสรุป';
         $company = CompanyProfile::find(1);
         $branchdata = Branch::find($branch);
-        if ($cancelflag == true) {
+
+        if ($cancelflag == "true") {
 
             if ($artype == 'F') {
                 $order = Order_header::where('branch_id', $branch)
@@ -350,7 +351,7 @@ class OrderHeaderController extends Controller
                     ->orderBy('branch_id', 'asc')
                     ->orderBy('order_header_no', 'asc')
                     ->get();
-            } elseif ($artype == 'A') {
+            } else {
                 $order = Order_header::where('branch_id', $branch)
                     ->where('order_header_date', '>=', $from)
                     ->where('order_header_date', '<=', $to)
@@ -388,7 +389,7 @@ class OrderHeaderController extends Controller
                     ->orderBy('branch_id', 'asc')
                     ->orderBy('order_header_no', 'asc')
                     ->get();
-            } elseif ($artype == 'A') {
+            } else {
                 $order = Order_header::where('branch_id', $branch)
                     ->where('order_header_date', '>=', $from)
                     ->where('order_header_date', '<=', $to)
@@ -413,7 +414,7 @@ class OrderHeaderController extends Controller
         $company = CompanyProfile::find(1);
         $branchdata = Branch::find($branch);
 
-        if ($cancelflag == true) {
+        if ($cancelflag == 'true') {
 
             if ($artype == 'F') {
                 $order = Order_header::where('branch_id', $branch)
