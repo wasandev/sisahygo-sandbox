@@ -59,6 +59,7 @@ class PrintOrderReportByBranchrec extends Action
             return Action::openInNewTab('/orderheader/report_4/' . $branch_value . '/' . $from_value . '/' . $to_value);
         } else {
             $year_value = strval($fields->report_year);
+
             return Action::openInNewTab('/orderheader/report_4m/' . $branch_value . '/' . $year_value);
         }
     }
