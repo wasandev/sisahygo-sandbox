@@ -32,6 +32,8 @@ class BranchBalanceReport extends Lens
             $query->select(self::columns())
                 ->join('branches', 'branch_balances.branch_id', '=', 'branches.id')
                 ->join('customers', 'branch_balances.customer_id', '=', 'customers.id')
+                ->where('branch_balances.pay_amount', '=', 0)
+                ->orWhere('branch_balances.pay_amount')
                 ->orderBy('branch_balances.branch_id', 'asc')
                 ->groupBy(
                     'branch_balances.branch_id'
