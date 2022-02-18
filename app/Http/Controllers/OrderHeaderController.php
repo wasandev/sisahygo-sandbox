@@ -265,7 +265,6 @@ class OrderHeaderController extends Controller
                 ->join('branches', 'order_headers.branch_rec_id', 'branches.id')
                 ->whereYear('order_header_date', '=', $year)
                 ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-                // ->lazyById(100, $column = 'id');
                 ->orderBy('branch_rec_id', 'asc')
                 ->orderBy('order_header_date', 'asc')
                 ->get();

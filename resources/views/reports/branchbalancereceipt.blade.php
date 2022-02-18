@@ -187,62 +187,57 @@
                     </td>
                     </tr>
 
+                    @foreach ($receipt_type->chunk(200) as $chunks)
+                        @foreach ($chunks  as $item )
 
-                    @foreach ($receipt_type  as $item )
+                            <tr style="font-weight:normal">
+                                <td colspan="2" style="text-align: center">
+                                </td>
+                                <td style="text-align: center">
+                                    {{ $loop->iteration }}
+                                </td>
+                                <td>
+                                    {{ $item->customer->name}}
+                                </td>
+                                <td style="text-align: center">
+                                    {{ $item->branchrec_order->order_header_no}}
+                                </td>
 
+                                <td style="text-align: center">
 
-                     <tr style="font-weight:normal">
+                                    {{ date("d-m-Y", strtotime($item->branchrec_order->order_header_date)) }}
+                                </td>
+                                <td style="text-align: center">
+                                    @isset($item->receipt_id)
+                                        {{ $item->receipt->receipt_no}}
+                                    @endisset
 
+                                </td>
+                                <td style="text-align: right">
+                                    {{ number_format($item->bal_amount,2,'.',',') }}
+                                </td>
 
-                        <td colspan="2" style="text-align: center">
-                        </td>
-                        <td style="text-align: center">
-                            {{ $loop->iteration }}
-                        </td>
-                        <td>
-                            {{ $item->customer->name}}
-                        </td>
-                        <td style="text-align: center">
-                            {{ $item->branchrec_order->order_header_no}}
-                        </td>
+                                <td style="text-align: right">
+                                    {{ number_format($item->discount_amount,2,'.',',') }}
+                                </td>
+                                <td style="text-align: right">
+                                    {{ number_format($item->tax_amount,2,'.',',') }}
+                                </td>
+                                <td style="text-align: right">
+                                    {{ number_format($item->pay_amount,2,'.',',') }}
+                                </td>
+                                <td>
+                                    @isset($item->delivery->delivery_no)
+                                        {{$item->delivery->delivery_no}}
+                                    @endisset
+                                    @empty($item->delivery_id)
+                                        รับเอง
+                                    @endempty
+                                </td>
+                            </tr>
 
-                        <td style="text-align: center">
-
-                            {{ date("d-m-Y", strtotime($item->branchrec_order->order_header_date)) }}
-                        </td>
-                        <td style="text-align: center">
-                            @isset($item->receipt_id)
-                                {{ $item->receipt->receipt_no}}
-                            @endisset
-
-                        </td>
-                        <td style="text-align: right">
-                            {{ number_format($item->bal_amount,2,'.',',') }}
-                        </td>
-
-                        <td style="text-align: right">
-                            {{ number_format($item->discount_amount,2,'.',',') }}
-                        </td>
-                        <td style="text-align: right">
-                            {{ number_format($item->tax_amount,2,'.',',') }}
-                        </td>
-                        <td style="text-align: right">
-                            {{ number_format($item->pay_amount,2,'.',',') }}
-                        </td>
-                        <td>
-                            @isset($item->delivery->delivery_no)
-                                {{$item->delivery->delivery_no}}
-                            @endisset
-                            @empty($item->delivery_id)
-                                รับเอง
-                            @endempty
-                        </td>
-
-
-                    </tr>
-
+                        @endforeach
                     @endforeach
-
                 @endforeach
             @endforeach
         @endforeach
