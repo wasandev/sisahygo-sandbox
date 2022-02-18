@@ -24,15 +24,15 @@ class BranchController extends Controller
         //$branchdata = Branch::find($branch);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::whereDate('branchbal_date', '>=', $from)
+            $branch_balances = Branch_balance::where('branchbal_date', '>=', $from)
                 ->whereDate('branchbal_date', '<=', $to)
                 ->lazyById(200, $column = 'id');
 
             //->get();
         } else {
             $branch_balances = Branch_balance::where('branch_id', $branch)
-                ->whereDate('branchbal_date', '>=', $from)
-                ->whereDate('branchbal_date', '<=', $to)
+                ->where('branchbal_date', '>=', $from)
+                ->where('branchbal_date', '<=', $to)
                 ->lazyById(200, $column = 'id');
 
             //->get();
@@ -57,8 +57,8 @@ class BranchController extends Controller
         $branch_balances = Branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
             ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
             ->where('branch_balances.branch_id', $branch)
-            ->whereDate('branch_balances.branchpay_date', '>=', $from)
-            ->whereDate('branch_balances.branchpay_date', '<=', $to)
+            ->where('branch_balances.branchpay_date', '>=', $from)
+            ->where('branch_balances.branchpay_date', '<=', $to)
             ->where('branch_balances.pay_amount', '>', 0)
             ->where('branch_balances.payment_status', '=', true)
             //->orderBy('branch_balances.branch_id', 'asc')
@@ -91,14 +91,14 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::whereDate('branchpay_date', '<=', $to)
+            $branch_balances = Branch_balance::where('branchbal_date', '<=', $to)
                 ->where('pay_amount', '=', 0)
                 //->orderBy('branchbal_date', 'asc')
                 ->orderBy('id', 'asc')
                 ->get();
         } else {
             $branch_balances = Branch_balance::where('branch_id', $branch)
-                ->whereDate('branchpay_date', '<=', $to)
+                ->where('branchbal_date', '<=', $to)
                 ->where('pay_amount', '=', 0)
                 //->orderBy('branchbal_date', 'asc')
                 ->orderBy('id', 'asc')
