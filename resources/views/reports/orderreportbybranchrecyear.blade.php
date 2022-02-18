@@ -92,7 +92,8 @@
 
 
         @endforeach
-        <tr style="font-weight: bold;text-align:center">
+
+            <tr style="font-weight: bold;background-color:#c0c0c0">
             <td colspan="3">
                     <strong>
                     รวมทั้งหมด
