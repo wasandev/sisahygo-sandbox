@@ -26,16 +26,18 @@ class BranchController extends Controller
         if ($branch == 'all') {
             $branch_balances = Branch_balance::where('branchbal_date', '>=', $from)
                 ->whereDate('branchbal_date', '<=', $to)
-                ->lazyById(200, $column = 'id');
-
-            //->get();
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('branchbal_date', 'asc')
+                ->orderBy('id', 'asc')
+                ->get();
         } else {
             $branch_balances = Branch_balance::where('branch_id', $branch)
                 ->where('branchbal_date', '>=', $from)
                 ->where('branchbal_date', '<=', $to)
-                ->lazyById(200, $column = 'id');
-
-            //->get();
+                ->orderBy('branch_id', 'asc')
+                ->orderBy('branchbal_date', 'asc')
+                ->orderBy('id', 'asc')
+                ->get();
         }
 
         $branch_groups = $branch_balances->groupBy([
