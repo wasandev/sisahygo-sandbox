@@ -70,7 +70,7 @@
                 <strong>
                 </td>
 
-            @foreach ( $date_groups->chunk(200) as $chunks)
+             @foreach ( $date_groups->chunk(200) as $chunks)
                 @foreach ($chunks as $item)
                 <tr>
 
@@ -81,7 +81,7 @@
                         {{ $loop->iteration }}
                     </td>
                     <td>
-                        {{ $item->first()->to_branch->name }}
+                        {{ $item->first()->name}}
                     </td>
                     <td style="text-align: right">
                         {{ number_format($item->sum('order_amount'),2,'.',',') }}
