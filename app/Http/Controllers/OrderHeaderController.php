@@ -280,7 +280,7 @@ class OrderHeaderController extends Controller
         $order_groups = $order_groups->all();
 
         $order_date = $order_groups;
-
+        dd($order_groups);
 
         return view('reports.orderreportbybranchrecyear', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'year'));
     }
