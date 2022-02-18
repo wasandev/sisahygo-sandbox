@@ -6,6 +6,7 @@ use App\Nova\Actions\Accounts\PrintOrderReportByBranchrec;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToBranch;
 use App\Nova\Filters\OrderToDate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -31,9 +32,11 @@ class OrderReportByBranchrec extends Lens
             $query->select(self::columns())
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
                 ->whereNotIn('order_headers.order_status', ['checking', 'new'])
-                ->orderBy('order_headers.order_header_date', 'asc')
+                ->orderBy('order_year', 'asc')
+                ->orderBy('order_month', 'asc')
                 ->orderBy('order_headers.branch_rec_id', 'asc')
-                ->groupBy('order_headers.order_header_date', 'order_headers.branch_rec_id')
+                ->groupBy('order_year', 'order_month', 'order_headers.branch_rec_id')
+
         ));
     }
     /**
@@ -44,8 +47,8 @@ class OrderReportByBranchrec extends Lens
     protected static function columns()
     {
         return [
-            'order_headers.order_header_date',
             'branches.name',
+            DB::raw('YEAR(order_headers.order_header_date) order_year, MONTH(order_headers.order_header_date) order_month'),
             DB::raw('sum(order_headers.order_amount) as amount'),
         ];
     }
@@ -58,8 +61,12 @@ class OrderReportByBranchrec extends Lens
     public function fields(Request $request)
     {
         return [
-            Date::make('วันที่', 'order_header_date'),
+
+            Text::make('ปี-เดือน', function () {
+                return $this->order_year . '-' . $this->order_month;
+            }),
             Text::make(__('Branch'), 'name'),
+
             Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
                 return $value;
             }),

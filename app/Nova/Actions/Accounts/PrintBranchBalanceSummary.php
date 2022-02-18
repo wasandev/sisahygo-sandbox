@@ -40,12 +40,9 @@ class PrintBranchBalanceSummary extends Action
         $branch  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchBalanceFilter');
         $branch_value = Arr::get($branch, 'value');
 
-
         if ($branch_value == '') {
             $branch_value = 'all';
         }
-
-
 
         $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchbalanceToDate');
         $to_value = Arr::get($to, 'value');

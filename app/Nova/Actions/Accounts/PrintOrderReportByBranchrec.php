@@ -58,7 +58,7 @@ class PrintOrderReportByBranchrec extends Action
             }
             return Action::openInNewTab('/orderheader/report_4/' . $branch_value . '/' . $from_value . '/' . $to_value);
         } else {
-            $year_value = $fields->report_year;
+            $year_value = strval($fields->report_year);
             return Action::openInNewTab('/orderheader/report_4m/' . $branch_value . '/' . $year_value);
         }
     }
@@ -75,7 +75,7 @@ class PrintOrderReportByBranchrec extends Action
             Boolean::make('ออกรายงานแบบสรุปรายเดือน', 'report_type'),
             NovaDependencyContainer::make([
                 Number::make('ระบุปีที่ต้องการออกรายงาน', 'report_year')
-                    ->step('0.01')
+                    ->step('1')
                     ->default(function () {
                         return date("Y", strtotime(today()));
                     }),
