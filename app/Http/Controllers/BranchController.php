@@ -24,15 +24,15 @@ class BranchController extends Controller
         //$branchdata = Branch::find($branch);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::where('branchbal_date', '>=', $from)
-                ->where('branchbal_date', '<=', $to)
+            $branch_balances = Branch_balance::whereDate('branchbal_date', '>=', $from)
+                ->whereDate('branchbal_date', '<=', $to)
                 ->lazyById(200, $column = 'id');
 
             //->get();
         } else {
             $branch_balances = Branch_balance::where('branch_id', $branch)
-                ->where('branchbal_date', '>=', $from)
-                ->where('branchbal_date', '<=', $to)
+                ->whereDate('branchbal_date', '>=', $from)
+                ->whereDate('branchbal_date', '<=', $to)
                 ->lazyById(200, $column = 'id');
 
             //->get();
@@ -91,16 +91,16 @@ class BranchController extends Controller
         $company = CompanyProfile::find(1);
 
         if ($branch == 'all') {
-            $branch_balances = Branch_balance::where('branchbal_date', '<=', $to)
+            $branch_balances = Branch_balance::whereDate('branchpay_date', '<=', $to)
                 ->where('pay_amount', '=', 0)
-                ->orderBy('branchbal_date', 'asc')
+                //->orderBy('branchbal_date', 'asc')
                 ->orderBy('id', 'asc')
                 ->get();
         } else {
             $branch_balances = Branch_balance::where('branch_id', $branch)
-                ->where('branchbal_date', '<=', $to)
+                ->whereDate('branchpay_date', '<=', $to)
                 ->where('pay_amount', '=', 0)
-                ->orderBy('branchbal_date', 'asc')
+                //->orderBy('branchbal_date', 'asc')
                 ->orderBy('id', 'asc')
                 ->get();
         }

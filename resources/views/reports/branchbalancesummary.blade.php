@@ -94,7 +94,7 @@
 
                 @foreach ($date_items as $item )
 
-                     <tr style="font-weight:bold">
+                     <tr>
 
                         <td>
                         </td>
