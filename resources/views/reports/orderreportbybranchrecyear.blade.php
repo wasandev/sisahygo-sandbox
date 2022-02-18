@@ -69,9 +69,9 @@
                 {{ number_format($sumdate,2,'.',',') }}
                 <strong>
                 </td>
-            </tr>
-            @foreach ( $date_groups as $item )
 
+            @foreach ( $date_groups->chunk(200) as $chunks)
+                @foreach ($chunks as $item)
                 <tr>
 
                     <td  style="text-align: right">
@@ -87,7 +87,7 @@
                         {{ number_format($item->sum('order_amount'),2,'.',',') }}
                     </td>
                 </tr>
-
+                @endforeach
             @endforeach
 
 

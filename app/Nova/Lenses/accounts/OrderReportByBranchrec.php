@@ -31,7 +31,7 @@ class OrderReportByBranchrec extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
-                ->whereNotIn('order_headers.order_status', ['checking', 'new'])
+                ->whereNotIn('order_headers.order_status', ['checking', 'new', 'cancel'])
                 ->orderBy('order_year', 'asc')
                 ->orderBy('order_month', 'asc')
                 ->orderBy('order_headers.branch_rec_id', 'asc')
