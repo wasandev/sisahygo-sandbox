@@ -30,15 +30,15 @@
         <tr>
 
             <th style="width: 10%;text-align: center;">วันที่รับเงิน</th>
-            <th style="width: 5%;text-align:center">ลำดับ</th>
+            <th style="width: 5%;">ลำดับ</th>
             <th style="width: 15%;text-align: center;">ลูกค้า</th>
             <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: center;">วันที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: center;">ใบเสร็จรับเงิน</th>
-            <th style="width: 10%;text-align: center;">ค่าขนส่ง</th>
-            <th style="width: 5%;text-align: center;">ส่วนลด</th>
-            <th style="width: 5%;text-align: center;">ภาษีฯ</th>
-            <th style="width: 10%;text-align: center;">ยอดรับชำระ</th>
+            <th style="width: 10%;text-align: right;">ค่าขนส่ง</th>
+            <th style="width: 5%;text-align: right;">ส่วนลด</th>
+            <th style="width: 5%;text-align: right;">ภาษีหัก ณ ที่จ่าย</th>
+            <th style="width: 10%;text-align: right;">ยอดรับชำระ</th>
             <th style="width: 10%;text-align: center;">การจัดส่ง</th>
 
         </tr>
@@ -51,7 +51,7 @@
 
             <tr style="font-weight: bold;background-color:#aaaaaa">
 
-                <td  style="text-align: left">
+                <td  style="text-align: right">
                     {{ date("d-m-Y", strtotime($date_item))}}
 
                 </td>
@@ -94,7 +94,7 @@
 
             @foreach ($date_items as $item_type => $receipt_type)
                 <tr style="font-weight: bold;background-color:#d4d4d4">
-                    <td  style="text-align: center">
+                    <td  style="text-align: right">
                         @if($item_type == 'C')
                             เงินสด
 

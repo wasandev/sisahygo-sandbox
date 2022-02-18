@@ -41,8 +41,8 @@ class PrintBranchBalanceReceipt extends Action
         $branch_value = Arr::get($branch, 'value');
 
 
-        if (is_null($branch_value)) {
-            $branch_value = 'all';
+        if ($branch_value == '') {
+            return Action::danger('เลือก สาขา ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
 
 
