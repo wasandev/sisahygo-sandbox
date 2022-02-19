@@ -50,7 +50,7 @@ class BranchController extends Controller
 
 
         $branch_balances = Branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
-            ->join('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
+            ->leftjoin('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
             ->where('branch_balances.branch_id', $branch)
             ->where('branch_balances.branchpay_date', '>=', $from)
             ->where('branch_balances.branchpay_date', '<=', $to)

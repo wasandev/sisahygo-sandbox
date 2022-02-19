@@ -74,7 +74,7 @@
                                  {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{$item->branchrec_order->customer->name}}
+                                {{$item->customer->name}}
                             </td>
                             <td style="text-align: center">
                                 {{$item->branchrec_order->order_header_no}}
@@ -83,7 +83,7 @@
                                 {{$item->branchrec_order->order_header_date->format('d/m/Y')}}
                             </td>
                             <td style="text-align: right">
-                                {{number_format($item->branchrec_order->order_amount,2,'.',',')}}
+                                {{number_format($item->bal_amount,2,'.',',')}}
                             </td>
                         </tr>
                     @endforeach
