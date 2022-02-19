@@ -106,7 +106,7 @@
 
             <td colspan="5">รวมจำนวนใบรับส่งทั้งหมด {{count($order) }} รายการ</td>
 
-            <td style="text-align: right">{{number_format($order->where('paymenttype','=','H')->sum('order_amount'),2,'.',',') }}</td>
+            <td style="text-align: right">{{number_format($order->whereIn('paymenttype',['H','T'])->sum('order_amount'),2,'.',',') }}</td>
             <td style="text-align: right">{{number_format($order->whereIn('paymenttype',['F','L'])->sum('order_amount'),2,'.',',') }}</td>
             <td style="text-align: right">{{number_format($order->where('paymenttype','=','E')->sum('order_amount'),2,'.',',') }}</td>
 
