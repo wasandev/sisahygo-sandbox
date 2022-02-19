@@ -35,7 +35,7 @@
             <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: center;">วันที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: right;">จำนวนเงิน</th>
-            <th style="width: 10%;text-align: right;">ชำระ - วันที่</th>
+            {{-- <th style="width: 10%;text-align: right;">ชำระ - วันที่</th> --}}
         </tr>
 
     </thead>
@@ -60,9 +60,9 @@
                     <td style="text-align: right">
                         {{ number_format($date_items->sum('bal_amount'),2,'.',',') }}
                     </td>
-                   <td style="text-align: right">
+                   {{-- <td style="text-align: right">
                         {{ number_format($date_items->sum('pay_amount'),2,'.',',') }}
-                    </td>
+                    </td> --}}
 
                 </tr>
 
@@ -93,15 +93,15 @@
 
                             </td>
                             <td style="text-align: right">
-                               
+
                                 {{number_format($item->bal_amount,2,'.',',')}}
-                               
+
                             </td>
-                            <td style="text-align: right">
-                               
+                            {{-- <td style="text-align: right">
+
                                 {{number_format($item->pay_amount,2,'.',',') }} - {{$item->branchpay_date}}
-                               
-                            </td>
+
+                            </td> --}}
                     </tr>
 
                 @endforeach
@@ -116,9 +116,9 @@
             <td style="text-align: right">
                 {{ number_format($branch_balances->sum('bal_amount'),2,'.',',') }}
             </td>
-            <td style="text-align: right">
+            {{-- <td style="text-align: right">
                 {{ number_format($branch_balances->sum('pay_amount'),2,'.',',') }}
-            </td>
+            </td> --}}
         </tr>
 
     </tbody>
