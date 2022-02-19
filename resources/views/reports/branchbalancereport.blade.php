@@ -92,7 +92,7 @@
 
         <tr style="font-weight: bold;background-color:#aaaaaa">
             <td colspan="5" style="text-align: center">
-                รวมทั้งหมด
+                รวมทั้งหมด -  {{count($branch_balances)}} - รายการ
             </td>
 
             <td style="text-align: right">
