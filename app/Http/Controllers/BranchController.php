@@ -21,33 +21,26 @@ class BranchController extends Controller
     {
         $report_title = 'รายงานตั้งหนี้ลูกหนี้สาขา';
         $company = CompanyProfile::find(1);
-        //$branchdata = Branch::find($branch);
+        $branchdata = Branch::find($branch);
 
-        if ($branch == 'all') {
-            $branch_balances = Branch_balance::where('branchbal_date', '>=', $from)
-                ->where('branchbal_date', '<=', $to)
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('branchbal_date', 'asc')
-                ->orderBy('id', 'asc')
-                ->get();
-        } else {
-            $branch_balances = Branch_balance::where('branch_id', $branch)
-                ->where('branchbal_date', '>=', $from)
-                ->where('branchbal_date', '<=', $to)
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('branchbal_date', 'asc')
-                ->orderBy('id', 'asc')
-                ->get();
-        }
 
-        $branch_groups = $branch_balances->groupBy([
-            'branch_id', function ($item) {
+        $branch_balances = Branch_balance::where('branch_id', $branch)
+            ->where('branchbal_date', '>=', $from)
+            ->where('branchbal_date', '<=', $to)
+            ->orderBy('branch_id', 'asc')
+            ->orderBy('branchbal_date', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        $branch_groups = $branch_balances->groupBy(
+            function ($item) {
                 return $item->branchbal_date->format('Y-m-d');
             }
-        ]);
+        );
         $branch_groups = $branch_groups->all();
 
-        return view('reports.branchbalancereport', compact('company', 'report_title', 'branch_balances', 'branch_groups',  'branch', 'from', 'to'));
+        return view('reports.branchbalancereport', compact('company', 'report_title', 'branch_balances', 'branch_groups',  'branchdata', 'from', 'to'));
     }
     public function report_21($branch, $from, $to)
     {
@@ -63,7 +56,6 @@ class BranchController extends Controller
             ->where('branch_balances.branchpay_date', '<=', $to)
             ->where('branch_balances.pay_amount', '>', 0)
             ->where('branch_balances.payment_status', '=', true)
-            //->orderBy('branch_balances.branch_id', 'asc')
             ->orderBy('branch_balances.branchpay_date', 'asc')
             ->orderBy('receipts.branchpay_by', 'asc')
             ->orderBy('branch_balances.order_header_id', 'asc')
@@ -91,31 +83,24 @@ class BranchController extends Controller
     {
         $report_title = 'รายงานลูกหนี้สาขาค้างชำระ';
         $company = CompanyProfile::find(1);
+        $branchdata = Branch::find($branch);
 
-        if ($branch == 'all') {
-            $branch_balances = Branch_balance::where('branchbal_date', '<=', $to)
-                ->where('pay_amount', '=', 0)
-                ->orWhereNull('pay_amount')
-                //->orderBy('branchbal_date', 'asc')
-                ->orderBy('id', 'asc')
-                ->get();
-        } else {
-            $branch_balances = Branch_balance::where('branch_id', $branch)
-                ->where('branchbal_date', '<=', $to)
-                ->where('pay_amount', '=', 0)
-                ->orWhereNull('pay_amount')
-                //->orderBy('branchbal_date', 'asc')
-                ->orderBy('id', 'asc')
-                ->get();
-        }
 
-        $branch_groups = $branch_balances->groupBy([
-            'branch_id', function ($item) {
+        $branch_balances = Branch_balance::where('branch_id', $branch)
+            ->where('branchbal_date', '<=', $to)
+            ->where('pay_amount', '=', 0)
+            ->orderBy('branchbal_date', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        $branch_groups = $branch_balances->groupBy(
+            function ($item) {
                 return $item->branchbal_date->format('Y-m-d');
             }
-        ]);
+        );
         $branch_groups = $branch_groups->all();
 
-        return view('reports.branchbalancesummary', compact('company', 'report_title', 'branch_balances', 'branch_groups',  'branch', 'to'));
+        return view('reports.branchbalancesummary', compact('company', 'report_title', 'branch_balances', 'branch_groups',  'branchdata', 'to'));
     }
 }

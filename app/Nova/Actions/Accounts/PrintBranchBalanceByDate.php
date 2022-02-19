@@ -43,7 +43,7 @@ class PrintBranchBalanceByDate extends Action
 
 
         if ($branch_value == '') {
-            $branch_value = 'all';
+            return Action::danger('เลือก สาขา ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
 
 

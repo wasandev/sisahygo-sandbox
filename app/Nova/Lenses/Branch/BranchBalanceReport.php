@@ -53,6 +53,7 @@ class BranchBalanceReport extends Lens
             DB::raw('sum(branch_balances.tax_amount) as tax_amount'),
             DB::raw('sum(branch_balances.pay_amount) as pay_amount'),
 
+
         ];
     }
     /**

@@ -40,8 +40,9 @@ class PrintBranchBalanceSummary extends Action
         $branch  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchBalanceFilter');
         $branch_value = Arr::get($branch, 'value');
 
+
         if ($branch_value == '') {
-            $branch_value = 'all';
+            return Action::danger('เลือก สาขา ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
 
         $to  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\BranchbalanceToDate');
