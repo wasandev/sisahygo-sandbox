@@ -87,22 +87,28 @@ class BranchController extends Controller
         $branchdata = Branch::find($branch);
 
 
-        $branch_balances = Branch_balance::where('branch_id', $branch)
-            //->where('branchbal_date', '<=', $to)
-            ->where('branchpay_date', '<=', $to)
-            ->orWhereNull('branchpay_date')
-            //->where('payment_status', '=', false)
+
+
+        $branch_balances1 = Branch_balance::where('branch_id', $branch)
+            ->where('branchbal_date', '<=', $to)
+            ->where('branchpay_date', '>', $to)
             ->orderBy('branchbal_date', 'asc')
             ->orderBy('id', 'asc')
             ->get();
-
-
+        $branch_balances2 = Branch_balance::where('branch_id', $branch)
+            ->where('branchbal_date', '<=', $to)
+            ->whereNull('branchpay_date')
+            ->orderBy('branchbal_date', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+        $branch_balances = $branch_balances1->concat($branch_balances2);
         $branch_groups = $branch_balances->groupBy(
             function ($item) {
                 return $item->branchbal_date->format('Y-m-d');
             }
         );
         $branch_groups = $branch_groups->all();
+
 
         return view('reports.branchbalancesummary', compact('company', 'report_title', 'branch_balances', 'branch_groups',  'branchdata', 'to'));
     }

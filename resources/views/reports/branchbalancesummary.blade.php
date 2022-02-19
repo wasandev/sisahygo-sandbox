@@ -32,9 +32,10 @@
             <th style="width: 20%;text-align: left;">วันที่ตั้งหนี้</th>
             <th style="width: 10%;">ลำดับ</th>
             <th style="width: 30%;text-align: center;">ลูกค้า</th>
-            <th style="width: 15%;text-align: center;">เลขที่ใบรับส่ง</th>
+            <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
             <th style="width: 10%;text-align: center;">วันที่ใบรับส่ง</th>
-            <th style="width: 15%;text-align: right;">จำนวนเงิน</th>
+            <th style="width: 10%;text-align: right;">จำนวนเงิน</th>
+            <th style="width: 10%;text-align: right;">ชำระ - วันที่</th>
         </tr>
 
     </thead>
@@ -58,6 +59,9 @@
                     </td>
                     <td style="text-align: right">
                         {{ number_format($date_items->sum('bal_amount'),2,'.',',') }}
+                    </td>
+                   <td style="text-align: right">
+                        {{ number_format($date_items->sum('pay_amount'),2,'.',',') }}
                     </td>
 
                 </tr>
@@ -89,11 +93,15 @@
 
                             </td>
                             <td style="text-align: right">
-                                @isset($item->branchrec_order)
+                               
                                 {{number_format($item->bal_amount,2,'.',',')}}
-                                @endisset
+                               
                             </td>
-
+                            <td style="text-align: right">
+                               
+                                {{number_format($item->pay_amount,2,'.',',') }} - {{$item->branchpay_date}}
+                               
+                            </td>
                     </tr>
 
                 @endforeach
@@ -107,6 +115,9 @@
 
             <td style="text-align: right">
                 {{ number_format($branch_balances->sum('bal_amount'),2,'.',',') }}
+            </td>
+            <td style="text-align: right">
+                {{ number_format($branch_balances->sum('pay_amount'),2,'.',',') }}
             </td>
         </tr>
 
