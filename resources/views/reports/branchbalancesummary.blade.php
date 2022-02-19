@@ -90,7 +90,7 @@
                             </td>
                             <td style="text-align: right">
                                 @isset($item->branchrec_order)
-                                {{number_format($item->branchrec_order->order_amount,2,'.',',')}}
+                                {{number_format($item->bal_amount,2,'.',',')}}
                                 @endisset
                             </td>
 

@@ -52,8 +52,8 @@ class BranchController extends Controller
         $branch_balances = Branch_balance::select('branch_balances.*', 'receipts.branchpay_by as branchpay_by')
             ->leftjoin('receipts', 'branch_balances.receipt_id', '=', 'receipts.id')
             ->where('branch_balances.branch_id', $branch)
-            // ->where('branch_balances.branchbal_date', '>=', $from)
-            // ->where('branch_balances.branchbal_date', '<=', $to)
+            //->where('branch_balances.branchbal_date', '>=', $from)
+            //->where('branch_balances.branchbal_date', '<=', $to)
             ->where('branch_balances.branchpay_date', '>=', $from)
             ->where('branch_balances.branchpay_date', '<=', $to)
             ->where('branch_balances.payment_status', '=', true)
@@ -88,8 +88,10 @@ class BranchController extends Controller
 
 
         $branch_balances = Branch_balance::where('branch_id', $branch)
+            //->where('branchbal_date', '<=', $to)
             ->where('branchpay_date', '<=', $to)
-            ->where('payment_status', '=', false)
+            ->orWhereNull('branchpay_date')
+            //->where('payment_status', '=', false)
             ->orderBy('branchbal_date', 'asc')
             ->orderBy('id', 'asc')
             ->get();
