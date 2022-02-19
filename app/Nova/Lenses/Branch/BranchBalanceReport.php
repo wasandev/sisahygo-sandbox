@@ -31,11 +31,12 @@ class BranchBalanceReport extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('branches', 'branch_balances.branch_id', '=', 'branches.id')
-                ->where('branch_balances.pay_amount', '=', 0)
+                ->where('branch_balances.payment_status', '=', false)
                 ->orderBy('branch_balances.branch_id', 'asc')
                 ->groupBy(
                     'branch_balances.branch_id'
                 )
+
         ));
     }
     /**
@@ -68,7 +69,7 @@ class BranchBalanceReport extends Lens
                 return $this->branch->name;
             }),
             Currency::make('ยอดค้างชำระ', function () {
-                return $this->branch_amount - ($this->pay_amount + $this->tax_amount + $this->discount_amount);
+                return $this->branch_amount;
             }),
         ];
     }
