@@ -66,7 +66,7 @@ class Productservice_newprice extends Resource
         'id', 'district', 'province', 'price'
     ];
     public static $searchRelations = [
-        'product' => ['name'],
+        'product' => ['name', 'id'],
     ];
 
     public static function label()
