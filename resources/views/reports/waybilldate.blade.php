@@ -298,7 +298,7 @@
                     </td>
 
                 </tr>
-                    @foreach($waybill_items->chunk(200) as $chunk)
+                    @foreach($waybill_items->chunk(20) as $chunk)
 
                         @foreach($chunk as $item)
 

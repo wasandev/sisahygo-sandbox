@@ -299,9 +299,9 @@
 
                     </tr>
 
+                    @foreach($waybill_items->chunk(20) as $chunk)
 
-                    @foreach($waybill_items as $item)
-
+                        @foreach($chunk as $item)
 
 
                         <tr style="vertical-align: top;">
@@ -351,6 +351,7 @@
 
                             </td>
                         </tr>
+                        @endforeach
                     @endforeach
                 @endforeach
             @endforeach
