@@ -223,6 +223,9 @@
                         $ordertype_h = 0 ;
                         $ordertype_f = 0 ;
                         $ordertype_e = 0 ;
+                        $sumtype_amount = $waybill_items->sum('waybill_amount');
+                        $sumtype_payable = $waybill_items->sum('waybill_payable');
+                        $sumtype_income = $waybill_items->sum('waybill_income');
                     @endphp
                     @foreach ($waybills as $item )
                         @php
@@ -230,9 +233,7 @@
                                                 ->where('branch_rec_id',$branch)
                                                 ->where('waybill_type',$type)
                                                 ->count();
-                            $sumtype_amount = $waybill_items->sum('waybill_amount');
-                            $sumtype_payable = $waybill_items->sum('waybill_payable');
-                            $sumtype_income = $waybill_items->sum('waybill_income');
+
                             if($item->departure_at->format('Y-m-d') == $waybill_date
                                     && $item->branch_rec_id == $branch && $item->waybill_type == $type){
                                     $ordertype_h +=  $item->order_loaders
