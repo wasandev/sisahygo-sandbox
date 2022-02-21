@@ -29,6 +29,7 @@ class MostValueCustomerDiscounts extends Lens
                 ->join('branch_balances', 'customers.id', '=', 'branch_balances.customer_id')
                 ->join('branches', 'branches.id', 'branch_balances.branch_id')
                 ->where('branch_balances.payment_status', '=', true)
+                ->where('branch_balances.discount_amount', '>', 0)
                 ->orderBy('discount', 'desc')
                 ->groupBy('customers.id', 'customers.name', 'branches.name')
         ));

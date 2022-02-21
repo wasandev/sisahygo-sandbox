@@ -28,6 +28,7 @@ class MostValueBranchDiscounts extends Lens
             $query->select(self::columns())
                 ->join('branch_balances', 'branches.id', '=', 'branch_balances.branch_id')
                 ->where('branch_balances.payment_status', '=', true)
+                ->where('branch_balances.discount_amount', '>', 0)
                 ->orderBy('discount', 'desc')
                 ->groupBy('branches.id', 'branches.name')
         ));
