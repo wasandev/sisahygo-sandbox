@@ -423,7 +423,8 @@ class Customer extends Resource
     {
         return [
             new Lenses\MostValueableSenders(),
-            new Lenses\MostValueableReceivers()
+            new Lenses\MostValueableReceivers(),
+            new Lenses\MostValueableBranchDiscounts(),
         ];
     }
 

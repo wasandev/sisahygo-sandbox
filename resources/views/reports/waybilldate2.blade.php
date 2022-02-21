@@ -54,7 +54,10 @@
                     $orderdate_h = 0 ;
                     $orderdate_f = 0 ;
                     $orderdate_e = 0 ;
+                    //$testData = $waybills->where('departure_at',$waybill_date);
+
                 @endphp
+
                 @foreach ($waybills as $item)
                     @php
                         $date_count =  $item->whereDate('departure_at',$waybill_date)
@@ -78,6 +81,7 @@
                 @endforeach
                 <td colspan="4" >
                     วันที่ : {{ date('d/m/Y',strtotime($waybill_date)) }}
+
                     - {{ $date_count}} เที่ยว
                 </td>
                 @php
