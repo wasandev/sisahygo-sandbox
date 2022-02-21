@@ -3,9 +3,6 @@
 namespace App\Nova\Lenses\Branch;
 
 use App\Nova\Actions\Accounts\PrintBranchBalanceReceipt;
-use App\Nova\Filters\BranchBalanceFilter;
-use App\Nova\Filters\BranchbalanceFromDate;
-use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Filters\BranchPayFromDate;
 use App\Nova\Filters\BranchPayToDate;
 use App\Nova\Filters\BranchReceiptLenseFilter;

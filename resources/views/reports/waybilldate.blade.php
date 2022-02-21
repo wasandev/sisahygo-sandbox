@@ -50,11 +50,15 @@
         @foreach ($waybill_groups as $waybill_date => $branches)
 
             <tr style="font-weight: bold;background-color:#c0c0c0">
-
+                @foreach ($waybills as $item)
+                    @php
+                        $date_count =  $item->whereDate('departure_at',$waybill_date)
+                                            ->count();
+                    @endphp
+                @endforeach
                 <td colspan="4" >
                     วันที่ : {{ date('d/m/Y',strtotime($waybill_date)) }}
-
-                    - {{ $branches->count('id')}} เที่ยว
+                    - {{ $date_count}} เที่ยว
                 </td>
                 <td  style="text-align: right;">
 
@@ -69,9 +73,11 @@
                                                         ->sum('waybill_amount');
 
                             }
+
                         @endphp
 
                     @endforeach
+
 
                     {{ number_format($sumdate_amount,2,'.',',') }}
 

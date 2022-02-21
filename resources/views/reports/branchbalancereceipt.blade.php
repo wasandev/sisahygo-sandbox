@@ -75,6 +75,7 @@
                 @endphp
 
                 <td style="text-align: right">
+
                     {{ number_format($datebal_amount,2,'.',',') }}
 
                 </td>

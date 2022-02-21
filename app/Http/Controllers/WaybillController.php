@@ -99,19 +99,42 @@ class WaybillController extends Controller
     public function report_w1($routetobranch, $from, $to)
     {
 
-        $report_title = 'รายงานรถออกประจำวัน(ปรับปรุง)';
+        $report_title = 'รายงานรถออกประจำวัน(ทดสอบ)';
         $company = CompanyProfile::find(1);
+        if ($routetobranch == 'all') {
+            $waybills = Waybill::whereDate('departure_at', '>=', $from)
+                ->whereDate('departure_at', '<=', $to)
+                ->whereNotIn('waybill_status', ['loading', 'cancel'])
+                ->orderBy('waybill_date', 'asc')
+                ->orderBy('branch_rec_id', 'asc')
+                ->orderBy('waybill_type', 'asc')
+                ->get();
+        } else {
 
-
-        foreach (DB::table('waybills')->whereDate('departure_at', '>=', $from)
-            ->whereDate('departure_at', '<=', $to)
-            ->whereNotIn('waybill_status', ['loading', 'cancel'])
-            ->orderBy('waybill_date', 'asc')
-            ->orderBy('branch_rec_id', 'asc')
-            ->orderBy('waybill_type', 'asc')
-            ->cursor() as $waybill) {
+            $waybills = Waybill::whereDate('departure_at', '>=', $from)
+                ->whereDate('departure_at', '<=', $to)
+                ->where('routeto_branch_id', '=', $routetobranch)
+                ->whereNotIn('waybill_status', ['loading', 'cancel'])
+                ->orderBy('id', 'asc')
+                ->orderBy('waybill_date', 'asc')
+                ->orderBy('branch_rec_id', 'asc')
+                ->orderBy('waybill_type', 'asc')
+                ->get();
         }
-        dd($waybill);
-        return view('reports.waybilldate2', compact('waybill'));
+
+        $waybill_groups = $waybills->all();
+
+        $waybill_groups = $waybills->groupBy([
+            function ($item) {
+                return $item->departure_at->format('Y-m-d');
+            },
+            'branch_rec_id', 'waybill_type'
+        ]);
+
+
+
+        $waybill_groups = $waybill_groups->all();
+
+        return view('reports.waybilldate2', compact('company', 'report_title', 'waybills', 'waybill_groups', 'routetobranch', 'from', 'to'));
     }
 }
