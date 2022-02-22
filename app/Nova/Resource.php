@@ -113,7 +113,66 @@ abstract class Resource extends NovaResource
                 'authorizedToForceDelete' => false,
             ]);
         }
-
+        if ($request->lens && $request->lens == 'order-billing-by-user') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
+        if ($request->lens && $request->lens == 'accounts-order-report-bill-by-day') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
+        if ($request->lens && $request->lens == 'accounts-order-report-by-day') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
+        if ($request->lens && $request->lens == 'accounts-order-report-by-branchrec') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
+        if ($request->lens && $request->lens == 'branch-branch-balance-bydate') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
+        if ($request->lens && $request->lens == 'branch-branch-balance-report') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
         return $serialized;
     }
 }

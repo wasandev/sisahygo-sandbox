@@ -32,12 +32,10 @@ class OrderReportBillByDay extends Lens
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_id')
-                ->join('customers as a', 'a.id', '=', 'order_headers.customer_id')
-                ->join('customers as b', 'b.id', '=', 'order_headers.customer_rec_id')
                 ->whereNotIn('order_headers.order_status', ['checking', 'new'])
-                ->orderBy('order_headers.branch_id', 'asc')
+                ->orderBy('branches.id', 'asc')
                 ->orderBy('order_headers.order_header_date', 'asc')
-            //->groupBy('order_headers.branch_id', 'order_headers.order_header_date')
+                ->groupBy('branches.id', 'order_headers.order_header_date')
         ));
     }
     /**
@@ -48,14 +46,10 @@ class OrderReportBillByDay extends Lens
     protected static function columns()
     {
         return [
+            'branches.id',
             'branches.name',
-            'order_headers.id',
             'order_headers.order_header_date',
-            'order_headers.order_header_no',
-            'a.name as from_customer',
-            'b.name as to_customer',
-            'order_headers.order_amount',
-            'order_headers.order_type',
+            DB::raw('sum(order_headers.order_amount) as amount'),
         ];
     }
     /**
@@ -67,14 +61,10 @@ class OrderReportBillByDay extends Lens
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            Text::make(__('Branch'), 'name'),
+
+            Text::make('สาขาต้นทาง', 'name'),
             Date::make('วันที่', 'order_header_date'),
-            Text::make('เลขที่ใบรับส่ง', 'order_header_no'),
-            Text::make('ผู้ส่งสินค้า', 'from_customer'),
-            Text::make('ผู้รับสินค้า', 'to_customer'),
-            Currency::make(__('จำนวนเงิน'), 'order_amount'),
-            Text::make('ประเภท', 'order_type'),
+            Currency::make(__('จำนวนเงิน'), 'amount'),
         ];
     }
 
