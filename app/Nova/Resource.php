@@ -103,6 +103,16 @@ abstract class Resource extends NovaResource
                 'authorizedToForceDelete' => false,
             ]);
         }
+        if ($request->lens && $request->lens == 'order-banktransfer') {
+            // If a lens is being viewed
+            $serialized = array_merge($serialized, [
+                'authorizedToView' => false,
+                'authorizedToUpdate' => false,
+                'authorizedToDelete' => false,
+                'authorizedToRestore' => false,
+                'authorizedToForceDelete' => false,
+            ]);
+        }
 
         return $serialized;
     }

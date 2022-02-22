@@ -7,6 +7,7 @@ use App\Nova\Filters\Lenses\PaymentLensFromDate;
 use App\Nova\Filters\Lenses\PaymentLensToDate;
 use App\Nova\Filters\Lenses\LensesPaymentType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
@@ -30,11 +31,11 @@ class CarpaymentReportByDay extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('cars', 'cars.id', '=', 'carpayments.car_id')
+                ->join('carpayments', 'carpayments.car_id', '=', 'cars.id')
                 ->join('vendors', 'vendors.id', '=', 'carpayments.vendor_id')
                 ->where('carpayments.status', true)
-                ->orderBy('carpayments.payment_date', 'asc')
-                ->orderBy('carpayments.id', 'asc')
+                ->orderBy('amount', 'desc')
+                ->groupBy('vendors.id', 'vendors.name', 'cars.id', 'cars.car_regist')
         ));
     }
     /**
@@ -45,16 +46,14 @@ class CarpaymentReportByDay extends Lens
     protected static function columns()
     {
         return [
-            'carpayments.id',
-            'carpayments.payment_date',
-            'carpayments.payment_no',
-            'carpayments.vendor_id',
-            'carpayments.car_id',
-            'vendors.name as owner',
+            'vendors.id',
+            'vendors.name',
+            'cars.id',
             'cars.car_regist',
-            'carpayments.payment_by',
-            'carpayments.amount',
-            'carpayments.type'
+
+            DB::raw('sum(carpayments.amount) as amount'),
+
+
         ];
     }
     /**
@@ -67,24 +66,10 @@ class CarpaymentReportByDay extends Lens
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Date::make('วันที่', 'payment_date'),
-            Text::make('เลขที่', 'payment_no'),
-            BelongsTo::make('จ่ายให้', 'vendor', 'App\Nova\Vendor'),
-            BelongsTo::make('ทะเบียนรถ', 'car', 'App\Nova\Car'),
+            Text::make('จ่ายให้', 'name'),
+            Text::make('ทะเบียนรถ', 'car_regist'),
             Currency::make('จำนวนเงิน', 'amount'),
-            Select::make('จ่ายด้วย', 'payment_by')
-                ->options([
-                    "H" => "เงินสด",
-                    'T' => "เงินโอน",
-                    'Q' => "เช็ค",
-                    'A' => "รายการตัดบัญชี"
-                ])->displayUsingLabels(),
-            Select::make('ประเภท', 'type')
-                ->options([
-                    "T" => "ค่าบรรทุก",
-                    'O' => "อื่นๆ",
-                    'B' => "เก็บปลายทาง"
-                ])->displayUsingLabels()
+
 
 
         ];

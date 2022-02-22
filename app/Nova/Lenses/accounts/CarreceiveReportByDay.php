@@ -7,6 +7,7 @@ use App\Nova\Actions\Accounts\PrintReceiveReportByDay;
 use App\Nova\Filters\Lenses\ReceiveLensFromDate;
 use App\Nova\Filters\Lenses\ReceiveLensToDate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
@@ -30,11 +31,12 @@ class CarreceiveReportByDay extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->join('cars', 'cars.id', '=', 'carreceives.car_id')
+                ->join('carreceives', 'carreceives.car_id', '=', 'cars.id')
                 ->join('vendors', 'vendors.id', '=', 'carreceives.vendor_id')
                 ->where('carreceives.status', true)
-                ->orderBy('carreceives.receive_date', 'asc')
-                ->orderBy('carreceives.id', 'asc')
+                ->orderBy('amount', 'desc')
+                ->groupBy('vendors.id', 'vendors.name', 'cars.id', 'cars.car_regist')
+
         ));
     }
     /**
@@ -45,15 +47,11 @@ class CarreceiveReportByDay extends Lens
     protected static function columns()
     {
         return [
-            'carreceives.id',
-            'carreceives.receive_date',
-            'carreceives.receive_no',
-            'carreceives.vendor_id',
-            'carreceives.car_id',
-            'vendors.name as owner',
+            'vendors.id',
+            'vendors.name',
+            'cars.id',
             'cars.car_regist',
-            'carreceives.receive_by',
-            'carreceives.amount',
+            DB::raw('sum(carreceives.amount) as amount'),
         ];
     }
     /**
@@ -66,18 +64,10 @@ class CarreceiveReportByDay extends Lens
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Date::make('วันที่', 'receive_date'),
-            Text::make('เลขที่', 'receive_no'),
-            BelongsTo::make('จ่ายให้', 'vendor', 'App\Nova\Vendor'),
-            BelongsTo::make('ทะเบียนรถ', 'car', 'App\Nova\Car'),
+            Text::make('รับจาก', 'name'),
+            Text::make('ทะเบียนรถ', 'car_regist'),
             Currency::make('จำนวนเงิน', 'amount'),
-            Select::make('จ่ายด้วย', 'receive_by')
-                ->options([
-                    "H" => "เงินสด",
-                    'T' => "เงินโอน",
-                    'Q' => "เช็ค",
-                    'A' => "รายการตัดบัญชี"
-                ])->displayUsingLabels()
+
 
         ];
     }

@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use App\Nova\Filters\CarType;
 use App\Nova\Filters\OwnerType;
+use App\Nova\Lenses\accounts\CarpaymentReportByDay;
+use App\Nova\Lenses\accounts\CarreceiveReportByDay;
 use App\Nova\Lenses\CarMonthSumary;
 use App\Nova\Lenses\cars\CarcardReport;
 use App\Nova\Lenses\cars\CarsummaryReport;
@@ -295,6 +297,8 @@ class Car extends Resource
             new CarMonthSumary(),
             new CarcardReport(),
             new CarsummaryReport(),
+            new CarpaymentReportByDay(),
+            new CarreceiveReportByDay()
         ];
     }
 

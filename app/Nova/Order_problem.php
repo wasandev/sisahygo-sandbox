@@ -53,6 +53,7 @@ class Order_problem extends Resource
 
     public static $searchRelations = [
         'customer' => ['name'],
+        'order_header' => ['order_header_no']
     ];
     public static function label()
     {

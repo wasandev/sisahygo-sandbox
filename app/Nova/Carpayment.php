@@ -8,8 +8,6 @@ use App\Nova\Actions\PrintCarpayment;
 use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
 use App\Nova\Filters\PaymentType;
-use App\Nova\Lenses\accounts\CarpaymentReportByDay;
-use App\Nova\Lenses\cars\CarpayTax;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -22,7 +20,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Number;
 
 class Carpayment extends Resource
 {
@@ -216,7 +213,7 @@ class Carpayment extends Resource
     public function lenses(Request $request)
     {
         return [
-            new CarpaymentReportByDay(),
+            //new CarpaymentReportByDay(),
             //new CarpayTax()
         ];
     }

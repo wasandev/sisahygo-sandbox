@@ -5,7 +5,6 @@ namespace App\Nova;
 use App\Models\Bank;
 use App\Models\Bankaccount;
 use App\Nova\Actions\PrintCarreceive;
-use App\Nova\Lenses\accounts\CarreceiveReportByDay;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -181,9 +180,7 @@ class Carreceive extends Resource
      */
     public function lenses(Request $request)
     {
-        return [
-            new CarreceiveReportByDay()
-        ];
+        return [];
     }
 
     /**

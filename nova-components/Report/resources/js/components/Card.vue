@@ -273,7 +273,7 @@
                     :to="{
                         name: 'lens',
                         params:{
-                        resourceName: 'carreceives',
+                        resourceName: 'cars',
                         lens: 'accounts-carreceive-report-by-day'
                         },
                         }"
@@ -304,7 +304,7 @@
                     :to="{
                         name: 'lens',
                         params:{
-                        resourceName: 'carpayments',
+                        resourceName: 'cars',
                         lens: 'accounts-carpayment-report-by-day'
                         },
                         }"
