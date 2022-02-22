@@ -168,7 +168,7 @@ class Order_branch extends Resource
     public function cards(Request $request)
     {
         return [
-            new OrderBranchPerDay(),
+            (new OrderBranchPerDay())->width('full'),
         ];
     }
 
