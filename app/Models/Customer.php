@@ -79,7 +79,7 @@ class Customer extends Model
     }
     public function order_recs()
     {
-        return $this->hasMany('App\Models\Branchrec_order', 'customer_rec_id', 'id');
+        return $this->hasMany('App\Models\Order_rec', 'customer_rec_id', 'id');
     }
 
     public function ar_balances()

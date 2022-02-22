@@ -252,7 +252,7 @@ class Customer extends Resource
                     return $request->user()->role == 'admin';
                 }),
             HasMany::make('รายการส่งสินค้า', 'order_sends', 'App\Nova\Order_header'),
-            HasMany::make('รายการรับสินค้า', 'order_recs', 'App\Nova\Branchrec_order'),
+            HasMany::make('รายการรับสินค้า', 'order_recs', 'App\Nova\Order_rec'),
 
         ];
     }

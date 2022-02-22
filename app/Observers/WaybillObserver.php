@@ -45,18 +45,22 @@ class WaybillObserver
                 }
                 //create car_balance
                 if ($waybill->car->ownertype == 'partner') {
-                    Car_balance::updateOrCreate([
-                        'car_id' => $waybill->car_id,
-                        'vendor_id' => $waybill->car->vendor_id,
-                        'doctype' => 'R',
-                        'docno' => $waybill->waybill_no,
-                        'cardoc_date' => $waybill->departure_at,
-                        'waybill_id' => $waybill->id,
-                        'description' => 'ค่าขนส่งสินค้า',
-                        'amount' => $waybill->waybill_payable,
-                        'user_id' => auth()->user()->id,
+                    Car_balance::updateOrCreate(
+                        [
+                            'car_id' => $waybill->car_id,
+                            'vendor_id' => $waybill->car->vendor_id,
+                            'doctype' => 'R',
+                            'docno' => $waybill->waybill_no,
+                            'cardoc_date' => $waybill->departure_at,
+                            'waybill_id' => $waybill->id,
+                            'description' => 'ค่าขนส่งสินค้า',
+                            'user_id' => auth()->user()->id
+                        ],
+                        [
+                            'amount' => $waybill->waybill_payable,
+                        ]
 
-                    ]);
+                    );
                 }
 
                 Waybill_status::updateOrCreate([

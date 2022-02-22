@@ -64,11 +64,12 @@ class AddProductServicePriceZone extends Action
                         'product_id' => $model->id,
                         'from_branch_id' => $fields->from_branch_id,
                         'district' => $district->name,
-                        'province' => $district->province->name
+                        'province' => $district->province->name,
+                        'unit_id' => $uses_unit
                     ],
                     [
-                        'price' => $fields->item_price,
-                        'unit_id' => $uses_unit
+                        'price' => $fields->item_price
+
                     ]
                 );
             }

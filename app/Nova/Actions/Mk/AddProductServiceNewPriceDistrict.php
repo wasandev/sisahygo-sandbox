@@ -62,11 +62,12 @@ class AddProductServiceNewPriceDistrict extends Action
                             'product_id' => $model->id,
                             'from_branch_id' => $fields->from_branch_id,
                             'district' => $area->district,
-                            'province' => $area->province
+                            'province' => $area->province,
+                            'unit_id' => $uses_unit
                         ],
                         [
                             'price' => $fields->item_price,
-                            'unit_id' => $uses_unit
+
                         ]
                     );
                 }
