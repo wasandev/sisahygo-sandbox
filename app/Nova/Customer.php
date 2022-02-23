@@ -253,6 +253,8 @@ class Customer extends Resource
                 }),
             HasMany::make('รายการส่งสินค้า', 'order_sends', 'App\Nova\Order_header'),
             HasMany::make('รายการรับสินค้า', 'order_recs', 'App\Nova\Order_rec'),
+            HasMany::make('รายการเก็บเงินปลายทาง', 'branch_balances', 'App\Nova\Branch_balance'),
+
 
         ];
     }
