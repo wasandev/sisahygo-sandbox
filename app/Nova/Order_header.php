@@ -34,6 +34,7 @@ use App\Nova\Metrics\OrdersByBranchRec;
 use App\Nova\Metrics\OrdersPerMonth;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Wasandev\Orderstatus\Orderstatus;
@@ -269,6 +270,17 @@ class Order_header extends Resource
 
 
             HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
+
+            // BelongsToMany::make('ค่าบริการอื่นๆ', 'service_charges', 'App\Nova\Service_charge')
+            //     ->fields(function () {
+            //         return [
+            //             Text::make('รายละเอียดเพิ่มเติม', 'description'),
+            //             Currency::make('จำนวนเงิน', 'service_amount'),
+
+            //         ];
+            //     })->canSee(function ($request) {
+            //         return $this->resource->order_status == 'confirmed';
+            //     }),
             HasMany::make(__('Order status'), 'order_statuses', 'App\Nova\Order_status'),
         ];
     }

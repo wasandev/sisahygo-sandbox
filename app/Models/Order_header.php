@@ -126,4 +126,10 @@ class Order_header extends Model
     {
         return $query->whereNotIn('order_status', ['checking', 'new', 'cancel']);
     }
+
+    public function service_charges()
+    {
+        return $this->belongsToMany('App\Models\Service_charge', 'service_charges_order_header', 'order_header_id', 'service_charge_id')
+            ->withPivot('service_amount', 'description');
+    }
 }

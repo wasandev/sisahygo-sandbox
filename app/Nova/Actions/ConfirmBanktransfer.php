@@ -68,10 +68,13 @@ class ConfirmBanktransfer extends Action
 
                 if ($tranitem->order_header->paymenttype == 'T') {
                     $receipttype = 'H';
+                    $total_amount = $cust_groups->sum('transfer_amount');
                 } elseif ($tranitem->order_header->paymenttype == 'E') {
                     $receipttype = 'E';
+                    $total_amount = $cust_groups->sum('transfer_amount') + $discount_amount + $tax_amount;
                 } else {
                     $receipttype = 'B';
+                    $total_amount = $cust_groups->sum('transfer_amount');
                 }
 
 
@@ -81,7 +84,7 @@ class ConfirmBanktransfer extends Action
                     'receipt_date' => $fields->transferdate,
                     'branch_id' => auth()->user()->branch_id,
                     'customer_id' => $rec_cust,
-                    'total_amount' => $cust_groups->sum('transfer_amount') + $discount_amount + $tax_amount,
+                    'total_amount' => $total_amount,
                     'discount_amount' => $discount_amount,
                     'tax_amount' => $tax_amount,
                     'pay_amount' => $cust_groups->sum('transfer_amount'),

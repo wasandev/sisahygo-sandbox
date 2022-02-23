@@ -20,13 +20,19 @@
 <value>540 ถ.บางขุนเทียน-ชายทะเล แขวงท่าข้าม เขตบางขุนเทียน กรุงเทพมหานคร 10150</value>
 </field>
 <field name="chk4">
-<value>Yes</value>
+<value>Off</value>
 </field>
 <field name="chk7">
 <value>Off</value>
 </field>
 <field name="date1">
-<value></value>
+<value>7 ม.ค. 2565</value>
+</field>
+<field name="pay10">
+<value>1600.00</value>
+</field>
+<field name="tax10">
+<value>0.00</value>
 </field>
 <field name="date2">
 <value></value>
@@ -68,13 +74,13 @@
 <value></value>
 </field>
 <field name="date141">
-<value>2022-01-07 00:00:00</value>
+<value></value>
 </field>
 <field name="pay1130">
 <value></value>
 </field>
 <field name="pay1131">
-<value>1600.00</value>
+<value></value>
 </field>
 <field name="pay1">
 <field name="14">
@@ -85,15 +91,15 @@
 <value></value>
 </field>
 <field name="tax1131">
-<value>48.00</value>
+<value></value>
 </field>
 <field name="tax1">
 <field name="14">
-<value>48.00</value>
+<value>0.00</value>
 </field>
 </field>
 <field name="total">
-<value>สี่สิบแปดบาทถ้วน</value>
+<value>ศูนย์บาทถ้วน</value>
 </field>
 <field name="chk8">
 <value>Yes</value>

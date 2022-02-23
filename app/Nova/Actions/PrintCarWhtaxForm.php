@@ -95,7 +95,7 @@ class PrintCarWhtaxForm extends Action
             }
             switch ($model->incometype->code) {
                 case '001':
-                    $date1 = $model->pay_date;
+                    $date1 = formatDateThai($model->pay_date, 2, '.', ',');
                     $pay10 = $model->pay_amount;
                     $tax10 = $model->tax_amount;
                     break;
@@ -182,6 +182,8 @@ class PrintCarWhtaxForm extends Action
                 'chk4' => $chk4,
                 'chk7' => $chk7,
                 'date1' => $date1,
+                'pay10' => $pay10,
+                'tax10' => $tax10,
                 'date2' => $date2,
                 'date3' => $date3,
                 'date4' => $date4,
