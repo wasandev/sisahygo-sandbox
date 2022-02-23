@@ -14,16 +14,16 @@
 
 
         </td>
-         <td style="width: 10%;margin-left: 15px ">
+        <td style="width: 10%;margin-left: 15px ">
             <div class="visible-print text-center">
                 {{-- {!! QrCode::size(70)->generate($order->tracking_no); !!} --}}
                 @isset($order->tracking_no)
                     {{-- <img src="data:image/png;base64, {!! QrCode::size(70)->generate($order->tracking_no)) !!} "> --}}
-                    {!! QrCode::size(70)->generate($order->tracking_no); !!}
+                    {!! QrCode::size(70)->generate($order->tracking_no) !!}
                 @endisset
 
             </div>
-         </td>
+        </td>
     </tr>
 
 
