@@ -48,6 +48,7 @@ class BranchBalanceReport extends Lens
     {
         return [
             'branch_balances.branch_id',
+            'branches.name as name',
             DB::raw('sum(branch_balances.bal_amount) as branch_amount'),
             DB::raw('sum(branch_balances.discount_amount) as discount_amount'),
             DB::raw('sum(branch_balances.tax_amount) as tax_amount'),
@@ -65,12 +66,13 @@ class BranchBalanceReport extends Lens
     public function fields(Request $request)
     {
         return [
-            Text::make('สาขา', function () {
-                return $this->branch->name;
-            }),
-            Currency::make('ยอดค้างชำระ', function () {
-                return $this->branch_amount;
-            }),
+            Text::make('สาขา', 'name'),
+            Currency::make('ค่าขนส่ง', 'branch_amount'),
+            Currency::make('ส่วนลด', 'discount_amount'),
+            Currency::make('ภาษี', 'tax_amount'),
+            Currency::make('ยอดชำระ', 'pay_amount'),
+
+
         ];
     }
 
@@ -113,11 +115,12 @@ class BranchBalanceReport extends Lens
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view branch_balance');
                 }),
-            (new DownloadExcel)->allFields()
-                ->withHeadings()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('view branch_balance');
-                }),
+            // (new DownloadExcel)
+            //     ->only('name', 'branch_amount', 'discount_amount', 'tax_amount', 'pay_amount')
+            //     ->withHeadings()
+            //     ->canSee(function ($request) {
+            //         return $request->user()->hasPermissionTo('view branch_balance');
+            //     }),
         ];
     }
 

@@ -32,7 +32,11 @@ class ServicePriceUpdate extends Partition
         )
             ->label(function ($value) {
                 $user = User::find($value);
-                return $user->name;
+                if (isset($user)) {
+                    return $user->name;
+                } else {
+                    return '-';
+                }
             });
         arsort($partitionResult->value);
 
