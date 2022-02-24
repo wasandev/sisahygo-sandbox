@@ -1,5 +1,5 @@
 body {
-  font-size: 15px;
+  font-size: 14px;
   font-family: sans-serif;
   color: black;
 }
@@ -12,8 +12,8 @@ body {
     margin: 0.20cm 0.0cm 0.00cm 0.0cm;
   }
   body {
-    font-size: 9.5pt;
-    font-family:serif;
+    font-size: 10pt;
+    font-family:sans-serif;
     color: black;
   }
   .header {

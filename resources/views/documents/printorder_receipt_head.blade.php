@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 
-    <table style="width: 100%;magin-top: -10px">
+    <table style="width: 100%;magin-top: -8px">
         <tr>
             <td style="width: 60%;text-align: right;vertical-align:top;">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
@@ -95,63 +95,60 @@
     <table style="width: 100%;border-top: 0.5px dotted black">
 
         <tr>
-            <td style="width: 50%;vertical-align:top;">
-                <strong>
-                    ผู้ส่งสินค้า: {{ $order->customer->name }}
-                    @isset($order->customer->taxid)
-                        Tax ID. {{ $order->customer->taxid }}
-                    @endisset
+            <td style="width: 50%;vertical-align:top">
+                ผู้ส่งสินค้า: {{ $order->customer->name }}
+                @isset($order->customer->taxid)
+                    Tax ID. {{ $order->customer->taxid }}
+                @endisset
 
-                    {{ $order->customer->address }}
-                    @if ($order->customer->province === 'กรุงเทพมหานคร')
-                        แขวง{{ $order->customer->sub_district }}
-                    @else
-                        ต.{{ $order->customer->sub_district }}
-                    @endif
+                {{ $order->customer->address }}
+                @if ($order->customer->province === 'กรุงเทพมหานคร')
+                    แขวง{{ $order->customer->sub_district }}
+                @else
+                    ต.{{ $order->customer->sub_district }}
+                @endif
 
-                    @if ($order->customer->province === 'กรุงเทพมหานคร')
-                        เขต{{ $order->customer->district }}
-                    @else
-                        อ.{{ $order->customer->district }}
-                    @endif
-                    @if ($order->customer->province === 'กรุงเทพมหานคร')
-                        {{ $order->customer->province }}
-                    @else
-                        จ.{{ $order->customer->province }}
-                    @endif
-                    {{ $order->customer->postal_code }}<br />
-                    Tel: {{ $order->customer->phoneno }}
-                </strong>
+                @if ($order->customer->province === 'กรุงเทพมหานคร')
+                    เขต{{ $order->customer->district }}
+                @else
+                    อ.{{ $order->customer->district }}
+                @endif
+                @if ($order->customer->province === 'กรุงเทพมหานคร')
+                    {{ $order->customer->province }}
+                @else
+                    จ.{{ $order->customer->province }}
+                @endif
+                {{ $order->customer->postal_code }}<br />
+                <strong>Tel: {{ $order->customer->phoneno }}</strong>
 
             </td>
             <td style="width: 50%;vertical-align:top">
-                <strong>
-                    ผู้รับสินค้า: {{ $order->to_customer->name }}
-                    @if ($order->to_customer->taxid != '')
-                        Tax ID. {{ $order->to_customer->taxid }}
-                    @endif
 
-                    {{ $order->to_customer->address }}
-                    @if ($order->to_customer->province === 'กรุงเทพมหานคร')
-                        แขวง{{ $order->to_customer->sub_district }}
-                    @else
-                        ต.{{ $order->to_customer->sub_district }}
-                    @endif
+                ผู้รับสินค้า: {{ $order->to_customer->name }}
+                @if ($order->to_customer->taxid != '')
+                    Tax ID. {{ $order->to_customer->taxid }}
+                @endif
+
+                {{ $order->to_customer->address }}
+                @if ($order->to_customer->province === 'กรุงเทพมหานคร')
+                    แขวง{{ $order->to_customer->sub_district }}
+                @else
+                    ต.{{ $order->to_customer->sub_district }}
+                @endif
 
 
-                    @if ($order->to_customer->province === 'กรุงเทพมหานคร')
-                        เขต{{ $order->to_customer->district }}
-                    @else
-                        อ.{{ $order->to_customer->district }}
-                    @endif
-                    @if ($order->to_customer->province === 'กรุงเทพมหานคร')
-                        {{ $order->to_customer->province }}
-                    @else
-                        จ.{{ $order->to_customer->province }}
-                    @endif
-                    {{ $order->to_customer->postal_code }}<br />
-                    Tel: {{ $order->to_customer->phoneno }}
-                </strong>
+                @if ($order->to_customer->province === 'กรุงเทพมหานคร')
+                    เขต{{ $order->to_customer->district }}
+                @else
+                    อ.{{ $order->to_customer->district }}
+                @endif
+                @if ($order->to_customer->province === 'กรุงเทพมหานคร')
+                    {{ $order->to_customer->province }}
+                @else
+                    จ.{{ $order->to_customer->province }}
+                @endif
+                {{ $order->to_customer->postal_code }}<br />
+                <strong>Tel: {{ $order->to_customer->phoneno }}</strong>
 
             </td>
         </tr>
@@ -181,38 +178,25 @@
 
         @foreach ($order->order_details as $item)
             <tr style="vertical-align:top;height:14px">
-
                 <td style="width: 45%;text-align: left">
-                    <strong>
-                        {{ $loop->iteration }}.{{ $item->product->name }}
-                        @isset($item->remark)
-                            ({{ $item->remark }})
-                        @endisset
-                    </strong>
+                    {{ $loop->iteration }}.{{ $item->product->name }}
+                    @isset($item->remark)
+                        ({{ $item->remark }})
+                    @endisset
                 </td>
                 <td style="width: 11%;text-align: right">
-                    <strong>
-                        {{ number_format($item->amount, 2) }}
-                    </strong>
+                    {{ number_format($item->amount, 2) }}
                 </td>
                 <td style="width: 9%;text-align: center">
-                    <strong>
-                        {{ $item->unit->name }}
-                    </strong>
+                    {{ $item->unit->name }}
                 </td>
                 <td style="width: 15%;text-align: right">
-                    <strong>
-                        {{ number_format($item->price, 2) }}
-                    </strong>
+                    {{ number_format($item->price, 2) }}
                 </td>
                 <td style="width: 20%;text-align: right">
-                    <strong>
-                        {{ number_format($item->price * $item->amount, 2) }}
-
-                    </strong>
+                    {{ number_format($item->price * $item->amount, 2) }}
 
                 </td>
-                </strong>
             </tr>
         @endforeach
         @if (count($order->order_details) < 5)
@@ -263,7 +247,7 @@
 
     <table style="width: 100%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
-            <td style="width: 40%;">
+            <td style="width: 50%;">
                 พนักงานตรวจรับ : {{ $order->checker->name }}<br />
                 พนักงานออกเอกสาร : {{ $order->user->name }}<br />
                 พนักงานจัดขึ้น :
@@ -272,7 +256,7 @@
                 @endisset
 
             </td>
-            <td style="width: 60%;text-align: right">
+            <td style="width: 50%;text-align: right">
                 <strong> ( {{ baht_text($order->order_amount) }} ) </strong><br>
 
                 เลขที่ตรวจสอบสถานะ : <strong>{{ $order->tracking_no }} Ref ID: {{ $order->id }} </strong><br />
