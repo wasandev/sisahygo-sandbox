@@ -111,13 +111,26 @@ class ArController extends Controller
                     ->get();
             }
         } else {
-            $ar_receipts = Ar_customer::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
-                ->where('ar_balances.customer_id', '=', $customer)
-                ->where('ar_balances.doctype', '=', 'R')
-                ->where('ar_balances.docdate', '>=', $from)
-                ->where('ar_balances.docdate', '<=', $to)
-                ->orderBy('ar_balances.id', 'asc')
-                ->get();
+            if ($branch == 'all') {
+                $branchdata = null;
+                $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
+                    ->where('ar_balances.customer_id', '=', $customer)
+                    ->where('ar_balances.doctype', '=', 'R')
+                    ->where('ar_balances.docdate', '>=', $from)
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->orderBy('ar_balances.id', 'asc')
+                    ->get();
+            } else {
+                $branchdata = Branch::find($branch);
+                $ar_receipts = Ar_balance::join('receipts', 'ar_balances.receipt_id', 'receipts.id')
+                    ->where('ar_balances.customer_id', '=', $customer)
+                    ->where('ar_balances.doctype', '=', 'R')
+                    ->where('ar_balances.docdate', '>=', $from)
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->where('receipts.branch_id', '=', $branch)
+                    ->orderBy('ar_balances.id', 'asc')
+                    ->get();
+            }
         }
 
         $receipt_groups = $ar_receipts->groupBy([function ($item) {
