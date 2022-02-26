@@ -50,14 +50,15 @@ class WaybillObserver
                             'car_id' => $waybill->car_id,
                             'vendor_id' => $waybill->car->vendor_id,
                             'doctype' => 'R',
-                            'docno' => $waybill->waybill_no,
-                            'cardoc_date' => $waybill->departure_at,
                             'waybill_id' => $waybill->id,
-                            'description' => 'ค่าขนส่งสินค้า',
-                            'user_id' => auth()->user()->id
+
                         ],
                         [
+                            'docno' => $waybill->waybill_no,
+                            'cardoc_date' => $waybill->departure_at,
                             'amount' => $waybill->waybill_payable,
+                            'description' => 'ค่าขนส่งสินค้า',
+                            'user_id' => auth()->user()->id
                         ]
 
                     );
