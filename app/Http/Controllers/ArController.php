@@ -75,9 +75,10 @@ class ArController extends Controller
         $report_title = 'รายงานสรุปยอดลูกหนี้';
         $company = CompanyProfile::find(1);
 
-        $ar_balances = Ar_balance::where('ar_balances.docdate', '>=', $from)
+        $ar_balances = Ar_balance::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
+            ->where('ar_balances.docdate', '>=', $from)
             ->where('ar_balances.docdate', '<=', $to)
-            ->orderBy('ar_balances.customer_id', 'asc')
+            ->orderBy('customers.name', 'asc')
             ->get();
 
 
