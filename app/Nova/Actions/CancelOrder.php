@@ -103,7 +103,7 @@ class CancelOrder extends Action
                 Order_status::create([
                     'order_header_id' => $model->id,
                     'status' => 'cancel',
-                    'user_id' => auth()->user()->id,
+
                 ]);
 
 
@@ -122,7 +122,7 @@ class CancelOrder extends Action
     public function fields()
     {
         return [
-            Text::make('ระบุสาเหตุที่ยกเลิก', 'remark')->rules('required'),
+            Text::make('ระบุสาเหตุที่ยกเลิกและบิลที่เปิดแทน', 'remark')->rules('required'),
         ];
     }
 }
