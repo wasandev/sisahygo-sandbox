@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\District;
 use App\Nova\Metrics\CustomerByPaymentType;
 use App\Nova\Metrics\CustomerByPtype;
 use App\Nova\Metrics\CustomerByType;
@@ -28,6 +29,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersPerDay;
+use App\Rules\CheckDistrict;
 use Illuminate\Support\Str;
 use Kristories\Qrcode\Qrcode;
 use Laravel\Nova\Actions\Action;
@@ -129,11 +131,14 @@ class Customer extends Resource
                 ->fromValue('district')
                 ->sortable()
                 ->rules('required'),
+
             InputDistrict::make(__('District'), 'district')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('amphoe')
                 ->sortable()
-                ->rules('required'),
+                ->rules('required')
+                ->creationRules([new CheckDistrict])
+                ->updateRules([new CheckDistrict]),
             InputProvince::make(__('Province'), 'province')
                 ->withValues(['district', 'amphoe', 'province', 'zipcode'])
                 ->fromValue('province')

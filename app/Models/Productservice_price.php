@@ -12,7 +12,7 @@ class Productservice_price extends Model
         'product_id', 'from_branch_id', 'unit_id', 'price',  'district', 'province', 'user_id', 'updated_by', 'branch_area_id'
     ];
 
-    protected $table = 'productservice_price';
+    protected $table = 'productservice_newprice';
 
     public function product()
     {

@@ -150,9 +150,9 @@ class Product_style extends Resource
             (new AddProductServicePriceStyle)->canSee(function ($request) {
                 return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('manage productservice_prices');
             }),
-            (new AddProductServiceNewPriceStyle)->canSee(function ($request) {
-                return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('manage productservice_prices');
-            }),
+            // (new AddProductServiceNewPriceStyle)->canSee(function ($request) {
+            //     return $request->user()->role == 'admin' || $request->user()->hasPermissionTo('manage productservice_prices');
+            // }),
         ];
     }
 

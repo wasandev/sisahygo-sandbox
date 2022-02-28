@@ -40,7 +40,7 @@ class Branchrec_order extends Resource
     public static $polling = false;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
-    public static $perPageOptions = [50, 100, 150];
+    public static $perPageOptions = [50, 100, 200];
     public static $perPageViaRelationship = 200;
     public static $with = ['customer', 'to_customer', 'user'];
     public static $trafficCop = false;

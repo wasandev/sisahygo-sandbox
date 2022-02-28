@@ -21,7 +21,7 @@ class Checker_detail extends Resource
     public static $priority = 2;
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
-    public static $with = ['product', 'unit'];
+    public static $with = ['product', 'unit', 'productservice_price'];
 
 
     /**

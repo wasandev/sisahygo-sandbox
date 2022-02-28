@@ -23,8 +23,9 @@ class CheckerDetailObserver
         } elseif ($checker_detail->weight == 0) {
             $product = Product::where('id', $checker_detail->product_id)
                 ->where('unit_id', $checker_detail->unit_id)->first();
-
-            $checker_detail->weight = $product->weight;
+            if (isset($product)) {
+                $checker_detail->weight = $product->weight;
+            }
         }
 
         $checker_detail->user_id = auth()->user()->id;
@@ -51,8 +52,9 @@ class CheckerDetailObserver
         } elseif ($checker_detail->weight == 0) {
             $product = Product::where('id', $checker_detail->product_id)
                 ->where('unit_id', $checker_detail->unit_id)->first();
-
-            $checker_detail->weight = $product->weight;
+            if (isset($product)) {
+                $checker_detail->weight = $product->weight;
+            }
         }
 
         if ($checker_detail->unit->name <> 'กิโลกรัม') {

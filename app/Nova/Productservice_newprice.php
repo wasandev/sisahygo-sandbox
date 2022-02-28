@@ -20,7 +20,7 @@ use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class Productservice_newprice extends Resource
 {
-    //public static $displayInNavigation = false;
+    public static $displayInNavigation = false;
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 8.1;
     public static $perPageOptions = [50, 100, 150];

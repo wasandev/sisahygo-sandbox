@@ -216,27 +216,27 @@ class Product extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('edit productservice_prices');
                 }),
-            (new Actions\AddProductServiceNewPriceZone)
-                ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('edit productservice_prices');
-                })
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('edit productservice_prices');
-                }),
-            (new Actions\AddProductServiceNewPrice)
-                ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('edit productservice_prices');
-                })
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('edit productservice_prices');
-                }),
-            (new Actions\AddProductServiceNewPriceDistrict)
-                ->canRun(function ($request) {
-                    return $request->user()->hasPermissionTo('edit productservice_prices');
-                })
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('edit productservice_prices');
-                }),
+            // (new Actions\AddProductServiceNewPriceZone)
+            //     ->canRun(function ($request) {
+            //         return $request->user()->hasPermissionTo('edit productservice_prices');
+            //     })
+            //     ->canSee(function ($request) {
+            //         return $request->user()->hasPermissionTo('edit productservice_prices');
+            //     }),
+            // (new Actions\AddProductServiceNewPrice)
+            //     ->canRun(function ($request) {
+            //         return $request->user()->hasPermissionTo('edit productservice_prices');
+            //     })
+            //     ->canSee(function ($request) {
+            //         return $request->user()->hasPermissionTo('edit productservice_prices');
+            //     }),
+            // (new Actions\AddProductServiceNewPriceDistrict)
+            //     ->canRun(function ($request) {
+            //         return $request->user()->hasPermissionTo('edit productservice_prices');
+            //     })
+            //     ->canSee(function ($request) {
+            //         return $request->user()->hasPermissionTo('edit productservice_prices');
+            //     }),
             (new Actions\SetProductCategory)
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('edit products');
