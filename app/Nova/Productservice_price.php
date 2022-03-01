@@ -6,6 +6,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
@@ -87,9 +88,13 @@ class Productservice_price extends Resource
             // BelongsTo::make('ตารางราคา', 'tableprice', 'App\Nova\Tableprice')
             //     ->sortable()
             //     ->searchable(),
+            Boolean::make('สถานะการปรับ', function () {
+                return ($this->updated_at->month >= 2 && $this->updated_at->year = '2022');
+            }),
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
-                ->exceptOnForms(),
+                ->exceptOnForms()
+                ->sortable(),
             BelongsTo::make(__('Product'), 'product', 'App\Nova\Product')
                 ->sortable()
                 ->searchable(),
