@@ -21,6 +21,8 @@ class Productservice_price extends Resource
     public static $group = "4.งานด้านการตลาด";
     public static $priority = 8;
     public static $perPageOptions = [50, 100, 150];
+    public static $perPageViaRelationship = 50;
+
 
 
     public static $with = ['product', 'unit', 'branch_area'];
