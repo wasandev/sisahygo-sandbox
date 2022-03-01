@@ -73,7 +73,7 @@ class Customer extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'customer_code',  'district', 'province'
+        'id', 'name'
     ];
 
     public static function label()

@@ -90,7 +90,7 @@ class Productservice_price extends Resource
             //     ->searchable(),
             Boolean::make('สถานะการปรับ', function () {
                 return ($this->updated_at->month >= 2 && $this->updated_at->year = '2022');
-            }),
+            })->exceptOnForms(),
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->exceptOnForms()
