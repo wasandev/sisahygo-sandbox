@@ -62,7 +62,8 @@ class Branch_balance_partner extends Resource
     ];
 
     public static $searchRelations = [
-        'customer' => ['name'], 'branchrec_order' => ['order_header_no']
+        'customer' => ['name'], 'branchrec_order' => ['order_header_no'],
+        'receipt' => ['receipt_no']
     ];
     public static function label()
     {
