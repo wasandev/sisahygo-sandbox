@@ -9,6 +9,7 @@ use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Filters\BranchPayFromDate;
 use App\Nova\Filters\BranchPayToDate;
+use App\Nova\Filters\DiscountItem;
 use App\Nova\Filters\PaymentStatus;
 use App\Nova\Lenses\Branch\BranchBalanceBydate;
 use App\Nova\Lenses\Branch\BranchBalanceReceipt;
@@ -138,7 +139,7 @@ class Branch_balance extends Resource
 
                 return $this->branchrec_order->branchrec_waybill->waybill_no . '-' . $this->branchrec_order->branchrec_waybill->car->car_regist;
             }),
-            Text::make('หมายเหตุ', 'remark')->onlyOnDetail(),
+            Text::make('หมายเหตุ', 'remark'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
@@ -176,6 +177,7 @@ class Branch_balance extends Resource
         return [
             new PaymentStatus(),
             new BranchBalanceFilter(),
+            new DiscountItem(),
             new BranchPayFromDate(),
             new BranchPayToDate(),
             new BranchbalanceFromDate(),
