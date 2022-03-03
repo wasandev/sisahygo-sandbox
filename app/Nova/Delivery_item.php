@@ -22,6 +22,7 @@ class Delivery_item extends Resource
     public static $group = '8.สำหรับสาขา';
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
+    public static $perPageViaRelationship = 100;
     /**
      * The model the resource corresponds to.
      *
