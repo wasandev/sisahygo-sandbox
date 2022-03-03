@@ -60,6 +60,7 @@ class BranchReceipt extends Action
             $delivery_detail = Delivery_detail::where('order_header_id', $model->order_header_id)->first();
 
             $model->discount_amount = $fields->discount_amount;
+            $model->remark = $fields->description . '-' . $fields->discount_remark;
 
             if ($fields->tax_status) {
                 $model->tax_amount = ($model->bal_amount - $fields->discount_amount) * 0.01;
@@ -74,7 +75,7 @@ class BranchReceipt extends Action
                 $model->payment_status = true;
             }
 
-            $model->remark = $fields->description;
+
             $model->branchpay_date = $fields->paydate;
             $model->save();
 
@@ -195,9 +196,12 @@ class BranchReceipt extends Action
                         ->rules('required'),
                     Text::make(__('Bank reference no'), 'reference'),
                 ])->dependsOn('payment_by', 'T'),
-                Currency::make('ส่วนลด', 'discount_amount'),
+                Boolean::make('มีส่วนลด', 'discount_flag'),
+                NovaDependencyContainer::make([
+                    Currency::make('ส่วนลด', 'discount_amount'),
+                    Text::make('สาเหตุการลด', 'discount_remark')->rules('required'),
+                ])->dependsOn('discount_flag', true),
                 Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
-
                 Text::make('หมายเหตุเพิ่มเติม', 'remark')
             ];
         }
@@ -219,7 +223,12 @@ class BranchReceipt extends Action
                     ->rules('required'),
                 Text::make(__('Bank reference no'), 'reference'),
             ])->dependsOn('payment_by', 'T'),
-            Currency::make('ส่วนลด', 'discount_amount'),
+
+            Boolean::make('มีส่วนลด', 'discount_flag'),
+            NovaDependencyContainer::make([
+                Currency::make('ส่วนลด', 'discount_amount'),
+                Text::make('สาเหตุการลด', 'discount_remark')->rules('required'),
+            ])->dependsOn('discount_flag', true),
             Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
         ];
     }

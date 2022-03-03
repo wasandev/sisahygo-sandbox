@@ -82,9 +82,9 @@ class Order_banktransferObserver
                                 $branch_balance->branchpay_date = $order_banktransfer->transfer_date;
 
                                 if ($order_header->trantype == '1') {
-                                    $branch_balance->remark = $delivery_item->description;
+                                    $branch_balance->remark = $branch_balance->remark . '-' . $delivery_item->description;
                                 } else {
-                                    $branch_balance->remark = 'รับสินค้าที่สาขา';
+                                    $branch_balance->remark = $branch_balance->remark . '-' . 'รับสินค้าที่สาขา';
                                 }
                                 $branch_balance->receipt_id = $order_banktransfer->receipt_id;
                                 $branch_balance->payment_status = true;

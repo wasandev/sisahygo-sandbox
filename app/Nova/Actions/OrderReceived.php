@@ -93,6 +93,10 @@ class OrderReceived extends Action
                     $model->bankaccount_id = $fields->bankaccount;
                     $model->bankreference = $fields->refernce;
                     $model->payment_status = false;
+                    $branch_balance = Branch_balance::where('order_header_id', $model->id)->first();
+                    $branch_balance->remark = $fields->description . '-' . $fields->discount_remark;
+                    $branch_balance->discount_amount = $fields->discount_amount;
+                    $branch_balance->save();
 
                     //create bank_transfer
                     $order_banktransfer = Order_banktransfer::create([
@@ -120,11 +124,14 @@ class OrderReceived extends Action
                     $branch_balance = Branch_balance::where('order_header_id', $model->id)->first();
                     $branch_balance->pay_amount = $model->order_amount - $fields->discount_amount - $tax_amount;
                     $branch_balance->discount_amount = $fields->discount_amount;
+                    $branch_balance->remark = $fields->description . '-' . $fields->discount_remark;
+
+
                     $branch_balance->tax_amount = $tax_amount;
                     $branch_balance->updated_by = auth()->user()->id;
                     $branch_balance->branchpay_date = $fields->paydate;
                     $branch_balance->payment_status = true;
-                    $branch_balance->remark = $fields->description;
+                    //$branch_balance->remark = $fields->description;
                     $branch_balance->receipt_id = $receipt->id;
 
                     $branch_balance->save();
@@ -184,7 +191,12 @@ class OrderReceived extends Action
                             ->rules('required'),
                         Text::make(__('Bank reference no'), 'reference'),
                     ])->dependsOn('payment_by', 'T'),
-                    Currency::make('ส่วนลด', 'discount_amount'),
+                    Boolean::make('มีส่วนลด', 'discount_flag'),
+                    NovaDependencyContainer::make([
+                        Currency::make('ส่วนลด', 'discount_amount'),
+                        Text::make('สาเหตุการลด', 'discount_remark')->rules('required'),
+                    ])->dependsOn('discount_flag', true),
+
                     Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
                     Text::make('ชื่อผู้รับสินค้า', 'order_recname'),
                     Text::make('เลขบัตรประชาชน', 'idcardno'),
@@ -214,7 +226,12 @@ class OrderReceived extends Action
                     ->rules('required'),
                 Text::make(__('Bank reference no'), 'reference'),
             ])->dependsOn('payment_by', 'T'),
-            Currency::make('ส่วนลด', 'discount_amount'),
+            Boolean::make('มีส่วนลด', 'discount_flag'),
+            NovaDependencyContainer::make([
+                Currency::make('ส่วนลด', 'discount_amount'),
+                Text::make('สาเหตุการลด', 'discount_remark')->rules('required'),
+            ])->dependsOn('discount_flag', true),
+
             Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
             Text::make('ชื่อผู้รับสินค้า', 'order_recname'),
             Text::make('เลขบัตรประชาชน', 'idcardno'),

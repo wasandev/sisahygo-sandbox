@@ -191,8 +191,8 @@ class Branchrec_order extends Resource
         return [
             new ToBranch(),
             new PaymentStatus(),
-            new ByBranchPaymentType(),
             new ShowByOrderStatusBranch(),
+            new ByBranchPaymentType(),
             new OrderFromDate(),
             new OrderToDate(),
             new ByWaybill(),

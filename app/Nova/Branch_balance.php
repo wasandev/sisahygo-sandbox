@@ -138,6 +138,7 @@ class Branch_balance extends Resource
 
                 return $this->branchrec_order->branchrec_waybill->waybill_no . '-' . $this->branchrec_order->branchrec_waybill->car->car_regist;
             }),
+            Text::make('หมายเหตุ', 'remark')->onlyOnDetail(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
             DateTime::make(__('Created At'), 'created_at')
