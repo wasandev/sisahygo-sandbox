@@ -35,7 +35,7 @@ class OrderReportByBranchrec extends Lens
                 ->orderBy('order_year', 'asc')
                 ->orderBy('order_month', 'asc')
                 ->orderBy('order_headers.branch_rec_id', 'asc')
-                ->groupBy('order_year', 'order_month', 'order_headers.branch_rec_id')
+                ->groupBy('order_year', 'order_month', 'order_headers.branch_rec_id', 'order_headers.order_type')
 
         ));
     }
@@ -49,6 +49,9 @@ class OrderReportByBranchrec extends Lens
         return [
             'branches.name',
             DB::raw('YEAR(order_headers.order_header_date) order_year, MONTH(order_headers.order_header_date) order_month'),
+            DB::raw("SUM(CASE WHEN order_headers.order_type = 'general' THEN order_headers.order_amount ELSE 0 END) as general_amount"),
+            DB::raw("SUM(CASE WHEN order_headers.order_type = 'express' THEN order_headers.order_amount ELSE 0 END) as express_amount"),
+            DB::raw("SUM(CASE WHEN order_headers.order_type = 'charter' THEN order_headers.order_amount ELSE 0 END) as charter_amount"),
             DB::raw('sum(order_headers.order_amount) as amount'),
         ];
     }
@@ -66,8 +69,16 @@ class OrderReportByBranchrec extends Lens
                 return $this->order_year . '-' . $this->order_month;
             }),
             Text::make(__('Branch'), 'name'),
-
-            Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
+            Currency::make(__('ทั่วไป'), 'general_amount', function ($value) {
+                return $value;
+            }),
+            Currency::make(__('เหมาคัน'), 'charter_amount', function ($value) {
+                return $value;
+            }),
+            Currency::make(__('Express'), 'express_amount', function ($value) {
+                return $value;
+            }),
+            Currency::make(__('รวม'), 'amount', function ($value) {
                 return $value;
             }),
         ];
