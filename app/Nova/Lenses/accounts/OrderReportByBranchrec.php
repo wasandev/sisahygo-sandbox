@@ -35,7 +35,7 @@ class OrderReportByBranchrec extends Lens
                 ->orderBy('order_year', 'asc')
                 ->orderBy('order_month', 'asc')
                 ->orderBy('order_headers.branch_rec_id', 'asc')
-                ->groupBy('order_year', 'order_month', 'order_headers.branch_rec_id', 'order_headers.order_type')
+                ->groupBy('order_year', 'order_month', 'order_headers.branch_rec_id')
 
         ));
     }
