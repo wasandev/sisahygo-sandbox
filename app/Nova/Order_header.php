@@ -271,16 +271,16 @@ class Order_header extends Resource
 
             HasMany::make(__('Order detail'), 'order_details', 'App\Nova\Order_detail'),
 
-            // BelongsToMany::make('ค่าบริการอื่นๆ', 'service_charges', 'App\Nova\Service_charge')
-            //     ->fields(function () {
-            //         return [
-            //             Text::make('รายละเอียดเพิ่มเติม', 'description'),
-            //             Currency::make('จำนวนเงิน', 'service_amount'),
+            BelongsToMany::make('ค่าบริการอื่นๆ', 'service_charges', 'App\Nova\Service_charge')
+                ->fields(function () {
+                    return [
+                        Text::make('รายละเอียดเพิ่มเติม', 'description'),
+                        Currency::make('จำนวนเงิน', 'service_amount'),
 
-            //         ];
-            //     })->canSee(function ($request) {
-            //         return $this->resource->order_status == 'confirmed';
-            //     }),
+                    ];
+                })->canSee(function ($request) {
+                    return $this->resource->order_status == 'confirmed';
+                }),
             HasMany::make(__('Order status'), 'order_statuses', 'App\Nova\Order_status'),
         ];
     }
