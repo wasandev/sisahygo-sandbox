@@ -29,11 +29,11 @@
 
                 <th style="width: 20%;text-align: left;">วันที่ตั้งหนี้</th>
                 <th style="width: 10%;">ลำดับ</th>
-                <th style="width: 40%;text-align: center;">ลูกค้า</th>
+                <th style="width: 25%;text-align: center;">ลูกค้า</th>
                 <th style="width: 10%;text-align: center;">เลขที่ใบรับส่ง</th>
                 <th style="width: 10%;text-align: center;">วันที่ใบรับส่ง</th>
                 <th style="width: 10%;text-align: right;">จำนวนเงิน</th>
-                <th style="width: 10%;text-align: right;">*ชำระ - วันที่</th>
+                <th style="width: 15%;text-align: right;">*ชำระ - วันที่</th>
             </tr>
 
         </thead>
