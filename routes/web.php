@@ -81,9 +81,9 @@ Route::middleware('web', 'auth')
         Route::get('/invoice/preview/{id}', 'InvoiceController@preview')->name('preview');
         Route::get('/receipt/preview/{id}', 'ReceiptController@preview')->name('preview');
         Route::get('/ar/report_16/{customer}/{from}/{to}', 'ArController@report_16')->name('report_16');
-        Route::get('/ar/report_17/{from}/{to}', 'ArController@report_17')->name('report_17');
-        Route::get('/ar/report_18/{from}/{to}', 'ArController@report_18')->name('report_18');
-        Route::get('/ar/report_19/{branch}/{cutomer}/{from}/{to}', 'ArController@report_19')->name('report_19');
+        Route::get('/ar/report_17/{branch}/{from}/{to}', 'ArController@report_17')->name('report_17');
+        Route::get('/ar/report_18/{branch}/{from}/{to}', 'ArController@report_18')->name('report_18');
+        Route::get('/ar/report_19/{branch}/{customer}/{from}/{to}', 'ArController@report_19')->name('report_19');
 
         //Branch
         Route::get('/ar/report_20/{branch}/{from}/{to}', 'BranchController@report_20')->name('report_20');

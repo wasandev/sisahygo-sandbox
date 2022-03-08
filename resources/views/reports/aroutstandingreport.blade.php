@@ -2,63 +2,64 @@
 
 @section('header')
     @include('partials.reportheader')
-
 @endsection
 
 @section('content')
+    <table style="width:100%;">
 
-<table style="width:100%;">
-
-    <tr>
-        <td style="width: 50%;text-align: left;border:0px">
-
-            <br/>
-        </td>
-        <td style="width:50%;text-align: right;border:0px">
-            <strong>
-             ถึงวันที่: {{ date("d-m-Y", strtotime($to))}}<br/>
-            </strong>
-        </td>
-    </tr>
-
-</table>
-<br/>
-
-<table style="width: 100%;" >
-    <thead>
         <tr>
-            <th style="width: 5%;">ลำดับ</th>
-            <th style="width: 15%;text-align: center;">วันที่</th>
-            <th style="width: 15%;text-align: center;">เลขที่เอกสาร</th>
-            <th style="width: 15%;text-align: center;">เลขที่ใบแจ้งหนี้</th>
-            <th style="width: 15%;text-align: center;">วันที่ครบกำหนด</th>
-            <th style="width: 35%;text-align: right;">จำนวนเงิน</th>
+            <td style="width: 50%;text-align: left;border:0px">
+                <strong>
+                    @if ($branchdata != null)
+                        สาขา {{ $branchdata->name }}
+                    @else
+                        ทุกสาขา
+                    @endif
+                </strong>
+                <br />
+            </td>
+            <td style="width:50%;text-align: right;border:0px">
+                <strong>
+                    ถึงวันที่: {{ date('d-m-Y', strtotime($to)) }}<br />
+                </strong>
+            </td>
         </tr>
 
-    </thead>
+    </table>
+    <br />
 
-    <tbody>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="width: 5%;">ลำดับ</th>
+                <th style="width: 15%;text-align: center;">วันที่</th>
+                <th style="width: 15%;text-align: center;">เลขที่เอกสาร</th>
+                <th style="width: 15%;text-align: center;">เลขที่ใบแจ้งหนี้</th>
+                <th style="width: 15%;text-align: center;">วันที่ครบกำหนด</th>
+                <th style="width: 35%;text-align: right;">จำนวนเงิน</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
             @foreach ($ar_groups as $ar_item => $ar_balance)
-
                 <tr style="font-weight:bold">
                     <td colspan="4" style="text-align: left">
                         @php
                             $customer = \App\Models\Ar_customer::find($ar_item);
                         @endphp
-                        {{ $customer->name}}
+                        {{ $customer->name }}
                     </td>
                     <td style="text-align: center">
                         รวม
                     </td>
                     <td style="text-align: right">
-                        {{ number_format($aroutstandings->where('customer_id','=',$ar_item)
-                        ->sum('ar_amount'),2,'.',',') }}
+                        {{ number_format($aroutstandings->where('customer_id', '=', $ar_item)->sum('ar_amount'), 2, '.', ',') }}
                     </td>
                 </tr>
 
 
-                @foreach ($ar_balance as $item )
-
+                @foreach ($ar_balance as $item)
                     <tr style="vertical-align: top;">
                         <td style="text-align: center">
                             {{ $loop->iteration }}
@@ -68,7 +69,7 @@
                             {{ $item->docdate->format('d/m/Y') }}
                         </td>
                         <td style="text-align: center">
-                            {{ $item->docno}}
+                            {{ $item->docno }}
                         </td>
                         <td style="text-align: center">
                             @isset($item->invoice->invoice_no)
@@ -79,30 +80,26 @@
 
                         <td style="text-align: center">
                             @isset($item->invoice->invoice_no)
-                            {{ $item->invoice->due_date->format('d/m/Y') }}
+                                {{ $item->invoice->due_date->format('d/m/Y') }}
                             @endisset
                         </td>
                         <td style="text-align: right">
-                            {{ number_format($item->ar_amount,2,'.',',') }}
+                            {{ number_format($item->ar_amount, 2, '.', ',') }}
                         </td>
                     </tr>
                 @endforeach
-        @endforeach
+            @endforeach
 
-        <tr style="font-weight:bold">
-            <td colspan="5" style="text-align: left">
-                รวมทั้งหมด
-            </td>
-            <td style="text-align: right">
-                {{ number_format($aroutstandings->sum('ar_amount'),2,'.',',') }}
-            </td>
-        </tr>
+            <tr style="font-weight:bold">
+                <td colspan="5" style="text-align: left">
+                    รวมทั้งหมด
+                </td>
+                <td style="text-align: right">
+                    {{ number_format($aroutstandings->sum('ar_amount'), 2, '.', ',') }}
+                </td>
+            </tr>
 
-    </tbody>
+        </tbody>
 
-</table>
-
-
-
+    </table>
 @endsection
-

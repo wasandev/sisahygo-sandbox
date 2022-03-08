@@ -38,12 +38,15 @@ class PrintArSummaryReport extends Action
 
     public function handle(ActionFields $fields, Collection $models)
     {
-
+        $branch_value = $fields->ar_branch;
+        if ($branch_value == '') {
+            $branch_value = 'all';
+        }
         $from_value = $fields->from;
         $to_value = $fields->to;
 
 
-        return Action::openInNewTab('/ar/report_18/' . $from_value . '/' . $to_value);
+        return Action::openInNewTab('/ar/report_18/' . $branch_value . '/' . $from_value . '/' . $to_value);
     }
 
 
@@ -54,7 +57,12 @@ class PrintArSummaryReport extends Action
      */
     public function fields()
     {
+        $branchs = \App\Models\Branch::pluck('name', 'id');
         return [
+            Select::make('เลือกสาขา', 'ar_branch')
+                ->options($branchs)
+                ->searchable()
+                ->help('เลือกสาขาที่ต้องการออกรายงาน หากต้องการออกรายงานทั้งหมดไม่ต้องเลือก'),
             Date::make('วันที่เริ่มต้น', 'from')
                 ->rules('required'),
             Date::make('วันที่สิ้นสุด', 'to')

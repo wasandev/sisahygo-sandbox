@@ -3,7 +3,10 @@
 namespace App\Nova\Lenses\ar;
 
 use App\Nova\Actions\Accounts\PrintArOutstandingReport;
+use App\Nova\Filters\ArbalanceByBranch;
 use App\Nova\Filters\ArbalanceToDate;
+use App\Nova\Filters\ArFilterByBranch;
+use App\Nova\Filters\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -90,7 +93,7 @@ class ArOutstandingReport extends Lens
     public function filters(Request $request)
     {
         return [
-
+            new ArFilterByBranch,
             new ArbalanceToDate
         ];
     }

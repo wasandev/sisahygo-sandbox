@@ -6,6 +6,8 @@ namespace App\Nova\Lenses\ar;
 use App\Nova\Actions\Accounts\PrintArSummaryReport;
 use App\Nova\Filters\ArbalanceFromDate;
 use App\Nova\Filters\ArbalanceToDate;
+use App\Nova\Filters\ArFilterByBranch;
+use App\Nova\Filters\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -93,6 +95,7 @@ class ArSummaryReport extends Lens
             // (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
             //     ->fieldAttribute('ar_customer')
             //     ->filterBy('customer_id'),
+            new ArFilterByBranch,
             new ArbalanceFromDate,
             new ArbalanceToDate
         ];

@@ -5,6 +5,7 @@ namespace App\Nova\Lenses\ar;
 use App\Nova\Actions\Accounts\PrintArReceiptReport;
 use App\Nova\Filters\ArbalanceFromDate;
 use App\Nova\Filters\ArbalanceToDate;
+use App\Nova\Filters\ArFilterByBranch;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
 use Illuminate\Http\Request;
@@ -94,7 +95,7 @@ class ArReceiptReport extends Lens
             // (new NovaSearchableBelongsToFilter('ตามลูกค้า'))
             //     ->fieldAttribute('ar_customer')
             //     ->filterBy('customer_id'),
-
+            new ArFilterByBranch,
             new ArbalanceFromDate,
             new ArbalanceToDate,
         ];
