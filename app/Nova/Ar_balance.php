@@ -32,6 +32,7 @@ class Ar_balance extends Resource
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
     public static $trafficCop = false;
+    public static $perPageViaRelationship = 200;
 
     public static $with = ['ar_customer',  'user', 'order_header', 'invoice', 'receipt_ar'];
     /**
