@@ -128,7 +128,8 @@ class Employee extends Resource
                 ->sortable(),
             Text::make(__('Name'), 'name')
                 ->sortable()
-                ->rules('required', 'unique:employees,name'),
+                ->rules('required')
+                ->creationRules('unique:employees,name'),
             Text::make(__('ID card number'), 'taxid')
                 ->sortable()
                 ->hideFromIndex()
