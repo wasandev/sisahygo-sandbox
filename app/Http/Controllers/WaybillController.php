@@ -59,8 +59,8 @@ class WaybillController extends Controller
             $waybills = Waybill::whereDate('departure_at', '>=', $from)
                 ->whereDate('departure_at', '<=', $to)
                 ->whereNotIn('waybill_status', ['loading', 'cancel'])
-                ->orderBy('id', 'asc')
-                ->orderBy('waybill_date', 'asc')
+                //->orderBy('id', 'asc')
+                ->orderBy('departure_at', 'asc')
                 ->orderBy('branch_rec_id', 'asc')
                 ->orderBy('waybill_type', 'asc')
                 ->get();
@@ -70,8 +70,8 @@ class WaybillController extends Controller
                 ->whereDate('departure_at', '<=', $to)
                 ->where('routeto_branch_id', '=', $routetobranch)
                 ->whereNotIn('waybill_status', ['loading', 'cancel'])
-                ->orderBy('id', 'asc')
-                ->orderBy('waybill_date', 'asc')
+                //->orderBy('id', 'asc')
+                ->orderBy('departure_at', 'asc')
                 ->orderBy('branch_rec_id', 'asc')
                 ->orderBy('waybill_type', 'asc')
                 ->get();
