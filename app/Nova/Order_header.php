@@ -276,7 +276,6 @@ class Order_header extends Resource
                     return [
                         Text::make('รายละเอียดเพิ่มเติม', 'description'),
                         Currency::make('จำนวนเงิน', 'service_amount'),
-
                     ];
                 })->canSee(function ($request) {
                     return $this->resource->order_status == 'confirmed';

@@ -99,7 +99,7 @@ class Carpayment extends Resource
                 ])->default('T')
                 ->displayUsingLabels()
                 ->sortable(),
-
+            Text::make(__('Description'), 'description')->default('ค่าบรรทุก(เบิกเดินทาง)'),
             BelongsTo::make('ใบกำกับ', 'branchrec_waybill', 'App\Nova\Branchrec_waybill')
                 ->sortable()
                 ->exceptOnForms()
@@ -110,8 +110,8 @@ class Carpayment extends Resource
             BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
                 ->exceptOnForms()
                 ->sortable(),
-            Text::make(__('Description'), 'description')->default('ค่าบรรทุก(เบิกเดินทาง)')
-                ->hideFromIndex(),
+
+
             Currency::make(__('Amount'), 'amount')
                 ->sortable(),
             Select::make('จ่ายด้วย', 'payment_by')->options([
