@@ -10,6 +10,7 @@ use App\Models\Carpayment;
 use App\Models\Order_status;
 use App\Models\Routeto_branch;
 use App\Models\Waybill_status;
+use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class Branchrec_waybillObserver
@@ -38,6 +39,11 @@ class Branchrec_waybillObserver
             if ($routeto_branch->dest_branch->type == 'partner') {
                 //จ่ายเงินรถด้วยรายการเก็บปลายทาง
                 $payment_no = IdGenerator::generate(['table' => 'carpayments', 'field' => 'payment_no', 'length' => 15, 'prefix' => 'P' . date('Ymd')]);
+                // if (($branchrec_waybill->departure_at->month <> Carbon::now()->month) && ($branchrec_waybill->departure_at->year <> Carbon::now()->year)) {
+                //     $car_paydate = $branchrec_waybill->departure_at;
+                // } else {
+                //     $car_paydate = today();
+                // }
 
                 Carpayment::create([
                     'status' => true,

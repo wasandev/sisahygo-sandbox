@@ -29,7 +29,8 @@ class CarCheck extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                ->leftjoin('carpayments', 'carpayments.waybill_id', '=', 'waybills.id')
+                ->join('waybills', 'waybills.car_id', '=', 'cars.id')
+                ->join('carpayments', 'carpayments.car_id', '=', 'cars.id')
                 ->join('car_balances', 'car_balances.docno', 'waybills.waybill_no')
                 ->join('order_headers', 'order_headers.waybill_id', '=', 'waybills.id')
                 ->orderBy('waybills.id', 'asc')
