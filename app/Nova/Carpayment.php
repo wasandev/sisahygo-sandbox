@@ -154,7 +154,7 @@ class Carpayment extends Resource
 
                 // BelongsTo::make(__('Cheque Bank'), 'chequebank', 'App\Nova\Bank')
                 //     ->nullable()
-                Select::make(__('Cheque Bank'), 'chequebank')
+                Select::make(__('Cheque Bank'), 'chequebank_id')
                     ->options($bank)
                     ->displayUsingLabels()
                     ->nullable(),
