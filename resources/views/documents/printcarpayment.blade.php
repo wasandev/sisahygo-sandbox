@@ -34,7 +34,7 @@
                         อ.{{ $carpayment->vendor->district }}
                     @endif
 
-                    จ.{{                     จ.$carpayment->vendor->province . ' ' . $carpayment->vendor->postal_code }}
+                    จ.{{ $carpayment->vendor->province . ' ' . $carpayment->vendor->postal_code }}
                     @isset($carpayment->vendor->phoneno)
                         Tel: {{ $carpayment->vendor->phoneno }}
                     @endisset
@@ -57,7 +57,8 @@
                         @break
 
                         @case('T')
-                            จ่ายโดย : เงินโอน เข้าบัญชี {{ $carpayment->tobank->name }} เลขที่ {{ $carpayment->tobankaccount }}
+                            จ่ายโดย : เงินโอน เข้าบัญชี {{ $carpayment->tobank->name }} เลขที่
+                            {{ $carpayment->tobankaccount }}
                             ชื่อบัญชี {{ $carpayment->tobankaccountname }}
                             <br />
                         @break
