@@ -104,7 +104,7 @@ class ArController extends Controller
         if ($branch == 'all') {
             $branchdata = null;
             $ar_balances = Ar_balance::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
-                ->where('ar_balances.docdate', '>=', $from)
+                //->where('ar_balances.docdate', '>=', $from)
                 ->where('ar_balances.docdate', '<=', $to)
                 ->orderBy('customers.name', 'asc')
                 ->get();
@@ -112,7 +112,7 @@ class ArController extends Controller
             $branchdata = Branch::find($branch);
             $ar_balances = Ar_balance::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
                 ->where('ar_balances.branch_id', '=', $branch)
-                ->where('ar_balances.docdate', '>=', $from)
+                //->where('ar_balances.docdate', '>=', $from)
                 ->where('ar_balances.docdate', '<=', $to)
                 ->orderBy('customers.name', 'asc')
                 ->get();

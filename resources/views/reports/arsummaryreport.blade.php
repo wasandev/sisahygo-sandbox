@@ -60,8 +60,14 @@
                         ->where('doctype', '=', 'R')
                         ->sum('ar_amount');
                     $ar_bringforword = $payforword - $recforword;
-                    $ar_paybalance = $ar_items->where('doctype', '=', 'P')->sum('ar_amount');
-                    $ar_recbalance = $ar_items->where('doctype', '=', 'R')->sum('ar_amount');
+                    $ar_paybalance = $ar_items
+                        ->where('doctype', '=', 'P')
+                        ->where('docdate', '>', $from)
+                        ->sum('ar_amount');
+                    $ar_recbalance = $ar_items
+                        ->where('doctype', '=', 'R')
+                        ->where('docdate', '>', $from)
+                        ->sum('ar_amount');
                     $ar_balamount = $ar_bringforword + $ar_paybalance - $ar_recbalance;
                     $sum_forword += $ar_bringforword;
                 @endphp
