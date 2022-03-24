@@ -50,7 +50,7 @@ class Delivery extends Model
     }
     public function sender()
     {
-        return $this->belongsTo('App\Models\User', 'sender_id');
+        return $this->belongsTo('App\Models\User', 'sender_id', 'id');
     }
     public function delivery_items()
     {

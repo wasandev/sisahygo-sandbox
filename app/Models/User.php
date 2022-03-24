@@ -89,14 +89,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\User', 'updated_by');
     }
 
-    public function checker()
-    {
-        return $this->belongsTo('App\Models\User', 'checker_id');
-    }
-    public function loader()
-    {
-        return $this->belongsTo('App\Models\User', 'loader_id');
-    }
+    // public function checker()
+    // {
+    //     return $this->belongsTo('App\Models\User', 'checker_id');
+    // }
+    // public function loader()
+    // {
+    //     return $this->belongsTo('App\Models\User', 'loader_id');
+    // }
     public function department()
     {
         return $this->belongsTo('App\Models\Department');

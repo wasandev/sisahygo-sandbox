@@ -116,11 +116,9 @@ class Delivery extends Resource
                 ->readonly(),
             BelongsTo::make('เส้นทาง', 'branch_route', 'App\Nova\Branch_route'),
             BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User')
-
                 ->rules('required')
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage branchrec_orders');
-                }),
+                ->searchable(),
+
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail()
                 ->canSee(function ($request) {
