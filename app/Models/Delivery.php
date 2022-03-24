@@ -46,7 +46,7 @@ class Delivery extends Model
 
     public function driver()
     {
-        return $this->belongsTo('App\Models\Employee', 'driver_id');
+        return $this->belongsTo('App\Models\Employee', 'driver_id', 'id');
     }
     public function sender()
     {

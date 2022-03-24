@@ -165,8 +165,9 @@ class Order_problem extends Resource
                     'S' => 'ลูกค้าผู้ส่ง',
                     'R' => 'ลูกค้าผู้รับ',
                 ])->showOnCreating()
-                ->hideFromIndex(),
-            BelongsTo::make('ลูกค้าผู้เรียกร้อง', 'customer', 'App\Nova\Customer')
+                ->hideFromIndex()
+                ->rules('required'),
+            BelongsTo::make('ชื่อลูกค้า', 'customer', 'App\Nova\Customer')
                 ->searchable(),
             //->onlyOnDetail(),
             Text::make('ผู้แจ้งเรื่อง', 'contact_person')->nullable()

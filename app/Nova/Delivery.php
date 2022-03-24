@@ -104,9 +104,7 @@ class Delivery extends Resource
                 ->sortable(),
             BelongsTo::make(__('Driver'), 'driver', 'App\Nova\Employee')
                 ->hideFromIndex()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('manage branchrec_orders');
-                }),
+                ->searchable(),
             Text::make(__('Description'), 'description')
                 ->hideFromIndex()
                 ->canSee(function ($request) {
