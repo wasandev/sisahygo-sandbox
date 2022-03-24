@@ -45,7 +45,7 @@ class Branchrec_waybillObserver
                 } elseif (($branchrec_waybill->departure_at->month > Carbon::now()->month) && ($branchrec_waybill->departure_at->year < Carbon::now()->year)) {
                     $car_paydate = $branchrec_waybill->departure_at;
                 } else {
-                    $car_paydate = today()->format("Y-m-d");
+                    $car_paydate = today();
                 }
 
                 Carpayment::create([
@@ -56,7 +56,7 @@ class Branchrec_waybillObserver
                     'waybill_id' => $branchrec_waybill->id,
                     'car_id' => $branchrec_waybill->car_id,
                     'vendor_id' => $branchrec_waybill->car->vendor_id,
-                    'payment_date' => $car_paydate->format("Y-m-d"),
+                    'payment_date' => $car_paydate,
                     'amount' => $branch_balances->sum('order_amount'),
                     'payment_by' => 'H',
                     'tax_flag' => true,
