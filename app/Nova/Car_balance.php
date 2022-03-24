@@ -87,11 +87,20 @@ class Car_balance extends Resource
 
 
             BelongsTo::make('ใบกำกับ', 'waybill', 'App\Nova\Waybill')
-                ->sortable()->hideFromIndex(),
+                ->sortable()
+                ->hideFromIndex()
+                ->searchable()
+                ->nullable(),
             BelongsTo::make('ใบจ่ายเงิน', 'carpayment', 'App\Nova\Carpayment')
-                ->sortable()->hideFromIndex(),
+                ->sortable()
+                ->hideFromIndex()
+                ->searchable()
+                ->nullable(),
             BelongsTo::make('ใบรับเงิน', 'carreceive', 'App\Nova\Carreceive')
-                ->sortable()->hideFromIndex(),
+                ->sortable()
+                ->hideFromIndex()
+                ->searchable()
+                ->nullable(),
             Currency::make('จำนวนเงิน', 'amount'),
             Text::make('รายละเอียด', 'description'),
 
