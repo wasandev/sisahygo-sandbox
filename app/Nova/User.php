@@ -210,7 +210,7 @@ class User extends Resource
         return [
             new Branch,
             new UserDepartment,
-            new CurrentUser
+            //new CurrentUser
         ];
     }
 
