@@ -6,6 +6,7 @@ use App\Models\District;
 use App\Nova\Metrics\CustomerByPaymentType;
 use App\Nova\Metrics\CustomerByPtype;
 use App\Nova\Metrics\CustomerByType;
+use App\Nova\Metrics\CustomerOrdersPerMonth;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasOne;
@@ -29,6 +30,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Metrics\CustomersByProvince;
 use App\Nova\Metrics\CustomersByDistrict;
 use App\Nova\Metrics\CustomersPerDay;
+use App\Nova\Metrics\ToCustomerOrdersPerMonth;
 use App\Rules\CheckDistrict;
 use Illuminate\Support\Str;
 use Kristories\Qrcode\Qrcode;
@@ -382,6 +384,8 @@ class Customer extends Resource
     public function cards(Request $request)
     {
         return [
+            (new  CustomerOrdersPerMonth())->width('1/2')->onlyOnDetail(),
+            (new  ToCustomerOrdersPerMonth())->width('1/2')->onlyOnDetail(),
             (new CustomersByProvince())->canSee(function ($request) {
                 return  $request->user()->hasPermissionTo('view dashboards');
             }),

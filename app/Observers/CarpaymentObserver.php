@@ -52,6 +52,7 @@ class CarpaymentObserver
             $car_balance->car_id = $carpayment->car_id;
             $car_balance->vendor_id = $carpayment->vendor_id;
             $car_balance->description = $carpayment->description;
+            $car_balance->cardoc_date = $carpayment->payment_date;
             $car_balance->amount = $carpayment->amount;
             $car_balance->save();
         }

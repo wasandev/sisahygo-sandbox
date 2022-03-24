@@ -39,11 +39,14 @@ class Branchrec_waybillObserver
             if ($routeto_branch->dest_branch->type == 'partner') {
                 //จ่ายเงินรถด้วยรายการเก็บปลายทาง
                 $payment_no = IdGenerator::generate(['table' => 'carpayments', 'field' => 'payment_no', 'length' => 15, 'prefix' => 'P' . date('Ymd')]);
-                // if (($branchrec_waybill->departure_at->month <> Carbon::now()->month) && ($branchrec_waybill->departure_at->year <> Carbon::now()->year)) {
-                //     $car_paydate = $branchrec_waybill->departure_at;
-                // } else {
-                //     $car_paydate = today();
-                // }
+
+                if (($branchrec_waybill->departure_at->month < Carbon::now()->month) && ($branchrec_waybill->departure_at->year == Carbon::now()->year)) {
+                    $car_paydate = $branchrec_waybill->departure_at;
+                } elseif (($branchrec_waybill->departure_at->month > Carbon::now()->month) && ($branchrec_waybill->departure_at->year < Carbon::now()->year)) {
+                    $car_paydate = $branchrec_waybill->departure_at;
+                } else {
+                    $car_paydate = today()->format("Y-m-d");
+                }
 
                 Carpayment::create([
                     'status' => true,
@@ -53,7 +56,7 @@ class Branchrec_waybillObserver
                     'waybill_id' => $branchrec_waybill->id,
                     'car_id' => $branchrec_waybill->car_id,
                     'vendor_id' => $branchrec_waybill->car->vendor_id,
-                    'payment_date' => today(),
+                    'payment_date' => $car_paydate->format("Y-m-d"),
                     'amount' => $branch_balances->sum('order_amount'),
                     'payment_by' => 'H',
                     'tax_flag' => true,

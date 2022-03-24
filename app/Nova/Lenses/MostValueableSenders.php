@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Illuminate\Support\Facades\DB;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class MostValueableSenders extends Lens
 {
@@ -56,7 +57,7 @@ class MostValueableSenders extends Lens
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make(__('Name'), 'name'),
+            Text::make(__('Name'), 'name')->sortable(),
             Currency::make(__('Revenue'), 'revenue', function ($value) {
                 return $value;
             }),
@@ -83,6 +84,7 @@ class MostValueableSenders extends Lens
     public function filters(Request $request)
     {
         return [
+
             new OrderFromDate(),
             new OrderToDate()
         ];

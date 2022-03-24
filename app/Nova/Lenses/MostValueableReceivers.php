@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class MostValueableReceivers extends Lens
 {
@@ -56,7 +57,7 @@ class MostValueableReceivers extends Lens
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make(__('Name'), 'name'),
+            Text::make(__('Name'), 'name')->sortable(),
             Currency::make(__('Revenue'), 'revenue', function ($value) {
                 return $value;
             }),
@@ -83,6 +84,7 @@ class MostValueableReceivers extends Lens
     public function filters(Request $request)
     {
         return [
+
             new OrderFromDate(),
             new OrderToDate()
         ];
