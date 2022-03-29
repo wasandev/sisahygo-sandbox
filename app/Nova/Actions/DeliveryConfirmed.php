@@ -151,7 +151,7 @@ class DeliveryConfirmed extends Action
 
                         $branch_balance = Branch_balance::where('order_header_id', $branch_order->id)->first();
                         if ($fields->tax_status) {
-                            $branch_balance->tax_amount = $branch_order * 0.01;
+                            $branch_balance->tax_amount = $branch_order->order_amount * 0.01;
                             $branch_balance->pay_amount = $branch_order->order_amount - ($branch_order->order_amount * 0.01);
                         } else {
                             $branch_balance->tax_amount = 0;
