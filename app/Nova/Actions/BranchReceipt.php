@@ -80,8 +80,9 @@ class BranchReceipt extends Action
             $model->save();
 
             if ($branch_order->order_status == 'completed' || $branch_order->order_status == 'problem') {
-                $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
-
+                if (isset($delivery_detail)) {
+                    $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
+                }
                 $branch_order->branchpay_by =  $fields->payment_by;
 
 
@@ -92,17 +93,25 @@ class BranchReceipt extends Action
                     $branch_order->bankaccount_id = $fields->bankaccount;
                     $branch_order->bankreference = $fields->refernce;
                     $branch_order->payment_status = false;
-                    $delivery_detail->payment_status = false;
-                    $delivery_item->branchpay_by = 'T';
-                    $delivery_item->bankaccount_id = $fields->bankaccount;
-                    $delivery_item->bankreference = $fields->reference;
-                    $delivery_item->discount_amount = $fields->discount_amount;
+                    if (isset($delivery_detail)) {
+                        $delivery_detail->payment_status = false;
+                    }
+                    if (isset($delivery_item)) {
+                        $delivery_item->branchpay_by = 'T';
+                        $delivery_item->bankaccount_id = $fields->bankaccount;
+                        $delivery_item->bankreference = $fields->reference;
+                        $delivery_item->discount_amount = $fields->discount_amount;
+                    }
                     if ($fields->tax_status) {
-                        $delivery_item->tax_amount = ($delivery_item->payment_amount - $fields->discount_amount)  * 0.01;
-                        $delivery_item->pay_amount = ($delivery_item->payment_amount - $fields->discount_amount) - (($delivery_item->payment_amount - $fields->discount_amount)  * 0.01);
+                        if (isset($delivery_item)) {
+                            $delivery_item->tax_amount = ($delivery_item->payment_amount - $fields->discount_amount)  * 0.01;
+                            $delivery_item->pay_amount = ($delivery_item->payment_amount - $fields->discount_amount) - (($delivery_item->payment_amount - $fields->discount_amount)  * 0.01);
+                        }
                     } else {
-                        $delivery_item->tax_amount = 0.00;
-                        $delivery_item->pay_amount = $delivery_item->payment_amount - $fields->discount_amount;
+                        if (isset($delivery_item)) {
+                            $delivery_item->tax_amount = 0.00;
+                            $delivery_item->pay_amount = $delivery_item->payment_amount - $fields->discount_amount;
+                        }
                     }
                     //Create Bank_transfer
 
@@ -130,8 +139,12 @@ class BranchReceipt extends Action
                     $model->payment_status = true;
                     $branch_order->branchpay_by = 'C';
                     $branch_order->payment_status = true;
-                    $delivery_detail->payment_status = true;
-                    $delivery_item->branchpay_by = 'C';
+                    if (isset($delivery_detail)) {
+                        $delivery_detail->payment_status = true;
+                    }
+                    if (isset($delivery_item)) {
+                        $delivery_item->branchpay_by = 'C';
+                    }
                     $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
                     $receipt = Receipt::create([
                         'receipt_no' => $receipt_no,
@@ -152,8 +165,12 @@ class BranchReceipt extends Action
                 }
 
                 $branch_order->save();
-                $delivery_item->save();
-                $delivery_detail->save();
+                if (isset($delivery_item)) {
+                    $delivery_item->save();
+                }
+                if (isset($delivery_detail)) {
+                    $delivery_detail->save();
+                }
 
                 return Action::push('/resources/branch_balances/');
             } else {
