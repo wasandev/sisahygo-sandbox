@@ -169,7 +169,9 @@ class BranchReceiptGroup extends Action
                             $branch_order->bankaccount_id = $fields->bankaccount;
                             $branch_order->bankreference = $fields->refernce;
                             $branch_order->payment_status = false;
-                            $delivery_detail->payment_status = false;
+                            if (isset($delivery_detail)) {
+                                $delivery_detail->payment_status = false;
+                            }
                             if (isset($delivery_item)) {
                                 $delivery_item->branchpay_by = 'T';
                                 $delivery_item->bankaccount_id = $fields->bankaccount;
