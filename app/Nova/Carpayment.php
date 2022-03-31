@@ -109,7 +109,7 @@ class Carpayment extends Resource
                 ->searchable()
                 ->sortable(),
             BelongsTo::make(__('Vendor'), 'vendor', 'App\Nova\Vendor')
-                ->exceptOnForms()
+                ->hideWhenCreating()
                 ->sortable(),
 
 

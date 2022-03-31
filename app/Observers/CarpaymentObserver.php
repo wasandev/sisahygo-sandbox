@@ -46,6 +46,7 @@ class CarpaymentObserver
     public function updating(Carpayment $carpayment)
     {
         $carpayment->updated_by = auth()->user()->id;
+        $carpayment->vendor_id = $carpayment->car->vendor_id;
         $car_balance = Car_balance::where('carpayment_id', '=', $carpayment->id)->first();
         if (isset($car_balance)) {
 
