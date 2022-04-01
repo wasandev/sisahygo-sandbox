@@ -70,6 +70,7 @@ class Car_balance extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             BelongsTo::make(__('Car'), 'car', 'App\Nova\Car')
+                ->searchable()
                 ->sortable(),
             BelongsTo::make('เจ้าของรถ', 'vendor', 'App\Nova\Vendor')
                 ->sortable()
