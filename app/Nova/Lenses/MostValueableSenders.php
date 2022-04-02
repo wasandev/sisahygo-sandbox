@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class MostValueableSenders extends Lens
@@ -98,7 +99,12 @@ class MostValueableSenders extends Lens
      */
     public function actions(Request $request)
     {
-        return parent::actions($request);
+        return [
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
+        ];
     }
 
     /**

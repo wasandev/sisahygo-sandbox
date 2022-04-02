@@ -3,7 +3,9 @@
 namespace App\Nova\Lenses;
 
 use App\Nova\Filters\OrderdateFilter;
+use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToBranch;
+use App\Nova\Filters\OrderToDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -14,7 +16,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-class ValueByBranch extends Lens
+class ValueByDistrictAll extends Lens
 {
     /**
      * Get the query builder / paginator for the lens.
@@ -27,12 +29,13 @@ class ValueByBranch extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                //->join('customers', 'customers.id', '=', 'order_headers.customer_rec_id')
+                ->join('customers', 'customers.id', '=', 'order_headers.customer_rec_id')
                 ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
-                ->where('order_headers.order_status', '=', 'confirmed')
+                ->whereNotIn('order_headers.order_status', ['checking', 'new', 'problem', 'cancel'])
                 ->where('order_headers.order_type', '<>', 'charter')
+                ->orderBy('order_headers.branch_rec_id', 'desc')
                 ->orderBy('amount', 'desc')
-                ->groupBy('order_headers.branch_rec_id')
+                ->groupBy('order_headers.branch_rec_id', 'customers.district')
         ));
     }
     /**
@@ -44,6 +47,7 @@ class ValueByBranch extends Lens
     {
         return [
             'branches.name',
+            'customers.district',
             DB::raw('sum(order_headers.order_amount) as amount'),
         ];
     }
@@ -58,6 +62,7 @@ class ValueByBranch extends Lens
         return [
             // ID::make(__('ID'), 'id')->sortable(),
             Text::make(__('Branch'), 'name'),
+            Text::make(__('District'), 'district'),
             Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
                 return $value;
             }),
@@ -84,7 +89,9 @@ class ValueByBranch extends Lens
     public function filters(Request $request)
     {
         return [
-            new OrderToBranch()
+            new OrderToBranch(),
+            new OrderFromDate(),
+            new OrderToDate(),
         ];
     }
 
@@ -111,10 +118,10 @@ class ValueByBranch extends Lens
      */
     public function uriKey()
     {
-        return 'value-branch-amount';
+        return 'value-district-amount-all';
     }
     public function name()
     {
-        return 'ยอดค่าขนส่งตามสาขาที่ยังไม่จัดขึ้น';
+        return 'ยอดค่าขนส่งทั่วไปตามอำเภอ';
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
 class MostValueableReceivers extends Lens
@@ -98,7 +99,12 @@ class MostValueableReceivers extends Lens
      */
     public function actions(Request $request)
     {
-        return parent::actions($request);
+        return [
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
+        ];
     }
 
     /**

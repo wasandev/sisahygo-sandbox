@@ -226,7 +226,9 @@ class Branch extends Resource
     public function lenses(Request $request)
     {
         return [
-            new Lenses\MostValueBranchDiscounts()
+            new Lenses\MostValueBranchDiscounts(),
+            //new Lenses\MostValueBranchDistrict()
+
         ];
     }
 

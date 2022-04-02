@@ -20,7 +20,7 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Branch_area extends Resource
 {
-    //public static $displayInNavigation = false;
+    public static $displayInNavigation = false;
     public static $group = '5.งานจัดการการขนส่ง';
     public static $priority = 1;
     public static $globallySearchable = false;
@@ -140,7 +140,9 @@ class Branch_area extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new Lenses\MostValueBranchDistrict()
+        ];
     }
 
     /**

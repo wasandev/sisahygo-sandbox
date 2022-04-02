@@ -2,19 +2,18 @@
 
 namespace App\Nova\Lenses;
 
-use App\Nova\Filters\OrderdateFilter;
-use App\Nova\Filters\OrderToBranch;
+use App\Nova\Filters\BranchbalanceToDate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
-use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Illuminate\Support\Facades\DB;
+use App\Nova\Filters\OrderFromDate;
+use App\Nova\Filters\OrderToDate;
 
-class ValueByBranch extends Lens
+class MostValueBranchDistrict extends Lens
 {
     /**
      * Get the query builder / paginator for the lens.
@@ -27,12 +26,12 @@ class ValueByBranch extends Lens
     {
         return $request->withOrdering($request->withFilters(
             $query->select(self::columns())
-                //->join('customers', 'customers.id', '=', 'order_headers.customer_rec_id')
-                ->join('branches', 'branches.id', '=', 'order_headers.branch_rec_id')
-                ->where('order_headers.order_status', '=', 'confirmed')
-                ->where('order_headers.order_type', '<>', 'charter')
-                ->orderBy('amount', 'desc')
-                ->groupBy('order_headers.branch_rec_id')
+                ->join('order_headers', 'branches.id', '=', 'order_headers.branch_rec_id')
+                ->join('branch_areas', 'branches.id', '=', 'branch_areas.branch_id')
+                //->where('branches.id', '=', $request->resourceId)
+                ->orderBy('branches.id', 'desc')
+                ->orderBy('district_amount', 'desc')
+                ->groupBy('branches.id', 'branches.name', 'branch_areas.district')
         ));
     }
     /**
@@ -43,8 +42,10 @@ class ValueByBranch extends Lens
     protected static function columns()
     {
         return [
+            'branches.id',
             'branches.name',
-            DB::raw('sum(order_headers.order_amount) as amount'),
+            'branch_areas.district',
+            DB::raw('sum(order_headers.order_amount) as district_amount'),
         ];
     }
     /**
@@ -56,9 +57,10 @@ class ValueByBranch extends Lens
     public function fields(Request $request)
     {
         return [
-            // ID::make(__('ID'), 'id')->sortable(),
-            Text::make(__('Branch'), 'name'),
-            Currency::make(__('จำนวนเงิน'), 'amount', function ($value) {
+            ID::make(__('ID'), 'id')->sortable(),
+            Text::make('สาขา', 'name'),
+            Text::make('อำเภอ', 'district'),
+            Currency::make('ยอดค่าขนส่ง', 'district_amount', function ($value) {
                 return $value;
             }),
         ];
@@ -84,7 +86,9 @@ class ValueByBranch extends Lens
     public function filters(Request $request)
     {
         return [
-            new OrderToBranch()
+
+            new OrderFromDate(),
+            new OrderToDate()
         ];
     }
 
@@ -96,12 +100,7 @@ class ValueByBranch extends Lens
      */
     public function actions(Request $request)
     {
-        return [
-            (new DownloadExcel)->allFields()->withHeadings()
-                ->canSee(function ($request) {
-                    return $request->user()->hasPermissionTo('view order_headers');
-                }),
-        ];
+        return parent::actions($request);
     }
 
     /**
@@ -111,10 +110,10 @@ class ValueByBranch extends Lens
      */
     public function uriKey()
     {
-        return 'value-branch-amount';
+        return 'most-value-branch-district';
     }
     public function name()
     {
-        return 'ยอดค่าขนส่งตามสาขาที่ยังไม่จัดขึ้น';
+        return 'ค่าขนส่งตามอำเภอของสาขา';
     }
 }

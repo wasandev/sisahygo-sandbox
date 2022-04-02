@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class ValueByDistrict extends Lens
 {
@@ -98,7 +99,12 @@ class ValueByDistrict extends Lens
      */
     public function actions(Request $request)
     {
-        return parent::actions($request);
+        return [
+            (new DownloadExcel)->allFields()->withHeadings()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
+        ];
     }
 
     /**
