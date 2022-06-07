@@ -94,7 +94,7 @@
                             <strong>
                     </td>
 
-                    @foreach ($date_groups->chunk(200) as $chunks)
+                    @foreach ($date_groups->chunk(10) as $chunks)
                         @foreach ($chunks as $item)
                 <tr>
 
