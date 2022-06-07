@@ -278,7 +278,7 @@ class OrderHeaderController extends Controller
                 return $branch->branch_rec_id;
             });
         });
-        dd($order_groups);
+
         $order_groups = $order_groups->all();
         $order_date = $order_groups;
 
