@@ -245,7 +245,7 @@ class OrderHeaderController extends Controller
 
         return view('reports.orderreportbybranchrec', compact('company', 'report_title', 'order', 'order_date', 'branchdata', 'from', 'to'));
     }
-    public function report_4m($branch, $year)
+    public function report_4m($branch, $month, $year)
     {
         $report_title = 'รายงานยอดค่าขนส่งตามสาขาปลายทาง ตามเดือน';
         $company = CompanyProfile::find(1);
@@ -254,6 +254,7 @@ class OrderHeaderController extends Controller
             $branchdata = Branch::find($branch);
 
             $order = Order_header::where('branch_rec_id', $branch)
+                ->whereMonth('order_header_date', '=', $month)
                 ->whereYear('order_header_date', '=', $year)
                 ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
                 ->orderBy('order_header_date', 'asc')
@@ -263,6 +264,7 @@ class OrderHeaderController extends Controller
             $branchdata = null;
             $order = Order_header::select('order_headers.id', 'order_headers.branch_rec_id', 'order_headers.order_header_date', 'order_headers.order_amount', 'branches.name', 'order_type')
                 ->join('branches', 'order_headers.branch_rec_id', 'branches.id')
+                ->whereMonth('order_header_date', '=', $month)
                 ->whereYear('order_header_date', '=', $year)
                 ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
                 ->orderBy('branch_rec_id', 'asc')

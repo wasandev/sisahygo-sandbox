@@ -43,7 +43,7 @@ Route::middleware('web', 'auth')
 
         Route::get('/orderheader/report_3/{branch}/{from}/{to}', 'OrderHeaderController@report_3')->name('report_3');
         Route::get('/orderheader/report_4/{branch}/{from}/{to}', 'OrderHeaderController@report_4')->name('report_4');
-        Route::get('/orderheader/report_4m/{branch}/{year}', 'OrderHeaderController@report_4m')->name('report_4m');
+        Route::get('/orderheader/report_4m/{branch}/{month}/{year}', 'OrderHeaderController@report_4m')->name('report_4m');
 
         Route::get('/orderheader/report_5/{branch}/{from}/{to}', 'OrderHeaderController@report_5')->name('report_5');
         Route::get('/orderheader/report_6/{branch}/{paytype}/{from}/{to}/{cancelflag}', 'OrderHeaderController@report_6')->name('report_6');
