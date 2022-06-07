@@ -63,7 +63,7 @@
                         $sum_express = 0;
                     @endphp
 
-                    @foreach ($date_groups->chunk(100) as $item)
+                    @foreach ($date_groups->chunk(10) as $item)
                         @php
                             $sumdate = $sumdate + $item->sum('order_amount');
                             $sum_general = $sum_general + $item->where('order_type', '=', 'general')->sum('order_amount');
@@ -94,7 +94,7 @@
                             <strong>
                     </td>
 
-                    @foreach ($date_groups->chunk(100) as $chunks)
+                    @foreach ($date_groups->chunk(10) as $chunks)
                         @foreach ($chunks as $item)
                 <tr>
 
