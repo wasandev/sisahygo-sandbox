@@ -135,8 +135,7 @@ class ArController extends Controller
                     ->where('ar_balances.doctype', '=', 'R')
                     ->where('ar_balances.docdate', '>=', $from)
                     ->where('ar_balances.docdate', '<=', $to)
-                    ->orderBy('ar_balances.created_at', 'asc')
-                    ->orderBy('ar_balances.id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
                     ->get();
             } else {
                 $branchdata = Branch::find($branch);
@@ -145,8 +144,7 @@ class ArController extends Controller
                     ->where('receipts.branch_id', '=', $branch)
                     ->where('ar_balances.docdate', '>=', $from)
                     ->where('ar_balances.docdate', '<=', $to)
-                    ->orderBy('ar_balances.created_at', 'asc')
-                    ->orderBy('ar_balances.id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
                     ->get();
             }
         } else {
@@ -157,8 +155,7 @@ class ArController extends Controller
                     ->where('ar_balances.doctype', '=', 'R')
                     ->where('ar_balances.docdate', '>=', $from)
                     ->where('ar_balances.docdate', '<=', $to)
-                    ->orderBy('ar_balances.created_at', 'asc')
-                    ->orderBy('ar_balances.id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
                     ->get();
             } else {
                 $branchdata = Branch::find($branch);
@@ -168,8 +165,7 @@ class ArController extends Controller
                     ->where('ar_balances.docdate', '>=', $from)
                     ->where('ar_balances.docdate', '<=', $to)
                     ->where('receipts.branch_id', '=', $branch)
-                    ->orderBy('ar_balances.created_at', 'asc')
-                    ->orderBy('ar_balances.id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
                     ->get();
             }
         }
