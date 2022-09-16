@@ -20,6 +20,7 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
@@ -150,7 +151,7 @@ class InvoiceReceipt extends Action
 
 
         return [
-            Currency::make('จำนวนเงินรับชำระ', 'pay_amount'),
+            Number::make('จำนวนเงินรับชำระ', 'pay_amount')->step(0.01),
             Date::make('วันที่รับชำระ', 'receipt_date'),
             Select::make('รับชำระด้วย', 'payment_by')->options([
                 'C' => 'เงินสด',
@@ -174,7 +175,7 @@ class InvoiceReceipt extends Action
                     ->options($banks)
                     ->nullable()
             ])->dependsOn('payment_by', 'Q'),
-            Currency::make('ส่วนลด', 'discount_amount'),
+            Number::make('ส่วนลด', 'discount_amount')->step(0.01),
             Boolean::make('หักภาษี ณ ที่จ่าย', 'tax_status'),
             Text::make('หมายเหตุเพิ่มเติม', 'remark')
         ];
