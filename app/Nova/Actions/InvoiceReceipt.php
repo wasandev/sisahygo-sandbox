@@ -62,9 +62,9 @@ class InvoiceReceipt extends Action
                     $pay_amount = $pay_amount + $invoice_item->ar_balances->sum('ar_amount');
                 }
 
-                if ($pay_amount <> $fields->pay_amount + $fields->discount_amount) {
-                    return Action::danger('ยอดเงินรับชำระไม่ถูกต้อง ยอดรับต้องเท่ากับ ' . ($fields->pay_amount - $fields->discount_amount));
-                }
+                // if ($pay_amount <> $fields->pay_amount + $fields->discount_amount) {
+                //     return Action::danger('ยอดเงินรับชำระไม่ถูกต้อง ยอดรับต้องเท่ากับ ' . ($pay_amount - $fields->discount_amount));
+                // }
                 $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
                 if ($fields->tax_status) {
                     $tax_amount =  $pay_amount * 0.01;
