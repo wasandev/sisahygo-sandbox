@@ -20,15 +20,15 @@ class Order_banktransferObserver
     {
 
         //sent notification
-        $tousers = User::where('role', 'employee')
-            ->get();
+        // $tousers = User::where('role', 'employee')
+        //     ->get();
 
-        foreach ($tousers as $touser) {
+        // foreach ($tousers as $touser) {
 
-            if ($touser->hasPermissionTo('edit order_banktransfers')) {
-                $touser->notify(new BankTransfer($touser, $order_banktransfer));
-            }
-        }
+        //     if ($touser->hasPermissionTo('edit order_banktransfers')) {
+        //         $touser->notify(new BankTransfer($touser, $order_banktransfer));
+        //     }
+        // }
     }
 
     public function updating(Order_banktransfer $order_banktransfer)
