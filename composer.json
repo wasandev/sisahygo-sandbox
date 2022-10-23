@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3",
+        "php": "^8.0.2",
         "algolia/algoliasearch-client-php": "^3.1",
         "anaseqal/nova-import": "^0.0.6",
         "bacon/bacon-qr-code": "^2.0",
