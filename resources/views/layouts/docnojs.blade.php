@@ -26,42 +26,39 @@
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-            ]); ?>
+            'csrfToken' => csrf_token(),
+        ]); ?>
     </script>
 
     <!-- This makes the current user's id available in javascript -->
-    @if(!auth()->guest())
-    <script>
-        window.Laravel.userId = <?php echo auth()->user()->id; ?>
-    </script>
-
-
+    @if (!auth()->guest())
+        <script>
+            window.Laravel.userId = <?php echo auth()->user()->id; ?>
+        </script>
     @endif
 
 
-    <link href="{{ mix('/css/doc.css') }}" rel="stylesheet" >
+    <link href="{{ mix('/css/doc.css') }}" rel="stylesheet">
 
 
 
 </head>
 
 
-    <body onLoad="loadHandler();">
-        <div class="container mt-5">
+<body onLoad="loadHandler();">
+    <div class="container mt-5">
 
-            <div id="app">
-                @yield('header')
+        <div>
+            @yield('header')
 
-                @yield('content')
+            @yield('content')
 
-                @yield('footer')
-            </div>
-
+            @yield('footer')
         </div>
-    </body>
+
+    </div>
+</body>
 
 
 
 </html>
-

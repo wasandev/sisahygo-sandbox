@@ -8,7 +8,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::get('/order-tracking', function () {
+    return view('partials.tracking');
+});
+Route::get('/service-price', function () {
+    return view('partials.service-price');
+});
 Route::middleware('web')
     ->namespace('\\App\\Http\\Controllers\\')
     ->group(function () {

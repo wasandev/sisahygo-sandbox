@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Nova\Lensese;
+namespace App\Nova\Lenses;
 
 use App\Nova\Filters\LensBranchFilter;
 

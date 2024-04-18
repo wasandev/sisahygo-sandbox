@@ -274,11 +274,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             \Pktharindu\NovaPermissions\NovaPermissions::make()
                 ->roleResource(Role::class),
             new NovaImport,
-            (new CustomEmailSender())
-                ->canSee(function ($request) {
-                    return $request->user()->role == 'admin';
-                }),
-            new NovaDocumentation,
+            // (new CustomEmailSender())
+            //     ->canSee(function ($request) {
+            //         return $request->user()->role == 'admin';
+            //     }),
+            // new NovaDocumentation,
             \Mirovit\NovaNotifications\NovaNotifications::make()
         ];
     }

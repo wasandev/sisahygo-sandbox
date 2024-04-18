@@ -14,7 +14,7 @@ use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-class MostValueBranchDiscounts extends Lens
+class MostValueBranchDiscount extends Lens
 {
     /**
      * Get the query builder / paginator for the lens.

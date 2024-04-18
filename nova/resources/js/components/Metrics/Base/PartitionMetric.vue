@@ -147,7 +147,7 @@ export default {
         .map((item, index) => {
           return {
             label: item.label,
-            value: item.value,
+            value: Nova.formatNumber(item.value),
             color: this.getItemColor(item, index),
             percentage:
               this.currentTotal > 0

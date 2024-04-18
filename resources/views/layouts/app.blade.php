@@ -16,34 +16,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Kodchasan:400,500,600,700"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kodchasan:400,500,600,700" rel="stylesheet">
 
-        <script src="{{ mix('/js/app.js') }}" defer></script>
-        @if (App::environment('production', 'staging'))
-            <script>
-                if ('serviceWorker' in navigator) {
-                    window.addEventListener('load', function() {
-                        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+    <script src="{{ mix('/js/app.js') }}" defer></script>
+    @if (App::environment('production', 'staging'))
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').then(function(registration) {
                         // Registration was successful
                         console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                        }, function(err) {
+                    }, function(err) {
                         // registration failed :(
                         console.log('ServiceWorker registration failed: ', err);
-                        });
                     });
-                    }
-            </script>
-        @endif
+                });
+            }
+        </script>
+    @endif
 
 
-        <link rel ="manifest" href ="/manifest.json">
+    <link rel="manifest" href="/manifest.json">
 
 
     <!-- Scripts -->
     <script>
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
         }
     </script>
 
@@ -55,7 +54,7 @@
     </script>
 
 
-    @if(!auth()->guest())
+    @if (!auth()->guest())
         <script>
             window.Laravel.userId = <?php echo auth()->user()->id; ?>
         </script>
@@ -65,7 +64,7 @@
     @stack('scripts')
 
 
-
+    @livewireStyles
 </head>
 
 <body class="font-sans  bg-white  leading-normal tracking-normal antialiased">
@@ -75,13 +74,13 @@
         @yield('nav')
 
         @yield('sghome')
-          @yield('search')
+
         @yield('content')
         @yield('footer')
     </div>
 
+    @livewireScripts
 
-
- </body>
+</body>
 
 </html>

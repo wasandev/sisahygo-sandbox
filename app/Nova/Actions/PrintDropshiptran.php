@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class PrintDropship_tran extends Action
+class PrintDropshiptran extends Action
 {
     use InteractsWithQueue, Queueable;
 

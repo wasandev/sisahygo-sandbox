@@ -26,56 +26,56 @@
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-            ]); ?>
+            'csrfToken' => csrf_token(),
+        ]); ?>
     </script>
 
     <!-- This makes the current user's id available in javascript -->
-    @if(!auth()->guest())
-    <script>
-        window.Laravel.userId = <?php echo auth()->user()->id; ?>
-    </script>
-
-
+    @if (!auth()->guest())
+        <script>
+            window.Laravel.userId = <?php echo auth()->user()->id; ?>
+        </script>
     @endif
 
 
-    <link href="{{ mix('/css/doclandscape.css') }}" rel="stylesheet" >
+    <link href="{{ mix('/css/doclandscape.css') }}" rel="stylesheet">
     @stack('scripts')
     <script>
-var is_chrome = function () { return Boolean(window.chrome); }
-if(is_chrome)
-{
-   window.print();
-   setTimeout(function(){window.close();}, 5000);
-   //give them 10 seconds to print, then close
-}
-else
-{
-   window.print();
-    setTimeout(function(){window.close();}, 5000);
+        var is_chrome = function() {
+            return Boolean(window.chrome);
+        }
+        if (is_chrome) {
+            window.print();
+            setTimeout(function() {
+                window.close();
+            }, 5000);
+            //give them 10 seconds to print, then close
+        } else {
+            window.print();
+            setTimeout(function() {
+                window.close();
+            }, 5000);
 
-}
-</script>
+        }
+    </script>
 
 
 </head>
 
 
-    <body onLoad="loadHandler();">
+<body onLoad="loadHandler();">
 
-            <div id="app">
-                @yield('header')
+    <div>
+        @yield('header')
 
-                @yield('content')
+        @yield('content')
 
-                @yield('footer')
-            </div>
+        @yield('footer')
+    </div>
 
 
-    </body>
+</body>
 
 
 
 </html>
-

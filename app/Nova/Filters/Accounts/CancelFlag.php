@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Nova\Filters;
+namespace App\Nova\Filters\Accounts;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;

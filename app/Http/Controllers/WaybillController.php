@@ -95,7 +95,7 @@ class WaybillController extends Controller
     public function report_w1($routetobranch, $from, $to)
     {
 
-        $report_title = 'รายงานรถออกประจำวัน(ทดสอบ)';
+        $report_title = 'รายงานรถออกประจำเดือน';
         $company = CompanyProfile::find(1);
         if ($routetobranch == 'all') {
             $waybills = Waybill::whereDate('departure_at', '>=', $from)
@@ -124,13 +124,13 @@ class WaybillController extends Controller
             function ($item) {
                 return $item->departure_at->format('Y-m-d');
             },
-            'branch_rec_id', 'waybill_type'
+           
         ]);
 
 
 
         $waybill_groups = $waybill_groups->all();
 
-        return view('reports.waybilldate2', compact('company', 'report_title', 'waybills', 'waybill_groups', 'routetobranch', 'from', 'to'));
+        return view('reports.waybillmonth', compact('company', 'report_title', 'waybills', 'waybill_groups', 'routetobranch', 'from', 'to'));
     }
 }

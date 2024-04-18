@@ -91,7 +91,11 @@ class Branch_balance extends Resource
             Boolean::make('สถานะการชำระ', 'payment_status')
                 ->sortable(),
             Text::make('สถานะใบรับส่ง', function () {
-                return $this->branchrec_order->order_status;
+                if(is_null($this->branchrec_order)){
+                    return '-';
+                }else {
+                    return $this->branchrec_order->order_status;
+                }
             }),
             BelongsTo::make(__('Branch'), 'branch', 'App\Nova\Branch')
                 ->sortable()
@@ -124,20 +128,24 @@ class Branch_balance extends Resource
                 ->sortable(),
 
             Text::make('ชำระโดย',  function () {
-                //if (isset($this->receipt_id)) {
-                if ($this->branchrec_order->branchpay_by == 'T' && $this->pay_amount > 0) {
-                    return 'โอน';
-                } elseif ($this->branchrec_order->branchpay_by == 'C' && $this->pay_amount > 0) {
-                    return 'เงินสด';
-                } else {
-                    return '-';
+                if (isset($this->branchrec_order)) {
+                    if ($this->branchrec_order->branchpay_by == 'T' && $this->pay_amount > 0) {
+                        return 'โอน';
+                    } elseif ($this->branchrec_order->branchpay_by == 'C' && $this->pay_amount > 0) {
+                        return 'เงินสด';
+                    } else {
+                        return '-';
+                    }
+                }else{
+                    return '';
                 }
             }),
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt', 'App\Nova\Receipt')->sortable()->readonly(),
 
             Text::make('ใบกำกับ-รถ',  function () {
-
-                return $this->branchrec_order->branchrec_waybill->waybill_no . '-' . $this->branchrec_order->branchrec_waybill->car->car_regist;
+                 if (isset($this->branchrec_order)) {
+                    return $this->branchrec_order->branchrec_waybill->waybill_no . '-' . $this->branchrec_order->branchrec_waybill->car->car_regist;
+                 }    
             }),
             Text::make('หมายเหตุ', 'remark'),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')

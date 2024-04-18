@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
 
-class MostValueCustomerDiscounts extends Lens
+class MostValueCustomerDiscount extends Lens
 {
     /**
      * Get the query builder / paginator for the lens.

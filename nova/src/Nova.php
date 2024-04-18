@@ -734,10 +734,8 @@ class Nova
     public static function dashboardForKey($dashboard, NovaRequest $request)
     {
         return collect(static::$dashboards)
-            ->filter
-            ->authorize($request)
-            ->first(function ($dash) use ($dashboard) {
-                return $dash::uriKey() === $dashboard;
+            ->first(function ($dash) use ($dashboard, $request) {
+                return $dash::uriKey() === $dashboard && $dash->authorize($request);
             });
     }
 
@@ -750,11 +748,13 @@ class Nova
      */
     public static function availableDashboardCardsForDashboard($dashboard, NovaRequest $request)
     {
-        return collect(static::$dashboards)->filter->authorize($request)->filter(function ($dash) use ($dashboard) {
-            return $dash->uriKey() === $dashboard;
-        })->flatMap(function ($dashboard) {
-            return $dashboard->cards();
-        })->filter->authorize($request)->values();
+        return with(static::dashboardForKey($dashboard, $request), function ($dashboard) use ($request) {
+            if (is_null($dashboard)) {
+                return collect();
+            }
+
+            return collect($dashboard->cards())->filter->authorize($request)->values();
+        });
     }
 
     /**

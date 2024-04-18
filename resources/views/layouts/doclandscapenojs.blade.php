@@ -16,7 +16,7 @@
         integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- Scripts -->
     <script src="{{ mix('/js/app.js') }}" defer></script>
 
@@ -26,21 +26,19 @@
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-            ]); ?>
+            'csrfToken' => csrf_token(),
+        ]); ?>
     </script>
 
     <!-- This makes the current user's id available in javascript -->
-    @if(!auth()->guest())
-    <script>
-        window.Laravel.userId = <?php echo auth()->user()->id; ?>
-    </script>
-
-
+    @if (!auth()->guest())
+        <script>
+            window.Laravel.userId = <?php echo auth()->user()->id; ?>
+        </script>
     @endif
 
 
-    <link href="{{ mix('/css/doclandscape.css') }}" rel="stylesheet" >
+    <link href="{{ mix('/css/doclandscape.css') }}" rel="stylesheet">
 
 
 
@@ -48,21 +46,20 @@
 </head>
 
 
-    <body>
-     <div class="container mt-5">
+<body>
+    <div class="container mt-5">
 
-            <div id="app">
-                @yield('header')
+        <div>
+            @yield('header')
 
-                @yield('content')
+            @yield('content')
 
-                @yield('footer')
-            </div>
+            @yield('footer')
+        </div>
 
-     </div>
-    </body>
+    </div>
+</body>
 
 
 
 </html>
-

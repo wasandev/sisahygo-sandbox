@@ -4,7 +4,7 @@ namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\OrderbyUser;
 use App\Nova\Metrics\OrderByUserPartition;
-use App\Nova\Metrics\OrderbyUserTrend;
+use App\Nova\Metrics\OrderByUserTrend;
 use App\Nova\Metrics\OrderCashbyUser;
 use App\Nova\Metrics\OrderIncomes;
 use App\Nova\Metrics\OrdersByBranchRec;
@@ -24,7 +24,7 @@ class BillingDashboard extends Dashboard
     {
         return [
             (new OrderbyUser())->width('1/2'),
-            (new OrderbyUserTrend())->width('1/2'),
+            (new OrderByUserTrend())->width('1/2'),
             (new OrderCashbyUser())->width('1/2'),
             (new OrderIncomes())->width('1/2'),
             (new OrdersPerMonth())->width('1/2'),

@@ -26,7 +26,6 @@
     "symfony/process": "^5.4|^6.0"
   },
   "require-dev": {
-    "laravel/legacy-factories": "^1.3",
     "laravel/nova-dusk-suite": "8.3.x-dev|9.3.x-dev",
     "mockery/mockery": "^1.4.4",
     "orchestra/testbench-dusk": "^6.23|^7.0",
@@ -91,5 +90,5 @@
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "version": "3.31.0"
+  "version": "3.32.0"
 }

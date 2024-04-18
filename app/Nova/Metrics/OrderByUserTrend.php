@@ -6,7 +6,7 @@ use App\Models\Order_header;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Trend;
 
-class OrderbyUserTrend extends Trend
+class OrderByUserTrend extends Trend
 {
     /**
      * Calculate the value of the metric.

@@ -323,10 +323,10 @@ export default {
      * Determine if we are creating a new resource via a parent relation
      */
     creatingViaRelatedResource() {
-      return (
+      return Boolean(
         this.viaResource == this.field.resourceName &&
-        this.field.reverse &&
-        this.viaResourceId
+          this.field.reverse &&
+          this.viaResourceId
       )
     },
 

@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\ServicepriceController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OrderCustomerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+//get product service price
+Route::get('/serviceprice/{product_id}/{qty}/{postal_code}', [ServicePriceController::class,'show']);
+Route::apiResource('ordercustomer', OrderCustomerController::class);
+
+// Route::post('login', [AuthController::class, 'signin']);
+// Route::post('register', [AuthController::class, 'signup']);
+     
+// Route::middleware('auth:sanctum')->group( function () {
+//     Route::apiResource('ordercustomer', OrderCustomerController::class);
+//     //Route::apiResource('serviceprice',ServicePriceController::class);
+// });
+
+

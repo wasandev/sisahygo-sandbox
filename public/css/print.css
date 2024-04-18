@@ -16,8 +16,8 @@ body {
   }
 
   body {
-    font-size: 9pt;
-    font-family:serif;
+    font-size: 10pt;
+    font-family:sans-serif;
     color: black;
   }
 
@@ -25,3 +25,4 @@ body {
     display: none;
   }
 }
+

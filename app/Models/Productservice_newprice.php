@@ -19,6 +19,7 @@ class Productservice_newprice extends Model
         return $this->belongsTo('App\Models\Product');
     }
 
+
     public function unit()
     {
         return $this->belongsTo('App\Models\Unit');
@@ -43,10 +44,7 @@ class Productservice_newprice extends Model
     {
         return $this->belongsTo('App\Models\Branch_area');
     }
-    // public function tableprice()
-    // {
-    //     return $this->belongsTo('App\Models\Tableprice');
-    // }
+   
     /**
      * Get the name of the index associated with the model.
      *
@@ -56,4 +54,10 @@ class Productservice_newprice extends Model
     {
         return 'productservice_newprices';
     }
+
+    public function district()
+    {
+        return $this->belongsTo('App\Models\District','name','district');
+    }
+
 }

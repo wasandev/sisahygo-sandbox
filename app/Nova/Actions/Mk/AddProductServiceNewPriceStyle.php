@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Nova\Actions;
+namespace App\Nova\Actions\Mk;
 
 use App\Models\Branch_area;
 use App\Models\Branch;

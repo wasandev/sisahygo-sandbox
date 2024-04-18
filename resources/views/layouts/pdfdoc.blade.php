@@ -25,15 +25,15 @@
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-            ]); ?>
+            'csrfToken' => csrf_token(),
+        ]); ?>
     </script>
 
     <!-- This makes the current user's id available in javascript -->
-    @if(!auth()->guest())
-    <script>
-        window.Laravel.userId = <?php echo auth()->user()->id; ?>
-    </script>
+    @if (!auth()->guest())
+        <script>
+            window.Laravel.userId = <?php echo auth()->user()->id; ?>
+        </script>
     @endif
 
 
@@ -47,7 +47,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div>
         @yield('header')
 
         @yield('content')
@@ -101,7 +101,7 @@
     table {
         font-size: 18px;
         width: 100%;
-        table-layout:fixed;
+        table-layout: fixed;
         border-spacing: 0px;
         vertical-align: top;
         border-collapse: collapse;
@@ -110,11 +110,10 @@
 
 
     }
+
     @page {
-margin-bottom:0px;
-margin-top:0px;
+        margin-bottom: 0px;
+        margin-top: 0px;
 
-}
-
-
+    }
 </style>

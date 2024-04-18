@@ -1,20 +1,39 @@
+@extends('layouts.app')
+@section('nav')
+    @include('partials.nav')
+@endsection
 
-<div  class="w-full bg-gray-800 items-center">
-    <form action="/tracking" method="POST" role="search">
-        @csrf
-        <div class="mx-auto flex">
-            <div class="p-4 text-xl block ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-labelledby="search" role="presentation" class="fill-current absolute  ml-3 mt-3 text-gray_200"><path fill-rule="nonzero" d="M14.32 12.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387a8 8 0 1 1 1.414-1.414zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path></svg>
-                <input name="vendor-search" type="search" placeholder="ติดตามสินค้า ป้อนเลข Tracking no"
-                class="w-full transition-colors duration-100 ease-in-out focus:outline-none focus:shadow-md border border-transparent focus:bg-white  placeholder-gray-600 rounded-lg bg-gray-100 py-2  pl-10  appearance-none leading-normal ">
 
-            </div>
-            <div class="p-4 text-lg block ">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 pr-2 mr-4 rounded ">
-                    QRCODE
-                </button>
+@section('sghome')
+    @include('partials.sghome')
+@endsection
 
-            </div>
+
+
+@section('content')
+    <div class="max-w-full  justify-center flex bg-white">
+        <div class=" w-10/12 px-2 py-2 m-2">
+
+            @livewire('order-tracking')
+
         </div>
-    </form>
-</div>
+        <div class="py-2 m-2">
+            <button class="bg-gray-700 hover:bg-blue-500 text-white font-bold  rounded  items-baseline p-2 my-4">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                </svg>
+
+            </button>
+
+        </div>
+
+    </div>
+@endsection
+@section('footer')
+    <div class="mt-8">
+        @include('partials.footer')
+    </div>
+@endsection

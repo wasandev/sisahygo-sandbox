@@ -8,9 +8,17 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\CreateResourceRequest;
 use Laravel\Nova\Nova;
+use Throwable;
 
 class ResourceStoreController extends Controller
 {
+    /**
+     * The action event for the action.
+     *
+     * @var ActionEvent
+     */
+    protected $actionEvent = null;
+
     /**
      * Create a new resource.
      *
@@ -25,25 +33,33 @@ class ResourceStoreController extends Controller
 
         $resource::validateForCreation($request);
 
-        $model = DB::transaction(function () use ($request, $resource) {
-            [$model, $callbacks] = $resource::fill(
-                $request, $resource::newModel()
-            );
+        try {
+            $model = DB::connection($resource::newModel()->getConnectionName())->transaction(function () use ($request, $resource) {
+                [$model, $callbacks] = $resource::fill(
+                    $request,
+                    $resource::newModel()
+                );
 
-            $this->storeResource($request, $model);
+                $this->storeResource($request, $model);
 
-            Nova::actionEvent()->forResourceCreate($request->user(), $model)->save();
+                DB::transaction(function () use ($request, $model) {
+                    $this->actionEvent = Nova::actionEvent()->forResourceCreate($request->user(), $model)->save();
+                });
 
-            collect($callbacks)->each->__invoke();
+                collect($callbacks)->each->__invoke();
 
-            return $model;
-        });
+                return $model;
+            });
 
-        return response()->json([
-            'id' => $model->getKey(),
-            'resource' => $model->attributesToArray(),
-            'redirect' => $resource::redirectAfterCreate($request, $request->newResourceWith($model)),
-        ], 201);
+            return response()->json([
+                'id' => $model->getKey(),
+                'resource' => $model->attributesToArray(),
+                'redirect' => $resource::redirectAfterCreate($request, $request->newResourceWith($model)),
+            ], 201);
+        } catch (Throwable $e) {
+            optional($this->actionEvent)->delete();
+            throw $e;
+        }
     }
 
     /**

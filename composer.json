@@ -9,12 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "algolia/algoliasearch-client-php": "^3.1",
         "anaseqal/nova-import": "^0.0.6",
         "bacon/bacon-qr-code": "^2.0",
-        "barryvdh/laravel-dompdf": "^0.8.7",
-        "dniccum/custom-email-sender": "^3.0",
-        "dniccum/nova-documentation": "^2.0",
+        "barryvdh/laravel-dompdf": "^2.0.0",
+        "devtical/nova-qrcode-field": "^2.0",
         "doctrine/dbal": "^2.12",
         "ebess/nova-collapsible-sidebar": "^0.1.2",
         "epartment/nova-dependency-container": "^1.2",
@@ -24,21 +22,21 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "haruncpi/laravel-id-generator": "^1.0",
         "jfeid/nova-google-maps": "^1.1",
-        "kristories/nova-qrcode-field": "^0.0.2",
-        "laravel/framework": "^8.0",
+        "laravel/framework": "^9.0",
         "laravel/nova": "~3.0 ",
+        "laravel/sanctum": "^3.0",
         "laravel/scout": "^9.2",
         "laravel/tinker": "^2.0",
+        "livewire/livewire": "^2.10",
         "maatwebsite/laravel-nova-excel": "^1.2",
         "mikehaertl/php-pdftk": "^0.10.3",
         "mikehaertl/php-shellcommand": "^1.6",
         "mirovit/nova-notifications": "^1.0",
-        "optimistdigital/nova-multiselect-field": "^2.0",
         "orlyapps/nova-belongsto-depend": "^2.0",
-        "phattarachai/line-notify": "^1.1",
         "pktharindu/nova-permissions": "^2.1",
-        "pusher/pusher-php-server": "^7.0",
-        "simplesoftwareio/simple-qrcode": "~4",
+        "psr/simple-cache": "^2.0",
+        "pusher/pusher-php-server": "^5.0",
+        "simplesoftwareio/simple-qrcode": "~4.2",
         "suenerds/nova-searchable-belongs-to-filter": "^1.0",
         "titasgailius/search-relations": "^1.0",
         "wasandev/account": "*",
@@ -60,12 +58,13 @@
         "wasandev/waybillstatus": "*"
     },
     "require-dev": {
-        "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.20",
+        "knuckleswtf/scribe": "^4.13",
         "laravel/sail": "^1.16",
         "mockery/mockery": "^1.3.1",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3"
+        "nunomaduro/collision": "^6.1",
+        "phpunit/phpunit": "^9.3",
+        "spatie/laravel-ignition": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -129,10 +128,6 @@
         {
             "type": "path",
             "url": "./nova-components/Orderstatus"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/anditsung/laravel-nova-qr-code-reader"
         },
         {
             "type": "path",

@@ -95,6 +95,10 @@ export default {
     clearSelection() {
       this.selectedOption = ''
       this.value = ''
+
+      if (this.field) {
+        Nova.$emit(this.field.attribute + '-change', this.value)
+      }
     },
 
     /**
@@ -103,6 +107,10 @@ export default {
     selectOption(option) {
       this.selectedOption = option
       this.value = option.value
+
+      if (this.field) {
+        Nova.$emit(this.field.attribute + '-change', this.value)
+      }
     },
 
     /**

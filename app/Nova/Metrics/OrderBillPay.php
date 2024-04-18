@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Nova\Metrics\Branchs;
+namespace App\Nova\Metrics;
 
 use App\Models\Receipt;
 use Laravel\Nova\Http\Requests\NovaRequest;

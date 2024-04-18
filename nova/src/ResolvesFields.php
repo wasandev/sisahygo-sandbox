@@ -427,10 +427,9 @@ trait ResolvesFields
     public function resolveInverseFieldsForAttribute(NovaRequest $request, $attribute, $morphType = null)
     {
         $field = $this->availableFields($request)
-                      ->authorized($request)
                       ->findFieldByAttribute($attribute);
 
-        if (! isset($field->resourceClass)) {
+        if (! (! is_null($field) && $field->authorize($request) && isset($field->resourceClass))) {
             return new FieldCollection;
         }
 
@@ -461,8 +460,8 @@ trait ResolvesFields
     public function resolveAvatarField(NovaRequest $request)
     {
         return tap($this->availableFields($request)
-            ->authorized($request)
             ->whereInstanceOf(Cover::class)
+            ->authorized($request)
             ->first(),
             function ($field) {
                 if ($field instanceof Resolvable) {
