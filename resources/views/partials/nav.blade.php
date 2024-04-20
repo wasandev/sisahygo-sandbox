@@ -45,7 +45,7 @@
             <a href="/service-price"
                 class="mx-2 block p-4 text-gray-100 mt-2 lg:mt-0 rounded-md  hover:bg-red-500 hover:text-gray-100  ">
 
-                <span>สอบถามราคา</span>
+                <span>สอบถามค่าขนส่ง</span>
             </a>
             <a href="/service-area"
                 class="mx-2 block p-4 text-gray-100 mt-2 lg:mt-0 rounded-md  hover:bg-red-500 hover:text-gray-100  ">

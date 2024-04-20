@@ -12,7 +12,14 @@ Route::get('/order-tracking', function () {
     return view('partials.tracking');
 });
 Route::get('/service-price', function () {
-    return view('partials.service-price');
+    return view('partials.serviceprice');
+});
+
+Route::get('/service-area', function () {
+    return view('partials.servicearea');
+});
+Route::get('/branchlist', function () {
+    return view('partials.branchlist');
 });
 Route::middleware('web')
     ->namespace('\\App\\Http\\Controllers\\')
@@ -24,11 +31,7 @@ Route::middleware('web')
         Route::any('/blogs', 'BlogController@index');
         Route::get('/blogs/{slug}', 'BlogController@show');
     });
-// Route::any('/blogs', 'BlogController@index');
-// Route::get('/blogs/{slug}', 'BlogController@show');
-// //Pages
-// Route::get('pages/{slug}', array('as' => 'page.show', 'uses' => 'PagesController@show'));
-// Route::get('pages', array('as' => 'page.about', 'uses' => 'PagesController@about'));
+
 
 Route::middleware('web', 'auth')
     ->namespace('\\App\\Http\\Controllers\\')

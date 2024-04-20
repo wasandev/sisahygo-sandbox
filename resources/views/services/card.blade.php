@@ -14,7 +14,7 @@
         </a>
     </div>
     <div>
-        <a href="/service_area"
+        <a href="/service-area"
             class="flex flex-col flex-1 border bg-white border-gray-200  hover:shadow-xl hover:bg-blue-500 hover:text-gray-100 translateY-2px m-2 p-2 lg:m-4 lg:p-4 no-underline transition items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" viewBox="0 0 24 24" fill="currentColor">
                 <path class="fill-current absolute"
@@ -27,7 +27,7 @@
         </a>
     </div>
     <div>
-        <a href="/service_price"
+        <a href="/service-price"
             class="flex flex-col flex-1 border bg-white border-gray-200  hover:shadow-xl  hover:bg-blue-500 hover:text-gray-100 translateY-2px m-2 p-2 lg:m-4 lg:p-4 no-underline transition items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" viewBox="0 0 24 24" fill="currentColor">
                 <path class="fill-current absolute"
@@ -41,7 +41,7 @@
     </div>
 
     <div>
-        <a href="/service_price"
+        <a href="/branchlist"
             class="flex flex-col flex-1 border border-gray-200  hover:shadow-xl  hover:bg-blue-500 hover-text-gray-100 translateY-2px m-2 p-2 lg:m-4 lg:p-4 no-underline transition items-center">
             <svg stroke="currentColor" class="h-24 w-24" stroke-width="1.5" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -50,7 +50,7 @@
                 </path>
             </svg>
 
-            <p class="text-base  text-center text-gray-800   hover:text-white p-2 ">จุดบริการรับ-ส่งสินค้า
+            <p class="text-base  text-center text-gray-800   hover:text-white p-2 ">สำนักงานสาขา
             </p>
 
         </a>
