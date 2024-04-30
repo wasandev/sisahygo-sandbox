@@ -106,6 +106,7 @@ class ArController extends Controller
             $ar_balances = Ar_balance::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
                 //->where('ar_balances.docdate', '>=', $from)
                 ->where('ar_balances.docdate', '<=', $to)
+                ->where('customers.paymenttype','=','Y')
                 ->orderBy('customers.name', 'asc')
                 ->get();
         } else {
@@ -114,6 +115,7 @@ class ArController extends Controller
                 ->where('ar_balances.branch_id', '=', $branch)
                 //->where('ar_balances.docdate', '>=', $from)
                 ->where('ar_balances.docdate', '<=', $to)
+                ->where('customers.paymenttype','=','Y')
                 ->orderBy('customers.name', 'asc')
                 ->get();
         }

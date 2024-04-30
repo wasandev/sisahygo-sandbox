@@ -71,28 +71,29 @@
                     $ar_balamount = $ar_bringforword + $ar_paybalance - $ar_recbalance;
                     $sum_forword += $ar_bringforword;
                 @endphp
+                @if ($ar_balamount > 0)
+                    <tr style="vertical-align: top">
+                        <td style="text-align: center">{{ $loop->iteration }}</td>
 
-                <tr style="vertical-align: top">
-                    <td style="text-align: center">{{ $loop->iteration }}</td>
+                        <td style="text-align: left">{{ $ardata->name }}</td>
 
-                    <td style="text-align: left">{{ $ardata->name }}</td>
+                        <td style="text-align: right">{{ number_format($ar_bringforword, 2, '.', ',') }}</td>
 
-                    <td style="text-align: right">{{ number_format($ar_bringforword, 2, '.', ',') }}</td>
+                        <td style="text-align: right">{{ number_format($ar_paybalance, 2, '.', ',') }}</td>
 
-                    <td style="text-align: right">{{ number_format($ar_paybalance, 2, '.', ',') }}</td>
-
-                    <td style="text-align: right">{{ number_format($ar_recbalance, 2, '.', ',') }}</td>
-
-
-                    <td style="text-align: right">
-
-                        {{ number_format($ar_balamount, 2, '.', ',') }}
-
-                    </td>
+                        <td style="text-align: right">{{ number_format($ar_recbalance, 2, '.', ',') }}</td>
 
 
+                        <td style="text-align: right">
 
-                </tr>
+                            {{ number_format($ar_balamount, 2, '.', ',') }}
+
+                        </td>
+
+
+
+                    </tr>
+                @endif
             @endforeach
 
 
@@ -107,19 +108,13 @@
                 </td>
                 <td style="text-align: right">
                     @php
-                        $arpay = $ar_balances
-                            ->where('doctype', 'P')
-                            ->where('docdate', '>=', $from)
-                            ->sum('ar_amount');
+                        $arpay = $ar_balances->where('doctype', 'P')->where('docdate', '>=', $from)->sum('ar_amount');
                     @endphp
                     {{ number_format($arpay, 2, '.', ',') }}
                 </td>
                 <td style="text-align: right">
                     @php
-                        $arrec = $ar_balances
-                            ->where('doctype', 'R')
-                            ->where('docdate', '>=', $from)
-                            ->sum('ar_amount');
+                        $arrec = $ar_balances->where('doctype', 'R')->where('docdate', '>=', $from)->sum('ar_amount');
                     @endphp
                     {{ number_format($arrec, 2, '.', ',') }}
                 </td>

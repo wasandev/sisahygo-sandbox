@@ -33,7 +33,7 @@ use App\Nova\Metrics\CustomersPerDay;
 use App\Nova\Metrics\ToCustomerOrdersPerMonth;
 use App\Rules\CheckDistrict;
 use Illuminate\Support\Str;
-use Devtical\Qrcode\Qrcode;
+//use Devtical\Qrcode\Qrcode;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -96,7 +96,7 @@ class Customer extends Resource
     {
         return [
             ID::make()->sortable(),
-            Qrcode::make('QR Code','id'),
+            //Qrcode::make('QR Code','id'),
                 //->detailSize(200),
                 //->onlyOndetail(),               
 

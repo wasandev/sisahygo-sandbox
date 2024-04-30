@@ -7,7 +7,7 @@ use App\Models\Bankaccount;
 use App\Nova\Actions\PrintCarpayment;
 use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
-use App\Nova\Filters\PaymentType;
+use App\Nova\Filters\Accounts\PaymentType;
 use Laravel\Nova\Fields\DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;

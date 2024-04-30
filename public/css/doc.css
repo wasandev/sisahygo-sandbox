@@ -3,23 +3,19 @@ body {
   font-family: sans-serif;
   color: black;
 }
-
 .header {
   display: block;
 }
-
 table {
   border-top: 0px solid black;
   border-bottom: .5px solid gray;
   border-collapse: collapse;
   vertical-align:top;
 }
-
 th{
   border: 0.5px solid gray;
   border-collapse: collapse;
 }
-
 td {
   border: 0.5px solid gray;
   border-collapse: collapse;
@@ -28,19 +24,18 @@ td {
 @media print {
   @page {
     size: A4;
-
     margin: 1.00cm;
-  }
 
+  }
   body {
     font-size: 8pt;
     font-family:serif;
     color: black;
   }
-
   .header {
     display: block;
   }
+
 }
 
 

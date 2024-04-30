@@ -12,15 +12,15 @@ class OrderTracking extends Component
     
     public $tracking = '';
     //public $order_statuses ;
-   
+    
     
     protected $queryString = ['tracking'];
     
     public function trackingOrder()
     
     {
-        sleep(1);       
-        
+       // sleep(1);       
+       
         
       
     }

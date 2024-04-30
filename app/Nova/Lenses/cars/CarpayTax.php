@@ -7,7 +7,7 @@ use App\Nova\Actions\Accounts\PrintCarwhtaxReport;
 use App\Nova\Actions\PostWhTax;
 use App\Nova\Filters\CarpaymentFromDate;
 use App\Nova\Filters\CarpaymentToDate;
-use App\Nova\Filters\LensePaymentType;
+use App\Nova\Filters\Lenses\LensesPaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -114,7 +114,7 @@ class CarpayTax extends Lens
     public function filters(Request $request)
     {
         return [
-            new LensePaymentType(),
+            new LensesPaymentType(),
             new CarpaymentFromDate(),
             new CarpaymentToDate()
         ];

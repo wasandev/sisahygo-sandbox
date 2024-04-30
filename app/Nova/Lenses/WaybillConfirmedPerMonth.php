@@ -4,7 +4,7 @@ namespace App\Nova\Lenses;
 
 use App\Models\Car;
 use App\Models\Cartype;
-use App\Nova\Actions\Accounts\PrintWaybillConfirmPerDay;
+use App\Nova\Actions\Accounts\PrintWaybillConfirmPerMonth;
 use App\Nova\Filters\CarType as FiltersCarType;
 use App\Nova\Filters\Lenses\WaybillLensFromDate;
 use App\Nova\Filters\Lenses\WaybillLensToDate;
@@ -21,7 +21,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-class WaybillConfirmedPerDay extends Lens
+class WaybillConfirmedPerMonth extends Lens
 {
     /**
      * Get the query builder / paginator for the lens.
@@ -148,7 +148,7 @@ class WaybillConfirmedPerDay extends Lens
     public function actions(Request $request)
     {
         return [
-            (new PrintWaybillConfirmPerDay($request->filters))
+            (new PrintWaybillConfirmPerMonth($request->filters))
                 ->standalone()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view waybills');
@@ -168,10 +168,10 @@ class WaybillConfirmedPerDay extends Lens
      */
     public function uriKey()
     {
-        return 'waybill-confirmed-per-day';
+        return 'waybill-confirmed-per-month';
     }
     public function name()
     {
-        return 'รายงานรถออกประจำวัน';
+        return 'รายงานรถออกประจำเดือน';
     }
 }

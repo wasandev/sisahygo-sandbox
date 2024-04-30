@@ -8,6 +8,7 @@ use App\Nova\Filters\WaybillFromDate;
 use App\Nova\Filters\WaybillToDate;
 use App\Nova\Lenses\cars\CarCheck;
 use App\Nova\Lenses\WaybillConfirmedPerDay;
+use App\Nova\Lenses\WaybillConfirmedPerMonth;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -239,6 +240,7 @@ class Waybill extends Resource
     {
         return [
             new  WaybillConfirmedPerDay(),
+            new  WaybillConfirmedPerMonth(),
             // new  CarCheck()
 
         ];

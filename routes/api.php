@@ -19,8 +19,8 @@ use App\Http\Controllers\Api\OrderCustomerController;
 
 
 //get product service price
-Route::get('/serviceprice/{product_id}/{qty}/{postal_code}', [ServicePriceController::class,'show']);
-Route::apiResource('ordercustomer', OrderCustomerController::class);
+//Route::get('/serviceprice/{product_id}/{qty}/{postal_code}', [ServicePriceController::class,'show']);
+//Route::apiResource('ordercustomer', OrderCustomerController::class);
 
 // Route::post('login', [AuthController::class, 'signin']);
 // Route::post('register', [AuthController::class, 'signup']);

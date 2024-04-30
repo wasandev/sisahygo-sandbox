@@ -427,7 +427,37 @@
                 </router-link>
             </div>
             <div class="align-top w-1/2 border-r border-b border-50">
+               
+                <router-link
+                    class="no-underline dim flex p-6"
+                    :to="{
+                        name: 'lens',
+                        params:{
+                        resourceName: 'waybills',
+                        lens: 'waybill-confirmed-per-month'
+                        },
+                        }"
+                    :title="รายงานรถออกประจำเดือน">
+                    <div class="flex justify-center w-11 flex-no-shrink mr-6">
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 20 20"
+                        >
+                        <path
+                            fill="var(--primary)"
+                            d="M4 16H0V6h20v10h-4v4H4v-4zm2-4v6h8v-6H6zM4 0h12v5H4V0zM2 8v2h2V8H2zm4 0v2h2V8H6z"
+                        />
+                        </svg>
 
+                    </div>
+                    <div class="mt-3">
+                        <heading :level="3" class="mb-3">รายงานรถออกประจำเดือน</heading>
+
+                    </div>
+                </router-link>
+           
             </div>
         </div>
         <div class="w-full flex flex-wrap" cellpadding="10" cellspacing="10">

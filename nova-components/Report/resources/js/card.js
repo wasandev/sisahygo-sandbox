@@ -1,3 +1,5 @@
+import Card from './components/Card.vue';
+
 Nova.booting((Vue, router, store) => {
-  Vue.component('report', require('./components/Card'))
+  Vue.component('report', Card)
 })

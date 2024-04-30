@@ -14,18 +14,18 @@ window.$ = window.jQuery = require('jquery');
 window.Vue = require('vue');
 
 
-import VueThailandAddress from 'vue-thailand-address';
+// import VueThailandAddress from 'vue-thailand-address';
 
 
 
 // เพิ่ม stylesheet ของ Vue Thailand Address เข้าไป
-import 'vue-thailand-address/dist/vue-thailand-address.css'; // ใช้ Plugin
-Vue.use(VueThailandAddress);
+//import 'vue-thailand-address/dist/vue-thailand-address.css'; // ใช้ Plugin
+//Vue.use(VueThailandAddress);
 
 
 
 var deferredPrompt;
-window.addEventListener('beforeinstallprompt', function(event) {
+window.addEventListener('beforeinstallprompt', function (event) {
   event.preventDefault();
   deferredPrompt = event;
   return false;
@@ -54,18 +54,16 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var app = new Vue({
-    el: "#app",
-    //router: new VueRouter(routes),
-    data: {
-        termModalShowing: false,
-        subdistrict: "",
-      district: "",
-      province: "",
-      zipcode: ""
+// var app = new Vue({
+//   el: "#app",
+//   //router: new VueRouter(routes),
+//   data: {
+//     termModalShowing: false,
+//     subdistrict: "",
+//     district: "",
+//     province: "",
+//     zipcode: ""
 
-    },
-
-
-});
+//   },
+// });
 

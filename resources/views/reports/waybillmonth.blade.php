@@ -56,10 +56,14 @@
                         @php
                             $date_count = $item->whereDate('departure_at', $waybill_date)->count();
                             if ($item->departure_at->format('Y-m-d') == $waybill_date) {
-                                $orderdate_h += $item->order_loaders->whereIn('paymenttype', ['H', 'T'])->sum('order_amount');
+                                $orderdate_h += $item->order_loaders
+                                    ->whereIn('paymenttype', ['H', 'T'])
+                                    ->sum('order_amount');
                             }
                             if ($item->departure_at->format('Y-m-d') == $waybill_date) {
-                                $orderdate_f += $item->order_loaders->whereIn('paymenttype', ['F', 'L'])->sum('order_amount');
+                                $orderdate_f += $item->order_loaders
+                                    ->whereIn('paymenttype', ['F', 'L'])
+                                    ->sum('order_amount');
                             }
                             if ($item->departure_at->format('Y-m-d') == $waybill_date) {
                                 $orderdate_e += $item->order_loaders->where('paymenttype', 'E')->sum('order_amount');
@@ -166,7 +170,7 @@
                     $orderall_h += $item->order_loaders->whereIn('paymenttype', ['H', 'T'])->sum('order_amount');
                     $orderall_f += $item->order_loaders->whereIn('paymenttype', ['F', 'L'])->sum('order_amount');
                     $orderall_e += $item->order_loaders->where('paymenttype', 'E')->sum('order_amount');
-                    
+
                 @endphp
             @endforeach
             <td colspan="4">
@@ -190,9 +194,9 @@
 
             </td>
             <td style="text-align: right;">
-
-                {{ number_format(($waybills->sum('waybill_income') / $waybills->sum('waybill_amount')) * 100, 2, '.', ',') }}
-
+                @if ($waybills->sum('waybill_amount') != 0)
+                    {{ number_format(($waybills->sum('waybill_income') / $waybills->sum('waybill_amount')) * 100, 2, '.', ',') }}
+                @endif
             </td>
 
             <td style="text-align: right;">

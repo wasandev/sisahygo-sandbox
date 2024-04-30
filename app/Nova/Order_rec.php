@@ -106,7 +106,10 @@ class Order_rec extends Resource
             Boolean::make(__('Payment status'), 'payment_status')
                 ->exceptOnForms(),
             Text::make('อำเภอ', 'districe', function () {
-                return $this->to_customer->district;
+                if(isset($this->to_customer->district)){
+                    return $this->to_customer->district;
+                }
+                
             })->onlyOnIndex(),
             Currency::make('ค่าขนส่ง', 'order_amount')
                 ->exceptOnForms(),

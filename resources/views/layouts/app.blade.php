@@ -67,7 +67,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans  bg-white  leading-normal tracking-normal antialiased">
+<body class="font-sans leading-normal tracking-normal antialiased">
 
     <div>
 

@@ -96,30 +96,44 @@
 
         <tr>
             <td style="width: 50%;vertical-align:top">
-                ผู้ส่งสินค้า: {{ $order->customer->name }}
+                ผู้ส่งสินค้า:
+                @isset($order->customer->name)
+                    {{ $order->customer->name }}
+                @endisset
                 @isset($order->customer->taxid)
                     Tax ID. {{ $order->customer->taxid }}
                 @endisset
-
-                {{ $order->customer->address }}
-                @if ($order->customer->province === 'กรุงเทพมหานคร')
-                    แขวง{{ $order->customer->sub_district }}
-                @else
-                    ต.{{ $order->customer->sub_district }}
-                @endif
-
-                @if ($order->customer->province === 'กรุงเทพมหานคร')
-                    เขต{{ $order->customer->district }}
-                @else
-                    อ.{{ $order->customer->district }}
-                @endif
-                @if ($order->customer->province === 'กรุงเทพมหานคร')
-                    {{ $order->customer->province }}
-                @else
-                    จ.{{ $order->customer->province }}
-                @endif
-                {{ $order->customer->postal_code }}<br />
-                <strong>Tel: {{ $order->customer->phoneno }}</strong>
+                @isset($order->customer->address)
+                    {{ $order->customer->address }}
+                @endisset
+                @isset($order->customer->province)
+                    @if ($order->customer->province === 'กรุงเทพมหานคร')
+                        แขวง{{ $order->customer->sub_district }}
+                    @else
+                        ต.{{ $order->customer->sub_district }}
+                    @endif
+                @endisset
+                @isset($order->customer->province)
+                    @if ($order->customer->province === 'กรุงเทพมหานคร')
+                        เขต{{ $order->customer->district }}
+                    @else
+                        อ.{{ $order->customer->district }}
+                    @endif
+                @endisset
+                @isset($order->customer->province)
+                    @if ($order->customer->province === 'กรุงเทพมหานคร')
+                        {{ $order->customer->province }}
+                    @else
+                        จ.
+                        {{ $order->customer->province }}
+                    @endif
+                @endisset
+                @isset($order->customer->postal_code)
+                    {{ $order->customer->postal_code }}<br />
+                @endisset
+                @isset($order->customer->phoneno)
+                    <strong>Tel: {{ $order->customer->phoneno }}</strong>
+                @endisset
 
             </td>
             <td style="width: 50%;vertical-align:top">
@@ -229,7 +243,7 @@
             </td>
             <td style="width: 11%;text-align: right">
                 <strong>รวมสินค้า
-                    {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') +$order->order_details->where('unit_id', '=', 10)->count('amount') }}</strong>
+                    {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}</strong>
             </td>
             <td style="width: 9%;text-align: center">
                 ชิ้น
@@ -248,8 +262,15 @@
     <table style="width: 100%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
             <td style="width: 50%;">
-                พนักงานตรวจรับ : {{ $order->checker->name }}<br />
-                พนักงานออกเอกสาร : {{ $order->user->name }}<br />
+                พนักงานตรวจรับ :
+                @isset($order->checker->name)
+                    {{ $order->checker->name }}<br />
+                @endisset
+
+                พนักงานออกเอกสาร :
+                @isset($order->user->name)
+                    {{ $order->user->name }}<br />
+                @endisset
                 พนักงานจัดขึ้น :
                 @isset($order->loader->name)
                     {{ $order->loader->name }}<br />
@@ -259,7 +280,7 @@
             <td style="width: 50%;text-align: right">
                 <strong> ( {{ baht_text($order->order_amount) }} ) </strong><br>
 
-                เลขที่ตรวจสอบสถานะ : <strong>{{ $order->tracking_no }} Ref ID: {{ $order->id }} </strong><br />
+                เลขที่ตรวจสอบสถานะ <strong> Ref ID: {{ $order->id }} </strong><br />
 
 
 

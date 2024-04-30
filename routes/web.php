@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 
+// Route::view('/neworder','neworder')->name('neworder');
+// Route::view('/neworder-success','neworder-success')->name('neworder.success');
+
+
 //Route::auth();
 Route::get('/', function () {
     return view('welcome');

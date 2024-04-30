@@ -30,7 +30,6 @@ td {
 @media print {
   @page {
     size: 20.5cm 14cm;
-
     margin: 0.5cm;
   }
 

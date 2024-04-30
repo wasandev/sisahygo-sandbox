@@ -19,7 +19,7 @@
                         class="list-item {{ $highlightIndex === $i ? 'highlightIndex' : '' }}">{{ $brancharea['district'] }}</a>
                 @endforeach
             @else
-                <div class="list-item">ไม่อยู่ในพื้นที่บริการของสี่สหาย!</div>
+                <div class="text-red-500">ไม่อยู่ในพื้นที่บริการของสี่สหาย!</div>
             @endif
         </div>
     @endif

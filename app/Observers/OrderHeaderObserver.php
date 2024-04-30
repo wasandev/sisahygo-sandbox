@@ -99,10 +99,10 @@ class OrderHeaderObserver
                     $total_weight = 0;
                     $branchtrack = $order_header->branch->code . $order_header->to_branch->code;
                     $order_header_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'order_header_no', 'length' => 15, 'prefix' => date('Ymd')]);
-                    $tracking_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'tracking_no', 'length' => 20, 'prefix' => $branchtrack . date('Ymd')]);
+                    //$tracking_no = IdGenerator::generate(['table' => 'order_headers', 'field' => 'tracking_no', 'length' => 20, 'prefix' =>  date('Ymd')]);
 
                     $order_header->order_header_no = $order_header_no;
-                    $order_header->tracking_no = $tracking_no;
+                    //$order_header->tracking_no = $tracking_no;
 
                     $to_customer = Customer::find($order_header->customer_rec_id);
                     if (!isset($order_header->branch_rec_id)) {

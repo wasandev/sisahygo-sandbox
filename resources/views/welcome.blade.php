@@ -13,7 +13,7 @@
 @endsection --}}
 
 @section('content')
-    <div class="max-w-full p-4">
+    <div class="max-w-full p-4  bg-blue-300">
 
         @include('services.card')
 
