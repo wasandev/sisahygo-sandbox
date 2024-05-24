@@ -33,7 +33,7 @@ class Waybill extends Resource
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $trafficCop = false;
-    public static $perPageViaRelationship = 50;
+    public static $perPageViaRelationship = 25;
 
     public static $with = ['car', 'branch', 'user'];
     /**

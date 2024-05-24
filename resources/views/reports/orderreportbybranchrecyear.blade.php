@@ -66,9 +66,12 @@
                     @foreach ($date_groups->chunk(10) as $item)
                         @php
                             $sumdate = $sumdate + $item->sum('order_amount');
-                            $sum_general = $sum_general + $item->where('order_type', '=', 'general')->sum('order_amount');
-                            $sum_charter = $sum_charter + $item->where('order_type', '=', 'charter')->sum('order_amount');
-                            $sum_express = $sum_express + $item->where('order_type', '=', 'express')->sum('order_amount');
+                            $sum_general =
+                                $sum_general + $item->where('order_type', '=', 'general')->sum('order_amount');
+                            $sum_charter =
+                                $sum_charter + $item->where('order_type', '=', 'charter')->sum('order_amount');
+                            $sum_express =
+                                $sum_express + $item->where('order_type', '=', 'express')->sum('order_amount');
 
                         @endphp
                     @endforeach
@@ -94,7 +97,7 @@
                             <strong>
                     </td>
 
-                    @foreach ($date_groups->chunk(10) as $chunks)
+                    @foreach ($date_groups->chunk(20) as $chunks)
                         @foreach ($chunks as $item)
                 <tr>
 
