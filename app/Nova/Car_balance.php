@@ -23,7 +23,7 @@ class Car_balance extends Resource
     public static $priority = 7;
     public static $trafficCop = false;
     public static $with = ['car',  'vendor', 'user'];
-    public static $perPageViaRelationship = 100;
+    public static $perPageViaRelationship = 25;
     /**
      * The model the resource corresponds to.
      *

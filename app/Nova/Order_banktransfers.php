@@ -25,7 +25,7 @@ class Order_banktransfers extends Resource
 {
     public static $group = '9.2 งานการเงิน/บัญชี';
     public static $priority = 5;
-    public static $polling = true;
+    public static $polling = false;
     public static $pollingInterval = 120;
     public static $showPollingToggle = true;
     public static $globallySearchable = false;

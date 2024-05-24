@@ -29,7 +29,7 @@ class Waybill extends Resource
     //use HasDependencies;
     public static $group = '7.งานบริการขนส่ง';
     public static $priority = 2;
-    public static $polling = true;
+    public static $polling = false;
     public static $pollingInterval = 90;
     public static $showPollingToggle = true;
     public static $trafficCop = false;

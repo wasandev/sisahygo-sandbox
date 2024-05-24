@@ -43,7 +43,7 @@ use Wasandev\QrCodeScan\QrCodeScan;
 class Order_header extends Resource
 {
     use HasDependencies;
-    public static $polling = true;
+    public static $polling = false;
     public static $pollingInterval = 120;
     public static $showPollingToggle = true;
     public static $group = '7.งานบริการขนส่ง';
