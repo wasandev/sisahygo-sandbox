@@ -30,7 +30,8 @@ class ServicePrice extends Component
     {
         $serviceprices = Productservice_price::with('product')
         ->with('branch_area')
-        ->when($this->searchPrice !== '', fn(Builder $query) => $query->whereHas('product',fn(Builder $query) => $query->where('name' ,'like', '%'. $this->searchPrice .'%')) )
+        ->whereHas('product',fn(Builder $query) => $query->whereNotIn('category_id',[6,8]))
+        ->when($this->searchPrice !== '', fn(Builder $query) => $query->whereHas('product',fn(Builder $query) => $query->where('name' ,'like', '%'. $this->searchPrice .'%') )) 
         ->when($this->searchBrancharea !== '', fn(Builder $query) => $query->where('district', $this->searchBrancharea)) 
         ->paginate(20);
 

@@ -688,6 +688,9 @@ ul {
 .mr-10 {
   margin-right: 2.5rem;
 }
+.mr-2 {
+  margin-right: 0.5rem;
+}
 .mr-20 {
   margin-right: 5rem;
 }
@@ -819,6 +822,9 @@ ul {
 }
 .flex-none {
   flex: none;
+}
+.table-auto {
+  table-layout: auto;
 }
 .table-fixed {
   table-layout: fixed;
@@ -1311,6 +1317,10 @@ ul {
   --tw-text-opacity: 1;
   color: rgb(252 165 165 / var(--tw-text-opacity));
 }
+.hover\:text-red-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -1336,9 +1346,9 @@ ul {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
-.focus\:text-red-200:focus {
+.focus\:text-red-300:focus {
   --tw-text-opacity: 1;
-  color: rgb(254 202 202 / var(--tw-text-opacity));
+  color: rgb(252 165 165 / var(--tw-text-opacity));
 }
 .focus\:text-white:focus {
   --tw-text-opacity: 1;
