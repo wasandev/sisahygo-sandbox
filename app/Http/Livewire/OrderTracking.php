@@ -19,7 +19,7 @@ class OrderTracking extends Component
     public function trackingOrder()
     
     {
-       // sleep(1);       
+        sleep(1);       
        
         
       
@@ -27,8 +27,14 @@ class OrderTracking extends Component
     
     
     public function render(){
+
+        $now = date('Y-m-d');
+        $back = date('Y-m-d', strtotime($now.' - 30 days'));
         
-        return view('livewire.order-tracking',['order_statuses' => Order_status::where('order_header_id',$this->tracking)->get(),]) ;
+        
+        return view('livewire.order-tracking',['order_statuses' => Order_status::where('order_header_id',$this->tracking)
+                                                                            ->whereDate('created_at','>=',$back )
+                                                                            ->get(),]) ;
         
     }
 }

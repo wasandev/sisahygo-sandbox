@@ -17,6 +17,8 @@
                 <p class="text-2xl">ติดตามสินค้าสี่สหายขนส่ง</p>
                 <p class="text-base">ดูเลขที่ตรวจสอบสถานะหลังข้อความ "Ref ID:" จากเอกสารใบรับส่งสินค้า
                 </p>
+                <p class=" text-sm font-bold text-red-500 ">**สามารถติดตามสินค้าได้ 30 วันย้อนหลัง**
+                </p>
             </div>
             @livewire('order-tracking')
 
