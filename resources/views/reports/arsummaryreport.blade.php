@@ -47,6 +47,7 @@
         <tbody>
             @php
                 $sum_forword = 0;
+                $itemlist = 0;
             @endphp
             @foreach ($ar_groups as $ar_list => $ar_items)
                 @php
@@ -72,8 +73,11 @@
                     $sum_forword += $ar_bringforword;
                 @endphp
                 @if ($ar_balamount > 0)
+                    @php
+                        $itemlist++;
+                    @endphp
                     <tr style="vertical-align: top">
-                        <td style="text-align: center">{{ $loop->iteration }}</td>
+                        <td style="text-align: center">{{ $itemlist }}</td>
 
                         <td style="text-align: left">{{ $ardata->name }}</td>
 
