@@ -103,20 +103,22 @@ class ArController extends Controller
         $company = CompanyProfile::find(1);
         if ($branch == 'all') {
             $branchdata = null;
-            $ar_balances = Ar_balance::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
+            $ar_balances = Ar_balance::where('ar_balances.docdate', '<=', $to)
+                //::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
                 //->where('ar_balances.docdate', '>=', $from)
-                ->where('ar_balances.docdate', '<=', $to)
-               // ->where('customers.paymenttype','=','Y')
-                ->orderBy('customers.name', 'asc')
+                //->where('ar_balances.docdate', '<=', $to)
+               //->where('customers.paymenttype','=','Y')
+                ->orderBy('customer_id', 'asc')
                 ->get();
         } else {
             $branchdata = Branch::find($branch);
-            $ar_balances = Ar_balance::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
+            $ar_balances = Ar_balance::where('ar_balances.docdate', '<=', $to)
+            //::join('customers', 'customers.id', '=', 'ar_balances.customer_id')
                 ->where('ar_balances.branch_id', '=', $branch)
                 //->where('ar_balances.docdate', '>=', $from)
-                ->where('ar_balances.docdate', '<=', $to)
+                //->where('ar_balances.docdate', '<=', $to)
                 //->where('customers.paymenttype','=','Y')
-                ->orderBy('customers.name', 'asc')
+                ->orderBy('customer_id', 'asc')
                 ->get();
         }
 
