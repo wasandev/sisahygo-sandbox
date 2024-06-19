@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-4 py-3">สินค้า</th>
@@ -48,10 +48,9 @@
                         </thead>
                         <tbody>
                             @forelse($serviceprices as $serviceprice)
-                                <tr class="border-b dark:border-gray-700">
-                                    <th scope="row"
-                                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $serviceprice->product->name }} </th>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3">
+                                        {{ $serviceprice->product->name }} </td>
                                     <td class="px-4 py-3">{{ $serviceprice->district }}</td>
                                     <td class="px-4 py-3">{{ $serviceprice->province }}</td>
                                     <td class="px-4 py-3"> {{ number_format($serviceprice->price, 2, '.', ',') }} </td>
