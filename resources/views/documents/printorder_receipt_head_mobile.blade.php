@@ -91,7 +91,7 @@
             <td style="width: 50%;text-align: right;vertical-align:top">
 
                 @if ($order->waybill_id == '')
-                    ใบกำกับ: .............................. ทะเบียนรถ: .....................
+                    ใบกำกับ: .............................. ทะเบียนรถ: .....................<br />
                 @else
                     ใบกำกับ: {{ $order->waybill->waybill_no }} - ทะเบียน:
                     {{ $order->waybill->car->car_regist }} <br />
