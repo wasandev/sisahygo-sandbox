@@ -7,12 +7,13 @@
         <tr>
 
             <td style="width: 80%;text-align: left;vertical-align:bottom;">
-                @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
-                    <strong>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</strong>
-                @else
-                    <strong>ใบรับส่งสินค้า</strong>
-                @endif
-
+                <p>
+                    @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
+                        <strong>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</strong>
+                    @else
+                        <strong>ใบรับส่งสินค้า</strong>
+                    @endif
+                </p>
                 <p>
                     @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
                         -จ่ายเงินแล้ว-
@@ -90,7 +91,7 @@
                     ใบกำกับ: .............................. ทะเบียนรถ: .....................
                 @else
                     ใบกำกับ: {{ $order->waybill->waybill_no }} - ทะเบียน:
-                    <{{ $order->waybill->car->car_regist }} <br />
+                    {{ $order->waybill->car->car_regist }} <br />
                 @endif
 
 
