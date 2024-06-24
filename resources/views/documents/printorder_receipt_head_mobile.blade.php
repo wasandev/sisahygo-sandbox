@@ -1,13 +1,21 @@
 @extends('layouts.formmobile')
 
-@section('header')
-    @include('partials.orderheader_noheadmobile')
-@endsection
+
 @section('content')
 
-    <table style="width: 95%;magin-top: -20px">
+    <table style="width: 98%;magin-top: -20px">
         <tr>
-            <td style="width: 60%;text-align: right;vertical-align:top;">
+            <td style="width: 20%;text-align: right;vertical-align:top;">
+                <div class="visible-print text-center">
+                    {{-- {!! QrCode::size(70)->generate($order->tracking_no); !!} --}}
+                    @isset($order->id)
+                        {{-- <img src="data:image/png;base64, {!! QrCode::size(70)->generate($order->tracking_no)) !!} "> --}}
+                        {!! QrCode::size(70)->generate('https://app.sisahygo.online/order-tracking?tracking=' . $order->id) !!}
+                    @endisset
+
+                </div>
+            </td>
+            <td style="width: 40%;text-align: right;vertical-align:top;">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
                     <h4>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h4>
                 @else
@@ -25,7 +33,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 95%;">
+    <table style="width: 98%;">
         <tr>
             <td style="width: 40%;text-align: left;vertical-align:top">
                 เลขที่ : <strong> {{ $order->order_header_no }}</strong> <br />
@@ -79,11 +87,11 @@
                 <strong> สาขาปลายทาง : {{ $order->to_branch->name }} Tel : {{ $order->to_branch->phoneno }} <br />
                     @switch($order->trantype)
                         @case(1)
-                            การจัดส่งปลายทาง : จัดส่ง<br />
+                            การจัดส่ง : จัดส่ง<br />
                         @break
 
                         @case(0)
-                            การจัดส่งปลายทาง : รับเอง<br />
+                            การจัดส่ง : รับเอง<br />
                         @break
                     @endswitch
                 </strong>
@@ -92,7 +100,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 95%;border-top: 0.5px dotted black">
+    <table style="width: 98%;border-top: 0.5px dotted black">
 
         <tr>
             <td style="width: 50%;vertical-align:top">
@@ -169,7 +177,7 @@
 
 
     </table>
-    <table style="width: 95%;border-top: 0.5px dotted black;">
+    <table style="width: 98%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;">
             <td style="width: 45%;text-align: left">
                 รายการ
@@ -188,7 +196,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 90%;height: 2.5cm;border-top: 0.5px dotted black;">
+    <table style="width: 98%;height: 2.5cm;border-top: 0.5px dotted black;">
 
         @foreach ($order->order_details as $item)
             <tr style="vertical-align:top;height:12px">
@@ -236,7 +244,7 @@
             @endfor
         @endif
     </table>
-    <table style="width: 95%;border-top: 0.5px dotted black;">
+    <table style="width: 98%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;height:12px;">
             <td style="width: 45%;text-align: left">
                 หมายเหตุ : {{ $order->remark }}
@@ -259,7 +267,7 @@
     </table>
 
 
-    <table style="width: 95%;border-top: 0.5px dotted black;">
+    <table style="width: 98;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
             <td style="width: 40%;">
                 พนักงานตรวจรับ :
@@ -290,9 +298,9 @@
 
         </tr>
     </table>
-    <table style="width: 95%;border-top: .05px dotted black;">
+    <table style="width: 98%;border-top: .05px dotted black;">
         <tr style="vertical-align:top;">
-            <td style="width: 95%;">
+            <td style="width: 98%;">
                 สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
                 ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน สินค้าไวเพลิง สินค้าผิดกฎหมาย
                 สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br />
