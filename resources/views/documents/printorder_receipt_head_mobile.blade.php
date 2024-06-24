@@ -3,100 +3,100 @@
 
 @section('content')
 
-    <table style="width: 96%;magin-top: -18px">
+    <table style="width: 96%;magin-top: -16px">
         <tr>
 
-            <td style="width: 40%;text-align: left;vertical-align:top;">
+            <td style="width: 80%;text-align: left;vertical-align:top;">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
                     <h3>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h3>
                 @else
                     <h3>ใบรับส่งสินค้า</h3>
                 @endif
-            </td>
-            <td style="width: 40%;text-align: right;vertical-align:top">
+                <br />
+
+
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
-                    <h3>จ่ายเงินแล้ว</h3>
+                    <h3>-จ่ายเงินแล้ว-</h3>
                 @elseif($order->paymenttype == 'E')
-                    <h3>เก็บเงินปลายทาง</h3>
+                    <h3>-เก็บเงินปลายทาง-</h3>
                 @else
-                    <h3>วางบิล</h3>
+                    <h3>-วางบิล-</h3>
                 @endif
             </td>
             <td style="width: 20%;text-align: right;vertical-align:top;">
-                <div class="visible-print text-center">
-                    {{-- {!! QrCode::size(70)->generate($order->tracking_no); !!} --}}
-                    @isset($order->id)
-                        {{-- <img src="data:image/png;base64, {!! QrCode::size(70)->generate($order->tracking_no)) !!} "> --}}
-                        {!! QrCode::size(60)->generate('https://app.sisahygo.online/order-tracking?tracking=' . $order->id) !!}
-                    @endisset
 
-                </div>
+                @isset($order->id)
+                    {!! QrCode::size(70)->generate('https://app.sisahygo.online/order-tracking?tracking=' . $order->id) !!}
+                @endisset
+
+
             </td>
         </tr>
     </table>
     <table style="width: 96%;">
         <tr>
             <td style="width: 40%;text-align: left;vertical-align:top">
-                เลขที่ : <strong> {{ $order->order_header_no }}</strong> <br />
-                วันที่ : <strong> {{ $order->created_at }}</strong><br />
-                <strong>
-                    @switch($order->paymenttype)
-                        @case('H')
-                            เงื่อนไขการชำระเงิน : เงินสดต้นทาง /
-                        @break
+                เลขที่ : {{ $order->order_header_no }}
+                @switch($order->order_type)
+                    @case('general')
+                        - ประเภท : ทั่วไป<br />
+                    @break
 
-                        @case('T')
-                            เงื่อนไขการชำระเงิน : เงินโอนต้นทาง /
-                        @break
+                    @case('express')
+                        - ประเภท : Express<br />
+                    @break
 
-                        @case('E')
-                            เงื่อนไขการชำระเงิน : เก็บเงินปลายทาง /
-                        @break
+                    @case('charter')
+                        - ประเภท : เหมาคัน<br />
+                    @break
+                @endswitch
+                วันที่ : {{ $order->created_at }}<br />
 
-                        @case('F')
-                            เงื่อนไขการชำระเงิน : วางบิลต้นทาง /
-                        @break
+                @switch($order->paymenttype)
+                    @case('H')
+                        เงื่อนไขการชำระเงิน : เงินสดต้นทาง /
+                    @break
 
-                        @case('L')
-                            เงื่อนไขการชำระเงิน : วางบิลปลายทาง /
-                        @break
-                    @endswitch
-                    @switch($order->trantype)
-                        @case(1)
-                            การจัดส่ง : จัดส่ง
-                        @break
+                    @case('T')
+                        เงื่อนไขการชำระเงิน : เงินโอนต้นทาง /
+                    @break
 
-                        @case(0)
-                            การจัดส่ง : รับเอง
-                        @break
-                    @endswitch
-                </strong>
+                    @case('E')
+                        เงื่อนไขการชำระเงิน : เก็บเงินปลายทาง /
+                    @break
+
+                    @case('F')
+                        เงื่อนไขการชำระเงิน : วางบิลต้นทาง /
+                    @break
+
+                    @case('L')
+                        เงื่อนไขการชำระเงิน : วางบิลปลายทาง /
+                    @break
+                @endswitch
+                @switch($order->trantype)
+                    @case(1)
+                        การจัดส่ง : จัดส่ง
+                    @break
+
+                    @case(0)
+                        การจัดส่ง : รับเอง
+                    @break
+                @endswitch
+
             </td>
             <td style="width: 50%;text-align: right;vertical-align:top">
 
                 @if ($order->waybill_id == '')
-                    ใบกำกับสินค้า: .............................. ทะเบียนรถ: .....................
+                    ใบกำกับ: .............................. ทะเบียนรถ: .....................
                 @else
-                    ใบกำกับสินค้า: <strong> {{ $order->waybill->waybill_no }}</strong> ทะเบียนรถ:
-                    <strong>{{ $order->waybill->car->car_regist }}</strong><br />
+                    ใบกำกับ: {{ $order->waybill->waybill_no }} - ทะเบียน:
+                    <{{ $order->waybill->car->car_regist }} <br />
                 @endif
 
-                @switch($order->order_type)
-                    @case('general')
-                        ประเภท : ทั่วไป<br />
-                    @break
 
-                    @case('express')
-                        ประเภท : Express<br />
-                    @break
+                สาขา : {{ $order->to_branch->name }} Tel : {{ $order->to_branch->phoneno }}
 
-                    @case('charter')
-                        ประเภท : เหมาคัน<br />
-                    @break
-                @endswitch
-                <strong> สาขาปลายทาง : {{ $order->to_branch->name }} Tel : {{ $order->to_branch->phoneno }}
 
-                </strong>
 
 
             </td>
@@ -106,7 +106,7 @@
 
         <tr>
             <td style="width: 50%;vertical-align:top">
-                ผู้ส่งสินค้า:
+                ผู้ส่ง:
                 @isset($order->customer->name)
                     {{ $order->customer->name }}
                 @endisset
@@ -148,7 +148,7 @@
             </td>
             <td style="width: 50%;vertical-align:top">
 
-                ผู้รับสินค้า: {{ $order->to_customer->name }}
+                ผู้รับ: {{ $order->to_customer->name }}
                 @if ($order->to_customer->taxid != '')
                     Tax ID. {{ $order->to_customer->taxid }}
                 @endif
@@ -252,8 +252,8 @@
                 หมายเหตุ : {{ $order->remark }}
             </td>
             <td style="width: 11%;text-align: right">
-                <strong>รวมสินค้า
-                    {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}</strong>
+                รวมสินค้า
+                {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}
             </td>
             <td style="width: 9%;text-align: center">
                 ชิ้น
@@ -302,12 +302,12 @@
     </table>
     <table style="width: 96%;border-top: .05px dotted black;">
         <tr style="vertical-align:top;">
-            <td style="width: 96%; font-size:small ;font-style: thin">
+            <td style="width: 96%; font-size:smaller ;font-style: thin">
                 สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
                 ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน สินค้าไวเพลิง สินค้าผิดกฎหมาย
                 สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br />
-                (ลงชื่อ) ผู้ส่งสินค้า....................(ลงชื่อ) ผู้รับเงิน...................(ลงชื่อ)
-                ผู้รับสินค้า...................วันที่...............
+                (ลงชื่อ) ผู้ส่งสินค้า........................(ลงชื่อ) ผู้รับเงิน........................(ลงชื่อ)
+                ผู้รับสินค้า.........................วันที่...................
 
 
             </td>
