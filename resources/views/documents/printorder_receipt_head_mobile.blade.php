@@ -3,10 +3,10 @@
 
 @section('content')
 
-    <table style="width: 96%;magin-top: -20px">
+    <table style="width: 96%;magin-top: -30px">
         <tr>
 
-            <td style="width: 80%;text-align: left;vertical-align:top;">
+            <td style="width: 80%;text-align: left;vertical-align:middle;">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
                     <strong>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</strong>
                 @else
