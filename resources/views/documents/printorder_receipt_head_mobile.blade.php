@@ -191,7 +191,7 @@
     <table style="width: 90%;height: 2.5cm;border-top: 0.5px dotted black;">
 
         @foreach ($order->order_details as $item)
-            <tr style="vertical-align:top;height:14px">
+            <tr style="vertical-align:top;height:12px">
                 <td style="width: 45%;text-align: left">
                     {{ $loop->iteration }}.{{ $item->product->name }}
                     @isset($item->remark)
@@ -213,9 +213,9 @@
                 </td>
             </tr>
         @endforeach
-        @if (count($order->order_details) < 5)
+        @if (count($order->order_details) < 4)
             @for ($i = 1; $i <= 5 - count($order->order_details); $i++)
-                <tr style="vertical-align:top;height:14px">
+                <tr style="vertical-align:top;height:12px">
                     <td style="width: 45%;text-align: left">
 
                     </td>
@@ -296,8 +296,8 @@
                 สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
                 ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน
                 สินค้าไวเพลิง สินค้าผิดกฎหมาย สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br />
-                (ลงชื่อ) ผู้ส่งสินค้า.................................. (ลงชื่อ) ผู้รับเงิน.............................
-                (ลงชื่อ) ผู้รับสินค้า............................วันที่...................
+                (ลงชื่อ) ผู้ส่งสินค้า...............(ลงชื่อ) ผู้รับเงิน.............(ลงชื่อ)
+                ผู้รับสินค้า.......วันที่.............
 
 
             </td>
