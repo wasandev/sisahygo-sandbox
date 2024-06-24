@@ -10,18 +10,17 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-
-class PrintOrder extends Action
+class PrintOrderMobile extends Action
 {
     use InteractsWithQueue, Queueable;
     public $withoutActionEvents = true;
     public function uriKey()
     {
-        return 'print-order';
+        return 'print-order-mobile';
     }
     public function name()
     {
-        return __('Print Order');
+        return __('Print Order Mobile');
     }
 
 
@@ -40,7 +39,6 @@ class PrintOrder extends Action
             }
             $orderheaderController =  new \App\Http\Controllers\OrderHeaderController();
             //$path = $orderheaderController->preview($model->id);
-            
 
             return Action::openInNewTab('/orderheader/preview/' . $model->id);
             //return Action::push('/resources/order_orders');

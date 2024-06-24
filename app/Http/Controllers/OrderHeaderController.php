@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Jenssegers\Agent\Agent;
 
 
 class OrderHeaderController extends Controller
@@ -27,6 +28,8 @@ class OrderHeaderController extends Controller
 
     public function preview($order)
     {
+        $agent = new Agent;
+
         $company = CompanyProfile::find(1);
         $order = Order_header::find($order);
         $order_detail = Order_detail::find($order);
@@ -37,7 +40,12 @@ class OrderHeaderController extends Controller
                 if ($order->order_type == 'charter') {
                     return view('documents.printorder_charter_head', compact('order', 'order_detail', 'company'));
                 } else {
-                    return view('documents.printorder_receipt_head', compact('order', 'order_detail', 'company'));
+                    if($agent->isMobile() || $agent->isTablet()  ) {
+                        return view('documents.printorder_receipt_head_mobile', compact('order', 'order_detail', 'company'));
+                    } else {
+                         return view('documents.printorder_receipt_head', compact('order', 'order_detail', 'company'));
+                    }
+                    
                 }
                 break;
             case 'form2':

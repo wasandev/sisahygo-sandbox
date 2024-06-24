@@ -1,0 +1,29 @@
+{
+    "nunito": {
+        "200_italic": "\/var\/www\/html\/storage\/fonts\/\/nunito-200-italic_32307a77f943df80fe87cf101749dde5",
+        "300_italic": "\/var\/www\/html\/storage\/fonts\/\/nunito-300-italic_ed8349265dea6280563e6d0bfb0a371f",
+        "italic": "\/var\/www\/html\/storage\/fonts\/\/nunito-italic_98aaa888b953216d500580414fc97ec1",
+        "600_italic": "\/var\/www\/html\/storage\/fonts\/\/nunito-600-italic_738f9d243a40f010ef4ce4a1a2b491fc",
+        "800_italic": "\/var\/www\/html\/storage\/fonts\/\/nunito-800-italic_ead55858520a2bb910f69d71fe4f55a8",
+        "900_italic": "\/var\/www\/html\/storage\/fonts\/\/nunito-900-italic_ad003606a5b093261cdf3036359952cd",
+        "200": "\/var\/www\/html\/storage\/fonts\/\/nunito-200_33b59ca411bf52dbcc288c1e17dc6b62",
+        "300": "\/var\/www\/html\/storage\/fonts\/\/nunito-300_97b4316872e8fe92ff5e1d4144edd869",
+        "normal": "\/var\/www\/html\/storage\/fonts\/\/nunito-normal_51ab6e3e316a21ef3af811c849f34cc6",
+        "600": "\/var\/www\/html\/storage\/fonts\/\/nunito-600_6b8d78284bc77de030674affd1dc6a1b",
+        "800": "\/var\/www\/html\/storage\/fonts\/\/nunito-800_9511d00700d9487f9665b0aba0afae4c",
+        "900": "\/var\/www\/html\/storage\/fonts\/\/nunito-900_141e9882edfa17fb2a21e226ca78ba1f"
+    },
+    "font awesome 5 brands": {
+        "normal": "\/var\/www\/html\/storage\/fonts\/\/font-awesome-5-brands-normal_fd81ac5cbdae2d355a3faed84662cb9c"
+    },
+    "font awesome 5 free": {
+        "normal": "\/var\/www\/html\/storage\/fonts\/\/font-awesome-5-free-normal_4def8c6cc0b76a076e38eea619c6cf03",
+        "900": "\/var\/www\/html\/storage\/fonts\/\/font-awesome-5-free-900_1539e14986bfc73fa373f518e69e056e"
+    },
+    "thsarabunnew": {
+        "normal": "\/var\/www\/html\/storage\/fonts\/\/thsarabunnew-normal_2031fc03ce8a0480c7da54772bb3fca6",
+        "bold": "\/var\/www\/html\/storage\/fonts\/\/thsarabunnew-bold_9fc03ca3407502f52ef8805a1f3c9f3a",
+        "italic": "\/var\/www\/html\/storage\/fonts\/\/thsarabunnew-italic_6fe6d3e58b6c7e70ef0c75f00cf43507",
+        "bold_italic": "\/var\/www\/html\/storage\/fonts\/\/thsarabunnew-bold-italic_98ecd5687a3ca44a043befc35af545a6"
+    }
+}
