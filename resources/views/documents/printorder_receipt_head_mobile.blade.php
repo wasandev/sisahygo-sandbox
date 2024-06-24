@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 
-    <table style="width: 90%;magin-top: -10px">
+    <table style="width: 95%;magin-top: -20px">
         <tr>
             <td style="width: 60%;text-align: right;vertical-align:top;">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
@@ -25,7 +25,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 90%;">
+    <table style="width: 95%;">
         <tr>
             <td style="width: 40%;text-align: left;vertical-align:top">
                 เลขที่ : <strong> {{ $order->order_header_no }}</strong> <br />
@@ -92,7 +92,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 90%;border-top: 0.5px dotted black">
+    <table style="width: 95%;border-top: 0.5px dotted black">
 
         <tr>
             <td style="width: 50%;vertical-align:top">
@@ -169,7 +169,7 @@
 
 
     </table>
-    <table style="width: 90%;border-top: 0.5px dotted black;">
+    <table style="width: 95%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;">
             <td style="width: 45%;text-align: left">
                 รายการ
@@ -236,7 +236,7 @@
             @endfor
         @endif
     </table>
-    <table style="width: 90%;border-top: 0.5px dotted black;">
+    <table style="width: 95%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;height:12px;">
             <td style="width: 45%;text-align: left">
                 หมายเหตุ : {{ $order->remark }}
@@ -259,9 +259,9 @@
     </table>
 
 
-    <table style="width: 90%;border-top: 0.5px dotted black;">
+    <table style="width: 95%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
-            <td style="width: 45%;">
+            <td style="width: 40%;">
                 พนักงานตรวจรับ :
                 @isset($order->checker->name)
                     {{ $order->checker->name }}<br />
@@ -277,10 +277,10 @@
                 @endisset
 
             </td>
-            <td style="width: 45%;text-align: right">
+            <td style="width: 50%;text-align: right">
                 <strong> ( {{ baht_text($order->order_amount) }} ) </strong><br>
 
-                เลขที่ตรวจสอบสถานะ <strong> Ref ID: {{ $order->id }} </strong><br />
+                เลขที่ตรวจสอบสถานะ <strong> Ref ID: {{ $order->id }} </strong>
 
 
 
@@ -289,13 +289,13 @@
 
 
         </tr>
-        {{-- </table>
-    <table style="width: 90%;border-top: .05px dotted black;"> --}}
+    </table>
+    <table style="width: 95%;border-top: .05px dotted black;">
         <tr style="vertical-align:top;">
-            <td style="width: 90%;">
+            <td style="width: 95%;">
                 สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
-                ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน
-                สินค้าไวเพลิง สินค้าผิดกฎหมาย สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br />
+                ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน สินค้าไวเพลิง สินค้าผิดกฎหมาย
+                สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br />
                 (ลงชื่อ) ผู้ส่งสินค้า...............(ลงชื่อ) ผู้รับเงิน.............(ลงชื่อ)
                 ผู้รับสินค้า.......วันที่.............
 
