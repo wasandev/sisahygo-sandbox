@@ -1,17 +1,17 @@
 @extends('layouts.formmobile')
 
 @section('header')
-    @include('partials.orderheader_nohead')
+    @include('partials.orderheader_noheadmobile')
 @endsection
 @section('content')
 
-    <table style="width: 100%;magin-top: -8px">
+    <table style="width: 90%;magin-top: -10px">
         <tr>
             <td style="width: 60%;text-align: right;vertical-align:top;">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
-                    <h3>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h3>
+                    <h4>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h4>
                 @else
-                    <h3>ใบรับส่งสินค้า</h3>
+                    <h4>ใบรับส่งสินค้า</h4>
                 @endif
             </td>
             <td style="width: 40%;text-align: right;vertical-align:top">
@@ -25,7 +25,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 100%;">
+    <table style="width: 90%;">
         <tr>
             <td style="width: 40%;text-align: left;vertical-align:top">
                 เลขที่ : <strong> {{ $order->order_header_no }}</strong> <br />
@@ -54,7 +54,7 @@
                     @endswitch
                 </strong>
             </td>
-            <td style="width: 60%;text-align: right;vertical-align:top">
+            <td style="width: 50%;text-align: right;vertical-align:top">
 
                 @if ($order->waybill_id == '')
                     ใบกำกับสินค้า: .............................. ทะเบียนรถ: .....................
@@ -92,7 +92,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 100%;border-top: 0.5px dotted black">
+    <table style="width: 90%;border-top: 0.5px dotted black">
 
         <tr>
             <td style="width: 50%;vertical-align:top">
@@ -169,7 +169,7 @@
 
 
     </table>
-    <table style="width: 100%;border-top: 0.5px dotted black;">
+    <table style="width: 90%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;">
             <td style="width: 45%;text-align: left">
                 รายการ
@@ -188,7 +188,7 @@
             </td>
         </tr>
     </table>
-    <table style="width: 100%;height: 2.5cm;border-top: 0.5px dotted black;">
+    <table style="width: 90%;height: 2.5cm;border-top: 0.5px dotted black;">
 
         @foreach ($order->order_details as $item)
             <tr style="vertical-align:top;height:14px">
@@ -236,7 +236,7 @@
             @endfor
         @endif
     </table>
-    <table style="width: 100%;border-top: 0.5px dotted black;">
+    <table style="width: 90%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;height:14px;">
             <td style="width: 45%;text-align: left">
                 หมายเหตุ : {{ $order->remark }}
@@ -259,7 +259,7 @@
     </table>
 
 
-    <table style="width: 100%;border-top: 0.5px dotted black;">
+    <table style="width: 90%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
             <td style="width: 50%;">
                 พนักงานตรวจรับ :
@@ -290,12 +290,12 @@
 
         </tr>
     </table>
-    <table style="width: 100%;border-top: .05px dotted black;">
+    <table style="width: 90%;border-top: .05px dotted black;">
         <tr style="vertical-align:top;">
-            <td style="width: 100%;">
+            <td style="width: 90%;">
                 สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
                 ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน
-                สินค้าไวเพลิง สินค้าผิดกฎหมาย สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br /><br />
+                สินค้าไวเพลิง สินค้าผิดกฎหมาย สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br />
                 (ลงชื่อ) ผู้ส่งสินค้า.................................. (ลงชื่อ) ผู้รับเงิน.............................
                 (ลงชื่อ) ผู้รับสินค้า............................วันที่...................
 
