@@ -3,37 +3,38 @@
 
 @section('content')
 
-    <table style="width: 98%;magin-top: -20px">
+    <table style="width: 96%;magin-top: -18px">
         <tr>
+
+            <td style="width: 40%;text-align: left;vertical-align:top;">
+                @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
+                    <h3>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h3>
+                @else
+                    <h3>ใบรับส่งสินค้า</h3>
+                @endif
+            </td>
+            <td style="width: 40%;text-align: right;vertical-align:top">
+                @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
+                    <h3>จ่ายเงินแล้ว</h3>
+                @elseif($order->paymenttype == 'E')
+                    <h3>เก็บเงินปลายทาง</h3>
+                @else
+                    <h3>วางบิล</h3>
+                @endif
+            </td>
             <td style="width: 20%;text-align: right;vertical-align:top;">
                 <div class="visible-print text-center">
                     {{-- {!! QrCode::size(70)->generate($order->tracking_no); !!} --}}
                     @isset($order->id)
                         {{-- <img src="data:image/png;base64, {!! QrCode::size(70)->generate($order->tracking_no)) !!} "> --}}
-                        {!! QrCode::size(70)->generate('https://app.sisahygo.online/order-tracking?tracking=' . $order->id) !!}
+                        {!! QrCode::size(60)->generate('https://app.sisahygo.online/order-tracking?tracking=' . $order->id) !!}
                     @endisset
 
                 </div>
             </td>
-            <td style="width: 40%;text-align: right;vertical-align:top;">
-                @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
-                    <h4>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h4>
-                @else
-                    <h4>ใบรับส่งสินค้า</h4>
-                @endif
-            </td>
-            <td style="width: 40%;text-align: right;vertical-align:top">
-                @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
-                    <h2>จ่ายเงินแล้ว</h2>
-                @elseif($order->paymenttype == 'E')
-                    <h2>เก็บเงินปลายทาง</h2>
-                @else
-                    <h2>วางบิล</h2>
-                @endif
-            </td>
         </tr>
     </table>
-    <table style="width: 98%;">
+    <table style="width: 96%;">
         <tr>
             <td style="width: 40%;text-align: left;vertical-align:top">
                 เลขที่ : <strong> {{ $order->order_header_no }}</strong> <br />
@@ -41,23 +42,32 @@
                 <strong>
                     @switch($order->paymenttype)
                         @case('H')
-                            เงื่อนไขการชำระเงิน : เงินสดต้นทาง<br />
+                            เงื่อนไขการชำระเงิน : เงินสดต้นทาง /
                         @break
 
                         @case('T')
-                            เงื่อนไขการชำระเงิน : เงินโอนต้นทาง<br />
+                            เงื่อนไขการชำระเงิน : เงินโอนต้นทาง /
                         @break
 
                         @case('E')
-                            เงื่อนไขการชำระเงิน : เก็บเงินปลายทาง<br />
+                            เงื่อนไขการชำระเงิน : เก็บเงินปลายทาง /
                         @break
 
                         @case('F')
-                            เงื่อนไขการชำระเงิน : วางบิลต้นทาง<br />
+                            เงื่อนไขการชำระเงิน : วางบิลต้นทาง /
                         @break
 
                         @case('L')
-                            เงื่อนไขการชำระเงิน : วางบิลปลายทาง
+                            เงื่อนไขการชำระเงิน : วางบิลปลายทาง /
+                        @break
+                    @endswitch
+                    @switch($order->trantype)
+                        @case(1)
+                            การจัดส่ง : จัดส่ง
+                        @break
+
+                        @case(0)
+                            การจัดส่ง : รับเอง
                         @break
                     @endswitch
                 </strong>
@@ -68,7 +78,7 @@
                     ใบกำกับสินค้า: .............................. ทะเบียนรถ: .....................
                 @else
                     ใบกำกับสินค้า: <strong> {{ $order->waybill->waybill_no }}</strong> ทะเบียนรถ:
-                    <strong>{{ $order->waybill->car->car_regist }}</strong>
+                    <strong>{{ $order->waybill->car->car_regist }}</strong><br />
                 @endif
 
                 @switch($order->order_type)
@@ -84,23 +94,15 @@
                         ประเภท : เหมาคัน<br />
                     @break
                 @endswitch
-                <strong> สาขาปลายทาง : {{ $order->to_branch->name }} Tel : {{ $order->to_branch->phoneno }} <br />
-                    @switch($order->trantype)
-                        @case(1)
-                            การจัดส่ง : จัดส่ง<br />
-                        @break
+                <strong> สาขาปลายทาง : {{ $order->to_branch->name }} Tel : {{ $order->to_branch->phoneno }}
 
-                        @case(0)
-                            การจัดส่ง : รับเอง<br />
-                        @break
-                    @endswitch
                 </strong>
 
 
             </td>
         </tr>
     </table>
-    <table style="width: 98%;border-top: 0.5px dotted black">
+    <table style="width: 96%;border-top: 0.5px dotted black">
 
         <tr>
             <td style="width: 50%;vertical-align:top">
@@ -177,7 +179,7 @@
 
 
     </table>
-    <table style="width: 98%;border-top: 0.5px dotted black;">
+    <table style="width: 96%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;">
             <td style="width: 45%;text-align: left">
                 รายการ
@@ -196,10 +198,10 @@
             </td>
         </tr>
     </table>
-    <table style="width: 98%;height: 2.5cm;border-top: 0.5px dotted black;">
+    <table style="width: 96%;height: 2.0cm;border-top: 0.5px dotted black;">
 
         @foreach ($order->order_details as $item)
-            <tr style="vertical-align:top;height:12px">
+            <tr style="vertical-align:top;height:10px">
                 <td style="width: 45%;text-align: left">
                     {{ $loop->iteration }}.{{ $item->product->name }}
                     @isset($item->remark)
@@ -223,7 +225,7 @@
         @endforeach
         @if (count($order->order_details) < 4)
             @for ($i = 1; $i <= 4 - count($order->order_details); $i++)
-                <tr style="vertical-align:top;height:12px">
+                <tr style="vertical-align:top;height:10px">
                     <td style="width: 45%;text-align: left">
 
                     </td>
@@ -244,8 +246,8 @@
             @endfor
         @endif
     </table>
-    <table style="width: 98%;border-top: 0.5px dotted black;">
-        <tr style="vertical-align:top;height:12px;">
+    <table style="width: 96%;border-top: 0.5px dotted black;">
+        <tr style="vertical-align:top;height:10px;">
             <td style="width: 45%;text-align: left">
                 หมายเหตุ : {{ $order->remark }}
             </td>
@@ -267,9 +269,9 @@
     </table>
 
 
-    <table style="width: 98;border-top: 0.5px dotted black;">
+    <table style="width: 96%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
-            <td style="width: 40%;">
+            <td style="width: 50%;">
                 พนักงานตรวจรับ :
                 @isset($order->checker->name)
                     {{ $order->checker->name }}<br />
@@ -298,14 +300,14 @@
 
         </tr>
     </table>
-    <table style="width: 98%;border-top: .05px dotted black;">
+    <table style="width: 96%;border-top: .05px dotted black;">
         <tr style="vertical-align:top;">
-            <td style="width: 98%;">
+            <td style="width: 96%; font-size:small ;font-style: thin">
                 สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
                 ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน สินค้าไวเพลิง สินค้าผิดกฎหมาย
                 สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br />
-                (ลงชื่อ) ผู้ส่งสินค้า...............(ลงชื่อ) ผู้รับเงิน.............(ลงชื่อ)
-                ผู้รับสินค้า.......วันที่.............
+                (ลงชื่อ) ผู้ส่งสินค้า....................(ลงชื่อ) ผู้รับเงิน...................(ลงชื่อ)
+                ผู้รับสินค้า...................วันที่...............
 
 
             </td>
