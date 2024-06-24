@@ -214,7 +214,7 @@
             </tr>
         @endforeach
         @if (count($order->order_details) < 4)
-            @for ($i = 1; $i <= 5 - count($order->order_details); $i++)
+            @for ($i = 1; $i <= 4 - count($order->order_details); $i++)
                 <tr style="vertical-align:top;height:12px">
                     <td style="width: 45%;text-align: left">
 
@@ -237,7 +237,7 @@
         @endif
     </table>
     <table style="width: 90%;border-top: 0.5px dotted black;">
-        <tr style="vertical-align:top;height:14px;">
+        <tr style="vertical-align:top;height:12px;">
             <td style="width: 45%;text-align: left">
                 หมายเหตุ : {{ $order->remark }}
             </td>
@@ -289,8 +289,8 @@
 
 
         </tr>
-    </table>
-    <table style="width: 90%;border-top: .05px dotted black;">
+        {{-- </table>
+    <table style="width: 90%;border-top: .05px dotted black;"> --}}
         <tr style="vertical-align:top;">
             <td style="width: 90%;">
                 สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
