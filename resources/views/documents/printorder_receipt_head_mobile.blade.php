@@ -3,25 +3,25 @@
 
 @section('content')
 
-    <table style="width: 96%;magin-top: -16px">
+    <table style="width: 96%;magin-top: -20px">
         <tr>
 
             <td style="width: 80%;text-align: left;vertical-align:top;">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
-                    <h3>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h3>
+                    <strong>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</strong>
                 @else
-                    <h3>ใบรับส่งสินค้า</h3>
+                    <strong>ใบรับส่งสินค้า</strong>
                 @endif
-                <br />
 
-
-                @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
-                    <h3>-จ่ายเงินแล้ว-</h3>
-                @elseif($order->paymenttype == 'E')
-                    <h3>-เก็บเงินปลายทาง-</h3>
-                @else
-                    <h3>-วางบิล-</h3>
-                @endif
+                <p>
+                    @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
+                        -จ่ายเงินแล้ว-
+                    @elseif($order->paymenttype == 'E')
+                        -เก็บเงินปลายทาง-
+                    @else
+                        -วางบิล-
+                    @endif
+                </p>
             </td>
             <td style="width: 20%;text-align: right;vertical-align:top;">
 
