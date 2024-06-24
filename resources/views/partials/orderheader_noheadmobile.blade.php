@@ -1,4 +1,4 @@
-<table style="width: 90%">
+<table style="width: 90% ;magin-top: -20px">
     <tr>
         <td style="width: 10%;">
             {{-- <img src="{{ url('storage/'.$company->logofile) }}" alt="{{$company->company_name}}" width="70" height="70"> --}}

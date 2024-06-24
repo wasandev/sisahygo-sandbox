@@ -261,7 +261,7 @@
 
     <table style="width: 90%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
-            <td style="width: 50%;">
+            <td style="width: 45%;">
                 พนักงานตรวจรับ :
                 @isset($order->checker->name)
                     {{ $order->checker->name }}<br />
@@ -277,7 +277,7 @@
                 @endisset
 
             </td>
-            <td style="width: 50%;text-align: right">
+            <td style="width: 45%;text-align: right">
                 <strong> ( {{ baht_text($order->order_amount) }} ) </strong><br>
 
                 เลขที่ตรวจสอบสถานะ <strong> Ref ID: {{ $order->id }} </strong><br />
