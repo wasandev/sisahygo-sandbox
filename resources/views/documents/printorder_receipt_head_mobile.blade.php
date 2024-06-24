@@ -6,7 +6,8 @@
     <table style="width: 96%;magin-top: -30px">
         <tr>
 
-            <td style="width: 80%;text-align: left;vertical-align:bottom;">
+            <td style="width: 40%;text-align: left;vertical-align:bottom;">
+                <br />
                 <p>
                     @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
                         <strong>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</strong>
@@ -14,14 +15,16 @@
                         <strong>ใบรับส่งสินค้า</strong>
                     @endif
                 </p>
-                <p>
-                    @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
-                        -จ่ายเงินแล้ว-
-                    @elseif($order->paymenttype == 'E')
-                        -เก็บเงินปลายทาง-
-                    @else
-                        -วางบิล-
-                    @endif
+            </td>
+            <td style="width: 40%;text-align: center;vertical-align:bottom;">
+
+                @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
+                    -จ่ายเงินแล้ว-
+                @elseif($order->paymenttype == 'E')
+                    -เก็บเงินปลายทาง-
+                @else
+                    -วางบิล-
+                @endif
                 </p>
             </td>
             <td style="width: 20%;text-align: right;vertical-align:top;">
