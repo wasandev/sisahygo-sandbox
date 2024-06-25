@@ -20,6 +20,7 @@ use Laravel\Nova\Fields\Text;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Agent\Agent;
 
 
 class OrderConfirmed extends Action
@@ -50,9 +51,12 @@ class OrderConfirmed extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        $agent = new Agent;
         foreach ($models as $model) {
             $hasitem = count($model->order_details);
             if ($hasitem) {
+
+                
 
                 if ($fields->paymenttype == 'F'  && $model->customer->paymenttype <> 'Y') {
                     return Action::danger('ลูกค้ารายนี้ไม่ใช่ลูกหนี้การค้า');
@@ -62,6 +66,12 @@ class OrderConfirmed extends Action
                 }
                 if ($model->order_status <> 'new') {
                     return Action::danger('ไม่สามารถยืนยันรายการที่ ยืนยัน/ยกเลิก ไปแล้วได้');
+                }
+                if ($agent->isMobile() || $agent->isTablet()  ) {
+                    if($fields->paymenttype == 'H' || $fields->paymenttype == 'T') {
+                        return Action::danger('ไม่สามารถยืนยันรายการที่เป็นเงินสด/หรือเงินโอนต้นทางได้ ให้ลูกค้าไปรับเอกสารที่ออฟฟิศ');
+                    }
+
                 }
 
                 $model->order_amount = $fields->order_amount;
