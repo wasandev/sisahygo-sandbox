@@ -457,12 +457,31 @@ class Order_header extends Resource
 
     public static function relatableCustomers(NovaRequest $request, $query)
     {
-
+        
+        $from_branch = $request->user()->branch_id;
+        $to_branch =  $request->user()->branch_rec_id;
+      //   $to_branch = $request->branch_rec_id ? $request->resource : \App\Models\Branch::find($request->viaResourceId);
+    
+  
+        
         if ($request->route()->parameter('field') === "customer") {
+            if (is_null($from_branch)) {
             return $query->where('status', true);
+             } else {
+                 $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
+                 return $query->whereIn('district', $from_branch_area)
+                     ->where('status', true);
+             }
+            
         }
         if ($request->route()->parameter('field') === "to_customer") {
+            if (is_null($to_branch)) {
             return $query->where('status', true);
+             } else {
+                 $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+                 return $query->whereIn('district', $to_branch_area)
+                     ->where('status', true);
+             }
         }
     }
 

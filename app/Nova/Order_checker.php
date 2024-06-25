@@ -28,6 +28,7 @@ use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Wasandev\QrCodeScan\QrCodeScan;
+use Laravel\Nova\Fields\FormData;
 
 class Order_checker extends Resource
 {
@@ -143,6 +144,9 @@ class Order_checker extends Resource
                 ->searchable()
                 ->withSubtitles()
                 ->showCreateRelationButton(),
+           
+            
+    
 
             Select::make('การจัดส่ง', 'trantype')->options([
                 '0' => 'รับเอง',
@@ -262,22 +266,32 @@ class Order_checker extends Resource
     {
         return $query->where('order_type', '<>', 'charter');
     }
-    public static function relatableCustomers(NovaRequest $request, $query)
+
+    public static function relatableCustomers(NovaRequest $request, $query )
     {
-        //$to_branch =  $request->user()->branch_rec_id;
+        $from_branch = $request->user()->branch_id;
+        $to_branch =  $request->user()->branch_rec_id; 
+        
 
-        if ($request->route()->parameter('field') === "customer") {
+
+         if ($request->route()->parameter('field') === "customer") {
+            if (is_null($from_branch)) {
             return $query->where('status', true);
+             } else {
+                 $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
+                 return $query->whereIn('district', $from_branch_area)
+                     ->where('status', true);
+             }
+            
         }
-
         if ($request->route()->parameter('field') === "to_customer") {
-            //if (is_null($to_branch)) {
+            if (is_null($to_branch)) {
             return $query->where('status', true);
-            // } else {
-            //     $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
-            //     return $query->whereIn('district', $to_branch_area)
-            //         ->where('status', true);
-            // }
+             } else {
+                 $to_branch_area = \App\Models\Branch_area::where('branch_id', $to_branch)->get('district');
+                 return $query->whereIn('district', $to_branch_area)
+                     ->where('status', true);
+             }
         }
     }
 }
