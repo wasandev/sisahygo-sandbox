@@ -83,7 +83,10 @@ class Withholdingtax extends Resource
 
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Date::make('วันที่จ่าย', 'pay_date')->sortable(),
+            Date::make('วันที่จ่าย', 'pay_date')->sortable()
+            ->default(today())
+                ->format('DD/MM/YYYY')
+                ->rules('required'),
             Select::make('ประเภทผู้ถูกหักภาษี', 'payertype')
                 ->options([
                     '1' => 'บุคคลธรรมดา',

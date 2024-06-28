@@ -165,11 +165,11 @@ class PrintCarWhtaxForm extends Action
                     break;
             }
 
-            $form_wh3path =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . 'wh3_sisahygo.pdf';
+            $form_wh3path =  Storage::disk('public')->path('documents/wh3_sisahygo.pdf');           
             $form_name = 'wh3_' . $model->vendor_id . '.pdf';
             $xfdf_name = 'wh3_' . $model->vendor_id . '.xfdf';
-            $form_wh3saved =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $form_name;
-            $xfdf_file =  Storage::disk('public')->getAdapter()->getPathPrefix() . 'documents/' . $xfdf_name;
+            $form_wh3saved =  Storage::disk('public')->path('documents/' . $form_name);
+            $xfdf_file =  Storage::disk('public')->path('documents/' . $xfdf_name);
 
             $form_wh3 = new Pdf($form_wh3path);
             $car_taxfill = [

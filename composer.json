@@ -28,6 +28,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/scout": "^9.2",
         "laravel/tinker": "^2.0",
+        "league/flysystem-path-prefixing": "^3.0",
         "livewire/livewire": "^2.10",
         "maatwebsite/laravel-nova-excel": "^1.2",
         "mikehaertl/php-pdftk": "^0.10.3",
