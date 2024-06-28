@@ -465,13 +465,13 @@ class Order_header extends Resource
   
         
         if ($request->route()->parameter('field') === "customer") {
-            if (is_null($from_branch)) {
+           // if (is_null($from_branch)) {
             return $query->where('status', true);
-             } else {
-                 $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
-                 return $query->whereIn('district', $from_branch_area)
-                     ->where('status', true);
-             }
+            //  } else {
+            //      $from_branch_area = \App\Models\Branch_area::where('branch_id', $from_branch)->get('district');
+            //      return $query->whereIn('district', $from_branch_area)
+            //          ->where('status', true);
+            //  }
             
         }
         if ($request->route()->parameter('field') === "to_customer") {
