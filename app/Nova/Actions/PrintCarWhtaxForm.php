@@ -165,13 +165,15 @@ class PrintCarWhtaxForm extends Action
                     break;
             }
 
-            $form_wh3path =  Storage::disk('public')->path('documents/wh3_sisahygo.pdf');           
+            $form_wh3path =  Storage::disk('public')->path('documents/wh3_sisahygo.pdf');   
+            
             $form_name = 'wh3_' . $model->vendor_id . '.pdf';
             $xfdf_name = 'wh3_' . $model->vendor_id . '.xfdf';
-            $form_wh3saved =  Storage::disk('public')->path('documents/' . $form_name);
+            $form_wh3saved =  Storage::disk('public')->url('documents/' . $form_name);
             $xfdf_file =  Storage::disk('public')->path('documents/' . $xfdf_name);
 
-            $form_wh3 = new Pdf($form_wh3path);
+           
+            
             $car_taxfill = [
                 'name1' => $company->company_name,
                 'id1' => substr($company->taxid, 0, 1) . ' ' . substr($company->taxid, 1, 4) . ' ' . substr($company->taxid, 5, 5) . ' ' . substr($company->taxid, 10, 2) . ' ' . substr($company->taxid, 12, 1),
@@ -212,13 +214,17 @@ class PrintCarWhtaxForm extends Action
             ];
 
             $xfdf = new XfdfFile($car_taxfill);
+            
             $xfdf->saveAs($xfdf_file);
-
-            $result = $form_wh3->allow('AllFeatures')
+            
+            $form_wh3 = new Pdf($form_wh3path);
+            
+            $result = $form_wh3
+                ->allow('AllFeatures')
                 ->fillForm($xfdf_file)
                 ->needAppearances()
                 ->saveAs($form_wh3saved);
-
+           // dd($result);
             // Always check for errors
             if ($result === false) {
                 $error = $form_wh3->getError();

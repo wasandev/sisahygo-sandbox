@@ -31,7 +31,7 @@
         "league/flysystem-path-prefixing": "^3.0",
         "livewire/livewire": "^2.10",
         "maatwebsite/laravel-nova-excel": "^1.2",
-        "mikehaertl/php-pdftk": "^0.10.3",
+        "mikehaertl/php-pdftk": "^0.13.1",
         "mikehaertl/php-shellcommand": "^1.6",
         "mirovit/nova-notifications": "^1.0",
         "orlyapps/nova-belongsto-depend": "^2.0",
