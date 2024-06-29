@@ -15,6 +15,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use mikehaertl\pdftk\Pdf;
 use mikehaertl\pdftk\XfdfFile;
+use mikehaertl\pdftk\FdfFile;
 
 class PrintCarWhtaxForm extends Action
 {
@@ -165,12 +166,13 @@ class PrintCarWhtaxForm extends Action
                     break;
             }
 
-            $form_wh3path =  Storage::disk('public')->path('documents/wh3_sisahygo.pdf');   
+            $form_wh3path =  Storage::url('documents/wh3_form.pdf');   
+            
             
             $form_name = 'wh3_' . $model->vendor_id . '.pdf';
             $xfdf_name = 'wh3_' . $model->vendor_id . '.xfdf';
-            $form_wh3saved =  Storage::disk('public')->url('documents/' . $form_name);
-            $xfdf_file =  Storage::disk('public')->path('documents/' . $xfdf_name);
+            $form_wh3saved =  Storage::path('documents/' . $form_name);
+            $xfdf_file =  Storage::path('documents/' . $xfdf_name);
 
            
             
@@ -219,19 +221,20 @@ class PrintCarWhtaxForm extends Action
             
             $form_wh3 = new Pdf($form_wh3path);
             
-            $result = $form_wh3
-                ->allow('AllFeatures')
-                ->fillForm($xfdf_file)
+            
+            $result = $form_wh3->fillForm($xfdf_file)
                 ->needAppearances()
+                ->allow('AllFeatures')
                 ->saveAs($form_wh3saved);
-           // dd($result);
-            // Always check for errors
+            
+            
             if ($result === false) {
                 $error = $form_wh3->getError();
                 echo $error;
             }
 
             return Action::openInNewTab(url('storage/documents/' . $form_name));
+           
         }
     }
     /**
