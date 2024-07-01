@@ -113,7 +113,7 @@ class Ar_customer extends Resource
                 'Y' => 'วางบิล'
             ])
                 ->hideFromIndex()
-                ->withMeta(['value' => 'Y'])
+                //->withMeta(['value' => 'Y'])
                 ->displayUsingLabels(),
             Number::make(__('Credit term'), 'creditterm')
                 ->hideFromIndex(),

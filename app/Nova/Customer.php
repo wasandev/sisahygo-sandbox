@@ -113,7 +113,7 @@ class Customer extends Resource
                 'Y' => 'วางบิล'
             ])
                 ->hideFromIndex()
-                ->withMeta(['value' => 'H'])
+               // ->withMeta(['value' => 'H'])
                 ->displayUsingLabels()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('manage order_headers');
