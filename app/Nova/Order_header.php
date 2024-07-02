@@ -39,6 +39,8 @@ use Laravel\Nova\Http\Requests\ActionRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Wasandev\Orderstatus\Orderstatus;
 use Wasandev\QrCodeScan\QrCodeScan;
+use Jenssegers\Agent\Agent;
+
 
 class Order_header extends Resource
 {
@@ -102,6 +104,7 @@ class Order_header extends Resource
      */
     public function fields(Request $request)
     {
+        $agent = new Agent;
         return [
             ID::make('ลำดับ', 'id')
                 ->sortable(),
@@ -241,11 +244,16 @@ class Order_header extends Resource
 
             Text::make(__('Remark'), 'remark')->nullable()
                 ->hideFromIndex(),
+           
+           
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
+                // ->withMeta([
+                //     'belongsToId' =>$this->user_id ?? auth()->user()->id
+                //         ])             
                 ->hideFromIndex()
                 ->searchable()
                 ->withSubtitles(),
-
+            
             BelongsTo::make(__('Loader'), 'loader', 'App\Nova\User')
                 ->nullable()
                 ->onlyOnDetail(),
