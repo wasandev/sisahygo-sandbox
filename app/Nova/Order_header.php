@@ -104,7 +104,7 @@ class Order_header extends Resource
      */
     public function fields(Request $request)
     {
-        $agent = new Agent;
+        
         return [
             ID::make('ลำดับ', 'id')
                 ->sortable(),
@@ -247,9 +247,13 @@ class Order_header extends Resource
            
            
             BelongsTo::make(__('Checker'), 'checker', 'App\Nova\User')
-                // ->withMeta([
-                //     'belongsToId' =>$this->user_id ?? auth()->user()->id
-                //         ])             
+                ->default(function ($request) {
+                    $agent = new Agent;
+                    if($agent->isMobile() || $agent->isTablet() ) {
+                        return $request->user()->id;
+                    }
+                    
+                })                      
                 ->hideFromIndex()
                 ->searchable()
                 ->withSubtitles(),

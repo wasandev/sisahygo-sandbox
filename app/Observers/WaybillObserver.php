@@ -82,5 +82,26 @@ class WaybillObserver
             $waybill->branch_id = $waybill->routeto_branch->branch_id;
             $waybill->branch_rec_id = $waybill->routeto_branch->dest_branch_id;
         }
+        
+                
+    }
+
+    public function updated(Waybill $waybill)
+    {
+        $car_balance = Car_balance::where('car_id',$waybill->car_id)                                   
+                                    ->where('doctype','R')
+                                    ->where('waybill_id',$waybill->id)
+                                    ->first();
+        //dd($car_balance);
+        $car_balance->amount = $waybill->waybill_payable ;
+        $car_balance->save();
+    }
+ 
+    /**
+     * Handle the User "deleted" event.
+     */
+    public function deleted(Waybill $waybill)
+    {
+        
     }
 }
