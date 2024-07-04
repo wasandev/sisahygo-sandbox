@@ -88,13 +88,13 @@ class WaybillObserver
 
     public function updated(Waybill $waybill)
     {
-        $car_balance = Car_balance::where('car_id',$waybill->car_id)                                   
-                                    ->where('doctype','R')
-                                    ->where('waybill_id',$waybill->id)
-                                    ->first();
-        //dd($car_balance);
-        $car_balance->amount = $waybill->waybill_payable ;
-        $car_balance->save();
+        // $car_balance = Car_balance::where('car_id',$waybill->car_id)                                   
+        //                             ->where('doctype','R')
+        //                             ->where('waybill_id',$waybill->id)
+        //                             ->first();
+        // //dd($car_balance);
+        // $car_balance->amount = $waybill->waybill_payable ;
+        // $car_balance->save();
     }
  
     /**
