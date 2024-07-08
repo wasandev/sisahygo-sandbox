@@ -160,7 +160,8 @@ class CreateTruckDeliveryItems extends Action
                 ->rules('required'),
             Select::make('เส้นทางขนส่งของสาขา', 'branch_route')
                 ->options($branch_routes)
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->rules('required'),
 
             Text::make('คำอธิบายรายการ/หมายเหตุ', 'description'),
         ];

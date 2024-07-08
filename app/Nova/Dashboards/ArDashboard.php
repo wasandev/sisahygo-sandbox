@@ -2,8 +2,8 @@
 
 namespace App\Nova\Dashboards;
 
-use App\Nova\Metrics\Branchs\OrderBillBalance;
-use App\Nova\Metrics\Branchs\OrderBillPay;
+use App\Nova\Metrics\OrderBillBalance;
+use App\Nova\Metrics\OrderBillPay;
 use App\Nova\Metrics\OrderBillPerDay;
 use Laravel\Nova\Dashboard;
 use Wasandev\Orderstatus\Orderstatus;

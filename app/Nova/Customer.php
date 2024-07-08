@@ -60,32 +60,14 @@ class Customer extends Resource
     //public static $title = 'name';
     public function title()
     {
-        $customer_paymenttype = '';
-
-        switch ($this->paymenttype) {
-            case "H":
-                $customer_paymenttype = 'สดต้นทาง' ;
-                return $this->name.'-'.$customer_paymenttype;
-                break;
-            case "E":
-                 $customer_paymenttype = 'สดปลายทาง' ;
-                 return $this->name.'-'.$customer_paymenttype;
-                break;
-            case "Y":
-                $customer_paymenttype = 'วางบิล' ;
-                return $this->name.'-'.$customer_paymenttype;
-                break;
-            default:
-                $customer_paymenttype = 'สดต้นทาง' ;
-                return $this->name.'-'.$customer_paymenttype;
-               
-            }
+        
+        return $this->name ;
         
     }
 
     public function subtitle()
     {
-
+        
         return   $this->address . ' ' . $this->sub_district . ' ' . $this->district . ' ' . $this->province;
     }
 
