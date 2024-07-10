@@ -54,7 +54,7 @@ class PrintOrderReportBillByDay extends Action
         if ($to_value == '') {
             return Action::danger('เลือก วันที่สิ้นสุด ที่ต้องการที่เมนูกรองข้อมูลก่อน');
         }
-        $cancelflag  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CancelFlag');
+        $cancelflag  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\Accounts\CancelFlag');
 
         $cancelflag_value = Arr::get($cancelflag, 'value.cancelflag');
 

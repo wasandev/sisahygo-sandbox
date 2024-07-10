@@ -61,7 +61,7 @@ class PrintOrderReportCrByDay extends Action
         if ($artype_value == '') {
             $artype_value = 'A';
         }
-        $cancelflag  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\CancelFlag');
+        $cancelflag  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\Accounts\CancelFlag');
 
         $cancelflag_value = Arr::get($cancelflag, 'value.cancelflag');
 
