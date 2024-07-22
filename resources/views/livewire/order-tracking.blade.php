@@ -2,7 +2,7 @@
     <div class="p-2">
 
         <form wire:submit.prevent="trackingOrder">
-            <input type="search" wire:keydown.enter="trackingOrder" wire:model.defer="tracking"
+            <input type="number" wire:keydown.enter="trackingOrder" wire:model.defer="tracking"
                 placeholder="ป้อนเลขที่ติดตามสินค้า Ref ID"
                 class="w-10/12 duration-100 ease-in-out focus:outline-none focus:shadow-md border border-transparent focus:bg-gray-100  placeholder-gray-600 rounded-lg bg-gray-50 p-2  appearance-none leading-normal ">
             <button class="bg-blue-600 hover:bg-blue-400 text-white font-bold  rounded  items-baseline p-2 my-4"
