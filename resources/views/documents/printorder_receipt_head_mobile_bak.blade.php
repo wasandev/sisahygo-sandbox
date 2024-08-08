@@ -1,102 +1,116 @@
-@extends('layouts.form')
+@extends('layouts.formmobile')
 
-@section('header')
-    @include('partials.orderheader_nohead')
-@endsection
+
 @section('content')
 
-    <table style="width: 100%;magin-top: -8px">
+    <table style="width: 96%;magin-top: -30px">
         <tr>
-            <td style="width: 60%;text-align: right;vertical-align:top;">
-                @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
-                    <h3>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</h3>
-                @else
-                    <h3>ใบรับส่งสินค้า</h3>
-                @endif
+
+            <td style="width: 40%;text-align: left;vertical-align:bottom;">
+                <br />
+                <p>
+                    @if ($order->paymenttype == 'H' || $order->paymenttype == 'E')
+                        <strong>ใบรับส่งสินค้า/ใบเสร็จรับเงิน</strong>
+                    @else
+                        <strong>ใบรับส่งสินค้า</strong>
+                    @endif
+                </p>
             </td>
-            <td style="width: 40%;text-align: right;vertical-align:top">
+            <td style="width: 40%;text-align: center;vertical-align:bottom;">
+
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
-                    <h2>จ่ายเงินแล้ว</h2>
+                    -จ่ายเงินแล้ว-
                 @elseif($order->paymenttype == 'E')
-                    <h2>เก็บเงินปลายทาง</h2>
+                    -เก็บเงินปลายทาง-
                 @else
-                    <h2>วางบิล</h2>
+                    -วางบิล-
                 @endif
+                </p>
+            </td>
+            <td style="width: 20%;text-align: right;vertical-align:top;">
+
+                @isset($order->id)
+                    {!! QrCode::size(70)->generate('https://app.sisahygo.online/order-tracking?tracking=' . $order->id) !!}
+                @endisset
+
+
             </td>
         </tr>
     </table>
-    <table style="width: 100%;">
+    <table style="width: 96%;">
         <tr>
             <td style="width: 40%;text-align: left;vertical-align:top">
-                เลขที่ : <strong> {{ $order->order_header_no }}</strong> <br />
-                วันที่ : <strong> {{ $order->created_at }}</strong><br />
-                <strong>
-                    @switch($order->paymenttype)
-                        @case('H')
-                            การชำระเงิน : เงินสดต้นทาง<br />
-                        @break
-
-                        @case('T')
-                            การชำระเงิน : เงินโอนต้นทาง<br />
-                        @break
-
-                        @case('E')
-                            การชำระเงิน : เก็บเงินปลายทาง<br />
-                        @break
-
-                        @case('F')
-                            การชำระเงิน : วางบิลต้นทาง<br />
-                        @break
-
-                        @case('L')
-                            การชำระเงิน : วางบิลปลายทาง
-                        @break
-                    @endswitch
-                </strong>
-            </td>
-            <td style="width: 60%;text-align: right;vertical-align:top">
-
-                @if ($order->waybill_id == '')
-                    ใบกำกับ: .............................. ทะเบียนรถ: .....................
-                @else
-                    ใบกำกับ: <strong> {{ $order->waybill->waybill_no }}</strong> ทะเบียนรถ:
-                    <strong>{{ $order->waybill->car->car_regist }}</strong>
-                @endif
-
+                เลขที่ : {{ $order->order_header_no }}
                 @switch($order->order_type)
                     @case('general')
-                        ประเภท : ทั่วไป<br />
+                        - ประเภท : ทั่วไป<br />
                     @break
 
                     @case('express')
-                        ประเภท : Express<br />
+                        - ประเภท : Express<br />
                     @break
 
                     @case('charter')
-                        ประเภท : เหมาคัน<br />
+                        - ประเภท : เหมาคัน<br />
                     @break
                 @endswitch
-                <strong> สาขา : {{ $order->to_branch->name }} Tel : {{ $order->to_branch->phoneno }} <br />
-                    @switch($order->trantype)
-                        @case(1)
-                            การจัดส่งปลายทาง : จัดส่ง<br />
-                        @break
+                วันที่ : {{ $order->created_at }}<br />
 
-                        @case(0)
-                            การจัดส่งปลายทาง : รับเอง<br />
-                        @break
-                    @endswitch
-                </strong>
+                @switch($order->paymenttype)
+                    @case('H')
+                        การชำระเงิน : เงินสดต้นทาง /
+                    @break
+
+                    @case('T')
+                        การชำระเงิน : เงินโอนต้นทาง /
+                    @break
+
+                    @case('E')
+                        การชำระเงิน : เก็บเงินปลายทาง /
+                    @break
+
+                    @case('F')
+                        การชำระเงิน : วางบิลต้นทาง /
+                    @break
+
+                    @case('L')
+                        การชำระเงิน : วางบิลปลายทาง /
+                    @break
+                @endswitch
+                @switch($order->trantype)
+                    @case(1)
+                        การจัดส่ง : จัดส่ง
+                    @break
+
+                    @case(0)
+                        การจัดส่ง : รับเอง
+                    @break
+                @endswitch
+
+            </td>
+            <td style="width: 50%;text-align: right;vertical-align:top">
+
+                @if ($order->waybill_id == '')
+                    ใบกำกับ: .............................. ทะเบียนรถ: .....................<br />
+                @else
+                    ใบกำกับ: {{ $order->waybill->waybill_no }} - ทะเบียน:
+                    {{ $order->waybill->car->car_regist }} <br />
+                @endif
+
+
+                สาขา : {{ $order->to_branch->name }} Tel : {{ $order->to_branch->phoneno }}
+
+
 
 
             </td>
         </tr>
     </table>
-    <table style="width: 100%;border-top: 0.5px dotted black">
+    <table style="width: 96%;border-top: 0.5px dotted black">
 
         <tr>
             <td style="width: 50%;vertical-align:top">
-                ผู้ส่งสินค้า:
+                ผู้ส่ง:
                 @isset($order->customer->name)
                     {{ $order->customer->name }}
                 @endisset
@@ -132,13 +146,13 @@
                     {{ $order->customer->postal_code }}<br />
                 @endisset
                 @isset($order->customer->phoneno)
-                    <strong>Tel: {{ $order->customer->phoneno }}</strong>
+                    Tel: {{ $order->customer->phoneno }}
                 @endisset
 
             </td>
             <td style="width: 50%;vertical-align:top">
 
-                ผู้รับสินค้า: {{ $order->to_customer->name }}
+                ผู้รับ: {{ $order->to_customer->name }}
                 @if ($order->to_customer->taxid != '')
                     Tax ID. {{ $order->to_customer->taxid }}
                 @endif
@@ -162,14 +176,14 @@
                     จ.{{ $order->to_customer->province }}
                 @endif
                 {{ $order->to_customer->postal_code }}<br />
-                <strong>Tel: {{ $order->to_customer->phoneno }}</strong>
+                Tel: {{ $order->to_customer->phoneno }}
 
             </td>
         </tr>
 
 
     </table>
-    <table style="width: 100%;border-top: 0.5px dotted black;">
+    <table style="width: 96%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top;">
             <td style="width: 45%;text-align: left">
                 รายการ
@@ -188,10 +202,10 @@
             </td>
         </tr>
     </table>
-    <table style="width: 100%;height: 2.5cm;border-top: 0.5px dotted black;">
+    <table style="width: 96%;height: 2.0cm;border-top: 0.5px dotted black;">
 
         @foreach ($order->order_details as $item)
-            <tr style="vertical-align:top;height:14px">
+            <tr style="vertical-align:top;height:10px">
                 <td style="width: 45%;text-align: left">
                     {{ $loop->iteration }}.{{ $item->product->name }}
                     @isset($item->remark)
@@ -213,9 +227,9 @@
                 </td>
             </tr>
         @endforeach
-        @if (count($order->order_details) < 5)
-            @for ($i = 1; $i <= 5 - count($order->order_details); $i++)
-                <tr style="vertical-align:top;height:14px">
+        @if (count($order->order_details) < 4)
+            @for ($i = 1; $i <= 4 - count($order->order_details); $i++)
+                <tr style="vertical-align:top;height:10px">
                     <td style="width: 45%;text-align: left">
 
                     </td>
@@ -236,32 +250,32 @@
             @endfor
         @endif
     </table>
-    <table style="width: 100%;border-top: 0.5px dotted black;">
-        <tr style="vertical-align:top;height:14px;">
+    <table style="width: 96%;border-top: 0.5px dotted black;">
+        <tr style="vertical-align:top;height:10px;">
             <td style="width: 45%;text-align: left">
                 หมายเหตุ : {{ $order->remark }}
             </td>
             <td style="width: 11%;text-align: right">
-                <strong>สินค้า
-                    {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}</strong>
+                สินค้า
+                {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}
             </td>
             <td style="width: 9%;text-align: center">
                 ชิ้น
             </td>
             <td style="width: 15%;text-align: right">
-                จำนวนเงิน
+                รวมจำนวนเงิน
             </td>
             <td style="width: 20%;text-align: right">
-                <strong>{{ number_format($order->order_amount, 2) }}</strong>
+                {{ number_format($order->order_amount, 2) }}
             </td>
 
         </tr>
     </table>
 
 
-    <table style="width: 100%;border-top: 0.5px dotted black;">
+    <table style="width: 96%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
-            <td style="width: 45%;">
+            <td style="width: 35%; font-size:smaller ;font-style: thin">
                 พนักงานตรวจรับ :
                 @isset($order->checker->name)
                     {{ $order->checker->name }}<br />
@@ -277,26 +291,17 @@
                 @endisset
 
             </td>
-            <td style="width: 20%;text-align: center">
-                @if ($order->paymenttype == 'E')
-                    การชำระเงิน<br />
-                    โอนเข้าบัญชี ธ.กสิกรไทย<br>
-                    บจก.สี่สหายขนส่ง(1988) สาขา บางมด<br />
-                    เลขที่บัญชี <strong>0901004102</strong>
-                @endif
-            </td>
+            <td style="width: 25%;text-align: right">
+                สแกนจ่าย QR Code ได้ทุกธนาคาร <br />
 
-            <td style="width: 10%;text-align: center">
-                @if ($order->paymenttype == 'E')
-                    <img src="{{ url('storage/images/siskbqrpay.jpg') }}" alt="Qr จ่ายเงินสี่สหายขนส่ง" height="100">
-                @endif
+                <img src="{{ url('storage/images/siskbqrpay.jpg') }}" alt="Qr จ่ายเงินสี่สหายขนส่ง" height="100">
+
 
             </td>
             <td style="width: 25%;text-align: right">
-                <strong> ( {{ baht_text($order->order_amount) }} ) </strong><br>
+                ( {{ baht_text($order->order_amount) }} ) <br>
 
-                <strong> Ref ID: {{ $order->id }} </strong><br />
-
+                Ref ID: {{ $order->id }}
 
 
             </td>
@@ -305,12 +310,16 @@
 
         </tr>
     </table>
-    <table style="width: 100%;">
+    <table style="width: 96%;border-top: .05px dotted black;">
         <tr style="vertical-align:top;">
-            <td style="width: 100%;">
+            <td style="width: 96%; font-size:smaller ;font-style: thin">
+                สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
+                ถ้าสินค้าสูญหายหรือเสียหาย ทวงถามภายใน 50 วัน
+                สินค้าไวเพลิง สินค้าผิดกฎหมาย สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br /><br />
 
-                (ลงชื่อ) ผู้ส่งสินค้า.................................. (ลงชื่อ) ผู้รับเงิน.............................
-                (ลงชื่อ) ผู้รับสินค้า............................วันที่...................
+                (ลงชื่อ) ผู้ส่งสินค้า......................................(ลงชื่อ)
+                ผู้รับเงิน.....................................(ลงชื่อ)
+                ผู้รับสินค้า..............................................วันที่........................
 
 
             </td>

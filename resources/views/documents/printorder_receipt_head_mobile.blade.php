@@ -58,23 +58,23 @@
 
                 @switch($order->paymenttype)
                     @case('H')
-                        เงื่อนไขการชำระเงิน : เงินสดต้นทาง /
+                        การชำระเงิน : เงินสดต้นทาง /
                     @break
 
                     @case('T')
-                        เงื่อนไขการชำระเงิน : เงินโอนต้นทาง /
+                        การชำระเงิน : เงินโอนต้นทาง /
                     @break
 
                     @case('E')
-                        เงื่อนไขการชำระเงิน : เก็บเงินปลายทาง /
+                        การชำระเงิน : เก็บเงินปลายทาง /
                     @break
 
                     @case('F')
-                        เงื่อนไขการชำระเงิน : วางบิลต้นทาง /
+                        การชำระเงิน : วางบิลต้นทาง /
                     @break
 
                     @case('L')
-                        เงื่อนไขการชำระเงิน : วางบิลปลายทาง /
+                        การชำระเงิน : วางบิลปลายทาง /
                     @break
                 @endswitch
                 @switch($order->trantype)
@@ -146,7 +146,7 @@
                     {{ $order->customer->postal_code }}<br />
                 @endisset
                 @isset($order->customer->phoneno)
-                    <strong>Tel: {{ $order->customer->phoneno }}</strong>
+                    Tel: {{ $order->customer->phoneno }}
                 @endisset
 
             </td>
@@ -176,7 +176,7 @@
                     จ.{{ $order->to_customer->province }}
                 @endif
                 {{ $order->to_customer->postal_code }}<br />
-                <strong>Tel: {{ $order->to_customer->phoneno }}</strong>
+                Tel: {{ $order->to_customer->phoneno }}
 
             </td>
         </tr>
@@ -256,7 +256,7 @@
                 หมายเหตุ : {{ $order->remark }}
             </td>
             <td style="width: 11%;text-align: right">
-                รวมสินค้า
+                สินค้า
                 {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}
             </td>
             <td style="width: 9%;text-align: center">
@@ -266,7 +266,7 @@
                 รวมจำนวนเงิน
             </td>
             <td style="width: 20%;text-align: right">
-                <strong>{{ number_format($order->order_amount, 2) }}</strong>
+                {{ number_format($order->order_amount, 2) }}
             </td>
 
         </tr>
@@ -275,7 +275,7 @@
 
     <table style="width: 96%;border-top: 0.5px dotted black;">
         <tr style="vertical-align:top">
-            <td style="width: 50%; font-size:smaller ;font-style: thin">
+            <td style="width: 35%; font-size:smaller ;font-style: thin">
                 พนักงานตรวจรับ :
                 @isset($order->checker->name)
                     {{ $order->checker->name }}<br />
@@ -291,25 +291,21 @@
                 @endisset
 
             </td>
-            <td style="width: 50%;text-align: right">
-                <strong> ( {{ baht_text($order->order_amount) }} ) </strong><br>
+            <td style="width: 25%;text-align: right">
+                สแกนจ่าย QR Code ได้ทุกธนาคาร <br />
 
-                เลขที่ตรวจสอบสถานะ <strong> Ref ID: {{ $order->id }} </strong>
-
-
+                <img src="{{ url('storage/images/siskbqrpay.jpg') }}" alt="Qr จ่ายเงินสี่สหายขนส่ง" height="100">
 
             </td>
-
-
-
+            <td style="width: 25%;text-align: right">
+                ( {{ baht_text($order->order_amount) }} ) <br>
+                Ref ID: {{ $order->id }}
+            </td>
         </tr>
     </table>
     <table style="width: 96%;border-top: .05px dotted black;">
         <tr style="vertical-align:top;">
             <td style="width: 96%; font-size:smaller ;font-style: thin">
-                สินค้าไม่ประเมินราคาหากสูญหายหรือเสียหายชดใช้ไม่เกิน 500 บาท หากพ้นกำหนดไม่รับผิดชอบ
-                ถ้าสินค้าสูญหายหรือเสียหายโปรดนำใบรับส่งสินค้าฉบับนี้มาทวงถามภายใน 50 วัน สินค้าไวเพลิง สินค้าผิดกฎหมาย
-                สินค้าแตกหักง่ายที่บรรจุไม่เหมาะสม ทางบริษัทฯ ไม่รับผิดชอบทั้งสิ้น<br /><br />
 
                 (ลงชื่อ) ผู้ส่งสินค้า......................................(ลงชื่อ)
                 ผู้รับเงิน.....................................(ลงชื่อ)
