@@ -277,21 +277,47 @@
                 @endisset
 
             </td>
-            <td style="width: 20%;text-align: center">
+            <td style="width: 30%;text-align: center">
                 @if ($order->paymenttype == 'E')
-                    การชำระเงิน<br />
-                    โอนเข้าบัญชี ธ.กสิกรไทย<br>
-                    บจก.สี่สหายขนส่ง(1988) สาขา บางมด<br />
-                    เลขที่บัญชี <strong>0901004102</strong>
+                    @switch($order->branch_rec_id)
+                        @case(5)
+                            การชำระเงิน<br />
+                            โอนเข้าบัญชี ธ.กรุงศรีอยุธยา<br>
+                            อรพรรณ บุญเกิด<br />
+                            เลขที่บัญชี <strong>042-1-66616-2</strong>
+                        @break
+
+                        @case(7)
+                            การชำระเงิน<br />
+                            โอนเข้าบัญชี ธ.ไทยพานิชย์<br>
+                            หจก.สี่สหายขนส่ง(บ้านนาสาร) 2016<br />
+                            เลขที่บัญชี <strong>898-2-29369-6</strong>
+                        @break
+
+                        @case(11)
+                            การชำระเงิน<br />
+                            โอนเข้าบัญชี ธ.ไทยพานิชย์<br>
+                            หจก.สี่สหายขนส่ง(บ้านนาสาร) 2016<br />
+                            เลขที่บัญชี <strong>898-2-29369-6</strong>
+                        @break
+
+                        @case(13)
+                            การชำระเงิน<br />
+                            โอนเข้าบัญชี ธ.กสิกรไทย สาขาตรัง<br>
+                            หจก.สี่สหายขนส่งตรัง-พัทลุง<br />
+                            เลขที่บัญชี <strong>054-1-87635-9</strong>
+                        @break
+
+                        @default
+                            การชำระเงิน<br />
+                            โอนเข้าบัญชี ธ.กสิกรไทย สาขาบางมด<br>
+                            บจก.สี่สหายขนส่ง(1988)<br />
+                            เลขที่บัญชี <strong>090-1-00410-2</strong>
+                    @endswitch
                 @endif
             </td>
 
-            <td style="width: 10%;text-align: center">
-                @if ($order->paymenttype == 'E')
-                    <img src="{{ url('storage/images/siskbqrpay.jpg') }}" alt="Qr จ่ายเงินสี่สหายขนส่ง" height="100">
-                @endif
 
-            </td>
             <td style="width: 25%;text-align: right">
                 <strong> ( {{ baht_text($order->order_amount) }} ) </strong><br>
 
