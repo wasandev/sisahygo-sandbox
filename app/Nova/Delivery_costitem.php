@@ -77,9 +77,8 @@ class Delivery_costitem extends Resource
             Boolean::make('ต้นทุนด้านแรงงาน', 'personal_costs')
                 ->default(false)
                 ->hideFromIndex(),
-            // BelongsTo::make('ชื่อพนักงาน','employee','App\Nova\Employee')
-            //     ->nullable()                
-            //     ->showCreateRelationButton(),
+            BelongsTo::make('ชื่อพนักงาน','employee','App\Nova\Employee')
+                ->onlyOnIndex(),
            NovaDependencyContainer::make([
                 Select::make('ชื่อพนักงาน', 'employee_id')
                     ->options($employee)
