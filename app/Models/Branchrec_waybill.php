@@ -11,7 +11,7 @@ class Branchrec_waybill extends Model
     protected $table = 'waybills';
 
     protected $fillable = [
-        'waybill_status', 'arrivaled_at'
+        'waybill_status', 'arrivaled_at','branch_car_income'
     ];
 
     protected $casts = [

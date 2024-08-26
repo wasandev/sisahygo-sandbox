@@ -12,9 +12,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Company_expense extends Resource
 {
-    public static $displayInNavigation = false;
-    public static $group = "8.งานการเงิน/บัญชี";
-    public static $priority = 6;
+    public static $displayInNavigation = true;
+    public static $group = "9.2 งานการเงิน/บัญชี";
+    public static $priority = 3;
     /**
      * The model the resource corresponds to.
      *
@@ -39,7 +39,7 @@ class Company_expense extends Resource
     ];
     public static function label()
     {
-        return 'หมวดค่าใช้จ่ายส่วนกลาง';
+        return 'หมวดค่าใช้จ่าย';
     }
     /**
      * Get the fields displayed by the resource.
@@ -51,7 +51,7 @@ class Company_expense extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('ชื่อหมวดค่าใช้จ่ายส่วนกลาง', 'name'),
+            Text::make('ค่าใช้จ่าย', 'name'),
             BelongsTo::make('ผู้ทำรายการ', 'user', 'App\Nova\User')
                 ->onlyOnDetail(),
         ];
@@ -99,5 +99,16 @@ class Company_expense extends Resource
     public function actions(Request $request)
     {
         return [];
+    }
+
+
+     public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
+    }
+
+    public static function redirectAfterUpdate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . static::uriKey();
     }
 }

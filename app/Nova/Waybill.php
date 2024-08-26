@@ -195,6 +195,8 @@ class Waybill extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            Currency::make('ต้นทุนค่าจัดลงสินค้าของสาขา', 'branch_car_income')
+                ->onlyOnDetail(),
             HasMany::make(__('Order header'), 'order_loaders', 'App\Nova\Order_loader'),
             HasMany::make(__('Waybill status'), 'waybill_statuses', 'App\Nova\Waybill_status'),
         ];

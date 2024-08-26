@@ -174,6 +174,8 @@ class Branchrec_waybill extends Resource
             DateTime::make(__('Updated At'), 'updated_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->onlyOnDetail(),
+            Currency::make('ต้นทุนค่าจัดลงสินค้าของสาขา', 'branch_car_income'),
+              
             HasMany::make(__('Order header'), 'branchrec_orders', 'App\Nova\Branchrec_order'),
             // ->canSee(function ($request) {
             //     return $this->waybill_status === 'arrival';

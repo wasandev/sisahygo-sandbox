@@ -15,6 +15,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Delivery extends Resource
@@ -37,7 +38,7 @@ class Delivery extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'delivery_no';
 
     /**
      * The columns that should be searched.
@@ -139,7 +140,17 @@ class Delivery extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->role == 'admin';
                 }),
+            Number::make('เลขไมล์เริ่มต้น','mile_start_number')
+                ->nullable()
+                ->hideFromIndex(),
+            Number::make('เลขไมล์สิ้นสุด','mile_end_number')
+                ->nullable()
+                ->hideFromIndex(),           
+            Number::make('รวมระยะทางขนส่ง', 'delivery_mile')
+                 ->nullable()
+                ->hideFromIndex(),        
             HasMany::make('รายการจัดส่งตามผู้รับ', 'delivery_items', 'App\Nova\Delivery_item'),
+            HasMany::make('ต้นทุนการจัดส่ง', 'delivery_costitems', 'App\Nova\Delivery_costitem'),
 
         ];
     }
@@ -198,7 +209,8 @@ class Delivery extends Resource
                 })
                 ->canSee(function ($request) {
                     return  $request->user()->hasPermissionTo('edit deliveries');
-                })
+                }),
+            (new Actions\SetDeliveryMile)->onlyOndetail()
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)

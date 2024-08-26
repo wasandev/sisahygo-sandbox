@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Currency;
 
 class WaybillArrival extends Action
 {
@@ -45,6 +46,7 @@ class WaybillArrival extends Action
 
             $model->arrivaled_at =   $fields->arrivaled_at;
             $model->waybill_status = 'arrival';
+            $model->branch_car_income = $fields->branch_car_income;
             $model->save();
             return Action::push('/resources/branchrec_waybills/');
         }
@@ -61,7 +63,8 @@ class WaybillArrival extends Action
             DateTime::make('วัน-เวลาถึงสาขาปลายทางจริง', 'arrivaled_at')
                 ->format('DD/MM/YYYY HH:mm')
                 ->rules('required'),
-
+            Currency::make('ค่าจัดลงสินค้า(ค่าจ้างเหมาจัดลงสินค้า)','branch_car_income')
+                
         ];
     }
 }

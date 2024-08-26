@@ -11,7 +11,7 @@ class Delivery extends Model
     protected $fillable = [
         'delivery_no', 'delivery_date', 'delivery_type', 'waybill_id',
         'branch_id', 'branch_route_id', 'car_id', 'driver_id', 'sender_id', 'description', 'receipt_amount', 'user_id',
-        'updated_by', 'completed'
+        'updated_by', 'completed','mile_start_number','mile_end_number','delivery_mile'
     ];
 
     protected $casts = [
@@ -55,5 +55,9 @@ class Delivery extends Model
     public function delivery_items()
     {
         return $this->hasMany('App\Models\Delivery_item');
+    }
+    public function delivery_costitems()
+    {
+        return $this->hasMany('App\Models\Delivery_costitem');
     }
 }
