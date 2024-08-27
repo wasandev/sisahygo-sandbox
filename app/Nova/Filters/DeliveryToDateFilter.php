@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Filters\DateFilter;
 
-class DeliveryDateFilter extends DateFilter
+class DeliveryToDateFilter extends DateFilter
 {
-    public $name = 'จากวันที่';
+    public $name = 'ถึงวันที่';
 
 
     /**
@@ -21,6 +21,6 @@ class DeliveryDateFilter extends DateFilter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('delivery_date', '>=', Carbon::parse($value));
+        return $query->where('delivery_date', '<=', Carbon::parse($value));
     }
 }
