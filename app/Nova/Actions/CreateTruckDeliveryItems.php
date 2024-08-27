@@ -46,8 +46,8 @@ class CreateTruckDeliveryItems extends Action
 
         $branch_warehouses =  $waybill_order->diff($models);
 
-        $delivery_no = IdGenerator::generate(['table' => 'deliveries', 'field' => 'delivery_no', 'length' => 15, 'prefix' => $branch->code  . date('Ymd')]);
-
+        $delivery_no = IdGenerator::generate(['table' => 'deliveries', 'field' => 'delivery_no', 'length' => 15, 'prefix' => $branch->code  . date('ym')]);
+        
         $select_orders = $models->filter(function ($item) {
             return data_get($item, 'order_status') == 'arrival';
         });

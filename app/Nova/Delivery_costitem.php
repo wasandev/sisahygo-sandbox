@@ -19,11 +19,11 @@ class Delivery_costitem extends Resource
 {
     use HasDependencies;
     public static $group = '8.สำหรับสาขา';
-    public static $priority = 3;
-    public static $displayInNavigation = false;   
+    public static $priority = 4;
+    public static $displayInNavigation = true;   
     public static $globallySearchable = false;
     public static $preventFormAbandonment = true;
-    public static $perPageViaRelationship = 100;
+    public static $perPageViaRelationship = 50;
     /**
      * The model the resource corresponds to.
      *

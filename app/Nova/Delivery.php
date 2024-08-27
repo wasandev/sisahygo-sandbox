@@ -29,6 +29,7 @@ class Delivery extends Resource
     // public static $pollingInterval = 90;
     // public static $showPollingToggle = true;
     //public static $globallySearchable = true;
+    
     /**
      * The model the resource corresponds to.
      *
@@ -42,7 +43,7 @@ class Delivery extends Resource
      *
      * @var string
      */
-    public static $title = 'delivery_no';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -86,7 +87,7 @@ class Delivery extends Resource
                 })
                 ->sortable(),
             Text::make('เลขที่จัดส่ง', function () {
-                return $this->delivery_no . '-' . $this->id;
+                return $this->delivery_no;
             })
 
                 ->onlyOnDetail(),

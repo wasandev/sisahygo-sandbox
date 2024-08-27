@@ -40,7 +40,7 @@ class CreateBranchDeliveryItems extends Action
     {
 
         $branch = \App\Models\Branch::find(auth()->user()->branch_id);
-        $delivery_no = IdGenerator::generate(['table' => 'deliveries', 'field' => 'delivery_no', 'length' => 15, 'prefix' => $branch->code  . date('Ymd')]);
+        $delivery_no = IdGenerator::generate(['table' => 'deliveries', 'field' => 'delivery_no', 'length' => 15, 'prefix' => $branch->code  . date('ym')]);
         $select_orders = $models->filter(function ($item) {
             return data_get($item, 'order_status') == 'branch warehouse';
         });
