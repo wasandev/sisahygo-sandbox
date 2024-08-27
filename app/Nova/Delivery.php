@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Filters\Branch;
 use App\Nova\Filters\DeliveryDateFilter;
 use App\Nova\Filters\DeliveryToDateFilter;
+use App\Nova\Filters\BranchType;
 use App\Nova\Filters\Deliverytype;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -33,7 +34,8 @@ class Delivery extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Delivery::class;
+    public static $model = \App\Models\Delivery::class;    
+    public static $with = ['branch'];
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -180,7 +182,8 @@ class Delivery extends Resource
             new Branch(),
             new DeliveryDateFilter(),
             new DeliveryToDateFilter(),
-            new Deliverytype()
+            new Deliverytype(),
+            new BranchType()
 
         ];
     }

@@ -37,6 +37,7 @@ class Branch extends Resource
     //public static $displayInNavigation = false;
     public static $group = '1.งานสำหรับผู้ดูแลระบบ';
     public static $priority = 2;
+    
     //public static $showColumnBorders = true;
 
     //public static $subGroup = "ข้อมูลบริษัท";
