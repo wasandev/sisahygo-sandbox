@@ -121,7 +121,13 @@ class Delivery extends Resource
             BelongsTo::make('เส้นทาง', 'branch_route', 'App\Nova\Branch_route'),
             BelongsTo::make('พนักงานจัดส่ง', 'sender', 'App\Nova\User')
                 ->rules('required')
-                ->searchable(),
+                ->searchable()
+                ->hideFromIndex(),
+
+            Currency::make('ต้นทุนการจัดส่ง',function() {
+                return $this->delivery_costitems->sum('amount');                
+            })->exceptOnForms(),
+            
 
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
                 ->onlyOnDetail()
