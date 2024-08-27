@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Filters\Branch;
 use App\Nova\Filters\DeliveryDateFilter;
+use App\Nova\Filters\Deliverytype;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -176,7 +177,9 @@ class Delivery extends Resource
     {
         return [
             new Branch(),
-            new DeliveryDateFilter()
+            new DeliveryDateFilter(),
+            new Deliverytype()
+
         ];
     }
 
