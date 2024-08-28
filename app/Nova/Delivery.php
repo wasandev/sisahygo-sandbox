@@ -226,6 +226,12 @@ class Delivery extends Resource
                     return  $request->user()->hasPermissionTo('edit deliveries');
                 }),
             (new Actions\SetDeliveryMile)->onlyOndetail()
+                ->canRun(function ($request) {
+                    return  $request->user()->hasPermissionTo('edit deliveries');
+                })
+                ->canSee(function ($request) {
+                    return  $request->user()->hasPermissionTo('edit deliveries');
+                }),
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)
