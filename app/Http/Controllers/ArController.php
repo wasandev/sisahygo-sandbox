@@ -50,44 +50,99 @@ class ArController extends Controller
         if ($customer == 'all') {
             if ($branch == 'all') {
                 $branchdata = null;
-                $aroutstandings = Ar_balance::select('ar_balances.*')
-                    ->join('order_headers', 'ar_balances.order_header_id', 'order_headers.id')
+               // $aroutstandings 
+               $arnotpay_1 = Ar_balance::select('ar_balances.*')                                      
                     ->where('ar_balances.docdate', '<=', $to)
-                    ->where('order_headers.payment_status', '=', 'false')
+                    ->where('ar_balances.doctype', '=', 'P')
+                    ->whereNull('ar_balances.receipt_id')                    
+                    ->orderBy('ar_balances.customer_id', 'asc')
                     ->orderBy('ar_balances.docdate', 'asc')
                     ->orderBy('ar_balances.id', 'asc')
                     ->get();
+                $arnotpay_2 = Ar_balance::select('ar_balances.*') 
+                    ->join('receipts', 'receipts.id', '=', 'ar_balances.receipt_id')                                     
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->where('ar_balances.doctype', '=', 'P')
+                    ->where('receipts.receipt_date' ,'>',$to)                    
+                    ->orderBy('ar_balances.customer_id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
+                    ->orderBy('ar_balances.id', 'asc')
+                    ->get();
+
+                $aroutstandings = $arnotpay_1->merge($arnotpay_2);
             } else {
                 $branchdata = Branch::find($branch);
-                $aroutstandings = Ar_balance::select('ar_balances.*')
-                    ->join('order_headers', 'ar_balances.order_header_id', 'order_headers.id')
+                $arnotpay_b1 = Ar_balance::select('ar_balances.*')                   
                     ->where('ar_balances.branch_id', '=', $branch)
+                    ->where('ar_balances.doctype', '=', 'P')
                     ->where('ar_balances.docdate', '<=', $to)
-                    ->where('order_headers.payment_status', '=', 'false')
+                    ->whereNull('ar_balances.receipt_id')                    
+                    ->orderBy('ar_balances.customer_id', 'asc')
                     ->orderBy('ar_balances.docdate', 'asc')
                     ->orderBy('ar_balances.id', 'asc')
                     ->get();
+                $arnotpay_b2 = Ar_balance::select('ar_balances.*') 
+                    ->join('receipts', 'receipts.id', '=', 'ar_balances.receipt_id') 
+                    ->where('ar_balances.branch_id', '=', $branch)                                    
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->where('ar_balances.doctype', '=', 'P')
+                    ->where('receipts.receipt_date' ,'>',$to)                    
+                    ->orderBy('ar_balances.customer_id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
+                    ->orderBy('ar_balances.id', 'asc')
+                    ->get();
+                $aroutstandings = $arnotpay_b1->merge($arnotpay_b2);
             }
         } else {
             if ($branch == 'all') {
                 $branchdata = null;
-                $aroutstandings = Ar_balance::join('order_headers', 'ar_balances.order_header_id', 'order_headers.id')
+                $arnotpay_c1  = Ar_balance::select('ar_balances.*')
                     ->where('ar_balances.customer_id', '=', $customer)
+                    ->where('ar_balances.doctype', '=', 'P')
+                    ->whereNull('ar_balances.receipt_id')   
                     ->where('ar_balances.docdate', '<=', $to)
-                    ->where('order_headers.payment_status', '=', 'false')
                     ->orderBy('ar_balances.docdate', 'asc')
                     ->orderBy('ar_balances.id', 'asc')
                     ->get();
+                $arnotpay_c2 = Ar_balance::select('ar_balances.*') 
+                    ->join('receipts', 'receipts.id', '=', 'ar_balances.receipt_id') 
+                    ->join('customers', 'customers.id', '=', 'ar_balances.customer_id')
+                    ->where('ar_balances.customer_id', '=', $customer)            
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->where('ar_balances.doctype', '=', 'P')
+                    ->where('receipts.receipt_date' ,'>',$to)                    
+                    ->orderBy('ar_balances.customer_id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
+                    ->orderBy('ar_balances.id', 'asc')
+                    ->get();
+                $aroutstandings = $arnotpay_c1->merge($arnotpay_c2);
+                
             } else {
                 $branchdata = Branch::find($branch);
-                $aroutstandings = Ar_balance::join('order_headers', 'ar_balances.order_header_id', 'order_headers.id')
+                $arnotpay_cb1 = Ar_balance::select('ar_balances.*')
                     ->where('ar_balances.branch_id', '=', $branch)
                     ->where('ar_balances.customer_id', '=', $customer)
                     ->where('ar_balances.docdate', '<=', $to)
-                    ->where('order_headers.payment_status', '=', 'false')
+                    ->where('ar_balances.doctype', '=', 'P')
+                    ->whereNull('ar_balances.receipt_id') 
+                    ->orderBy('ar_balances.customer_id', 'asc')
                     ->orderBy('ar_balances.docdate', 'asc')
                     ->orderBy('ar_balances.id', 'asc')
                     ->get();
+                $arnotpay_cb2 = Ar_balance::select('ar_balances.*') 
+                    ->join('receipts', 'receipts.id', '=', 'ar_balances.receipt_id') 
+                    ->join('customers', 'customers.id', '=', 'ar_balances.customer_id')
+                    ->where('ar_balances.branch_id', '=', $branch)
+                    ->where('ar_balances.customer_id', '=', $customer)            
+                    ->where('ar_balances.docdate', '<=', $to)
+                    ->where('ar_balances.doctype', '=', 'P')
+                    ->where('receipts.receipt_date' ,'>',$to)                    
+                    ->orderBy('ar_balances.customer_id', 'asc')
+                    ->orderBy('ar_balances.docdate', 'asc')
+                    ->orderBy('ar_balances.id', 'asc')
+                    ->get();
+
+                $aroutstandings = $arnotpay_cb1->merge($arnotpay_cb2);
             }
         }
 

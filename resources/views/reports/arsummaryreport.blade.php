@@ -72,39 +72,39 @@
                     $ar_balamount = $ar_bringforword + $ar_paybalance - $ar_recbalance;
                     $sum_forword += $ar_bringforword;
                 @endphp
-                @if ($ar_balamount > 0)
-                    @php
-                        $itemlist++;
-                    @endphp
-                    <tr style="vertical-align: top">
-                        <td style="text-align: center">{{ $itemlist }}</td>
+                {{-- @if ($ar_balamount > 0 || $ar_bringforword > 0 || $ar_paybalance > 0 || $ar_recbalance > 0) --}}
+                @php
+                    $itemlist++;
+                @endphp
+                <tr style="vertical-align: top">
+                    <td style="text-align: center">{{ $itemlist }}</td>
 
-                        <td style="text-align: left">{{ $ardata->name }}</td>
+                    <td style="text-align: left">{{ $ardata->name }}</td>
 
-                        <td style="text-align: right">{{ number_format($ar_bringforword, 2, '.', ',') }}</td>
+                    <td style="text-align: right">{{ number_format($ar_bringforword, 2, '.', ',') }}</td>
 
-                        <td style="text-align: right">{{ number_format($ar_paybalance, 2, '.', ',') }}</td>
+                    <td style="text-align: right">{{ number_format($ar_paybalance, 2, '.', ',') }}</td>
 
-                        <td style="text-align: right">{{ number_format($ar_recbalance, 2, '.', ',') }}</td>
-
-
-                        <td style="text-align: right">
-
-                            {{ number_format($ar_balamount, 2, '.', ',') }}
-
-                        </td>
+                    <td style="text-align: right">{{ number_format($ar_recbalance, 2, '.', ',') }}</td>
 
 
+                    <td style="text-align: right">
 
-                    </tr>
-                @endif
+                        {{ number_format($ar_balamount, 2, '.', ',') }}
+
+                    </td>
+
+
+
+                </tr>
+                {{-- @endif --}}
             @endforeach
 
 
             <tr style="font-weight: bold;">
                 <td colspan="2">
                     <strong>
-                        รวมทั้งหมด - {{ count($ar_groups) }} รายการ
+                        รวมทั้งหมด
                     </strong>
                 </td>
                 <td style="text-align: right">
