@@ -42,13 +42,20 @@
         </thead>
 
         <tbody>
+            @php
+
+                $itemlist = 0;
+            @endphp
             @foreach ($ar_groups as $ar_item => $ar_balance)
+                @php
+                    $itemlist++;
+                @endphp
                 <tr style="font-weight:bold">
                     <td colspan="4" style="text-align: left">
                         @php
                             $customer = \App\Models\Ar_customer::find($ar_item);
                         @endphp
-                        {{ $customer->name }}
+                        {{ $itemlist }} - {{ $customer->name }}
                     </td>
                     <td style="text-align: center">
                         รวม
