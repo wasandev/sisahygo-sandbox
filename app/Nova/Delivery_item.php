@@ -73,6 +73,17 @@ class Delivery_item extends Resource
                 ->viewable(false),
             Date::make('วันที่รับชำระ', 'paydate')
                 ->default(today()),
+            
+            Currency::make('ค่าขนส่งรวม',  function () {    
+                $sumorder = 0; 
+                $delivery_details =  \App\Models\Delivery_detail::where('delivery_item_id',$this->id)->get(); 
+                foreach ($delivery_details as $orderitem ) {
+                    $order = \App\Models\Branchrec_order::find($orderitem->order_header_id);
+                    $sumorder += $order->order_amount ;
+                }
+
+                return $sumorder;
+            })->exceptOnForms(),
             Currency::make('ยอดจัดเก็บ', 'payment_amount')
                 ->exceptOnForms(),
             Boolean::make('สถานะการจัดส่ง', 'delivery_status')
