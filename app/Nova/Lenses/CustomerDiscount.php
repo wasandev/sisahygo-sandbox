@@ -11,6 +11,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
+use App\Nova\Filters\Branch;
 use Illuminate\Support\Facades\DB;
 
 class CustomerDiscount extends Lens
@@ -109,7 +110,8 @@ class CustomerDiscount extends Lens
     {
         return [
             new ReceiptFromDate(),
-            new ReceiptToDate()
+            new ReceiptToDate(),
+            new Branch(),
         ];
     }
 

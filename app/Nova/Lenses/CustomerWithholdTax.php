@@ -12,6 +12,7 @@ use Laravel\Nova\Lenses\Lens;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
 use Illuminate\Support\Facades\DB;
+use App\Nova\Filters\Branch;
 
 class CustomerWithholdTax extends Lens
 {
@@ -108,6 +109,7 @@ class CustomerWithholdTax extends Lens
     public function filters(Request $request)
     {
         return [
+            new Branch(),
             new ReceiptFromDate(),
             new ReceiptToDate()
         ];
