@@ -16,6 +16,8 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Lenses\CustomerWithholdTax;
+use Laravel\Nova\Lenses\CustomerDiscount;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Receipt_all extends Resource
@@ -157,7 +159,10 @@ class Receipt_all extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new Lenses\CustomerWithholdTax(),
+            new Lenses\CustomerDiscount()
+        ];
     }
 
     /**
