@@ -112,6 +112,7 @@ class CustomerDiscount extends Lens
             new ReceiptFromDate(),
             new ReceiptToDate(),
             new Branch(),
+            new Customer()
         ];
     }
 

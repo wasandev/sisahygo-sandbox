@@ -3,10 +3,13 @@
 namespace App\Nova;
 
 use App\Nova\Actions\BranchReceipt;
+use App\Nova\Actions\BranchReceiptGroup;
 use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchBalanceStatus;
 use App\Nova\Filters\BranchbalanceToDate;
+use App\Nova\Filters\BranchPayFromDate;
+use App\Nova\Filters\BranchPayToDate;
 use App\Nova\Filters\PaymentStatus;
 use App\Nova\Lenses\Branch\BranchBalanceBydate;
 use App\Nova\Lenses\Branch\BranchBalanceReceipt;
@@ -166,6 +169,8 @@ class Branch_balance_partner extends Resource
         return [
             new PaymentStatus(),
             new BranchBalanceFilter(),
+            new BranchPayFromDate(),
+            new BranchPayToDate(),
             new BranchbalanceFromDate(),
             new BranchbalanceToDate()
 
@@ -203,7 +208,16 @@ class Branch_balance_partner extends Resource
                 ->cancelButtonText("ไม่ยืนยัน")
                 ->canRun(function ($request) {
                     return $request->user()->hasPermissionTo('view branch_balance');
+                }),
+            BranchReceiptGroup::make($request->resourceId)
+                ->onlyOnIndex()
+                ->confirmText('ต้องการยืนยันการรับชำระค่าขนส่งตามรายการที่เลือกไว้นี้?')
+                ->confirmButtonText('ยืนยัน')
+                ->cancelButtonText("ไม่ยืนยัน")
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('view branch_balance');
                 })
+            
         ];
     }
     public static function indexQuery(NovaRequest $request, $query)

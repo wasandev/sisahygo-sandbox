@@ -79,13 +79,11 @@ class BranchReceipt extends Action
             $model->branchpay_date = $fields->paydate;
             $model->save();
 
-            if ($branch_order->order_status == 'completed' || $branch_order->order_status == 'problem') {
+            
                 if (isset($delivery_detail)) {
                     $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
                 }
                 $branch_order->branchpay_by =  $fields->payment_by;
-
-
 
                 if ($fields->payment_by == 'T') {
                     $model->payment_status = false;
@@ -173,9 +171,7 @@ class BranchReceipt extends Action
                 }
 
                 return Action::push('/resources/branch_balances/');
-            } else {
-                return Action::danger('รายการนี้ยังไม่ได้ทำรายการจัดส่งหรือลูกยังไม่ได้รับสินค้า โปรดตรวจสอบ');
-            }
+            
         }
 
 

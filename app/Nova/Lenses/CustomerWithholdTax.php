@@ -11,6 +11,7 @@ use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
+use App\Nova\Actions\Accounts\PrintTaxwhCustomer;
 use Illuminate\Support\Facades\DB;
 use App\Nova\Filters\Branch;
 
@@ -78,7 +79,7 @@ class CustomerWithholdTax extends Lens
                 }
                 return $rectype;
             }),
-            Text::make('ชื่อลูกค้าผู้หักภาษี','customer_name') ,
+            Text::make('ชื่อลูกค้าผู้หักภาษี','customer_name'),
             Currency::make('จำนวนเงินค่าบริการ', 'total_amount', function ($value) {
                 return $value;
             }),
@@ -111,7 +112,7 @@ class CustomerWithholdTax extends Lens
         return [
             new Branch(),
             new ReceiptFromDate(),
-            new ReceiptToDate()
+            new ReceiptToDate(),
         ];
     }
 
@@ -123,7 +124,13 @@ class CustomerWithholdTax extends Lens
      */
     public function actions(Request $request)
     {
-        return parent::actions($request);
+        return [
+            (new PrintTaxwhCustomer($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view receipt_all');
+                }),
+        ];
     }
 
     /**

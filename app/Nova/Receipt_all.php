@@ -92,7 +92,6 @@ class Receipt_all extends Resource
             ])->displayUsingLabels(),
             BelongsTo::make('โอนเข้าบัญชี', 'bankaccount', 'App\Nova\Bankaccount')
                 ->hideFromIndex()
-                ->searchable()
                 ->withSubtitles()
                 ->nullable(),
             Text::make('เลขที่รายการโอน', 'bankreference')

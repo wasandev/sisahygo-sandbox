@@ -122,7 +122,7 @@ class Branch_balance extends Resource
 
             Currency::make('ส่วนลด', 'discount_amount')
                 ->sortable(),
-            Currency::make('ภาษี', 'tax_amount'),
+            Currency::make('ภาษี', 'tax_amount')->sortable(),
 
             Currency::make('ยอดรับชำระ', 'pay_amount')
                 ->sortable(),

@@ -66,9 +66,9 @@ class BranchReceiptGroup extends Action
                         return Action::danger('รายการนี้ชำระเงินไปแล้ว');
                     }
                     $branch_order = Branchrec_order::find($model->order_header_id);
-                    if ($branch_order->order_status <> 'completed') {
-                        return Action::danger('รายการที่เลือกบางรายการ ยังไม่ทำรายการจัดส่งหรือลูกยังไม่ได้รับสินค้า โปรดตรวจสอบ');
-                    }
+                    // if ($branch_order->order_status <> 'completed') {
+                    //     return Action::danger('รายการที่เลือกบางรายการ ยังไม่ทำรายการจัดส่งหรือลูกยังไม่ได้รับสินค้า โปรดตรวจสอบ');
+                    // }
                 }
                 $total_amount = $cust_groups->sum('bal_amount');
                 if ($fields->tax_status) {
@@ -156,7 +156,7 @@ class BranchReceiptGroup extends Action
 
                     $model->save();
 
-                    if ($branch_order->order_status == 'completed') {
+                    // if ($branch_order->order_status == 'completed') {
                         if (isset($delivery_detail)) {
                             $delivery_item = Delivery_item::find($delivery_detail->delivery_item_id);
                         }
@@ -215,9 +215,10 @@ class BranchReceiptGroup extends Action
                         if (isset($delivery_detail)) {
                             $delivery_detail->save();
                         }
-                    } else {
-                        return Action::danger('รายการที่เลือกบางรายการ ยังไม่ทำรายการจัดส่งหรือลูกยังไม่ได้รับสินค้า โปรดตรวจสอบ');
-                    }
+                    //} 
+                    // else {
+                    //     return Action::danger('รายการที่เลือกบางรายการ ยังไม่ทำรายการจัดส่งหรือลูกค้ายังไม่ได้รับสินค้า โปรดตรวจสอบ');
+                    // }
                 }
             }
             return Action::push('/resources/branch_balances/');
