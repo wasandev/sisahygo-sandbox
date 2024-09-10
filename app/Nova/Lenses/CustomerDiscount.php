@@ -12,6 +12,7 @@ use Laravel\Nova\Lenses\Lens;
 use App\Nova\Filters\ReceiptFromDate;
 use App\Nova\Filters\ReceiptToDate;
 use App\Nova\Filters\Branch;
+use App\Nova\Actions\Accounts\PrintDiscountCustomer;
 use Illuminate\Support\Facades\DB;
 
 class CustomerDiscount extends Lens
@@ -123,7 +124,13 @@ class CustomerDiscount extends Lens
      */
     public function actions(Request $request)
     {
-        return parent::actions($request);
+        return [
+            (new PrintDiscountCustomer($request->filters))
+                ->standalone()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view receipt_all');
+                }),
+        ];
     }
 
     /**

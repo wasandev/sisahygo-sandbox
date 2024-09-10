@@ -97,6 +97,7 @@ Route::middleware('web', 'auth')
         Route::get('/ar/report_19/{branch}/{customer}/{from}/{to}', 'ArController@report_19')->name('report_19');
         //Receipt
         Route::get('/receipt/report_r1/{branch}/{from}/{to}', 'ReceiptController@report_r1')->name('report_r1');
+        Route::get('/receipt/report_r2/{branch}/{from}/{to}', 'ReceiptController@report_r2')->name('report_r2');
         
         
         //Branch
