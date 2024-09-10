@@ -111,8 +111,7 @@ class CustomerDiscount extends Lens
         return [
             new ReceiptFromDate(),
             new ReceiptToDate(),
-            new Branch(),
-            new Customer()
+            new Branch()
         ];
     }
 
