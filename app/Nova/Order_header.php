@@ -26,6 +26,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Metrics\OrderIncomes;
 use App\Nova\Metrics\OrdersByPaymentType;
@@ -118,6 +119,40 @@ class Order_header extends Resource
                 ->hideWhenCreating()
                 ->showOnUpdating()
                 ->sortable(),
+            Number::make('ระยะเวลาจัดส่ง', function () {
+                    $orderstatus = \App\Models\Order_status::where('order_header_id','=',$this->id)->get();
+                    $i = 0;
+                    $len = count($orderstatus);
+                    $fromdate = $this->order_header_date ;
+                    $completed_status = \App\Models\Order_status::where('order_header_id','=',$this->id)
+                                                        ->where('status','=','completed')
+                                                        ->first();
+                    if (isset($completed_status)) {
+                         $todate = $completed_status->created_at;
+                    }else{
+                        $todate = now();
+                    }
+                    foreach ($orderstatus as $status) {
+                        if ($i == 0 &&  $status->status == 'confirmed') {
+                            $fromdate = $status->created_at;
+                            $todate = now();
+
+                        } elseif($i = $len- 1 ) {
+                            //$todate = $status->created_at;
+                            if ($status->status <> 'completed') {
+                                $fromdate = $status->created_at;
+                                $todate = now();
+                            }else {
+                                $fromdate = $this->order_header_date ;
+                                $todate = $status->created_at;
+                            }
+                        } 
+                        $i++;
+                    }
+                  
+                    $trandays = $fromdate->diffInDays($todate);
+                    return $trandays;
+            })->exceptOnForms(),
             BelongsTo::make(__('From branch'), 'branch', 'App\Nova\Branch')
                 //->hideWhenCreating()
                 ->onlyOnDetail()
@@ -226,6 +261,7 @@ class Order_header extends Resource
                 ->searchable()
                 ->withSubtitles()
                 ->exceptOnForms(),
+            
             Text::make('ที่อยู่', function () {
                 return $this->to_customer->address . ' ' . $this->to_customer->sub_district . ' ' . $this->to_customer->district
                     . ' ' . $this->to_customer->province . ' ' . $this->to_customer->phoneno;
