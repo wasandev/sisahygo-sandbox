@@ -98,7 +98,7 @@ class Branchrec_order extends Resource
                     $orderstatus = \App\Models\Order_status::where('order_header_id','=',$this->id)->get();
                     $i = 0;
                     $len = count($orderstatus);
-                    $trandays = 0;
+                    $trandays = 1;
                     $fromdate = $this->order_header_date ;
                     $todate = now();
                     $completed_status = \App\Models\Order_status::where('order_header_id','=',$this->id)
@@ -106,7 +106,7 @@ class Branchrec_order extends Resource
                                                         ->first();
                     if ($this->order_status == 'completed') {
                         $todate = $completed_status->created_at;
-                        $trandays = $fromdate->diffInDays($todate);
+                        $trandays = $fromdate->diffInDays($todate) + 1 ;
 
                     }else{
                        
@@ -118,7 +118,7 @@ class Branchrec_order extends Resource
                             } 
                             $i++;
                         }
-                       $trandays = $fromdate->diffInDays($todate); 
+                       $trandays = $fromdate->diffInDays($todate) + 1; 
                     }
                     return $trandays;
             })->exceptOnForms(),
