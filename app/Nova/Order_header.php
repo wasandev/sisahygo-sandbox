@@ -384,7 +384,7 @@ class Order_header extends Resource
             new lenses\ValueByOrderBranchWarehouse(),
             new lenses\ValueByOrderBranchCompletedNotPay(),
             new lenses\ValueByDistrictAll(),
-            //new lenses\ValueByDistrict()
+            new lenses\BranchTranDays()
         ];
     }
 
