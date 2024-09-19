@@ -8,6 +8,7 @@ use App\Nova\Filters\ArbalanceByCustomer;
 use App\Nova\Filters\InvoiceFromDate;
 use App\Nova\Filters\InvoiceNotReceipt;
 use App\Nova\Filters\InvoiceToDate;
+use App\Nova\Filters\InvoiceBranch;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
@@ -50,7 +51,8 @@ class Invoice extends Resource
 
     public static $searchRelations = [
         'ar_customer' => ['name'],
-        'receipt_ar' => ['receipt_no']
+        'receipt_ar' => ['receipt_no'],
+        'user' => ['name']
     ];
     public static $globalSearchRelations = [
         'ar_customer' => ['name'],
@@ -98,21 +100,7 @@ class Invoice extends Resource
                         number_format(0, 2, '.', ',');
                 }
             })->exceptOnForms(),
-            // Number::make('ยอดรับชำระ', 'receipt_amount', function () {
-
-            //     if (isset($this->ar_balances)) {
-            //         $payed_amount = 0;
-            //         foreach ($this->ar_balances as $arbalance_item) {
-            //             if (isset($arbalance_item->receipt_ar)) {
-
-            //                 $payed_amount = $payed_amount +$arbalance_item->receipt_ar->pay_amount;
-            //             }
-            //         }
-            //         return number_format($payed_amount, 2, '.', ',');
-            //     } else {
-            //         return number_format(0, 2, '.', ',');
-            //     }
-            // })->exceptOnForms(),
+            
             BelongsTo::make('ใบเสร็จรับเงิน', 'receipt_ar', 'App\Nova\Receipt_ar')
                 ->exceptOnForms()
                 ->nullable(),
@@ -121,7 +109,7 @@ class Invoice extends Resource
             Text::make('รายละเอียด/หมายเหตุอื่นๆ', 'description')
                 ->hideFromIndex(),
             BelongsTo::make(__('Created by'), 'user', 'App\Nova\User')
-                ->onlyOnDetail()
+                ->exceptOnForms()
                 ->searchable()
                 ->sortable(),
             DateTime::make(__('Created At'), 'created_at')
@@ -160,6 +148,7 @@ class Invoice extends Resource
             new InvoiceNotReceipt,
             new InvoiceFromDate,
             new InvoiceToDate,
+            new InvoiceBranch,
         ];
     }
 
