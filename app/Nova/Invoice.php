@@ -173,7 +173,7 @@ class Invoice extends Resource
     {
         return [
             (new PrintInvoice),
-            (new InvoiceReceipt)
+            (new InvoiceReceipt($request->resourceId))
                 ->showOnIndex()
                 ->confirmText('ต้องการรับชำระหนี้จากใบแจ้งหนี้ที่เลือกไว้')
                 ->confirmButtonText('รับชำระ')

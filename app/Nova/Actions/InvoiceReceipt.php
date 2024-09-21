@@ -23,6 +23,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceReceipt extends Action
 {
@@ -36,7 +37,12 @@ class InvoiceReceipt extends Action
     {
         return 'รับชำระหนี้';
     }
+    protected $model;
 
+    public function __construct($model = null)
+    {
+        $this->model = $model;
+    }
 
 
     /**
@@ -61,16 +67,16 @@ class InvoiceReceipt extends Action
                 foreach ($cust_groups as $invoice_item) {
                     $pay_amount = $pay_amount + $invoice_item->ar_balances->sum('ar_amount');
                 }
-
-                // if ($pay_amount <> $fields->pay_amount + $fields->discount_amount) {
-                //     return Action::danger('ยอดเงินรับชำระไม่ถูกต้อง ยอดรับต้องเท่ากับ ' . ($pay_amount - $fields->discount_amount));
-                // }
-                $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
                 if ($fields->tax_status) {
                     $tax_amount =  $pay_amount * 0.01;
                 } else {
                     $tax_amount = 0;
                 }
+                if ($pay_amount <> $fields->pay_amount + $fields->discount_amount + $tax_amount) {
+                    return Action::danger('ยอดเงินรับชำระไม่ถูกต้อง ยอดรับต้องเท่ากับ ' . ($pay_amount - $fields->discount_amount- $tax_amount));
+                }
+                $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
+                
                 $receipt = Receipt::create([
                     'receipt_no' => $receipt_no,
                     'status' => true,
@@ -148,9 +154,14 @@ class InvoiceReceipt extends Action
     {
         $bankaccount = Bankaccount::where('defaultflag', '=', true)->pluck('account_no', 'id');
         $banks = Bank::all()->pluck('name', 'id');
-
+        if(isset($this->model)){
+            $ar_bal = DB::table('ar_balances')->where('invoice_id','=' ,$this->model)->sum('ar_amount');
+        }else {
+            $ar_bal = 0;
+        }
 
         return [
+            Number::make('ยอดเงินตามใบแจ้งหนี้','ar_balance')->default($ar_bal)->readonly(),
             Number::make('จำนวนเงินรับชำระ', 'pay_amount')->step(0.01),
             Date::make('วันที่รับชำระ', 'receipt_date'),
             Select::make('รับชำระด้วย', 'payment_by')->options([
