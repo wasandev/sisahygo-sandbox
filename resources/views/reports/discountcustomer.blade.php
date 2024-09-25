@@ -1,4 +1,4 @@
-@extends('layouts.doclandscapenojs')
+@extends('layouts.docnojs')
 
 @section('header')
     @include('partials.reportheader')
