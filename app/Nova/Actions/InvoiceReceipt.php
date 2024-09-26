@@ -65,12 +65,12 @@ class InvoiceReceipt extends Action
 
                 $pay_amount = 0;
                 foreach ($cust_groups as $invoice_item) {
-                    $pay_amount = $pay_amount + $invoice_item->ar_balances->sum('ar_amount');
+                    $pay_amount = number_format($pay_amount + $invoice_item->ar_balances->sum('ar_amount'), 2, '.', '');
                 }
                 if ($fields->tax_status) {
-                    $tax_amount =  $pay_amount * 0.01;
+                    $tax_amount =  number_format( $pay_amount * 0.01, 2, '.', '');
                 } else {
-                    $tax_amount = 0;
+                    $tax_amount = 0.00;
                 }
                 if ($pay_amount <> number_format($fields->pay_amount + $fields->discount_amount + $tax_amount, 2, '.', '')) {
                     return Action::danger('ยอดเงินรับชำระไม่ถูกต้อง ยอดรับต้องเท่ากับ ' . number_format($pay_amount - $fields->discount_amount- $tax_amount,2, '.', ''));
