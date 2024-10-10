@@ -118,30 +118,49 @@ class OrderHeaderController extends Controller
     {
         $report_title = 'รายงานรายการขนส่งประจำวัน';
         $company = CompanyProfile::find(1);
+        if ($branch != 'all') {
+            $branchdata = Branch::find($branch);
 
-        $branchdata = Branch::find($branch);
 
-
-        if ($cancelflag == 'true') {
-            $order = Order_header::where('branch_id', $branch)
-                ->where('order_header_date', '>=', $from)
-                ->where('order_header_date', '<=', $to)
-                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-                //->lazyById(100, $column = 'id');
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('order_header_no', 'asc')
-                ->get();
-        } else {
-            $order = Order_header::where('branch_id', $branch)
-                ->where('order_header_date', '>=', $from)
-                ->where('order_header_date', '<=', $to)
-                ->whereNotIn('order_status', ['new', 'checking'])
-                //->lazyById(100, $column = 'id');
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('order_header_no', 'asc')
-                ->get();
+            if ($cancelflag == 'true') {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            } else {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            }
+        }else {
+             $branchdata = null;
+             if ($cancelflag == 'true') {
+                $order = Order_header::where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            } else {
+                $order = Order_header::where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            }
         }
-
 
         $order_groups = $order->groupBy(function ($item) {
             return $item->order_header_date->format('Y-m-d');
@@ -154,28 +173,48 @@ class OrderHeaderController extends Controller
     {
         $report_title = 'รายงานรายการขนส่งประจำวันแบบสรุป';
         $company = CompanyProfile::find(1);
+        if ($branch != 'all') {
+            $branchdata = Branch::find($branch);
 
-        $branchdata = Branch::find($branch);
 
-
-        if ($cancelflag == 'true') {
-            $order = Order_header::where('branch_id', $branch)
-                ->where('order_header_date', '>=', $from)
-                ->where('order_header_date', '<=', $to)
-                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-                //->lazyById(100, $column = 'id');
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('order_header_no', 'asc')
-                ->get();
-        } else {
-            $order = Order_header::where('branch_id', $branch)
-                ->where('order_header_date', '>=', $from)
-                ->where('order_header_date', '<=', $to)
-                ->whereNotIn('order_status', ['new', 'checking'])
-                //->lazyById(100, $column = 'id');
-                ->orderBy('branch_id', 'asc')
-                ->orderBy('order_header_no', 'asc')
-                ->get();
+            if ($cancelflag == 'true') {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            } else {
+                $order = Order_header::where('branch_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            }
+        }else{
+             $branchdata = null;
+             if ($cancelflag == 'true') {
+                $order = Order_header::where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            } else {
+                $order = Order_header::where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking'])
+                    //->lazyById(100, $column = 'id');
+                    ->orderBy('branch_id', 'asc')
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+            }
         }
 
 
@@ -191,17 +230,26 @@ class OrderHeaderController extends Controller
         $report_title = 'รายงานยอดค่าขนส่งตามวัน';
         $company = CompanyProfile::find(1);
 
-        $branchdata = Branch::find($branch);
+        if ($branch != 'all') {
+            $branchdata = Branch::find($branch);
+            $order = Order_header::where('branch_id', $branch)
+                ->where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                ->orderBy('order_header_date', 'asc')
+                ->orderBy('order_type', 'asc')
+                ->get();
+        } else{
+            $branchdata = null;
+            $order = Order_header::where('order_header_date', '>=', $from)
+                ->where('order_header_date', '<=', $to)
+                ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
+                ->orderBy('order_header_date', 'asc')
+                ->orderBy('order_type', 'asc')
+                ->get();
+        }
 
-
-        $order = Order_header::where('branch_id', $branch)
-            ->where('order_header_date', '>=', $from)
-            ->where('order_header_date', '<=', $to)
-            ->whereNotIn('order_status', ['new', 'checking', 'cancel'])
-            ->orderBy('order_header_date', 'asc')
-            ->orderBy('order_type', 'asc')
-            ->get();
-
+        
 
         $order_groups = $order->groupBy(function ($item) {
             return $item->order_header_date->format('Y-m-d');

@@ -41,8 +41,10 @@ class PrintOrderReportBillByDay extends Action
         $branch_value = Arr::get($branch, 'value');
 
         if ($branch_value == '') {
-            return Action::danger('เลือกสาขาที่ต้องการที่เมนูกรองข้อมูลก่อน');
+            $branch_value = 'all';
         }
+
+        
 
         $from  =  $decodedFilters->firstWhere('class', 'App\Nova\Filters\OrderFromDate');
         $from_value = Arr::get($from, 'value');
