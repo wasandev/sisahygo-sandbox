@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Nova\Filters\OrderdateFilter;
 use App\Nova\Filters\OrderFromDate;
 use App\Nova\Filters\OrderToDate;
+use App\Nova\Filters\ToBranch;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
 
@@ -45,6 +46,8 @@ class MostValueableReceivers extends Lens
         return [
             'customers.id',
             'customers.name',
+            'customers.district',
+            'customers.province',
             DB::raw('sum(order_headers.order_amount) as revenue'),
         ];
     }
@@ -59,6 +62,8 @@ class MostValueableReceivers extends Lens
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Text::make(__('Name'), 'name')->sortable(),
+            Text::make('อำเภอ','district'),
+            Text::make('จังหวัด','province'),
             Currency::make(__('Revenue'), 'revenue', function ($value) {
                 return $value;
             }),
@@ -87,7 +92,8 @@ class MostValueableReceivers extends Lens
         return [
 
             new OrderFromDate(),
-            new OrderToDate()
+            new OrderToDate(),
+            new ToBranch()
         ];
     }
 
