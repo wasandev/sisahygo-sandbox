@@ -8,6 +8,7 @@ use App\Nova\Filters\BranchBalanceFilter;
 use App\Nova\Filters\BranchbalanceFromDate;
 use App\Nova\Filters\BranchbalanceToDate;
 use App\Nova\Filters\BranchSummaryToDate;
+use App\Nova\Filters\ByBranchType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Currency;
@@ -15,6 +16,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Lenses\Lens;
+
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class BranchBalanceReport extends Lens
@@ -67,10 +69,10 @@ class BranchBalanceReport extends Lens
     {
         return [
             Text::make('สาขา', 'name'),
-            Currency::make('ค่าขนส่ง', 'branch_amount'),
+            Currency::make('ยอดค้างชำระ', 'branch_amount'),
             Currency::make('ส่วนลด', 'discount_amount'),
             Currency::make('ภาษี', 'tax_amount'),
-            Currency::make('ยอดชำระ', 'pay_amount'),
+            Currency::make('ยอดชำระแล้ว', 'pay_amount'),
 
 
         ];
@@ -98,6 +100,8 @@ class BranchBalanceReport extends Lens
         return [
             new BranchBalanceFilter(),
             new BranchBalanceToDate(),
+            new ByBranchType(),
+
         ];
     }
 
@@ -136,6 +140,6 @@ class BranchBalanceReport extends Lens
 
     public function name()
     {
-        return 'รายงานลูกหนี้สาขาค้างชำระ';
+        return 'รายงานลูกหนี้สาขาค้างชำระ ณ วันที่';
     }
 }
