@@ -52,7 +52,7 @@ class ConfirmBanktransfer extends Action
             $rec_custs = $cust_groups;
             foreach ($rec_custs as $rec_cust => $cust_groups) {
 
-                $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
+                $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd'),'reset_on_prefix_change' => 'true']);
                 $tax_amount = 0;
                 $discount_amount = $cust_groups->sum('discount_amount');
                 $tax_before = $cust_groups->sum('tax_amount');

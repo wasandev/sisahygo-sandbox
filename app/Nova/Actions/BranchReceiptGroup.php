@@ -79,7 +79,7 @@ class BranchReceiptGroup extends Action
                 $pay_amount = $total_amount - $fields->discount_amount - $tax_amount;
 
                 if ($fields->payment_by == 'C') {
-                    $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd')]);
+                    $receipt_no = IdGenerator::generate(['table' => 'receipts', 'field' => 'receipt_no', 'length' => 15, 'prefix' => 'RC' . date('Ymd'),'reset_on_prefix_change' => 'true']);
                     $receipt = Receipt::create([
                         'receipt_no' => $receipt_no,
                         'receipt_date' => $fields->paydate,
