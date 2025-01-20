@@ -62,7 +62,26 @@ class OrderHeaderController extends Controller
         }
     }
 
+    public function printorders($branch, $from, $to)
+    {
+        
 
+        $company = CompanyProfile::find(1);
+        $branchdata = Branch::find($branch);
+
+        $orderprints = Order_header::where('branch_rec_id', $branch)
+                    ->where('order_header_date', '>=', $from)
+                    ->where('order_header_date', '<=', $to)
+                    ->whereNotIn('order_status', ['new', 'checking'])
+                    ->orderBy('order_header_no', 'asc')
+                    ->get();
+        
+         
+        return view('documents.printorder_receipt_many', compact('company',  'orderprints'));
+                
+               
+        
+    }
     public function makePDF($order)
     {
         $company = CompanyProfile::find(1);

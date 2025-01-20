@@ -463,7 +463,7 @@
     "Other": "ข้อมูลอื่นๆ",
     "Logo": "โลโก้",
     "Image": "รูปภาพ",
-    "Branches":"ข้อมูลสาขา",
+    "Branches": "ข้อมูลสาขา",
     "Branch": "สาขา",
     "Branch Code": "รหัสสาขา",
     "Type": "ประเภท",
@@ -478,8 +478,8 @@
     "User Code": "รหัสพนักงาน(เดิม)",
     "Roles": "สิทธิ์การใช้งาน",
     "Role": "สิทธิ์การใช้งาน",
-    "Driving license types":"ข้อมูลประเภทใบขับขี่",
-    "Driving license type":"ประเภทใบขับขี่",
+    "Driving license types": "ข้อมูลประเภทใบขับขี่",
+    "Driving license type": "ประเภทใบขับขี่",
     "Employees": "ข้อมูลพนักงาน",
     "Employee": "พนักงาน",
     "Driver": "พนักงานขับรถ",
@@ -558,7 +558,7 @@
     "Amount": "จำนวนเงิน",
     "Distance": "ระยะทาง(กม.)",
     "Shipping cost data": "กำหนดต้นทุนการขนส่ง",
-    "From branch area" : "จากพื้นที่บริการของสาขา",
+    "From branch area": "จากพื้นที่บริการของสาขา",
     "Customer code": "รหัสลูกค้า",
     "Employee code": "รหัสพนักงาน",
     "Vendors": "ข้อมูลเจ้าหนี้/เจ้าของรถ",
@@ -628,12 +628,13 @@
     "Blog_image": "รูปภาพ",
     "Order loaded": "จัดขึ้นสินค้า",
     "Waybill transporting": "กำหนดรถออก",
-    "Waybill confirmed":"ยืนยันใบกำกับสินค้า",
-    "Waybill status":"สถานะใบกำกับ",
+    "Waybill confirmed": "ยืนยันใบกำกับสินค้า",
+    "Waybill status": "สถานะใบกำกับ",
     "loading": "กำลังจัดสินค้าขึ้นรถบรรทุก",
     "Waybill arrival": "กำหนดรถถึงสาขาปลายทางแล้ว",
     "Tran type": "การจัดส่ง",
     "Print Order": "พิมพ์",
+    "Print Orders": "พิมพ์ใบรับส่งที่เลือก",
     "Print Waybill": "พิมพ์ใบกำกับ",
     "Print Delivery": "พิมพ์ใบจัดส่งสินค้า",
     "Waybill Confirmed": "จำนวนรถออกต่อวัน(เที่ยว)",
@@ -644,7 +645,4 @@
     "Cheque No": "เลขที่เช็ค",
     "Cheque Date": "วันที่เช็ค",
     "Cheque Bank": "เช็คธนาคาร"
-
-
-
 }

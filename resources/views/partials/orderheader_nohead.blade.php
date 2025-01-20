@@ -17,10 +17,6 @@
         <td style="width: 10%;margin-left: 15px ">
             <div class="visible-print text-center">
                 {{-- {!! QrCode::size(70)->generate($order->tracking_no); !!} --}}
-                @isset($order->id)
-                    {{-- <img src="data:image/png;base64, {!! QrCode::size(70)->generate($order->tracking_no)) !!} "> --}}
-                    {!! QrCode::size(70)->generate('https://app.sisahygo.online/order-tracking?tracking=' . $order->id) !!}
-                @endisset
 
             </div>
         </td>

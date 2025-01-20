@@ -433,6 +433,17 @@ class Order_header extends Resource
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('view order_headers');
                 }),
+            (new Actions\PrintManyOrder) 
+                ->standalone()              
+                ->confirmText('ต้องการพิมพ์ใบรับส่งตามที่กรองไว้?')
+                ->confirmButtonText('พิมพ์')
+                ->cancelButtonText("ไม่พิมพ์")
+                ->canRun(function ($request, $model) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                })
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('view order_headers');
+                }),
             (new Actions\PrintPdfOrder)
                 ->onlyOnDetail()
                 ->confirmText('ต้องการบันทึกใบรับส่งรายการนี้เป็นไฟล์ PDF?')

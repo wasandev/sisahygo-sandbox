@@ -41,12 +41,15 @@ Route::middleware('web', 'auth')
     ->group(function () {
 
         Route::get('/quotation/preview/{id}', 'QuotationController@preview')->name('preview'); //For test
+         
         Route::get('/quotation/makepdf/{id}', 'QuotationController@makePDF')->name('makepdf');
         Route::get('/charterjob/preview/{id}', 'CharterJobController@preview')->name('preview'); //for test
         Route::get('/charterjob/makepdf/{id}', 'CharterJobController@makePDF')->name('makepdf');
         //order_header
         Route::get('/orderheader/makepdf/{id}', 'OrderHeaderController@makePDF')->name('makepdf');
         Route::get('/orderheader/preview/{id}', 'OrderHeaderController@preview')->name('preview');
+        Route::get('/orderheader/printorders/{branch}/{from}/{to}', 'OrderHeaderController@printorders')->name('printorders'); //For test
+      
         //report
         Route::get('/orderheader/report_1/{branch}/{orderdate}', 'OrderHeaderController@report_1')->name('report_1');
         Route::get('/orderheader/report_2/{branch}/{from}/{to}/{cancelflag}', 'OrderHeaderController@report_2')->name('report_2');
