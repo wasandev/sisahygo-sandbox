@@ -56,9 +56,22 @@ class OrderHeaderController extends Controller
                 }
                 break;
             case 'form3':
-                return view('documents.printorder_thermal', compact('order', 'order_detail', 'company'));
+
+                if ($order->order_type == 'charter') {
+                    return view('documents.printorder_charter_head', compact('order', 'order_detail', 'company'));
+                } else {
+                    if($agent->isMobile() || $agent->isTablet()  ) {
+                        return view('documents.printorder_receipt_head_mobile', compact('order', 'order_detail', 'company'));
+                    } else {
+                         return view('documents.printorder_receipt_newform', compact('order', 'order_detail', 'company'));
+                    }
+                    
+                }
+
+                break;
+                
             default:
-                return view('documents.printorder_receipt', compact('order', 'order_detail', 'company'));
+                return view('documents.printorder_receipt_newform', compact('order', 'order_detail', 'company'));
         }
     }
 

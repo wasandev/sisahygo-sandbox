@@ -172,7 +172,7 @@ class CompanyProfile extends Resource
             Select::make('รูปแบบการพิมพ์ใบรับส่ง', 'orderprint_option')->options([
                 'form1' => 'พิมพ์ลงฟอร์ม',
                 'form2' => 'พิมพ์ลงกระดาษเปล่า(A5)',
-                'form3' => 'พิมพ์กระดาษเทอร์มอล'
+                'form3' => 'พิมพ์แบบฟอร์มใหม่ (2025)'
             ])->displayUsingLabels()
                 ->hideFromIndex(),
 

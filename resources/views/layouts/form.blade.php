@@ -38,7 +38,9 @@
     @endif
 
 
+
     <link href="{{ mix('/css/print.css') }}" rel="stylesheet">
+
     @stack('scripts')
 
     <script>
