@@ -1,7 +1,7 @@
-@extends('layouts.form')
+@extends('layouts.form_chartera4')
 
 @section('header')
-    @include('partials.orderheader_nohead')
+    @include('partials.orderheader')
 @endsection
 @section('content')
     <table style="width: 100%;height: 1.5cm;">
@@ -208,7 +208,7 @@
             </td>
             <td style="width: 11%;text-align: right">
                 <strong>รวมสินค้า
-                    {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') +$order->order_details->where('unit_id', '=', 10)->count('amount') }}</strong>
+                    {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}</strong>
             </td>
             <td style="width: 9%;text-align: center">
                 ชิ้น

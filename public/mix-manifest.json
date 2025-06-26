@@ -1,10 +1,11 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/admin.js": "/js/admin.js",
-    "/css/doc.css": "/css/doc.css",
+    "/css/printcharter.css": "/css/printcharter.css",
     "/css/print955.css": "/css/print955.css",
     "/css/printa4.css": "/css/printa4.css",
     "/css/print.css": "/css/print.css",
     "/css/app.css": "/css/app.css",
-    "/css/doclandscape.css": "/css/doclandscape.css"
+    "/css/doclandscape.css": "/css/doclandscape.css",
+    "/css/doc.css": "/css/doc.css"
 }

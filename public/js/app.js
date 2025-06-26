@@ -30208,6 +30208,19 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./resources/css/doc.css":
+/*!*******************************!*\
+  !*** ./resources/css/doc.css ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/css/doclandscape.css":
 /*!****************************************!*\
   !*** ./resources/css/doclandscape.css ***!
@@ -30273,10 +30286,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/doc.css":
-/*!*******************************!*\
-  !*** ./resources/css/doc.css ***!
-  \*******************************/
+/***/ "./resources/css/printcharter.css":
+/*!****************************************!*\
+  !*** ./resources/css/printcharter.css ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -42427,12 +42440,13 @@ module.exports = axios;
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
-/******/ 			"css/doc": 0,
+/******/ 			"css/printcharter": 0,
 /******/ 			"css/print955": 0,
 /******/ 			"css/printa4": 0,
 /******/ 			"css/print": 0,
 /******/ 			"css/app": 0,
-/******/ 			"css/doclandscape": 0
+/******/ 			"css/doclandscape": 0,
+/******/ 			"css/doc": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -42482,13 +42496,14 @@ module.exports = axios;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/doc","css/print955","css/printa4","css/print","css/app","css/doclandscape"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/doc","css/print955","css/printa4","css/print","css/app","css/doclandscape"], () => (__webpack_require__("./resources/sass/app.sass")))
-/******/ 	__webpack_require__.O(undefined, ["css/doc","css/print955","css/printa4","css/print","css/app","css/doclandscape"], () => (__webpack_require__("./resources/css/print.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/doc","css/print955","css/printa4","css/print","css/app","css/doclandscape"], () => (__webpack_require__("./resources/css/printa4.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/doc","css/print955","css/printa4","css/print","css/app","css/doclandscape"], () => (__webpack_require__("./resources/css/print955.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/doc","css/print955","css/printa4","css/print","css/app","css/doclandscape"], () => (__webpack_require__("./resources/css/doc.css")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/doc","css/print955","css/printa4","css/print","css/app","css/doclandscape"], () => (__webpack_require__("./resources/css/doclandscape.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/sass/app.sass")))
+/******/ 	__webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/css/print.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/css/printa4.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/css/print955.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/css/printcharter.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/css/doc.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/printcharter","css/print955","css/printa4","css/print","css/app","css/doclandscape","css/doc"], () => (__webpack_require__("./resources/css/doclandscape.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
