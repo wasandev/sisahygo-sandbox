@@ -22,25 +22,51 @@
 
     <table style="width: 100%;">
         <tr>
-            <td style="width: 20%;text-align: left;">
-                Ref ID: {{ $order->id }}
+            <td style="width: 66%;text-align: left;">
+                Ref ID: {{ $order->id }} &nbsp;&nbsp;
+                @if ($order->paymenttype == 'E')
+                    @switch($order->branch_rec_id)
+                        @case(5)
+                            ธ.ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:<strong>699-2-39128-8</strong>
+                        @break
+
+                        @case(7)
+                            ธ.ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร)2016 เลขที่:<strong>898-2-29369-6</strong>
+                        @break
+
+                        @case(11)
+                            ธ.ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร) 2016 เลขที่:<strong>898-2-29369-6</strong>
+                        @break
+
+                        @case(12)
+                            ธ.ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:<strong>699-2-39128-8</strong>
+                        @break
+
+                        @case(13)
+                            ธ.กสิกรไทย สาขาตรัง หจก.สี่สหายขนส่งตรัง-พัทลุง เลขที่:<strong>054-1-87635-9</strong>
+                        @break
+
+                        @default
+                            ธ.กสิกรไทย สาขาบางมด บจก.สี่สหายขนส่ง(1988) เลขที่ :<strong>090-1-00410-2</strong>
+                    @endswitch
+                @endif
             </td>
-            <td style="width: 20%;text-align: center;">
+            <td style="width: 2%;text-align: center;">
             </td>
-            <td style="width: 20%;text-align: center;">
+            <td style="width: 2%;text-align: center;">
             </td>
-            <td style="width: 20%;text-align: center;">
+            <td style="width: 10%;text-align: right;">
                 @switch($order->order_type)
                     @case('general')
-                        ประเภท : ทั่วไป
+                        ทั่วไป
                     @break
 
                     @case('express')
-                        ประเภท : Express
+                        Express
                     @break
 
                     @case('charter')
-                        ประเภท : เหมาคัน
+                        เหมาคัน
                     @break
                 @endswitch
             </td>
@@ -281,33 +307,8 @@
         <tr style="vertical-align:top;height:14px;">
             <td style="width: 55%;text-align: left">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $order->remark }}
-                <br />
-                @if ($order->paymenttype == 'E')
-                    @switch($order->branch_rec_id)
-                        @case(5)
-                            ธ.ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:<strong>699-2-39128-8</strong>
-                        @break
 
-                        @case(7)
-                            ธ.ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร)2016 เลขที่:<strong>898-2-29369-6</strong>
-                        @break
 
-                        @case(11)
-                            ธ.ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร) 2016 เลขที่:<strong>898-2-29369-6</strong>
-                        @break
-
-                        @case(12)
-                            ธ.ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:<strong>699-2-39128-8</strong>
-                        @break
-
-                        @case(13)
-                            ธ.กสิกรไทย สาขาตรัง หจก.สี่สหายขนส่งตรัง-พัทลุง เลขที่:<strong>054-1-87635-9</strong>
-                        @break
-
-                        @default
-                            ธ.กสิกรไทย สาขาบางมด บจก.สี่สหายขนส่ง(1988) เลขที่ :<strong>090-1-00410-2</strong>
-                    @endswitch
-                @endif
             </td>
             <td style="width: 20%;text-align: left">
 
