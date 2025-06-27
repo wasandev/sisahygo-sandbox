@@ -22,38 +22,38 @@
 
     <table style="width: 100%;">
         <tr>
-            <td style="width: 66%;text-align: left;">
-                Ref ID: {{ $order->id }} &nbsp;&nbsp;
+            <td style="width: 68%;text-align: left;">
+                Ref ID: {{ $order->id }} &nbsp;
 
                 @switch($order->branch_rec_id)
                     @case(5)
-                        ธ.ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:<strong>699-2-39128-8</strong>
+                        ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:699-2-39128-8
                     @break
 
                     @case(7)
-                        ธ.ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร)2016 เลขที่:<strong>898-2-29369-6</strong>
+                        ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร)2016 เลขที่:898-2-29369-6
                     @break
 
                     @case(11)
-                        ธ.ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร) 2016 เลขที่:<strong>898-2-29369-6</strong>
+                        ไทยพานิชย์ หจก.สี่สหายขนส่ง(บ้านนาสาร) 2016 เลขที่:898-2-29369-6
                     @break
 
                     @case(12)
-                        ธ.ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:<strong>699-2-39128-8</strong>
+                        ไทยพานิชย์ หจก.บุญณรงค์รุ่งเรืองทรัพย์ เลขที่:699-2-39128-8
                     @break
 
                     @case(13)
-                        ธ.กสิกรไทย สาขาตรัง หจก.สี่สหายขนส่งตรัง-พัทลุง เลขที่:<strong>054-1-87635-9</strong>
+                        กสิกรไทย สาขาตรัง หจก.สี่สหายขนส่งตรัง-พัทลุง เลขที่:054-1-87635-9
                     @break
 
                     @default
-                        ธ.กสิกรไทย สาขาบางมด บจก.สี่สหายขนส่ง(1988) เลขที่ :<strong>090-1-00410-2</strong>
+                        กสิกรไทย สาขาบางมด บจก.สี่สหายขนส่ง(1988) เลขที่:090-1-00410-2
                 @endswitch
 
             </td>
-            <td style="width: 2%;text-align: center;">
+            <td style="width: 1%;text-align: center;">
             </td>
-            <td style="width: 2%;text-align: center;">
+            <td style="width: 1%;text-align: center;">
             </td>
             <td style="width: 10%;text-align: right;">
                 @switch($order->order_type)
