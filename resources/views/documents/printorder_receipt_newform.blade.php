@@ -12,7 +12,7 @@
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
                     <h3>ใบเสร็จรับเงิน - จ่ายเงินแล้ว</h3>
                 @elseif($order->paymenttype == 'E')
-                    <h3>เก็บเงินปลายทาง</h3>
+                    <h3>เก็บเงินปลายทาง - ใบเสร็จรับเงิน </h3>
                 @else
                     <h3>วางบิล</h3>
                 @endif
