@@ -74,7 +74,7 @@ class Order_rec extends Resource
     ];
     public static function label()
     {
-        return 'รายการรับสินค้า';
+        return 'รายการรับสินค้าของสาขา';
     }
     /**
      * Get the fields displayed by the resource.

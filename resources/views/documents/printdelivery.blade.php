@@ -262,4 +262,28 @@
         </tr>
 
     </table>
+    <table style="width: 100%;border-top: .05px dotted black;">
+        <tr style="vertical-align:top;">
+            <td style="width: 50%;text-align:center;padding:20px;font-weight: bold;vertical-align:middle">
+                ** ขอความร่วมมือให้ลูกค้า สแกนจ่าย QR Code ** <br />
+                ** ชำระค่าขนส่งปลายทาง แทนเงินสดให้มากที่สุด **<br /><br />
+                การชำระเงิน<br />
+                โอนเข้าบัญชี ธ.กสิกรไทย<br>
+                บจก.สี่สหายขนส่ง(1988) สาขา บางมด<br />
+                เลขที่บัญชี <strong>0901004102</strong>
+
+
+
+
+            </td>
+            <td style="width: 50%;text-align:center;padding:10px">
+                สแกนจ่าย QR Code ได้ทุกธนาคาร <br />
+
+                <img src="{{ url('storage/images/siskbqrpay.jpg') }}" alt="Qr จ่ายเงินสี่สหายขนส่ง" height="250">
+            </td>
+
+            </td>
+
+        </tr>
+    </table>
 @endsection

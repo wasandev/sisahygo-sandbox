@@ -5,8 +5,26 @@
 @endsection
 @section('content')
 
-    <table style="width: 100%;margin-top: -10px">
+    <table style="width: 100%;margin-top: -12px">
+
         <tr>
+
+            <td style="width: 100%;text-align: center;vertical-align:top">
+                @if (
+                    $order->paymenttype == 'E' &&
+                        $order->branch_rec_id != 5 &&
+                        $order->branch_rec_id != 7 &&
+                        $order->branch_rec_id != 11 &&
+                        $order->branch_rec_id != 12 &&
+                        $order->branch_rec_id != 13)
+                    ** สแกนจ่าย QR Code ที่พนักงานจัดส่ง แทนเงินสด รวดเร็วมั่นใจปลอดภัย **
+                @else
+                    &nbsp;
+                @endif
+            </td>
+        </tr>
+        <tr>
+
 
             <td style="width: 100%;text-align: right;vertical-align:top">
                 @if ($order->paymenttype == 'H' || $order->paymenttype == 'T')
@@ -310,13 +328,13 @@
 
 
             </td>
-            <td style="width: 20%;text-align: left">
+            <td style="width: 15%;text-align: left">
 
                 {{ $order->order_details->where('unit_id', '<>', 10)->sum('amount') + $order->order_details->where('unit_id', '=', 10)->count('amount') }}
                 ชิ้น
             </td>
 
-            <td style="width: 25%;text-align: right">
+            <td style="width: 30%;text-align: right">
                 <strong>{{ number_format($order->order_amount, 2) }}</strong><br />
                 {{ baht_text($order->order_amount) }}
             </td>
@@ -343,7 +361,7 @@
 
 
         </tr>
-        <tr style="vertical-align:top">
+        <tr style="vertical-align:top;text-align:center">
             <td style="width: 22%;">
 
                 @isset($order->checker->name)
