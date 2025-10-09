@@ -42,6 +42,6 @@ class CheckerDashboard extends Dashboard
      */
     public static function label()
     {
-        return 'พนักงานตรวจรับ';
+        return 'พนักงานตรวจรับสินค้า';
     }
 }
