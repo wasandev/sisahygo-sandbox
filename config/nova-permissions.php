@@ -76,6 +76,30 @@ return [
             'description'  => 'Can delete users',
             'group'        => 'ผู้ใช้งาน',
         ],
+        //-apiclients
+        'view apiclients' => [
+            'display_name' => 'ดู',
+            'description'  => 'ดูข้อมูล Api Clients',
+            'group'        => 'ผู้ใช้งาน',
+        ],
+
+        'create apiclients' => [
+            'display_name' => 'สร้าง',
+            'description'  => 'สร้าง Api Key',
+            'group'        => 'ผู้ใช้งาน',
+        ],
+
+        'edit apiclients' => [
+            'display_name' => 'แก้ไข',
+            'description'  => 'Edit Api Clients',
+            'group'        => 'ผู้ใช้งาน',
+        ],
+
+        'delete apiclients' => [
+            'display_name' => 'ลบ',
+            'description'  => 'Delete Api Clients',
+            'group'        => 'ผู้ใช้งาน',
+        ],
         //Role
         'view roles' => [
             'display_name' => 'ดู',

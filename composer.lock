@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a513495f3d6b0fd1991b016baf61813e",
+    "content-hash": "1ce197b5f3e0e6a469915858363b67a4",
     "packages": [
         {
             "name": "anaseqal/nova-import",
@@ -2998,13 +2998,13 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Laravel\\Sanctum\\SanctumServiceProvider"
                     ]
+                },
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
@@ -9356,7 +9356,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Account",
-                "reference": "b9249a9bee849a9651ec8cc7c0e8144b2d27eeee"
+                "reference": "a44e4e5371883b59377f2d5e81e7e78f4b1564eb"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9392,7 +9392,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Araccount",
-                "reference": "3aa52bc6ba62f5ddcf9779ff7444a29a4fca16f0"
+                "reference": "ec273c514405a8255825deeda8c387093704dd6a"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9428,7 +9428,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Billing",
-                "reference": "cff524610ebe518ed49e3690bc56e116d73eaf88"
+                "reference": "d1e625396c7e6180e207c24b61b1b51d16108040"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9464,7 +9464,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Branch",
-                "reference": "0eda8a2cc088732ccdb4bb0c18ab03d74d6ba496"
+                "reference": "17b398cb0a78e5a3e873934c9368562cc0b2a511"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9500,7 +9500,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Checkers",
-                "reference": "80e468de90fe6d03d17758adbef3f794b51de106"
+                "reference": "338fba427dde6126d340584fcbbf7e5c1b788a19"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9536,7 +9536,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Financial",
-                "reference": "67ad738740d56b0bdce9f0b5f2e49be809e300a0"
+                "reference": "7836523b058df4ea48dd4c9885228bc5acda2dc1"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9572,7 +9572,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/InputThaiAddress",
-                "reference": "7594cbd9bb7086ecd1f29adff4559526bb6b0857"
+                "reference": "c2d7c64cba4dfaeff2254d562a260f13beb0a9e7"
             },
             "require": {
                 "laravel/helpers": "^1.1",
@@ -9609,7 +9609,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Loading",
-                "reference": "c7d48b0a13d135bb6fab393be6f366b5023087d1"
+                "reference": "243daed796577c16f447ddf37308c68e3fe6297c"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9645,7 +9645,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Marketing",
-                "reference": "548f60f3b48e1e8bfb7926bc4633e98ad6367e08"
+                "reference": "ffbe91865373006f12220ccad3ac546e4a1c211e"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9681,7 +9681,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Orderstatus",
-                "reference": "f7ff19ce464b74c5284584c88991206744ae9aa4"
+                "reference": "bc7f5db66678a0efecc43486cc604d3d6cb77303"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9717,7 +9717,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/QrCodeScan",
-                "reference": "80ca21e3d6b9f5336bf7c9d2fa4e66deeb6fefe3"
+                "reference": "40702786f761058e26f925c8a67cd16382927ac1"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9753,7 +9753,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Report",
-                "reference": "d2a11e075b556bf3c21168e1fb8b900e8bd0404f"
+                "reference": "20625ad5c6df3d4e9096f09f79063ac88adad70a"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9792,7 +9792,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Sender",
-                "reference": "26e62335a2fc0c5fefa15f5179b758564f9d38d2"
+                "reference": "8d40f2af7ae9f77b9226ab830ae1e764c9232daa"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9828,7 +9828,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/SisahyGo",
-                "reference": "5d475a8c5ea337fa15dfa64a4f662b1bc225c9d4"
+                "reference": "0c2b6274ef7be1cc35fa4fe0e35636c0e9bd30ba"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9864,7 +9864,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ThaiAddress",
-                "reference": "981635d51575b0b3abd76bf8bf227769dfc50dae"
+                "reference": "1b86bba6256abb580d23a4e2cc3eea12075d62cd"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9900,7 +9900,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Truck",
-                "reference": "0312169ad170200ef183429464f6fee6fd216af8"
+                "reference": "1f09ac9cbce8265e2abff22534263f9b19f6b181"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -9936,7 +9936,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Waybillstatus",
-                "reference": "7962a653806c17f6cef4c494d404c594be600277"
+                "reference": "64d11f33a22460b6f86d841372c865488c70e6e8"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -12952,12 +12952,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.0.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
