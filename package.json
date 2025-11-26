@@ -8,6 +8,7 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress  --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "build": "echo 'No build needed' ",
         "generate-sw": "workbox injectManifest workbox-config.js",
         "build-thai-address": "cd nova-components/ThaiAddress && npm run dev",
         "build-thai-address-prod": "cd nova-components/ThaiAddress && npm run prod",
